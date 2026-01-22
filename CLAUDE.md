@@ -250,6 +250,23 @@ Weapons can have a `modifiers` array that grants stat bonuses when the weapon is
 - `ranged`: Affects ranged weapons only
 - `weapon`: Affects all weapons
 
+### Leader Ability (in unit.abilities)
+Character units with the Leader ability can attach to specific bodyguard units:
+```javascript
+{
+  id: "leader",
+  name: "Leader",
+  description: "This model can be attached to Custodian Guard or Custodian Wardens.",
+  eligibleUnits: ["custodian-guard", "custodian-wardens"]
+}
+```
+
+### Leader Ability Fields
+- `id`: Always "leader" for leader abilities
+- `name`: Always "Leader"
+- `description`: Human-readable description of attachment rules
+- `eligibleUnits`: Array of unit IDs this leader can attach to
+
 ---
 
 ## Current Features

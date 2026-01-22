@@ -551,7 +551,8 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to Custodian Guard or Custodian Wardens."
+          "description": "This model can be attached to Custodian Guard or Custodian Wardens.",
+          "eligibleUnits": ["custodian-guard", "custodian-wardens"]
         },
         {
           "id": "master-of-stances",
@@ -599,7 +600,8 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to Custodian Guard or Custodian Wardens."
+          "description": "This model can be attached to Custodian Guard or Custodian Wardens.",
+          "eligibleUnits": ["custodian-guard", "custodian-wardens"]
         },
         {
           "id": "swift-onslaught",
@@ -640,7 +642,8 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to Custodian Guard or Custodian Wardens."
+          "description": "This model can be attached to Custodian Guard or Custodian Wardens.",
+          "eligibleUnits": ["custodian-guard", "custodian-wardens"]
         },
         {
           "id": "captain-general",
@@ -725,7 +728,8 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to Prosecutors, Vigilators, or Witchseekers."
+          "description": "This model can be attached to Prosecutors, Vigilators, or Witchseekers.",
+          "eligibleUnits": ["prosecutors", "vigilators", "witchseekers"]
         },
         {
           "id": "scouts",

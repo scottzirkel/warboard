@@ -137,3 +137,26 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [leader-001] Add eligibleUnits array to leader abilities in data
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `eligibleUnits` array field to leader abilities to specify which units a character can attach to
+- This is a data-only change that prepares for leader attachment functionality
+- Updated all character units with Leader abilities:
+  - Shield-Captain: eligibleUnits ["custodian-guard", "custodian-wardens"]
+  - Blade Champion: eligibleUnits ["custodian-guard", "custodian-wardens"]
+  - Trajann Valoris: eligibleUnits ["custodian-guard", "custodian-wardens"]
+  - Knight-Centura: eligibleUnits ["prosecutors", "vigilators", "witchseekers"]
+- Did not update Inquisitor Draxus (ally unit) as their leader rules are more complex and out of scope
+
+**Files changed:**
+- `data/custodes.json` - Added eligibleUnits array to 4 leader abilities
+- `CLAUDE.md` - Added "Leader Ability" and "Leader Ability Fields" documentation sections
+
+**Verification:**
+- npm run build passes
+
