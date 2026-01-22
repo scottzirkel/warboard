@@ -490,7 +490,117 @@
       "keywords": ["Monster", "Great Devourer", "Carnifexes"]
     }
   ],
-  "detachments": {},
+  "detachments": {
+    "invasion_fleet": {
+      "name": "Invasion Fleet",
+      "rules": [
+        {
+          "id": "hyper-adaptations",
+          "name": "Hyper-adaptations",
+          "description": "At the start of the first battle round, select one Hyper-adaptation to be active for TYRANIDS units for the rest of the battle.",
+          "type": "selection",
+          "choices": [
+            {
+              "id": "swarming-instincts",
+              "name": "Swarming Instincts",
+              "description": "Each time a TYRANIDS model makes an attack that targets an INFANTRY or SWARM unit, that attack has the [SUSTAINED HITS 1] ability."
+            },
+            {
+              "id": "hyper-aggression",
+              "name": "Hyper-aggression",
+              "description": "Each time a TYRANIDS model makes an attack that targets a MONSTER or VEHICLE unit, that attack has the [LETHAL HITS] ability."
+            },
+            {
+              "id": "hive-predators",
+              "name": "Hive Predators",
+              "description": "Each time a TYRANIDS model makes an attack that targets a CHARACTER unit, a Critical Hit automatically wounds the target and has the [PRECISION] ability."
+            }
+          ],
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "rapid-regeneration",
+          "name": "Rapid Regeneration",
+          "cost": 1,
+          "phase": "Shooting/Fight",
+          "description": "After an enemy unit selects targets: Target TYRANIDS unit gains Feel No Pain 6+, or Feel No Pain 5+ if within Synapse Range.",
+          "modifiers": []
+        },
+        {
+          "id": "adrenal-surge",
+          "name": "Adrenal Surge",
+          "cost": 2,
+          "phase": "Fight",
+          "description": "Start of Fight phase: Up to two TYRANIDS units within Synapse Range (or one anywhere) gain Critical Hits on unmodified Hit rolls of 5+ in melee.",
+          "modifiers": []
+        },
+        {
+          "id": "death-frenzy",
+          "name": "Death Frenzy",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "After enemy selects targets: When a model is destroyed before fighting, on 4+ it fights before being removed.",
+          "modifiers": []
+        },
+        {
+          "id": "overrun",
+          "name": "Overrun",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Before Consolidation: Unit can Consolidate up to 3\" extra if ending in Engagement Range or Synapse Range. If within Synapse Range and not in Engagement Range, can make a Normal Move of up to 6\" instead.",
+          "modifiers": []
+        },
+        {
+          "id": "predatory-imperative",
+          "name": "Predatory Imperative",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Select a Hyper-adaptation. Up to two units within Synapse Range (or one anywhere) gain that adaptation in addition to the army's chosen adaptation until your next Command phase.",
+          "modifiers": []
+        },
+        {
+          "id": "endless-swarm",
+          "name": "Endless Swarm",
+          "cost": 1,
+          "phase": "Command",
+          "description": "Your Command phase: Up to two ENDLESS MULTITUDE units within Synapse Range (or one anywhere) return D3+3 destroyed models.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "alien-cunning",
+          "name": "Alien Cunning",
+          "points": 30,
+          "description": "TYRANIDS CHARACTER only. After deployment, redeploy up to three TYRANIDS units. Any of them can be placed into Strategic Reserves.",
+          "modifiers": []
+        },
+        {
+          "id": "perfectly-adapted",
+          "name": "Perfectly Adapted",
+          "points": 15,
+          "description": "TYRANIDS CHARACTER only. Once per turn, re-roll one Hit roll, Wound roll, Damage roll, Advance roll, Charge roll, or saving throw for the bearer.",
+          "modifiers": []
+        },
+        {
+          "id": "synaptic-linchpin",
+          "name": "Synaptic Linchpin",
+          "points": 20,
+          "description": "TYRANIDS CHARACTER with Synapse only. Friendly TYRANIDS units within 9\" are considered within Synapse Range.",
+          "modifiers": []
+        },
+        {
+          "id": "adaptive-biology",
+          "name": "Adaptive Biology",
+          "points": 25,
+          "description": "TYRANIDS CHARACTER only. Bearer has Feel No Pain 5+. At the start of any turn, if the bearer has lost one or more wounds, it gains Feel No Pain 4+ for the rest of the battle.",
+          "modifiers": []
+        }
+      ]
+    }
+  },
   "armyRules": {
     "synapse": {
       "name": "Synapse",

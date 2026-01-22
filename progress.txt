@@ -943,3 +943,38 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [tyranids-009] Add Invasion Fleet detachment to tyranids.json
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Invasion Fleet as the first Tyranid detachment
+- Detachment rule is Hyper-adaptations with a "selection" type and three adaptation choices
+- Swarming Instincts: Sustained Hits 1 vs Infantry/Swarm
+- Hyper-aggression: Lethal Hits vs Monster/Vehicle
+- Hive Predators: Critical Hits auto-wound and gain Precision vs Characters
+- Added all 6 stratagems with appropriate phases and CP costs:
+  - Rapid Regeneration (1CP): Feel No Pain 6+/5+ based on Synapse Range
+  - Adrenal Surge (2CP): Critical Hits on 5+ in melee
+  - Death Frenzy (1CP): Fight when destroyed on 4+
+  - Overrun (1CP): Extended Consolidation or Normal Move if in Synapse Range
+  - Predatory Imperative (1CP): Gain additional Hyper-adaptation
+  - Endless Swarm (1CP): Return D3+3 models to Endless Multitude units
+- Added all 4 enhancements with accurate points costs:
+  - Alien Cunning (30pts): Redeploy up to 3 units after deployment
+  - Perfectly Adapted (15pts): Once per turn re-roll
+  - Synaptic Linchpin (20pts): Extend Synapse Range to 9"
+  - Adaptive Biology (25pts): Feel No Pain 5+, upgrades to 4+ after taking wounds
+- Data sourced from Wahapedia: https://wahapedia.ru/wh40k10ed/factions/tyranids/
+
+**Files changed:**
+- `data/tyranids.json` - Added invasion_fleet detachment with:
+  - Hyper-adaptations rule with three choices
+  - 6 stratagems (Rapid Regeneration, Adrenal Surge, Death Frenzy, Overrun, Predatory Imperative, Endless Swarm)
+  - 4 enhancements (Alien Cunning, Perfectly Adapted, Synaptic Linchpin, Adaptive Biology)
+
+**Verification:**
+- npm run build passes
+
