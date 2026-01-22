@@ -565,3 +565,26 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [mixed-001] Group weapons by loadout choice in Play Mode unit display
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `getWeaponsByLoadoutGroup(listUnit)` helper function that groups weapons by their loadoutGroup
+- Function returns an array of group objects with: id, name, modelCount, isPaired, and weapons array
+- Groups are sorted with _default (Standard Equipment) first, then by model count descending
+- Updated Play Mode weapons display to show weapons in distinct visual groups
+- Each group has a header showing the model count prefix (e.g., "3×") and the loadout name
+- Groups use a subtle background color (bg-gray-600/50) with bottom border to visually separate them
+- Paired loadout indicator (⬡) is shown at the group level instead of per-weapon
+- This change prepares the UI structure for future features (collapsible groups, ranged/melee sections)
+
+**Files changed:**
+- `src/main.js` - Added `getWeaponsByLoadoutGroup(listUnit)` helper function
+- `index.html` - Updated Play Mode weapons section to use grouped display with visual separation
+
+**Verification:**
+- npm run build passes
+

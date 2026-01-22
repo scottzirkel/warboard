@@ -754,6 +754,80 @@ Alpine.data('armyTracker', () => ({
     return this.sortedWeapons(results)
   },
 
+  getWeaponsByLoadoutGroup(listUnit) {
+    const unit = this.getUnitById(listUnit.unitId)
+    if (!unit) return []
+
+    const weaponCounts = listUnit.weaponCounts || {}
+    const groups = []
+
+    // Build map of loadoutGroup to choice info
+    const choiceInfo = {}
+    for (const option of unit.loadoutOptions || []) {
+      for (const choice of option.choices) {
+        if (choice.id !== 'none') {
+          choiceInfo[choice.id] = {
+            name: choice.name,
+            pattern: option.pattern || 'replacement',
+            paired: choice.paired || false
+          }
+        }
+      }
+    }
+
+    // Group weapons by loadoutGroup
+    const weaponsByGroup = {}
+    for (const weapon of unit.weapons) {
+      if (weapon.type === 'equipment') continue
+      const group = weapon.loadoutGroup || '_default'
+      if (!weaponsByGroup[group]) {
+        weaponsByGroup[group] = []
+      }
+      weaponsByGroup[group].push(weapon)
+    }
+
+    // Build result groups
+    for (const [groupId, weapons] of Object.entries(weaponsByGroup)) {
+      let modelCount = 0
+      let groupName = ''
+      let isPaired = false
+
+      if (groupId === '_default') {
+        // Default weapons are used by all models
+        modelCount = listUnit.modelCount
+        groupName = 'Standard Equipment'
+      } else {
+        const info = choiceInfo[groupId]
+        const equippedCount = weaponCounts[groupId] || 0
+
+        if (equippedCount === 0) continue
+
+        modelCount = equippedCount
+        groupName = info?.name || groupId
+        isPaired = info?.paired || false
+      }
+
+      if (modelCount > 0) {
+        groups.push({
+          id: groupId,
+          name: groupName,
+          modelCount: modelCount,
+          isPaired: isPaired,
+          weapons: this.sortedWeapons(weapons)
+        })
+      }
+    }
+
+    // Sort groups: _default first, then by model count descending
+    groups.sort((a, b) => {
+      if (a.id === '_default') return -1
+      if (b.id === '_default') return 1
+      return b.modelCount - a.modelCount
+    })
+
+    return groups
+  },
+
   getEquippedAbilities(listUnit) {
     const unit = this.getUnitById(listUnit.unitId)
     if (!unit) return unit?.abilities || []
