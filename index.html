@@ -187,12 +187,13 @@
         <!-- Army Units -->
         <div class="space-y-3 flex-1 overflow-y-auto min-h-0">
           <template x-for="(listUnit, index) in currentList.units" :key="index">
-            <div class="bg-gray-700 rounded p-3" :class="{ 'border-l-2 border-l-purple-500': getUnitById(listUnit.unitId)?.isAlly }">
+            <div class="bg-gray-700 rounded p-3" :class="{ 'border-l-2 border-l-purple-500': getUnitById(listUnit.unitId)?.isAlly, 'border-l-2 border-l-purple-400 opacity-75': isUnitAttachedAsLeader(index) }">
               <div class="flex justify-between items-start mb-2">
                 <div>
                   <div class="flex items-center gap-2">
                     <h4 class="font-medium" x-text="getUnitById(listUnit.unitId)?.name"></h4>
                     <span x-show="getUnitById(listUnit.unitId)?.isAlly" class="text-[10px] bg-purple-600 text-white px-1.5 py-0.5 rounded uppercase font-semibold">Ally</span>
+                    <span x-show="isUnitAttachedAsLeader(index)" class="text-[10px] bg-purple-500 text-white px-1.5 py-0.5 rounded" x-text="'→ ' + getAttachedToUnitName(index)"></span>
                   </div>
                   <div class="flex gap-2 mt-1">
                     <select
@@ -547,6 +548,7 @@
         <div class="space-y-2 flex-1 overflow-y-auto min-h-0">
           <template x-for="(listUnit, index) in currentList.units" :key="index">
             <div
+              x-show="!isUnitAttachedAsLeader(index)"
               class="bg-gray-700 rounded p-3 cursor-pointer hover:bg-gray-600 transition-colors"
               @click="selectPlayUnit(index)"
               :class="{ 'ring-2 ring-custodes-red': selectedPlayUnitIndex === index }"

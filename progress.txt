@@ -482,3 +482,27 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [leader-008] Hide attached leaders from main army list display
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `isUnitAttachedAsLeader(unitIndex)` helper function to check if a unit is attached as a leader to another unit
+- Added `getAttachedToUnitName(unitIndex)` helper function to get the name of the unit a leader is attached to
+- Updated Play Mode army list to hide units that are attached as leaders using `x-show="!isUnitAttachedAsLeader(index)"`
+- Build Mode still shows all units for editing, but attached leaders have visual indicators:
+  - Purple left border (border-l-purple-400) and reduced opacity (opacity-75)
+  - Badge showing "→ [unit name]" indicating where the leader is attached
+- These visual cues help users understand the unit is attached elsewhere while still allowing editing
+
+**Files changed:**
+- `src/main.js` - Added `isUnitAttachedAsLeader(unitIndex)` helper function
+- `src/main.js` - Added `getAttachedToUnitName(unitIndex)` helper function
+- `index.html` - Updated Play Mode army list to hide attached leaders
+- `index.html` - Added visual indicator in Build Mode for attached leaders
+
+**Verification:**
+- npm run build passes
+

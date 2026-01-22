@@ -864,6 +864,21 @@ Alpine.data('armyTracker', () => ({
     return this.getEquippedWeaponsWithCounts(leaderListUnit)
   },
 
+  isUnitAttachedAsLeader(unitIndex) {
+    // Check if this unit is attached as a leader to any other unit
+    return this.currentList.units.some(u => u.attachedLeader?.unitIndex === unitIndex)
+  },
+
+  getAttachedToUnitName(unitIndex) {
+    // Find which unit this leader is attached to and return its name
+    const attachedToIndex = this.currentList.units.findIndex(u => u.attachedLeader?.unitIndex === unitIndex)
+    if (attachedToIndex === -1) return null
+
+    const attachedToListUnit = this.currentList.units[attachedToIndex]
+    const attachedToUnit = this.getUnitById(attachedToListUnit?.unitId)
+    return attachedToUnit?.name || null
+  },
+
   getAvailableLeaders(unitIndex) {
     const listUnit = this.currentList.units[unitIndex]
     if (!listUnit) return []
