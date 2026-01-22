@@ -588,3 +588,26 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [mixed-002] Separate ranged and melee weapon sections within each loadout group
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Updated `getWeaponsByLoadoutGroup(listUnit)` to include separate `rangedWeapons` and `meleeWeapons` arrays
+- Each loadout group now returns: id, name, modelCount, isPaired, weapons (all), rangedWeapons, meleeWeapons
+- Updated Play Mode UI to display Ranged and Melee subsections within each loadout group
+- Ranged subsection has blue color scheme (text-blue-400, border-blue-500/30)
+- Melee subsection has red color scheme (text-red-400, border-red-500/30)
+- Subsections use left border indent to create visual hierarchy: Loadout > Ranged/Melee > Weapon stats
+- Subsections only display if the loadout group has weapons of that type
+- This provides clearer organization when loadout groups have both ranged and melee weapons
+
+**Files changed:**
+- `src/main.js` - Updated `getWeaponsByLoadoutGroup` to add rangedWeapons and meleeWeapons arrays
+- `index.html` - Restructured Play Mode weapons display to show Ranged/Melee subsections
+
+**Verification:**
+- npm run build passes
+

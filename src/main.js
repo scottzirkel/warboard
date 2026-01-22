@@ -808,12 +808,18 @@ Alpine.data('armyTracker', () => ({
       }
 
       if (modelCount > 0) {
+        // Separate weapons by type (ranged vs melee)
+        const rangedWeapons = weapons.filter(w => w.type === 'ranged')
+        const meleeWeapons = weapons.filter(w => w.type === 'melee')
+
         groups.push({
           id: groupId,
           name: groupName,
           modelCount: modelCount,
           isPaired: isPaired,
-          weapons: this.sortedWeapons(weapons)
+          weapons: this.sortedWeapons(weapons),
+          rangedWeapons: rangedWeapons,
+          meleeWeapons: meleeWeapons
         })
       }
     }

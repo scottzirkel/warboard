@@ -855,45 +855,61 @@
                         title="Paired loadout (equipped together)"
                       >⬡</span>
                     </div>
-                    <!-- Weapons in this group -->
-                    <div class="space-y-2">
-                      <template x-for="weapon in group.weapons" :key="weapon.id + '-' + weapon.type">
-                        <div class="text-sm">
-                          <div class="flex justify-between items-center">
-                            <span class="font-medium text-gray-300" x-text="weapon.name"></span>
-                            <span class="text-gray-400 text-xs" x-text="weapon.type"></span>
-                          </div>
-                          <template x-if="weapon.type === 'ranged'">
-                            <div class="grid grid-cols-6 gap-1 text-center text-xs mt-1 text-gray-300">
-                              <div><span class="text-gray-500">RNG:</span> <span x-text="formatInches(weapon.stats.range)"></span></div>
-                              <div><span class="text-gray-500">A:</span> <span x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 'a')"></span></div>
-                              <div><span class="text-gray-500">BS:</span> <span x-text="weapon.stats.bs"></span></div>
-                              <div><span class="text-gray-500">S:</span> <span x-text="weapon.stats.s"></span></div>
-                              <div><span class="text-gray-500">AP:</span> <span x-text="weapon.stats.ap"></span></div>
-                              <div><span class="text-gray-500">D:</span> <span x-text="weapon.stats.d"></span></div>
-                            </div>
-                          </template>
-                          <template x-if="weapon.type === 'melee'">
-                            <div class="grid grid-cols-5 gap-1 text-center text-xs mt-1 text-gray-300">
-                              <div>
-                                <span class="text-gray-500">A:</span>
-                                <span
-                                  :class="isWeaponStatModified(selectedPlayUnitIndex, weapon, 'a') ? 'text-gold-400 font-bold' : ''"
-                                  x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 'a')"
-                                ></span>
+
+                    <!-- Ranged Weapons Subsection -->
+                    <template x-if="group.rangedWeapons.length > 0">
+                      <div class="mb-2">
+                        <div class="text-[10px] uppercase tracking-wide text-blue-400 font-semibold mb-1">Ranged</div>
+                        <div class="space-y-2 pl-2 border-l border-blue-500/30">
+                          <template x-for="weapon in group.rangedWeapons" :key="weapon.id">
+                            <div class="text-sm">
+                              <div class="font-medium text-gray-300" x-text="weapon.name"></div>
+                              <div class="grid grid-cols-6 gap-1 text-center text-xs mt-1 text-gray-300">
+                                <div><span class="text-gray-500">RNG:</span> <span x-text="formatInches(weapon.stats.range)"></span></div>
+                                <div><span class="text-gray-500">A:</span> <span x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 'a')"></span></div>
+                                <div><span class="text-gray-500">BS:</span> <span x-text="weapon.stats.bs"></span></div>
+                                <div><span class="text-gray-500">S:</span> <span x-text="weapon.stats.s"></span></div>
+                                <div><span class="text-gray-500">AP:</span> <span x-text="weapon.stats.ap"></span></div>
+                                <div><span class="text-gray-500">D:</span> <span x-text="weapon.stats.d"></span></div>
                               </div>
-                              <div><span class="text-gray-500">WS:</span> <span x-text="weapon.stats.ws"></span></div>
-                              <div><span class="text-gray-500">S:</span> <span x-text="weapon.stats.s"></span></div>
-                              <div><span class="text-gray-500">AP:</span> <span x-text="weapon.stats.ap"></span></div>
-                              <div><span class="text-gray-500">D:</span> <span x-text="weapon.stats.d"></span></div>
+                              <template x-if="weapon.abilities && weapon.abilities.length > 0">
+                                <div class="text-xs text-gold-400 mt-1" x-text="weapon.abilities.join(', ')"></div>
+                              </template>
                             </div>
-                          </template>
-                          <template x-if="weapon.abilities && weapon.abilities.length > 0">
-                            <div class="text-xs text-gold-400 mt-1" x-text="weapon.abilities.join(', ')"></div>
                           </template>
                         </div>
-                      </template>
-                    </div>
+                      </div>
+                    </template>
+
+                    <!-- Melee Weapons Subsection -->
+                    <template x-if="group.meleeWeapons.length > 0">
+                      <div>
+                        <div class="text-[10px] uppercase tracking-wide text-red-400 font-semibold mb-1">Melee</div>
+                        <div class="space-y-2 pl-2 border-l border-red-500/30">
+                          <template x-for="weapon in group.meleeWeapons" :key="weapon.id">
+                            <div class="text-sm">
+                              <div class="font-medium text-gray-300" x-text="weapon.name"></div>
+                              <div class="grid grid-cols-5 gap-1 text-center text-xs mt-1 text-gray-300">
+                                <div>
+                                  <span class="text-gray-500">A:</span>
+                                  <span
+                                    :class="isWeaponStatModified(selectedPlayUnitIndex, weapon, 'a') ? 'text-gold-400 font-bold' : ''"
+                                    x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 'a')"
+                                  ></span>
+                                </div>
+                                <div><span class="text-gray-500">WS:</span> <span x-text="weapon.stats.ws"></span></div>
+                                <div><span class="text-gray-500">S:</span> <span x-text="weapon.stats.s"></span></div>
+                                <div><span class="text-gray-500">AP:</span> <span x-text="weapon.stats.ap"></span></div>
+                                <div><span class="text-gray-500">D:</span> <span x-text="weapon.stats.d"></span></div>
+                              </div>
+                              <template x-if="weapon.abilities && weapon.abilities.length > 0">
+                                <div class="text-xs text-gold-400 mt-1" x-text="weapon.abilities.join(', ')"></div>
+                              </template>
+                            </div>
+                          </template>
+                        </div>
+                      </div>
+                    </template>
                   </div>
                 </template>
 
