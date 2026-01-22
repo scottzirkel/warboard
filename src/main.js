@@ -36,7 +36,9 @@ Alpine.data('armyTracker', () => ({
     commandPoints: 0,
     activeStratagems: [],
     collapsedLoadoutGroups: {},  // { unitIndex: { groupId: true } }
-    activatedLoadoutGroups: {}   // { unitIndex: { groupId: true } } - tracks which groups have activated this round
+    activatedLoadoutGroups: {},  // { unitIndex: { groupId: true } } - tracks which groups have activated this round
+    collapsedLeaders: {},        // { unitIndex: true } - tracks collapsed state for attached leaders
+    activatedLeaders: {}         // { unitIndex: true } - tracks activation state for attached leaders
   },
   selectedUnit: null,
   selectedPlayUnitIndex: null,
@@ -795,6 +797,28 @@ Alpine.data('armyTracker', () => ({
 
   resetActivationState() {
     this.gameState.activatedLoadoutGroups = {}
+    this.gameState.activatedLeaders = {}
+  },
+
+  isLeaderCollapsed(unitIndex) {
+    return this.gameState.collapsedLeaders[unitIndex] === true
+  },
+
+  toggleLeaderCollapsed(unitIndex) {
+    this.gameState.collapsedLeaders[unitIndex] = !this.gameState.collapsedLeaders[unitIndex]
+  },
+
+  isLeaderActivated(unitIndex) {
+    return this.gameState.activatedLeaders[unitIndex] === true
+  },
+
+  toggleLeaderActivated(unitIndex) {
+    this.gameState.activatedLeaders[unitIndex] = !this.gameState.activatedLeaders[unitIndex]
+
+    // When activating, also collapse the leader section
+    if (this.gameState.activatedLeaders[unitIndex]) {
+      this.gameState.collapsedLeaders[unitIndex] = true
+    }
   },
 
   getWeaponsByLoadoutGroup(listUnit) {
