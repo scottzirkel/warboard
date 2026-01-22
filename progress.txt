@@ -305,3 +305,30 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [leader-007] Update unit display for units with attached leaders
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `getCombinedUnitName(unitIndex)` helper function that returns "Unit Name + Leader Name" format when a leader is attached
+- Added `getCombinedModelCount(unitIndex)` helper function that sums the unit's model count and the attached leader's model count
+- Added `getLeaderWeapons(unitIndex)` helper function to retrieve equipped weapons from the attached leader
+- Updated Play Mode army list to show combined unit name and model count for units with attached leaders
+- Updated Play Mode unit detail panel header to show combined name
+- Added purple "Attached Leader" badge below enhancement badge in detail panel
+- Updated "Models" display in damage tracker to show combined model count
+- Added leader weapons section in the weapons panel, separated by a purple border with leader name label
+- Leader weapons are displayed with same formatting as unit weapons but without modifier calculations
+
+**Files changed:**
+- `src/main.js` - Added `getCombinedUnitName(unitIndex)` helper function
+- `src/main.js` - Added `getCombinedModelCount(unitIndex)` helper function
+- `src/main.js` - Added `getLeaderWeapons(unitIndex)` helper function
+- `index.html` - Updated Play Mode army list to use combined name and model count
+- `index.html` - Updated Play Mode unit detail panel with combined name, leader badge, and leader weapons
+
+**Verification:**
+- npm run build passes
+

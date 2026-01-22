@@ -660,6 +660,48 @@ Alpine.data('armyTracker', () => ({
     return leaderUnit?.name || null
   },
 
+  getCombinedUnitName(unitIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit) return ''
+
+    const unit = this.getUnitById(listUnit.unitId)
+    if (!unit) return ''
+
+    const leaderName = this.getAttachedLeaderName(unitIndex)
+    if (leaderName) {
+      return `${unit.name} + ${leaderName}`
+    }
+
+    return unit.name
+  },
+
+  getCombinedModelCount(unitIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit) return 0
+
+    let count = listUnit.modelCount
+
+    // Add leader model count if attached
+    if (listUnit.attachedLeader?.unitIndex !== undefined) {
+      const leaderListUnit = this.currentList.units[listUnit.attachedLeader.unitIndex]
+      if (leaderListUnit) {
+        count += leaderListUnit.modelCount
+      }
+    }
+
+    return count
+  },
+
+  getLeaderWeapons(unitIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit?.attachedLeader) return []
+
+    const leaderListUnit = this.currentList.units[listUnit.attachedLeader.unitIndex]
+    if (!leaderListUnit) return []
+
+    return this.getEquippedWeaponsWithCounts(leaderListUnit)
+  },
+
   getAvailableLeaders(unitIndex) {
     const listUnit = this.currentList.units[unitIndex]
     if (!listUnit) return []
