@@ -1012,3 +1012,39 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [tyranids-011] Add Crusher Stampede detachment to tyranids.json
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Crusher Stampede as the third Tyranid detachment
+- Detachment rule is Enraged Behemoths with bonuses based on Monster strength level:
+  - At Starting Strength: +2 Objective Control (excludes Battle-shocked units)
+  - Below Starting Strength: +1 to Hit rolls
+  - Below Half-strength: +1 to Hit rolls AND +1 to Wound rolls
+- Added structured `bonuses` array to the rule to document the three condition tiers
+- Added all 6 stratagems with appropriate phases and CP costs:
+  - Corrosive Viscera (1CP): Auto-trigger Deadly Demise instead of rolling
+  - Rampaging Monstrosities (1CP): Re-roll Hit rolls in Fight phase
+  - Savage Roar (1CP): Force Battle-shock test on attacking enemy, -1 to hit
+  - Untrammelled Ferocity (1CP): Move through models and terrain in Movement phase
+  - Swarm-guided Salvoes (1CP): Ignores Cover and ignore BS modifiers
+  - Massive Impact (1CP): Roll 6D6 on charge, mortal wounds on 4+
+- Added all 4 enhancements with accurate points costs:
+  - Ominous Presence (15pts): +3 OC, includes stat modifier
+  - Enraged Reserves (20pts): Fight on death on 3+
+  - Null Nodules (10pts): Feel No Pain 5+ vs Psychic once per battle
+  - Monstrous Nemesis (25pts): +1 to Wound vs Monster/Vehicle
+- Data sourced from Wahapedia: https://wahapedia.ru/wh40k10ed/factions/tyranids/
+
+**Files changed:**
+- `data/tyranids.json` - Added crusher_stampede detachment with:
+  - Enraged Behemoths rule with bonuses array documenting strength-based effects
+  - 6 stratagems (Corrosive Viscera, Rampaging Monstrosities, Savage Roar, Untrammelled Ferocity, Swarm-guided Salvoes, Massive Impact)
+  - 4 enhancements (Ominous Presence, Enraged Reserves, Null Nodules, Monstrous Nemesis)
+
+**Verification:**
+- npm run build passes
+
