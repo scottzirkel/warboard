@@ -704,3 +704,33 @@ Format follows the Ralph technique.
 - npm run build passes
 - JSON validates successfully
 
+---
+
+## [tyranids-002] Add Termagants battleline unit to tyranids.json
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Termagants as the first Tyranid battleline unit
+- Points costs: 60 points for 10 models, 120 points for 20 models (per Munitorum Field Manual)
+- Stats match 10th edition datasheet: M6 T3 SV5+ W1 LD8+ OC2
+- No invulnerable save (set to null)
+- Included three ranged weapon options via loadoutOptions with "replacement" pattern:
+  - Fleshborer (default): 18" A1 BS4+ S5 AP0 D1, Assault
+  - Termagant Devourer: 18" A2 BS4+ S4 AP0 D1
+  - Termagant Spinefists: 12" A2 BS4+ S3 AP0 D1, Assault, Pistol, Twin-linked
+- Included melee weapon: Chitinous Claws and Teeth (A1 WS4+ S3 AP0 D1)
+- Added Skulking Horrors ability: reactive D6" move when enemy ends movement within 9"
+- Keywords: Infantry, Battleline, Great Devourer, Endless Multitude, Termagants
+
+**Files changed:**
+- `data/tyranids.json` - Added Termagants unit to the units array with:
+  - Full unit stats and points
+  - 4 weapon profiles (3 ranged options, 1 melee)
+  - loadoutOptions for ranged weapon replacement choices
+  - Skulking Horrors ability
+  - Appropriate keywords including Battleline and Endless Multitude
+
+**Verification:**
+- npm run build passes
+
