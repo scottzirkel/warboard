@@ -627,6 +627,39 @@ Alpine.data('armyTracker', () => ({
     return unit?.keywords?.includes('Character')
   },
 
+  canHaveLeaderAttached(unitIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit) return false
+
+    const unit = this.getUnitById(listUnit.unitId)
+    if (!unit) return false
+
+    // Characters cannot have leaders attached to them
+    if (unit.keywords?.includes('Character')) return false
+
+    // Check if any leader in the list has this unit in their eligibleUnits
+    return this.currentList.units.some((candidateListUnit, candidateIndex) => {
+      if (candidateIndex === unitIndex) return false
+
+      const candidateUnit = this.getUnitById(candidateListUnit.unitId)
+      if (!candidateUnit) return false
+
+      const leaderAbility = candidateUnit.abilities?.find(a => a.id === 'leader')
+      return leaderAbility?.eligibleUnits?.includes(listUnit.unitId)
+    })
+  },
+
+  getAttachedLeaderName(unitIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit?.attachedLeader) return null
+
+    const leaderListUnit = this.currentList.units[listUnit.attachedLeader.unitIndex]
+    if (!leaderListUnit) return null
+
+    const leaderUnit = this.getUnitById(leaderListUnit.unitId)
+    return leaderUnit?.name || null
+  },
+
   getAvailableLeaders(unitIndex) {
     const listUnit = this.currentList.units[unitIndex]
     if (!listUnit) return []

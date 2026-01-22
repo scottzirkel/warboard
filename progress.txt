@@ -281,3 +281,27 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [leader-006] Add leader attachment dropdown UI to unit cards
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `canHaveLeaderAttached(unitIndex)` helper function to determine if a unit can have a leader attached
+- Function checks that the unit is not a Character and that at least one leader in the list has this unit in their eligibleUnits
+- Added `getAttachedLeaderName(unitIndex)` helper to get the name of the currently attached leader
+- Added leader attachment dropdown UI to Build Mode unit cards, placed after the Enhancement Selector
+- Dropdown shows "None" option and all available leaders from `getAvailableLeaders()`
+- Selecting a leader calls `attachLeader()`, selecting "None" calls `detachLeader()`
+- Dropdown shows leader's enhancement name if they have one (e.g., "Shield-Captain (Auric Mantle)")
+- Handles edge case where currently attached leader may not be in available list (shows them anyway)
+
+**Files changed:**
+- `src/main.js` - Added `canHaveLeaderAttached(unitIndex)` helper function
+- `src/main.js` - Added `getAttachedLeaderName(unitIndex)` helper function
+- `index.html` - Added Leader Attachment Selector UI to Build Mode unit cards
+
+**Verification:**
+- npm run build passes
+
