@@ -211,8 +211,83 @@ Alpine.data('armyTracker', () => ({
     return errors
   },
 
+  get leaderAttachmentErrors() {
+    const errors = []
+    const units = this.currentList.units
+
+    // Track which leaders are attached and to which units
+    const leaderAttachments = new Map() // leaderIndex -> array of unitIndices
+
+    units.forEach((listUnit, unitIndex) => {
+      if (listUnit.attachedLeader?.unitIndex !== undefined) {
+        const leaderIndex = listUnit.attachedLeader.unitIndex
+
+        if (!leaderAttachments.has(leaderIndex)) {
+          leaderAttachments.set(leaderIndex, [])
+        }
+        leaderAttachments.get(leaderIndex).push(unitIndex)
+      }
+    })
+
+    // Check for leaders attached to multiple units
+    leaderAttachments.forEach((attachedToUnits, leaderIndex) => {
+      if (attachedToUnits.length > 1) {
+        const leaderListUnit = units[leaderIndex]
+        const leaderUnit = leaderListUnit ? this.getUnitById(leaderListUnit.unitId) : null
+        const leaderName = leaderUnit?.name || 'Leader'
+        const unitNames = attachedToUnits.map(i => {
+          const u = this.getUnitById(units[i]?.unitId)
+          return u?.name || 'unit'
+        }).join(', ')
+        errors.push(`${leaderName} is attached to multiple units: ${unitNames}`)
+      }
+    })
+
+    // Check for units with multiple leaders
+    units.forEach((listUnit, unitIndex) => {
+      if (!listUnit.attachedLeader) return
+
+      const unit = this.getUnitById(listUnit.unitId)
+      const unitName = unit?.name || 'Unit'
+
+      // Count how many leaders are attached to this unit
+      const attachedLeaders = units.filter((_, i) =>
+        units.some(u => u.attachedLeader?.unitIndex === i &&
+          units.indexOf(u) === unitIndex)
+      )
+
+      // Verify the attached leader exists
+      const leaderIndex = listUnit.attachedLeader.unitIndex
+      if (leaderIndex >= units.length || leaderIndex < 0) {
+        errors.push(`${unitName} has an invalid leader attachment`)
+        return
+      }
+
+      const leaderListUnit = units[leaderIndex]
+      if (!leaderListUnit) {
+        errors.push(`${unitName} has an invalid leader attachment`)
+        return
+      }
+
+      // Verify the leader has the Leader ability for this unit
+      const leaderUnit = this.getUnitById(leaderListUnit.unitId)
+      const leaderAbility = leaderUnit?.abilities?.find(a => a.id === 'leader')
+
+      if (!leaderAbility) {
+        errors.push(`${leaderUnit?.name || 'Unit'} cannot be a leader (no Leader ability)`)
+        return
+      }
+
+      if (!leaderAbility.eligibleUnits?.includes(listUnit.unitId)) {
+        errors.push(`${leaderUnit?.name || 'Leader'} cannot attach to ${unitName}`)
+      }
+    })
+
+    return errors
+  },
+
   get listErrors() {
-    return this.colosseumErrors
+    return [...this.colosseumErrors, ...this.leaderAttachmentErrors]
   },
 
   get canPlay() {
@@ -750,6 +825,22 @@ Alpine.data('armyTracker', () => ({
     const leaderListUnit = this.currentList.units[leaderIndex]
     if (!leaderListUnit) return
 
+    const targetUnit = this.getUnitById(listUnit.unitId)
+    const leaderUnit = this.getUnitById(leaderListUnit.unitId)
+
+    // Validate: leader must have Leader ability
+    const leaderAbility = leaderUnit?.abilities?.find(a => a.id === 'leader')
+    if (!leaderAbility) {
+      this.showToast(`${leaderUnit?.name || 'Unit'} cannot be a leader`, 'error')
+      return
+    }
+
+    // Validate: target unit must be in eligibleUnits
+    if (!leaderAbility.eligibleUnits?.includes(listUnit.unitId)) {
+      this.showToast(`${leaderUnit?.name || 'Leader'} cannot attach to ${targetUnit?.name || 'this unit'}`, 'error')
+      return
+    }
+
     // First, detach the leader from any unit it's currently attached to
     this.currentList.units.forEach((u, i) => {
       if (u.attachedLeader?.unitIndex === leaderIndex) {
@@ -760,8 +851,6 @@ Alpine.data('armyTracker', () => ({
     // Attach the leader to the target unit
     listUnit.attachedLeader = { unitIndex: leaderIndex }
 
-    const leaderUnit = this.getUnitById(leaderListUnit.unitId)
-    const targetUnit = this.getUnitById(listUnit.unitId)
     this.showToast(`${leaderUnit?.name || 'Leader'} attached to ${targetUnit?.name || 'unit'}`, 'success')
   },
 

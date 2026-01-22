@@ -359,3 +359,28 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [leader-010] Add validation rules for leader attachment
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `leaderAttachmentErrors` getter that validates leader attachment rules
+- Validates that a leader can only attach to one unit (no duplicate attachments)
+- Validates that the attached leader exists and has a valid index
+- Validates that the leader has the "Leader" ability
+- Validates that the target unit is in the leader's `eligibleUnits` array
+- Added validation to `attachLeader()` function to prevent invalid attachments at the time of action
+- Function now shows error toast and returns early if validation fails
+- Merged `leaderAttachmentErrors` into `listErrors` getter so validation runs on save and play mode entry
+- The `canPlay` getter already uses `listErrors`, so play mode is blocked if validation fails
+
+**Files changed:**
+- `src/main.js` - Added `leaderAttachmentErrors` getter with comprehensive validation
+- `src/main.js` - Updated `listErrors` getter to include leader attachment errors
+- `src/main.js` - Updated `attachLeader()` function with validation before attachment
+
+**Verification:**
+- npm run build passes
+
