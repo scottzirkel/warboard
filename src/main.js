@@ -627,6 +627,47 @@ Alpine.data('armyTracker', () => ({
     return unit?.keywords?.includes('Character')
   },
 
+  getAvailableLeaders(unitIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit) return []
+
+    const targetUnit = this.getUnitById(listUnit.unitId)
+    if (!targetUnit) return []
+
+    const availableLeaders = []
+
+    // Check each unit in the list to see if it's an eligible leader
+    this.currentList.units.forEach((candidateListUnit, candidateIndex) => {
+      // Skip the target unit itself
+      if (candidateIndex === unitIndex) return
+
+      // Skip units that are already attached to another unit
+      const isAlreadyAttached = this.currentList.units.some((u, i) =>
+        i !== unitIndex && u.attachedLeader?.unitIndex === candidateIndex
+      )
+      if (isAlreadyAttached) return
+
+      const candidateUnit = this.getUnitById(candidateListUnit.unitId)
+      if (!candidateUnit) return
+
+      // Check if this unit has a Leader ability with eligibleUnits
+      const leaderAbility = candidateUnit.abilities?.find(a => a.id === 'leader')
+      if (!leaderAbility?.eligibleUnits) return
+
+      // Check if the target unit is in the eligible units list
+      if (leaderAbility.eligibleUnits.includes(listUnit.unitId)) {
+        availableLeaders.push({
+          unitIndex: candidateIndex,
+          unitId: candidateListUnit.unitId,
+          name: candidateUnit.name,
+          enhancement: candidateListUnit.enhancement
+        })
+      }
+    })
+
+    return availableLeaders
+  },
+
   getAvailableEnhancements() {
     const detachment = this.getDetachment()
     return detachment?.enhancements || []

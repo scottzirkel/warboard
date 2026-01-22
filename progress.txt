@@ -220,3 +220,23 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [leader-003] Add getAvailableLeaders function
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `getAvailableLeaders(unitIndex)` function to return eligible unattached leaders for a unit
+- Function iterates through all units in the current list to find potential leaders
+- Filters based on the leader's `eligibleUnits` array (from leader ability data)
+- Excludes leaders that are already attached to other units (checks `attachedLeader.unitIndex`)
+- Returns array of objects with: `unitIndex`, `unitId`, `name`, `enhancement`
+- Placed function near other enhancement/helper functions for logical grouping
+
+**Files changed:**
+- `src/main.js` - Added `getAvailableLeaders(unitIndex)` function
+
+**Verification:**
+- npm run build passes
+
