@@ -441,12 +441,43 @@ Alpine.data('armyTracker', () => ({
             name: choice.name,
             optionId: option.id,
             optionType: option.type,
+            optionPattern: option.pattern || 'replacement',
             maxModels: choice.maxModels
           })
         }
       }
     }
     return choices
+  },
+
+  getLoadoutOptionsByPattern(unitId) {
+    const unit = this.getUnitById(unitId)
+    if (!unit) return { replacement: [], addition: [] }
+
+    const result = { replacement: [], addition: [] }
+
+    for (const option of unit.loadoutOptions || []) {
+      const pattern = option.pattern || 'replacement'
+      const optionWithChoices = {
+        id: option.id,
+        name: option.name,
+        type: option.type,
+        pattern: pattern,
+        choices: option.choices.filter(c => c.id !== 'none').map(c => ({
+          id: c.id,
+          name: c.name,
+          maxModels: c.maxModels,
+          default: c.default,
+          paired: c.paired
+        }))
+      }
+
+      if (optionWithChoices.choices.length > 0) {
+        result[pattern].push(optionWithChoices)
+      }
+    }
+
+    return result
   },
 
   getChoiceMaxModels(unitId, choiceId) {

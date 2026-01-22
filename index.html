@@ -253,44 +253,93 @@
 
               <!-- Weapon Loadout -->
               <template x-if="getWeaponChoices(listUnit.unitId).length > 0">
-                <div class="mt-2">
-                  <div class="text-xs text-gray-400 mb-1">Weapons:</div>
-                  <div class="space-y-1">
-                    <template x-for="choice in getWeaponChoices(listUnit.unitId)" :key="choice.id">
-                      <div class="flex items-center justify-between bg-gray-600 rounded px-2 py-1">
-                        <div class="flex items-center gap-1">
-                          <span class="text-xs" x-text="choice.name"></span>
-                          <span
-                            x-show="choice.maxModels"
-                            class="text-[10px] text-yellow-400 font-medium"
-                            :title="'Max ' + choice.maxModels + ' model(s) can take this option'"
-                            x-text="'(max ' + choice.maxModels + ')'"
-                          ></span>
-                        </div>
-                        <div class="flex items-center gap-1">
-                          <button
-                            @click="updateWeaponCount(index, choice.id, -1)"
-                            class="w-5 h-5 bg-gray-500 hover:bg-gray-400 rounded text-xs font-bold"
-                          >-</button>
-                          <input
-                            type="number"
-                            :value="listUnit.weaponCounts?.[choice.id] || 0"
-                            @change="setWeaponCount(index, choice.id, $event.target.value)"
-                            class="w-8 bg-gray-700 border border-gray-500 rounded text-center text-xs py-0.5"
-                            min="0"
-                            :max="choice.maxModels ? Math.min(choice.maxModels, listUnit.modelCount) : listUnit.modelCount"
-                          >
-                          <button
-                            @click="updateWeaponCount(index, choice.id, 1)"
-                            :disabled="choice.maxModels && (listUnit.weaponCounts?.[choice.id] || 0) >= choice.maxModels"
-                            :class="choice.maxModels && (listUnit.weaponCounts?.[choice.id] || 0) >= choice.maxModels ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-500 hover:bg-gray-400'"
-                            :title="choice.maxModels && (listUnit.weaponCounts?.[choice.id] || 0) >= choice.maxModels ? 'Maximum ' + choice.maxModels + ' model(s) can take this option' : ''"
-                            class="w-5 h-5 rounded text-xs font-bold"
-                          >+</button>
-                        </div>
+                <div class="mt-2 space-y-2">
+                  <!-- Replacement Options (mutually exclusive weapons) -->
+                  <template x-for="option in getLoadoutOptionsByPattern(listUnit.unitId).replacement" :key="option.id">
+                    <div>
+                      <div class="text-xs text-gray-400 mb-1">
+                        <span class="text-blue-400">⟲</span> Replace with:
                       </div>
-                    </template>
-                  </div>
+                      <div class="space-y-1">
+                        <template x-for="choice in option.choices" :key="choice.id">
+                          <div class="flex items-center justify-between bg-gray-600 rounded px-2 py-1">
+                            <div class="flex items-center gap-1">
+                              <span class="text-xs" x-text="choice.name"></span>
+                              <span
+                                x-show="choice.paired"
+                                class="text-[10px] text-blue-400 font-medium"
+                                title="These items are equipped together"
+                              >⬡</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                              <button
+                                @click="updateWeaponCount(index, choice.id, -1)"
+                                class="w-5 h-5 bg-gray-500 hover:bg-gray-400 rounded text-xs font-bold"
+                              >-</button>
+                              <input
+                                type="number"
+                                :value="listUnit.weaponCounts?.[choice.id] || 0"
+                                @change="setWeaponCount(index, choice.id, $event.target.value)"
+                                class="w-8 bg-gray-700 border border-gray-500 rounded text-center text-xs py-0.5"
+                                min="0"
+                                :max="listUnit.modelCount"
+                              >
+                              <button
+                                @click="updateWeaponCount(index, choice.id, 1)"
+                                class="w-5 h-5 bg-gray-500 hover:bg-gray-400 rounded text-xs font-bold"
+                              >+</button>
+                            </div>
+                          </div>
+                        </template>
+                      </div>
+                    </div>
+                  </template>
+
+                  <!-- Addition Options (optional extras) -->
+                  <template x-for="option in getLoadoutOptionsByPattern(listUnit.unitId).addition" :key="option.id">
+                    <div>
+                      <div class="text-xs text-gray-400 mb-1">
+                        <span class="text-green-400">+</span> Add:
+                      </div>
+                      <div class="space-y-1">
+                        <template x-for="choice in option.choices" :key="choice.id">
+                          <div class="flex items-center justify-between bg-gray-600 rounded px-2 py-1 border-l-2 border-green-600">
+                            <div class="flex items-center gap-1">
+                              <span class="text-xs" x-text="choice.name"></span>
+                              <span
+                                x-show="choice.maxModels"
+                                class="text-[10px] text-yellow-400 font-medium"
+                                :title="'Max ' + choice.maxModels + ' model(s) can take this option'"
+                                x-text="'(max ' + choice.maxModels + ')'"
+                              ></span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                              <button
+                                @click="updateWeaponCount(index, choice.id, -1)"
+                                class="w-5 h-5 bg-gray-500 hover:bg-gray-400 rounded text-xs font-bold"
+                              >-</button>
+                              <input
+                                type="number"
+                                :value="listUnit.weaponCounts?.[choice.id] || 0"
+                                @change="setWeaponCount(index, choice.id, $event.target.value)"
+                                class="w-8 bg-gray-700 border border-gray-500 rounded text-center text-xs py-0.5"
+                                min="0"
+                                :max="choice.maxModels ? Math.min(choice.maxModels, listUnit.modelCount) : listUnit.modelCount"
+                              >
+                              <button
+                                @click="updateWeaponCount(index, choice.id, 1)"
+                                :disabled="choice.maxModels && (listUnit.weaponCounts?.[choice.id] || 0) >= choice.maxModels"
+                                :class="choice.maxModels && (listUnit.weaponCounts?.[choice.id] || 0) >= choice.maxModels ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-500 hover:bg-gray-400'"
+                                :title="choice.maxModels && (listUnit.weaponCounts?.[choice.id] || 0) >= choice.maxModels ? 'Maximum ' + choice.maxModels + ' model(s) can take this option' : ''"
+                                class="w-5 h-5 rounded text-xs font-bold"
+                              >+</button>
+                            </div>
+                          </div>
+                        </template>
+                      </div>
+                    </div>
+                  </template>
+
                   <!-- Validation -->
                   <template x-if="getWeaponCountError(listUnit)">
                     <div class="text-xs text-red-400 mt-1" x-text="getWeaponCountError(listUnit)"></div>

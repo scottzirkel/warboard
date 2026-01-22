@@ -406,3 +406,29 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [patterns-004] Update UI labels to indicate pattern type
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `getLoadoutOptionsByPattern(unitId)` helper function that groups loadout options by their pattern type
+- Returns object with `replacement` and `addition` arrays, each containing full option details
+- Updated Build Mode weapon loadout UI to show pattern-specific sections:
+  - Replacement options: Blue "⟲ Replace with:" label, standard appearance
+  - Addition options: Green "+ Add:" label, green left border to distinguish visually
+- Replacement options show paired indicator (⬡) for choices that equip multiple items together
+- Addition options continue to show maxModels limits as before
+- Updated `getWeaponChoices()` to include `optionPattern` field for consistency
+
+**Files changed:**
+- `src/main.js` - Added `getLoadoutOptionsByPattern(unitId)` helper function
+- `src/main.js` - Updated `getWeaponChoices()` to include `optionPattern` field
+- `index.html` - Restructured weapon loadout UI into two sections:
+  - Replacement options section with blue icon and "Replace with:" label
+  - Addition options section with green icon, "Add:" label, and green border styling
+
+**Verification:**
+- npm run build passes
+
