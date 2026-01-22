@@ -69,3 +69,25 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [limits-002] Add validation logic for maxModels in weapon count updates
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `getChoiceMaxModels(unitId, choiceId)` helper function to retrieve the maxModels limit for a choice
+- Updated `updateWeaponCount()` to enforce maxModels constraint when incrementing
+- Updated `setWeaponCount()` to enforce maxModels constraint when setting value directly
+- The constraint uses the minimum of maxModels and modelCount as the upper limit
+- Updated `getWeaponChoices()` to include maxModels in returned choice objects for UI use
+
+**Files changed:**
+- `src/main.js` - Added getChoiceMaxModels helper function
+- `src/main.js` - Updated updateWeaponCount to enforce maxModels limit
+- `src/main.js` - Updated setWeaponCount to enforce maxModels limit
+- `src/main.js` - Added maxModels to getWeaponChoices return data
+
+**Verification:**
+- npm run build passes
+
