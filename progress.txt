@@ -1095,3 +1095,33 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [tyranids-014] Add additional Tyranid units for variety
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added 5 new Tyranid units to reach 12 total units in tyranids.json
+- Selected units to provide gameplay variety across different battlefield roles:
+  - Gargoyles: Fast flying infantry (M12, Deep Strike, Winged Swarm ability for post-shoot movement)
+  - Lictor: Elite infiltrator assassin (Infiltrators, Lone Operative, Stealth, Fights First)
+  - Zoanthropes: Synapse psyker artillery with 4+ invuln and two Warp Blast firing modes
+  - Tyrant Guard: Monster bodyguards for Hive Tyrant (T8, 3+ save, Guardian Organism ability)
+  - Neurogaunts: Cheap synapse-extending troops via Neurocytes ability
+- All unit data sourced from Wahapedia 10th edition datasheets
+- Points costs verified against current Munitorum Field Manual values
+- Tyrant Guard added to enable the Hive Tyrant's Leader ability (eligibleUnits already includes tyrant-guard)
+
+**Files changed:**
+- `data/tyranids.json` - Added 5 new units to the units array:
+  - Gargoyles: 85/170 pts (10/20 models), Fleshborer ranged + Blinding Venom melee, FLY keyword
+  - Lictor: 60 pts (1 model), Lictor Claws with Precision, multiple defensive abilities
+  - Zoanthropes: 100/200 pts (3/6 models), 4+ invuln, Warp Blast with two firing modes, Synapse
+  - Tyrant Guard: 80/160 pts (3/6 models), T8 3+ save, 3 melee weapon loadout options
+  - Neurogaunts: 45/90 pts (11/22 models), Neurocytes ability grants conditional Synapse
+
+**Verification:**
+- npm run build passes
+- Total units in tyranids.json: 12
+
