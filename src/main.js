@@ -35,7 +35,8 @@ Alpine.data('armyTracker', () => ({
     battleRound: 1,
     commandPoints: 0,
     activeStratagems: [],
-    collapsedLoadoutGroups: {}  // { unitIndex: { groupId: true } }
+    collapsedLoadoutGroups: {},  // { unitIndex: { groupId: true } }
+    activatedLoadoutGroups: {}   // { unitIndex: { groupId: true } } - tracks which groups have activated this round
   },
   selectedUnit: null,
   selectedPlayUnitIndex: null,
@@ -62,6 +63,11 @@ Alpine.data('armyTracker', () => ({
   async init() {
     await this.loadData()
     await this.fetchSavedLists()
+
+    // Watch for battle round changes to reset activation state
+    this.$watch('gameState.battleRound', () => {
+      this.resetActivationState()
+    })
   },
 
   async loadData() {
@@ -765,6 +771,30 @@ Alpine.data('armyTracker', () => ({
     }
     this.gameState.collapsedLoadoutGroups[unitIndex][groupId] =
       !this.gameState.collapsedLoadoutGroups[unitIndex][groupId]
+  },
+
+  isLoadoutGroupActivated(unitIndex, groupId) {
+    return this.gameState.activatedLoadoutGroups[unitIndex]?.[groupId] === true
+  },
+
+  toggleLoadoutGroupActivated(unitIndex, groupId) {
+    if (!this.gameState.activatedLoadoutGroups[unitIndex]) {
+      this.gameState.activatedLoadoutGroups[unitIndex] = {}
+    }
+    this.gameState.activatedLoadoutGroups[unitIndex][groupId] =
+      !this.gameState.activatedLoadoutGroups[unitIndex][groupId]
+
+    // When activating, also collapse the group to indicate those models are done
+    if (this.gameState.activatedLoadoutGroups[unitIndex][groupId]) {
+      if (!this.gameState.collapsedLoadoutGroups[unitIndex]) {
+        this.gameState.collapsedLoadoutGroups[unitIndex] = {}
+      }
+      this.gameState.collapsedLoadoutGroups[unitIndex][groupId] = true
+    }
+  },
+
+  resetActivationState() {
+    this.gameState.activatedLoadoutGroups = {}
   },
 
   getWeaponsByLoadoutGroup(listUnit) {

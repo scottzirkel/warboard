@@ -638,3 +638,37 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [mixed-004] Track activation state per loadout group
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `activatedLoadoutGroups` object to `gameState` to track which loadout groups have activated this round
+- State structure is `{ unitIndex: { groupId: true } }` where true means activated
+- Added `isLoadoutGroupActivated(unitIndex, groupId)` helper function to check activation state
+- Added `toggleLoadoutGroupActivated(unitIndex, groupId)` helper function to toggle activation
+- When a group is marked as activated, it automatically collapses to indicate those models are done
+- Added `resetActivationState()` helper function to clear all activation states
+- Added `$watch` on `gameState.battleRound` in `init()` to automatically reset activation state when battle round changes
+- Visual distinction between collapsed-by-user and collapsed-as-activated:
+  - Activated groups have green background (bg-green-900/40) with green ring outline
+  - Activated groups show green text colors for model count and loadout name
+  - Non-activated groups retain original gray styling
+- Added "Act" button on each loadout group header to toggle activation state
+- Button shows checkmark (✓) when activated, "Act" when not activated
+- Clicking the activate button uses @click.stop to prevent triggering collapse toggle
+
+**Files changed:**
+- `src/main.js` - Added `activatedLoadoutGroups` to gameState
+- `src/main.js` - Added `isLoadoutGroupActivated(unitIndex, groupId)` helper function
+- `src/main.js` - Added `toggleLoadoutGroupActivated(unitIndex, groupId)` helper function
+- `src/main.js` - Added `resetActivationState()` helper function
+- `src/main.js` - Added `$watch` in init() to reset activation on battle round change
+- `index.html` - Updated loadout group styling with conditional classes for activated state
+- `index.html` - Added activation toggle button to loadout group headers
+
+**Verification:**
+- npm run build passes
+

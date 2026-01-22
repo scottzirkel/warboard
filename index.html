@@ -844,29 +844,55 @@
               <h3 class="text-sm text-gray-400 mb-2">Weapons</h3>
               <div class="space-y-3">
                 <template x-for="group in getWeaponsByLoadoutGroup(currentList.units[selectedPlayUnitIndex])" :key="group.id">
-                  <div class="bg-gray-600/50 rounded overflow-hidden">
+                  <div
+                    class="rounded overflow-hidden transition-colors"
+                    :class="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id) ? 'bg-green-900/40 ring-1 ring-green-600/50' : 'bg-gray-600/50'"
+                  >
                     <!-- Group Header (Clickable) -->
                     <div
-                      class="flex items-center gap-2 px-2 py-1.5 cursor-pointer hover:bg-gray-500/50 transition-colors"
+                      class="flex items-center gap-2 px-2 py-1.5 cursor-pointer transition-colors"
+                      :class="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id) ? 'hover:bg-green-800/40' : 'hover:bg-gray-500/50'"
                       @click="toggleLoadoutGroupCollapsed(selectedPlayUnitIndex, group.id)"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-3 w-3 text-gray-400 transition-transform"
-                        :class="{ '-rotate-90': isLoadoutGroupCollapsed(selectedPlayUnitIndex, group.id) }"
+                        class="h-3 w-3 transition-transform"
+                        :class="{
+                          '-rotate-90': isLoadoutGroupCollapsed(selectedPlayUnitIndex, group.id),
+                          'text-green-400': isLoadoutGroupActivated(selectedPlayUnitIndex, group.id),
+                          'text-gray-400': !isLoadoutGroupActivated(selectedPlayUnitIndex, group.id)
+                        }"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                       >
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                       </svg>
-                      <span class="text-xs font-bold text-gold-400" x-text="group.modelCount + '×'"></span>
-                      <span class="text-sm font-medium text-gray-200" x-text="group.name"></span>
+                      <span
+                        class="text-xs font-bold"
+                        :class="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id) ? 'text-green-400' : 'text-gold-400'"
+                        x-text="group.modelCount + '×'"
+                      ></span>
+                      <span
+                        class="text-sm font-medium"
+                        :class="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id) ? 'text-green-300' : 'text-gray-200'"
+                        x-text="group.name"
+                      ></span>
                       <span
                         x-show="group.isPaired"
                         class="text-[10px] text-blue-400 font-medium"
                         title="Paired loadout (equipped together)"
                       >⬡</span>
+                      <!-- Activation Toggle Button -->
+                      <button
+                        @click.stop="toggleLoadoutGroupActivated(selectedPlayUnitIndex, group.id)"
+                        class="ml-auto px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors"
+                        :class="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id) ? 'bg-green-600 text-white' : 'bg-gray-500 hover:bg-gray-400 text-gray-200'"
+                        :title="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id) ? 'Mark as not activated' : 'Mark as activated'"
+                      >
+                        <span x-show="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id)">✓</span>
+                        <span x-show="!isLoadoutGroupActivated(selectedPlayUnitIndex, group.id)">Act</span>
+                      </button>
                     </div>
 
                     <!-- Collapsible Content -->
