@@ -792,12 +792,27 @@ Alpine.data('armyTracker', () => ({
     const listUnit = this.currentList.units[unitIndex]
     if (!listUnit) return modifiers
 
+    // Collect enhancement modifiers
     if (listUnit.enhancement) {
       const enhancement = this.getEnhancementById(listUnit.enhancement)
       if (enhancement?.modifiers) {
         for (const mod of enhancement.modifiers) {
           if (mod.stat === stat && (mod.scope === 'model' || mod.scope === 'unit')) {
             modifiers.push(mod)
+          }
+        }
+      }
+    }
+
+    // Collect weapon modifiers from equipped weapons
+    const unit = this.getUnitById(listUnit.unitId)
+    if (unit?.weapons) {
+      for (const weapon of unit.weapons) {
+        if (weapon.modifiers && this.isWeaponEquipped(listUnit, weapon)) {
+          for (const mod of weapon.modifiers) {
+            if (mod.stat === stat && (mod.scope === 'model' || mod.scope === 'unit')) {
+              modifiers.push(mod)
+            }
           }
         }
       }

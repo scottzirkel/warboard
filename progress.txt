@@ -201,3 +201,22 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [abilities-003] Update collectModifiers to include weapon modifiers
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Updated `collectModifiers(unitIndex, stat)` to also check equipped weapons for modifiers
+- Uses `isWeaponEquipped(listUnit, weapon)` helper to determine if a weapon's modifiers should apply
+- Only collects modifiers where `scope` is `model` or `unit` (consistent with enhancement modifier handling)
+- Weapon modifiers are checked after enhancement modifiers
+- This enables the Praesidium Shield +1W modifier to apply when Sentinel Blades are equipped
+
+**Files changed:**
+- `src/main.js` - Updated `collectModifiers` function to iterate through unit weapons and collect their modifiers
+
+**Verification:**
+- npm run build passes
+
