@@ -792,3 +792,36 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [tyranids-005] Add Broodlord character to tyranids.json
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Broodlord as the first Tyranid character unit
+- Points cost: 80 points for 1 model (per Wahapedia)
+- Stats match 10th edition datasheet: M8 T5 SV4+ W6 LD7+ OC1
+- Invulnerable save: 4+
+- Single weapon: Broodlord Claws and Talons (A5 WS2+ S6 AP-2 D2) with Twin-linked and Devastating Wounds abilities
+- No loadout options needed (single weapon profile)
+- Added Leader ability with eligibleUnits: ["genestealers"] for leader attachment system
+- Added Scouts 8" ability (same as Genestealers)
+- Added Hypnotic Gaze (Psychic) ability: -1 to hit for enemy unit in Engagement Range
+- Added Vicious Insight ability: grants Devastating Wounds to led unit's weapons
+- Keywords: Infantry, Character, Psyker, Great Devourer, Synapse, Vanguard Invader, Broodlord
+- Data sourced from Wahapedia: https://wahapedia.ru/wh40k10ed/factions/tyranids/Broodlord
+
+**Files changed:**
+- `data/tyranids.json` - Added Broodlord unit to the units array with:
+  - Full unit stats and points (1 model option)
+  - 4+ invulnerable save
+  - Broodlord Claws and Talons melee weapon profile with Twin-linked and Devastating Wounds
+  - Leader ability with eligibleUnits for Genestealers
+  - Scouts 8", Hypnotic Gaze, and Vicious Insight abilities
+  - Empty loadoutOptions array (no weapon choices)
+  - Appropriate keywords including Character, Psyker, and Synapse
+
+**Verification:**
+- npm run build passes
+
