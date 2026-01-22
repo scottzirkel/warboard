@@ -158,6 +158,99 @@
         }
       ],
       "keywords": ["Infantry", "Character", "Psyker", "Great Devourer", "Synapse", "Vanguard Invader", "Broodlord"]
+    },
+    {
+      "id": "tyranid-warriors",
+      "name": "Tyranid Warriors",
+      "points": { "3": 65, "6": 130 },
+      "stats": { "m": 6, "t": 5, "sv": "4+", "w": 3, "ld": "7+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "devourer",
+          "name": "Devourer",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 5, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "devourer"
+        },
+        {
+          "id": "deathspitter",
+          "name": "Deathspitter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 3, "bs": "4+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "deathspitter"
+        },
+        {
+          "id": "spinefists",
+          "name": "Spinefists",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 2, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Assault", "Pistol", "Twin-linked"],
+          "loadoutGroup": "spinefists"
+        },
+        {
+          "id": "barbed-strangler",
+          "name": "Barbed Strangler",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D6+1", "bs": "4+", "s": 6, "ap": -1, "d": 1 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "barbed-strangler"
+        },
+        {
+          "id": "venom-cannon",
+          "name": "Venom Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D3", "bs": "4+", "s": 9, "ap": -2, "d": 2 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "venom-cannon"
+        },
+        {
+          "id": "scything-talons",
+          "name": "Scything Talons",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "devourer", "name": "Devourer", "default": true },
+            { "id": "deathspitter", "name": "Deathspitter" },
+            { "id": "spinefists", "name": "Spinefists" }
+          ]
+        },
+        {
+          "id": "heavy-weapon",
+          "name": "Heavy Weapon",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "barbed-strangler", "name": "Barbed Strangler", "maxModels": 2 },
+            { "id": "venom-cannon", "name": "Venom Cannon", "maxModels": 2 }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "adaptable-predators",
+          "name": "Adaptable Predators",
+          "description": "This unit is eligible to shoot and declare a charge in a turn in which it Fell Back."
+        },
+        {
+          "id": "shadow-in-the-warp-synapse",
+          "name": "Shadow in the Warp, Synapse",
+          "description": "While a friendly Tyranids unit is within 6\" of one or more units with this ability, models in that unit have the Synapse keyword."
+        }
+      ],
+      "keywords": ["Infantry", "Great Devourer", "Synapse", "Tyranid Warriors"]
     }
   ],
   "detachments": {},

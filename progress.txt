@@ -825,3 +825,39 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [tyranids-006] Add Tyranid Warriors unit to tyranids.json
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Tyranid Warriors as the first Synapse infantry unit (non-character)
+- Points costs: 65 points for 3 models, 130 points for 6 models (per Wahapedia - Ranged Bio-weapons variant)
+- Stats match 10th edition datasheet: M6 T5 SV4+ W3 LD7+ OC2
+- No invulnerable save
+- Multiple ranged weapon options via loadoutOptions:
+  - Devourer (default): 18" A5 BS4+ S4 AP0 D1
+  - Deathspitter: 24" A3 BS4+ S5 AP-1 D1
+  - Spinefists: 12" A2 BS4+ S4 AP0 D1 (Assault, Pistol, Twin-linked)
+- Heavy weapon options as "addition" pattern (max 2 per unit - "for every 3 models"):
+  - Barbed Strangler: 36" D6+1 BS4+ S6 AP-1 D1 (Blast)
+  - Venom Cannon: 36" D3 BS4+ S9 AP-2 D2 (Blast)
+- Scything Talons melee weapon: A5 WS3+ S5 AP-1 D1
+- Added Adaptable Predators ability: eligible to shoot and charge after Falling Back
+- Added Shadow in the Warp/Synapse ability reference
+- Keywords: Infantry, Great Devourer, Synapse, Tyranid Warriors
+- Data sourced from Wahapedia: https://wahapedia.ru/wh40k10ed/factions/tyranids/Tyranid-Warriors-With-Ranged-Bio-weapons
+
+**Files changed:**
+- `data/tyranids.json` - Added Tyranid Warriors unit to the units array with:
+  - Full unit stats and points (3 and 6 model options)
+  - 6 weapon profiles (5 ranged options in loadoutOptions, 1 melee)
+  - loadoutOptions for ranged weapon replacement and heavy weapon addition choices
+  - Adaptable Predators and Synapse abilities
+  - Appropriate keywords including Synapse
+
+**Verification:**
+- npm run build passes
+- JSON validates successfully
+
