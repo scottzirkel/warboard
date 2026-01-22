@@ -672,3 +672,35 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [tyranids-001] Create tyranids.json with faction metadata and army rules
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created new `data/tyranids.json` file with the same structure as `custodes.json`
+- Added faction name "Tyranids" and lastUpdated "2026-01"
+- Army rules include Synapse with 6" range that gives 3D6 Battle-shock tests
+- Army rules include Shadow in the Warp as once-per-battle ability forcing enemy Battle-shock tests
+- Both abilities reference SYNAPSE keyword in their rules
+- Added `range: 6` to Synapse for potential programmatic use
+- Added `oncePerBattle: true` to Shadow in the Warp for tracking
+- Added standard weapon keywords section for reference
+- Units array starts empty (will be populated by subsequent tasks)
+- Detachments object starts empty (will be populated by subsequent tasks)
+
+**Files changed:**
+- `data/tyranids.json` - Created new faction data file with:
+  - Faction metadata (faction, lastUpdated)
+  - armyRules.synapse with name, description, range, keywords
+  - armyRules.shadow_in_the_warp with name, description, oncePerBattle, keywords
+  - Empty units array placeholder
+  - Empty detachments object placeholder
+  - weaponKeywords for common abilities
+  - Empty allies and glossary placeholders
+
+**Verification:**
+- npm run build passes
+- JSON validates successfully
+

@@ -1,0 +1,36 @@
+{
+  "faction": "Tyranids",
+  "lastUpdated": "2026-01",
+  "units": [],
+  "detachments": {},
+  "armyRules": {
+    "synapse": {
+      "name": "Synapse",
+      "description": "A Tyranids unit is within Synapse Range when it is within 6\" of one or more friendly SYNAPSE models. While within Synapse Range, each time that unit takes a Battle-shock test, take that test on 3D6 instead of 2D6.",
+      "range": 6,
+      "keywords": ["SYNAPSE"]
+    },
+    "shadow_in_the_warp": {
+      "name": "Shadow in the Warp",
+      "description": "Once per battle, in either player's Command phase, if one or more units with this ability are on the battlefield, every enemy unit on the battlefield must take a Battle-shock test. If an enemy unit is within 6\" of one or more SYNAPSE units from your army, subtract 1 from that Battle-shock test.",
+      "oncePerBattle": true,
+      "keywords": ["SYNAPSE"]
+    }
+  },
+  "weaponKeywords": {
+    "Devastating Wounds": "Critical wounds (unmodified wound roll of 6) inflict mortal wounds equal to the Damage characteristic, and the attack sequence ends.",
+    "Lethal Hits": "Critical hits (unmodified hit roll of 6) automatically wound the target.",
+    "Sustained Hits": "Critical hits generate additional hits (number specified after the ability name).",
+    "Twin-linked": "Re-roll wound rolls.",
+    "Assault": "Can shoot after Advancing (at -1 to hit).",
+    "Pistol": "Can shoot in Engagement Range, but only at units within Engagement Range.",
+    "Blast": "+1 attack per 5 models in target unit (minimum 3 attacks vs 6+ models).",
+    "Rapid Fire": "Double the Attacks characteristic when targeting within half range.",
+    "Heavy": "+1 to hit if the bearer's unit Remained Stationary this turn.",
+    "Torrent": "Automatically hits the target.",
+    "Anti-": "Improves wound roll against targets with the specified keyword.",
+    "Hazardous": "After resolving attacks, roll one D6. On a 1, bearer suffers 3 mortal wounds."
+  },
+  "allies": [],
+  "glossary": {}
+}
