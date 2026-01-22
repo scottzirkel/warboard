@@ -668,6 +668,40 @@ Alpine.data('armyTracker', () => ({
     return availableLeaders
   },
 
+  attachLeader(unitIndex, leaderIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit) return
+
+    const leaderListUnit = this.currentList.units[leaderIndex]
+    if (!leaderListUnit) return
+
+    // First, detach the leader from any unit it's currently attached to
+    this.currentList.units.forEach((u, i) => {
+      if (u.attachedLeader?.unitIndex === leaderIndex) {
+        u.attachedLeader = null
+      }
+    })
+
+    // Attach the leader to the target unit
+    listUnit.attachedLeader = { unitIndex: leaderIndex }
+
+    const leaderUnit = this.getUnitById(leaderListUnit.unitId)
+    const targetUnit = this.getUnitById(listUnit.unitId)
+    this.showToast(`${leaderUnit?.name || 'Leader'} attached to ${targetUnit?.name || 'unit'}`, 'success')
+  },
+
+  detachLeader(unitIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit || !listUnit.attachedLeader) return
+
+    const leaderListUnit = this.currentList.units[listUnit.attachedLeader.unitIndex]
+    const leaderUnit = leaderListUnit ? this.getUnitById(leaderListUnit.unitId) : null
+
+    listUnit.attachedLeader = null
+
+    this.showToast(`${leaderUnit?.name || 'Leader'} detached`, 'success')
+  },
+
   getAvailableEnhancements() {
     const detachment = this.getDetachment()
     return detachment?.enhancements || []

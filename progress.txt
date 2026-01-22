@@ -240,3 +240,25 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [leader-004] Add attachLeader and detachLeader functions
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `attachLeader(unitIndex, leaderIndex)` function to attach a leader to a bodyguard unit
+- Added `detachLeader(unitIndex)` function to remove the attached leader from a unit
+- `attachLeader` first detaches the leader from any unit it's currently attached to (iterates all units)
+- `attachLeader` then sets `attachedLeader: { unitIndex: leaderIndex }` on the target unit
+- `detachLeader` sets `attachedLeader` to `null`
+- Both functions show toast notifications for user feedback
+- Functions placed next to `getAvailableLeaders` for logical grouping
+
+**Files changed:**
+- `src/main.js` - Added `attachLeader(unitIndex, leaderIndex)` function
+- `src/main.js` - Added `detachLeader(unitIndex)` function
+
+**Verification:**
+- npm run build passes
+
