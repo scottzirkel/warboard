@@ -362,6 +362,20 @@ Alpine.data('armyTracker', () => ({
     return null
   },
 
+  getLoadoutOptionForChoice(unitId, choiceId) {
+    const unit = this.getUnitById(unitId)
+    if (!unit) return null
+
+    for (const option of unit.loadoutOptions || []) {
+      for (const choice of option.choices) {
+        if (choice.id === choiceId) {
+          return option
+        }
+      }
+    }
+    return null
+  },
+
   getWeaponCountTotal(listUnit) {
     if (!listUnit.weaponCounts) return 0
     return Object.values(listUnit.weaponCounts).reduce((sum, count) => sum + count, 0)
@@ -465,22 +479,35 @@ Alpine.data('armyTracker', () => ({
     if (!unit) return []
 
     const weaponCounts = listUnit.weaponCounts || {}
-    const equippedGroups = new Set(
-      Object.entries(weaponCounts)
-        .filter(([_, count]) => count > 0)
-        .map(([id]) => id)
-    )
+    const equippedChoices = Object.entries(weaponCounts)
+      .filter(([_, count]) => count > 0)
+      .map(([id]) => id)
+
+    // Build sets of equipped groups by pattern type
+    const replacementGroups = new Set()
+    const additionGroups = new Set()
+
+    for (const choiceId of equippedChoices) {
+      const option = this.getLoadoutOptionForChoice(listUnit.unitId, choiceId)
+      if (option?.pattern === 'addition') {
+        additionGroups.add(choiceId)
+      } else {
+        replacementGroups.add(choiceId)
+      }
+    }
 
     // Also support legacy loadout format
     if (Object.keys(weaponCounts).length === 0 && listUnit.loadout) {
       const loadout = listUnit.loadout
-      Object.values(loadout).filter(v => v && v !== 'none').forEach(v => equippedGroups.add(v))
+      Object.values(loadout).filter(v => v && v !== 'none').forEach(v => replacementGroups.add(v))
     }
+
+    const allEquippedGroups = new Set([...replacementGroups, ...additionGroups])
 
     return this.sortedWeapons(unit.weapons).filter(w => {
       if (w.type === 'equipment') return false
       if (!w.loadoutGroup) return true
-      return equippedGroups.has(w.loadoutGroup)
+      return allEquippedGroups.has(w.loadoutGroup)
     })
   },
 
@@ -491,7 +518,17 @@ Alpine.data('armyTracker', () => ({
     const weaponCounts = listUnit.weaponCounts || {}
     const results = []
 
-    // Group weapons by loadoutGroup and get count
+    // Build map of loadoutGroup to pattern type
+    const groupPatterns = {}
+    for (const option of unit.loadoutOptions || []) {
+      for (const choice of option.choices) {
+        if (choice.id !== 'none') {
+          groupPatterns[choice.id] = option.pattern || 'replacement'
+        }
+      }
+    }
+
+    // Group weapons by loadoutGroup
     const groupedWeapons = {}
     for (const weapon of unit.weapons) {
       if (weapon.type === 'equipment') continue
@@ -502,12 +539,26 @@ Alpine.data('armyTracker', () => ({
       groupedWeapons[group].push(weapon)
     }
 
-    // Add weapons with their counts
+    // Add weapons with their counts based on pattern
     for (const [group, weapons] of Object.entries(groupedWeapons)) {
-      let count = listUnit.modelCount // Default weapons used by all models
-      if (group !== '_default') {
-        count = weaponCounts[group] || 0
+      let count = 0
+
+      if (group === '_default') {
+        // Default weapons (no loadoutGroup) are used by all models
+        count = listUnit.modelCount
+      } else {
+        const pattern = groupPatterns[group] || 'replacement'
+        const equippedCount = weaponCounts[group] || 0
+
+        if (pattern === 'addition') {
+          // Addition pattern: weapon is used by the models that have it equipped
+          count = equippedCount
+        } else {
+          // Replacement pattern: weapon is used by models with this choice selected
+          count = equippedCount
+        }
       }
+
       if (count > 0) {
         for (const weapon of weapons) {
           results.push({ ...weapon, modelCount: count })
@@ -523,11 +574,15 @@ Alpine.data('armyTracker', () => ({
     if (!unit) return unit?.abilities || []
 
     const weaponCounts = listUnit.weaponCounts || {}
-    const equippedGroups = new Set(
-      Object.entries(weaponCounts)
-        .filter(([_, count]) => count > 0)
-        .map(([id]) => id)
-    )
+    const equippedChoices = Object.entries(weaponCounts)
+      .filter(([_, count]) => count > 0)
+      .map(([id]) => id)
+
+    // Build set of all equipped groups (both replacement and addition patterns)
+    const equippedGroups = new Set()
+    for (const choiceId of equippedChoices) {
+      equippedGroups.add(choiceId)
+    }
 
     // Also support legacy loadout format
     if (Object.keys(weaponCounts).length === 0 && listUnit.loadout) {

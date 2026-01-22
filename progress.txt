@@ -115,3 +115,25 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [patterns-003] Update weapon display logic for replacement vs addition patterns
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `getLoadoutOptionForChoice(unitId, choiceId)` helper function to retrieve the loadout option for a choice
+- Updated `getEquippedWeapons()` to categorize equipped choices by pattern type (replacement vs addition)
+- Updated `getEquippedWeaponsWithCounts()` to use pattern-aware logic when calculating weapon counts
+- Updated `getEquippedAbilities()` for consistency with the new pattern-aware approach
+- Both patterns ultimately filter weapons the same way (by loadoutGroup), but the code now explicitly references the pattern field for clarity and future extensibility
+
+**Files changed:**
+- `src/main.js` - Added getLoadoutOptionForChoice helper function
+- `src/main.js` - Updated getEquippedWeapons to use pattern-aware grouping
+- `src/main.js` - Updated getEquippedWeaponsWithCounts to use pattern map
+- `src/main.js` - Updated getEquippedAbilities for consistency
+
+**Verification:**
+- npm run build passes
+
