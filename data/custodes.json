@@ -76,7 +76,7 @@
           "pattern": "addition",
           "choices": [
             { "id": "none", "name": "None", "default": true },
-            { "id": "vexilla", "name": "Vexilla Magnifica" }
+            { "id": "vexilla", "name": "Vexilla Magnifica", "maxModels": 1 }
           ]
         }
       ],
@@ -166,7 +166,7 @@
           "pattern": "addition",
           "choices": [
             { "id": "none", "name": "None", "default": true },
-            { "id": "vexilla", "name": "Vexilla Magnifica" }
+            { "id": "vexilla", "name": "Vexilla Magnifica", "maxModels": 1 }
           ]
         }
       ],
@@ -271,7 +271,7 @@
           "pattern": "addition",
           "choices": [
             { "id": "none", "name": "None", "default": true },
-            { "id": "vexilla", "name": "Vexilla Magnifica" }
+            { "id": "vexilla", "name": "Vexilla Magnifica", "maxModels": 1 }
           ]
         }
       ],

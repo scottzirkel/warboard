@@ -198,7 +198,7 @@ Choose a stance each round that grants army-wide bonuses:
   pattern: "replacement",   // "replacement" or "addition"
   choices: [
     { id: "spears", name: "Guardian Spears", default: true },
-    { id: "blades", name: "Sentinel Blades + Shield" }
+    { id: "blades", name: "Sentinel Blades + Shield", maxModels: 1 }
   ]
 }
 ```
@@ -206,6 +206,12 @@ Choose a stance each round that grants army-wide bonuses:
 ### Loadout Pattern Values
 - `replacement`: Selecting a choice replaces the default weapon (e.g., swapping Guardian Spear for Castellan Axe)
 - `addition`: Selecting a choice adds equipment while keeping the base weapon (e.g., adding Vexilla to a model)
+
+### Loadout Choice Fields
+- `id`: Unique identifier for the choice
+- `name`: Display name
+- `default`: (optional) If true, this is the pre-selected option
+- `maxModels`: (optional) Maximum number of models that can take this option (e.g., "1 model can be equipped with a vexilla" → `maxModels: 1`)
 
 ### Modifier Operations
 - `add`: Add value to stat

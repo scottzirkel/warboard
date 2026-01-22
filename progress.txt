@@ -28,3 +28,22 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [limits-001] Add maxModels field to loadout choice data structure
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `maxModels` field to loadout choices to limit how many models can take a specific option
+- Field is optional - omit for choices available to all models in the unit
+- Used for rules like "1 model can be equipped with a vexilla" → `maxModels: 1`
+- Applied to all three vexilla choices across Custodian Guard, Custodian Wardens, and Allarus Custodians
+
+**Files changed:**
+- `data/custodes.json` - Added `maxModels: 1` to vexilla choices (3 occurrences)
+- `CLAUDE.md` - Added "Loadout Choice Fields" documentation section explaining `id`, `name`, `default`, and `maxModels` fields
+
+**Verification:**
+- npm run build passes
+
