@@ -1,0 +1,30 @@
+# Army Tracker - Implementation Progress
+
+This file tracks completed features, decisions made, and files changed.
+Format follows the Ralph technique.
+
+---
+
+## [patterns-001] Add pattern field to loadout options data structure
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `pattern` field to loadout options with two values: "replacement" and "addition"
+- "replacement" indicates the choice swaps out the default weapon (mutually exclusive options)
+- "addition" indicates the choice adds equipment while keeping base weapon (non-exclusive options)
+- All main-weapon type loadouts are "replacement" pattern
+- All vexilla type loadouts are "addition" pattern
+
+**Files changed:**
+- `data/custodes.json` - Added pattern field to all 8 loadout options across 5 units
+  - Custodian Guard: main-weapon (replacement), vexilla (addition)
+  - Custodian Wardens: main-weapon (replacement), vexilla (addition)
+  - Allarus Custodians: main-weapon (replacement), vexilla (addition)
+  - Shield-Captain: main-weapon (replacement)
+  - Knight-Centura: loadout (replacement)
+- `CLAUDE.md` - Added documentation for Loadout Option data structure and pattern values
+
+**Verification:**
+- npm run build passes
+
