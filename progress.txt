@@ -160,3 +160,25 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [leader-002] Add attachedLeader field to list unit structure
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `attachedLeader` field to the list unit data structure
+- Field is initialized to `null` when adding new units via `addUnitToList()`
+- Field structure is `{ unitIndex: number }` when a leader is attached, or `null` when no leader
+- Updated `loadList()` to handle missing `attachedLeader` field on legacy saved lists (sets to `null`)
+- This is a data structure change that prepares for leader attachment functionality
+
+**Files changed:**
+- `src/main.js` - Added `attachedLeader: null` to unit object in `addUnitToList()`
+- `src/main.js` - Added migration logic in `loadList()` for `attachedLeader` field
+- `CLAUDE.md` - Updated "List Unit" example with `attachedLeader` field
+- `CLAUDE.md` - Added "List Unit Fields" documentation section
+
+**Verification:**
+- npm run build passes
+

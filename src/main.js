@@ -296,7 +296,8 @@ Alpine.data('armyTracker', () => ({
       modelCount: initialModelCount,
       enhancement: '',
       weaponCounts: this.getDefaultWeaponCounts(unit, initialModelCount),
-      currentWounds: null
+      currentWounds: null,
+      attachedLeader: null
     })
     this.showToast(`${unit.name} added to list`, 'success')
   },
@@ -883,6 +884,9 @@ Alpine.data('armyTracker', () => ({
         this.currentList.units.forEach(unit => {
           if (unit.currentWounds === undefined) {
             unit.currentWounds = null
+          }
+          if (unit.attachedLeader === undefined) {
+            unit.attachedLeader = null
           }
         })
         this.showLoadModal = false
