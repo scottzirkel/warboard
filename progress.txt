@@ -332,3 +332,30 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [limits-003] Update UI to show maxModels limits and disable controls
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added max limit indicator next to weapon choices that have a `maxModels` constraint
+- The indicator shows "(max N)" in yellow text next to the choice name
+- Added tooltip on the indicator explaining the restriction ("Max N model(s) can take this option")
+- Disabled the increment (+) button when the count reaches the maxModels limit
+- Button changes appearance (grayed out with cursor-not-allowed) when disabled
+- Added tooltip on the disabled button explaining why it's disabled
+- Updated the input's max attribute to respect maxModels constraint
+
+**Files changed:**
+- `index.html` - Updated weapon loadout UI in Build Mode:
+  - Wrapped choice name in a flex container to add limit indicator
+  - Added conditional "(max N)" span with yellow text for constrained options
+  - Added :disabled binding to + button based on maxModels limit
+  - Added :class binding to change button appearance when disabled
+  - Added :title binding for tooltip on disabled button
+  - Updated input :max to use Math.min(maxModels, modelCount) when constrained
+
+**Verification:**
+- npm run build passes
+

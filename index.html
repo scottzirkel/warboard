@@ -258,7 +258,15 @@
                   <div class="space-y-1">
                     <template x-for="choice in getWeaponChoices(listUnit.unitId)" :key="choice.id">
                       <div class="flex items-center justify-between bg-gray-600 rounded px-2 py-1">
-                        <span class="text-xs" x-text="choice.name"></span>
+                        <div class="flex items-center gap-1">
+                          <span class="text-xs" x-text="choice.name"></span>
+                          <span
+                            x-show="choice.maxModels"
+                            class="text-[10px] text-yellow-400 font-medium"
+                            :title="'Max ' + choice.maxModels + ' model(s) can take this option'"
+                            x-text="'(max ' + choice.maxModels + ')'"
+                          ></span>
+                        </div>
                         <div class="flex items-center gap-1">
                           <button
                             @click="updateWeaponCount(index, choice.id, -1)"
@@ -270,11 +278,14 @@
                             @change="setWeaponCount(index, choice.id, $event.target.value)"
                             class="w-8 bg-gray-700 border border-gray-500 rounded text-center text-xs py-0.5"
                             min="0"
-                            :max="listUnit.modelCount"
+                            :max="choice.maxModels ? Math.min(choice.maxModels, listUnit.modelCount) : listUnit.modelCount"
                           >
                           <button
                             @click="updateWeaponCount(index, choice.id, 1)"
-                            class="w-5 h-5 bg-gray-500 hover:bg-gray-400 rounded text-xs font-bold"
+                            :disabled="choice.maxModels && (listUnit.weaponCounts?.[choice.id] || 0) >= choice.maxModels"
+                            :class="choice.maxModels && (listUnit.weaponCounts?.[choice.id] || 0) >= choice.maxModels ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-500 hover:bg-gray-400'"
+                            :title="choice.maxModels && (listUnit.weaponCounts?.[choice.id] || 0) >= choice.maxModels ? 'Maximum ' + choice.maxModels + ' model(s) can take this option' : ''"
+                            class="w-5 h-5 rounded text-xs font-bold"
                           >+</button>
                         </div>
                       </div>
