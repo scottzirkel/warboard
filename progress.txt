@@ -706,6 +706,34 @@ Format follows the Ralph technique.
 
 ---
 
+## [tyranids-003] Add Hormagaunts battleline unit to tyranids.json
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Hormagaunts as the second Tyranid battleline unit
+- Points costs: 65 points for 10 models, 130 points for 20 models (per Wahapedia/MFM)
+- Stats match 10th edition datasheet: M10 T3 SV5+ W1 LD8+ OC2
+- No invulnerable save (set to null)
+- Only weapon is Hormagaunt Talons (melee): A3 WS4+ S3 AP-1 D1
+- No loadout options needed (single weapon profile, no choices)
+- Added Bounding Leap ability: eligible to charge after Advancing
+- Keywords: Infantry, Battleline, Great Devourer, Endless Multitude, Hormagaunts
+- Data sourced from Wahapedia: https://wahapedia.ru/wh40k10ed/factions/tyranids/Hormagaunts
+
+**Files changed:**
+- `data/tyranids.json` - Added Hormagaunts unit to the units array with:
+  - Full unit stats and points (10 and 20 model options)
+  - Hormagaunt Talons melee weapon profile
+  - Bounding Leap ability
+  - Empty loadoutOptions array (no weapon choices)
+  - Appropriate keywords including Battleline and Endless Multitude
+
+**Verification:**
+- npm run build passes
+
+---
+
 ## [tyranids-002] Add Termagants battleline unit to tyranids.json
 
 **Date:** 2026-01-22

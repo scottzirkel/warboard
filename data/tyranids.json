@@ -62,6 +62,31 @@
         }
       ],
       "keywords": ["Infantry", "Battleline", "Great Devourer", "Endless Multitude", "Termagants"]
+    },
+    {
+      "id": "hormagaunts",
+      "name": "Hormagaunts",
+      "points": { "10": 65, "20": 130 },
+      "stats": { "m": 10, "t": 3, "sv": "5+", "w": 1, "ld": "8+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "hormagaunt-talons",
+          "name": "Hormagaunt Talons",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 3, "ap": -1, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "bounding-leap",
+          "name": "Bounding Leap",
+          "description": "This unit is eligible to declare a charge in a turn in which it Advanced."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Great Devourer", "Endless Multitude", "Hormagaunts"]
     }
   ],
   "detachments": {},
