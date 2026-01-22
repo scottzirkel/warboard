@@ -530,3 +530,38 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [leader-009] Add separate wound tracking for attached leaders
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `leaderCurrentWounds` field to the list unit data structure for tracking leader wounds separately
+- Field is initialized to `null` when adding new units (same pattern as `currentWounds`)
+- Updated `loadList()` to handle missing `leaderCurrentWounds` field on legacy saved lists
+- Added 6 new helper functions for leader wound tracking:
+  - `getLeaderMaxWounds(unitIndex)` - returns total max wounds for attached leader
+  - `getLeaderWoundsPerModel(unitIndex)` - returns wounds per model for attached leader
+  - `getLeaderCurrentWounds(unitIndex)` - returns current wounds for attached leader (or max if null)
+  - `getLeaderModelsAlive(unitIndex)` - returns number of leader models still alive
+  - `getCurrentLeaderModelWounds(unitIndex)` - returns wounds remaining on current leader model
+  - `adjustLeaderWounds(unitIndex, delta)` - adjusts leader wounds by delta value
+- Updated Damage Tracker UI to show two separate wound pools when a leader is attached:
+  - Unit wounds section with gray background, showing unit name and unit-specific controls
+  - Leader wounds section with purple border/background, showing leader name and leader-specific controls
+- Each wound pool has its own +/- buttons and current model wound indicators
+- Total models alive display now sums both unit and leader models alive
+- Leader wound indicators use purple color scheme to match other leader UI elements
+
+**Files changed:**
+- `src/main.js` - Added `leaderCurrentWounds: null` to unit object in `addUnitToList()`
+- `src/main.js` - Added migration logic in `loadList()` for `leaderCurrentWounds` field
+- `src/main.js` - Added 6 new leader wound tracking helper functions
+- `index.html` - Restructured Damage Tracker UI to show separate unit and leader wound pools
+- `CLAUDE.md` - Updated List Unit example with `leaderCurrentWounds` field
+- `CLAUDE.md` - Added `leaderCurrentWounds` to List Unit Fields documentation
+
+**Verification:**
+- npm run build passes
+

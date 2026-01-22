@@ -173,6 +173,7 @@ Choose a stance each round that grants army-wide bonuses:
   enhancement: "auric-mantle",  // Enhancement ID or empty string
   loadout: { "main-weapon": "spears", "vexilla": "none" },
   currentWounds: null,  // Set during play, null = full health
+  leaderCurrentWounds: null,  // Leader wounds, tracked separately from unit
   attachedLeader: null  // { unitIndex: number } or null if no leader attached
 }
 ```
@@ -184,6 +185,7 @@ Choose a stance each round that grants army-wide bonuses:
 - `loadout`: Legacy format for weapon choices (deprecated, use weaponCounts)
 - `weaponCounts`: Object mapping choice IDs to model counts
 - `currentWounds`: Current wound total in Play Mode, null = full health
+- `leaderCurrentWounds`: Current wound total for attached leader in Play Mode, null = full health
 - `attachedLeader`: Reference to attached leader unit, or null if none
 
 ### Enhancement

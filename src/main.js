@@ -397,6 +397,7 @@ Alpine.data('armyTracker', () => ({
       enhancement: '',
       weaponCounts: this.getDefaultWeaponCounts(unit, initialModelCount),
       currentWounds: null,
+      leaderCurrentWounds: null,
       attachedLeader: null
     })
     this.showToast(`${unit.name} added to list`, 'success')
@@ -1109,6 +1110,79 @@ Alpine.data('armyTracker', () => ({
     listUnit.currentWounds = Math.max(0, Math.min(maxWounds, currentWounds + delta))
   },
 
+  getLeaderMaxWounds(unitIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit?.attachedLeader) return 0
+
+    const leaderListUnit = this.currentList.units[listUnit.attachedLeader.unitIndex]
+    if (!leaderListUnit) return 0
+
+    const leaderUnit = this.getUnitById(leaderListUnit.unitId)
+    if (!leaderUnit) return 0
+
+    return leaderUnit.stats.w * leaderListUnit.modelCount
+  },
+
+  getLeaderWoundsPerModel(unitIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit?.attachedLeader) return 1
+
+    const leaderListUnit = this.currentList.units[listUnit.attachedLeader.unitIndex]
+    if (!leaderListUnit) return 1
+
+    const leaderUnit = this.getUnitById(leaderListUnit.unitId)
+    if (!leaderUnit) return 1
+
+    return leaderUnit.stats.w
+  },
+
+  getLeaderCurrentWounds(unitIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit?.attachedLeader) return 0
+
+    const maxWounds = this.getLeaderMaxWounds(unitIndex)
+    return listUnit.leaderCurrentWounds ?? maxWounds
+  },
+
+  getLeaderModelsAlive(unitIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit?.attachedLeader) return 0
+
+    const leaderListUnit = this.currentList.units[listUnit.attachedLeader.unitIndex]
+    if (!leaderListUnit) return 0
+
+    const woundsPerModel = this.getLeaderWoundsPerModel(unitIndex)
+    const maxWounds = this.getLeaderMaxWounds(unitIndex)
+    const currentWounds = listUnit.leaderCurrentWounds ?? maxWounds
+
+    if (currentWounds <= 0) return 0
+    return Math.ceil(currentWounds / woundsPerModel)
+  },
+
+  getCurrentLeaderModelWounds(unitIndex) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit?.attachedLeader) return 0
+
+    const woundsPerModel = this.getLeaderWoundsPerModel(unitIndex)
+    const maxWounds = this.getLeaderMaxWounds(unitIndex)
+    const currentWounds = listUnit.leaderCurrentWounds ?? maxWounds
+
+    if (currentWounds <= 0) return 0
+
+    const remainder = currentWounds % woundsPerModel
+    return remainder === 0 ? woundsPerModel : remainder
+  },
+
+  adjustLeaderWounds(unitIndex, delta) {
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit?.attachedLeader) return
+
+    const maxWounds = this.getLeaderMaxWounds(unitIndex)
+    const currentWounds = listUnit.leaderCurrentWounds ?? maxWounds
+
+    listUnit.leaderCurrentWounds = Math.max(0, Math.min(maxWounds, currentWounds + delta))
+  },
+
   getModifiedStat(unitIndex, stat) {
     const listUnit = this.currentList.units[unitIndex]
     if (!listUnit) return '-'
@@ -1376,6 +1450,9 @@ Alpine.data('armyTracker', () => ({
         this.currentList.units.forEach(unit => {
           if (unit.currentWounds === undefined) {
             unit.currentWounds = null
+          }
+          if (unit.leaderCurrentWounds === undefined) {
+            unit.leaderCurrentWounds = null
           }
           if (unit.attachedLeader === undefined) {
             unit.attachedLeader = null

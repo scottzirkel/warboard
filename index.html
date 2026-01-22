@@ -730,45 +730,88 @@
                 <span class="text-gray-400 text-sm">Models:</span>
                 <span
                   class="text-2xl font-bold"
-                  :class="getModelsAlive(selectedPlayUnitIndex) < getCombinedModelCount(selectedPlayUnitIndex) ? 'text-red-400' : 'text-white'"
-                  x-text="getModelsAlive(selectedPlayUnitIndex)"
+                  :class="(getModelsAlive(selectedPlayUnitIndex) + getLeaderModelsAlive(selectedPlayUnitIndex)) < getCombinedModelCount(selectedPlayUnitIndex) ? 'text-red-400' : 'text-white'"
+                  x-text="getModelsAlive(selectedPlayUnitIndex) + getLeaderModelsAlive(selectedPlayUnitIndex)"
                 ></span>
                 <span class="text-gray-400">/</span>
                 <span class="text-lg text-gray-400" x-text="getCombinedModelCount(selectedPlayUnitIndex)"></span>
               </div>
 
-              <!-- Current Model Wounds (only show if unit has multi-wound models) -->
-              <template x-if="getWoundsPerModel(selectedPlayUnitIndex) > 1 && getModelsAlive(selectedPlayUnitIndex) > 0">
-                <div class="bg-gray-600 rounded p-2 mb-3 text-center">
-                  <span class="text-xs text-gray-400">Current model wounds:</span>
-                  <div class="flex items-center justify-center gap-1 mt-1">
-                    <template x-for="i in getWoundsPerModel(selectedPlayUnitIndex)" :key="i">
-                      <div
-                        class="w-4 h-4 rounded-full border-2"
-                        :class="i <= getCurrentModelWounds(selectedPlayUnitIndex) ? 'bg-green-500 border-green-400' : 'bg-gray-700 border-gray-500'"
-                      ></div>
-                    </template>
+              <!-- Unit Wounds Section -->
+              <div class="bg-gray-600 rounded p-2 mb-3">
+                <div class="text-xs text-gray-400 text-center mb-2" x-text="getUnitById(currentList.units[selectedPlayUnitIndex].unitId)?.name + ' Wounds'"></div>
+
+                <!-- Current Model Wounds (only show if unit has multi-wound models) -->
+                <template x-if="getWoundsPerModel(selectedPlayUnitIndex) > 1 && getModelsAlive(selectedPlayUnitIndex) > 0">
+                  <div class="bg-gray-700 rounded p-2 mb-2 text-center">
+                    <span class="text-xs text-gray-400">Current model:</span>
+                    <div class="flex items-center justify-center gap-1 mt-1">
+                      <template x-for="i in getWoundsPerModel(selectedPlayUnitIndex)" :key="i">
+                        <div
+                          class="w-4 h-4 rounded-full border-2"
+                          :class="i <= getCurrentModelWounds(selectedPlayUnitIndex) ? 'bg-green-500 border-green-400' : 'bg-gray-700 border-gray-500'"
+                        ></div>
+                      </template>
+                    </div>
+                  </div>
+                </template>
+
+                <!-- Unit Wounds Controls -->
+                <div class="flex items-center justify-between">
+                  <button
+                    @click="adjustWounds(selectedPlayUnitIndex, -1)"
+                    class="w-8 h-8 bg-red-600 hover:bg-red-500 rounded text-sm font-bold"
+                  >-</button>
+                  <div class="text-center">
+                    <span class="text-xl font-bold" x-text="currentList.units[selectedPlayUnitIndex].currentWounds ?? getMaxWounds(selectedPlayUnitIndex)"></span>
+                    <span class="text-gray-400"> / </span>
+                    <span class="text-sm text-gray-400" x-text="getMaxWounds(selectedPlayUnitIndex)"></span>
+                  </div>
+                  <button
+                    @click="adjustWounds(selectedPlayUnitIndex, 1)"
+                    class="w-8 h-8 bg-green-600 hover:bg-green-500 rounded text-sm font-bold"
+                  >+</button>
+                </div>
+              </div>
+
+              <!-- Leader Wounds Section (only show if leader is attached) -->
+              <template x-if="currentList.units[selectedPlayUnitIndex].attachedLeader">
+                <div class="bg-purple-900/30 border border-purple-600 rounded p-2">
+                  <div class="text-xs text-purple-400 text-center mb-2" x-text="getAttachedLeaderName(selectedPlayUnitIndex) + ' Wounds'"></div>
+
+                  <!-- Leader Current Model Wounds (only show if leader has multi-wound models) -->
+                  <template x-if="getLeaderWoundsPerModel(selectedPlayUnitIndex) > 1 && getLeaderModelsAlive(selectedPlayUnitIndex) > 0">
+                    <div class="bg-gray-700 rounded p-2 mb-2 text-center">
+                      <span class="text-xs text-gray-400">Current model:</span>
+                      <div class="flex items-center justify-center gap-1 mt-1">
+                        <template x-for="i in getLeaderWoundsPerModel(selectedPlayUnitIndex)" :key="'leader-' + i">
+                          <div
+                            class="w-4 h-4 rounded-full border-2"
+                            :class="i <= getCurrentLeaderModelWounds(selectedPlayUnitIndex) ? 'bg-purple-500 border-purple-400' : 'bg-gray-700 border-gray-500'"
+                          ></div>
+                        </template>
+                      </div>
+                    </div>
+                  </template>
+
+                  <!-- Leader Wounds Controls -->
+                  <div class="flex items-center justify-between">
+                    <button
+                      @click="adjustLeaderWounds(selectedPlayUnitIndex, -1)"
+                      class="w-8 h-8 bg-red-600 hover:bg-red-500 rounded text-sm font-bold"
+                    >-</button>
+                    <div class="text-center">
+                      <span class="text-xl font-bold text-purple-300" x-text="getLeaderCurrentWounds(selectedPlayUnitIndex)"></span>
+                      <span class="text-gray-400"> / </span>
+                      <span class="text-sm text-gray-400" x-text="getLeaderMaxWounds(selectedPlayUnitIndex)"></span>
+                    </div>
+                    <button
+                      @click="adjustLeaderWounds(selectedPlayUnitIndex, 1)"
+                      class="w-8 h-8 bg-green-600 hover:bg-green-500 rounded text-sm font-bold"
+                    >+</button>
                   </div>
                 </div>
               </template>
-
-              <!-- Total Wounds Controls -->
-              <div class="flex items-center justify-between">
-                <button
-                  @click="adjustWounds(selectedPlayUnitIndex, -1)"
-                  class="w-10 h-10 bg-red-600 hover:bg-red-500 rounded text-lg font-bold"
-                >-</button>
-                <div class="text-center">
-                  <div class="text-xs text-gray-500 mb-1">Total Wounds</div>
-                  <span class="text-2xl font-bold" x-text="currentList.units[selectedPlayUnitIndex].currentWounds ?? getMaxWounds(selectedPlayUnitIndex)"></span>
-                  <span class="text-gray-400"> / </span>
-                  <span class="text-lg text-gray-400" x-text="getMaxWounds(selectedPlayUnitIndex)"></span>
-                </div>
-                <button
-                  @click="adjustWounds(selectedPlayUnitIndex, 1)"
-                  class="w-10 h-10 bg-green-600 hover:bg-green-500 rounded text-lg font-bold"
-                >+</button>
-              </div>
             </div>
 
             <!-- Active Modifiers Summary -->
