@@ -91,3 +91,27 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [abilities-001] Add modifiers array to weapons that grant stat bonuses
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `modifiers` array field to weapon data structure for weapons that grant stat bonuses
+- The Praesidium Shield grants +1 Wound to the bearer (confirmed via Wahapedia)
+- Added `source` field to modifiers to identify where the bonus comes from (for tooltip display)
+- Modifiers are placed on Sentinel Blade weapons since they are paired with the Praesidium Shield
+- Uses existing modifier format: stat, operation, value, scope, plus new source field
+
+**Files changed:**
+- `data/custodes.json` - Added modifiers to 4 sentinel blade weapons:
+  - Custodian Guard: sentinel-blade (melee) and sentinel-blade-ranged
+  - Shield-Captain: sentinel-blade (melee) and sentinel-blade-ranged
+  - Each has: `{ "stat": "w", "operation": "add", "value": 1, "scope": "model", "source": "Praesidium Shield" }`
+- `CLAUDE.md` - Added "Weapon Modifiers" documentation section with example
+- `CLAUDE.md` - Added "Modifier Fields" section documenting stat, operation, value, scope, and source fields
+
+**Verification:**
+- npm run build passes
+

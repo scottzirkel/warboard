@@ -31,7 +31,10 @@
           "type": "melee",
           "stats": { "a": 5, "ws": "2+", "s": 6, "ap": -2, "d": 1 },
           "abilities": [],
-          "loadoutGroup": "blades"
+          "loadoutGroup": "blades",
+          "modifiers": [
+            { "stat": "w", "operation": "add", "value": 1, "scope": "model", "source": "Praesidium Shield" }
+          ]
         },
         {
           "id": "sentinel-blade-ranged",
@@ -39,7 +42,10 @@
           "type": "ranged",
           "stats": { "range": 12, "a": 2, "bs": "2+", "s": 4, "ap": -1, "d": 2 },
           "abilities": ["Assault", "Pistol"],
-          "loadoutGroup": "blades"
+          "loadoutGroup": "blades",
+          "modifiers": [
+            { "stat": "w", "operation": "add", "value": 1, "scope": "model", "source": "Praesidium Shield" }
+          ]
         },
         {
           "id": "misericordia",
@@ -478,7 +484,10 @@
           "type": "melee",
           "stats": { "a": 7, "ws": "2+", "s": 6, "ap": -2, "d": 1 },
           "abilities": [],
-          "loadoutGroup": "blade"
+          "loadoutGroup": "blade",
+          "modifiers": [
+            { "stat": "w", "operation": "add", "value": 1, "scope": "model", "source": "Praesidium Shield" }
+          ]
         },
         {
           "id": "sentinel-blade-ranged",
@@ -486,7 +495,10 @@
           "type": "ranged",
           "stats": { "range": 12, "a": 2, "bs": "2+", "s": 4, "ap": -1, "d": 2 },
           "abilities": ["Assault", "Pistol"],
-          "loadoutGroup": "blade"
+          "loadoutGroup": "blade",
+          "modifiers": [
+            { "stat": "w", "operation": "add", "value": 1, "scope": "model", "source": "Praesidium Shield" }
+          ]
         },
         {
           "id": "castellan-axe-melee",

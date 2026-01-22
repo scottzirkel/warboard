@@ -214,6 +214,29 @@ Choose a stance each round that grants army-wide bonuses:
 - `maxModels`: (optional) Maximum number of models that can take this option (e.g., "1 model can be equipped with a vexilla" → `maxModels: 1`)
 - `paired`: (optional) If true, this choice represents two items that must be equipped together (e.g., "Sentinel Blade + Praesidium Shield" → `paired: true`)
 
+### Weapon Modifiers
+Weapons can have a `modifiers` array that grants stat bonuses when the weapon is equipped:
+```javascript
+{
+  id: "sentinel-blade",
+  name: "Sentinel Blade",
+  type: "melee",
+  stats: { a: 5, ws: "2+", s: 6, ap: -2, d: 1 },
+  abilities: [],
+  loadoutGroup: "blades",
+  modifiers: [
+    { stat: "w", operation: "add", value: 1, scope: "model", source: "Praesidium Shield" }
+  ]
+}
+```
+
+### Modifier Fields
+- `stat`: The stat to modify (e.g., "w" for wounds, "a" for attacks)
+- `operation`: How to apply the modifier (see Modifier Operations)
+- `value`: The numeric value for the operation
+- `scope`: What the modifier affects (see Modifier Scopes)
+- `source`: (optional) The name of the wargear/ability granting this modifier, for display in tooltips
+
 ### Modifier Operations
 - `add`: Add value to stat
 - `subtract`: Subtract value from stat
