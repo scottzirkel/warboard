@@ -834,5 +834,23 @@
     "Hazardous": "After resolving attacks, roll one D6. On a 1, bearer suffers 3 mortal wounds."
   },
   "allies": [],
-  "glossary": {}
+  "keywordGlossary": {
+    "faction": [
+      { "name": "Synapse", "description": "Units with Synapse provide a 6\" aura. Friendly TYRANIDS units within Synapse Range take Battle-shock tests on 3D6 instead of 2D6. Many stratagems and abilities reference Synapse Range." },
+      { "name": "Shadow in the Warp", "description": "Once per battle, in either player's Command phase, if one or more units with this ability are on the battlefield, every enemy unit must take a Battle-shock test. Enemies within 6\" of SYNAPSE units subtract 1 from the test." },
+      { "name": "Endless Multitude", "description": "Represents the vast swarms of lesser Tyranid bioforms. Units with this keyword interact with specific stratagems that can return destroyed models or provide bonuses based on unit size. Key units: Termagants, Hormagaunts." },
+      { "name": "Great Devourer", "description": "The faction keyword for all Tyranid units. Represents the all-consuming nature of the Hive Mind. All Tyranid units have this keyword and it is used for army-wide rules and ability interactions." }
+    ],
+    "unit": [
+      { "name": "Battleline", "description": "Core troop units. May have special rules in certain detachments." },
+      { "name": "Character", "description": "Can lead units, receive Enhancements, and is targeted by Precision." },
+      { "name": "Monster", "description": "Large creatures with powerful stats. Often have high Toughness, many Wounds, and Deadly Demise. Key units: Hive Tyrant, Carnifexes." },
+      { "name": "Psyker", "description": "Can use Psychic abilities. The Tyranid Hive Mind manifests through these creatures." },
+      { "name": "Vanguard Invader", "description": "Units that specialize in rapid assault and infiltration ahead of the main swarm. Often have Scouts ability." },
+      { "name": "Leader", "description": "Can be attached to Bodyguard units. Abilities affect the combined unit." },
+      { "name": "Feel No Pain X+", "description": "Roll D6 when losing a wound. On X+, wound is ignored." },
+      { "name": "Deadly Demise X", "description": "When destroyed, roll D6. On a 6, each unit within 6\" suffers X mortal wounds." },
+      { "name": "Scouts X\"", "description": "Make a Normal move of up to X\" before first turn begins." }
+    ]
+  }
 }

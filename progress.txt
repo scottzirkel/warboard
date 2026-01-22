@@ -1070,3 +1070,28 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [tyranids-012] Add Tyranid keyword glossary entries
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `keywordGlossary` object to tyranids.json replacing the empty `glossary` placeholder
+- Created two categories: "faction" for Tyranid-specific keywords and "unit" for general unit keywords
+- Faction keywords defined:
+  - Synapse: Explains the 6" aura, 3D6 Battle-shock tests, and stratagem interactions
+  - Shadow in the Warp: Describes the once-per-battle army-wide Battle-shock ability
+  - Endless Multitude: Explains swarm mechanics and stratagem interactions (model return, size bonuses)
+  - Great Devourer: Defines the faction keyword that all Tyranid units share
+- Unit keywords defined:
+  - Battleline, Character, Monster, Psyker, Vanguard Invader, Leader
+  - Feel No Pain X+, Deadly Demise X, Scouts X"
+- Structure follows custodes.json keywordGlossary format for consistency
+
+**Files changed:**
+- `data/tyranids.json` - Replaced empty `glossary: {}` with populated `keywordGlossary` object containing faction and unit keyword definitions
+
+**Verification:**
+- npm run build passes
+
