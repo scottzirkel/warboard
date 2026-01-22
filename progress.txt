@@ -762,3 +762,33 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [tyranids-004] Add Genestealers elite unit to tyranids.json
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Genestealers as the first Tyranid elite unit
+- Points costs: 75 points for 5 models, 140 points for 10 models (per Wahapedia)
+- Stats match 10th edition datasheet: M8 T4 SV5+ W2 LD7+ OC1
+- Invulnerable save: 5+
+- Single weapon: Genestealer Claws and Talons (A4 WS2+ S4 AP-2 D1)
+- No loadout options needed (single weapon profile, no choices)
+- Added Scouts 8" ability: make a Normal move up to 8" before first turn
+- Added Vanguard Predator ability: re-roll 1s to hit, re-roll 1s to wound near objectives
+- Keywords: Infantry, Great Devourer, Vanguard Invader, Genestealers
+- Data sourced from Wahapedia: https://wahapedia.ru/wh40k10ed/factions/tyranids/Genestealers
+
+**Files changed:**
+- `data/tyranids.json` - Added Genestealers unit to the units array with:
+  - Full unit stats and points (5 and 10 model options)
+  - 5+ invulnerable save
+  - Genestealer Claws and Talons melee weapon profile
+  - Scouts 8" and Vanguard Predator abilities
+  - Empty loadoutOptions array (no weapon choices)
+  - Appropriate keywords including Vanguard Invader
+
+**Verification:**
+- npm run build passes
+

@@ -87,6 +87,36 @@
         }
       ],
       "keywords": ["Infantry", "Battleline", "Great Devourer", "Endless Multitude", "Hormagaunts"]
+    },
+    {
+      "id": "genestealers",
+      "name": "Genestealers",
+      "points": { "5": 75, "10": 140 },
+      "stats": { "m": 8, "t": 4, "sv": "5+", "w": 2, "ld": "7+", "oc": 1 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "genestealer-claws",
+          "name": "Genestealer Claws and Talons",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "2+", "s": 4, "ap": -2, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "scouts-8",
+          "name": "Scouts 8\"",
+          "description": "This unit can make a Normal move of up to 8\" before the first turn begins. If both players have units that can do this, the player who is taking the first turn moves their units first."
+        },
+        {
+          "id": "vanguard-predator",
+          "name": "Vanguard Predator",
+          "description": "Each time a model in this unit makes an attack, re-roll a Hit roll of 1. While this unit is within range of an objective marker, you can re-roll a Wound roll of 1 as well."
+        }
+      ],
+      "keywords": ["Infantry", "Great Devourer", "Vanguard Invader", "Genestealers"]
     }
   ],
   "detachments": {},
