@@ -861,3 +861,40 @@ Format follows the Ralph technique.
 - npm run build passes
 - JSON validates successfully
 
+---
+
+## [tyranids-007] Add Hive Tyrant monster to tyranids.json
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Hive Tyrant as the first Tyranid monster unit (and first with T10+)
+- Points cost: 195 points for 1 model (per Wahapedia)
+- Stats match 10th edition datasheet: M8 T10 SV2+ W10 LD7+ OC3
+- Invulnerable save: 4+
+- Ranged weapon options via loadoutOptions (replacement pattern):
+  - Heavy Venom Cannon (default): 36" D3 BS2+ S9 AP-2 D3 (Blast)
+  - Stranglethorn Cannon: 36" D6+1 BS2+ S7 AP-1 D2 (Blast)
+- Melee weapon options via loadoutOptions (replacement pattern):
+  - Monstrous Bonesword and Lash Whip (default): A6 WS2+ S9 AP-2 D3 (Twin-linked)
+  - Monstrous Scything Talons: A4 WS2+ S7 AP-2 D2 (Extra Attacks)
+- Added Leader ability with eligibleUnits: ["tyrant-guard"] (Tyrant Guard unit to be added later)
+- Added Deadly Demise D3 ability
+- Added Will of the Hive Mind ability: 1CP reduction for friendly units within 12"
+- Added Onslaught (Aura, Psychic) ability: grants Assault and Lethal Hits to nearby units
+- Keywords: Monster, Character, Psyker, Great Devourer, Synapse, Hive Tyrant
+- Data sourced from Wahapedia: https://wahapedia.ru/wh40k10ed/factions/tyranids/Hive-Tyrant
+
+**Files changed:**
+- `data/tyranids.json` - Added Hive Tyrant unit to the units array with:
+  - Full unit stats and points (1 model option)
+  - 4+ invulnerable save
+  - 4 weapon profiles (2 ranged options, 2 melee options)
+  - loadoutOptions for ranged and melee weapon replacement choices
+  - Leader ability with eligibleUnits for Tyrant Guard
+  - Deadly Demise D3, Will of the Hive Mind, and Onslaught abilities
+  - Appropriate keywords including Monster, Character, Psyker, and Synapse
+
+**Verification:**
+- npm run build passes
+

@@ -251,6 +251,93 @@
         }
       ],
       "keywords": ["Infantry", "Great Devourer", "Synapse", "Tyranid Warriors"]
+    },
+    {
+      "id": "hive-tyrant",
+      "name": "Hive Tyrant",
+      "points": { "1": 195 },
+      "stats": { "m": 8, "t": 10, "sv": "2+", "w": 10, "ld": "7+", "oc": 3 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "heavy-venom-cannon",
+          "name": "Heavy Venom Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D3", "bs": "2+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "heavy-venom-cannon"
+        },
+        {
+          "id": "stranglethorn-cannon",
+          "name": "Stranglethorn Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D6+1", "bs": "2+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "stranglethorn-cannon"
+        },
+        {
+          "id": "monstrous-bonesword-lashwhip",
+          "name": "Monstrous Bonesword and Lash Whip",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": ["Twin-linked"],
+          "loadoutGroup": "bonesword-lashwhip"
+        },
+        {
+          "id": "monstrous-scything-talons",
+          "name": "Monstrous Scything Talons",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "2+", "s": 7, "ap": -2, "d": 2 },
+          "abilities": ["Extra Attacks"],
+          "loadoutGroup": "scything-talons"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "heavy-venom-cannon", "name": "Heavy Venom Cannon", "default": true },
+            { "id": "stranglethorn-cannon", "name": "Stranglethorn Cannon" }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "bonesword-lashwhip", "name": "Monstrous Bonesword and Lash Whip", "default": true },
+            { "id": "scything-talons", "name": "Monstrous Scything Talons" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to a Tyrant Guard unit.",
+          "eligibleUnits": ["tyrant-guard"]
+        },
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "will-of-the-hive-mind",
+          "name": "Will of the Hive Mind",
+          "description": "Once per battle round, one friendly TYRANIDS unit within 12\" of this model can use a Stratagem for 1CP less than normal (to a minimum of 0CP)."
+        },
+        {
+          "id": "onslaught",
+          "name": "Onslaught (Aura, Psychic)",
+          "description": "While a friendly TYRANIDS unit is within 6\" of this model, ranged weapons equipped by models in that unit have the [ASSAULT] and [LETHAL HITS] abilities."
+        }
+      ],
+      "keywords": ["Monster", "Character", "Psyker", "Great Devourer", "Synapse", "Hive Tyrant"]
     }
   ],
   "detachments": {},
