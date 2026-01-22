@@ -1048,3 +1048,25 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [tyranids-013] Enable Tyranids faction in main.js
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Removed `disabled: true` from the Tyranids entry in `availableArmies` array
+- Tyranids faction is now selectable in the army selector dropdown
+- No other changes needed - the faction data in `tyranids.json` is already complete with:
+  - 8 units (Termagants, Hormagaunts, Genestealers, Broodlord, Tyranid Warriors, Hive Tyrant, Carnifexes)
+  - 3 detachments (Invasion Fleet, Unending Swarm, Crusher Stampede)
+  - Army rules (Synapse, Shadow in the Warp)
+- The app can now switch to Tyranids without errors
+- Build Mode will show all Tyranid units properly grouped by keywords
+
+**Files changed:**
+- `src/main.js` - Removed `disabled: true` from Tyranids entry in `availableArmies` array (line 13)
+
+**Verification:**
+- npm run build passes
+

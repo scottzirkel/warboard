@@ -10,7 +10,7 @@ Alpine.data('armyTracker', () => ({
   selectedArmy: 'custodes',
   availableArmies: [
     { id: 'custodes', name: 'Adeptus Custodes', file: 'custodes.json', theme: 'custodes' },
-    { id: 'tyranids', name: 'Tyranids', file: 'tyranids.json', theme: 'tyranids', disabled: true },
+    { id: 'tyranids', name: 'Tyranids', file: 'tyranids.json', theme: 'tyranids' },
     { id: 'space-marines', name: 'Space Marines', file: 'space-marines.json', theme: 'space-marines', disabled: true },
     { id: 'necrons', name: 'Necrons', file: 'necrons.json', theme: 'necrons', disabled: true },
     { id: 'orks', name: 'Orks', file: 'orks.json', theme: 'orks', disabled: true },
