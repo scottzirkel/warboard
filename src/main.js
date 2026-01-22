@@ -34,7 +34,8 @@ Alpine.data('armyTracker', () => ({
   gameState: {
     battleRound: 1,
     commandPoints: 0,
-    activeStratagems: []
+    activeStratagems: [],
+    collapsedLoadoutGroups: {}  // { unitIndex: { groupId: true } }
   },
   selectedUnit: null,
   selectedPlayUnitIndex: null,
@@ -752,6 +753,18 @@ Alpine.data('armyTracker', () => ({
     }
 
     return this.sortedWeapons(results)
+  },
+
+  isLoadoutGroupCollapsed(unitIndex, groupId) {
+    return this.gameState.collapsedLoadoutGroups[unitIndex]?.[groupId] === true
+  },
+
+  toggleLoadoutGroupCollapsed(unitIndex, groupId) {
+    if (!this.gameState.collapsedLoadoutGroups[unitIndex]) {
+      this.gameState.collapsedLoadoutGroups[unitIndex] = {}
+    }
+    this.gameState.collapsedLoadoutGroups[unitIndex][groupId] =
+      !this.gameState.collapsedLoadoutGroups[unitIndex][groupId]
   },
 
   getWeaponsByLoadoutGroup(listUnit) {

@@ -611,3 +611,30 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [mixed-003] Make loadout groups collapsible in Play Mode
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `collapsedLoadoutGroups` object to `gameState` to track collapsed state per unit and group
+- State structure is `{ unitIndex: { groupId: true } }` where true means collapsed
+- Added `isLoadoutGroupCollapsed(unitIndex, groupId)` helper function to check if a group is collapsed
+- Added `toggleLoadoutGroupCollapsed(unitIndex, groupId)` helper function to toggle collapse state
+- Updated Play Mode loadout group UI to make headers clickable with hover effect
+- Added chevron icon that rotates 90° when collapsed (points right when collapsed, down when expanded)
+- Used Alpine.js `x-collapse` directive for smooth animated transitions
+- Collapsed state shows just the header (e.g., "▶ 3× Guardian Spear")
+- Expanded state shows the full ranged/melee subsections
+- Groups start expanded by default (collapsed state defaults to falsy)
+
+**Files changed:**
+- `src/main.js` - Added `collapsedLoadoutGroups` to gameState
+- `src/main.js` - Added `isLoadoutGroupCollapsed(unitIndex, groupId)` helper function
+- `src/main.js` - Added `toggleLoadoutGroupCollapsed(unitIndex, groupId)` helper function
+- `index.html` - Updated loadout group UI with collapsible headers and chevron icons
+
+**Verification:**
+- npm run build passes
+
