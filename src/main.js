@@ -893,6 +893,21 @@ Alpine.data('armyTracker', () => ({
       }
     }
 
+    // Collect modifiers from attached leader's enhancement
+    if (listUnit.attachedLeader?.unitIndex !== undefined) {
+      const leaderListUnit = this.currentList.units[listUnit.attachedLeader.unitIndex]
+      if (leaderListUnit?.enhancement) {
+        const leaderEnhancement = this.getEnhancementById(leaderListUnit.enhancement)
+        if (leaderEnhancement?.modifiers) {
+          for (const mod of leaderEnhancement.modifiers) {
+            if (mod.stat === stat && (mod.scope === 'model' || mod.scope === 'unit')) {
+              modifiers.push(mod)
+            }
+          }
+        }
+      }
+    }
+
     return modifiers
   },
 

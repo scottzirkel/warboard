@@ -262,3 +262,22 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [leader-005] Update collectModifiers to include attached leader modifiers
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Updated `collectModifiers(unitIndex, stat)` to check for attached leader and include their enhancement modifiers
+- When a unit has `attachedLeader.unitIndex` set, the function retrieves the leader's list unit
+- If the leader has an enhancement with modifiers, those modifiers are collected for the bodyguard unit
+- Only modifiers with `scope` of `model` or `unit` are included (consistent with existing behavior)
+- This enables enhancements like Auric Mantle (+2W) to apply to the attached unit's stat display
+
+**Files changed:**
+- `src/main.js` - Added leader enhancement modifier collection in `collectModifiers` function
+
+**Verification:**
+- npm run build passes
+
