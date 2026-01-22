@@ -898,3 +898,48 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [tyranids-008] Add Carnifexes monster unit to tyranids.json
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Carnifexes as the second Tyranid monster unit
+- Points costs: 90 points for 1 model, 180 points for 2 models (per Wahapedia)
+- Stats match 10th edition datasheet: M8 T9 SV2+ W8 LD8+ OC3
+- No invulnerable save (set to null)
+- Extensive weapon loadout options modeled as left-arm/right-arm replacement choices:
+  - Left arm options: Scything Talons (default), Crushing Claws, Deathspitters, Devourers
+  - Right arm options: Same as left arm plus Heavy Venom Cannon and Stranglethorn Cannon
+- Addition pattern options for extra weapons:
+  - Additional weapons: Bio-plasma, Spine Banks
+  - Extra Scything Talons: Can add +2 attacks if taking an extra set of talons
+- Ranged weapon profiles:
+  - Bio-plasma: 12" D3 BS4+ S7 AP-2 D1 (Assault, Blast)
+  - Deathspitters with Slimer Maggots: 24" A6 BS4+ S7 AP-2 D1 (Assault)
+  - Devourers with Brainleech Worms: 18" A12 BS4+ S6 AP0 D1 (Assault)
+  - Heavy Venom Cannon: 36" D3 BS4+ S9 AP-2 D3 (Blast)
+  - Stranglethorn Cannon: 36" D6+1 BS4+ S7 AP-1 D2 (Blast)
+  - Spine Banks: 6" A5 BS4+ S5 AP0 D1 (Assault)
+- Melee weapon profiles:
+  - Carnifex Crushing Claws: A4 WS4+ S12 AP-3 D6+1
+  - Carnifex Scything Talons: A6 WS4+ S9 AP-2 D3
+  - Carnifex Extra Scything Talons: A2 WS4+ S9 AP-2 D3 (Extra Attacks)
+  - Chitinous Claws and Teeth: A4 WS4+ S6 AP0 D1 (default melee)
+- Added Deadly Demise 1 ability
+- Added Blistering Assault ability: D6+2" move when shooting if not in Engagement Range (but cannot shoot)
+- Keywords: Monster, Great Devourer, Carnifexes
+- Data sourced from Wahapedia: https://wahapedia.ru/wh40k10ed/factions/tyranids/Carnifexes
+
+**Files changed:**
+- `data/tyranids.json` - Added Carnifexes unit to the units array with:
+  - Full unit stats and points (1 and 2 model options)
+  - 10 weapon profiles (6 ranged options, 4 melee options)
+  - 4 loadoutOptions for left-arm, right-arm, additional weapons, and extra talons
+  - Deadly Demise 1 and Blistering Assault abilities
+  - Appropriate keywords including Monster and Great Devourer
+
+**Verification:**
+- npm run build passes
+

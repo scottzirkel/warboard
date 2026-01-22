@@ -338,6 +338,156 @@
         }
       ],
       "keywords": ["Monster", "Character", "Psyker", "Great Devourer", "Synapse", "Hive Tyrant"]
+    },
+    {
+      "id": "carnifexes",
+      "name": "Carnifexes",
+      "points": { "1": 90, "2": 180 },
+      "stats": { "m": 8, "t": 9, "sv": "2+", "w": 8, "ld": "8+", "oc": 3 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bio-plasma",
+          "name": "Bio-plasma",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D3", "bs": "4+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Assault", "Blast"],
+          "loadoutGroup": "bio-plasma"
+        },
+        {
+          "id": "deathspitters-slimer",
+          "name": "Deathspitters with Slimer Maggots",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 6, "bs": "4+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Assault"],
+          "loadoutGroup": "deathspitters"
+        },
+        {
+          "id": "devourers-brainleech",
+          "name": "Devourers with Brainleech Worms",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 12, "bs": "4+", "s": 6, "ap": 0, "d": 1 },
+          "abilities": ["Assault"],
+          "loadoutGroup": "devourers"
+        },
+        {
+          "id": "carnifex-heavy-venom-cannon",
+          "name": "Heavy Venom Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D3", "bs": "4+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "heavy-venom-cannon"
+        },
+        {
+          "id": "carnifex-stranglethorn-cannon",
+          "name": "Stranglethorn Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D6+1", "bs": "4+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "stranglethorn-cannon"
+        },
+        {
+          "id": "spine-banks",
+          "name": "Spine Banks",
+          "type": "ranged",
+          "stats": { "range": 6, "a": 5, "bs": "4+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Assault"],
+          "loadoutGroup": "spine-banks"
+        },
+        {
+          "id": "carnifex-crushing-claws",
+          "name": "Carnifex Crushing Claws",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "4+", "s": 12, "ap": -3, "d": "D6+1" },
+          "abilities": [],
+          "loadoutGroup": "crushing-claws"
+        },
+        {
+          "id": "carnifex-scything-talons",
+          "name": "Carnifex Scything Talons",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "4+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": [],
+          "loadoutGroup": "scything-talons"
+        },
+        {
+          "id": "carnifex-extra-scything-talons",
+          "name": "Carnifex Extra Scything Talons",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": ["Extra Attacks"],
+          "loadoutGroup": "extra-scything-talons"
+        },
+        {
+          "id": "carnifex-claws-teeth",
+          "name": "Chitinous Claws and Teeth",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "4+", "s": 6, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "left-arm",
+          "name": "Left Arm Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "scything-talons", "name": "Carnifex Scything Talons", "default": true },
+            { "id": "crushing-claws", "name": "Carnifex Crushing Claws" },
+            { "id": "deathspitters", "name": "Deathspitters with Slimer Maggots" },
+            { "id": "devourers", "name": "Devourers with Brainleech Worms" }
+          ]
+        },
+        {
+          "id": "right-arm",
+          "name": "Right Arm Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "scything-talons", "name": "Carnifex Scything Talons", "default": true },
+            { "id": "crushing-claws", "name": "Carnifex Crushing Claws" },
+            { "id": "deathspitters", "name": "Deathspitters with Slimer Maggots" },
+            { "id": "devourers", "name": "Devourers with Brainleech Worms" },
+            { "id": "heavy-venom-cannon", "name": "Heavy Venom Cannon" },
+            { "id": "stranglethorn-cannon", "name": "Stranglethorn Cannon" }
+          ]
+        },
+        {
+          "id": "additional-weapon",
+          "name": "Additional Weapons",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "bio-plasma", "name": "Bio-plasma" },
+            { "id": "spine-banks", "name": "Spine Banks" }
+          ]
+        },
+        {
+          "id": "extra-talons",
+          "name": "Extra Scything Talons",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "extra-scything-talons", "name": "Carnifex Extra Scything Talons" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-1",
+          "name": "Deadly Demise 1",
+          "description": "When this model is destroyed, roll one D6 before removing it from play. On a 6, each unit within 6\" suffers 1 mortal wound."
+        },
+        {
+          "id": "blistering-assault",
+          "name": "Blistering Assault",
+          "description": "Each time this unit is selected to shoot, if it is not within Engagement Range of any enemy units, it can make a Normal Move of up to D6+2\" as if it were your Movement phase. If it does, until the end of the phase, it cannot shoot."
+        }
+      ],
+      "keywords": ["Monster", "Great Devourer", "Carnifexes"]
     }
   ],
   "detachments": {},
