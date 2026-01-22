@@ -212,6 +212,7 @@ Choose a stance each round that grants army-wide bonuses:
 - `name`: Display name
 - `default`: (optional) If true, this is the pre-selected option
 - `maxModels`: (optional) Maximum number of models that can take this option (e.g., "1 model can be equipped with a vexilla" → `maxModels: 1`)
+- `paired`: (optional) If true, this choice represents two items that must be equipped together (e.g., "Sentinel Blade + Praesidium Shield" → `paired: true`)
 
 ### Modifier Operations
 - `add`: Add value to stat

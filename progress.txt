@@ -47,3 +47,25 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [patterns-002] Add paired field to choices for combined loadouts
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `paired` field to loadout choices to indicate two items that must be equipped together
+- Field is optional - omit for single-item choices
+- Used for rules like "1 sentinel blade and 1 praesidium shield" where both items are a single choice
+- Added to Custodian Guard "Sentinel Blades + Shield" choice
+- Added to Shield-Captain "Sentinel Blade + Shield" choice
+
+**Files changed:**
+- `data/custodes.json` - Added `paired: true` to 2 loadout choices
+  - Custodian Guard: blades choice (Sentinel Blades + Shield)
+  - Shield-Captain: blade choice (Sentinel Blade + Shield)
+- `CLAUDE.md` - Added `paired` field documentation to "Loadout Choice Fields" section
+
+**Verification:**
+- npm run build passes
+
