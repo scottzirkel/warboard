@@ -384,3 +384,25 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [limits-004] Add list validation for maxModels on save and play mode entry
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `maxModelsErrors` getter that validates weapon counts against maxModels constraints
+- Iterates through all units and their loadout options to check if any choice exceeds its maxModels limit
+- Error message format: "{unit name}: {choice name} limited to {maxModels} model(s), but {count} assigned"
+- Included `maxModelsErrors` in `listErrors` getter so validation applies everywhere listErrors is used
+- Updated `saveList()` to check `listErrors` before saving and show the first error if validation fails
+- Play Mode entry was already protected via `canPlay` getter which uses `listErrors`
+
+**Files changed:**
+- `src/main.js` - Added `maxModelsErrors` getter for validating maxModels limits
+- `src/main.js` - Updated `listErrors` getter to include maxModels errors
+- `src/main.js` - Updated `saveList()` to validate and show error before saving
+
+**Verification:**
+- npm run build passes
+

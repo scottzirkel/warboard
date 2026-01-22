@@ -211,6 +211,31 @@ Alpine.data('armyTracker', () => ({
     return errors
   },
 
+  get maxModelsErrors() {
+    const errors = []
+
+    this.currentList.units.forEach((listUnit, unitIndex) => {
+      const unit = this.getUnitById(listUnit.unitId)
+      if (!unit) return
+
+      const weaponCounts = listUnit.weaponCounts || {}
+
+      for (const option of unit.loadoutOptions || []) {
+        for (const choice of option.choices) {
+          if (choice.id === 'none') continue
+          if (choice.maxModels === undefined) continue
+
+          const count = weaponCounts[choice.id] || 0
+          if (count > choice.maxModels) {
+            errors.push(`${unit.name}: ${choice.name} limited to ${choice.maxModels} model(s), but ${count} assigned`)
+          }
+        }
+      }
+    })
+
+    return errors
+  },
+
   get leaderAttachmentErrors() {
     const errors = []
     const units = this.currentList.units
@@ -287,7 +312,7 @@ Alpine.data('armyTracker', () => ({
   },
 
   get listErrors() {
-    return [...this.colosseumErrors, ...this.leaderAttachmentErrors]
+    return [...this.colosseumErrors, ...this.maxModelsErrors, ...this.leaderAttachmentErrors]
   },
 
   get canPlay() {
@@ -1122,6 +1147,12 @@ Alpine.data('armyTracker', () => ({
   async saveList() {
     if (!this.currentList.name.trim()) {
       this.showToast('Please enter a list name', 'error')
+      return
+    }
+
+    // Validate list before saving
+    if (this.listErrors.length > 0) {
+      this.showToast(this.listErrors[0], 'error')
       return
     }
 
