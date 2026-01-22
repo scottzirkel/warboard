@@ -506,3 +506,27 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [abilities-005] Add wargear abilities section to Quick Reference panel
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `getWargearAbilities()` helper function that collects unique weapon stat modifiers from faction data
+- Function iterates through all units and their weapons to find modifiers with a `source` field
+- Each modifier source is displayed once (deduplicated using a Set)
+- Added `getStatDisplayName(stat)` helper to convert stat codes to human-readable names (e.g., "w" → "Wounds")
+- Description format: "Bearer gains +N StatName." (e.g., "Bearer gains +1 Wounds.")
+- Section uses orange color scheme to distinguish from other reference sections
+- Section only shows if wargear abilities exist (via `x-if` template conditional)
+- Positioned between Detachment Enhancements and Weapon Keywords sections
+
+**Files changed:**
+- `src/main.js` - Added `getWargearAbilities()` helper function
+- `src/main.js` - Added `getStatDisplayName(stat)` helper function
+- `index.html` - Added Wargear Abilities section to Quick Reference panel
+
+**Verification:**
+- npm run build passes
+

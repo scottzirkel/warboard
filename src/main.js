@@ -995,6 +995,47 @@ Alpine.data('armyTracker', () => ({
     return stance?.name || ''
   },
 
+  getWargearAbilities() {
+    const abilities = []
+    const seen = new Set()
+
+    for (const unit of this.data.units || []) {
+      for (const weapon of unit.weapons || []) {
+        if (weapon.modifiers && weapon.modifiers.length > 0) {
+          for (const mod of weapon.modifiers) {
+            if (mod.source && !seen.has(mod.source)) {
+              seen.add(mod.source)
+              const statName = this.getStatDisplayName(mod.stat)
+              const sign = mod.operation === 'add' ? '+' : (mod.operation === 'subtract' ? '-' : '')
+              abilities.push({
+                name: mod.source,
+                description: `Bearer gains ${sign}${mod.value} ${statName}.`
+              })
+            }
+          }
+        }
+      }
+    }
+
+    return abilities
+  },
+
+  getStatDisplayName(stat) {
+    const names = {
+      m: 'Movement',
+      t: 'Toughness',
+      sv: 'Save',
+      w: 'Wounds',
+      ld: 'Leadership',
+      oc: 'Objective Control',
+      a: 'Attacks',
+      s: 'Strength',
+      ap: 'AP',
+      d: 'Damage'
+    }
+    return names[stat] || stat.toUpperCase()
+  },
+
   getStratagemById(stratId) {
     for (const det of Object.values(this.data.detachments || {})) {
       const strat = det.stratagems?.find(s => s.id === stratId)

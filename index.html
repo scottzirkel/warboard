@@ -959,6 +959,21 @@
           </div>
         </div>
 
+        <!-- Wargear Abilities -->
+        <template x-if="getWargearAbilities().length > 0">
+          <div>
+            <h4 class="text-sm font-semibold text-orange-400 uppercase tracking-wide mb-3">Wargear Abilities</h4>
+            <div class="space-y-1.5">
+              <template x-for="ability in getWargearAbilities()" :key="ability.name">
+                <div class="bg-gray-700 rounded p-2">
+                  <span class="font-medium text-sm text-orange-300" x-text="ability.name"></span>
+                  <div class="text-xs text-gray-300 mt-0.5" x-text="ability.description"></div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </template>
+
         <!-- Weapon Keywords -->
         <div>
           <h4 class="text-sm font-semibold text-blue-400 uppercase tracking-wide mb-3">Weapon Abilities</h4>
