@@ -1,0 +1,18 @@
+{
+    "name": "First save",
+    "detachment": "shield_host",
+    "gameFormat": "standard",
+    "pointsLimit": 2000,
+    "units": [
+        {
+            "unitId": "shield-captain",
+            "modelCount": 1,
+            "enhancement": "",
+            "wargear": [],
+            "currentWounds": null
+        }
+    ],
+    "activeKatah": "",
+    "activeModifiers": [],
+    "savedAt": "2026-01-22T03:29:43+00:00"
+}

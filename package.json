@@ -1,0 +1,19 @@
+{
+  "name": "army-tracker",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.1.18",
+    "vite": "^7.3.1"
+  },
+  "dependencies": {
+    "@alpinejs/collapse": "^3.15.4",
+    "@tailwindcss/vite": "^4.1.18",
+    "alpinejs": "^3.14.0"
+  }
+}

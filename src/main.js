@@ -9,8 +9,13 @@ Alpine.data('armyTracker', () => ({
   mode: 'build',
   selectedArmy: 'custodes',
   availableArmies: [
-    { id: 'custodes', name: 'Adeptus Custodes', file: 'custodes.json' },
-    { id: 'tyranids', name: 'Tyranids', file: 'tyranids.json', disabled: true }
+    { id: 'custodes', name: 'Adeptus Custodes', file: 'custodes.json', theme: 'custodes' },
+    { id: 'tyranids', name: 'Tyranids', file: 'tyranids.json', theme: 'tyranids', disabled: true },
+    { id: 'space-marines', name: 'Space Marines', file: 'space-marines.json', theme: 'space-marines', disabled: true },
+    { id: 'necrons', name: 'Necrons', file: 'necrons.json', theme: 'necrons', disabled: true },
+    { id: 'orks', name: 'Orks', file: 'orks.json', theme: 'orks', disabled: true },
+    { id: 'chaos', name: 'Chaos', file: 'chaos.json', theme: 'chaos', disabled: true },
+    { id: 'aeldari', name: 'Aeldari', file: 'aeldari.json', theme: 'aeldari', disabled: true }
   ],
   data: {
     units: [],
@@ -1131,6 +1136,13 @@ Alpine.data('armyTracker', () => ({
 
   getDetachment() {
     return this.data.detachments?.[this.currentList.detachment]
+  },
+
+  getArmyTheme() {
+    const army = this.availableArmies.find(a => a.id === this.selectedArmy)
+    // Custodes uses default theme (no data-theme attribute needed)
+    if (!army || army.theme === 'custodes') return null
+    return army.theme
   },
 
   getKatahDescription(katahId) {

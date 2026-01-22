@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Army Tracker - UI Prototype</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // These are fallbacks - actual theming uses CSS custom properties
+            gold: {
+              50: '#fdfcf7',
+              100: '#fbf7e8',
+              200: '#f5ebc6',
+              300: '#eddda0',
+              400: '#e0c35c',
+              500: '#d4a72c',
+              600: '#b8871e',
+              700: '#96691a',
+              800: '#7a541b',
+              900: '#66461a',
+            },
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* ============================================
+       ARMY THEMES - CSS Custom Properties
+       ============================================ */
+
+    :root {
+      /* Default: Custodes Gold */
+      --accent-50: #fdfcf7;
+      --accent-100: #fbf7e8;
+      --accent-200: #f5ebc6;
+      --accent-300: #eddda0;
+      --accent-400: #e0c35c;
+      --accent-500: #d4a72c;
+      --accent-600: #b8871e;
+      --accent-700: #96691a;
+      --accent-800: #7a541b;
+      --accent-900: #66461a;
+      --accent-glow: rgba(212, 167, 44, 0.4);
+      --faction-name: 'Adeptus Custodes';
+    }
+
+    /* Tyranids - Leviathan Purple */
+    [data-theme="tyranids"] {
+      --accent-50: #faf5ff;
+      --accent-100: #f3e8ff;
+      --accent-200: #e9d5ff;
+      --accent-300: #d8b4fe;
+      --accent-400: #c084fc;
+      --accent-500: #a855f7;
+      --accent-600: #9333ea;
+      --accent-700: #7e22ce;
+      --accent-800: #6b21a8;
+      --accent-900: #581c87;
+      --accent-glow: rgba(168, 85, 247, 0.4);
+      --faction-name: 'Tyranids';
+    }
+
+    /* Space Marines - Ultramarine Blue */
+    [data-theme="space-marines"] {
+      --accent-50: #eff6ff;
+      --accent-100: #dbeafe;
+      --accent-200: #bfdbfe;
+      --accent-300: #93c5fd;
+      --accent-400: #60a5fa;
+      --accent-500: #3b82f6;
+      --accent-600: #2563eb;
+      --accent-700: #1d4ed8;
+      --accent-800: #1e40af;
+      --accent-900: #1e3a8a;
+      --accent-glow: rgba(59, 130, 246, 0.4);
+      --faction-name: 'Space Marines';
+    }
+
+    /* Necrons - Gauss Green */
+    [data-theme="necrons"] {
+      --accent-50: #ecfdf5;
+      --accent-100: #d1fae5;
+      --accent-200: #a7f3d0;
+      --accent-300: #6ee7b7;
+      --accent-400: #34d399;
+      --accent-500: #10b981;
+      --accent-600: #059669;
+      --accent-700: #047857;
+      --accent-800: #065f46;
+      --accent-900: #064e3b;
+      --accent-glow: rgba(16, 185, 129, 0.4);
+      --faction-name: 'Necrons';
+    }
+
+    /* Orks - Waaagh Green */
+    [data-theme="orks"] {
+      --accent-50: #f0fdf4;
+      --accent-100: #dcfce7;
+      --accent-200: #bbf7d0;
+      --accent-300: #86efac;
+      --accent-400: #4ade80;
+      --accent-500: #22c55e;
+      --accent-600: #16a34a;
+      --accent-700: #15803d;
+      --accent-800: #166534;
+      --accent-900: #14532d;
+      --accent-glow: rgba(34, 197, 94, 0.4);
+      --faction-name: 'Orks';
+    }
+
+    /* Chaos - Khorne Red */
+    [data-theme="chaos"] {
+      --accent-50: #fef2f2;
+      --accent-100: #fee2e2;
+      --accent-200: #fecaca;
+      --accent-300: #fca5a5;
+      --accent-400: #f87171;
+      --accent-500: #ef4444;
+      --accent-600: #dc2626;
+      --accent-700: #b91c1c;
+      --accent-800: #991b1b;
+      --accent-900: #7f1d1d;
+      --accent-glow: rgba(239, 68, 68, 0.4);
+      --faction-name: 'Chaos';
+    }
+
+    /* Aeldari - Craftworld Teal */
+    [data-theme="aeldari"] {
+      --accent-50: #f0fdfa;
+      --accent-100: #ccfbf1;
+      --accent-200: #99f6e4;
+      --accent-300: #5eead4;
+      --accent-400: #2dd4bf;
+      --accent-500: #14b8a6;
+      --accent-600: #0d9488;
+      --accent-700: #0f766e;
+      --accent-800: #115e59;
+      --accent-900: #134e4a;
+      --accent-glow: rgba(20, 184, 166, 0.4);
+      --faction-name: 'Aeldari';
+    }
+
+    /* Utility classes using CSS variables */
+    .text-accent-400 { color: var(--accent-400); }
+    .text-accent-500 { color: var(--accent-500); }
+    .text-accent-600 { color: var(--accent-600); }
+    .bg-accent-400 { background-color: var(--accent-400); }
+    .bg-accent-500 { background-color: var(--accent-500); }
+    .bg-accent-600 { background-color: var(--accent-600); }
+    .border-accent-400 { border-color: var(--accent-400); }
+    .border-accent-500 { border-color: var(--accent-500); }
+
+    /* iOS-style materials and effects */
+
+    /* Base dark material */
+    .material-dark {
+      background: rgba(28, 28, 30, 0.85);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+    }
+
+    /* Elevated material (cards, sheets) */
+    .material-elevated {
+      background: rgba(44, 44, 46, 0.95);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+    }
+
+    /* Grouped inset style (like iOS Settings) */
+    .inset-group {
+      background: rgba(44, 44, 46, 0.65);
+      border-radius: 12px;
+    }
+
+    .inset-group-item {
+      padding: 12px 16px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .inset-group-item:not(:last-child) {
+      border-bottom: 0.5px solid rgba(84, 84, 88, 0.65);
+    }
+
+    /* Segmented control */
+    .segmented-control {
+      display: flex;
+      background: rgba(118, 118, 128, 0.24);
+      border-radius: 9px;
+      padding: 2px;
+    }
+
+    .segmented-control-item {
+      flex: 1;
+      text-align: center;
+      padding: 8px 12px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.6);
+      transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .segmented-control-item.active {
+      background: rgba(99, 99, 102, 0.85);
+      color: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .segmented-control-item:not(.active):hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* iOS-style buttons */
+    .btn-ios {
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-ios:active {
+      transform: scale(0.97);
+      opacity: 0.8;
+    }
+
+    .btn-ios-primary {
+      background: linear-gradient(180deg, var(--accent-500) 0%, var(--accent-600) 100%);
+      color: #1a1a1a;
+    }
+
+    .btn-ios-secondary {
+      background: rgba(118, 118, 128, 0.24);
+      color: white;
+    }
+
+    .btn-ios-tinted {
+      background: color-mix(in srgb, var(--accent-500) 18%, transparent);
+      color: var(--accent-400);
+    }
+
+    /* iOS-style stepper */
+    .stepper {
+      display: inline-flex;
+      background: rgba(118, 118, 128, 0.24);
+      border-radius: 9px;
+      overflow: hidden;
+    }
+
+    .stepper-btn {
+      width: 44px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-400);
+      font-size: 22px;
+      font-weight: 300;
+      transition: background 0.1s;
+    }
+
+    .stepper-btn:active {
+      background: rgba(118, 118, 128, 0.4);
+    }
+
+    .stepper-divider {
+      width: 0.5px;
+      background: rgba(84, 84, 88, 0.65);
+    }
+
+    /* Card with subtle depth */
+    .card-depth {
+      background: rgba(44, 44, 46, 0.65);
+      border-radius: 16px;
+      box-shadow:
+        0 0 0 0.5px rgba(255, 255, 255, 0.05),
+        0 2px 8px rgba(0, 0, 0, 0.15),
+        0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Accent badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-accent {
+      background: color-mix(in srgb, var(--accent-500) 18%, transparent);
+      color: var(--accent-400);
+    }
+
+    .badge-red {
+      background: rgba(255, 69, 58, 0.18);
+      color: #ff6b6b;
+    }
+
+    .badge-purple {
+      background: rgba(191, 90, 242, 0.18);
+      color: #bf5af2;
+    }
+
+    /* iOS-style list row */
+    .list-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      min-height: 56px;
+      transition: background 0.15s;
+    }
+
+    .list-row:active {
+      background: rgba(118, 118, 128, 0.2);
+    }
+
+    /* Smooth scrolling */
+    .scroll-smooth {
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+
+    /* Custom scrollbar - thinner, more iOS-like */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Subtle gradient backgrounds */
+    .bg-gradient-dark {
+      background: linear-gradient(180deg, #1c1c1e 0%, #000000 100%);
+    }
+
+    /* Navigation bar blur */
+    .nav-blur {
+      background: rgba(28, 28, 30, 0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+    }
+
+    /* Stats grid styling */
+    .stat-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-label {
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      margin-top: 2px;
+    }
+
+    .stat-value.modified {
+      color: var(--accent-400);
+    }
+
+    /* Weapon table iOS style */
+    .weapon-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .weapon-table th {
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      padding: 4px 6px;
+    }
+
+    .weapon-table td {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      padding: 6px;
+    }
+
+    /* Divider */
+    .divider {
+      height: 0.5px;
+      background: rgba(84, 84, 88, 0.65);
+      margin: 0 16px;
+    }
+
+    /* Section header */
+    .section-header {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.55);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 24px 16px 8px;
+    }
+
+    /* Pill toggle (for activation) */
+    .pill-toggle {
+      width: 51px;
+      height: 31px;
+      border-radius: 15.5px;
+      background: rgba(118, 118, 128, 0.32);
+      padding: 2px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .pill-toggle.active {
+      background: #30d158;
+    }
+
+    .pill-toggle-thumb {
+      width: 27px;
+      height: 27px;
+      border-radius: 13.5px;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    .pill-toggle.active .pill-toggle-thumb {
+      transform: translateX(20px);
+    }
+
+    /* Wounds indicator circles */
+    .wound-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 5px;
+      background: rgba(118, 118, 128, 0.32);
+      transition: all 0.15s;
+    }
+
+    .wound-dot.filled {
+      background: #30d158;
+    }
+
+    .wound-dot.damaged {
+      background: #ff9f0a;
+    }
+
+    /* Interactive feedback */
+    .touch-highlight {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Spring animation */
+    @keyframes spring-in {
+      0% { transform: scale(0.95); opacity: 0; }
+      70% { transform: scale(1.02); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .animate-spring {
+      animation: spring-in 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+  </style>
+</head>
+<body class="bg-gradient-dark text-white min-h-screen font-sans" id="app-body">
+
+  <!-- Navigation Bar -->
+  <nav class="nav-blur sticky top-0 z-50 safe-area-inset-top">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="h-14 flex items-center justify-between">
+        <!-- Army Selector -->
+        <div class="flex items-center gap-3">
+          <select
+            id="theme-picker"
+            onchange="setTheme(this.value)"
+            class="bg-black/30 border border-white/20 rounded-lg px-3 py-1.5 text-sm font-semibold focus:outline-none focus:border-white/40 cursor-pointer"
+            style="color: var(--accent-400)"
+          >
+            <option value="custodes" class="bg-gray-900 text-white">Adeptus Custodes</option>
+            <option value="tyranids" class="bg-gray-900 text-white">Tyranids</option>
+            <option value="space-marines" class="bg-gray-900 text-white">Space Marines</option>
+            <option value="necrons" class="bg-gray-900 text-white">Necrons</option>
+            <option value="orks" class="bg-gray-900 text-white">Orks</option>
+            <option value="chaos" class="bg-gray-900 text-white">Chaos</option>
+            <option value="aeldari" class="bg-gray-900 text-white">Aeldari</option>
+          </select>
+        </div>
+
+        <!-- Mode Segmented Control -->
+        <div class="segmented-control w-52">
+          <div class="segmented-control-item active" onclick="this.parentElement.querySelectorAll('.segmented-control-item').forEach(e => e.classList.remove('active')); this.classList.add('active');">Build</div>
+          <div class="segmented-control-item" onclick="this.parentElement.querySelectorAll('.segmented-control-item').forEach(e => e.classList.remove('active')); this.classList.add('active');">Play</div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-2">
+          <button class="btn-ios btn-ios-tinted">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    function setTheme(theme) {
+      const body = document.getElementById('app-body');
+      body.removeAttribute('data-theme');
+      if (theme !== 'custodes') {
+        body.setAttribute('data-theme', theme);
+      }
+    }
+  </script>
+
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <!-- Points Summary Bar -->
+    <div class="card-depth p-4 mb-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-sm text-white/50 mb-1">My Custodes List</div>
+          <div class="flex items-center gap-3">
+            <span class="badge badge-accent">Shield Host</span>
+            <span class="badge badge-purple">Colosseum</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-3xl font-bold text-accent-400">385</div>
+          <div class="text-sm text-white/50">of 500 pts</div>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="mt-4 h-2 bg-black/30 rounded-full overflow-hidden">
+        <div class="h-full rounded-full transition-all" style="width: 77%; background: linear-gradient(to right, var(--accent-500), var(--accent-400))"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Left Panel: Army List -->
+      <div class="lg:col-span-1">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="section-header !p-0">Army List</h2>
+          <div class="flex gap-2">
+            <button class="btn-ios btn-ios-secondary text-sm py-2">Load</button>
+            <button class="btn-ios btn-ios-primary text-sm py-2">Save</button>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Unit Card -->
+          <div class="card-depth overflow-hidden">
+            <div class="list-row touch-highlight cursor-pointer">
+              <div class="flex-1">
+                <div class="flex items-center gap-2">
+                  <span class="font-semibold">Shield-Captain</span>
+                  <span class="badge badge-accent text-[10px] py-0.5">Leader</span>
+                </div>
+                <div class="text-sm text-white/50 mt-0.5">1 model</div>
+              </div>
+              <div class="text-right">
+                <div class="text-accent-400 font-semibold">100 pts</div>
+                <div class="text-xs text-white/40">Auric Mantle</div>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Unit Card with Attached Leader -->
+          <div class="card-depth overflow-hidden">
+            <div class="list-row touch-highlight cursor-pointer">
+              <div class="flex-1">
+                <div class="flex items-center gap-2">
+                  <span class="font-semibold">Custodian Guard</span>
+                </div>
+                <div class="text-sm text-white/50 mt-0.5">4 models</div>
+                <div class="flex items-center gap-1 mt-1">
+                  <span class="text-purple-400 text-xs">+ Shield-Captain attached</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-accent-400 font-semibold">150 pts</div>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Unit Card -->
+          <div class="card-depth overflow-hidden">
+            <div class="list-row touch-highlight cursor-pointer">
+              <div class="flex-1">
+                <div class="flex items-center gap-2">
+                  <span class="font-semibold">Prosecutors</span>
+                  <span class="badge badge-purple text-[10px] py-0.5">Ally</span>
+                </div>
+                <div class="text-sm text-white/50 mt-0.5">5 models</div>
+              </div>
+              <div class="text-right">
+                <div class="text-accent-400 font-semibold">40 pts</div>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Add Unit Button -->
+          <button class="w-full card-depth list-row touch-highlight justify-center text-accent-400 font-semibold">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Add Unit
+          </button>
+        </div>
+      </div>
+
+      <!-- Middle Panel: Game State (Play Mode Preview) -->
+      <div class="lg:col-span-1">
+        <h2 class="section-header">Game State</h2>
+
+        <!-- Battle Round -->
+        <div class="card-depth p-4 mb-4">
+          <div class="flex items-center justify-between">
+            <span class="text-white/60 font-medium">Battle Round</span>
+            <div class="flex items-center gap-4">
+              <div class="stepper">
+                <button class="stepper-btn">-</button>
+                <div class="stepper-divider"></div>
+                <button class="stepper-btn">+</button>
+              </div>
+              <span class="text-4xl font-bold text-white w-8 text-center">2</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Command Points -->
+        <div class="card-depth p-4 mb-4">
+          <div class="flex items-center justify-between">
+            <span class="text-white/60 font-medium">Command Points</span>
+            <div class="flex items-center gap-4">
+              <div class="stepper">
+                <button class="stepper-btn">-</button>
+                <div class="stepper-divider"></div>
+                <button class="stepper-btn">+</button>
+              </div>
+              <span class="text-4xl font-bold text-accent-400 w-8 text-center">4</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Martial Ka'tah -->
+        <div class="card-depth overflow-hidden mb-4">
+          <div class="p-4 pb-3">
+            <div class="text-white/60 font-medium mb-3">Martial Ka'tah</div>
+            <div class="segmented-control">
+              <div class="segmented-control-item">None</div>
+              <div class="segmented-control-item active">Dacatarai</div>
+              <div class="segmented-control-item">Rendax</div>
+            </div>
+          </div>
+          <div class="p-3" style="background: color-mix(in srgb, var(--accent-500) 10%, transparent)">
+            <div class="text-xs text-accent-400">Re-roll hit rolls of 1 for melee attacks</div>
+          </div>
+        </div>
+
+        <!-- Active Stratagems -->
+        <div class="card-depth overflow-hidden">
+          <div class="section-header">Stratagems</div>
+
+          <div class="inset-group-item touch-highlight cursor-pointer" onclick="this.classList.toggle('bg-custodes-red/30')">
+            <div class="flex-1">
+              <div class="font-medium text-sm">Arcane Genetic Alchemy</div>
+              <div class="text-xs text-white/40 mt-0.5">When attacked</div>
+            </div>
+            <span class="badge badge-accent">1 CP</span>
+          </div>
+
+          <div class="inset-group-item touch-highlight cursor-pointer" style="background: color-mix(in srgb, var(--accent-500) 20%, transparent)">
+            <div class="flex-1">
+              <div class="font-medium text-sm">Avenge the Fallen</div>
+              <div class="text-xs text-white/40 mt-0.5">Fight phase</div>
+            </div>
+            <span class="badge badge-accent">1 CP</span>
+          </div>
+
+          <div class="inset-group-item touch-highlight cursor-pointer">
+            <div class="flex-1">
+              <div class="font-medium text-sm">Slayers of Nightmares</div>
+              <div class="text-xs text-white/40 mt-0.5">Fight phase</div>
+            </div>
+            <span class="badge badge-accent">1 CP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Unit Details -->
+      <div class="lg:col-span-1">
+        <h2 class="section-header">Custodian Guard</h2>
+
+        <!-- Stats Card -->
+        <div class="card-depth p-4 mb-4">
+          <div class="grid grid-cols-6 gap-2 mb-3">
+            <div class="stat-cell">
+              <span class="stat-label">M</span>
+              <span class="stat-value">6"</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-label">T</span>
+              <span class="stat-value">6</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-label">SV</span>
+              <span class="stat-value">2+</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-label">W</span>
+              <span class="stat-value modified">4</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-label">LD</span>
+              <span class="stat-value">6+</span>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-label">OC</span>
+              <span class="stat-value">2</span>
+            </div>
+          </div>
+          <div class="flex justify-center">
+            <span class="badge badge-accent">4+ Invuln</span>
+          </div>
+        </div>
+
+        <!-- Wounds Tracker -->
+        <div class="card-depth p-4 mb-4">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-white/60 font-medium">Damage</span>
+            <div class="flex items-center gap-2">
+              <span class="text-2xl font-bold">3</span>
+              <span class="text-white/40">/</span>
+              <span class="text-lg text-white/50">4 models</span>
+            </div>
+          </div>
+
+          <!-- Per-model wounds visualization -->
+          <div class="space-y-2">
+            <div class="flex items-center gap-3">
+              <span class="text-xs text-white/40 w-12">Model 1</span>
+              <div class="flex gap-1">
+                <div class="wound-dot filled"></div>
+                <div class="wound-dot filled"></div>
+                <div class="wound-dot filled"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs text-white/40 w-12">Model 2</span>
+              <div class="flex gap-1">
+                <div class="wound-dot filled"></div>
+                <div class="wound-dot filled"></div>
+                <div class="wound-dot damaged"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs text-white/40 w-12">Model 3</span>
+              <div class="flex gap-1">
+                <div class="wound-dot filled"></div>
+                <div class="wound-dot filled"></div>
+                <div class="wound-dot filled"></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 opacity-30">
+              <span class="text-xs text-white/40 w-12">Model 4</span>
+              <div class="flex gap-1">
+                <div class="wound-dot"></div>
+                <div class="wound-dot"></div>
+                <div class="wound-dot"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-center gap-4 mt-4">
+            <button class="btn-ios btn-ios-secondary px-6">
+              <span class="text-red-400 font-bold">- Wound</span>
+            </button>
+            <button class="btn-ios btn-ios-secondary px-6">
+              <span class="text-green-400 font-bold">+ Heal</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Weapons -->
+        <div class="card-depth overflow-hidden">
+          <div class="section-header">Weapons</div>
+
+          <!-- Weapon Group - Guardian Spears (3x) -->
+          <div class="inset-group-item flex-col items-stretch gap-3">
+            <div class="flex items-center gap-2">
+              <span class="badge badge-accent text-[10px] py-0.5">3x</span>
+              <span class="font-medium">Guardian Spear</span>
+              <button class="ml-auto pill-toggle active" onclick="this.classList.toggle('active')">
+                <div class="pill-toggle-thumb"></div>
+              </button>
+            </div>
+
+            <!-- Ranged Profile -->
+            <div class="bg-black/20 rounded-lg p-3">
+              <div class="text-[10px] uppercase tracking-wide text-blue-400 font-semibold mb-2">Ranged</div>
+              <table class="weapon-table">
+                <thead>
+                  <tr>
+                    <th>RNG</th>
+                    <th>A</th>
+                    <th>BS</th>
+                    <th>S</th>
+                    <th>AP</th>
+                    <th>D</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>24"</td>
+                    <td>2</td>
+                    <td>2+</td>
+                    <td>4</td>
+                    <td>-1</td>
+                    <td>2</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-xs text-accent-400 mt-2">Assault, Rapid Fire 2</div>
+            </div>
+
+            <!-- Melee Profile -->
+            <div class="bg-black/20 rounded-lg p-3">
+              <div class="text-[10px] uppercase tracking-wide text-red-400 font-semibold mb-2">Melee</div>
+              <table class="weapon-table">
+                <thead>
+                  <tr>
+                    <th>A</th>
+                    <th>WS</th>
+                    <th>S</th>
+                    <th>AP</th>
+                    <th>D</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-accent-400 font-bold">6</td>
+                    <td>2+</td>
+                    <td>7</td>
+                    <td>-2</td>
+                    <td>2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Weapon Group - Sentinel Blade (1x) -->
+          <div class="inset-group-item flex-col items-stretch gap-3">
+            <div class="flex items-center gap-2">
+              <span class="badge badge-accent text-[10px] py-0.5">1x</span>
+              <span class="font-medium">Sentinel Blade + Shield</span>
+              <span class="text-[10px] text-blue-400 font-medium">Paired</span>
+              <button class="ml-auto pill-toggle" onclick="this.classList.toggle('active')">
+                <div class="pill-toggle-thumb"></div>
+              </button>
+            </div>
+
+            <!-- Melee Profile -->
+            <div class="bg-black/20 rounded-lg p-3">
+              <div class="text-[10px] uppercase tracking-wide text-red-400 font-semibold mb-2">Melee</div>
+              <table class="weapon-table">
+                <thead>
+                  <tr>
+                    <th>A</th>
+                    <th>WS</th>
+                    <th>S</th>
+                    <th>AP</th>
+                    <th>D</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>5</td>
+                    <td>2+</td>
+                    <td>6</td>
+                    <td>-2</td>
+                    <td>1</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-xs text-accent-400 mt-2">+1 Wound per model</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Comparison: Current vs New Style -->
+  <div class="max-w-6xl mx-auto px-4 py-12 border-t border-white/10 mt-12">
+    <h2 class="text-2xl font-bold mb-6 text-center">Style Comparison</h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Current Style -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4 text-white/60">Current Style</h3>
+        <div class="bg-gray-800 rounded-lg p-4">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold" style="color: var(--accent-300)">Army List</h2>
+            <div class="flex gap-2">
+              <button class="text-sm px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded">Load</button>
+              <button class="text-sm px-3 py-1 rounded text-gray-900 font-medium" style="background: var(--accent-500)">Save</button>
+            </div>
+          </div>
+          <div class="bg-gray-700 rounded p-3">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h4 class="font-medium">Custodian Guard</h4>
+                <div class="flex gap-2 mt-1">
+                  <span class="text-sm text-accent-400 py-1">150 pts</span>
+                </div>
+              </div>
+              <button class="text-red-400 hover:text-red-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- New iOS Style -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4 text-white/60">iOS-Inspired Style</h3>
+        <div class="card-depth p-4">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-sm font-semibold text-white/55 uppercase tracking-wide">Army List</h2>
+            <div class="flex gap-2">
+              <button class="btn-ios btn-ios-secondary text-sm py-2">Load</button>
+              <button class="btn-ios btn-ios-primary text-sm py-2">Save</button>
+            </div>
+          </div>
+          <div class="card-depth overflow-hidden">
+            <div class="list-row touch-highlight cursor-pointer">
+              <div class="flex-1">
+                <div class="font-semibold">Custodian Guard</div>
+                <div class="text-sm text-white/50 mt-0.5">4 models</div>
+              </div>
+              <div class="text-right">
+                <div class="text-accent-400 font-semibold">150 pts</div>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 text-center">
+      <h3 class="text-lg font-semibold mb-4">Key Differences</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+        <div class="card-depth p-4">
+          <div class="text-accent-400 font-semibold mb-1">Materials</div>
+          <div class="text-white/60">Frosted glass with blur</div>
+        </div>
+        <div class="card-depth p-4">
+          <div class="text-accent-400 font-semibold mb-1">Controls</div>
+          <div class="text-white/60">iOS segmented + steppers</div>
+        </div>
+        <div class="card-depth p-4">
+          <div class="text-accent-400 font-semibold mb-1">Touch</div>
+          <div class="text-white/60">44pt minimum targets</div>
+        </div>
+        <div class="card-depth p-4">
+          <div class="text-accent-400 font-semibold mb-1">Typography</div>
+          <div class="text-white/60">SF Pro system font</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

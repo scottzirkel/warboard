@@ -1,0 +1,651 @@
+@import "tailwindcss";
+
+/* ============================================
+   ARMY THEMES - CSS Custom Properties
+   ============================================ */
+
+:root {
+  /* Default: Custodes Gold */
+  --accent-50: #fdfcf7;
+  --accent-100: #fbf7e8;
+  --accent-200: #f5ebc6;
+  --accent-300: #eddda0;
+  --accent-400: #e0c35c;
+  --accent-500: #d4a72c;
+  --accent-600: #b8871e;
+  --accent-700: #96691a;
+  --accent-800: #7a541b;
+  --accent-900: #66461a;
+  --accent-glow: rgba(212, 167, 44, 0.4);
+}
+
+/* Tyranids - Leviathan Purple */
+[data-theme="tyranids"] {
+  --accent-50: #faf5ff;
+  --accent-100: #f3e8ff;
+  --accent-200: #e9d5ff;
+  --accent-300: #d8b4fe;
+  --accent-400: #c084fc;
+  --accent-500: #a855f7;
+  --accent-600: #9333ea;
+  --accent-700: #7e22ce;
+  --accent-800: #6b21a8;
+  --accent-900: #581c87;
+  --accent-glow: rgba(168, 85, 247, 0.4);
+}
+
+/* Space Marines - Ultramarine Blue */
+[data-theme="space-marines"] {
+  --accent-50: #eff6ff;
+  --accent-100: #dbeafe;
+  --accent-200: #bfdbfe;
+  --accent-300: #93c5fd;
+  --accent-400: #60a5fa;
+  --accent-500: #3b82f6;
+  --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
+  --accent-800: #1e40af;
+  --accent-900: #1e3a8a;
+  --accent-glow: rgba(59, 130, 246, 0.4);
+}
+
+/* Necrons - Gauss Green */
+[data-theme="necrons"] {
+  --accent-50: #ecfdf5;
+  --accent-100: #d1fae5;
+  --accent-200: #a7f3d0;
+  --accent-300: #6ee7b7;
+  --accent-400: #34d399;
+  --accent-500: #10b981;
+  --accent-600: #059669;
+  --accent-700: #047857;
+  --accent-800: #065f46;
+  --accent-900: #064e3b;
+  --accent-glow: rgba(16, 185, 129, 0.4);
+}
+
+/* Orks - Waaagh Green */
+[data-theme="orks"] {
+  --accent-50: #f0fdf4;
+  --accent-100: #dcfce7;
+  --accent-200: #bbf7d0;
+  --accent-300: #86efac;
+  --accent-400: #4ade80;
+  --accent-500: #22c55e;
+  --accent-600: #16a34a;
+  --accent-700: #15803d;
+  --accent-800: #166534;
+  --accent-900: #14532d;
+  --accent-glow: rgba(34, 197, 94, 0.4);
+}
+
+/* Chaos - Khorne Red */
+[data-theme="chaos"] {
+  --accent-50: #fef2f2;
+  --accent-100: #fee2e2;
+  --accent-200: #fecaca;
+  --accent-300: #fca5a5;
+  --accent-400: #f87171;
+  --accent-500: #ef4444;
+  --accent-600: #dc2626;
+  --accent-700: #b91c1c;
+  --accent-800: #991b1b;
+  --accent-900: #7f1d1d;
+  --accent-glow: rgba(239, 68, 68, 0.4);
+}
+
+/* Aeldari - Craftworld Teal */
+[data-theme="aeldari"] {
+  --accent-50: #f0fdfa;
+  --accent-100: #ccfbf1;
+  --accent-200: #99f6e4;
+  --accent-300: #5eead4;
+  --accent-400: #2dd4bf;
+  --accent-500: #14b8a6;
+  --accent-600: #0d9488;
+  --accent-700: #0f766e;
+  --accent-800: #115e59;
+  --accent-900: #134e4a;
+  --accent-glow: rgba(20, 184, 166, 0.4);
+}
+
+/* ============================================
+   CUSTOM THEME COLORS (Tailwind)
+   ============================================ */
+
+@theme {
+  --color-gold-50: #fdfcf7;
+  --color-gold-100: #fbf7e8;
+  --color-gold-200: #f5ebc6;
+  --color-gold-300: #eddda0;
+  --color-gold-400: #e0c35c;
+  --color-gold-500: #d4a72c;
+  --color-gold-600: #b8871e;
+  --color-gold-700: #96691a;
+  --color-gold-800: #7a541b;
+  --color-gold-900: #66461a;
+
+  --color-custodes-gold: #d4a72c;
+  --color-custodes-red: #8b1e1e;
+  --color-custodes-black: #1a1a1a;
+
+  --font-family-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+[x-cloak] {
+  display: none !important;
+}
+
+body {
+  @apply antialiased;
+  background: linear-gradient(180deg, #1c1c1e 0%, #000000 100%);
+  min-height: 100vh;
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ============================================
+   iOS-STYLE MATERIALS
+   ============================================ */
+
+.material-dark {
+  background: rgba(28, 28, 30, 0.85);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+.material-elevated {
+  background: rgba(44, 44, 46, 0.95);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* Navigation bar blur */
+.nav-blur {
+  background: rgba(28, 28, 30, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* ============================================
+   CARD STYLES
+   ============================================ */
+
+.card-depth {
+  background: rgba(44, 44, 46, 0.65);
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 0.5px rgba(255, 255, 255, 0.05),
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.inset-group {
+  background: rgba(44, 44, 46, 0.65);
+  border-radius: 12px;
+}
+
+.inset-group-item {
+  padding: 12px 16px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.inset-group-item:not(:last-child) {
+  border-bottom: 0.5px solid rgba(84, 84, 88, 0.65);
+}
+
+/* ============================================
+   SEGMENTED CONTROL
+   ============================================ */
+
+.segmented-control {
+  display: flex;
+  background: rgba(118, 118, 128, 0.24);
+  border-radius: 9px;
+  padding: 2px;
+}
+
+.segmented-control-item {
+  flex: 1;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.segmented-control-item.active {
+  background: rgba(99, 99, 102, 0.85);
+  color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.segmented-control-item:not(.active):hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================
+   iOS-STYLE BUTTONS
+   ============================================ */
+
+.btn-ios {
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-ios:active {
+  transform: scale(0.97);
+  opacity: 0.8;
+}
+
+.btn-ios-primary {
+  background: linear-gradient(180deg, var(--accent-500) 0%, var(--accent-600) 100%);
+  color: #1a1a1a;
+}
+
+.btn-ios-secondary {
+  background: rgba(118, 118, 128, 0.24);
+  color: white;
+}
+
+.btn-ios-tinted {
+  background: color-mix(in srgb, var(--accent-500) 18%, transparent);
+  color: var(--accent-400);
+}
+
+.btn-ios-sm {
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+/* ============================================
+   iOS-STYLE STEPPER
+   ============================================ */
+
+.stepper {
+  display: inline-flex;
+  background: rgba(118, 118, 128, 0.24);
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.stepper-btn {
+  width: 44px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-400);
+  font-size: 22px;
+  font-weight: 300;
+  transition: background 0.1s;
+}
+
+.stepper-btn:active {
+  background: rgba(118, 118, 128, 0.4);
+}
+
+.stepper-divider {
+  width: 0.5px;
+  background: rgba(84, 84, 88, 0.65);
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-accent {
+  background: color-mix(in srgb, var(--accent-500) 18%, transparent);
+  color: var(--accent-400);
+}
+
+.badge-red {
+  background: rgba(255, 69, 58, 0.18);
+  color: #ff6b6b;
+}
+
+.badge-purple {
+  background: rgba(191, 90, 242, 0.18);
+  color: #bf5af2;
+}
+
+.badge-green {
+  background: rgba(48, 209, 88, 0.18);
+  color: #30d158;
+}
+
+.badge-blue {
+  background: rgba(10, 132, 255, 0.18);
+  color: #0a84ff;
+}
+
+/* ============================================
+   LIST ROWS
+   ============================================ */
+
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  min-height: 56px;
+  transition: background 0.15s;
+}
+
+.list-row:active {
+  background: rgba(118, 118, 128, 0.2);
+}
+
+.list-row-compact {
+  min-height: 44px;
+  padding: 8px 16px;
+}
+
+/* ============================================
+   STAT CELLS
+   ============================================ */
+
+.stat-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.stat-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  margin-top: 2px;
+}
+
+.stat-value.modified {
+  color: var(--accent-400);
+}
+
+/* ============================================
+   WEAPON TABLES
+   ============================================ */
+
+.weapon-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.weapon-table th {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  padding: 4px 6px;
+}
+
+.weapon-table td {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  padding: 6px;
+}
+
+.weapon-table td.modified {
+  color: var(--accent-400);
+  font-weight: 700;
+}
+
+/* ============================================
+   PILL TOGGLE (iOS Switch)
+   ============================================ */
+
+.pill-toggle {
+  width: 51px;
+  height: 31px;
+  border-radius: 15.5px;
+  background: rgba(118, 118, 128, 0.32);
+  padding: 2px;
+  transition: background 0.2s;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.pill-toggle.active {
+  background: #30d158;
+}
+
+.pill-toggle-thumb {
+  width: 27px;
+  height: 27px;
+  border-radius: 13.5px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.pill-toggle.active .pill-toggle-thumb {
+  transform: translateX(20px);
+}
+
+/* ============================================
+   WOUND INDICATORS
+   ============================================ */
+
+.wound-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background: rgba(118, 118, 128, 0.32);
+  transition: all 0.15s;
+}
+
+.wound-dot.filled {
+  background: #30d158;
+}
+
+.wound-dot.damaged {
+  background: #ff9f0a;
+}
+
+/* ============================================
+   SECTION HEADERS
+   ============================================ */
+
+.section-header {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 24px 16px 8px;
+}
+
+.section-header-inline {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================
+   DIVIDER
+   ============================================ */
+
+.divider {
+  height: 0.5px;
+  background: rgba(84, 84, 88, 0.65);
+  margin: 0 16px;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.text-accent-300 { color: var(--accent-300); }
+.text-accent-400 { color: var(--accent-400); }
+.text-accent-500 { color: var(--accent-500); }
+.text-accent-600 { color: var(--accent-600); }
+.bg-accent-400 { background-color: var(--accent-400); }
+.bg-accent-500 { background-color: var(--accent-500); }
+.bg-accent-600 { background-color: var(--accent-600); }
+.border-accent-400 { border-color: var(--accent-400); }
+.border-accent-500 { border-color: var(--accent-500); }
+
+.bg-accent-glow {
+  background: var(--accent-glow);
+}
+
+.bg-accent-tint {
+  background: color-mix(in srgb, var(--accent-500) 10%, transparent);
+}
+
+.bg-accent-tint-strong {
+  background: color-mix(in srgb, var(--accent-500) 20%, transparent);
+}
+
+/* Progress bar gradient */
+.progress-accent {
+  background: linear-gradient(to right, var(--accent-500), var(--accent-400));
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1.25rem;
+  padding-right: 2.5rem !important;
+}
+
+.select-dark {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 16px;
+  color: white;
+  font-size: 15px;
+}
+
+.select-dark:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.input-dark {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 16px;
+  color: white;
+  font-size: 15px;
+}
+
+.input-dark:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.input-dark::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes spring-in {
+  0% { transform: scale(0.95); opacity: 0; }
+  70% { transform: scale(1.02); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-spring {
+  animation: spring-in 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Touch feedback */
+.touch-highlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth scrolling */
+.scroll-smooth {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* ============================================
+   LEGACY COMPATIBILITY
+   ============================================ */
+
+.stat-modified {
+  color: var(--accent-400);
+  font-weight: bold;
+}
+
+.stat-highlight {
+  background: color-mix(in srgb, var(--accent-500) 15%, transparent);
+  border-radius: 4px;
+  padding: 0 4px;
+}
