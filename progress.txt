@@ -459,3 +459,26 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [abilities-004] Update stat display to show weapon modifier sources in tooltips
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `getModifierSources(unitIndex, stat)` helper function to collect modifier source names with their values
+- Function checks three sources of modifiers: unit's enhancement, equipped weapons, and attached leader's enhancement
+- Each source is formatted as "Source Name: +/-value" (e.g., "Praesidium Shield: +1" or "Auric Mantle: +2")
+- For weapon modifiers, uses the `source` field if present, otherwise falls back to weapon name
+- For attached leader enhancements, appends "(Leader)" to distinguish from unit's own enhancement
+- Updated Play Mode stat display to show tooltip on modified stats containing all modifier sources
+- Added `cursor-help` class to modified stats to indicate they have additional information
+- Multiple modifier sources are separated by newlines in the tooltip
+
+**Files changed:**
+- `src/main.js` - Added `getModifierSources(unitIndex, stat)` helper function
+- `index.html` - Updated Play Mode stat display with `:title` binding showing modifier sources
+
+**Verification:**
+- npm run build passes
+

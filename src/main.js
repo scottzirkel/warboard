@@ -1092,6 +1092,59 @@ Alpine.data('armyTracker', () => ({
     return baseValue !== modifiedValue
   },
 
+  getModifierSources(unitIndex, stat) {
+    const sources = []
+    const listUnit = this.currentList.units[unitIndex]
+    if (!listUnit) return sources
+
+    // Check enhancement modifiers
+    if (listUnit.enhancement) {
+      const enhancement = this.getEnhancementById(listUnit.enhancement)
+      if (enhancement?.modifiers) {
+        for (const mod of enhancement.modifiers) {
+          if (mod.stat === stat && (mod.scope === 'model' || mod.scope === 'unit')) {
+            const sign = mod.operation === 'add' ? '+' : (mod.operation === 'subtract' ? '-' : '')
+            sources.push(`${enhancement.name}: ${sign}${mod.value}`)
+          }
+        }
+      }
+    }
+
+    // Check weapon modifiers from equipped weapons
+    const unit = this.getUnitById(listUnit.unitId)
+    if (unit?.weapons) {
+      for (const weapon of unit.weapons) {
+        if (weapon.modifiers && this.isWeaponEquipped(listUnit, weapon)) {
+          for (const mod of weapon.modifiers) {
+            if (mod.stat === stat && (mod.scope === 'model' || mod.scope === 'unit')) {
+              const sign = mod.operation === 'add' ? '+' : (mod.operation === 'subtract' ? '-' : '')
+              const sourceName = mod.source || weapon.name
+              sources.push(`${sourceName}: ${sign}${mod.value}`)
+            }
+          }
+        }
+      }
+    }
+
+    // Check attached leader's enhancement modifiers
+    if (listUnit.attachedLeader?.unitIndex !== undefined) {
+      const leaderListUnit = this.currentList.units[listUnit.attachedLeader.unitIndex]
+      if (leaderListUnit?.enhancement) {
+        const leaderEnhancement = this.getEnhancementById(leaderListUnit.enhancement)
+        if (leaderEnhancement?.modifiers) {
+          for (const mod of leaderEnhancement.modifiers) {
+            if (mod.stat === stat && (mod.scope === 'model' || mod.scope === 'unit')) {
+              const sign = mod.operation === 'add' ? '+' : (mod.operation === 'subtract' ? '-' : '')
+              sources.push(`${leaderEnhancement.name} (Leader): ${sign}${mod.value}`)
+            }
+          }
+        }
+      }
+    }
+
+    return sources
+  },
+
   getModifiedWeaponStat(unitIndex, weapon, stat) {
     const listUnit = this.currentList.units[unitIndex]
     if (!listUnit) return weapon.stats[stat]

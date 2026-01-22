@@ -704,7 +704,8 @@
                     <div class="text-gray-500 uppercase" x-text="stat"></div>
                     <div
                       class="font-bold"
-                      :class="isStatModified(selectedPlayUnitIndex, stat) ? 'text-gold-400 stat-highlight' : ''"
+                      :class="isStatModified(selectedPlayUnitIndex, stat) ? 'text-gold-400 stat-highlight cursor-help' : ''"
+                      :title="isStatModified(selectedPlayUnitIndex, stat) ? getModifierSources(selectedPlayUnitIndex, stat).join('\n') : ''"
                       x-text="getModifiedStat(selectedPlayUnitIndex, stat)"
                     ></div>
                   </div>
