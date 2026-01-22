@@ -182,3 +182,22 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [abilities-002] Add isWeaponEquipped helper function
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `isWeaponEquipped(listUnit, weapon)` helper function to check if a weapon is equipped
+- Function returns `true` for weapons without a `loadoutGroup` (always equipped)
+- Function checks `weaponCounts[weapon.loadoutGroup] > 0` for weapons with a loadoutGroup
+- Includes fallback support for legacy `loadout` format when `weaponCounts` is empty
+- This helper will be used by `collectModifiers` (abilities-003) to include weapon modifiers
+
+**Files changed:**
+- `src/main.js` - Added `isWeaponEquipped(listUnit, weapon)` helper function
+
+**Verification:**
+- npm run build passes
+

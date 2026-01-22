@@ -377,6 +377,27 @@ Alpine.data('armyTracker', () => ({
     return null
   },
 
+  isWeaponEquipped(listUnit, weapon) {
+    if (!weapon.loadoutGroup) {
+      return true
+    }
+
+    const weaponCounts = listUnit.weaponCounts || {}
+    const count = weaponCounts[weapon.loadoutGroup] || 0
+
+    if (count > 0) {
+      return true
+    }
+
+    // Support legacy loadout format
+    if (Object.keys(weaponCounts).length === 0 && listUnit.loadout) {
+      const loadoutValues = Object.values(listUnit.loadout).filter(v => v && v !== 'none')
+      return loadoutValues.includes(weapon.loadoutGroup)
+    }
+
+    return false
+  },
+
   getWeaponCountTotal(listUnit) {
     if (!listUnit.weaponCounts) return 0
     return Object.values(listUnit.weaponCounts).reduce((sum, count) => sum + count, 0)
