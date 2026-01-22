@@ -599,6 +599,101 @@
           "modifiers": []
         }
       ]
+    },
+    "unending_swarm": {
+      "name": "Unending Swarm",
+      "rules": [
+        {
+          "id": "insurmountable-odds",
+          "name": "Insurmountable Odds",
+          "description": "Each time an enemy unit is selected to shoot, after that unit has finished making its attacks, if one or more models from one or more ENDLESS MULTITUDE units from your army were destroyed as a result of those attacks, each such unit can make a Surge move. To make a Surge move, roll 1D6: the unit can move up to that many inches, but must end that move as close as possible to the closest enemy unit (excluding AIRCRAFT). Models can move within Engagement Range of enemy units. A unit cannot make a Surge move if it is Battle-shocked.",
+          "type": "passive",
+          "keywords": ["ENDLESS MULTITUDE"],
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "swarming-masses",
+          "name": "Swarming Masses",
+          "cost": 1,
+          "phase": "Shooting/Fight",
+          "description": "Battle Tactic. When an ENDLESS MULTITUDE unit is selected to shoot or fight: Until the end of the phase, weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability. If that unit has 15 or more models, those weapons have the [SUSTAINED HITS 2] ability instead.",
+          "modifiers": []
+        },
+        {
+          "id": "teeming-masses",
+          "name": "Teeming Masses",
+          "cost": 1,
+          "phase": "Opponent's Shooting",
+          "description": "Battle Tactic. When an ENDLESS MULTITUDE unit is selected as the target of an attack: Until the end of the phase, each time an attack targets that unit, subtract 1 from the Hit roll.",
+          "modifiers": []
+        },
+        {
+          "id": "preservation-imperative",
+          "name": "Preservation Imperative",
+          "cost": 1,
+          "phase": "Opponent's Shooting",
+          "description": "Strategic Ploy. When an ENDLESS MULTITUDE unit is selected as the target of an attack: Until the end of the phase, for the purposes of the Blast ability, that unit is treated as having fewer than 5 models.",
+          "modifiers": []
+        },
+        {
+          "id": "synaptic-goading",
+          "name": "Synaptic Goading",
+          "cost": 1,
+          "phase": "Opponent's Shooting",
+          "description": "Strategic Ploy. After an ENDLESS MULTITUDE unit within Synapse Range makes a Surge move: That unit can re-roll the Surge move distance roll. In addition, that unit can end that Surge move as close as possible to the closest objective marker instead of the closest enemy unit.",
+          "modifiers": []
+        },
+        {
+          "id": "unending-waves",
+          "name": "Unending Waves",
+          "cost": 2,
+          "phase": "Command",
+          "description": "Strategic Ploy. Your Command phase: Select one destroyed ENDLESS MULTITUDE unit. Place a new identical unit into Strategic Reserves at its full Starting Strength. This does not include any attached CHARACTER units.",
+          "modifiers": []
+        },
+        {
+          "id": "bounding-advance",
+          "name": "Bounding Advance",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Battle Tactic. When an ENDLESS MULTITUDE unit Advances: Do not make an Advance roll for that unit. Instead, until the end of the phase, add 6\" to the Move characteristic of models in that unit.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "relentless-hunger",
+          "name": "Relentless Hunger",
+          "points": 20,
+          "description": "TYRANIDS model only. Add 2\" to the Move characteristic of models in the bearer's unit.",
+          "modifiers": [
+            { "stat": "m", "operation": "add", "value": 2, "scope": "unit" }
+          ]
+        },
+        {
+          "id": "naturalised-camouflage",
+          "name": "Naturalised Camouflage",
+          "points": 30,
+          "description": "TYRANIDS model only. At the start of the first battle round, select up to three friendly ENDLESS MULTITUDE units within 9\" of the bearer. Until the end of the battle round, each time a ranged attack targets one of those units, models in that unit have the Benefit of Cover against that attack.",
+          "modifiers": []
+        },
+        {
+          "id": "piercing-talons",
+          "name": "Piercing Talons",
+          "points": 25,
+          "description": "TYRANIDS model only. Each time a model in the bearer's unit makes an attack, on a Critical Wound, improve the Armour Penetration characteristic of that attack by 1.",
+          "modifiers": []
+        },
+        {
+          "id": "adrenalised-onslaught",
+          "name": "Adrenalised Onslaught",
+          "points": 15,
+          "description": "TYRANIDS model only. Each time the bearer's unit Piles In or Consolidates, models in this unit can move an additional 3\".",
+          "modifiers": []
+        }
+      ]
     }
   },
   "armyRules": {

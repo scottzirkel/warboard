@@ -978,3 +978,37 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [tyranids-010] Add Unending Swarm detachment to tyranids.json
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Unending Swarm as the second Tyranid detachment
+- Detachment rule is Insurmountable Odds with passive Surge move mechanic
+- Surge moves trigger after ENDLESS MULTITUDE units lose models to shooting
+- Roll 1D6 and move up to that distance toward closest enemy (can enter Engagement Range)
+- Added all 6 stratagems with appropriate phases and CP costs:
+  - Swarming Masses (1CP): Sustained Hits 1, or Sustained Hits 2 with 15+ models
+  - Teeming Masses (1CP): -1 to hit against target ENDLESS MULTITUDE unit
+  - Preservation Imperative (1CP): Unit counts as <5 models for Blast purposes
+  - Synaptic Goading (1CP): Re-roll Surge move, can move toward objective instead
+  - Unending Waves (2CP): Return destroyed ENDLESS MULTITUDE unit to Strategic Reserves
+  - Bounding Advance (1CP): Auto +6" to Move when Advancing instead of rolling
+- Added all 4 enhancements with accurate points costs:
+  - Relentless Hunger (20pts): +2" to Move for bearer's unit (includes modifier)
+  - Naturalised Camouflage (30pts): Up to 3 ENDLESS MULTITUDE units get Benefit of Cover round 1
+  - Piercing Talons (25pts): Critical Wounds improve AP by 1
+  - Adrenalised Onslaught (15pts): +3" to Pile In and Consolidate moves
+- Data sourced from Wahapedia: https://wahapedia.ru/wh40k10ed/factions/tyranids/
+
+**Files changed:**
+- `data/tyranids.json` - Added unending_swarm detachment with:
+  - Insurmountable Odds rule with Surge move mechanic
+  - 6 stratagems (Swarming Masses, Teeming Masses, Preservation Imperative, Synaptic Goading, Unending Waves, Bounding Advance)
+  - 4 enhancements (Relentless Hunger, Naturalised Camouflage, Piercing Talons, Adrenalised Onslaught)
+
+**Verification:**
+- npm run build passes
+
