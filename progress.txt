@@ -432,3 +432,30 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [patterns-005] Handle paired loadouts equipping both items together
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added `isPairedChoice(unitId, choiceId)` helper function to check if a loadout choice is paired
+- Added `getPairedChoiceName(unitId, choiceId)` helper function to get the display name of a paired choice
+- Updated `getEquippedWeaponsWithCounts()` to include `isPaired` flag on returned weapons
+- The function now tracks paired status from loadout choice data and attaches it to each weapon
+- Updated Play Mode weapon display to show paired indicator (⬡) next to weapons from paired loadouts
+- The indicator has a tooltip explaining "Paired loadout (equipped together)"
+- Paired loadouts work correctly because weapons share a common `loadoutGroup` (e.g., Sentinel Blade melee and ranged both use "blades")
+- The Praesidium Shield bonus is modeled as a modifier on the Sentinel Blade weapons, not a separate equipment item
+- Selecting a paired choice automatically equips all items in that loadout group together
+- Unselecting (setting count to 0) removes all items in that loadout group
+
+**Files changed:**
+- `src/main.js` - Added `isPairedChoice(unitId, choiceId)` helper function
+- `src/main.js` - Added `getPairedChoiceName(unitId, choiceId)` helper function
+- `src/main.js` - Updated `getEquippedWeaponsWithCounts()` to track and return `isPaired` flag
+- `index.html` - Added paired indicator (⬡) to Play Mode weapon display with tooltip
+
+**Verification:**
+- npm run build passes
+

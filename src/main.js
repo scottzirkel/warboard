@@ -508,6 +508,34 @@ Alpine.data('armyTracker', () => ({
     return null
   },
 
+  isPairedChoice(unitId, choiceId) {
+    const unit = this.getUnitById(unitId)
+    if (!unit) return false
+
+    for (const option of unit.loadoutOptions || []) {
+      for (const choice of option.choices) {
+        if (choice.id === choiceId) {
+          return choice.paired === true
+        }
+      }
+    }
+    return false
+  },
+
+  getPairedChoiceName(unitId, choiceId) {
+    const unit = this.getUnitById(unitId)
+    if (!unit) return null
+
+    for (const option of unit.loadoutOptions || []) {
+      for (const choice of option.choices) {
+        if (choice.id === choiceId && choice.paired) {
+          return choice.name
+        }
+      }
+    }
+    return null
+  },
+
   isWeaponEquipped(listUnit, weapon) {
     if (!weapon.loadoutGroup) {
       return true
@@ -671,12 +699,14 @@ Alpine.data('armyTracker', () => ({
     const weaponCounts = listUnit.weaponCounts || {}
     const results = []
 
-    // Build map of loadoutGroup to pattern type
+    // Build map of loadoutGroup to pattern type and paired status
     const groupPatterns = {}
+    const groupPaired = {}
     for (const option of unit.loadoutOptions || []) {
       for (const choice of option.choices) {
         if (choice.id !== 'none') {
           groupPatterns[choice.id] = option.pattern || 'replacement'
+          groupPaired[choice.id] = choice.paired || false
         }
       }
     }
@@ -695,6 +725,7 @@ Alpine.data('armyTracker', () => ({
     // Add weapons with their counts based on pattern
     for (const [group, weapons] of Object.entries(groupedWeapons)) {
       let count = 0
+      const isPaired = groupPaired[group] || false
 
       if (group === '_default') {
         // Default weapons (no loadoutGroup) are used by all models
@@ -714,7 +745,7 @@ Alpine.data('armyTracker', () => ({
 
       if (count > 0) {
         for (const weapon of weapons) {
-          results.push({ ...weapon, modelCount: count })
+          results.push({ ...weapon, modelCount: count, isPaired: isPaired })
         }
       }
     }

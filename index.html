@@ -803,6 +803,11 @@
                       <div class="flex items-center gap-2">
                         <span class="font-medium" x-text="weapon.name"></span>
                         <span
+                          x-show="weapon.isPaired"
+                          class="text-[10px] text-blue-400 font-medium"
+                          title="Paired loadout (equipped together)"
+                        >⬡</span>
+                        <span
                           x-show="weapon.modelCount && weapon.modelCount < currentList.units[selectedPlayUnitIndex].modelCount"
                           class="text-xs bg-gray-600 px-1.5 py-0.5 rounded text-gray-300"
                           x-text="'×' + weapon.modelCount"
