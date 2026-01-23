@@ -320,6 +320,79 @@
       "keywords": ["Infantry", "Imperium", "Tacticus", "Bladeguard Veteran Squad"]
     },
     {
+      "id": "heavy-intercessor-squad",
+      "name": "Heavy Intercessor Squad",
+      "points": { "5": 100, "10": 200 },
+      "stats": { "m": 5, "t": 6, "sv": "3+", "w": 3, "ld": "6+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "heavy-bolt-rifle",
+          "name": "Heavy Bolt Rifle",
+          "type": "ranged",
+          "stats": { "range": 30, "a": 2, "bs": "3+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Assault", "Heavy"],
+          "loadoutGroup": "heavy-bolt-rifle"
+        },
+        {
+          "id": "hellstorm-bolt-rifle",
+          "name": "Hellstorm Bolt Rifle",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 3, "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Assault"],
+          "loadoutGroup": "hellstorm-bolt-rifle"
+        },
+        {
+          "id": "executor-bolt-rifle",
+          "name": "Executor Bolt Rifle",
+          "type": "ranged",
+          "stats": { "range": 42, "a": 1, "bs": "3+", "s": 5, "ap": -2, "d": 2 },
+          "abilities": ["Heavy", "Precision"],
+          "loadoutGroup": "executor-bolt-rifle"
+        },
+        {
+          "id": "heavy-bolt-pistol-heavy-int",
+          "name": "Heavy Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 1, "bs": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "close-combat-weapon-heavy-int",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "bolt-rifle-type",
+          "name": "Bolt Rifle",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "heavy-bolt-rifle", "name": "Heavy Bolt Rifle", "default": true },
+            { "id": "hellstorm-bolt-rifle", "name": "Hellstorm Bolt Rifle" },
+            { "id": "executor-bolt-rifle", "name": "Executor Bolt Rifle" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "oath-of-moment",
+          "name": "Oath of Moment",
+          "description": "Select one enemy unit at the start of your Command phase. Until the start of your next Command phase, each time a model in this unit makes an attack that targets that unit, you can re-roll the Hit roll and you can re-roll the Wound roll."
+        },
+        {
+          "id": "heavy-fire-support",
+          "name": "Heavy Fire Support",
+          "description": "Each time a model in this unit makes a ranged attack that targets the closest eligible enemy unit, that attack has the [LETHAL HITS] ability."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Imperium", "Gravis", "Heavy Intercessor Squad"]
+    },
+    {
       "id": "terminator-squad",
       "name": "Terminator Squad",
       "points": { "5": 185, "10": 370 },
