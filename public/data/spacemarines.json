@@ -9,7 +9,76 @@
       "description": "If your Army Faction is ADEPTUS ASTARTES, and every unit from your army is ULTRAMARINES (excluding AGENTS OF THE IMPERIUM and UNALIGNED units), at the start of your Command phase, if you have Battle-shock tokens on any of your ULTRAMARINES units, you can remove one of those Battle-shock tokens."
     }
   },
-  "units": [],
+  "units": [
+    {
+      "id": "intercessor-squad",
+      "name": "Intercessor Squad",
+      "points": { "5": 85, "10": 170 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 2, "ld": "6+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bolt-rifle",
+          "name": "Bolt Rifle",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": ["Assault", "Heavy"],
+          "loadoutGroup": "bolt-rifle"
+        },
+        {
+          "id": "auto-bolt-rifle",
+          "name": "Auto Bolt Rifle",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 3, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Assault"],
+          "loadoutGroup": "auto-bolt-rifle"
+        },
+        {
+          "id": "stalker-bolt-rifle",
+          "name": "Stalker Bolt Rifle",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 1, "bs": "3+", "s": 4, "ap": -2, "d": 2 },
+          "abilities": ["Heavy", "Precision"],
+          "loadoutGroup": "stalker-bolt-rifle"
+        },
+        {
+          "id": "bolt-pistol",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "close-combat-weapon",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "bolt-rifle-type",
+          "name": "Bolt Rifle",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "bolt-rifle", "name": "Bolt Rifle", "default": true },
+            { "id": "auto-bolt-rifle", "name": "Auto Bolt Rifle" },
+            { "id": "stalker-bolt-rifle", "name": "Stalker Bolt Rifle" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "oath-of-moment",
+          "name": "Oath of Moment",
+          "description": "Select one enemy unit at the start of your Command phase. Until the start of your next Command phase, each time a model in this unit makes an attack that targets that unit, you can re-roll the Hit roll and you can re-roll the Wound roll."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Imperium", "Tacticus", "Intercessor Squad"]
+    }
+  ],
   "detachments": {},
   "armyRules": {
     "oath_of_moment": {

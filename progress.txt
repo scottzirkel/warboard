@@ -2374,3 +2374,36 @@ Format follows the Ralph technique.
   2. Calculates total wounds (woundsPerModel × modelCount) and models alive (modelCount - floor(woundsTaken / woundsPerModel))
   3. Handles leader wounds separately (leaderWounds state with separate tracking)
   4. Resets wounds on new game (resetAllWounds sets both to null for full health)
+
+---
+
+## [spacemarines-002] Add Intercessor Squad battleline unit
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Intercessor Squad as the first unit in Space Marines faction
+- Points: 85 for 5 models, 170 for 10 models (per current Munitorum Field Manual)
+- Stats: M6 T4 SV3+ W2 LD6+ OC2 (standard Primaris stats)
+- Included all three bolt rifle options as a loadout choice with replacement pattern:
+  - Bolt Rifle (24" A2 BS3+ S4 AP-1 D1, Assault/Heavy) - default
+  - Auto Bolt Rifle (24" A3 BS3+ S4 AP0 D1, Assault)
+  - Stalker Bolt Rifle (36" A1 BS3+ S4 AP-2 D2, Heavy/Precision)
+- Also included Bolt Pistol (all models) and Close Combat Weapon
+- Added Oath of Moment as unit ability (though it comes from army rule, useful for reference)
+- Keywords: Infantry, Battleline, Imperium, Tacticus, Intercessor Squad
+
+**Files changed:**
+- public/data/spacemarines.json - Added Intercessor Squad unit to units array
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (191 tests)
+- npm run build passes
+- Acceptance criteria met:
+  1. Intercessor Squad with points for 5/10 models (85/170)
+  2. Stats: M6 T4 SV3+ W2 LD6+ OC2
+  3. Bolt rifle options (standard, auto, stalker) with correct stats and abilities
+  4. Bolt pistol and close combat weapon included
+  5. Keywords include Infantry, Battleline, Imperium, Tacticus
