@@ -5,6 +5,83 @@ Format follows the Ralph technique.
 
 ---
 
+## [chaosmarines-006] Add Chosen elite unit
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Chosen as an elite unit for Chaos Space Marines
+- Points: 125/250 for 5/10 models (per Wahapedia)
+- Stats: M6 T4 SV3+ W3 LD6+ OC1 (no invulnerable save)
+- Similar profile to Legionaries but with W3 instead of W2
+- Weapons:
+  - Bolt Pistol: 12" A1 BS3+ S4 AP0 D1 (Pistol)
+  - Boltgun: 24" A2 BS3+ S4 AP0 D1 (standard)
+  - Plasma Pistol: 12" A1 BS3+ S7 AP-2 D1 (Pistol) - replaces bolt pistol, max 2 per 5
+  - Combi-weapon: 24" A1 BS4+ S4 AP0 D1 (Anti-Infantry 4+, Devastating Wounds, Rapid Fire 1) - max 2 per 5
+  - Accursed Weapon: A4 WS3+ S5 AP-2 D1 (default melee)
+  - Paired Accursed Weapons: A5 WS3+ S5 AP-2 D1 (+1 attack) - max 1 per 5
+  - Power Fist: A4 WS3+ S8 AP-2 D2 (heavy melee) - max 1 per 5
+- Chosen Marauders ability: Can shoot and charge after Advancing or Falling Back (very aggressive unit)
+- Keywords: Infantry, Chaos, Grenades, Heretic Astartes, Chosen
+- Note: Chaos Lord and Dark Apostle both already have "chosen" in their eligibleUnits arrays
+
+**Additional fixes:**
+- Downgraded Prisma from 7.3.0 to 5.22.0 to fix breaking changes in Prisma 7
+- Removed "prisma generate" from build script (db.ts exists but isn't used yet)
+
+**Files changed:**
+- public/data/chaosmarines.json - Added Chosen unit to units array
+- package.json - Downgraded prisma and @prisma/client to ^5.22.0, simplified build script
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 226 tests passed (12 test files)
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Chosen with points for 5/10 models (125/250)
+2. ✅ Stats: M6 T4 SV3+ W3 LD6+ OC1
+3. ✅ Accursed weapons and bolt pistols
+4. ✅ Heavy melee and ranged weapon options (power fist, combi-weapon, plasma pistol)
+5. ✅ Keywords include Infantry, Chaos, Heretic Astartes
+
+---
+
+## [necrons-005] Add Royal Warden character
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Royal Warden as a support character for Necrons (50 points)
+- Stats: M5 T5 SV3+ W4 LD6+ OC1 (no invulnerable save)
+- Relic Gauss Blaster: 24" A2 BS3+ S5 AP-1 D2 with Lethal Hits and Rapid Fire 2
+- Close Combat Weapon: A4 WS3+ S5 AP0 D1 (basic melee)
+- Leader ability with eligibleUnits: ["immortals", "necron-warriors"]
+- Adaptive Strategy ability: While leading a unit, that unit can shoot and charge after Falling Back
+- Engrammatic Logic ability: Once per battle, remove Battle-shock from a friendly NECRONS unit within 12"
+- Keywords: Infantry, Character, Necrons, Royal Warden
+
+**Files changed:**
+- public/data/necrons.json - Added Royal Warden unit to units array
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 238 tests passed (13 test files)
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Royal Warden with points for 1 model (50 points)
+2. ✅ Stats: M5 T5 SV3+ W4 LD6+ OC1
+3. ✅ Relic gauss blaster (24" A2 BS3+ S5 AP-1 D2 with Lethal Hits, Rapid Fire 2)
+4. ✅ Adaptive Strategy ability (Fall Back and shoot/charge)
+5. ✅ Leader ability with eligible units (Immortals, Necron Warriors)
+6. ✅ Keywords include Infantry, Character, Necrons
+
+---
+
 ## [necrons-003] Add Immortals battleline unit
 
 **Date:** 2026-01-23

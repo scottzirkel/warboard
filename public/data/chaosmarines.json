@@ -318,6 +318,120 @@
       "keywords": ["Infantry", "Character", "Chaos", "Grenades", "Heretic Astartes", "Dark Apostle"]
     },
     {
+      "id": "chosen",
+      "name": "Chosen",
+      "points": { "5": 125, "10": 250 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 3, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bolt-pistol-chosen",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "plasma-pistol-chosen",
+          "name": "Plasma Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "plasma-pistol"
+        },
+        {
+          "id": "boltgun-chosen",
+          "name": "Boltgun",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "boltgun"
+        },
+        {
+          "id": "combi-weapon-chosen",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "combi-weapon"
+        },
+        {
+          "id": "accursed-weapon-chosen",
+          "name": "Accursed Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "accursed-weapon"
+        },
+        {
+          "id": "paired-accursed-weapons",
+          "name": "Paired Accursed Weapons",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "paired-accursed"
+        },
+        {
+          "id": "power-fist-chosen",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "power-fist"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "plasma-pistol",
+          "name": "Plasma Pistol",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "plasma-pistol", "name": "Plasma Pistol", "maxModels": 2 }
+          ]
+        },
+        {
+          "id": "combi-weapon",
+          "name": "Combi-weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "combi-weapon", "name": "Combi-weapon", "maxModels": 2 }
+          ]
+        },
+        {
+          "id": "paired-accursed",
+          "name": "Paired Accursed Weapons",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "paired-accursed", "name": "Paired Accursed Weapons", "maxModels": 1 }
+          ]
+        },
+        {
+          "id": "power-fist",
+          "name": "Power Fist",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "power-fist", "name": "Power Fist", "maxModels": 1 }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "chosen-marauders",
+          "name": "Chosen Marauders",
+          "description": "This unit is eligible to shoot and declare a charge in a turn in which it Advanced or Fell Back."
+        }
+      ],
+      "keywords": ["Infantry", "Chaos", "Grenades", "Heretic Astartes", "Chosen"]
+    },
+    {
       "id": "cultist-mob",
       "name": "Cultist Mob",
       "points": { "10": 50, "20": 100 },
