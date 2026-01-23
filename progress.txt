@@ -1472,3 +1472,37 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-015] Create Play Mode layout and container
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Enhanced existing PlayMode component with mode toggle and validation gate functionality
+- Added PlayModeHeader subcomponent for header bar with list name, army, points, battle round badge, and Edit List button
+- Added ValidationGate subcomponent that blocks Play Mode access when validation errors exist
+- ValidationGate displays all errors with type badges and a "Return to Build Mode" button
+- Mode toggle callback (onModeToggle) enables switching between Build and Play modes
+- Added canPlay prop to control access - when false with errors, shows ValidationGate instead of game UI
+- Added ModeToggle component as standalone segmented control for Build/Play switching
+- ModeToggle disables Play button when canPlay is false (prevents entering with validation errors)
+- Layout uses responsive 3-column grid (1 column on mobile, 3 on large screens) matching Build Mode
+- Each panel column has proper overflow handling (flex flex-col min-h-0)
+- Placeholder panels remain for subsequent tasks (nextjs-016, nextjs-017, nextjs-018)
+
+**Files changed:**
+- `src/components/play/PlayMode.tsx` - Enhanced with:
+  - PlayModeHeader subcomponent with onModeToggle callback and battleRound badge
+  - ValidationGate subcomponent for blocking invalid list access
+  - New props: battleRound, onModeToggle, canPlay, validationErrors
+  - ModeToggle standalone component for navigation use
+  - Responsive grid layout matching Build Mode
+
+**Files created:**
+- `src/components/play/index.ts` - Export barrel file for PlayMode and ModeToggle
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+
