@@ -5,6 +5,42 @@ Format follows the Ralph technique.
 
 ---
 
+## [orks-004] Add Warboss character
+
+**Date:** 2026-01-23
+
+**Task:** Add Warboss character unit to orks.json
+
+**Decisions:**
+- Stats from Wahapedia: M6 T5 SV4+ W6 LD6+ OC1 with 5+ invuln
+- Points: 75 for 1 model
+- Ranged weapon options: Kombi-weapon (default) or Twin Slugga
+- Melee weapon options: Big Choppa (default) or Power Klaw
+- Attack Squig always equipped (Extra Attacks ability)
+- Leader ability allows attachment to Boyz or Nobz
+- Might Is Right ability: +1 to Hit rolls for melee attacks in led unit
+- Da Biggest and da Best: +4 Attacks during Waaagh!
+- Keywords: Infantry, Character, Grenades, Orks, Warboss
+
+**Files changed:**
+- public/data/orks.json - Added Warboss character unit with weapons, loadout options, and abilities
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 280 tests passed
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Warboss with points 75 for 1 model
+2. ✅ Stats: M6 T5 SV4+ W6 LD6+ OC1 with 5+ invuln
+3. ✅ Kombi-weapon, twin slugga, power klaw options
+4. ✅ Waaagh! aura ability (Da Biggest and da Best)
+5. ✅ Leader ability with eligible units (boyz, nobz)
+6. ✅ Keywords include Infantry, Character, Orks
+
+---
+
 ## [necrons-009] Enable Necrons faction in app
 
 **Date:** 2026-01-23
@@ -3647,3 +3683,41 @@ Format follows the Ralph technique.
 2. ✅ Protocol bonuses each battle round (via protocol selection mechanic)
 3. ✅ 6 stratagems including Protocol of the Conquering Tyrant, Resurrection Orb
 4. ✅ 4 enhancements including Veil of Darkness, Sempiternal Weave
+
+---
+
+## [orks-005] Add Weirdboy character
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Weirdboy as an Ork Psyker character unit
+- Points: 65pts for 1 model (per Wahapedia)
+- Stats: M6 T5 SV5+ W4 LD7+ OC1 (no invulnerable save)
+- Weapons:
+  - 'Eadbanger (ranged psychic, 24" A1 BS4+ S6 AP-3 D1 with Precision, Psychic abilities) - psychic ranged attack
+  - Weirdboy Staff (melee psychic, A3 WS3+ S8 AP-1 DD3 with Psychic ability) - decent melee weapon powered by Waaagh! energy
+- Abilities:
+  - Leader: Can attach to Boyz unit (channels their Waaagh! energy)
+  - Deadly Demise D3: On destruction, roll D6 - on 6, units within 6" suffer D3 mortal wounds
+  - Waaagh! Energy: 'Eadbanger gains +1 S and D per 5 models in unit; at 10+ models gains HAZARDOUS
+  - Da Jump (Psychic): Once per turn, at end of Movement phase, teleport unit 9"+ from enemies (2+ success, 1 causes D6 mortal wounds)
+- Keywords: Infantry, Character, Orks, Psyker, Weirdboy
+- Data sourced from Wahapedia
+
+**Files changed:**
+- public/data/orks.json - Added Weirdboy character unit
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 280 tests passed
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Weirdboy with points for 1 model (65 pts)
+2. ✅ Stats: M6 T5 SV5+ W4 LD7+ OC1
+3. ✅ Weirdboy staff melee weapon (A3 WS3+ S8 AP-1 DD3)
+4. ✅ Da Jump psychic ability (teleport unit)
+5. ✅ Leader ability with eligibleUnits: ["boyz"]
+6. ✅ Keywords include Infantry, Character, Orks, Psyker

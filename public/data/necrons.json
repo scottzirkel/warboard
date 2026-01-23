@@ -312,6 +312,31 @@
         }
       ],
       "keywords": ["Infantry", "Necrons", "Destroyer Cult", "Skorpekh Destroyers"]
+    },
+    {
+      "id": "canoptek-scarabs",
+      "name": "Canoptek Scarabs",
+      "points": { "3": 40, "6": 80, "9": 120 },
+      "stats": { "m": 9, "t": 2, "sv": "6+", "w": 4, "ld": "8+", "oc": 0 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "feeder-mandibles",
+          "name": "Feeder Mandibles",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "5+", "s": 2, "ap": 0, "d": 1 },
+          "abilities": ["Lethal Hits"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "self-destruction",
+          "name": "Self-Destruction",
+          "description": "Once per battle, at the start of the Fight phase, you can select one enemy unit within Engagement Range of this unit. Roll one D6 for each model in this unit: for each 2+, that enemy unit suffers 1 mortal wound."
+        }
+      ],
+      "keywords": ["Swarm", "Fly", "Necrons", "Canoptek", "Canoptek Scarabs"]
     }
   ],
   "detachments": {

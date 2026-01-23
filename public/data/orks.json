@@ -169,6 +169,95 @@
         }
       ],
       "keywords": ["Infantry", "Character", "Orks", "Psyker", "Weirdboy"]
+    },
+    {
+      "id": "warboss",
+      "name": "Warboss",
+      "points": { "1": 75 },
+      "stats": { "m": 6, "t": 5, "sv": "4+", "w": 6, "ld": "6+", "oc": 1 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "kombi-weapon",
+          "name": "Kombi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "5+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "kombi-weapon"
+        },
+        {
+          "id": "twin-slugga",
+          "name": "Twin Slugga",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 2, "bs": "5+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "twin-slugga"
+        },
+        {
+          "id": "attack-squig",
+          "name": "Attack Squig",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Extra Attacks"]
+        },
+        {
+          "id": "big-choppa-warboss",
+          "name": "Big Choppa",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "2+", "s": 8, "ap": -1, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "big-choppa"
+        },
+        {
+          "id": "power-klaw-warboss",
+          "name": "Power Klaw",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 10, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "power-klaw"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "kombi-weapon", "name": "Kombi-weapon", "default": true },
+            { "id": "twin-slugga", "name": "Twin Slugga" }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "big-choppa", "name": "Big Choppa", "default": true },
+            { "id": "power-klaw", "name": "Power Klaw" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to Boyz or Nobz.",
+          "eligibleUnits": ["boyz", "nobz"]
+        },
+        {
+          "id": "might-is-right",
+          "name": "Might Is Right",
+          "description": "While this model is leading a unit, each time a model in that unit makes a melee attack, add 1 to the Hit roll."
+        },
+        {
+          "id": "da-biggest-and-da-best",
+          "name": "Da Biggest and da Best",
+          "description": "While a Waaagh! is active for your army, add 4 to the Attacks characteristic of melee weapons equipped by this model."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Grenades", "Orks", "Warboss"]
     }
   ],
   "detachments": {
