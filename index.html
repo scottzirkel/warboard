@@ -636,13 +636,7 @@
               </template>
             </div>
           </div>
-          <template x-if="currentList.activeKatah">
-            <div class="px-4 py-2 bg-accent-tint flex items-center justify-between">
-              <span class="text-xs font-medium text-accent-300" x-text="getKatahName(currentList.activeKatah).replace(' Stance', '')"></span>
-              <span class="text-xs text-accent-400" x-text="getKatahDescription(currentList.activeKatah).replace('Melee weapons gain ', '')"></span>
-            </div>
-          </template>
-        </div>
+          </div>
 
         <!-- Active Stratagems -->
         <div class="card-depth overflow-hidden mb-4">
@@ -811,21 +805,23 @@
             <!-- Active Modifiers Summary -->
             <div class="card-depth overflow-hidden mb-4">
               <div class="section-header">Active Modifiers</div>
-              <div class="px-4 pb-4 space-y-1">
+              <div class="px-4 pb-4 space-y-2">
                 <template x-if="currentList.activeKatah">
-                  <div class="text-sm px-3 py-2 bg-accent-tint rounded-lg flex items-center justify-between">
-                    <span class="text-accent-300 font-medium" x-text="getKatahName(currentList.activeKatah)"></span>
-                    <span class="text-xs text-accent-400" x-text="getKatahDescription(currentList.activeKatah).replace('Melee weapons gain ', '')"></span>
+                  <div class="text-sm px-3 py-2 bg-accent-tint rounded-lg">
+                    <div class="text-accent-300 font-medium" x-text="getKatahName(currentList.activeKatah)"></div>
+                    <div class="text-xs text-accent-400 mt-1" x-text="getKatahDescription(currentList.activeKatah)"></div>
                   </div>
                 </template>
                 <template x-if="currentList.units[selectedPlayUnitIndex].enhancement">
                   <div class="text-sm px-3 py-2 bg-accent-tint rounded-lg">
-                    <span class="text-accent-300" x-text="getEnhancementById(currentList.units[selectedPlayUnitIndex].enhancement)?.name"></span>
+                    <div class="text-accent-300 font-medium" x-text="getEnhancementById(currentList.units[selectedPlayUnitIndex].enhancement)?.name"></div>
+                    <div class="text-xs text-accent-400 mt-1" x-text="getEnhancementById(currentList.units[selectedPlayUnitIndex].enhancement)?.description"></div>
                   </div>
                 </template>
                 <template x-for="stratId in gameState.activeStratagems" :key="stratId">
-                  <div class="text-sm px-3 py-2 bg-accent-tint-strong rounded-lg">
-                    <span x-text="getStratagemById(stratId)?.name"></span>
+                  <div class="text-sm px-3 py-2 bg-accent-tint rounded-lg">
+                    <div class="text-accent-300 font-medium" x-text="getStratagemById(stratId)?.name"></div>
+                    <div class="text-xs text-accent-400 mt-1" x-text="getStratagemById(stratId)?.description"></div>
                   </div>
                 </template>
                 <template x-if="!currentList.activeKatah && !currentList.units[selectedPlayUnitIndex].enhancement && gameState.activeStratagems.length === 0">
@@ -900,10 +896,10 @@
                             <template x-for="weapon in group.rangedWeapons" :key="weapon.id">
                               <div class="text-sm">
                                 <div class="font-medium text-gray-300" x-text="weapon.name"></div>
-                                <table class="w-full text-center text-xs mt-1">
+                                <table class="w-full table-fixed text-center text-xs mt-1">
                                   <thead>
                                     <tr class="text-gray-500">
-                                      <th class="font-normal">RNG</th>
+                                      <th class="font-normal w-[16%]">RNG</th>
                                       <th class="font-normal">A</th>
                                       <th class="font-normal">BS</th>
                                       <th class="font-normal">S</th>
@@ -939,9 +935,10 @@
                             <template x-for="weapon in group.meleeWeapons" :key="weapon.id">
                               <div class="text-sm">
                                 <div class="font-medium text-gray-300" x-text="weapon.name"></div>
-                                <table class="w-full text-center text-xs mt-1">
+                                <table class="w-full table-fixed text-center text-xs mt-1">
                                   <thead>
                                     <tr class="text-gray-500">
+                                      <th class="font-normal w-[16%]"></th>
                                       <th class="font-normal">A</th>
                                       <th class="font-normal">WS</th>
                                       <th class="font-normal">S</th>
@@ -951,6 +948,7 @@
                                   </thead>
                                   <tbody class="text-gray-300">
                                     <tr>
+                                      <td></td>
                                       <td :class="isWeaponStatModified(selectedPlayUnitIndex, weapon, 'a') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 'a')"></td>
                                       <td x-text="weapon.stats.ws"></td>
                                       <td :class="isWeaponStatModified(selectedPlayUnitIndex, weapon, 's') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 's')"></td>
@@ -1023,10 +1021,10 @@
                             <span class="text-gray-400 text-xs" x-text="weapon.type"></span>
                           </div>
                           <template x-if="weapon.type === 'ranged'">
-                            <table class="w-full text-center text-xs mt-1">
+                            <table class="w-full table-fixed text-center text-xs mt-1">
                               <thead>
                                 <tr class="text-gray-500">
-                                  <th class="font-normal">RNG</th>
+                                  <th class="font-normal w-[16%]">RNG</th>
                                   <th class="font-normal">A</th>
                                   <th class="font-normal">BS</th>
                                   <th class="font-normal">S</th>
@@ -1047,9 +1045,10 @@
                             </table>
                           </template>
                           <template x-if="weapon.type === 'melee'">
-                            <table class="w-full text-center text-xs mt-1">
+                            <table class="w-full table-fixed text-center text-xs mt-1">
                               <thead>
                                 <tr class="text-gray-500">
+                                  <th class="font-normal w-[16%]"></th>
                                   <th class="font-normal">A</th>
                                   <th class="font-normal">WS</th>
                                   <th class="font-normal">S</th>
@@ -1059,6 +1058,7 @@
                               </thead>
                               <tbody class="text-gray-300">
                                 <tr>
+                                  <td></td>
                                   <td :class="isWeaponStatModified(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'a') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'a')"></td>
                                   <td x-text="weapon.stats.ws"></td>
                                   <td :class="isWeaponStatModified(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 's') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 's')"></td>

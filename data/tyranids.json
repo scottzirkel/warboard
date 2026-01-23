@@ -253,6 +253,111 @@
       "keywords": ["Infantry", "Great Devourer", "Synapse", "Tyranid Warriors"]
     },
     {
+      "id": "tyranid-prime",
+      "name": "Tyranid Prime",
+      "points": { "1": 80 },
+      "stats": { "m": 6, "t": 5, "sv": "4+", "w": 6, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "prime-devourer",
+          "name": "Devourer",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 5, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "devourer"
+        },
+        {
+          "id": "prime-deathspitter",
+          "name": "Deathspitter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 3, "bs": "3+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "deathspitter"
+        },
+        {
+          "id": "prime-spinefists",
+          "name": "Spinefists",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 3, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Assault", "Pistol", "Twin-linked"],
+          "loadoutGroup": "spinefists"
+        },
+        {
+          "id": "lash-whip-bonesword",
+          "name": "Lash Whip and Bonesword",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "2+", "s": 6, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "lash-whip-bonesword"
+        },
+        {
+          "id": "prime-talons",
+          "name": "Prime Talons",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Twin-linked"],
+          "loadoutGroup": "prime-talons"
+        },
+        {
+          "id": "prime-scything-talons",
+          "name": "Scything Talons",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "2+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "scything-talons"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "devourer", "name": "Devourer", "default": true },
+            { "id": "deathspitter", "name": "Deathspitter" },
+            { "id": "spinefists", "name": "Spinefists" }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "lash-whip-bonesword", "name": "Lash Whip and Bonesword", "default": true },
+            { "id": "prime-talons", "name": "Prime Talons" },
+            { "id": "scything-talons", "name": "Scything Talons" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to a Tyranid Warriors unit.",
+          "eligibleUnits": ["tyranid-warriors"]
+        },
+        {
+          "id": "shadow-in-the-warp-synapse",
+          "name": "Shadow in the Warp, Synapse",
+          "description": "While a friendly Tyranids unit is within 6\" of one or more units with this ability, models in that unit have the Synapse keyword."
+        },
+        {
+          "id": "alpha-warrior",
+          "name": "Alpha Warrior",
+          "description": "While this model is leading a unit, weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability."
+        },
+        {
+          "id": "death-blow",
+          "name": "Death Blow",
+          "description": "If this model is destroyed by a melee attack, if it has not fought this phase, roll one D6: on a 4+, do not remove it from play. The destroyed model can fight after the attacking model's unit has finished making its attacks, and is then removed from play."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Great Devourer", "Synapse", "Tyranid Prime"]
+    },
+    {
       "id": "hive-tyrant",
       "name": "Hive Tyrant",
       "points": { "1": 195 },
@@ -711,6 +816,1681 @@
         }
       ],
       "keywords": ["Infantry", "Great Devourer", "Endless Multitude", "Neurogaunts"]
+    },
+    {
+      "id": "deathleaper",
+      "name": "Deathleaper",
+      "points": { "1": 80 },
+      "stats": { "m": 8, "t": 6, "sv": "3+", "w": 7, "ld": "7+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "deathleaper-claws",
+          "name": "Lictor Claws and Talons",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 7, "ap": -2, "d": 2 },
+          "abilities": ["Precision"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "fights-first",
+          "name": "Fights First",
+          "description": "This unit is eligible to fight in the Fight phase before units without this ability."
+        },
+        {
+          "id": "infiltrators",
+          "name": "Infiltrators",
+          "description": "During deployment, this unit can be set up anywhere on the battlefield that is more than 9\" horizontally away from the enemy deployment zone and all enemy models."
+        },
+        {
+          "id": "lone-operative",
+          "name": "Lone Operative",
+          "description": "Unless this unit is within 3\" of one or more friendly TYRANIDS units, this unit can only be selected as the target of a ranged attack if the attacking model is within 12\"."
+        },
+        {
+          "id": "stealth",
+          "name": "Stealth",
+          "description": "If every model in a unit has this ability, then each time a ranged attack is made against it, subtract 1 from that attack's Hit roll."
+        },
+        {
+          "id": "feeder-tendrils",
+          "name": "Feeder Tendrils",
+          "description": "Each time this model destroys an enemy CHARACTER model, you gain 1CP."
+        },
+        {
+          "id": "fear-of-the-unseen",
+          "name": "Fear of the Unseen (Aura)",
+          "description": "While an enemy unit is within 6\" of this model, subtract 1 from the Leadership characteristic of models in that unit. At the start of each Fight phase, each enemy unit within 6\" of this model that is below its Starting Strength must take a Battle-shock test."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Epic Hero", "Great Devourer", "Vanguard Invader", "Deathleaper"]
+    },
+    {
+      "id": "neurotyrant",
+      "name": "Neurotyrant",
+      "points": { "1": 105 },
+      "stats": { "m": 6, "t": 8, "sv": "4+", "w": 9, "ld": "7+", "oc": 3 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "psychic-scream",
+          "name": "Psychic Scream",
+          "type": "ranged",
+          "stats": { "range": 18, "a": "2D6", "bs": "N/A", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Ignores Cover", "Psychic", "Torrent"]
+        },
+        {
+          "id": "neurotyrant-claws",
+          "name": "Neurotyrant Claws and Lashes",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to Neurogaunts, Tyrant Guard, or Zoanthropes.",
+          "eligibleUnits": ["neurogaunts", "tyrant-guard", "zoanthropes"]
+        },
+        {
+          "id": "node-lash",
+          "name": "Node Lash",
+          "description": "While this model is leading a unit, each time a model in that unit makes an attack, add 1 to the Hit roll."
+        },
+        {
+          "id": "synaptic-relay",
+          "name": "Synaptic Relay",
+          "description": "In your Command phase, you can select up to two friendly TYRANIDS units within 12\" of this model. Until the start of your next Command phase, those units are always considered to be within Synapse Range of this model."
+        }
+      ],
+      "keywords": ["Monster", "Character", "Fly", "Psyker", "Great Devourer", "Synapse", "Neurotyrant"]
+    },
+    {
+      "id": "winged-tyranid-prime",
+      "name": "Winged Tyranid Prime",
+      "points": { "1": 80 },
+      "stats": { "m": 12, "t": 5, "sv": "4+", "w": 6, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "prime-talons",
+          "name": "Prime Talons",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 6, "ap": -1, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and arrive on a later turn within 9\" of any enemy units."
+        },
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to Gargoyles or Tyranid Warriors.",
+          "eligibleUnits": ["gargoyles", "tyranid-warriors"]
+        },
+        {
+          "id": "alpha-warrior",
+          "name": "Alpha Warrior",
+          "description": "While this model is leading a unit, weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability."
+        },
+        {
+          "id": "death-blow",
+          "name": "Death Blow",
+          "description": "If this model is destroyed by a melee attack, if it has not fought this phase, roll one D6: on a 4+, do not remove it from play. The destroyed model can fight after the attacking model's unit has finished making its attacks, and is then removed from play."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Fly", "Great Devourer", "Synapse", "Vanguard Invader", "Winged Tyranid Prime"]
+    },
+    {
+      "id": "the-swarmlord",
+      "name": "The Swarmlord",
+      "points": { "1": 240 },
+      "stats": { "m": 8, "t": 10, "sv": "2+", "w": 10, "ld": "7+", "oc": 3 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "synaptic-pulse",
+          "name": "Synaptic Pulse",
+          "type": "ranged",
+          "stats": { "range": 18, "a": "D6+3", "bs": "N/A", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Psychic", "Torrent"]
+        },
+        {
+          "id": "bone-sabres",
+          "name": "Bone Sabres",
+          "type": "melee",
+          "stats": { "a": 8, "ws": "2+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": ["Twin-linked"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to a Tyrant Guard unit.",
+          "eligibleUnits": ["tyrant-guard"]
+        },
+        {
+          "id": "hive-commander",
+          "name": "Hive Commander",
+          "description": "At the start of your Command phase, if this model is on the battlefield, you gain 1CP."
+        },
+        {
+          "id": "malign-presence",
+          "name": "Malign Presence (Aura)",
+          "description": "While an enemy unit is within 12\" of this model, each time that enemy unit is selected to use a Stratagem, your opponent must spend 1 additional CP to use that Stratagem."
+        },
+        {
+          "id": "domination-of-the-hive-mind",
+          "name": "Domination of the Hive Mind (Aura)",
+          "description": "While a friendly TYRANIDS unit is within 9\" of this model, that unit is considered to be within Synapse Range."
+        }
+      ],
+      "keywords": ["Monster", "Character", "Epic Hero", "Psyker", "Great Devourer", "Synapse", "Hive Tyrant", "The Swarmlord"]
+    },
+    {
+      "id": "old-one-eye",
+      "name": "Old One Eye",
+      "points": { "1": 140 },
+      "stats": { "m": 8, "t": 9, "sv": "2+", "w": 9, "ld": "8+", "oc": 3 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "claws-talons-strike",
+          "name": "Claws and Talons - Strike",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "3+", "s": 14, "ap": -3, "d": "D6+1" },
+          "abilities": []
+        },
+        {
+          "id": "claws-talons-sweep",
+          "name": "Claws and Talons - Sweep",
+          "type": "melee",
+          "stats": { "a": 12, "ws": "3+", "s": 6, "ap": -1, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "melee-mode",
+          "name": "Attack Mode",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "strike", "name": "Strike (6A, S14, D6+1)", "default": true },
+            { "id": "sweep", "name": "Sweep (12A, S6, D1)" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "feel-no-pain-5",
+          "name": "Feel No Pain 5+",
+          "description": "Each time this model would lose a wound, roll one D6: on a 5+, that wound is not lost."
+        },
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to a Carnifexes unit.",
+          "eligibleUnits": ["carnifexes"]
+        },
+        {
+          "id": "alpha-leader",
+          "name": "Alpha Leader",
+          "description": "While this model is leading a unit, each time a model in that unit makes an attack, you can re-roll the Hit roll."
+        },
+        {
+          "id": "unstoppable-monster",
+          "name": "Unstoppable Monster",
+          "description": "At the start of each player's Command phase, this model regains up to D3 lost wounds."
+        }
+      ],
+      "keywords": ["Monster", "Character", "Epic Hero", "Great Devourer", "Old One Eye"]
+    },
+    {
+      "id": "winged-hive-tyrant",
+      "name": "Winged Hive Tyrant",
+      "points": { "1": 195 },
+      "stats": { "m": 12, "t": 9, "sv": "2+", "w": 10, "ld": "7+", "oc": 3 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "wht-heavy-venom-cannon",
+          "name": "Heavy Venom Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D3", "bs": "2+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "heavy-venom-cannon"
+        },
+        {
+          "id": "wht-stranglethorn-cannon",
+          "name": "Stranglethorn Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D6+1", "bs": "2+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "stranglethorn-cannon"
+        },
+        {
+          "id": "wht-monstrous-bonesword-lashwhip",
+          "name": "Monstrous Bonesword and Lash Whip",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": ["Twin-linked"],
+          "loadoutGroup": "bonesword-lashwhip"
+        },
+        {
+          "id": "wht-monstrous-scything-talons",
+          "name": "Monstrous Scything Talons",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "2+", "s": 7, "ap": -2, "d": 2 },
+          "abilities": ["Extra Attacks"],
+          "loadoutGroup": "scything-talons"
+        },
+        {
+          "id": "wht-tyrant-talons",
+          "name": "Tyrant Talons",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "2+", "s": 7, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "tyrant-talons"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "heavy-venom-cannon", "name": "Heavy Venom Cannon", "default": true },
+            { "id": "stranglethorn-cannon", "name": "Stranglethorn Cannon" }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "bonesword-lashwhip", "name": "Monstrous Bonesword and Lash Whip", "default": true },
+            { "id": "scything-talons", "name": "Monstrous Scything Talons" },
+            { "id": "tyrant-talons", "name": "Tyrant Talons" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and arrive on a later turn within 9\" of any enemy units."
+        },
+        {
+          "id": "will-of-the-hive-mind",
+          "name": "Will of the Hive Mind",
+          "description": "Once per battle round, one friendly TYRANIDS unit within 12\" of this model can use a Stratagem for 1CP less than normal (to a minimum of 0CP)."
+        },
+        {
+          "id": "paroxysm",
+          "name": "Paroxysm (Psychic)",
+          "description": "At the start of the Fight phase, you can select one enemy unit within 12\" of and visible to this Psyker. Until the end of the phase, subtract 1 from the Attacks characteristic of melee weapons equipped by models in that unit."
+        }
+      ],
+      "keywords": ["Monster", "Character", "Fly", "Psyker", "Great Devourer", "Synapse", "Vanguard Invader", "Hive Tyrant", "Winged Hive Tyrant"]
+    },
+    {
+      "id": "parasite-of-mortrex",
+      "name": "Parasite of Mortrex",
+      "points": { "1": 90 },
+      "stats": { "m": 12, "t": 5, "sv": "4+", "w": 5, "ld": "8+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "barbed-ovipositor",
+          "name": "Barbed Ovipositor",
+          "type": "melee",
+          "stats": { "a": 1, "ws": "2+", "s": 3, "ap": -2, "d": 3 },
+          "abilities": ["Extra Attacks"]
+        },
+        {
+          "id": "clawed-limbs",
+          "name": "Clawed Limbs",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and arrive on a later turn within 9\" of any enemy units."
+        },
+        {
+          "id": "lone-operative",
+          "name": "Lone Operative",
+          "description": "Unless this unit is within 3\" of one or more friendly TYRANIDS units, this unit can only be selected as the target of a ranged attack if the attacking model is within 12\"."
+        },
+        {
+          "id": "stealth",
+          "name": "Stealth",
+          "description": "If every model in a unit has this ability, then each time a ranged attack is made against it, subtract 1 from that attack's Hit roll."
+        },
+        {
+          "id": "parasitic-infection",
+          "name": "Parasitic Infection",
+          "description": "Each time this model's Barbed Ovipositor destroys an enemy INFANTRY model, after this model has finished making its attacks, you can add a new RIPPER SWARMS unit containing D3 models to your army and set it up within 6\" of this model and not within Engagement Range of any enemy models."
+        },
+        {
+          "id": "it-itches",
+          "name": "It Itches!",
+          "description": "At the start of the Fight phase, each enemy unit within Engagement Range of this model must take a Battle-shock test."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Fly", "Great Devourer", "Synapse", "Vanguard Invader", "Parasite of Mortrex"]
+    },
+    {
+      "id": "tervigon",
+      "name": "Tervigon",
+      "points": { "1": 200 },
+      "stats": { "m": 8, "t": 11, "sv": "2+", "w": 16, "ld": "7+", "oc": 5 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "stinger-salvoes",
+          "name": "Stinger Salvoes",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 8, "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "massive-crushing-claws",
+          "name": "Massive Crushing Claws",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "4+", "s": 12, "ap": -3, "d": "D6+1" },
+          "abilities": [],
+          "loadoutGroup": "crushing-claws"
+        },
+        {
+          "id": "massive-scything-talons-strike",
+          "name": "Massive Scything Talons - Strike",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 9, "ap": -2, "d": "D6" },
+          "abilities": [],
+          "loadoutGroup": "scything-talons"
+        },
+        {
+          "id": "massive-scything-talons-sweep",
+          "name": "Massive Scything Talons - Sweep",
+          "type": "melee",
+          "stats": { "a": 8, "ws": "3+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "scything-talons-sweep"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "scything-talons", "name": "Massive Scything Talons - Strike", "default": true },
+            { "id": "scything-talons-sweep", "name": "Massive Scything Talons - Sweep" },
+            { "id": "crushing-claws", "name": "Massive Crushing Claws" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d6",
+          "name": "Deadly Demise D6",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D6 mortal wounds."
+        },
+        {
+          "id": "spawn-termagants",
+          "name": "Spawn Termagants",
+          "description": "In your Command phase, you can select one friendly TERMAGANTS unit within 6\" of this model and return up to D3+3 destroyed models to that unit."
+        },
+        {
+          "id": "brood-progenitor",
+          "name": "Brood Progenitor (Aura, Psychic)",
+          "description": "While a friendly TERMAGANTS unit is within 6\" of this model, ranged weapons equipped by models in that unit have the [LETHAL HITS] ability."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-5 Wounds Remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Monster", "Character", "Psyker", "Great Devourer", "Synapse", "Tervigon"]
+    },
+    {
+      "id": "barbgaunts",
+      "name": "Barbgaunts",
+      "points": { "5": 55, "10": 110 },
+      "stats": { "m": 6, "t": 4, "sv": "4+", "w": 2, "ld": "8+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "barblauncher",
+          "name": "Barblauncher",
+          "type": "ranged",
+          "stats": { "range": 24, "a": "D6", "bs": "4+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Blast", "Heavy"]
+        },
+        {
+          "id": "barbgaunt-claws",
+          "name": "Chitinous Claws and Teeth",
+          "type": "melee",
+          "stats": { "a": 1, "ws": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "disruption-bombardment",
+          "name": "Disruption Bombardment",
+          "description": "Each time a unit is hit by one or more attacks made by this unit's Barblaunchers, until the end of your opponent's next turn, subtract 2\" from the Move characteristic of models in that unit and subtract 2 from Advance and Charge rolls made for that unit."
+        }
+      ],
+      "keywords": ["Infantry", "Great Devourer", "Barbgaunts"]
+    },
+    {
+      "id": "biovores",
+      "name": "Biovores",
+      "points": { "1": 50, "2": 100, "3": 150 },
+      "stats": { "m": 5, "t": 6, "sv": "3+", "w": 5, "ld": "8+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "spore-mine-launcher",
+          "name": "Spore Mine Launcher",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D3", "bs": "4+", "s": 6, "ap": -1, "d": 2 },
+          "abilities": ["Blast", "Devastating Wounds", "Heavy", "Indirect Fire"]
+        },
+        {
+          "id": "chitin-barbed-limbs",
+          "name": "Chitin-barbed Limbs",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-1",
+          "name": "Deadly Demise 1",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers 1 mortal wound."
+        },
+        {
+          "id": "seed-spore-mines",
+          "name": "Seed Spore Mines",
+          "description": "In your Shooting phase, instead of selecting targets for this unit's Spore Mine Launcher, you can add a new SPORE MINES unit to your army and set it up anywhere on the battlefield that is within 48\" of this unit and not within 9\" of any enemy models. That unit contains 1 model for each model in this unit."
+        }
+      ],
+      "keywords": ["Infantry", "Great Devourer", "Biovores"]
+    },
+    {
+      "id": "hive-guard",
+      "name": "Hive Guard",
+      "points": { "3": 90, "6": 180 },
+      "stats": { "m": 6, "t": 7, "sv": "3+", "w": 4, "ld": "8+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "shockcannon",
+          "name": "Shockcannon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 7, "ap": -1, "d": 3 },
+          "abilities": ["Anti-Vehicle 2+"],
+          "loadoutGroup": "shockcannon"
+        },
+        {
+          "id": "impaler-cannon",
+          "name": "Impaler Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 4, "bs": "4+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Heavy", "Indirect Fire"],
+          "loadoutGroup": "impaler-cannon"
+        },
+        {
+          "id": "hive-guard-claws",
+          "name": "Chitinous Claws and Teeth",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "shockcannon", "name": "Shockcannon", "default": true },
+            { "id": "impaler-cannon", "name": "Impaler Cannon" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "defensive-stance",
+          "name": "Defensive Stance",
+          "description": "Each time you target this unit with the Fire Overwatch Stratagem, hits are scored on unmodified Hit rolls of 5+ instead of only 6. If this unit is within range of an objective marker you control, hits are scored on unmodified Hit rolls of 4+ instead."
+        }
+      ],
+      "keywords": ["Infantry", "Great Devourer", "Hive Guard"]
+    },
+    {
+      "id": "pyrovores",
+      "name": "Pyrovores",
+      "points": { "1": 35, "2": 70, "3": 105 },
+      "stats": { "m": 5, "t": 6, "sv": "3+", "w": 5, "ld": "8+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "flamespurt",
+          "name": "Flamespurt",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6+1", "bs": "N/A", "s": 6, "ap": -1, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent", "Twin-linked"]
+        },
+        {
+          "id": "pyrovore-chitin-limbs",
+          "name": "Chitin-barbed Limbs",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-1",
+          "name": "Deadly Demise 1",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers 1 mortal wound."
+        },
+        {
+          "id": "burning-spray",
+          "name": "Burning Spray",
+          "description": "In your Shooting phase, after this unit has shot, select one enemy unit that was hit by one or more of those attacks. Until the end of the phase, that unit cannot have the Benefit of Cover."
+        }
+      ],
+      "keywords": ["Infantry", "Great Devourer", "Harvester", "Pyrovores"]
+    },
+    {
+      "id": "raveners",
+      "name": "Raveners",
+      "points": { "3": 75, "6": 150 },
+      "stats": { "m": 10, "t": 5, "sv": "4+", "w": 3, "ld": "8+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "ravener-claws-talons",
+          "name": "Ravener Claws and Talons",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Twin-linked"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and arrive on a later turn within 9\" of any enemy units."
+        },
+        {
+          "id": "death-from-below",
+          "name": "Death From Below",
+          "description": "At the end of your opponent's turn, if this unit is not within Engagement Range of one or more enemy units, you can remove this unit from the battlefield and place it into Strategic Reserves."
+        }
+      ],
+      "keywords": ["Infantry", "Great Devourer", "Vanguard Invader", "Burrowers", "Raveners"]
+    },
+    {
+      "id": "venomthropes",
+      "name": "Venomthropes",
+      "points": { "3": 70, "6": 140 },
+      "stats": { "m": 6, "t": 5, "sv": "4+", "w": 3, "ld": "8+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "toxic-lashes",
+          "name": "Toxic Lashes",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 3, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 2+"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "stealth",
+          "name": "Stealth",
+          "description": "If every model in a unit has this ability, then each time a ranged attack is made against it, subtract 1 from that attack's Hit roll."
+        },
+        {
+          "id": "foul-spores",
+          "name": "Foul Spores (Aura)",
+          "description": "While a friendly TYRANIDS unit is within 6\" of this unit, models in that unit have the Benefit of Cover against ranged attacks. In addition, while a friendly TYRANIDS unit (excluding MONSTER units) is within 6\" of this unit, that unit has the Stealth ability."
+        }
+      ],
+      "keywords": ["Infantry", "Fly", "Great Devourer", "Venomthropes"]
+    },
+    {
+      "id": "von-ryans-leapers",
+      "name": "Von Ryan's Leapers",
+      "points": { "3": 70, "6": 140 },
+      "stats": { "m": 10, "t": 5, "sv": "4+", "w": 3, "ld": "8+", "oc": 1 },
+      "invuln": "6+",
+      "weapons": [
+        {
+          "id": "leapers-talons",
+          "name": "Leaper's Talons",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "3+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "fights-first",
+          "name": "Fights First",
+          "description": "This unit is eligible to fight in the Fight phase before units without this ability."
+        },
+        {
+          "id": "infiltrators",
+          "name": "Infiltrators",
+          "description": "During deployment, this unit can be set up anywhere on the battlefield that is more than 9\" horizontally away from the enemy deployment zone and all enemy models."
+        },
+        {
+          "id": "stealth",
+          "name": "Stealth",
+          "description": "If every model in a unit has this ability, then each time a ranged attack is made against it, subtract 1 from that attack's Hit roll."
+        },
+        {
+          "id": "pouncing-leap",
+          "name": "Pouncing Leap",
+          "description": "Each time you select this unit to use the Heroic Intervention Stratagem, you can do so even if you have already used that Stratagem on a different unit this phase."
+        }
+      ],
+      "keywords": ["Infantry", "Great Devourer", "Vanguard Invader", "Von Ryan's Leapers"]
+    },
+    {
+      "id": "ripper-swarms",
+      "name": "Ripper Swarms",
+      "points": { "3": 40, "6": 80 },
+      "stats": { "m": 6, "t": 2, "sv": "6+", "w": 4, "ld": "8+", "oc": 0 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "spinemaw",
+          "name": "Spinemaw",
+          "type": "ranged",
+          "stats": { "range": 6, "a": 4, "bs": "5+", "s": 3, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "ripper-claws",
+          "name": "Chitinous Claws and Teeth",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "5+", "s": 2, "ap": 0, "d": 1 },
+          "abilities": ["Sustained Hits 1"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and arrive on a later turn within 9\" of any enemy units."
+        },
+        {
+          "id": "chitinous-horrors",
+          "name": "Chitinous Horrors (Aura)",
+          "description": "While an enemy unit is within Engagement Range of this unit, halve the Objective Control characteristic of models in that enemy unit."
+        }
+      ],
+      "keywords": ["Swarm", "Great Devourer", "Harvester", "Ripper Swarms"]
+    },
+    {
+      "id": "spore-mines",
+      "name": "Spore Mines",
+      "points": { "3": 50, "6": 100 },
+      "stats": { "m": 4, "t": 1, "sv": "7+", "w": 1, "ld": "8+", "oc": 0 },
+      "invuln": null,
+      "weapons": [],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and arrive on a later turn within 9\" of any enemy units."
+        },
+        {
+          "id": "bio-minefield",
+          "name": "Bio-minefield",
+          "description": "Enemy units cannot start or end an Advance move within 6\" of this unit."
+        },
+        {
+          "id": "floating-death",
+          "name": "Floating Death",
+          "description": "Each time an enemy unit ends a move within 3\" of a model in this unit, and each time a model in this unit ends a move within 3\" of an enemy unit, one model in this unit must explode. When it does, roll one D6: on a 2-5, that enemy unit suffers 1 mortal wound; on a 6, that enemy unit suffers D3 mortal wounds. The model that exploded is then destroyed."
+        }
+      ],
+      "keywords": ["Beast", "Fly", "Great Devourer", "Spore Mines"]
+    },
+    {
+      "id": "mucolid-spores",
+      "name": "Mucolid Spores",
+      "points": { "1": 30, "2": 60 },
+      "stats": { "m": 4, "t": 4, "sv": "7+", "w": 3, "ld": "8+", "oc": 0 },
+      "invuln": null,
+      "weapons": [],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and arrive on a later turn within 9\" of any enemy units."
+        },
+        {
+          "id": "bio-minefield",
+          "name": "Bio-minefield",
+          "description": "Enemy units cannot start or end an Advance move within 6\" of this unit."
+        },
+        {
+          "id": "floating-death",
+          "name": "Floating Death",
+          "description": "Each time an enemy unit ends a move within 3\" of a model in this unit, and each time a model in this unit ends a move within 3\" of an enemy unit, one model in this unit must explode. When it does, roll one D6: on a 2-5, that enemy unit suffers D3 mortal wounds; on a 6, that enemy unit suffers D6 mortal wounds. The model that exploded is then destroyed."
+        }
+      ],
+      "keywords": ["Beast", "Fly", "Great Devourer", "Mucolid Spores"]
+    },
+    {
+      "id": "exocrine",
+      "name": "Exocrine",
+      "points": { "1": 135 },
+      "stats": { "m": 8, "t": 10, "sv": "3+", "w": 14, "ld": "8+", "oc": 4 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bio-plasmic-cannon",
+          "name": "Bio-plasmic Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D6+3", "bs": "3+", "s": 9, "ap": -3, "d": 3 },
+          "abilities": ["Blast", "Heavy"]
+        },
+        {
+          "id": "powerful-limbs",
+          "name": "Powerful Limbs",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 7, "ap": 0, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "symbiotic-targeting",
+          "name": "Symbiotic Targeting",
+          "description": "In your Shooting phase, each time this model shoots, after resolving those attacks, select one enemy unit that was hit by one or more of those attacks. Until the end of the phase, each time a friendly TYRANIDS model makes a ranged attack that targets that enemy unit, you can re-roll a Hit roll of 1."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-5 Wounds Remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Monster", "Great Devourer", "Exocrine"]
+    },
+    {
+      "id": "harpy",
+      "name": "Harpy",
+      "points": { "1": 180 },
+      "stats": { "m": 20, "t": 9, "sv": "3+", "w": 12, "ld": "8+", "oc": 0 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "harpy-stinger-salvoes",
+          "name": "Stinger Salvoes",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 8, "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "twin-heavy-venom-cannon",
+          "name": "Twin Heavy Venom Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D3", "bs": "3+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": ["Blast", "Twin-linked"],
+          "loadoutGroup": "twin-heavy-venom-cannon"
+        },
+        {
+          "id": "twin-stranglethorn-cannon",
+          "name": "Twin Stranglethorn Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D6+1", "bs": "3+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": ["Blast", "Twin-linked"],
+          "loadoutGroup": "twin-stranglethorn-cannon"
+        },
+        {
+          "id": "scything-wings",
+          "name": "Scything Wings",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "4+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Main Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "twin-heavy-venom-cannon", "name": "Twin Heavy Venom Cannon", "default": true },
+            { "id": "twin-stranglethorn-cannon", "name": "Twin Stranglethorn Cannon" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "hover",
+          "name": "Hover",
+          "description": "At the end of your Movement phase, this model can Hover. If it does, until the start of your next Movement phase, it loses the Aircraft keyword and can be targeted by ranged weapons."
+        },
+        {
+          "id": "spore-mine-cysts",
+          "name": "Spore Mine Cysts",
+          "description": "Each time this model ends a Normal move, you can select one enemy unit it moved over and roll six D6: for each 4+, that unit suffers 1 mortal wound. Alternatively, you can add a new SPORE MINES unit containing D3 models to your army and set it up anywhere on the battlefield within 6\" of this model and not within Engagement Range of any enemy models."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-4 Wounds Remaining",
+          "description": "While this model has 1-4 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Monster", "Fly", "Aircraft", "Great Devourer", "Vanguard Invader", "Harpy"]
+    },
+    {
+      "id": "haruspex",
+      "name": "Haruspex",
+      "points": { "1": 125 },
+      "stats": { "m": 8, "t": 11, "sv": "3+", "w": 14, "ld": "8+", "oc": 4 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "grasping-tongue",
+          "name": "Grasping Tongue",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 6, "ap": -2, "d": "D6+1" },
+          "abilities": ["Precision"]
+        },
+        {
+          "id": "ravenous-maw",
+          "name": "Ravenous Maw",
+          "type": "melee",
+          "stats": { "a": 14, "ws": "3+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": []
+        },
+        {
+          "id": "shovelling-claws",
+          "name": "Shovelling Claws",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 14, "ap": -2, "d": "D6+1" },
+          "abilities": ["Extra Attacks"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "grisly-spectacle",
+          "name": "Grisly Spectacle",
+          "description": "Each time this model destroys an enemy unit, each enemy unit within 6\" of this model must take a Battle-shock test."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-5 Wounds Remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Monster", "Great Devourer", "Harvester", "Haruspex"]
+    },
+    {
+      "id": "hive-crone",
+      "name": "Hive Crone",
+      "points": { "1": 200 },
+      "stats": { "m": 20, "t": 9, "sv": "3+", "w": 12, "ld": "8+", "oc": 0 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "drool-cannon",
+          "name": "Drool Cannon",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "2D6", "bs": "N/A", "s": 6, "ap": -1, "d": 1 },
+          "abilities": ["Torrent"]
+        },
+        {
+          "id": "crone-stinger-salvoes",
+          "name": "Stinger Salvoes",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 8, "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "tentaclids",
+          "name": "Tentaclids",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 4, "bs": "3+", "s": 7, "ap": 0, "d": 2 },
+          "abilities": ["Anti-Vehicle 4+", "Devastating Wounds"]
+        },
+        {
+          "id": "crone-scything-wings",
+          "name": "Scything Wings",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "4+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": []
+        },
+        {
+          "id": "thorax-spur",
+          "name": "Thorax Spur",
+          "type": "melee",
+          "stats": { "a": 1, "ws": "3+", "s": 10, "ap": -3, "d": "D6" },
+          "abilities": ["Anti-Fly 2+", "Extra Attacks"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "hover",
+          "name": "Hover",
+          "description": "At the end of your Movement phase, this model can Hover. If it does, until the start of your next Movement phase, it loses the Aircraft keyword and can be targeted by ranged weapons."
+        },
+        {
+          "id": "airborne-predator",
+          "name": "Airborne Predator",
+          "description": "Each time this model makes an attack that targets a unit that can FLY, add 1 to the Hit roll."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-4 Wounds Remaining",
+          "description": "While this model has 1-4 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Monster", "Fly", "Aircraft", "Great Devourer", "Vanguard Invader", "Hive Crone"]
+    },
+    {
+      "id": "maleceptor",
+      "name": "Maleceptor",
+      "points": { "1": 170 },
+      "stats": { "m": 8, "t": 11, "sv": "3+", "w": 14, "ld": "7+", "oc": 4 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "psychic-overload",
+          "name": "Psychic Overload",
+          "type": "ranged",
+          "stats": { "range": 18, "a": "D6+3", "bs": "3+", "s": 10, "ap": -2, "d": 3 },
+          "abilities": ["Blast", "Psychic"]
+        },
+        {
+          "id": "maleceptor-scything-talons-strike",
+          "name": "Massive Scything Talons - Strike",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 9, "ap": -2, "d": "D6+1" },
+          "abilities": []
+        },
+        {
+          "id": "maleceptor-scything-talons-sweep",
+          "name": "Massive Scything Talons - Sweep",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "3+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "melee-mode",
+          "name": "Attack Mode",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "strike", "name": "Strike (3A, S9, D6+1)", "default": true },
+            { "id": "sweep", "name": "Sweep (6A, S7, D2)" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "encephalic-diffusion",
+          "name": "Encephalic Diffusion (Aura, Psychic)",
+          "description": "While an enemy unit is within 6\" of this model, each time a model in that enemy unit makes an attack, subtract 1 from the Hit roll. While an enemy unit that is Below Half-strength is within 6\" of this model, each time a model in that unit makes an attack, subtract 1 from the Wound roll as well."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-5 Wounds Remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Monster", "Psyker", "Great Devourer", "Synapse", "Maleceptor"]
+    },
+    {
+      "id": "mawloc",
+      "name": "Mawloc",
+      "points": { "1": 145 },
+      "stats": { "m": 10, "t": 10, "sv": "3+", "w": 14, "ld": "8+", "oc": 4 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "distensible-jaw",
+          "name": "Distensible Jaw",
+          "type": "melee",
+          "stats": { "a": 1, "ws": "3+", "s": 5, "ap": 0, "d": 3 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Extra Attacks"]
+        },
+        {
+          "id": "mawloc-scything-talons",
+          "name": "Mawloc Scything Talons",
+          "type": "melee",
+          "stats": { "a": 16, "ws": "3+", "s": 8, "ap": -2, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and arrive on a later turn within 9\" of any enemy units."
+        },
+        {
+          "id": "terror-from-the-deep",
+          "name": "Terror From The Deep",
+          "description": "When this model is set up on the battlefield from Strategic Reserves, you can select one enemy unit within 12\" of this model. Roll one D6 for each model in that unit (to a maximum of six D6): for each 3+, that unit suffers 1 mortal wound. After resolving these mortal wounds, that enemy unit must take a Battle-shock test."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-5 Wounds Remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Monster", "Great Devourer", "Vanguard Invader", "Burrowers", "Mawloc"]
+    },
+    {
+      "id": "neurolictor",
+      "name": "Neurolictor",
+      "points": { "1": 65 },
+      "stats": { "m": 8, "t": 5, "sv": "4+", "w": 7, "ld": "7+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "piercing-claws-talons",
+          "name": "Piercing Claws and Talons",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 6, "ap": -2, "d": 1 },
+          "abilities": ["Precision"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "infiltrators",
+          "name": "Infiltrators",
+          "description": "During deployment, this unit can be set up anywhere on the battlefield that is more than 9\" horizontally away from the enemy deployment zone and all enemy models."
+        },
+        {
+          "id": "lone-operative",
+          "name": "Lone Operative",
+          "description": "Unless this unit is within 3\" of one or more friendly TYRANIDS units, this unit can only be selected as the target of a ranged attack if the attacking model is within 12\"."
+        },
+        {
+          "id": "stealth",
+          "name": "Stealth",
+          "description": "If every model in a unit has this ability, then each time a ranged attack is made against it, subtract 1 from that attack's Hit roll."
+        },
+        {
+          "id": "feeder-tendrils",
+          "name": "Feeder Tendrils",
+          "description": "Each time this model destroys an enemy CHARACTER model, you gain 1CP."
+        },
+        {
+          "id": "neural-disruption",
+          "name": "Neural Disruption",
+          "description": "In your Command phase, you can select one enemy unit within 12\" of this model. That enemy unit must take a Battle-shock test."
+        },
+        {
+          "id": "psychological-saboteur",
+          "name": "Psychological Saboteur (Aura)",
+          "description": "While a Battle-shocked enemy unit is within 12\" of this model, each time a model in that unit makes an attack, subtract 1 from the Hit roll. In addition, each time a friendly TYRANIDS model makes an attack that targets a Battle-shocked enemy unit within 12\" of this model, add 1 to the Wound roll."
+        }
+      ],
+      "keywords": ["Infantry", "Great Devourer", "Vanguard Invader", "Synapse", "Neurolictor"]
+    },
+    {
+      "id": "norn-assimilator",
+      "name": "Norn Assimilator",
+      "points": { "1": 290 },
+      "stats": { "m": 10, "t": 11, "sv": "2+", "w": 16, "ld": "7+", "oc": 5 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "toxinjector-harpoon-ranged",
+          "name": "Toxinjector Harpoon",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 2, "bs": "2+", "s": 12, "ap": -3, "d": "D6+1" },
+          "abilities": []
+        },
+        {
+          "id": "norn-scything-talons",
+          "name": "Monstrous Scything Talons",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": []
+        },
+        {
+          "id": "toxinjector-harpoon-melee",
+          "name": "Toxinjector Harpoon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "2+", "s": 12, "ap": -3, "d": "D6+1" },
+          "abilities": ["Extra Attacks"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-d6",
+          "name": "Deadly Demise D6",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D6 mortal wounds."
+        },
+        {
+          "id": "singular-purpose",
+          "name": "Singular Purpose",
+          "description": "At the start of the first battle round, select one of the following: Destroy: Select one enemy unit. Each time this model makes an attack that targets that unit, you can re-roll the Hit roll and Wound roll. OR Secure: Select one objective marker. While this model is within range of that objective, it has the Feel No Pain 5+ ability and its OC is 15."
+        },
+        {
+          "id": "harpoon-barbs",
+          "name": "Harpoon Barbs",
+          "description": "Each time an enemy unit (excluding TITANIC units) within Engagement Range of this model is selected to Fall Back, roll one D6: on a 2+, that enemy unit suffers D6 mortal wounds."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-5 Wounds Remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Monster", "Great Devourer", "Synapse", "Harvester", "Norn Assimilator"]
+    },
+    {
+      "id": "norn-emissary",
+      "name": "Norn Emissary",
+      "points": { "1": 275 },
+      "stats": { "m": 10, "t": 11, "sv": "2+", "w": 16, "ld": "7+", "oc": 5 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "psychic-tendril-neuroparasite",
+          "name": "Psychic Tendril - Neuroparasite",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 2, "bs": "2+", "s": 8, "ap": -2, "d": "D3" },
+          "abilities": ["Precision", "Psychic"],
+          "loadoutGroup": "neuroparasite"
+        },
+        {
+          "id": "psychic-tendril-neuroblast",
+          "name": "Psychic Tendril - Neuroblast",
+          "type": "ranged",
+          "stats": { "range": 18, "a": "2D6", "bs": "2+", "s": 6, "ap": -2, "d": 1 },
+          "abilities": ["Blast", "Psychic"],
+          "loadoutGroup": "neuroblast"
+        },
+        {
+          "id": "psychic-tendril-neurolance",
+          "name": "Psychic Tendril - Neurolance",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 2, "bs": "2+", "s": 12, "ap": -3, "d": "D6" },
+          "abilities": ["Melta 2", "Psychic"],
+          "loadoutGroup": "neurolance"
+        },
+        {
+          "id": "emissary-scything-talons",
+          "name": "Monstrous Scything Talons",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": []
+        },
+        {
+          "id": "monstrous-rending-claws",
+          "name": "Monstrous Rending Claws",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "2+", "s": 7, "ap": -2, "d": 2 },
+          "abilities": ["Extra Attacks"]
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "psychic-tendril",
+          "name": "Psychic Tendril",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "neuroparasite", "name": "Neuroparasite (Precision)", "default": true },
+            { "id": "neuroblast", "name": "Neuroblast (Blast)" },
+            { "id": "neurolance", "name": "Neurolance (Melta)" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d6",
+          "name": "Deadly Demise D6",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D6 mortal wounds."
+        },
+        {
+          "id": "singular-purpose",
+          "name": "Singular Purpose",
+          "description": "At the start of the first battle round, select one of the following: Destroy: Select one enemy unit. Each time this model makes an attack that targets that unit, you can re-roll the Hit roll and Wound roll. OR Secure: Select one objective marker. While this model is within range of that objective, it has the Feel No Pain 5+ ability and its OC is 15."
+        },
+        {
+          "id": "unnatural-resilience",
+          "name": "Unnatural Resilience",
+          "description": "Each time this model would lose a wound as a result of a mortal wound, roll one D6: on a 4+, that wound is not lost."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-5 Wounds Remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Monster", "Psyker", "Great Devourer", "Synapse", "Norn Emissary"]
+    },
+    {
+      "id": "psychophage",
+      "name": "Psychophage",
+      "points": { "1": 125 },
+      "stats": { "m": 8, "t": 9, "sv": "3+", "w": 10, "ld": "8+", "oc": 3 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "psychoclastic-torrent",
+          "name": "Psychoclastic Torrent",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 6, "ap": -1, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent"]
+        },
+        {
+          "id": "talons-betentacled-maw",
+          "name": "Talons and Betentacled Maw",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "3+", "s": 6, "ap": -1, "d": 2 },
+          "abilities": ["Anti-Psyker 4+", "Devastating Wounds"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-1",
+          "name": "Deadly Demise 1",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers 1 mortal wound."
+        },
+        {
+          "id": "feel-no-pain-5",
+          "name": "Feel No Pain 5+",
+          "description": "Each time this model would lose a wound, roll one D6: on a 5+, that wound is not lost."
+        },
+        {
+          "id": "bio-stimulus",
+          "name": "Bio-stimulus",
+          "description": "In your Shooting phase, after this model has shot, select one enemy unit that was hit by one or more of those attacks. Until the end of the turn, each time a friendly TYRANIDS model makes a melee attack that targets that unit, improve the Armour Penetration characteristic of that attack by 1."
+        },
+        {
+          "id": "feeding-frenzy",
+          "name": "Feeding Frenzy",
+          "description": "Each time this model makes an attack that targets an enemy unit that is below its Starting Strength, add 1 to the Hit roll. If that unit is Below Half-strength, add 1 to the Wound roll as well."
+        }
+      ],
+      "keywords": ["Monster", "Great Devourer", "Harvester", "Psychophage"]
+    },
+    {
+      "id": "screamer-killer",
+      "name": "Screamer-Killer",
+      "points": { "1": 165 },
+      "stats": { "m": 8, "t": 9, "sv": "2+", "w": 10, "ld": "8+", "oc": 3 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bio-plasmic-scream",
+          "name": "Bio-plasmic Scream",
+          "type": "ranged",
+          "stats": { "range": 18, "a": "D6+3", "bs": "4+", "s": 8, "ap": -2, "d": 1 },
+          "abilities": ["Assault", "Blast", "Lethal Hits"]
+        },
+        {
+          "id": "screamer-killer-talons",
+          "name": "Screamer-Killer Talons",
+          "type": "melee",
+          "stats": { "a": 10, "ws": "3+", "s": 10, "ap": -2, "d": 3 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-1",
+          "name": "Deadly Demise 1",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers 1 mortal wound."
+        },
+        {
+          "id": "death-scream",
+          "name": "Death Scream",
+          "description": "In your Shooting phase, after this model has shot, select one enemy unit that was hit by one or more of those attacks. That unit must take a Battle-shock test, subtracting 1 from the result."
+        }
+      ],
+      "keywords": ["Monster", "Great Devourer", "Screamer-Killer"]
+    },
+    {
+      "id": "sporocyst",
+      "name": "Sporocyst",
+      "points": { "1": 145 },
+      "stats": { "m": "-", "t": 10, "sv": "3+", "w": 10, "ld": "8+", "oc": 0 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "sporocyst-bio-weapons",
+          "name": "Sporocyst Bio-weapons",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 10, "bs": "4+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": []
+        },
+        {
+          "id": "sporocyst-flensing-whips",
+          "name": "Flensing Whips",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "4+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "seed-mucolids",
+          "name": "Seed Mucolids",
+          "description": "In your Shooting phase, instead of selecting targets for this model, you can add a new MUCOLID SPORES unit containing 1 model to your army and set it up anywhere on the battlefield that is within 18\" of this model and not within 9\" of any enemy models."
+        },
+        {
+          "id": "hive-defences",
+          "name": "Hive Defences",
+          "description": "Each time you target this model with the Fire Overwatch Stratagem, you can do so even if you have already used that Stratagem on a different unit this phase."
+        }
+      ],
+      "keywords": ["Monster", "Great Devourer", "Sporocyst"]
+    },
+    {
+      "id": "toxicrene",
+      "name": "Toxicrene",
+      "points": { "1": 165 },
+      "stats": { "m": 8, "t": 11, "sv": "3+", "w": 14, "ld": "8+", "oc": 4 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "massive-toxic-lashes-ranged",
+          "name": "Massive Toxic Lashes",
+          "type": "ranged",
+          "stats": { "range": 9, "a": "2D6", "bs": "3+", "s": 6, "ap": -1, "d": 2 },
+          "abilities": ["Anti-Infantry 2+"]
+        },
+        {
+          "id": "massive-toxic-lashes-melee",
+          "name": "Massive Toxic Lashes",
+          "type": "melee",
+          "stats": { "a": 12, "ws": "3+", "s": 6, "ap": -1, "d": 2 },
+          "abilities": ["Anti-Infantry 2+"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "grasping-tendrils",
+          "name": "Grasping Tendrils",
+          "description": "Each time an enemy unit (excluding TITANIC units) within Engagement Range of this model is selected to Fall Back, roll one D6: on a 3+, that unit cannot Fall Back this phase."
+        },
+        {
+          "id": "hypertoxic-miasma",
+          "name": "Hypertoxic Miasma (Aura)",
+          "description": "At the end of the Movement phase, roll one D6 for each enemy unit within 6\" of this model: on a 2-3, that enemy unit suffers 1 mortal wound; on a 4-5, it suffers D3 mortal wounds; on a 6, it suffers D6 mortal wounds."
+        }
+      ],
+      "keywords": ["Monster", "Great Devourer", "Toxicrene"]
+    },
+    {
+      "id": "trygon",
+      "name": "Trygon",
+      "points": { "1": 170 },
+      "stats": { "m": 10, "t": 10, "sv": "3+", "w": 14, "ld": "8+", "oc": 4 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bio-electric-pulse",
+          "name": "Bio-electric Pulse",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 6, "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Sustained Hits 2"]
+        },
+        {
+          "id": "trygon-scything-talons",
+          "name": "Trygon Scything Talons",
+          "type": "melee",
+          "stats": { "a": 12, "ws": "3+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and arrive on a later turn within 9\" of any enemy units."
+        },
+        {
+          "id": "subterranean-tunnels",
+          "name": "Subterranean Tunnels",
+          "description": "Each time this model is set up on the battlefield from Strategic Reserves, it can be set up anywhere on the battlefield that is more than 6\" horizontally away from all enemy models. If it does, it cannot declare a charge the same turn."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-5 Wounds Remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Monster", "Great Devourer", "Vanguard Invader", "Burrowers", "Trygon"]
+    },
+    {
+      "id": "tyrannofex",
+      "name": "Tyrannofex",
+      "points": { "1": 190 },
+      "stats": { "m": 9, "t": 12, "sv": "2+", "w": 16, "ld": "8+", "oc": 5 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "acid-spray",
+          "name": "Acid Spray",
+          "type": "ranged",
+          "stats": { "range": 18, "a": "D6+6", "bs": "N/A", "s": 6, "ap": -2, "d": 2 },
+          "abilities": ["Torrent"],
+          "loadoutGroup": "acid-spray"
+        },
+        {
+          "id": "fleshborer-hive",
+          "name": "Fleshborer Hive",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 20, "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Heavy", "Sustained Hits 1", "Twin-linked"],
+          "loadoutGroup": "fleshborer-hive"
+        },
+        {
+          "id": "rupture-cannon",
+          "name": "Rupture Cannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 2, "bs": "3+", "s": 18, "ap": -4, "d": "D6+6" },
+          "abilities": ["Heavy"],
+          "loadoutGroup": "rupture-cannon"
+        },
+        {
+          "id": "tyrannofex-stinger-salvoes",
+          "name": "Stinger Salvoes",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 8, "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "tyrannofex-powerful-limbs",
+          "name": "Powerful Limbs",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 8, "ap": 0, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Main Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "acid-spray", "name": "Acid Spray", "default": true },
+            { "id": "fleshborer-hive", "name": "Fleshborer Hive" },
+            { "id": "rupture-cannon", "name": "Rupture Cannon" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d6",
+          "name": "Deadly Demise D6",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D6 mortal wounds."
+        },
+        {
+          "id": "resilient-organism",
+          "name": "Resilient Organism",
+          "description": "Once per battle, when an attack is allocated to this model, you can change the Damage characteristic of that attack to 0."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-5 Wounds Remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Monster", "Great Devourer", "Tyrannofex"]
+    },
+    {
+      "id": "tyrannocyte",
+      "name": "Tyrannocyte",
+      "points": { "1": 105 },
+      "stats": { "m": 8, "t": 9, "sv": "3+", "w": 10, "ld": "8+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "tyrannocyte-bio-weapons",
+          "name": "Tyrannocyte Bio-weapons",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 5, "bs": "4+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": []
+        },
+        {
+          "id": "tyrannocyte-flensing-whips",
+          "name": "Flensing Whips",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "4+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and arrive on a later turn within 9\" of any enemy units."
+        },
+        {
+          "id": "aerial-seeding",
+          "name": "Aerial Seeding",
+          "description": "This model must start the battle in Reserves, but neither it nor any units embarked within it are counted towards any limits placed on the number of Strategic Reserves units you can have. This model can be set up in the Reinforcements step of your Movement phase, regardless of any mission rules. Any units embarked within this model must immediately disembark, and they must be set up more than 9\" away from all enemy models. This model can then make a Normal move."
+        },
+        {
+          "id": "transport",
+          "name": "Transport",
+          "description": "This model has a transport capacity of 20 TYRANIDS INFANTRY models, or 1 MONSTER model with 12 or fewer wounds."
+        }
+      ],
+      "keywords": ["Monster", "Fly", "Transport", "Dedicated Transport", "Great Devourer", "Vanguard Invader", "Tyrannocyte"]
     }
   ],
   "detachments": {
@@ -1026,6 +2806,492 @@
           "modifiers": []
         }
       ]
+    },
+    "assimilation_swarm": {
+      "name": "Assimilation Swarm",
+      "rules": [
+        {
+          "id": "feed-the-swarm",
+          "name": "Feed the Swarm",
+          "description": "In your Command phase, each HARVESTER unit from your army can Regenerate one friendly TYRANIDS unit that is within 6\" of it. A unit can only be Regenerated once per phase. When a unit Regenerates: One model regains up to D3+1 lost wounds, OR one destroyed INFANTRY model (excluding CHARACTERS) is returned with its full wounds, OR if that unit has the ENDLESS MULTITUDE keyword, up to 3 destroyed models are returned instead.",
+          "type": "passive",
+          "keywords": ["HARVESTER"],
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "tyrannoformed",
+          "name": "Tyrannoformed",
+          "cost": 1,
+          "phase": "Command",
+          "description": "Strategic Ploy. Your Command phase: Select one HARVESTER unit from your army within range of an objective marker. That objective marker is now a Sticky Objective (remains under your control even if you move away, until your opponent controls it).",
+          "modifiers": []
+        },
+        {
+          "id": "ablative-carapace",
+          "name": "Ablative Carapace",
+          "cost": 2,
+          "phase": "Opponent's Shooting/Fight",
+          "description": "Epic Deed. When a HARVESTER unit from your army is selected as the target of an attack: Until the end of the phase, models in that unit have the Feel No Pain 5+ ability.",
+          "modifiers": []
+        },
+        {
+          "id": "rapacious-hunger",
+          "name": "Rapacious Hunger",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Battle Tactic. When a TYRANIDS unit from your army destroys an enemy unit in the Fight phase: That unit can immediately Regenerate. If it is a HARVESTER unit and you choose to regain wounds, it regains 3 wounds instead of D3+1.",
+          "modifiers": []
+        },
+        {
+          "id": "secure-biomass",
+          "name": "Secure Biomass",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Strategic Ploy. Your Movement phase: Select one HARVESTER unit from your army. Until the end of the turn, that unit has the Objective Secured ability.",
+          "modifiers": []
+        },
+        {
+          "id": "broodguard-impulse",
+          "name": "Broodguard Impulse",
+          "cost": 1,
+          "phase": "Opponent's Shooting/Fight",
+          "description": "Strategic Ploy. When a HARVESTER unit from your army is destroyed: Until the end of your next turn, each time a friendly TYRANIDS unit makes an attack, add 1 to the Wound roll.",
+          "modifiers": []
+        },
+        {
+          "id": "visceral-biomass",
+          "name": "Visceral Biomass",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Battle Tactic. When a HARVESTER unit from your army is selected to fight: Until the end of the phase, each time a model in that unit makes a melee attack, on a Critical Wound that attack has the [DEVASTATING WOUNDS] ability.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "biophagic-flow",
+          "name": "Biophagic Flow",
+          "points": 10,
+          "description": "TYRANIDS CHARACTER only. While a friendly HARVESTER model is within 12\" of the bearer, that model can use its Regeneration ability at a range of 9\" instead of 6\".",
+          "modifiers": []
+        },
+        {
+          "id": "instinctive-defence",
+          "name": "Instinctive Defence",
+          "points": 15,
+          "description": "TYRANIDS CHARACTER only. While the bearer is within 6\" of one or more friendly HARVESTER units: You can target the bearer's unit with the Heroic Intervention Stratagem for 0CP, and models in the bearer's unit have the Fights First ability.",
+          "modifiers": []
+        },
+        {
+          "id": "parasitic-biomorphology",
+          "name": "Parasitic Biomorphology",
+          "points": 20,
+          "description": "TYRANIDS CHARACTER only. Add 1 to the Strength characteristic of melee weapons equipped by the bearer. Each time the bearer destroys an enemy unit in the Fight phase while within 6\" of a friendly HARVESTER unit, add 1 to the Attacks characteristic of melee weapons equipped by the bearer for the rest of the battle.",
+          "modifiers": [
+            { "stat": "s", "operation": "add", "value": 1, "scope": "melee" }
+          ]
+        },
+        {
+          "id": "enhanced-regeneration",
+          "name": "Enhanced Regeneration",
+          "points": 15,
+          "description": "TYRANIDS CHARACTER only. The bearer's unit can be Regenerated up to twice per Command phase instead of once. This does not apply to MONSTER models.",
+          "modifiers": []
+        }
+      ]
+    },
+    "vanguard_onslaught": {
+      "name": "Vanguard Onslaught",
+      "rules": [
+        {
+          "id": "questing-tendrils",
+          "name": "Questing Tendrils",
+          "description": "TYRANIDS units from your army can declare a charge even if they Fell Back this turn. VANGUARD INVADER units from your army can declare a charge even if they Advanced this turn.",
+          "type": "passive",
+          "keywords": ["VANGUARD INVADER"],
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "seeded-broods",
+          "name": "Seeded Broods",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Strategic Ploy. Your Movement phase: Select up to two VANGUARD INVADER units from your army that are in Strategic Reserves, or one other TYRANIDS unit. Those units can arrive from Strategic Reserves this turn as if it were one battle round later than it actually is.",
+          "modifiers": []
+        },
+        {
+          "id": "invisible-hunter",
+          "name": "Invisible Hunter",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Strategic Ploy. Your Movement phase: Select one VANGUARD INVADER unit from your army. Remove that unit from the battlefield and place it into Strategic Reserves.",
+          "modifiers": []
+        },
+        {
+          "id": "assassin-beasts",
+          "name": "Assassin Beasts",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Battle Tactic. When a VANGUARD INVADER unit from your army is selected to fight: Until the end of the phase, each time a model in that unit makes a melee attack that targets a CHARACTER unit, you can re-roll the Hit roll and Wound roll.",
+          "modifiers": []
+        },
+        {
+          "id": "reactive-movement",
+          "name": "Reactive Movement",
+          "cost": 1,
+          "phase": "Opponent's Movement",
+          "description": "Strategic Ploy. When an enemy unit ends a Normal, Advance, or Fall Back move within 9\" of a VANGUARD INVADER unit from your army: That VANGUARD INVADER unit can make a Normal move of up to 6\".",
+          "modifiers": []
+        },
+        {
+          "id": "strategic-withdrawal",
+          "name": "Strategic Withdrawal",
+          "cost": 1,
+          "phase": "Opponent's Fight",
+          "description": "Strategic Ploy. At the start of the Fight phase: Select one VANGUARD INVADER unit from your army that is within Engagement Range of any enemy units. Remove that unit from the battlefield and place it into Strategic Reserves.",
+          "modifiers": []
+        },
+        {
+          "id": "lurking-horror",
+          "name": "Lurking Horror",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Battle Tactic. When a VANGUARD INVADER unit from your army is selected as the target of an attack: Until the end of the phase, each time an attack targets that unit, subtract 1 from the Hit roll.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "vanguard-adrenalised-onslaught",
+          "name": "Adrenalised Onslaught",
+          "points": 15,
+          "description": "TYRANIDS model only. Each time the bearer's unit Piles In or Consolidates, models in that unit can move an additional 3\".",
+          "modifiers": []
+        },
+        {
+          "id": "chameleonic",
+          "name": "Chameleonic",
+          "points": 20,
+          "description": "TYRANIDS model only. The bearer's unit has the Stealth ability and the Benefit of Cover.",
+          "modifiers": []
+        },
+        {
+          "id": "neuronode",
+          "name": "Neuronode",
+          "points": 30,
+          "description": "TYRANIDS CHARACTER only. After deployment, you can redeploy up to three TYRANIDS units from your army. Any of those units can be placed into Strategic Reserves.",
+          "modifiers": []
+        },
+        {
+          "id": "hunting-grounds",
+          "name": "Hunting Grounds",
+          "points": 20,
+          "description": "TYRANIDS CHARACTER only. While the bearer is on the battlefield, each time an enemy unit is set up on the battlefield from Strategic Reserves or using a Deep Strike ability, that unit must take a Battle-shock test, subtracting 1 from the result.",
+          "modifiers": []
+        }
+      ]
+    },
+    "synaptic_nexus": {
+      "name": "Synaptic Nexus",
+      "rules": [
+        {
+          "id": "synaptic-imperatives",
+          "name": "Synaptic Imperatives",
+          "description": "At the start of each battle round, select one Synaptic Imperative to be active until the end of the battle round. While a TYRANIDS unit from your army is within Synapse Range, it benefits from the selected imperative.",
+          "type": "selection",
+          "choices": [
+            {
+              "id": "synaptic-augmentation",
+              "name": "Synaptic Augmentation",
+              "description": "Models in this unit have a 5+ invulnerable save."
+            },
+            {
+              "id": "surging-vitality",
+              "name": "Surging Vitality",
+              "description": "Add 1 to Advance and Charge rolls made for this unit."
+            },
+            {
+              "id": "goaded-to-slaughter",
+              "name": "Goaded to Slaughter",
+              "description": "Each time a model in this unit makes a melee attack, add 1 to the Hit roll."
+            }
+          ],
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "imperative-dominance",
+          "name": "Imperative Dominance",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Strategic Ploy. Select one TYRANIDS unit from your army within Synapse Range. Select one Synaptic Imperative (even if it was selected previously). That unit gains the benefits of that imperative until the start of your next Command phase.",
+          "modifiers": []
+        },
+        {
+          "id": "override-instincts",
+          "name": "Override Instincts",
+          "cost": 1,
+          "phase": "Movement/Shooting/Charge",
+          "description": "Strategic Ploy. When a TYRANIDS unit from your army within Synapse Range that Fell Back this turn is selected to shoot or declare a charge: That unit can shoot and declare charges this turn even though it Fell Back.",
+          "modifiers": []
+        },
+        {
+          "id": "synaptic-amplification",
+          "name": "Synaptic Amplification",
+          "cost": 1,
+          "phase": "Shooting/Fight",
+          "description": "Battle Tactic. When a TYRANID WARRIORS unit from your army is selected to shoot or fight: Until the end of the phase, each time a model in that unit makes an attack, you can re-roll the Wound roll. In addition, select one ENDLESS MULTITUDE unit within 6\" of that unit; until the end of the phase, each time a model in that ENDLESS MULTITUDE unit makes an attack, you can re-roll the Wound roll.",
+          "modifiers": []
+        },
+        {
+          "id": "psychic-imperative",
+          "name": "Psychic Imperative",
+          "cost": 1,
+          "phase": "Shooting",
+          "description": "Battle Tactic. When a TYRANIDS PSYKER unit from your army is selected to shoot: Until the end of the phase, each time that unit makes a Psychic Attack, add 1 to the Wound roll.",
+          "modifiers": []
+        },
+        {
+          "id": "neural-dominion",
+          "name": "Neural Dominion",
+          "cost": 1,
+          "phase": "Command",
+          "description": "Strategic Ploy. Your Command phase: Select one enemy unit within 12\" of a SYNAPSE unit from your army. That enemy unit must take a Battle-shock test, subtracting 1 from the result.",
+          "modifiers": []
+        },
+        {
+          "id": "the-will-of-the-hive-mind",
+          "name": "The Will of the Hive Mind",
+          "cost": 2,
+          "phase": "Any",
+          "description": "Epic Deed. When a SYNAPSE model from your army is destroyed: Until the end of the battle, the range of the Synapse ability for all other SYNAPSE models from your army is increased to 9\".",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "power-of-the-hive-mind",
+          "name": "Power of the Hive Mind",
+          "points": 10,
+          "description": "TYRANIDS PSYKER only. Add 1 to the Strength and Armour Penetration characteristics of Psychic weapons equipped by the bearer.",
+          "modifiers": []
+        },
+        {
+          "id": "psychostatic-disruption",
+          "name": "Psychostatic Disruption",
+          "points": 30,
+          "description": "TYRANIDS SYNAPSE model only. Each time an enemy unit within 12\" of the bearer is selected to shoot or fight, if that unit is Battle-shocked, subtract 1 from the Hit roll.",
+          "modifiers": []
+        },
+        {
+          "id": "synaptic-control",
+          "name": "Synaptic Control",
+          "points": 20,
+          "description": "TYRANIDS model only. Each time an attack is allocated to a model in the bearer's unit, subtract 1 from the Damage characteristic of that attack (to a minimum of 1).",
+          "modifiers": []
+        },
+        {
+          "id": "the-dirgeheart-of-kharis",
+          "name": "The Dirgeheart of Kharis",
+          "points": 15,
+          "description": "TYRANIDS CHARACTER only. Each time an enemy unit fails a Battle-shock test within 12\" of the bearer, that unit suffers D3 mortal wounds.",
+          "modifiers": []
+        }
+      ]
+    },
+    "subterranean_assault": {
+      "name": "Subterranean Assault",
+      "rules": [
+        {
+          "id": "tunnel-networks",
+          "name": "Tunnel Networks",
+          "description": "Each time a BURROWERS unit from your army is set up on the battlefield from Strategic Reserves, you can place one Tunnel Marker anywhere on the battlefield within 6\" of that unit and more than 1\" from all enemy models. TYRANIDS units can use Tunnel Markers to redeploy. In addition, each time a TYRANIDS model makes an attack, you can re-roll a Hit roll of 1.",
+          "type": "passive",
+          "keywords": ["BURROWERS"],
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "tunnel-network",
+          "name": "Tunnel Network",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Strategic Ploy. At the end of your Movement phase: Select one TYRANIDS unit from your army within 9\" of a Tunnel Marker. Remove that unit from the battlefield and set it up within 9\" of a different Tunnel Marker and more than 6\" from all enemy models.",
+          "modifiers": []
+        },
+        {
+          "id": "replenishing-swarms",
+          "name": "Replenishing Swarms",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Strategic Ploy. Your Movement phase: Select one TYRANIDS unit from your army within 9\" of a Tunnel Marker. One model in that unit regains D3+1 lost wounds, or D3+1 destroyed models with 1 wound are returned to that unit.",
+          "modifiers": []
+        },
+        {
+          "id": "swarming-assault",
+          "name": "Swarming Assault",
+          "cost": 1,
+          "phase": "Charge",
+          "description": "Battle Tactic. When a TYRANIDS MONSTER unit from your army declares a charge: Until the end of the phase, you can re-roll Charge rolls made for that unit and any other friendly TYRANIDS units within 6\" of that unit.",
+          "modifiers": []
+        },
+        {
+          "id": "enfilading-emergence",
+          "name": "Enfilading Emergence",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Battle Tactic. At the end of your Movement phase: Select one TYRANIDS unit from your army that was set up on the battlefield from Strategic Reserves this turn. Until the end of the turn, weapons equipped by models in that unit have the [SUSTAINED HITS 1] and [IGNORES COVER] abilities.",
+          "modifiers": []
+        },
+        {
+          "id": "ambush-predators",
+          "name": "Ambush Predators",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Battle Tactic. When a BURROWERS unit from your army is selected to fight: Until the end of the phase, each time a model in that unit makes a melee attack, on a Critical Hit, add 1 to the Wound roll.",
+          "modifiers": []
+        },
+        {
+          "id": "subterranean-strike",
+          "name": "Subterranean Strike",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Strategic Ploy. At the end of your Movement phase: Select one BURROWERS unit from your army. Remove that unit from the battlefield and place it into Strategic Reserves.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "tremor-senses",
+          "name": "Tremor Senses",
+          "points": 20,
+          "description": "TYRANIDS CHARACTER only. After deployment, you can redeploy up to three TYRANIDS units from your army. Any of those units can be placed into Strategic Reserves.",
+          "modifiers": []
+        },
+        {
+          "id": "vanguard-intellect",
+          "name": "Vanguard Intellect",
+          "points": 20,
+          "description": "TYRANIDS CHARACTER only. The bearer's unit can be set up from Strategic Reserves in the first battle round.",
+          "modifiers": []
+        },
+        {
+          "id": "trygon-alpha",
+          "name": "Trygon Alpha",
+          "points": 15,
+          "description": "TRYGON only. Add 1 to the Weapon Skill and Strength characteristics of the bearer.",
+          "modifiers": [
+            { "stat": "ws", "operation": "add", "value": 1, "scope": "model" },
+            { "stat": "s", "operation": "add", "value": 1, "scope": "melee" }
+          ]
+        },
+        {
+          "id": "bio-electric-pulse-node",
+          "name": "Bio-electric Pulse Node",
+          "points": 25,
+          "description": "TYRANIDS MONSTER only. Add 6\" to the range of ranged weapons equipped by the bearer, and those weapons have the [DEVASTATING WOUNDS] ability.",
+          "modifiers": []
+        }
+      ]
+    },
+    "warrior_bioform_onslaught": {
+      "name": "Warrior Bioform Onslaught",
+      "rules": [
+        {
+          "id": "leader-beasts",
+          "name": "Leader-beasts",
+          "description": "TYRANID WARRIORS and WINGED TYRANID PRIME units from your army have a 5+ invulnerable save. In addition, TYRANID WARRIORS units from your army have the Battleline keyword and have an Objective Control characteristic of 3.",
+          "type": "passive",
+          "keywords": ["TYRANID WARRIORS", "WINGED TYRANID PRIME"],
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "wbo-synaptic-amplification",
+          "name": "Synaptic Amplification",
+          "cost": 1,
+          "phase": "Shooting/Fight",
+          "description": "Battle Tactic. When a TYRANID WARRIORS unit from your army is selected to shoot or fight: Until the end of the phase, each time a model in that unit makes an attack, you can re-roll the Hit roll of 1 and the Wound roll of 1. In addition, select one ENDLESS MULTITUDE unit within 6\"; until the end of the phase, each time a model in that unit makes an attack, you can re-roll the Wound roll of 1.",
+          "modifiers": []
+        },
+        {
+          "id": "spontaneous-hypercorrosion",
+          "name": "Spontaneous Hypercorrosion",
+          "cost": 1,
+          "phase": "Shooting/Fight",
+          "description": "Battle Tactic. When a TYRANID WARRIORS or WINGED TYRANID PRIME unit from your army is selected to shoot or fight: Until the end of the phase, add 2 to the Strength characteristic of ranged weapons equipped by models in that unit, or add 1 to the Strength characteristic of melee weapons instead.",
+          "modifiers": []
+        },
+        {
+          "id": "synaptic-shield",
+          "name": "Synaptic Shield",
+          "cost": 1,
+          "phase": "Opponent's Shooting",
+          "description": "Battle Tactic. When one of your TYRANIDS units is selected as the target of an attack: Until the end of the phase, each time an attack is made against that unit, if the Strength characteristic of that attack is greater than the Toughness characteristic of that unit, subtract 1 from the Wound roll.",
+          "modifiers": []
+        },
+        {
+          "id": "warrior-resurgence",
+          "name": "Warrior Resurgence",
+          "cost": 1,
+          "phase": "Command",
+          "description": "Strategic Ploy. Your Command phase: Select one TYRANID WARRIORS unit from your army. Return one destroyed TYRANID WARRIOR model to that unit with its full wounds remaining.",
+          "modifiers": []
+        },
+        {
+          "id": "secure-position",
+          "name": "Secure Position",
+          "cost": 1,
+          "phase": "Command",
+          "description": "Strategic Ploy. Your Command phase: Select one TYRANID WARRIORS unit from your army within range of an objective marker. That objective marker is now a Sticky Objective.",
+          "modifiers": []
+        },
+        {
+          "id": "synapse-conduit",
+          "name": "Synapse Conduit",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Strategic Ploy. When a TYRANID WARRIORS unit from your army is selected to use a Stratagem: Until the end of the phase, that Stratagem affects all friendly TYRANID WARRIORS units within 6\" of that unit.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "synaptic-tyrant",
+          "name": "Synaptic Tyrant",
+          "points": 10,
+          "description": "NEUROTYRANT only. The bearer has the Leader ability and can be attached to TYRANID WARRIORS units.",
+          "modifiers": []
+        },
+        {
+          "id": "ocular-adaptation",
+          "name": "Ocular Adaptation",
+          "points": 20,
+          "description": "WINGED TYRANID PRIME only. While the bearer is leading a unit, add 1 to the Hit roll of attacks made by models in that unit.",
+          "modifiers": []
+        },
+        {
+          "id": "sensory-assimilation",
+          "name": "Sensory Assimilation",
+          "points": 20,
+          "description": "WINGED TYRANID PRIME only. While the bearer is leading a unit, each time an attack targets that unit, subtract 1 from the Hit roll.",
+          "modifiers": []
+        },
+        {
+          "id": "elevated-might",
+          "name": "Elevated Might",
+          "points": 30,
+          "description": "TYRANIDS CHARACTER only. The bearer's unit can Advance and declare charges in the same turn.",
+          "modifiers": []
+        }
+      ]
     }
   },
   "armyRules": {
@@ -1053,16 +3319,46 @@
     "Rapid Fire": "Double the Attacks characteristic when targeting within half range.",
     "Heavy": "+1 to hit if the bearer's unit Remained Stationary this turn.",
     "Torrent": "Automatically hits the target.",
-    "Anti-": "Improves wound roll against targets with the specified keyword.",
-    "Hazardous": "After resolving attacks, roll one D6. On a 1, bearer suffers 3 mortal wounds."
+    "Anti-": "Improves wound roll against targets with the specified keyword (e.g., Anti-Vehicle 4+ wounds on 4+ vs Vehicles).",
+    "Hazardous": "After resolving attacks, roll one D6. On a 1, bearer suffers 3 mortal wounds.",
+    "Psychic": "This is a Psychic Attack. Some abilities and rules specifically interact with Psychic attacks.",
+    "Precision": "When targeting a unit with an attached Leader, attacks with this ability can target the Character instead of the unit.",
+    "Extra Attacks": "These attacks are made in addition to the bearer's normal attacks, using the weapon's profile.",
+    "Ignores Cover": "The target does not receive the benefit of cover against attacks with this ability.",
+    "Indirect Fire": "Can target units not visible to the bearer, but subtract 1 from Hit rolls when doing so.",
+    "Melta": "When targeting within half range, add X to the Damage characteristic (Melta 2 = +2 Damage)."
   },
   "allies": [],
   "keywordGlossary": {
+    "weapon": [
+      { "name": "Anti-X #+", "description": "Improve AP by 1 and wound on #+ against targets with keyword X." },
+      { "name": "Assault", "description": "Can be shot after Advancing." },
+      { "name": "Blast", "description": "+1 Attack per 5 models in target unit." },
+      { "name": "Devastating Wounds", "description": "Critical wounds inflict mortal wounds equal to Damage, no saves allowed." },
+      { "name": "Extra Attacks", "description": "Attacks with this weapon are made in addition to other weapons." },
+      { "name": "Hazardous", "description": "After resolving attacks, roll D6. On 1, bearer suffers 3 mortal wounds (Characters) or is destroyed (other models)." },
+      { "name": "Heavy", "description": "+1 to Hit if unit Remained Stationary." },
+      { "name": "Ignores Cover", "description": "Target does not benefit from cover." },
+      { "name": "Indirect Fire", "description": "Can target units not visible. -1 to Hit, +1 to target's Save if not visible." },
+      { "name": "Lance", "description": "+1 to Wound if unit charged this turn." },
+      { "name": "Lethal Hits", "description": "Critical hits automatically wound (no wound roll needed)." },
+      { "name": "Melta X", "description": "+X Damage against targets within half range." },
+      { "name": "One Shot", "description": "Can only be used once per battle." },
+      { "name": "Pistol", "description": "Can be shot in Engagement Range, but only at units in Engagement Range." },
+      { "name": "Precision", "description": "On critical wounds, attacker can allocate wound to a Character or Attached model." },
+      { "name": "Psychic", "description": "Weapon has the Psychic keyword for ability interactions." },
+      { "name": "Rapid Fire X", "description": "+X Attacks when targeting units within half range." },
+      { "name": "Sustained Hits X", "description": "Critical hits score X additional hits." },
+      { "name": "Torrent", "description": "Automatically hits (no hit roll needed)." },
+      { "name": "Twin-linked", "description": "Re-roll wound rolls." }
+    ],
     "faction": [
       { "name": "Synapse", "description": "Units with Synapse provide a 6\" aura. Friendly TYRANIDS units within Synapse Range take Battle-shock tests on 3D6 instead of 2D6. Many stratagems and abilities reference Synapse Range." },
       { "name": "Shadow in the Warp", "description": "Once per battle, in either player's Command phase, if one or more units with this ability are on the battlefield, every enemy unit must take a Battle-shock test. Enemies within 6\" of SYNAPSE units subtract 1 from the test." },
       { "name": "Endless Multitude", "description": "Represents the vast swarms of lesser Tyranid bioforms. Units with this keyword interact with specific stratagems that can return destroyed models or provide bonuses based on unit size. Key units: Termagants, Hormagaunts." },
-      { "name": "Great Devourer", "description": "The faction keyword for all Tyranid units. Represents the all-consuming nature of the Hive Mind. All Tyranid units have this keyword and it is used for army-wide rules and ability interactions." }
+      { "name": "Great Devourer", "description": "The faction keyword for all Tyranid units. Represents the all-consuming nature of the Hive Mind. All Tyranid units have this keyword and it is used for army-wide rules and ability interactions." },
+      { "name": "Harvester", "description": "Units specialized in biomass collection and regeneration. In Assimilation Swarm detachment, HARVESTER units can Regenerate nearby friendly units. Key units: Psychophage, Haruspex, Pyrovores, Ripper Swarms." },
+      { "name": "Burrowers", "description": "Units that can tunnel beneath the battlefield. In Subterranean Assault detachment, BURROWERS create Tunnel Markers when arriving from reserves. Key units: Trygon, Mawloc, Raveners." }
     ],
     "unit": [
       { "name": "Battleline", "description": "Core troop units. May have special rules in certain detachments." },
