@@ -592,6 +592,11 @@ export default function Home() {
                   stratagemNames={Object.fromEntries(
                     armyData?.detachments[currentList.detachment]?.stratagems?.map(s => [s.id, s.name]) || []
                   )}
+                  activeStratagemData={
+                    armyData?.detachments[currentList.detachment]?.stratagems?.filter(
+                      s => gameState.activeStratagems.includes(s.id)
+                    ) || []
+                  }
                 />
               ) : undefined
             }

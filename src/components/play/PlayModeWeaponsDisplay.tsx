@@ -1,7 +1,7 @@
 'use client';
 
 import { Badge, LoadoutGroupAccordion, WeaponStatsTable } from '@/components/ui';
-import type { Weapon, LoadoutGroup } from '@/types';
+import type { Weapon, LoadoutGroup, Stratagem } from '@/types';
 
 interface LoadoutGroupCardProps {
   group: LoadoutGroup;
@@ -9,6 +9,7 @@ interface LoadoutGroupCardProps {
   isActivated: boolean;
   onToggleCollapse: () => void;
   onToggleActivated?: () => void;
+  activeStratagems?: Stratagem[];
 }
 
 export function LoadoutGroupCard({
@@ -17,6 +18,7 @@ export function LoadoutGroupCard({
   isActivated,
   onToggleCollapse,
   onToggleActivated,
+  activeStratagems = [],
 }: LoadoutGroupCardProps) {
   return (
     <LoadoutGroupAccordion
@@ -36,7 +38,7 @@ export function LoadoutGroupCard({
             <div className="text-xs text-blue-400 uppercase tracking-wider mb-2 font-medium">
               Ranged
             </div>
-            <WeaponStatsTable weapons={group.rangedWeapons} />
+            <WeaponStatsTable weapons={group.rangedWeapons} activeStratagems={activeStratagems} />
           </div>
         )}
 
@@ -46,7 +48,7 @@ export function LoadoutGroupCard({
             <div className="text-xs text-red-400 uppercase tracking-wider mb-2 font-medium">
               Melee
             </div>
-            <WeaponStatsTable weapons={group.meleeWeapons} />
+            <WeaponStatsTable weapons={group.meleeWeapons} activeStratagems={activeStratagems} />
           </div>
         )}
       </div>
@@ -63,6 +65,7 @@ interface PlayModeWeaponsDisplayProps {
   onToggleActivated?: (unitIndex: number, groupId: string) => void;
   leaderWeapons?: Weapon[];
   leaderName?: string;
+  activeStratagems?: Stratagem[];
   className?: string;
 }
 
@@ -75,6 +78,7 @@ export function PlayModeWeaponsDisplay({
   onToggleActivated,
   leaderWeapons,
   leaderName,
+  activeStratagems = [],
   className = '',
 }: PlayModeWeaponsDisplayProps) {
   const hasLeaderWeapons = leaderWeapons && leaderWeapons.length > 0;
@@ -96,6 +100,7 @@ export function PlayModeWeaponsDisplay({
               ? () => onToggleActivated(unitIndex, group.id)
               : undefined
           }
+          activeStratagems={activeStratagems}
         />
       ))}
 
@@ -118,7 +123,7 @@ export function PlayModeWeaponsDisplay({
                 <div className="text-xs text-blue-400 uppercase tracking-wider mb-2 font-medium">
                   Ranged
                 </div>
-                <WeaponStatsTable weapons={leaderRanged} />
+                <WeaponStatsTable weapons={leaderRanged} activeStratagems={activeStratagems} />
               </div>
             )}
 
@@ -128,7 +133,7 @@ export function PlayModeWeaponsDisplay({
                 <div className="text-xs text-red-400 uppercase tracking-wider mb-2 font-medium">
                   Melee
                 </div>
-                <WeaponStatsTable weapons={leaderMelee} />
+                <WeaponStatsTable weapons={leaderMelee} activeStratagems={activeStratagems} />
               </div>
             )}
           </div>

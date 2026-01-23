@@ -71,17 +71,11 @@ export function WeaponLoadoutSelector({
   return (
     <div className={`space-y-1 ${className}`}>
       {/* Option Header */}
-      <div className="flex items-center gap-2 text-xs">
+      <div className="text-xs text-white/50 mb-2">
         {isReplacement ? (
-          <>
-            <span className="text-blue-400">⟲</span>
-            <span className="text-gray-400 font-medium">Replace with:</span>
-          </>
+          <span className="text-blue-400">Replace</span>
         ) : (
-          <>
-            <span className="text-green-400">+</span>
-            <span className="text-gray-400 font-medium">Add:</span>
-          </>
+          <span className="text-green-400">Add</span>
         )}
       </div>
 

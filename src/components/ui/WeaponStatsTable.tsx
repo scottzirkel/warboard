@@ -1,10 +1,12 @@
 import { Badge } from './Badge';
-import type { Weapon, RangedWeaponStats, MeleeWeaponStats } from '@/types';
+import type { Weapon, RangedWeaponStats, MeleeWeaponStats, Stratagem } from '@/types';
+import { getModifiedWeaponStat } from '@/hooks/useWeaponModifiers';
 
 interface WeaponStatsTableProps {
   weapons: Weapon[];
   showModelCount?: boolean;
   modelCounts?: Record<string, number>;
+  activeStratagems?: Stratagem[];
   className?: string;
 }
 
@@ -20,11 +22,36 @@ interface WeaponRowProps {
   weapon: Weapon;
   count?: number;
   showCount?: boolean;
+  activeStratagems?: Stratagem[];
 }
 
-function RangedWeaponRow({ weapon, count, showCount }: WeaponRowProps) {
+interface StatCellProps {
+  value: number | string;
+  modified: boolean;
+  sources: string[];
+  suffix?: string;
+}
+
+function StatCell({ value, modified, sources, suffix = '' }: StatCellProps) {
+  return (
+    <td
+      className={`py-1.5 px-2 text-center ${modified ? 'text-green-400 font-bold' : 'text-gray-300'}`}
+      title={modified ? sources.join(', ') : undefined}
+    >
+      {value}{suffix}
+    </td>
+  );
+}
+
+function RangedWeaponRow({ weapon, count, showCount, activeStratagems = [] }: WeaponRowProps) {
   if (!isRangedWeapon(weapon)) return null;
-  const { stats } = weapon;
+
+  const range = getModifiedWeaponStat(weapon, 'range', activeStratagems);
+  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems);
+  const bs = getModifiedWeaponStat(weapon, 'bs', activeStratagems);
+  const s = getModifiedWeaponStat(weapon, 's', activeStratagems);
+  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems);
+  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems);
 
   return (
     <tr className="border-b border-gray-700/30 last:border-b-0">
@@ -36,12 +63,12 @@ function RangedWeaponRow({ weapon, count, showCount }: WeaponRowProps) {
           <span>{weapon.name}</span>
         </div>
       </td>
-      <td className="py-1.5 px-2 text-center text-gray-300">{stats.range}&quot;</td>
-      <td className="py-1.5 px-2 text-center text-gray-300">{stats.a}</td>
-      <td className="py-1.5 px-2 text-center text-gray-300">{stats.bs}</td>
-      <td className="py-1.5 px-2 text-center text-gray-300">{stats.s}</td>
-      <td className="py-1.5 px-2 text-center text-gray-300">{stats.ap}</td>
-      <td className="py-1.5 px-2 text-center text-gray-300">{stats.d}</td>
+      <StatCell value={range.value} modified={range.modified} sources={range.sources} suffix='"' />
+      <StatCell value={a.value} modified={a.modified} sources={a.sources} />
+      <StatCell value={bs.value} modified={bs.modified} sources={bs.sources} />
+      <StatCell value={s.value} modified={s.modified} sources={s.sources} />
+      <StatCell value={ap.value} modified={ap.modified} sources={ap.sources} />
+      <StatCell value={d.value} modified={d.modified} sources={d.sources} />
       <td className="py-1.5 px-2">
         <div className="flex flex-wrap gap-1">
           {weapon.abilities.map((ability) => (
@@ -55,9 +82,14 @@ function RangedWeaponRow({ weapon, count, showCount }: WeaponRowProps) {
   );
 }
 
-function MeleeWeaponRow({ weapon, count, showCount }: WeaponRowProps) {
+function MeleeWeaponRow({ weapon, count, showCount, activeStratagems = [] }: WeaponRowProps) {
   if (!isMeleeWeapon(weapon)) return null;
-  const { stats } = weapon;
+
+  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems);
+  const ws = getModifiedWeaponStat(weapon, 'ws', activeStratagems);
+  const s = getModifiedWeaponStat(weapon, 's', activeStratagems);
+  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems);
+  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems);
 
   return (
     <tr className="border-b border-gray-700/30 last:border-b-0">
@@ -69,11 +101,11 @@ function MeleeWeaponRow({ weapon, count, showCount }: WeaponRowProps) {
           <span>{weapon.name}</span>
         </div>
       </td>
-      <td className="py-1.5 px-2 text-center text-gray-300">{stats.a}</td>
-      <td className="py-1.5 px-2 text-center text-gray-300">{stats.ws}</td>
-      <td className="py-1.5 px-2 text-center text-gray-300">{stats.s}</td>
-      <td className="py-1.5 px-2 text-center text-gray-300">{stats.ap}</td>
-      <td className="py-1.5 px-2 text-center text-gray-300">{stats.d}</td>
+      <StatCell value={a.value} modified={a.modified} sources={a.sources} />
+      <StatCell value={ws.value} modified={ws.modified} sources={ws.sources} />
+      <StatCell value={s.value} modified={s.modified} sources={s.sources} />
+      <StatCell value={ap.value} modified={ap.modified} sources={ap.sources} />
+      <StatCell value={d.value} modified={d.modified} sources={d.sources} />
       <td className="py-1.5 px-2">
         <div className="flex flex-wrap gap-1">
           {weapon.abilities.map((ability) => (
@@ -91,6 +123,7 @@ export function WeaponStatsTable({
   weapons,
   showModelCount = false,
   modelCounts = {},
+  activeStratagems = [],
   className = '',
 }: WeaponStatsTableProps) {
   const rangedWeapons = weapons.filter(isRangedWeapon);
@@ -124,6 +157,7 @@ export function WeaponStatsTable({
                     weapon={weapon}
                     count={modelCounts[weapon.loadoutGroup || weapon.id]}
                     showCount={showModelCount}
+                    activeStratagems={activeStratagems}
                   />
                 ))}
               </tbody>
@@ -157,6 +191,7 @@ export function WeaponStatsTable({
                     weapon={weapon}
                     count={modelCounts[weapon.loadoutGroup || weapon.id]}
                     showCount={showModelCount}
+                    activeStratagems={activeStratagems}
                   />
                 ))}
               </tbody>

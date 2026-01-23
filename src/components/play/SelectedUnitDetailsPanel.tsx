@@ -1,7 +1,7 @@
 'use client';
 
 import { PlayModeWeaponsDisplay } from './PlayModeWeaponsDisplay';
-import type { Unit, ListUnit, Enhancement, Weapon, Modifier, ModifierSource, LoadoutGroup } from '@/types';
+import type { Unit, ListUnit, Enhancement, Weapon, Modifier, ModifierSource, LoadoutGroup, Stratagem } from '@/types';
 
 interface SelectedUnitDetailsPanelProps {
   // Unit data
@@ -42,6 +42,7 @@ interface SelectedUnitDetailsPanelProps {
   katahDescription?: string;
   activeStratagems?: string[];
   stratagemNames?: Record<string, string>;
+  activeStratagemData?: Stratagem[];
 
   className?: string;
 }
@@ -178,6 +179,7 @@ export function SelectedUnitDetailsPanel({
   katahDescription,
   activeStratagems = [],
   stratagemNames = {},
+  activeStratagemData = [],
 
   className = '',
 }: SelectedUnitDetailsPanelProps) {
@@ -405,6 +407,7 @@ export function SelectedUnitDetailsPanel({
             onToggleActivated={onToggleActivated}
             leaderWeapons={leaderWeapons}
             leaderName={leaderUnit?.name}
+            activeStratagems={activeStratagemData}
           />
         </div>
 
