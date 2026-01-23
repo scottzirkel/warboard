@@ -1584,3 +1584,40 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-014] Create Build Mode right panel - Unit Details
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created UnitDetailsPanel as the main container component for the Build Mode right panel
+- Broke down into smaller, focused sub-components for reusability
+- StatsTable displays unit stats (M, T, SV, W, LD, OC, INV) with modifier support
+  - Calculates modified stat values based on enhancement and weapon modifiers
+  - Shows modified stats in gold color with tooltips showing modifier sources
+  - Preserves stat format (e.g., "2+" for saves)
+- WeaponsDisplay wraps WeaponStatsTable component to show all unit weapons
+  - Separates ranged and melee weapons into distinct sections
+  - Shows weapon abilities as badges
+- AbilitiesDisplay shows all unit abilities with descriptions
+  - Highlights Leader abilities with purple badge
+  - Shows eligible units for leader abilities
+- UnitDetailsPanel combines all sections with unit header, stats, keywords, weapons, and abilities
+  - Shows empty state when no unit is selected
+  - Displays Character badge and enhancement badge in header
+  - Shows total points (base + enhancement) in header
+
+**Files created:**
+- `src/components/build/UnitDetailsPanel.tsx` - Main panel container with all detail sections
+- `src/components/build/StatsTable.tsx` - Stats display with modifier calculation and tooltips
+- `src/components/build/WeaponsDisplay.tsx` - Weapon stats table wrapper
+- `src/components/build/AbilitiesDisplay.tsx` - Abilities list with leader badge
+
+**Files changed:**
+- `src/components/build/index.ts` - Added exports for UnitDetailsPanel, StatsTable, WeaponsDisplay, AbilitiesDisplay
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+
