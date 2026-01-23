@@ -1,67 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { getAllLists, saveList } from '@/lib/listService';
+import type { CurrentList } from '@/types';
 
 // ============================================================================
-// Configuration
-// ============================================================================
-
-const LISTS_DIR = path.join(process.cwd(), 'data', 'lists');
-
-// ============================================================================
-// Helpers
-// ============================================================================
-
-/**
- * Ensure the lists directory exists.
- */
-async function ensureListsDir(): Promise<void> {
-  try {
-    await fs.access(LISTS_DIR);
-  } catch {
-    await fs.mkdir(LISTS_DIR, { recursive: true });
-  }
-}
-
-/**
- * Generate a filename from a list name.
- * Replaces spaces with underscores, removes special characters except underscore and hyphen.
- */
-function generateFilename(name: string): string {
-  return name
-    .replace(/\s+/g, '_')
-    .replace(/[^a-zA-Z0-9_-]/g, '')
-    .concat('.json');
-}
-
-/**
- * Extract display name from a filename.
- */
-function filenameToDisplayName(filename: string): string {
-  return filename
-    .replace(/\.json$/, '')
-    .replace(/_/g, ' ');
-}
-
-// ============================================================================
-// GET /api/lists - Returns saved list filenames
+// GET /api/lists - Returns saved list metadata
 // ============================================================================
 
 export async function GET(): Promise<NextResponse> {
   try {
-    await ensureListsDir();
+    const lists = await getAllLists();
 
-    const files = await fs.readdir(LISTS_DIR);
-    const jsonFiles = files.filter(file => file.endsWith('.json'));
-
-    const lists = jsonFiles.map(filename => ({
-      filename,
-      name: filenameToDisplayName(filename),
+    // Map to backward-compatible format for existing clients
+    const response = lists.map(list => ({
+      id: list.id,
+      filename: `${list.name.replace(/\s+/g, '_')}.json`, // For backward compatibility
+      name: list.name,
+      armyId: list.armyId,
+      updatedAt: list.updatedAt.toISOString(),
     }));
 
-    return NextResponse.json(lists);
+    return NextResponse.json(response);
   } catch (error) {
-    console.error('Error reading lists directory:', error);
+    console.error('Error reading lists:', error);
 
     return NextResponse.json(
       { error: 'Failed to read lists' },
@@ -71,13 +31,11 @@ export async function GET(): Promise<NextResponse> {
 }
 
 // ============================================================================
-// POST /api/lists - Save list to data/lists/
+// POST /api/lists - Save list to database
 // ============================================================================
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    await ensureListsDir();
-
     const body = await request.json();
 
     if (!body.name) {
@@ -87,20 +45,22 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const filename = generateFilename(body.name);
-    const filepath = path.join(LISTS_DIR, filename);
-
-    // Add savedAt timestamp
-    const listData = {
-      ...body,
-      savedAt: new Date().toISOString(),
+    // Normalize incoming data to CurrentList format
+    const listData: CurrentList = {
+      name: body.name,
+      army: body.army || 'custodes',
+      pointsLimit: body.pointsLimit || 2000,
+      format: body.format || body.gameFormat || 'standard',
+      detachment: body.detachment || '',
+      units: body.units || [],
     };
 
-    await fs.writeFile(filepath, JSON.stringify(listData, null, 2));
+    const savedList = await saveList(listData);
 
     return NextResponse.json({
       success: true,
-      filename,
+      id: savedList.id,
+      filename: `${savedList.name.replace(/\s+/g, '_')}.json`, // For backward compatibility
       message: 'List saved successfully',
     });
   } catch (error) {

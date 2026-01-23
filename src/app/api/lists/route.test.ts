@@ -1,32 +1,20 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-
-// Mock fs module
-vi.mock('fs', () => {
-  const promises = {
-    access: vi.fn(),
-    mkdir: vi.fn(),
-    readdir: vi.fn(),
-    writeFile: vi.fn(),
-    readFile: vi.fn(),
-    unlink: vi.fn(),
-  };
-
-  return {
-    default: { promises },
-    promises,
-  };
-});
-
-import { promises as fs } from 'fs';
-import { GET, POST } from './route';
 import { NextRequest } from 'next/server';
 
-const mockFs = vi.mocked(fs);
+// Mock listService
+const mockGetAllLists = vi.fn();
+const mockSaveList = vi.fn();
+
+vi.mock('@/lib/listService', () => ({
+  getAllLists: () => mockGetAllLists(),
+  saveList: (data: unknown) => mockSaveList(data),
+}));
+
+import { GET, POST } from './route';
 
 describe('API /api/lists', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockFs.access.mockResolvedValue(undefined);
   });
 
   afterEach(() => {
@@ -35,7 +23,7 @@ describe('API /api/lists', () => {
 
   describe('GET /api/lists', () => {
     it('returns empty array when no lists exist', async () => {
-      mockFs.readdir.mockResolvedValue([]);
+      mockGetAllLists.mockResolvedValue([]);
 
       const response = await GET();
       const data = await response.json();
@@ -43,53 +31,34 @@ describe('API /api/lists', () => {
       expect(data).toEqual([]);
     });
 
-    it('returns list of saved lists', async () => {
-      // readdir returns strings when called without withFileTypes option
-      // Using 'any' cast because readdir overload types are complex
-      (mockFs.readdir as ReturnType<typeof vi.fn>).mockResolvedValue([
-        'My_List.json',
-        'Another_List.json',
+    it('returns list of saved lists with backward-compatible format', async () => {
+      mockGetAllLists.mockResolvedValue([
+        { id: 'cid1', name: 'My List', armyId: 'custodes', updatedAt: new Date('2026-01-01T00:00:00Z') },
+        { id: 'cid2', name: 'Another List', armyId: 'tyranids', updatedAt: new Date('2026-01-02T00:00:00Z') },
       ]);
 
       const response = await GET();
       const data = await response.json();
 
       expect(data).toEqual([
-        { filename: 'My_List.json', name: 'My List' },
-        { filename: 'Another_List.json', name: 'Another List' },
+        { id: 'cid1', filename: 'My_List.json', name: 'My List', armyId: 'custodes', updatedAt: '2026-01-01T00:00:00.000Z' },
+        { id: 'cid2', filename: 'Another_List.json', name: 'Another List', armyId: 'tyranids', updatedAt: '2026-01-02T00:00:00.000Z' },
       ]);
     });
 
-    it('filters out non-JSON files', async () => {
-      // readdir returns strings when called without withFileTypes option
-      // Using cast because readdir overload types are complex
-      (mockFs.readdir as ReturnType<typeof vi.fn>).mockResolvedValue([
-        'My_List.json',
-        '.DS_Store',
-        'readme.md',
-      ]);
+    it('returns 500 when database error occurs', async () => {
+      mockGetAllLists.mockRejectedValue(new Error('Database error'));
 
       const response = await GET();
       const data = await response.json();
 
-      expect(data).toEqual([
-        { filename: 'My_List.json', name: 'My List' },
-      ]);
-    });
-
-    it('creates lists directory if it does not exist', async () => {
-      mockFs.access.mockRejectedValue(new Error('ENOENT'));
-      mockFs.mkdir.mockResolvedValue(undefined);
-      mockFs.readdir.mockResolvedValue([]);
-
-      await GET();
-
-      expect(mockFs.mkdir).toHaveBeenCalled();
+      expect(response.status).toBe(500);
+      expect(data.error).toBe('Failed to read lists');
     });
   });
 
   describe('POST /api/lists', () => {
-    it('saves a list with the correct filename', async () => {
+    it('saves a list and returns success', async () => {
       const listData = {
         name: 'My Test List',
         army: 'custodes',
@@ -99,19 +68,22 @@ describe('API /api/lists', () => {
         units: [],
       };
 
+      mockSaveList.mockResolvedValue({
+        id: 'cid123',
+        name: 'My Test List',
+      });
+
       const request = new NextRequest('http://localhost/api/lists', {
         method: 'POST',
         body: JSON.stringify(listData),
       });
 
-      mockFs.writeFile.mockResolvedValue(undefined);
-
       const response = await POST(request);
       const data = await response.json();
 
       expect(data.success).toBe(true);
+      expect(data.id).toBe('cid123');
       expect(data.filename).toBe('My_Test_List.json');
-      expect(mockFs.writeFile).toHaveBeenCalledTimes(1);
     });
 
     it('returns error when name is missing', async () => {
@@ -132,9 +104,39 @@ describe('API /api/lists', () => {
       expect(data.error).toBe('List name is required');
     });
 
-    it('handles special characters in list name', async () => {
+    it('handles legacy gameFormat field', async () => {
       const listData = {
-        name: 'Test @List',
+        name: 'Legacy List',
+        army: 'custodes',
+        pointsLimit: 500,
+        gameFormat: 'colosseum', // Legacy field
+        detachment: 'shield_host',
+        units: [],
+      };
+
+      mockSaveList.mockResolvedValue({
+        id: 'cid456',
+        name: 'Legacy List',
+      });
+
+      const request = new NextRequest('http://localhost/api/lists', {
+        method: 'POST',
+        body: JSON.stringify(listData),
+      });
+
+      const response = await POST(request);
+      const data = await response.json();
+
+      expect(data.success).toBe(true);
+      // Verify saveList was called with normalized format
+      expect(mockSaveList).toHaveBeenCalledWith(expect.objectContaining({
+        format: 'colosseum',
+      }));
+    });
+
+    it('returns 500 when database error occurs', async () => {
+      const listData = {
+        name: 'Test List',
         army: 'custodes',
         pointsLimit: 2000,
         format: 'standard',
@@ -142,19 +144,18 @@ describe('API /api/lists', () => {
         units: [],
       };
 
+      mockSaveList.mockRejectedValue(new Error('Database error'));
+
       const request = new NextRequest('http://localhost/api/lists', {
         method: 'POST',
         body: JSON.stringify(listData),
       });
 
-      mockFs.writeFile.mockResolvedValue(undefined);
-
       const response = await POST(request);
       const data = await response.json();
 
-      expect(data.success).toBe(true);
-      // Special characters are removed, spaces become underscores
-      expect(data.filename).toBe('Test_List.json');
+      expect(response.status).toBe(500);
+      expect(data.error).toBe('Failed to save list');
     });
   });
 });

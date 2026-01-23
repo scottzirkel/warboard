@@ -1,12 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
-
-// ============================================================================
-// Configuration
-// ============================================================================
-
-const LISTS_DIR = path.join(process.cwd(), 'data', 'lists');
+import { getListById, getListByName, deleteListById, deleteListByName } from '@/lib/listService';
 
 // ============================================================================
 // Types
@@ -21,24 +14,21 @@ interface RouteParams {
 // ============================================================================
 
 /**
- * Validate that the filename is safe (no path traversal).
+ * Extract list name from a filename.
+ * Handles both legacy filename format (e.g., "My_List.json") and new ID format.
  */
-function isValidFilename(filename: string): boolean {
-  if (!filename) {
-    return false;
-  }
+function filenameToName(filename: string): string {
+  return filename
+    .replace(/\.json$/, '')
+    .replace(/_/g, ' ');
+}
 
-  // Must end with .json
-  if (!filename.endsWith('.json')) {
-    return false;
-  }
-
-  // No path traversal
-  if (filename.includes('..') || filename.includes('/') || filename.includes('\\')) {
-    return false;
-  }
-
-  return true;
+/**
+ * Check if the identifier looks like a database ID (cuid format).
+ */
+function isCuid(identifier: string): boolean {
+  // CUIDs start with 'c' and are alphanumeric, typically 25 chars
+  return /^c[a-z0-9]{20,}$/i.test(identifier);
 }
 
 // ============================================================================
@@ -52,26 +42,38 @@ export async function GET(
   try {
     const { filename } = await context.params;
 
-    if (!isValidFilename(filename)) {
+    if (!filename) {
       return NextResponse.json(
-        { error: 'Invalid filename' },
+        { error: 'List identifier is required' },
         { status: 400 }
       );
     }
 
-    const filepath = path.join(LISTS_DIR, filename);
+    // Try to find the list by ID or name
+    let list;
 
-    try {
-      const content = await fs.readFile(filepath, 'utf-8');
-      const data = JSON.parse(content);
+    if (isCuid(filename)) {
+      // New ID-based lookup
+      list = await getListById(filename);
+    } else {
+      // Legacy filename-based lookup
+      const name = filenameToName(filename);
+      list = await getListByName(name);
+    }
 
-      return NextResponse.json(data);
-    } catch {
+    if (!list) {
       return NextResponse.json(
         { error: 'List not found' },
         { status: 404 }
       );
     }
+
+    // Return the full list data for backward compatibility
+    return NextResponse.json({
+      ...list.data,
+      id: list.id,
+      savedAt: list.updatedAt.toISOString(),
+    });
   } catch (error) {
     console.error('Error loading list:', error);
 
@@ -93,25 +95,30 @@ export async function DELETE(
   try {
     const { filename } = await context.params;
 
-    if (!isValidFilename(filename)) {
+    if (!filename) {
       return NextResponse.json(
-        { error: 'Invalid filename' },
+        { error: 'List identifier is required' },
         { status: 400 }
       );
     }
 
-    const filepath = path.join(LISTS_DIR, filename);
+    let deleted = false;
 
-    try {
-      await fs.access(filepath);
-    } catch {
+    if (isCuid(filename)) {
+      // New ID-based deletion
+      deleted = await deleteListById(filename);
+    } else {
+      // Legacy filename-based deletion
+      const name = filenameToName(filename);
+      deleted = await deleteListByName(name);
+    }
+
+    if (!deleted) {
       return NextResponse.json(
         { error: 'List not found' },
         { status: 404 }
       );
     }
-
-    await fs.unlink(filepath);
 
     return NextResponse.json({
       success: true,
