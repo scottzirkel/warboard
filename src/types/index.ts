@@ -1,0 +1,345 @@
+// ============================================================================
+// Stat Modifiers
+// ============================================================================
+
+export type ModifierOperation = 'add' | 'subtract' | 'multiply' | 'set';
+export type ModifierScope = 'model' | 'unit' | 'melee' | 'ranged' | 'weapon' | 'all';
+export type StatKey = 'm' | 't' | 'sv' | 'w' | 'ld' | 'oc' | 'a' | 's' | 'ap' | 'd' | 'bs' | 'ws' | 'range';
+
+export interface Modifier {
+  stat: StatKey;
+  operation: ModifierOperation;
+  value: number;
+  scope: ModifierScope;
+  source?: string;
+  condition?: string;
+}
+
+// ============================================================================
+// Weapon Types
+// ============================================================================
+
+export type WeaponType = 'melee' | 'ranged' | 'equipment';
+
+export interface RangedWeaponStats {
+  range: number;
+  a: number | string; // Can be "D6", "D6+1", etc.
+  bs: string; // "2+", "3+", "N/A"
+  s: number;
+  ap: number;
+  d: number | string; // Can be "D6", "D6+1", etc.
+}
+
+export interface MeleeWeaponStats {
+  a: number | string; // Can be "D6", "D6+1", etc.
+  ws: string; // "2+", "3+"
+  s: number;
+  ap: number;
+  d: number | string; // Can be "D6", "D6+1", etc.
+}
+
+export interface EquipmentStats {
+  // Empty object for equipment type weapons
+}
+
+export type WeaponStats = RangedWeaponStats | MeleeWeaponStats | EquipmentStats;
+
+export interface Weapon {
+  id: string;
+  name: string;
+  type: WeaponType;
+  stats: WeaponStats;
+  abilities: string[];
+  loadoutGroup?: string;
+  modifiers?: Modifier[];
+}
+
+// ============================================================================
+// Abilities
+// ============================================================================
+
+export interface Ability {
+  id: string;
+  name: string;
+  description: string;
+  loadoutGroup?: string;
+  eligibleUnits?: string[]; // For Leader ability
+}
+
+// ============================================================================
+// Loadout Options
+// ============================================================================
+
+export type LoadoutOptionType = 'choice' | 'optional';
+export type LoadoutPattern = 'replacement' | 'addition';
+
+export interface LoadoutChoice {
+  id: string;
+  name: string;
+  default?: boolean;
+  maxModels?: number;
+  paired?: boolean;
+}
+
+export interface LoadoutOption {
+  id: string;
+  name: string;
+  type: LoadoutOptionType;
+  pattern: LoadoutPattern;
+  choices: LoadoutChoice[];
+}
+
+// ============================================================================
+// Units
+// ============================================================================
+
+export interface UnitStats {
+  m: number;
+  t: number;
+  sv: string; // "2+", "3+"
+  w: number;
+  ld: string; // "6+", "5+"
+  oc: number;
+}
+
+export interface Unit {
+  id: string;
+  name: string;
+  points: Record<string, number>; // { "4": 150, "5": 190 }
+  stats: UnitStats;
+  invuln: string | null; // "4+", "5+", or null
+  weapons: Weapon[];
+  loadoutOptions?: LoadoutOption[];
+  abilities: Ability[];
+  keywords: string[];
+}
+
+// ============================================================================
+// Enhancements
+// ============================================================================
+
+export interface Enhancement {
+  id: string;
+  name: string;
+  points: number;
+  description: string;
+  modifiers?: Modifier[];
+}
+
+// ============================================================================
+// Stratagems
+// ============================================================================
+
+export interface Stratagem {
+  id: string;
+  name: string;
+  cost: number;
+  phase: string;
+  description: string;
+  modifiers?: Modifier[];
+}
+
+// ============================================================================
+// Detachment Rules
+// ============================================================================
+
+export type DetachmentRuleType = 'passive' | 'aura' | 'selection';
+
+export interface DetachmentRuleBonus {
+  condition: string;
+  effect: string;
+}
+
+export interface DetachmentRuleChoice {
+  id: string;
+  name: string;
+  effect: string;
+}
+
+export interface DetachmentRule {
+  id: string;
+  name: string;
+  description: string;
+  type?: DetachmentRuleType;
+  modifiers?: Modifier[];
+  bonuses?: DetachmentRuleBonus[];
+  choices?: DetachmentRuleChoice[];
+}
+
+// ============================================================================
+// Detachments
+// ============================================================================
+
+export interface Detachment {
+  name: string;
+  rules: DetachmentRule[];
+  stratagems: Stratagem[];
+  enhancements: Enhancement[];
+}
+
+// ============================================================================
+// Army Rules
+// ============================================================================
+
+export interface ArmyRule {
+  name: string;
+  description: string;
+  range?: number;
+  keywords?: string[];
+  oncePerBattle?: boolean;
+}
+
+// ============================================================================
+// Keyword Glossary
+// ============================================================================
+
+export interface KeywordDefinition {
+  name: string;
+  description: string;
+}
+
+export interface KeywordGlossary {
+  faction?: Record<string, KeywordDefinition>;
+  unit?: Record<string, KeywordDefinition>;
+}
+
+// ============================================================================
+// Weapon Keywords
+// ============================================================================
+
+export interface WeaponKeyword {
+  name: string;
+  description: string;
+}
+
+// ============================================================================
+// Army Data (Full Faction JSON)
+// ============================================================================
+
+export interface ArmyData {
+  faction: string;
+  lastUpdated: string;
+  armyRules?: Record<string, ArmyRule>;
+  units: Unit[];
+  detachments: Record<string, Detachment>;
+  allies?: unknown[];
+  weaponKeywords?: Record<string, WeaponKeyword>;
+  keywordGlossary?: KeywordGlossary;
+  glossary?: Record<string, unknown>;
+}
+
+// ============================================================================
+// List Unit (User's Army List)
+// ============================================================================
+
+export interface AttachedLeader {
+  unitIndex: number;
+}
+
+export interface ListUnit {
+  unitId: string;
+  modelCount: number;
+  enhancement: string; // Enhancement ID or empty string
+  loadout?: Record<string, string>; // Legacy format
+  weaponCounts?: Record<string, number>;
+  currentWounds: number | null; // null = full health
+  leaderCurrentWounds: number | null; // null = full health
+  attachedLeader: AttachedLeader | null;
+}
+
+// ============================================================================
+// Current List (Full Army List)
+// ============================================================================
+
+export type GameFormat = 'standard' | 'colosseum';
+
+export interface CurrentList {
+  name: string;
+  army: string;
+  pointsLimit: number;
+  format: GameFormat;
+  detachment: string;
+  units: ListUnit[];
+}
+
+// ============================================================================
+// Game State (Play Mode)
+// ============================================================================
+
+export interface GameState {
+  battleRound: number;
+  commandPoints: number;
+  activeStratagems: string[];
+  katah: string | null;
+  collapsedLoadoutGroups: Record<number, Record<string, boolean>>;
+  activatedLoadoutGroups: Record<number, Record<string, boolean>>;
+}
+
+// ============================================================================
+// UI State
+// ============================================================================
+
+export type AppMode = 'build' | 'play';
+
+export interface UIState {
+  mode: AppMode;
+  selectedUnitIndex: number | null;
+  isLoading: boolean;
+  error: string | null;
+}
+
+// ============================================================================
+// Validation Errors
+// ============================================================================
+
+export interface ValidationError {
+  type: 'points' | 'format' | 'leader' | 'maxModels';
+  message: string;
+}
+
+// ============================================================================
+// Helper Types
+// ============================================================================
+
+export interface WeaponWithCount extends Weapon {
+  count: number;
+  isPaired?: boolean;
+}
+
+export interface LoadoutGroup {
+  id: string;
+  name: string;
+  modelCount: number;
+  isPaired: boolean;
+  weapons: Weapon[];
+  rangedWeapons: Weapon[];
+  meleeWeapons: Weapon[];
+}
+
+export interface AvailableLeader {
+  unitIndex: number;
+  unitId: string;
+  name: string;
+  enhancement: string;
+}
+
+export interface ModifierSource {
+  name: string;
+  value: number;
+  operation: ModifierOperation;
+}
+
+// ============================================================================
+// API Response Types
+// ============================================================================
+
+export interface SavedListInfo {
+  filename: string;
+  name: string;
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: string;
+}

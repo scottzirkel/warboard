@@ -1211,3 +1211,36 @@ Format follows the Ralph technique.
 **Verification:**
 - npm run build passes
 
+---
+
+## [nextjs-004] Create TypeScript types for all data structures
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created comprehensive TypeScript types in `src/types/index.ts`
+- Types organized into logical sections: Modifiers, Weapons, Abilities, Loadout Options, Units, Enhancements, Stratagems, Detachments, Army Data, List Units, Game State, UI State
+- Used union types for constrained values (e.g., `WeaponType`, `ModifierOperation`, `ModifierScope`)
+- Weapon stats handled with separate interfaces for ranged vs melee vs equipment types
+- Used `string | number` for variable attack/damage values that can be dice notation ("D6", "D6+1")
+- `Record<string, T>` used for flexible key-value structures (points by model count, detachments by id)
+- Included helper types for common computed structures (WeaponWithCount, LoadoutGroup, AvailableLeader)
+- Added API response types for future API route integration
+
+**Files created:**
+- `src/types/index.ts` - Complete TypeScript type definitions including:
+  - Modifier, ModifierOperation, ModifierScope, StatKey
+  - Weapon, WeaponType, RangedWeaponStats, MeleeWeaponStats, EquipmentStats
+  - Ability, LoadoutOption, LoadoutChoice, LoadoutPattern
+  - Unit, UnitStats, Enhancement, Stratagem
+  - Detachment, DetachmentRule, DetachmentRuleBonus, DetachmentRuleChoice
+  - ArmyData, ArmyRule, WeaponKeyword, KeywordGlossary
+  - ListUnit, AttachedLeader, CurrentList, GameFormat
+  - GameState, UIState, AppMode, ValidationError
+  - Helper types: WeaponWithCount, LoadoutGroup, AvailableLeader, ModifierSource
+  - API types: SavedListInfo, ApiResponse
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+
