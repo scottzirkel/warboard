@@ -1786,3 +1786,97 @@ Format follows the Ralph technique.
 - npm run test passes (53 tests)
 - npm run build passes
 
+---
+
+## [nextjs-025] Create Quick Reference panel
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created QuickReferencePanel as a dedicated reference component for Play Mode
+- Uses collapsible sections for each category, with Stratagems open by default
+- Component structure:
+  - CollapsibleSection: Reusable collapsible container with color variants
+  - StratagemCard: Displays stratagem name, CP cost, phase, and description
+  - KeywordCard: Displays keyword name and description
+  - WargearAbilityCard: Displays wargear abilities extracted from weapon modifiers
+- Sections included:
+  - Detachment Rule (purple) - Shows the active detachment's special rules
+  - Detachment Stratagems (blue) - Grouped by phase for easy reference
+  - Detachment Enhancements (green) - Shows available enhancements with points costs
+  - Wargear Abilities (orange) - Extracted from weapons with stat modifiers
+  - Weapon Abilities (gray) - From keywordGlossary.weapon array
+  - Unit Abilities (gray) - From keywordGlossary.unit array
+- Fixed TypeScript types: Updated KeywordGlossary to use arrays instead of Records for weapon/unit fields
+- Color-coded sections help distinguish different types of reference information
+- Empty state shown when no detachment is selected
+
+**Files created:**
+- `src/components/play/QuickReferencePanel.tsx` - Main panel component with:
+  - CollapsibleSection subcomponent with 5 color variants
+  - StratagemCard for individual stratagem display
+  - KeywordCard for keyword definitions
+  - WargearAbilityCard for wargear stat modifier display
+  - getWargearAbilities helper to extract modifiers from faction data
+  - getStatDisplayName helper for human-readable stat names
+
+**Files changed:**
+- `src/components/play/index.ts` - Added export for QuickReferencePanel
+- `src/types/index.ts` - Updated KeywordGlossary interface to add weapon/unit arrays
+
+**Verification:**
+- npm run lint passes (no new warnings)
+- npm run typecheck passes
+- npm run test passes (53 tests)
+- npm run build passes
+
+---
+
+## [nextjs-018] Create Play Mode right panel - Selected Unit
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created SelectedUnitDetailsPanel as the main container component for the Play Mode right panel
+- Broke down into smaller, focused sub-components for reusability and maintainability
+- ModifiedStatsTable component shows unit stats with modifier tooltips:
+  - Calculates modified stat values based on enhancement and weapon modifiers
+  - Shows modified stats in gold color with cursor-help style
+  - Tooltips display all modifier sources with their values (e.g., "Praesidium Shield: +1")
+  - Preserves stat format (e.g., "2+" for saves) after applying modifiers
+- DamageTracker component tracks unit and leader wounds separately:
+  - Shows combined total models alive summary
+  - Unit wound pool with WoundIndicator component
+  - Optional leader wound pool (purple variant) when leader is attached
+  - Uses existing WoundIndicator UI component for consistent styling
+- PlayModeWeaponsDisplay component with LoadoutGroupCard:
+  - LoadoutGroupCard wraps LoadoutGroupAccordion for collapsible weapon groups
+  - Each group shows ranged weapons (blue section) and melee weapons (red section)
+  - Groups support collapse/activate state for tracking model activation
+  - Leader weapons displayed in separate purple-bordered section below unit weapons
+- SelectedUnitDetailsPanel combines all sections:
+  - Unit header with combined name when leader attached
+  - Badges for Character, Enhancement, and Leader Enhancement
+  - Keywords display
+  - Stats table with modifier support
+  - Damage tracker
+  - Weapons display with loadout groups
+  - Unit abilities (with leader ability badge)
+  - Leader abilities when attached (purple styling)
+  - Empty state when no unit selected
+
+**Files created:**
+- `src/components/play/ModifiedStatsTable.tsx` - Stats display with modifier calculation and tooltips
+- `src/components/play/DamageTracker.tsx` - Combined unit and leader wound tracking
+- `src/components/play/PlayModeWeaponsDisplay.tsx` - Weapon display with LoadoutGroupCard
+- `src/components/play/SelectedUnitDetailsPanel.tsx` - Main panel combining all sections
+
+**Files changed:**
+- `src/components/play/index.ts` - Added exports for all new components
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (53 tests)
+- npm run build passes
+
