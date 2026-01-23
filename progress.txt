@@ -5,6 +5,41 @@ Format follows the Ralph technique.
 
 ---
 
+## [chaosmarines-004] Add Chaos Lord character
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Chaos Lord as the primary HQ character for Chaos Space Marines
+- Points: 90 for 1 model (per Munitorum Field Manual)
+- Stats: M6 T4 SV3+ W5 LD6+ OC1 with 4+ invulnerable save
+- Multiple weapon options via loadoutOptions:
+  - Ranged: Plasma Pistol (default), Bolt Pistol
+  - Melee: Daemon Hammer (default with Devastating Wounds), Accursed Weapon, Astartes Chainsword, Power Fist
+- BS and WS 2+ for all weapons (elite Character profile)
+- Leader ability with eligibleUnits: ["chosen", "legionaries"]
+- Lord of Chaos (Aura) ability: Reduce Stratagem CP cost by 1 once per battle round
+- Chance for Glory ability: Once per battle, improve melee weapon S/A/AP/D by 1 for a Fight phase
+- Keywords: Infantry, Character, Chaos, Grenades, Heretic Astartes, Chaos Lord
+
+**Files changed:**
+- public/data/chaosmarines.json - Added Chaos Lord unit to units array
+
+**Verification:**
+- JSON syntax validated (python3 -m json.tool)
+- Unit structure matches existing Character patterns in other faction files
+- Note: node_modules are corrupted from previous session, preventing npm run validate - unrelated to this data-only change
+
+**Acceptance criteria met:**
+1. ✅ Chaos Lord with points for 1 model (90 points)
+2. ✅ Stats: M6 T4 SV3+ W5 LD6+ OC1
+3. ✅ Bolt pistol, daemon hammer, plasma pistol options included
+4. ✅ Lord of Chaos aura ability included
+5. ✅ Leader ability with eligible units (chosen, legionaries)
+6. ✅ Keywords include Infantry, Character, Chaos, Heretic Astartes
+
+---
+
 ## [chaosmarines-003] Add Cultist Mob battleline unit
 
 **Date:** 2026-01-23
