@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui';
+import { StatsTable } from './StatsTable';
 import type { Unit, ListUnit, Modifier, ModifierSource, Enhancement, Weapon, RangedWeaponStats, MeleeWeaponStats } from '@/types';
 
 interface UnitDetailsPanelProps {
@@ -23,64 +24,12 @@ function isMeleeStats(weapon: Weapon): weapon is Weapon & { stats: MeleeWeaponSt
   return weapon.type === 'melee';
 }
 
-// Sort weapons: ranged first, then melee, alphabetically within each group
-function sortWeapons(weapons: Weapon[]): Weapon[] {
-  return [...weapons]
-    .filter(w => w.type !== 'equipment')
-    .sort((a, b) => {
-      if (a.type === 'ranged' && b.type === 'melee') return -1;
-      if (a.type === 'melee' && b.type === 'ranged') return 1;
-      return a.name.localeCompare(b.name);
-    });
-}
-
-// Calculate modified stat value
-function getModifiedValue(
-  stat: string,
-  baseValue: string | number,
-  modifiers?: Modifier[]
-): { value: string | number; modified: boolean } {
-  if (!modifiers || modifiers.length === 0) {
-    return { value: baseValue, modified: false };
-  }
-
-  const statModifiers = modifiers.filter(
-    (m) => m.stat === stat && (m.scope === 'model' || m.scope === 'unit')
-  );
-
-  if (statModifiers.length === 0) {
-    return { value: baseValue, modified: false };
-  }
-
-  let numericValue = typeof baseValue === 'number' ? baseValue : parseInt(baseValue, 10);
-  if (isNaN(numericValue)) {
-    const match = String(baseValue).match(/(\d+)/);
-    if (match) {
-      numericValue = parseInt(match[1], 10);
-    } else {
-      return { value: baseValue, modified: false };
-    }
-  }
-
-  for (const mod of statModifiers) {
-    switch (mod.operation) {
-      case 'add':
-        numericValue += mod.value;
-        break;
-      case 'subtract':
-        numericValue -= mod.value;
-        break;
-      case 'set':
-        numericValue = mod.value;
-        break;
-    }
-  }
-
-  if (typeof baseValue === 'string' && baseValue.includes('+')) {
-    return { value: `${numericValue}+`, modified: true };
-  }
-
-  return { value: numericValue, modified: true };
+// Group weapons by type
+function groupWeaponsByType(weapons: Weapon[]): { ranged: Weapon[]; melee: Weapon[] } {
+  return {
+    ranged: weapons.filter((w) => w.type === 'ranged'),
+    melee: weapons.filter((w) => w.type === 'melee'),
+  };
 }
 
 export function UnitDetailsPanel({
@@ -89,7 +38,7 @@ export function UnitDetailsPanel({
   unitIndex,
   enhancement,
   modifiers,
-  modifierSources: _modifierSources,
+  modifierSources,
   onAddUnit,
   className = '',
 }: UnitDetailsPanelProps) {
@@ -108,25 +57,25 @@ export function UnitDetailsPanel({
   const enhancementPoints = enhancement?.points || 0;
   const totalPoints = (basePoints || 0) + enhancementPoints;
 
-  // Get sorted weapons
-  const sortedWeaponsList = sortWeapons(unit.weapons);
+  // Check if unit is a Character
+  const isCharacter = unit.keywords.includes('Character');
 
-  // Calculate modified stats
-  const stats = {
-    m: getModifiedValue('m', unit.stats.m, modifiers),
-    t: getModifiedValue('t', unit.stats.t, modifiers),
-    sv: getModifiedValue('sv', unit.stats.sv, modifiers),
-    w: getModifiedValue('w', unit.stats.w, modifiers),
-    ld: getModifiedValue('ld', unit.stats.ld, modifiers),
-    oc: getModifiedValue('oc', unit.stats.oc, modifiers),
-  };
+  // Group weapons
+  const { ranged, melee } = groupWeaponsByType(unit.weapons);
 
   return (
-    <div className={`flex flex-col h-full overflow-y-auto scroll-smooth ${className}`}>
+    <div className={`flex flex-col h-full ${className}`}>
       {/* Header */}
-      <div className="flex justify-between items-start mb-4 shrink-0">
-        <h2 className="text-xl font-semibold text-accent-300">{unit.name}</h2>
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between mb-4 shrink-0">
+        <div>
+          <h3 className="section-header text-lg">{unit.name}</h3>
+          {listUnit && (
+            <span className="text-xs text-white/50">
+              {listUnit.modelCount} model{listUnit.modelCount !== 1 ? 's' : ''}
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-2">
           <span className="text-accent-400 font-bold">{totalPoints} pts</span>
           {onAddUnit && (
             <Button
@@ -142,76 +91,63 @@ export function UnitDetailsPanel({
       </div>
 
       {/* Badges */}
-      {enhancement && (
-        <div className="flex flex-wrap gap-2 mb-4 shrink-0">
-          <span className="badge badge-purple">{enhancement.name}</span>
-        </div>
-      )}
+      <div className="flex flex-wrap gap-1 mb-4 shrink-0">
+        {isCharacter && <span className="badge badge-accent">Character</span>}
+        {enhancement && <span className="badge badge-purple">{enhancement.name}</span>}
+      </div>
 
-      {/* Stats Table */}
-      <div className="card-depth p-4 mb-4 shrink-0">
-        <div className="grid grid-cols-6 gap-2 mb-3">
-          <div className="stat-cell">
-            <span className="stat-label">M</span>
-            <span className={`stat-value ${stats.m.modified ? 'modified' : ''}`}>
-              {stats.m.value}&quot;
-            </span>
-          </div>
-          <div className="stat-cell">
-            <span className="stat-label">T</span>
-            <span className={`stat-value ${stats.t.modified ? 'modified' : ''}`}>
-              {stats.t.value}
-            </span>
-          </div>
-          <div className="stat-cell">
-            <span className="stat-label">SV</span>
-            <span className={`stat-value ${stats.sv.modified ? 'modified' : ''}`}>
-              {stats.sv.value}
-            </span>
-          </div>
-          <div className="stat-cell">
-            <span className="stat-label">W</span>
-            <span className={`stat-value ${stats.w.modified ? 'modified' : ''}`}>
-              {stats.w.value}
-            </span>
-          </div>
-          <div className="stat-cell">
-            <span className="stat-label">LD</span>
-            <span className={`stat-value ${stats.ld.modified ? 'modified' : ''}`}>
-              {stats.ld.value}
-            </span>
-          </div>
-          <div className="stat-cell">
-            <span className="stat-label">OC</span>
-            <span className={`stat-value ${stats.oc.modified ? 'modified' : ''}`}>
-              {stats.oc.value}
-            </span>
-          </div>
+      {/* Stats */}
+      <div className="mb-4 shrink-0">
+        <div className="section-header-inline mb-2">
+          <span>Stats</span>
+          {unit.invuln && <span className="badge badge-blue">{unit.invuln} Invuln</span>}
         </div>
-        {unit.invuln && (
-          <div className="flex justify-center">
-            <span className="badge badge-accent">{unit.invuln} Invuln</span>
-          </div>
-        )}
+        <StatsTable
+          stats={unit.stats}
+          modifiers={modifiers}
+          modifierSources={modifierSources}
+        />
+      </div>
+
+      {/* Keywords */}
+      <div className="mb-4 shrink-0">
+        <div className="section-header-inline mb-2">
+          <span>Keywords</span>
+        </div>
+        <div className="flex flex-wrap gap-1">
+          {unit.keywords.map((kw) => (
+            <span key={kw} className="badge">{kw}</span>
+          ))}
+        </div>
       </div>
 
       {/* Weapons */}
-      <div className="card-depth overflow-hidden mb-4 shrink-0">
-        <div className="section-header">Weapons</div>
-        <div className="px-4 pb-4 space-y-3">
-          {sortedWeaponsList.map((weapon) => (
-            <div key={weapon.id} className="bg-black/20 rounded-lg p-3">
-              <div className="flex justify-between items-center mb-2">
-                <span className="font-medium text-sm">{weapon.name}</span>
-                <span className={`badge text-[10px] py-0 ${weapon.type === 'ranged' ? 'badge-blue' : 'badge-red'}`}>
-                  {weapon.type}
-                </span>
-              </div>
-              {isRangedStats(weapon) && (
-                <table className="weapon-table">
+      <div className="mb-4 shrink-0">
+        <div className="section-header-inline mb-2">
+          <span>Weapons</span>
+          <span className="badge">{unit.weapons.length}</span>
+        </div>
+
+        {/* Ranged Weapons */}
+        {ranged.length > 0 && (
+          <div className="mb-3">
+            <div className="text-xs text-white/50 uppercase tracking-wide mb-1">Ranged</div>
+            {ranged.filter(isRangedStats).map((weapon) => (
+              <div key={weapon.id} className="bg-black/20 rounded-lg p-2 mb-1">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm font-medium text-white">{weapon.name}</span>
+                  {weapon.abilities && weapon.abilities.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {weapon.abilities.map((ab) => (
+                        <span key={ab} className="badge badge-blue text-[10px] py-0">{ab}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <table className="weapon-table text-xs">
                   <thead>
                     <tr>
-                      <th>RNG</th>
+                      <th>Range</th>
                       <th>A</th>
                       <th>BS</th>
                       <th>S</th>
@@ -230,9 +166,28 @@ export function UnitDetailsPanel({
                     </tr>
                   </tbody>
                 </table>
-              )}
-              {isMeleeStats(weapon) && (
-                <table className="weapon-table">
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Melee Weapons */}
+        {melee.length > 0 && (
+          <div>
+            <div className="text-xs text-white/50 uppercase tracking-wide mb-1">Melee</div>
+            {melee.filter(isMeleeStats).map((weapon) => (
+              <div key={weapon.id} className="bg-black/20 rounded-lg p-2 mb-1">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm font-medium text-white">{weapon.name}</span>
+                  {weapon.abilities && weapon.abilities.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {weapon.abilities.map((ab) => (
+                        <span key={ab} className="badge badge-red text-[10px] py-0">{ab}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <table className="weapon-table text-xs">
                   <thead>
                     <tr>
                       <th>A</th>
@@ -252,26 +207,24 @@ export function UnitDetailsPanel({
                     </tr>
                   </tbody>
                 </table>
-              )}
-              {weapon.abilities && weapon.abilities.length > 0 && (
-                <div className="text-xs text-accent-400 mt-2">
-                  {weapon.abilities.join(', ')}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Abilities */}
       {unit.abilities && unit.abilities.length > 0 && (
-        <div className="card-depth overflow-hidden shrink-0">
-          <div className="section-header">Abilities</div>
-          <div className="px-4 pb-4 space-y-2">
+        <div className="shrink-0">
+          <div className="section-header-inline mb-2">
+            <span>Abilities</span>
+            <span className="badge">{unit.abilities.length}</span>
+          </div>
+          <div className="space-y-2">
             {unit.abilities.map((ability) => (
-              <div key={ability.id} className="text-sm">
-                <span className="font-semibold text-accent-300">{ability.name}: </span>
-                <span className="text-white/70">{ability.description}</span>
+              <div key={ability.id} className="bg-black/20 rounded-lg p-2">
+                <div className="text-sm font-medium text-accent-300">{ability.name}</div>
+                <div className="text-xs text-white/70 mt-0.5">{ability.description}</div>
               </div>
             ))}
           </div>
