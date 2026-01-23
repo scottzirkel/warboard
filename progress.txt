@@ -1374,3 +1374,39 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-009] Create atomic UI components
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created atomic UI components in src/components/ui/ directory
+- Components use Tailwind CSS with same color scheme as original Alpine.js app
+- Badge component supports 7 variants (default, accent, success, warning, error, info, purple) and 2 sizes
+- Button component supports 4 variants (primary, secondary, ghost, danger), 4 sizes, and loading state
+- Select component uses the select-dark class from globals.css for consistent styling
+- Stepper component provides increment/decrement buttons with min/max constraints
+- Input component supports labels, error messages, and icon prefixes
+- Card component with CardHeader, CardBody, CardFooter subcomponents for flexible layouts
+- Panel component for main layout areas with title and header slot
+- StatCell and StatRow components for displaying unit statistics
+- ProgressBar component with variants for different states (default, success, warning, danger)
+- PointsProgress specialized component for army list points display
+
+**Files created:**
+- `src/components/ui/Badge.tsx` - Badge component with variants and sizes
+- `src/components/ui/Button.tsx` - Button component with variants, sizes, and loading state
+- `src/components/ui/Select.tsx` - Select dropdown using dark theme styling
+- `src/components/ui/Stepper.tsx` - Numeric stepper with +/- buttons
+- `src/components/ui/Input.tsx` - Text input with label, error, and icon support
+- `src/components/ui/Card.tsx` - Card container with header, body, footer sections
+- `src/components/ui/Panel.tsx` - Panel layout component with title and sections
+- `src/components/ui/StatCell.tsx` - Stat display cell and row components
+- `src/components/ui/ProgressBar.tsx` - Progress bar with variants, includes PointsProgress
+- `src/components/ui/index.ts` - Export barrel file for all UI components
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+
