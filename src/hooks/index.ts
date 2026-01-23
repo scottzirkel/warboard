@@ -43,3 +43,15 @@ export type {
   LeaderAttachmentResult,
   UseLeaderAttachmentReturn,
 } from './useLeaderAttachment';
+
+// ============================================================================
+// Wake Lock Hook
+// ============================================================================
+
+export {
+  useWakeLock,
+} from './useWakeLock';
+
+export type {
+  UseWakeLockResult,
+} from './useWakeLock';

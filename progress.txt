@@ -1880,3 +1880,113 @@ Format follows the Ralph technique.
 - npm run test passes (53 tests)
 - npm run build passes
 
+---
+
+## [nextjs-020] Create leader attachment hooks
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created useLeaderAttachment hook in src/hooks/useLeaderAttachment.ts for managing leader attachment state
+- Hook receives army data, units list, and callback functions for state updates
+- Designed as a pure logic hook that delegates actual state changes to parent via callbacks
+- Key query functions implemented:
+  - `getAvailableLeaders(unitIndex)`: Returns eligible unattached leaders for a unit
+  - `getAttachedLeader(unitIndex)`: Returns info about the currently attached leader
+  - `getAttachedToUnit(leaderIndex)`: Returns info about what unit a leader is attached to
+  - `isLeaderUnit(unitIndex)`: Checks if a unit has the Leader ability
+  - `isUnitAttachedAsLeader(unitIndex)`: Checks if unit is attached as a leader elsewhere
+  - `canHaveLeaderAttached(unitIndex)`: Checks if a unit can receive a leader attachment
+- Key action functions implemented:
+  - `attachLeader(unitIndex, leaderIndex)`: Validates and attaches leader with error handling
+  - `detachLeader(unitIndex)`: Removes attached leader from a unit
+- Validation implemented via `validateLeaderAttachments()` function:
+  - Validates leader index is valid
+  - Validates attached unit has Leader ability
+  - Validates leader can attach to target unit type (via eligibleUnits)
+  - Detects when a leader is attached to multiple units
+- Leader eligibility determined by matching unit's `unitId` against leader's `ability.eligibleUnits` array
+- Character units cannot have leaders attached to them
+
+**Files created:**
+- `src/hooks/useLeaderAttachment.ts` - Leader attachment hook with:
+  - Helper functions for checking Leader ability presence
+  - Query functions for leader state inspection
+  - Action functions for attach/detach operations
+  - Validation function returning ValidationError array
+- `src/hooks/useLeaderAttachment.test.ts` - Comprehensive test suite with 27 tests covering:
+  - isLeaderUnit functionality
+  - getAvailableLeaders with eligibility and attachment filtering
+  - canHaveLeaderAttached for Characters and eligible units
+  - getAttachedLeader and getAttachedToUnit queries
+  - isUnitAttachedAsLeader detection
+  - attachLeader validation and callback invocation
+  - detachLeader callback invocation
+  - validateLeaderAttachments error detection
+
+**Files changed:**
+- `src/hooks/index.ts` - Added exports for useLeaderAttachment hook and types
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (53 tests, 27 for this hook)
+- npm run build passes
+
+
+---
+
+## [nextjs-026] Create modals and overlays
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created Modal base component with proper backdrop and close behavior:
+  - Escape key closes modal (configurable via closeOnEscape)
+  - Backdrop click closes modal (configurable via closeOnBackdrop)
+  - Body scroll prevented when modal is open
+  - Proper ARIA attributes for accessibility (role="dialog", aria-modal, aria-labelledby)
+  - Three size variants (sm, md, lg)
+  - Animated entrance with fade-in and zoom-in effects
+- Created ConfirmModal as a specialized modal for confirmation dialogs:
+  - Supports default and danger variants
+  - Configurable confirm/cancel button text
+  - Simple API for common confirmation patterns
+- Created ImportModal for Yellowscribe JSON import:
+  - Text area for pasting JSON content
+  - File upload button for uploading .json files
+  - JSON parsing and validation with clear error messages
+  - Validates required fields (units array)
+  - Transforms imported data to CurrentList format
+  - Handles missing optional fields with sensible defaults
+- Created LoadModal for saved lists selection:
+  - Displays list of saved lists with file icons
+  - Single-click to select, double-click to load
+  - Two-step delete confirmation (click once to reveal confirm/cancel)
+  - Loading and empty states
+  - Error display for failed operations
+- Created ToastNotification system for user feedback:
+  - Four toast types: success, error, warning, info
+  - Each type has distinct icon and color scheme
+  - ToastContainer component for managing multiple toasts
+  - Standalone ToastNotification for single toast usage
+  - Auto-dismiss with configurable duration
+  - Manual dismiss button on each toast
+  - Slide-in animation from right
+  - Positioned at top-right by default (configurable)
+
+**Files created:**
+- `src/components/ui/Modal.tsx` - Base Modal and ConfirmModal components
+- `src/components/ui/ImportModal.tsx` - Yellowscribe JSON import modal
+- `src/components/ui/LoadModal.tsx` - Saved lists selection modal
+- `src/components/ui/ToastNotification.tsx` - Toast notification components
+
+**Files changed:**
+- `src/components/ui/index.ts` - Added exports for Modal, ConfirmModal, ImportModal, LoadModal, ToastNotification, ToastContainer
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (53 tests)
+- npm run build passes
+
