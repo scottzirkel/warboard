@@ -1244,3 +1244,36 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-005] Create Zustand store for army list state
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created useArmyStore in src/stores/armyStore.ts using Zustand
+- Store manages: currentList, selectedArmy (via armyData), detachment (via currentList.detachment)
+- Actions for add/remove/update units follow same logic patterns as original Alpine.js implementation
+- Points calculation implemented as getTotalPoints() method on the store
+- Included weapon count management with maxModels constraint validation
+- Leader attachment/detachment actions included
+- Wound tracking actions included for both unit and leader wounds
+- Added availableArmies configuration for faction selection
+- Store properly handles legacy list data migration (weaponCounts, attachedLeader, etc.)
+- Used immutable update patterns for all state changes
+
+**Files created:**
+- `src/stores/armyStore.ts` - Zustand store with:
+  - State: armyData, currentList, isLoading, error
+  - Army data actions: loadArmyData
+  - List management: setListName, setPointsLimit, setFormat, setDetachment, resetList, loadList
+  - Unit management: addUnit, removeUnit, updateUnitModelCount, setUnitEnhancement
+  - Weapon/loadout: updateWeaponCount, setWeaponCount
+  - Leader attachment: attachLeader, detachLeader
+  - Wound tracking: setUnitWounds, setLeaderWounds, resetAllWounds
+  - Helpers: getUnitById, getTotalPoints
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+
