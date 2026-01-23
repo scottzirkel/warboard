@@ -1308,3 +1308,35 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-007] Create Zustand store for UI state
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created useUIStore in src/stores/uiStore.ts using Zustand
+- Store manages: mode (build/play), selectedUnitIndex, modal states, toast notifications, and loading state
+- Added custom Toast and ConfirmModalConfig types for richer UI feedback
+- Mode switching via setMode, toggleMode, enterBuildMode, enterPlayMode
+- Unit selection via selectUnit, clearSelection
+- Modal management with openModal, closeModal, openConfirmModal for different modal types (import, load, save, confirm)
+- Toast notifications with auto-dismiss (configurable duration), different types (success, error, info, warning)
+- Convenience methods: showSuccess, showError, showInfo, showWarning
+- Loading state with optional message via setLoading
+- Full reset via resetUI
+
+**Files created:**
+- `src/stores/uiStore.ts` - Zustand store with:
+  - State: mode, selectedUnitIndex, activeModal, confirmModalConfig, toasts, isLoading, loadingMessage
+  - Mode actions: setMode, toggleMode, enterBuildMode, enterPlayMode
+  - Unit selection: selectUnit, clearSelection
+  - Modal actions: openModal, closeModal, openConfirmModal
+  - Toast actions: showToast, showSuccess, showError, showInfo, showWarning, dismissToast, clearToasts
+  - Loading actions: setLoading
+  - Reset: resetUI
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+

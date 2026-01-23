@@ -1,0 +1,239 @@
+import { create } from 'zustand';
+import type { AppMode } from '@/types';
+
+// ============================================================================
+// Toast Notification Types
+// ============================================================================
+
+export type ToastType = 'success' | 'error' | 'info' | 'warning';
+
+export interface Toast {
+  id: string;
+  type: ToastType;
+  message: string;
+  duration?: number;
+}
+
+// ============================================================================
+// Modal Types
+// ============================================================================
+
+export type ModalType = 'import' | 'load' | 'save' | 'confirm' | null;
+
+export interface ConfirmModalConfig {
+  title: string;
+  message: string;
+  confirmText?: string;
+  cancelText?: string;
+  onConfirm: () => void;
+  onCancel?: () => void;
+}
+
+// ============================================================================
+// Store Interface
+// ============================================================================
+
+interface UIStoreState {
+  // App Mode
+  mode: AppMode;
+
+  // Unit Selection
+  selectedUnitIndex: number | null;
+
+  // Modal States
+  activeModal: ModalType;
+  confirmModalConfig: ConfirmModalConfig | null;
+
+  // Toast Notifications
+  toasts: Toast[];
+
+  // Loading States
+  isLoading: boolean;
+  loadingMessage: string | null;
+}
+
+interface UIStoreActions {
+  // Mode Management
+  setMode: (mode: AppMode) => void;
+  toggleMode: () => void;
+  enterBuildMode: () => void;
+  enterPlayMode: () => void;
+
+  // Unit Selection
+  selectUnit: (index: number | null) => void;
+  clearSelection: () => void;
+
+  // Modal Management
+  openModal: (modal: ModalType) => void;
+  closeModal: () => void;
+  openConfirmModal: (config: ConfirmModalConfig) => void;
+
+  // Toast Notifications
+  showToast: (type: ToastType, message: string, duration?: number) => void;
+  showSuccess: (message: string) => void;
+  showError: (message: string) => void;
+  showInfo: (message: string) => void;
+  showWarning: (message: string) => void;
+  dismissToast: (id: string) => void;
+  clearToasts: () => void;
+
+  // Loading State
+  setLoading: (isLoading: boolean, message?: string | null) => void;
+
+  // Reset
+  resetUI: () => void;
+}
+
+type UIStore = UIStoreState & UIStoreActions;
+
+// ============================================================================
+// Helper Functions
+// ============================================================================
+
+const generateToastId = (): string => {
+  return `toast-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+};
+
+// ============================================================================
+// Default State
+// ============================================================================
+
+const createDefaultUIState = (): UIStoreState => ({
+  mode: 'build',
+  selectedUnitIndex: null,
+  activeModal: null,
+  confirmModalConfig: null,
+  toasts: [],
+  isLoading: false,
+  loadingMessage: null,
+});
+
+// ============================================================================
+// Store Implementation
+// ============================================================================
+
+export const useUIStore = create<UIStore>((set, get) => ({
+  // Initial State
+  ...createDefaultUIState(),
+
+  // -------------------------------------------------------------------------
+  // Mode Management Actions
+  // -------------------------------------------------------------------------
+
+  setMode: (mode: AppMode) => {
+    set({ mode });
+  },
+
+  toggleMode: () => {
+    set(state => ({
+      mode: state.mode === 'build' ? 'play' : 'build',
+    }));
+  },
+
+  enterBuildMode: () => {
+    set({ mode: 'build' });
+  },
+
+  enterPlayMode: () => {
+    set({ mode: 'play' });
+  },
+
+  // -------------------------------------------------------------------------
+  // Unit Selection Actions
+  // -------------------------------------------------------------------------
+
+  selectUnit: (index: number | null) => {
+    set({ selectedUnitIndex: index });
+  },
+
+  clearSelection: () => {
+    set({ selectedUnitIndex: null });
+  },
+
+  // -------------------------------------------------------------------------
+  // Modal Management Actions
+  // -------------------------------------------------------------------------
+
+  openModal: (modal: ModalType) => {
+    set({ activeModal: modal });
+  },
+
+  closeModal: () => {
+    set({
+      activeModal: null,
+      confirmModalConfig: null,
+    });
+  },
+
+  openConfirmModal: (config: ConfirmModalConfig) => {
+    set({
+      activeModal: 'confirm',
+      confirmModalConfig: config,
+    });
+  },
+
+  // -------------------------------------------------------------------------
+  // Toast Notification Actions
+  // -------------------------------------------------------------------------
+
+  showToast: (type: ToastType, message: string, duration: number = 3000) => {
+    const id = generateToastId();
+    const toast: Toast = { id, type, message, duration };
+
+    set(state => ({
+      toasts: [...state.toasts, toast],
+    }));
+
+    // Auto-dismiss after duration
+    if (duration > 0) {
+      setTimeout(() => {
+        get().dismissToast(id);
+      }, duration);
+    }
+  },
+
+  showSuccess: (message: string) => {
+    get().showToast('success', message);
+  },
+
+  showError: (message: string) => {
+    get().showToast('error', message, 5000); // Longer duration for errors
+  },
+
+  showInfo: (message: string) => {
+    get().showToast('info', message);
+  },
+
+  showWarning: (message: string) => {
+    get().showToast('warning', message, 4000);
+  },
+
+  dismissToast: (id: string) => {
+    set(state => ({
+      toasts: state.toasts.filter(toast => toast.id !== id),
+    }));
+  },
+
+  clearToasts: () => {
+    set({ toasts: [] });
+  },
+
+  // -------------------------------------------------------------------------
+  // Loading State Actions
+  // -------------------------------------------------------------------------
+
+  setLoading: (isLoading: boolean, message: string | null = null) => {
+    set({
+      isLoading,
+      loadingMessage: isLoading ? message : null,
+    });
+  },
+
+  // -------------------------------------------------------------------------
+  // Reset
+  // -------------------------------------------------------------------------
+
+  resetUI: () => {
+    set(createDefaultUIState());
+  },
+}));
