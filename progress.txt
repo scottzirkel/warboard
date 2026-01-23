@@ -2440,3 +2440,41 @@ Format follows the Ralph technique.
   4. Astartes chainsword with correct stats (A4 WS3+ S4 AP-1 D1)
   5. Shock Assault ability included
   6. Keywords include Infantry, Battleline, Imperium, Tacticus
+
+---
+
+## [spacemarines-004] Add Captain in Terminator Armour character
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Captain in Terminator Armour as a Character unit for Space Marines
+- Points: 95 for 1 model (per current Munitorum Field Manual)
+- Stats: M5 T5 SV2+ W6 LD6+ OC1 (Terminator profile with Captain buffs)
+- Invulnerable save: 4+ (standard Terminator armour)
+- Ranged weapons with loadout options:
+  - Storm Bolter (24" A2 BS2+ S4 AP0 D1, Rapid Fire 2) - default
+  - Combi-weapon (24" A1 BS2+ S4 AP0 D1, Anti-Infantry 4+, Devastating Wounds, Rapid Fire 1)
+- Melee weapons with loadout options:
+  - Power Weapon (A6 WS2+ S5 AP-2 D1) - default
+  - Relic Weapon (A6 WS2+ S5 AP-2 D2)
+  - Power Fist (A5 WS2+ S8 AP-2 D2)
+- Leader ability: Can attach to Terminator Squad (eligibleUnits: ["terminator-squad"])
+- Rites of Battle ability: Reduce Stratagem CP cost by 1 once per round
+- The Imperium's Sword ability: Re-roll Charge rolls
+- Keywords: Infantry, Character, Imperium, Terminator, Captain in Terminator Armour
+
+**Files changed:**
+- public/data/spacemarines.json - Added Captain in Terminator Armour unit to units array
+
+**Verification:**
+- npm run lint passes
+- npm run test passes (191 tests)
+- JSON is valid (python3 json.tool validation)
+- Pre-existing TypeScript errors in src/app/page.tsx are unrelated to this data change
+- Acceptance criteria met:
+  1. Captain with points for 1 model (95)
+  2. Stats: M5 T5 SV2+ W6 LD6+ OC1 with 4+ invuln
+  3. Storm bolter and power weapon options included
+  4. Leader ability with eligibleUnits: ["terminator-squad"]
+  5. Keywords include Infantry, Character, Imperium, Terminator

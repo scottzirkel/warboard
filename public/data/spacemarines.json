@@ -200,6 +200,124 @@
         }
       ],
       "keywords": ["Infantry", "Character", "Imperium", "Terminator", "Captain in Terminator Armour"]
+    },
+    {
+      "id": "primaris-lieutenant",
+      "name": "Primaris Lieutenant",
+      "points": { "1": 75 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bolt-pistol-lt",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "standard"
+        },
+        {
+          "id": "master-crafted-bolt-rifle",
+          "name": "Master-crafted Bolt Rifle",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": -1, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "standard"
+        },
+        {
+          "id": "close-combat-weapon-lt",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "standard"
+        },
+        {
+          "id": "neo-volkite-pistol",
+          "name": "Neo-volkite Pistol",
+          "type": "ranged",
+          "stats": { "range": 15, "a": 1, "bs": "3+", "s": 5, "ap": 0, "d": 2 },
+          "abilities": ["Pistol", "Devastating Wounds"],
+          "loadoutGroup": "volkite"
+        },
+        {
+          "id": "master-crafted-power-weapon",
+          "name": "Master-crafted Power Weapon",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 5, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "volkite"
+        },
+        {
+          "id": "storm-shield-lt",
+          "name": "Storm Shield",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "volkite",
+          "modifiers": [
+            { "stat": "invuln", "operation": "set", "value": "4+", "scope": "model", "source": "Storm Shield" }
+          ]
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "wargear",
+          "name": "Wargear",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "standard", "name": "Bolt Pistol, Master-crafted Bolt Rifle & CCW", "default": true },
+            { "id": "volkite", "name": "Neo-volkite Pistol, Power Weapon & Storm Shield" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to Intercessor Squad, Assault Intercessor Squad, Infernus Squad, Heavy Intercessor Squad, Sternguard Veteran Squad, or Hellblaster Squad.",
+          "eligibleUnits": ["intercessor-squad", "assault-intercessor-squad", "infernus-squad", "heavy-intercessor-squad", "sternguard-veteran-squad", "hellblaster-squad"]
+        },
+        {
+          "id": "tactical-precision",
+          "name": "Tactical Precision",
+          "description": "While this model is leading a unit, weapons equipped by models in that unit have the [Lethal Hits] ability."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Grenades", "Imperium", "Tacticus", "Primaris Lieutenant"]
+    },
+    {
+      "id": "bladeguard-veteran-squad",
+      "name": "Bladeguard Veteran Squad",
+      "points": { "3": 90, "6": 180 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 3, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "heavy-bolt-pistol-bladeguard",
+          "name": "Heavy Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 1, "bs": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "master-crafted-power-sword",
+          "name": "Master-crafted Power Sword",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "bladeguard",
+          "name": "Bladeguard",
+          "description": "At the start of the Fight phase, select one of the following abilities to take effect until the end of the phase: Swords of the Chapter - Each time a model in this unit makes a melee attack, re-roll a Hit roll of 1. Shields of the Imperium - Each time an invulnerable saving throw is made for a model in this unit, re-roll a saving throw of 1."
+        }
+      ],
+      "keywords": ["Infantry", "Imperium", "Tacticus", "Bladeguard Veteran Squad"]
     }
   ],
   "detachments": {},
