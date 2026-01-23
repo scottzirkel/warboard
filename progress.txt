@@ -2336,3 +2336,41 @@ Format follows the Ralph technique.
   1. public/data/chaosmarines.json exists with faction: Chaos Space Marines
   2. Army rule: Dark Pacts (take wounds to get Lethal Hits or Sustained Hits)
   3. lastUpdated set to 2026-01 (current month)
+
+---
+
+## [nextjs-022] Create wound tracking hooks
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Created `useWoundTracking` hook that manages wound state for units and attached leaders
+- Hook takes callbacks for setting wounds rather than directly modifying store state (dependency injection pattern)
+- Uses `useStatModifiers` hook internally to get modified wound values (e.g., from enhancements)
+- Calculates models alive based on wounds taken divided by wounds per model
+- Tracks unit wounds and leader wounds separately
+- Provides combined state for displaying total wounds across unit + leader
+- Implemented damage and healing actions with validation:
+  - `applyUnitDamage` / `applyLeaderDamage` - apply damage, clamp to 0
+  - `healUnit` / `healLeader` - heal wounds, sets to null when fully healed
+  - `resetUnitWounds` / `resetLeaderWounds` / `resetAllWounds` - reset to full health (null)
+- Edge cases handled: negative damage/healing ignored, destroyed units cannot take more damage, full health units cannot heal
+- Exported types: WoundTrackingState, LeaderWoundTrackingState, CombinedWoundState, UseWoundTrackingReturn
+
+**Files created:**
+- src/hooks/useWoundTracking.ts - Wound tracking hook implementation
+- src/hooks/useWoundTracking.test.ts - 30 comprehensive unit tests
+
+**Files changed:**
+- src/hooks/index.ts - Added exports for useWoundTracking and its types
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (191 tests, 30 new for useWoundTracking hook)
+- npm run build passes
+- Acceptance criteria met:
+  1. useWoundTracking hook manages wound state (currentWounds, woundsTaken, isFullHealth, isDestroyed)
+  2. Calculates total wounds (woundsPerModel × modelCount) and models alive (modelCount - floor(woundsTaken / woundsPerModel))
+  3. Handles leader wounds separately (leaderWounds state with separate tracking)
+  4. Resets wounds on new game (resetAllWounds sets both to null for full health)

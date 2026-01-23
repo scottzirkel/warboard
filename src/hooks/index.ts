@@ -73,6 +73,21 @@ export type {
 } from './useListValidation';
 
 // ============================================================================
+// Wound Tracking Hook
+// ============================================================================
+
+export {
+  useWoundTracking,
+} from './useWoundTracking';
+
+export type {
+  WoundTrackingState,
+  LeaderWoundTrackingState,
+  CombinedWoundState,
+  UseWoundTrackingReturn,
+} from './useWoundTracking';
+
+// ============================================================================
 // Wake Lock Hook
 // ============================================================================
 
