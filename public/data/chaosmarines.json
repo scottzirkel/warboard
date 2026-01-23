@@ -275,6 +275,49 @@
       "keywords": ["Infantry", "Character", "Chaos", "Grenades", "Heretic Astartes", "Chaos Lord"]
     },
     {
+      "id": "dark-apostle",
+      "name": "Dark Apostle",
+      "points": { "1": 65 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 4, "ld": "5+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "bolt-pistol-apostle",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "accursed-crozius",
+          "name": "Accursed Crozius",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "2+", "s": 6, "ap": -1, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units: Accursed Cultists, Chosen, Cultist Mob, Legionaries, Nemesis Claw.",
+          "eligibleUnits": ["accursed-cultists", "chosen", "cultist-mob", "legionaries", "nemesis-claw"]
+        },
+        {
+          "id": "dark-zealotry",
+          "name": "Dark Zealotry",
+          "description": "While this model is leading a unit, each time a model in that unit makes a melee attack, add 1 to the Wound roll."
+        },
+        {
+          "id": "demagogue",
+          "name": "Demagogue",
+          "description": "Once per battle, at the start of any phase, you can select one friendly HERETIC ASTARTES unit that is Battle-shocked and within 12\" of this model. That unit is no longer Battle-shocked."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Chaos", "Grenades", "Heretic Astartes", "Dark Apostle"]
+    },
+    {
       "id": "cultist-mob",
       "name": "Cultist Mob",
       "points": { "10": 50, "20": 100 },

@@ -5,6 +5,43 @@ Format follows the Ralph technique.
 
 ---
 
+## [chaosmarines-005] Add Dark Apostle character
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Dark Apostle as a support character for Chaos Space Marines
+- Points: 65 for 1 model (per Wahapedia/Munitorum Field Manual)
+- Stats: M6 T4 SV3+ W4 LD5+ OC1 with 4+ invulnerable save
+- Note: Dark Apostle comes with 2 Dark Disciples in the datasheet, but for simplicity modeled as a single character
+- Weapons:
+  - Bolt Pistol: 12" A1 BS3+ S4 AP0 D1 (Pistol)
+  - Accursed Crozius: A5 WS2+ S6 AP-1 D2 (powerful melee weapon, signature Dark Apostle wargear)
+- Leader ability with eligibleUnits: ["accursed-cultists", "chosen", "cultist-mob", "legionaries", "nemesis-claw"]
+- Dark Zealotry ability: While leading a unit, melee attacks gain +1 to Wound rolls
+- Demagogue ability: Once per battle, remove Battle-shock from a friendly HERETIC ASTARTES unit within 12"
+- Note: Omitted Malign Sacrifice ability (requires Dark Disciple models to sacrifice, not applicable without them)
+- Keywords: Infantry, Character, Chaos, Grenades, Heretic Astartes, Dark Apostle
+
+**Files changed:**
+- public/data/chaosmarines.json - Added Dark Apostle unit to units array
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 226 tests passed (12 test files)
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Dark Apostle with points for 1 model (65 points)
+2. ✅ Stats: M6 T4 SV3+ W4 LD5+ OC1
+3. ✅ Accursed crozius melee weapon (A5 WS2+ S6 AP-1 D2)
+4. ✅ Prayers to the Dark Gods ability (modeled as Dark Zealotry - +1 to Wound on melee attacks)
+5. ✅ Leader ability with eligible units
+6. ✅ Keywords include Infantry, Character, Chaos, Heretic Astartes
+
+---
+
 ## [nextjs-030] Migrate existing saved lists and update documentation
 
 **Date:** 2026-01-23
