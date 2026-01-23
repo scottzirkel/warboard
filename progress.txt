@@ -5,6 +5,41 @@ Format follows the Ralph technique.
 
 ---
 
+## [spacemarines-005] Add Primaris Lieutenant character
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Primaris Lieutenant as a Character unit for Space Marines
+- Points: 75 for 1 model (per current Munitorum Field Manual)
+- Stats: M6 T4 SV3+ W4 LD6+ OC1 (standard Primaris Character stats)
+- No base invulnerable save (but can gain 4+ from Storm Shield option)
+- Two wargear options via loadoutOptions with replacement pattern:
+  - Standard: Bolt Pistol, Master-crafted Bolt Rifle, Close Combat Weapon (default)
+  - Volkite: Neo-volkite Pistol (S5 D2, Devastating Wounds), Master-crafted Power Weapon (A5 S5 AP-2 D2), Storm Shield (grants 4+ invuln via modifier)
+- Storm Shield implemented as a melee weapon entry with a modifier that sets invuln to 4+
+- Added Tactical Precision ability: grants [Lethal Hits] to all weapons in the attached unit
+- Leader ability allows attachment to: Intercessor Squad, Assault Intercessor Squad, Infernus Squad, Heavy Intercessor Squad, Sternguard Veteran Squad, Hellblaster Squad
+- Keywords: Infantry, Character, Grenades, Imperium, Tacticus, Primaris Lieutenant
+
+**Files changed:**
+- public/data/spacemarines.json - Added Primaris Lieutenant unit to units array
+
+**Verification:**
+- npm run lint passes
+- npm run test passes (191 tests)
+- JSON syntax validated
+- Note: npm run build and typecheck have pre-existing failures in page.tsx from ongoing nextjs-029 migration - unrelated to this data-only change
+- Acceptance criteria met:
+  1. Lieutenant with points for 1 model (75)
+  2. Stats: M6 T4 SV3+ W4 LD6+ OC1
+  3. Bolt pistol, master-crafted bolt rifle options included
+  4. Tactical Precision ability (lethal hits) included
+  5. Leader ability with eligible units included
+  6. Keywords include Infantry, Character, Imperium, Tacticus
+
+---
+
 ## [patterns-001] Add pattern field to loadout options data structure
 
 **Date:** 2026-01-22
@@ -2478,3 +2513,38 @@ Format follows the Ralph technique.
   3. Storm bolter and power weapon options included
   4. Leader ability with eligibleUnits: ["terminator-squad"]
   5. Keywords include Infantry, Character, Imperium, Terminator
+
+---
+
+## [spacemarines-007] Add Bladeguard Veterans elite unit
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Bladeguard Veterans as an elite infantry unit for Space Marines
+- Points: 90 for 3 models, 180 for 6 models (per current Munitorum Field Manual)
+- Stats: M6 T4 SV3+ W3 LD6+ OC1 (elite infantry profile)
+- Invulnerable save: 4+ (from storm shields)
+- Weapons (no loadout options - fixed loadout):
+  - Heavy Bolt Pistol (18" A1 BS3+ S4 AP-1 D1, Pistol)
+  - Master-crafted Power Sword (A4 WS3+ S5 AP-2 D2)
+- Bladeguard ability: At start of Fight phase, select one of two effects:
+  - Swords of the Chapter: Re-roll Hit rolls of 1 in melee
+  - Shields of the Imperium: Re-roll invulnerable save rolls of 1
+- Keywords: Infantry, Imperium, Tacticus, Bladeguard Veteran Squad
+- Data sourced from Wahapedia and community sources
+
+**Files changed:**
+- public/data/spacemarines.json - Added Bladeguard Veteran Squad unit to units array
+
+**Verification:**
+- npm run lint passes
+- npm run test passes (191 tests)
+- JSON is valid (python3 json.tool validation)
+- Pre-existing TypeScript errors in src/app/page.tsx are unrelated to this data change
+- Acceptance criteria met:
+  1. Bladeguard Veterans with points for 3/6 models (90/180)
+  2. Stats: M6 T4 SV3+ W3 LD6+ OC1 with 4+ invuln
+  3. Master-crafted power sword and storm shield (4+ invuln)
+  4. Shields of the Imperium ability (via Bladeguard ability)
+  5. Keywords include Infantry, Imperium, Tacticus
