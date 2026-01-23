@@ -1621,3 +1621,38 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-016] Create Play Mode left panel - Army Overview
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created ArmyOverviewPanel as the main container component for the Play Mode left panel
+- Broke down into smaller, focused sub-components for reusability
+- PlayUnitCard displays individual unit cards with:
+  - Combined unit name when leader attached (e.g., "Custodian Guard + Shield-Captain")
+  - Models alive / total models display with large counter
+  - Wounds progress bar using SimpleWoundBar component
+  - Badges for Character, Enhancement, Led (has attached leader), and Destroyed status
+  - Detailed breakdown of unit vs leader wounds when damaged
+- ArmyOverviewPanel manages the unit list with:
+  - Helper functions for wound calculation (calculateUnitWounds, calculateLeaderWounds)
+  - Helper function to check if unit is attached as leader (filters from display)
+  - Panel header shows active/total unit count
+  - Units selectable to show details in right panel
+  - Empty state when no units in list
+- Attached leaders are hidden from main list and shown with their host unit
+- Leaders that are attached display their wounds separately when the combined unit is damaged
+
+**Files created:**
+- `src/components/play/PlayUnitCard.tsx` - Unit card with wounds, models alive, and leader info
+- `src/components/play/ArmyOverviewPanel.tsx` - Main panel container with unit list and helpers
+
+**Files changed:**
+- `src/components/play/index.ts` - Added exports for PlayUnitCard and ArmyOverviewPanel
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+
