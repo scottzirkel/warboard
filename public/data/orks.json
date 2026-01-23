@@ -1,0 +1,79 @@
+{
+  "faction": "Orks",
+  "lastUpdated": "2026-01",
+  "units": [],
+  "detachments": {},
+  "armyRules": {
+    "waaagh": {
+      "name": "Waaagh!",
+      "description": "Once per battle, in your Command phase, you can call a Waaagh!. If you do, until the start of your next Command phase, ORKS units from your army get +1 to Strength, +1 to Attacks (melee only), and +1 to Charge rolls. A Waaagh! can only be called if your WARLORD is an ORKS model and is on the battlefield.",
+      "oncePerBattle": true,
+      "keywords": ["ORKS"],
+      "effects": [
+        {
+          "stat": "s",
+          "operation": "add",
+          "value": 1,
+          "scope": "melee"
+        },
+        {
+          "stat": "a",
+          "operation": "add",
+          "value": 1,
+          "scope": "melee"
+        },
+        {
+          "stat": "charge",
+          "operation": "add",
+          "value": 1,
+          "scope": "unit"
+        }
+      ]
+    }
+  },
+  "weaponKeywords": {
+    "Devastating Wounds": "Critical wounds (unmodified wound roll of 6) inflict mortal wounds equal to the Damage characteristic, and the attack sequence ends.",
+    "Lethal Hits": "Critical hits (unmodified hit roll of 6) automatically wound the target.",
+    "Sustained Hits": "Critical hits generate additional hits (number specified after the ability name).",
+    "Twin-linked": "Re-roll wound rolls.",
+    "Assault": "Can shoot after Advancing (at -1 to hit).",
+    "Pistol": "Can shoot in Engagement Range, but only at units within Engagement Range.",
+    "Blast": "+1 attack per 5 models in target unit (minimum 3 attacks vs 6+ models).",
+    "Rapid Fire": "Double the Attacks characteristic when targeting within half range.",
+    "Heavy": "+1 to hit if the bearer's unit Remained Stationary this turn.",
+    "Torrent": "Automatically hits the target.",
+    "Anti-": "Improves wound roll against targets with the specified keyword (e.g., Anti-Vehicle 4+ wounds on 4+ vs Vehicles).",
+    "Hazardous": "After resolving attacks, roll one D6. On a 1, bearer suffers 3 mortal wounds.",
+    "Dakka": "Each time this weapon targets a unit within half range, the Attacks characteristic is increased by the number shown in brackets. For example, Dakka [2] would add 2 Attacks at half range."
+  },
+  "allies": [],
+  "keywordGlossary": {
+    "weapon": [
+      { "name": "Anti-X #+", "description": "Improve AP by 1 and wound on #+ against targets with keyword X." },
+      { "name": "Assault", "description": "Can be shot after Advancing." },
+      { "name": "Blast", "description": "+1 Attack per 5 models in target unit." },
+      { "name": "Devastating Wounds", "description": "Critical wounds inflict mortal wounds equal to Damage, no saves allowed." },
+      { "name": "Dakka", "description": "Increases Attacks when targeting within half range." },
+      { "name": "Heavy", "description": "+1 to hit if Remained Stationary." },
+      { "name": "Hazardous", "description": "Roll D6 after attacking; on 1, bearer takes 3 mortal wounds." },
+      { "name": "Lethal Hits", "description": "Critical hits automatically wound." },
+      { "name": "Pistol", "description": "Can shoot in Engagement Range." },
+      { "name": "Rapid Fire X", "description": "Double Attacks at half range." },
+      { "name": "Sustained Hits X", "description": "Critical hits generate X extra hits." },
+      { "name": "Torrent", "description": "Automatically hits." },
+      { "name": "Twin-linked", "description": "Re-roll wound rolls." }
+    ],
+    "unit": [
+      { "name": "Orks", "description": "Units from the Orks faction. Benefit from Waaagh! army rule." },
+      { "name": "Mob", "description": "Large groups of Orks fighting together. Often benefit from abilities that scale with model count." },
+      { "name": "Gretchin", "description": "Small, cowardly greenskins used as cannon fodder and workers by the Orks." },
+      { "name": "Battleline", "description": "Core troop units. May have special rules in certain detachments." },
+      { "name": "Character", "description": "Can lead units, receive Enhancements, and is targeted by Precision." },
+      { "name": "Psyker", "description": "Can use Psychic abilities. Ork Weirdboyz channel the Waaagh! energy of nearby Orks." },
+      { "name": "Leader", "description": "Can be attached to Bodyguard units. Abilities affect the combined unit." },
+      { "name": "Mega Armour", "description": "Heavy armoured suits worn by Meganobz. Provides excellent protection but reduces mobility." },
+      { "name": "Feel No Pain X+", "description": "Roll D6 when losing a wound. On X+, wound is ignored." },
+      { "name": "Deadly Demise X", "description": "When destroyed, roll D6. On a 6, each unit within 6\" suffers X mortal wounds." }
+    ]
+  }
+}

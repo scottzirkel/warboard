@@ -2304,3 +2304,35 @@ Format follows the Ralph technique.
   3. Gauss flayer and gauss reaper weapon options with loadout choice
   4. Their Number Is Legion ability (re-roll one dice on Reanimation Protocols)
   5. Keywords include Infantry, Battleline, Necrons
+
+---
+
+## [chaosmarines-001] Create chaosmarines.json with Chaos Space Marines faction metadata and army rules
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Created chaosmarines.json following the established structure from custodes.json and tyranids.json
+- Army rule Dark Pacts implemented with Leadership test mechanic for gaining Lethal Hits or Sustained Hits 1
+- Dark Pacts affects HERETIC ASTARTES units (the faction keyword for CSM)
+- On failed Leadership test, unit suffers D3 mortal wounds (risk/reward mechanic)
+- Included comprehensive weaponKeywords section matching other faction files
+- Added keywordGlossary with CSM-specific keywords:
+  - Faction: Dark Pacts, Heretic Astartes, Chaos, Daemon, Damned
+  - Weapon keywords matching standard 40k keywords
+  - Unit keywords including Deep Strike for terminators/raptors
+- Units array left empty for subsequent tasks (chaosmarines-002 through chaosmarines-007)
+- Detachments object left empty for subsequent task (chaosmarines-008)
+- lastUpdated set to 2026-01 (current month)
+
+**Files created:**
+- public/data/chaosmarines.json - Chaos Space Marines faction data with Dark Pacts army rule
+
+**Verification:**
+- npm run lint passes
+- npm run test passes (191 tests)
+- npm run build passes
+- Acceptance criteria met:
+  1. public/data/chaosmarines.json exists with faction: Chaos Space Marines
+  2. Army rule: Dark Pacts (take wounds to get Lethal Hits or Sustained Hits)
+  3. lastUpdated set to 2026-01 (current month)

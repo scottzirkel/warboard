@@ -1,7 +1,60 @@
 {
   "faction": "Necrons",
   "lastUpdated": "2026-01",
-  "units": [],
+  "units": [
+    {
+      "id": "necron-warriors",
+      "name": "Necron Warriors",
+      "points": { "10": 60, "20": 120 },
+      "stats": { "m": 5, "t": 4, "sv": "4+", "w": 1, "ld": "7+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "gauss-flayer",
+          "name": "Gauss Flayer",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Lethal Hits", "Rapid Fire 1"],
+          "loadoutGroup": "flayer"
+        },
+        {
+          "id": "gauss-reaper",
+          "name": "Gauss Reaper",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 2, "bs": "4+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Lethal Hits"],
+          "loadoutGroup": "reaper"
+        },
+        {
+          "id": "close-combat-weapon",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 1, "ws": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "flayer", "name": "Gauss Flayer", "default": true },
+            { "id": "reaper", "name": "Gauss Reaper" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "their-number-is-legion",
+          "name": "Their Number Is Legion",
+          "description": "Each time this unit makes a Reanimation Protocols roll, you can re-roll one of the dice."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Necrons", "Necron Warriors"]
+    }
+  ],
   "detachments": {},
   "armyRules": {
     "reanimation_protocols": {
