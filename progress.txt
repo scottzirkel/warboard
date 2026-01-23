@@ -5,6 +5,40 @@ Format follows the Ralph technique.
 
 ---
 
+## [spacemarines-009] Enable Space Marines faction in app
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Space Marines to availableArmies array in armyStore.ts
+- Added Heavy Intercessor Squad as 7th unit to meet acceptance criteria of "at least 7 units"
+  - Heavy Intercessor Squad: M5 T6 SV3+ W3 (Gravis armour profile)
+  - Points: 100/200 for 5/10 models
+  - Three bolt rifle options: Heavy (30" A2 S5 AP-1), Hellstorm (24" A3 S5), Executor (42" A1 S5 AP-2 D2)
+  - Heavy Fire Support ability grants Lethal Hits vs closest enemy
+  - Keywords: Infantry, Battleline, Imperium, Gravis
+  - This unit is referenced in Primaris Lieutenant's leader eligibleUnits array
+- Total Space Marines units now: 7 (Intercessor, Assault Intercessor, Captain in Terminator Armour, Primaris Lieutenant, Bladeguard Veterans, Heavy Intercessors, Terminator Squad)
+- Gladius Task Force detachment with Combat Doctrines and 6 stratagems already implemented
+
+**Files changed:**
+- src/stores/armyStore.ts - Added Space Marines to availableArmies
+- public/data/spacemarines.json - Added Heavy Intercessor Squad unit
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 213 tests passed (11 test files)
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Space Marines added to availableArmies in stores
+2. ✅ App can load spacemarines.json without errors (build passes)
+3. ✅ Build Mode shows Space Marine units (faction enabled)
+4. ✅ At least 7 units available (7 total)
+
+---
+
 ## [spacemarines-006] Add Terminator Squad elite unit
 
 **Date:** 2026-01-23
@@ -2779,3 +2813,63 @@ Format follows the Ralph technique.
   3. Points calculate correctly
   4. Can save/load/delete lists
   5. Play mode tracks wounds and stratagems
+
+
+---
+
+## [nextjs-031] Yellowscribe import and Colosseum validation
+
+**Date:** 2026-01-23
+
+**Status:** Task already complete - verified existing implementation
+
+**Decisions:**
+- Verified existing Yellowscribe import in ImportModal.tsx
+- Verified Colosseum validation in useListValidation.ts
+- No new code needed - all acceptance criteria already met by previous tasks
+
+**Existing Implementation:**
+1. **Yellowscribe JSON import** (src/components/ui/ImportModal.tsx):
+   - JSON parsing and validation (lines 36-111)
+   - File upload via HTML input (lines 113-137)
+   - Textarea for pasting JSON (lines 173-193)
+   - Transforms imported data into CurrentList format
+   - Error handling with user-friendly messages
+   - Integrated in page.tsx via handleImport callback (lines 379-387, 566-572)
+
+2. **Colosseum format validation** (src/hooks/useListValidation.ts):
+   - validateColosseumFormat function (lines 196-263)
+   - Rule 1: No Epic Heroes (lines 217-223)
+   - Rule 2: No T10+ units (lines 225-233)
+   - Rule 3: Warlord required (lines 236-252)
+   - Rule 4: 2+ Infantry non-Characters (lines 254-260)
+   - Comprehensive test coverage in useListValidation.test.ts (lines 231-321)
+
+3. **Error message display** (src/components/build/ValidationErrors.tsx):
+   - Displays validation errors with icons and color coding
+   - Error types: points (yellow), format (red), leader (purple), maxModels (orange)
+   - Integrated in BuildMode and PlayMode components
+
+4. **Validation enforcement**:
+   - On save: page.tsx lines 342-346
+   - Before Play Mode: page.tsx lines 306-314
+   - Errors displayed in both Build and Play modes
+
+**Files reviewed:**
+- src/components/ui/ImportModal.tsx
+- src/hooks/useListValidation.ts
+- src/hooks/useListValidation.test.ts
+- src/components/build/ValidationErrors.tsx
+- src/app/page.tsx
+
+**Verification:**
+- npm run lint: No ESLint warnings or errors
+- npm run typecheck: Passed
+- npm run test: 213 tests passed (includes 32 validation tests)
+- npm run build: Next.js build successful
+
+**Acceptance criteria met:**
+1. Yellowscribe JSON import works - ImportModal supports file upload and paste
+2. Colosseum format validation works - All 4 rules implemented and tested
+3. Error messages display correctly - ValidationErrors component with appropriate styling
+4. All validation rules enforced - Checked on save and before Play Mode entry

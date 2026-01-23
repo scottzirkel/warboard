@@ -20,6 +20,7 @@ export interface AvailableArmy {
 
 export const availableArmies: AvailableArmy[] = [
   { id: 'custodes', name: 'Adeptus Custodes', file: 'custodes.json' },
+  { id: 'spacemarines', name: 'Space Marines', file: 'spacemarines.json' },
   { id: 'tyranids', name: 'Tyranids', file: 'tyranids.json' },
 ];
 
