@@ -2102,6 +2102,48 @@ Format follows the Ralph technique.
 
 **Verification:**
 - npm run lint passes
-- npm run typecheck passes  
+- npm run typecheck passes
 - npm run test passes (135 tests total, 20 new tests for useStatModifiers)
+- npm run build passes
+
+---
+
+## [nextjs-023] Create list validation hooks
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created useListValidation hook to validate army lists against game rules
+- Hook provides three individual validators: validatePoints, validateColosseumFormat, validateLeaderAttachments
+- Points validation checks if total points exceeds the pointsLimit from the list
+- Colosseum format validation enforces all four custom format rules:
+  1. Must have at least one Character (non-Epic Hero) as Warlord
+  2. No Epic Heroes allowed
+  3. Must have 2+ Infantry units that are NOT Characters
+  4. No units with T10+ allowed
+- Leader attachment validation checks:
+  1. Leader index is valid
+  2. Leader has Leader ability
+  3. Leader can attach to target unit (via eligibleUnits)
+  4. No leader attached to multiple units
+- Points calculation includes enhancement points from detachment
+- canEnterPlayMode requires both valid list AND at least one unit
+- Hook handles null armyData gracefully
+- validateList returns {isValid, errors, warnings} structure
+
+**Types created:**
+- ListValidationResult: Contains isValid, errors, and warnings arrays
+- UseListValidationReturn: Return type with all validators and derived values
+
+**Files created:**
+- src/hooks/useListValidation.ts - List validation hook
+- src/hooks/useListValidation.test.ts - Test suite with 32 tests
+
+**Files changed:**
+- src/hooks/index.ts - Added exports for useListValidation and related types
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (135 tests total, 32 new tests for useListValidation)
 - npm run build passes
