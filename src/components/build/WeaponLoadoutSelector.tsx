@@ -70,19 +70,10 @@ export function WeaponLoadoutSelector({
 
   return (
     <div className={`space-y-1 ${className}`}>
-      {/* Option Header */}
-      <div className="text-xs text-white/50 mb-2">
-        {isReplacement ? (
-          <span className="text-blue-400">Replace</span>
-        ) : (
-          <span className="text-green-400">Add</span>
-        )}
-      </div>
-
       {/* Choices - filter out "none" as it's implied when no other choice is selected */}
       <div
-        className={`pl-2 ${
-          isAddition ? 'border-l-2 border-green-500/30' : ''
+        className={`${
+          isAddition ? 'border-l-2 border-green-500/30 pl-2' : ''
         }`}
       >
         {option.choices
