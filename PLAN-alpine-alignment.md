@@ -10,7 +10,7 @@ Goal: Align the Next.js app with the original Alpine.js design in `/reference/al
 | 2 - Quick Reference | ✅ Done | Slide-out panel from right edge |
 | 3 - Build Mode | ✅ Done | Points summary, Army List, Roster, Unit Details |
 | 4 - Play Mode | ✅ Done | Removed header, iOS-style controls, wound dots |
-| 5 - Modals | 🔴 Not started | Import/Load styling alignment |
+| 5 - Modals | ✅ Done | iOS-style buttons, material-elevated backdrop |
 | 6 - CSS | ✅ Done | All classes present in globals.css |
 
 ---
@@ -118,18 +118,35 @@ Changes made:
 
 ---
 
-## Phase 5: Modals 🔴 TODO
+## Phase 5: Modals ✅ COMPLETE
 
-**Files to update:**
+**Files updated:**
+- `src/components/ui/Modal.tsx`
 - `src/components/ui/ImportModal.tsx`
 - `src/components/ui/LoadModal.tsx`
 
-**Changes needed:**
-1. Modal backdrop styling (darker, blur)
-2. Modal container with `.card-depth` or `.material-elevated`
-3. Button styling with `.btn-ios-*` classes
-4. Input styling with `.input-dark`
-5. List items with `.list-row` styling
+**Changes made:**
+1. Modal.tsx:
+   - Darker backdrop with `bg-black/80 backdrop-blur-md`
+   - Container uses `.material-elevated` styling
+   - Close button uses `.btn-ios-secondary` styling
+   - Rounded corners with `rounded-2xl`
+
+2. ImportModal.tsx:
+   - File upload button uses `.btn-ios-tinted`
+   - Text area uses `.input-dark` styling
+   - Action buttons use `.btn-ios-*` classes
+   - Error display uses accent-tinted background
+
+3. LoadModal.tsx:
+   - List items use `.list-row` styling with `.touch-highlight`
+   - Selected item uses `.bg-accent-tint-strong`
+   - Action buttons use `.btn-ios-*` classes
+   - Delete confirmation uses iOS-style buttons
+
+4. ConfirmModal:
+   - Uses `.btn-ios` classes for all buttons
+   - Danger variant uses red background
 
 ---
 

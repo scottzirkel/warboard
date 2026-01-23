@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from 'react';
 import { Modal } from './Modal';
-import { Button } from './Button';
 import type { SavedListInfo, CurrentList } from '@/types';
 
 // ============================================================================
@@ -138,7 +137,7 @@ export function LoadModal({
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               />
             </svg>
-            <span className="ml-2 text-gray-400">Loading saved lists...</span>
+            <span className="ml-2 text-white/60">Loading saved lists...</span>
           </div>
         )}
 
@@ -146,7 +145,7 @@ export function LoadModal({
         {!isLoading && lists.length === 0 && (
           <div className="text-center py-8">
             <svg
-              className="w-12 h-12 mx-auto text-gray-600 mb-3"
+              className="w-12 h-12 mx-auto text-white/20 mb-3"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -158,8 +157,8 @@ export function LoadModal({
                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
-            <p className="text-gray-400">No saved lists found</p>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-white/60">No saved lists found</p>
+            <p className="text-sm text-white/40 mt-1">
               Save a list first to see it here
             </p>
           </div>
@@ -167,21 +166,20 @@ export function LoadModal({
 
         {/* List of Saved Lists */}
         {!isLoading && lists.length > 0 && (
-          <div className="max-h-64 overflow-y-auto space-y-1 rounded border border-gray-700 bg-gray-900/50 p-1">
+          <div className="card-depth max-h-64 overflow-y-auto">
             {lists.map((list) => (
               <div
                 key={list.filename}
                 className={`
-                  flex items-center justify-between p-2 rounded cursor-pointer
-                  transition-colors
-                  ${selectedFilename === list.filename ? 'bg-accent-500/20 border border-accent-500/50' : 'hover:bg-gray-700/50 border border-transparent'}
+                  list-row cursor-pointer touch-highlight
+                  ${selectedFilename === list.filename ? 'bg-accent-tint-strong' : 'hover:bg-white/5'}
                 `}
                 onClick={() => setSelectedFilename(list.filename)}
                 onDoubleClick={handleLoad}
               >
-                <div className="flex items-center gap-2 min-w-0">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
                   <svg
-                    className={`w-4 h-4 flex-shrink-0 ${selectedFilename === list.filename ? 'text-accent-400' : 'text-gray-500'}`}
+                    className={`w-5 h-5 flex-shrink-0 ${selectedFilename === list.filename ? 'text-accent-400' : 'text-white/40'}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -193,7 +191,7 @@ export function LoadModal({
                       d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                     />
                   </svg>
-                  <span className={`truncate ${selectedFilename === list.filename ? 'text-gray-100' : 'text-gray-300'}`}>
+                  <span className={`truncate ${selectedFilename === list.filename ? 'text-white' : 'text-white/80'}`}>
                     {list.name}
                   </span>
                 </div>
@@ -205,14 +203,14 @@ export function LoadModal({
                       <>
                         <button
                           onClick={() => handleDelete(list.filename)}
-                          className="px-2 py-1 text-xs rounded bg-red-600 hover:bg-red-700 text-white transition-colors"
+                          className="btn-ios btn-ios-sm bg-red-600 text-white"
                           disabled={isProcessing}
                         >
-                          Confirm
+                          Delete
                         </button>
                         <button
                           onClick={handleCancelDelete}
-                          className="px-2 py-1 text-xs rounded bg-gray-600 hover:bg-gray-500 text-gray-200 transition-colors"
+                          className="btn-ios btn-ios-sm btn-ios-secondary"
                           disabled={isProcessing}
                         >
                           Cancel
@@ -221,7 +219,7 @@ export function LoadModal({
                     ) : (
                       <button
                         onClick={() => handleDelete(list.filename)}
-                        className="p-1 text-gray-500 hover:text-red-400 rounded hover:bg-gray-700/50 transition-colors"
+                        className="p-2 text-white/40 hover:text-red-400 rounded-lg hover:bg-white/5 transition-colors"
                         title="Delete list"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -243,7 +241,7 @@ export function LoadModal({
 
         {/* Error Message */}
         {error && (
-          <div className="flex items-start gap-2 p-3 rounded bg-red-900/30 border border-red-700">
+          <div className="flex items-start gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
             <svg className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
@@ -257,18 +255,17 @@ export function LoadModal({
         )}
 
         {/* Actions */}
-        <div className="flex justify-end gap-2 pt-2">
-          <Button variant="ghost" onClick={handleClose}>
+        <div className="flex justify-end gap-3 pt-2">
+          <button className="btn-ios btn-ios-secondary" onClick={handleClose}>
             Cancel
-          </Button>
-          <Button
-            variant="primary"
+          </button>
+          <button
+            className="btn-ios btn-ios-primary"
             onClick={handleLoad}
-            isLoading={isProcessing}
-            disabled={!selectedFilename || isLoading}
+            disabled={!selectedFilename || isLoading || isProcessing}
           >
-            Load List
-          </Button>
+            {isProcessing ? 'Loading...' : 'Load List'}
+          </button>
         </div>
       </div>
     </Modal>

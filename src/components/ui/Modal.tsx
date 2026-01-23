@@ -83,28 +83,27 @@ export function Modal({
       aria-modal="true"
       aria-labelledby="modal-title"
     >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+      {/* Backdrop - iOS-style blur */}
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
 
-      {/* Modal Content */}
+      {/* Modal Content - using material-elevated styling */}
       <div
         className={`
           relative w-full ${sizeStyles[size]}
-          bg-gray-800 rounded-lg shadow-xl
-          border border-gray-700
+          material-elevated rounded-2xl shadow-2xl
           transform transition-all duration-200
           animate-in fade-in zoom-in-95
         `}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700">
-          <h2 id="modal-title" className="text-lg font-semibold text-gray-100">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
+          <h2 id="modal-title" className="text-lg font-semibold text-white">
             {title}
           </h2>
           {showCloseButton && (
             <button
               onClick={onClose}
-              className="p-1 text-gray-400 hover:text-gray-200 rounded hover:bg-gray-700 transition-colors"
+              className="btn-ios-secondary p-2 rounded-full"
               aria-label="Close modal"
             >
               <svg
@@ -125,7 +124,7 @@ export function Modal({
         </div>
 
         {/* Body */}
-        <div className="p-4">{children}</div>
+        <div className="p-5">{children}</div>
       </div>
     </div>
   );
@@ -161,26 +160,25 @@ export function ConfirmModal({
     onClose();
   };
 
-  const confirmButtonClass =
-    variant === 'danger'
-      ? 'bg-red-600 hover:bg-red-700 text-white'
-      : 'bg-accent-500 hover:bg-accent-600 text-gray-900';
-
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm">
       <div className="space-y-4">
-        <p className="text-gray-300">{message}</p>
+        <p className="text-white/70">{message}</p>
 
-        <div className="flex justify-end gap-2">
+        <div className="flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-3 py-1.5 text-sm rounded bg-gray-700 hover:bg-gray-600 text-gray-200 transition-colors"
+            className="btn-ios btn-ios-secondary"
           >
             {cancelText}
           </button>
           <button
             onClick={handleConfirm}
-            className={`px-3 py-1.5 text-sm rounded font-medium transition-colors ${confirmButtonClass}`}
+            className={`btn-ios ${
+              variant === 'danger'
+                ? 'bg-red-600 hover:bg-red-700 text-white'
+                : 'btn-ios-primary'
+            }`}
           >
             {confirmText}
           </button>
