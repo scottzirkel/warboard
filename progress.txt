@@ -1446,3 +1446,29 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-011] Create Build Mode layout and container
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Build Mode layout implemented as a container component that receives three panels as children
+- Uses responsive 3-column grid layout (1 column on mobile, 3 on large screens)
+- PointsSummaryBar displays list name, current/limit points with color-coded progress bar
+- Progress bar variants: default (gold), warning (yellow at 90%+), danger (red when over limit)
+- ValidationErrors component displays errors with type-specific icons and colored backgrounds
+- Error types supported: points, format, leader, maxModels
+- Layout follows same structure as Alpine.js original: summary bar → errors → 3-column panels
+- Panels passed as ReactNode props to allow flexible content injection from parent
+
+**Files created:**
+- `src/components/build/BuildMode.tsx` - Main layout container with 3-column grid and summary bar
+- `src/components/build/PointsSummaryBar.tsx` - Points display with name, values, and progress bar
+- `src/components/build/ValidationErrors.tsx` - Error display with icons and color-coded backgrounds
+- `src/components/build/index.ts` - Export barrel file for build components
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+
