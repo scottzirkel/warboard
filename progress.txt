@@ -3859,3 +3859,35 @@ Format follows the Ralph technique.
 4. ✅ Da Jump psychic ability (teleport unit)
 5. ✅ Leader ability with eligibleUnits: ["boyz"]
 6. ✅ Keywords include Infantry, Character, Orks, Psyker
+
+---
+
+## [orks-009] Enable Orks faction in app
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Orks to the availableArmies array in armyStore.ts (alphabetically ordered between Necrons and Space Marines)
+- Added Lootas unit to orks.json to meet the 7-unit minimum requirement (previous tasks added 6 units)
+- Lootas are a Heavy Support choice with:
+  - Points: 55/110 for 5/10 models
+  - Stats: M6 T5 SV5+ W1 LD7+ OC1
+  - Deffgun (ranged 48" AD3 BS5+ S8 AP-1 D2 Heavy) - long-range anti-tank weapon
+  - Close Combat Weapon (standard melee fallback)
+  - Loot It ability: Gain CP for destroying enemy units
+
+**Files changed:**
+- src/stores/armyStore.ts - Added Orks to availableArmies array
+- public/data/orks.json - Added Lootas unit (7th unit to meet acceptance criteria)
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 317 tests passed
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Orks added to availableArmies in stores
+2. ✅ App can load orks.json without errors (verified by successful build)
+3. ✅ Build Mode shows Ork units (enabled in availableArmies)
+4. ✅ At least 7 units available (Boyz, Gretchin, Weirdboy, Warboss, Nobz, Meganobz, Lootas)

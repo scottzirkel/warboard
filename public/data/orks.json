@@ -449,6 +449,38 @@
         }
       ],
       "keywords": ["Infantry", "Grenades", "Orks", "Mega Armour", "Meganobz"]
+    },
+    {
+      "id": "lootas",
+      "name": "Lootas",
+      "points": { "5": 55, "10": 110 },
+      "stats": { "m": 6, "t": 5, "sv": "5+", "w": 1, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "deffgun",
+          "name": "Deffgun",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D3", "bs": "5+", "s": 8, "ap": -1, "d": 2 },
+          "abilities": ["Heavy"]
+        },
+        {
+          "id": "close-combat-weapon-loota",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "loot-it",
+          "name": "Loot It",
+          "description": "Each time this unit destroys an enemy VEHICLE unit, you gain a number of extra Command points equal to the number of models in this unit (to a maximum of 3 CP). Each time this unit destroys any other enemy unit, you gain 1 Command point."
+        }
+      ],
+      "keywords": ["Infantry", "Orks", "Lootas"]
     }
   ],
   "detachments": {
