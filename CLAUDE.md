@@ -33,10 +33,9 @@ army-tracker/
 ```bash
 npm install
 npm run dev          # Starts Vite dev server on localhost:5173
-php -S localhost:8000 # Serve PHP API (separate terminal)
 ```
 
-Access at `http://localhost:8000` (PHP serves index.html, Vite handles JS/CSS hot reload).
+Access at `http://localhost:5173`. The Vite config proxies `/api.php` requests to `http://army-tracker.test` (served by Laravel Herd).
 
 ---
 
@@ -342,7 +341,7 @@ All state lives in the Alpine.js component:
 
 ### Testing Changes
 1. Run dev server: `npm run dev`
-2. Run PHP server: `php -S localhost:8000`
+2. Access at `http://localhost:5173` (API proxied to Herd)
 3. Test both Build and Play modes
 4. Test list save/load functionality
 5. Test Colosseum validation if relevant

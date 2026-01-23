@@ -25,5 +25,11 @@ export default defineConfig({
       host: 'localhost',
       port: 5173,
     },
+    proxy: {
+      '/api.php': {
+        target: 'http://army-tracker.test',
+        changeOrigin: true,
+      },
+    },
   },
 })
