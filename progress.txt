@@ -5,6 +5,83 @@ Format follows the Ralph technique.
 
 ---
 
+## [necrons-007] Add Skorpekh Destroyers elite unit
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Skorpekh Destroyers as elite melee unit for Necrons Destroyer Cult
+- Points: 90/180 for 3/6 models (per Wahapedia/Munitorum Field Manual)
+- Stats: M8 T6 SV3+ W3 LD7+ OC1 (no invulnerable save)
+- Weapon:
+  - Skorpekh Hyperphase Weapons: A4 WS3+ S6 AP-2 D2 (melee only)
+- Abilities:
+  - Whirling Onslaught: Re-roll hit rolls of 1 in melee; full re-roll if charged this turn
+  - Devastating Charge: Melee weapons gain Devastating Wounds when unit charged this turn
+- Keywords: Infantry, Necrons, Destroyer Cult, Skorpekh Destroyers
+- No loadout options - fixed weapon loadout
+
+**Files changed:**
+- public/data/necrons.json - Added Skorpekh Destroyers elite unit to units array
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 238 tests passed
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Skorpekh Destroyers with points for 3/6 models (90/180)
+2. ✅ Stats: M8 T6 SV3+ W3 LD7+ OC1
+3. ✅ Skorpekh hyperphase weapons (A4 WS3+ S6 AP-2 D2)
+4. ✅ Devastating Wounds on charge (via Devastating Charge ability)
+5. ✅ Keywords include Infantry, Necrons, Destroyer Cult
+
+---
+
+## [chaosmarines-008] Add Slaves to Darkness detachment
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added the Slaves to Darkness detachment for Chaos Space Marines (Index detachment, later renamed Pactbound Zealots in Codex)
+- Detachment rule "Eye of the Gods" - assigns Marks of Chaos (Khorne, Tzeentch, Nurgle, Slaanesh, Chaos Undivided) to units, granting bonus abilities when Dark Pacts succeed
+- Each mark provides a unique bonus when Dark Pact doesn't fail leadership test:
+  - Khorne: Melee attacks crit on 5+
+  - Tzeentch: Ranged attacks crit on 5+
+  - Nurgle: Wound rolls crit on 5+
+  - Slaanesh: Melee attacks crit on 5+ if charged
+  - Chaos Undivided: Re-roll 1s on hit and wound rolls
+- 6 stratagems implemented:
+  1. Profane Zeal (1CP): Re-roll hits/wounds of 1, or all with Chaos Undivided
+  2. Dark Obscuration (1CP): Stealth ability, Nurgle limits targeting to 12"
+  3. Infernal Rites (2CP): Worsen incoming AP by 1
+  4. Skinshift (1CP): Heal 3 wounds, Tzeentch can return a destroyed model
+  5. Eternal Hate (1CP): Fight on death on 4+, Khorne adds +1 to roll
+  6. Unnatural Swiftness (1CP): Shoot/charge after Fall Back, Slaanesh also after Advance
+- 4 enhancements (one per mark except Slaanesh):
+  1. Liber Hereticus (30pts): Chaos Undivided - Dark Pact grants both Lethal Hits and Sustained Hits 1
+  2. Talisman of Burning Blood (20pts): Khorne - +1 A/S to melee, or +D3 A/S with Dark Pact
+  3. Eye of Tzeentch (20pts): Tzeentch - Gain 1CP when Dark Pact succeeds
+  4. Orbs of Unlife (20pts): Nurgle - D3 mortal wounds to enemies within 6" at end of Fight phase
+
+**Files changed:**
+- public/data/chaosmarines.json - Added slaves_to_darkness detachment with rules, stratagems, and enhancements
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 238 tests passed
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Slaves to Darkness with Eye of the Gods rule (marks of chaos with Dark Pact bonuses)
+2. ✅ Dark Pact enhancement bonuses (each enhancement interacts with Dark Pacts)
+3. ✅ 6 stratagems including Profane Zeal, Dark Obscuration
+4. ✅ 4 enhancements including Liber Hereticus, Talisman of Burning Blood
+
+---
+
 ## [multiuser-001] Add database schema for users and lists
 
 **Date:** 2026-01-23

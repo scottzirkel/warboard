@@ -494,7 +494,130 @@
       "keywords": ["Infantry", "Chaos", "Daemon", "Heretic Astartes", "Possessed"]
     }
   ],
-  "detachments": {},
+  "detachments": {
+    "slaves_to_darkness": {
+      "name": "Slaves to Darkness",
+      "rules": [
+        {
+          "id": "eye-of-the-gods",
+          "name": "Eye of the Gods",
+          "description": "When you add a unit to your army, if that unit is not an EPIC HERO and does not already have one of the following keywords, you must select one: KHORNE, TZEENTCH, NURGLE, SLAANESH, or CHAOS UNDIVIDED. Each time a unit with one of these keywords gains a weapon ability as the result of a Dark Pact and does not fail the resulting Leadership test, that unit gains an additional bonus based on its Mark of Chaos.",
+          "type": "passive",
+          "marks": [
+            {
+              "id": "khorne",
+              "name": "Khorne",
+              "description": "Each time a model in this unit makes a melee attack, an unmodified Hit roll of 5+ scores a Critical Hit."
+            },
+            {
+              "id": "tzeentch",
+              "name": "Tzeentch",
+              "description": "Each time a model in this unit makes a ranged attack, an unmodified Hit roll of 5+ scores a Critical Hit."
+            },
+            {
+              "id": "nurgle",
+              "name": "Nurgle",
+              "description": "Each time a model in this unit makes an attack, an unmodified Wound roll of 5+ scores a Critical Wound."
+            },
+            {
+              "id": "slaanesh",
+              "name": "Slaanesh",
+              "description": "Each time a model in this unit makes a melee attack, if that model made a Charge move this turn, an unmodified Hit roll of 5+ scores a Critical Hit."
+            },
+            {
+              "id": "chaos-undivided",
+              "name": "Chaos Undivided",
+              "description": "Each time a model in this unit makes an attack, you can re-roll a Hit roll of 1 and you can re-roll a Wound roll of 1."
+            }
+          ],
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "profane-zeal",
+          "name": "Profane Zeal",
+          "cost": 1,
+          "phase": "Shooting/Fight",
+          "description": "Use this Stratagem in your Shooting phase or the Fight phase. Select one HERETIC ASTARTES unit from your army that has not been selected to shoot or fight this phase. Until the end of the phase, each time a model in your unit makes an attack, you can re-roll a Hit roll of 1 and you can re-roll a Wound roll of 1. If your unit has the CHAOS UNDIVIDED keyword, you can re-roll the Hit roll and you can re-roll the Wound roll instead.",
+          "modifiers": []
+        },
+        {
+          "id": "dark-obscuration",
+          "name": "Dark Obscuration",
+          "cost": 1,
+          "phase": "Opponent's Shooting",
+          "description": "Use this Stratagem in your opponent's Shooting phase, just after an enemy unit has selected its targets. Select one HERETIC ASTARTES unit from your army that was selected as the target of one or more of the attacking unit's attacks. Until the end of the phase, your unit has the Stealth ability. If your unit has the NURGLE keyword, until the end of the phase, it can only be selected as the target of a ranged attack if the attacking model is within 12\".",
+          "modifiers": []
+        },
+        {
+          "id": "infernal-rites",
+          "name": "Infernal Rites",
+          "cost": 2,
+          "phase": "Opponent's Shooting/Fight",
+          "description": "Use this Stratagem in your opponent's Shooting phase or the Fight phase, just after an enemy unit has selected its targets. Select one HERETIC ASTARTES unit from your army that was selected as the target of one or more of that enemy unit's attacks. Until the end of the phase, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.",
+          "modifiers": []
+        },
+        {
+          "id": "skinshift",
+          "name": "Skinshift",
+          "cost": 1,
+          "phase": "Command",
+          "description": "Use this Stratagem in your Command phase. Select one HERETIC ASTARTES unit from your army. One model in your unit regains up to 3 lost wounds. If your unit has the TZEENTCH keyword and is below its Starting Strength, one destroyed model (excluding CHARACTER models) is returned to your unit with its full wounds remaining.",
+          "modifiers": []
+        },
+        {
+          "id": "eternal-hate",
+          "name": "Eternal Hate",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Use this Stratagem in the Fight phase, just after an enemy unit has selected its targets. Select one HERETIC ASTARTES unit from your army that was selected as the target of one or more of the attacking unit's attacks. Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6: on a 4+, do not remove it from play. The destroyed model can fight after the attacking model's unit has finished making its attacks, and is then removed from play. If your unit has the KHORNE keyword, add 1 to that roll.",
+          "modifiers": []
+        },
+        {
+          "id": "unnatural-swiftness",
+          "name": "Unnatural Swiftness",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Use this Stratagem in your Movement phase, just after a HERETIC ASTARTES unit from your army Falls Back. Until the end of the turn, your unit is eligible to shoot and declare a charge. If your unit has the SLAANESH keyword, until the end of the turn, your unit is also eligible to shoot and declare a charge in a turn in which it Advanced.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "liber-hereticus",
+          "name": "Liber Hereticus",
+          "points": 30,
+          "description": "HERETIC ASTARTES CHAOS UNDIVIDED model only. Each time the bearer's unit makes a Dark Pact, if it does not fail the Leadership test, until the end of the phase, weapons equipped by models in that unit have both the [LETHAL HITS] and [SUSTAINED HITS 1] abilities instead of just one.",
+          "modifiers": []
+        },
+        {
+          "id": "talisman-of-burning-blood",
+          "name": "Talisman of Burning Blood",
+          "points": 20,
+          "description": "HERETIC ASTARTES KHORNE model only. Add 1 to the Attacks and Strength characteristics of the bearer's melee weapons. Each time the bearer's unit makes a Dark Pact, until the end of the phase, add D3 to the Attacks and Strength characteristics of the bearer's melee weapons instead.",
+          "modifiers": [
+            { "stat": "a", "operation": "add", "value": 1, "scope": "melee" },
+            { "stat": "s", "operation": "add", "value": 1, "scope": "melee" }
+          ]
+        },
+        {
+          "id": "eye-of-tzeentch",
+          "name": "Eye of Tzeentch",
+          "points": 20,
+          "description": "HERETIC ASTARTES TZEENTCH model only. Each time the bearer's unit makes a Dark Pact, if it does not fail the resulting Leadership test, you gain 1CP.",
+          "modifiers": []
+        },
+        {
+          "id": "orbs-of-unlife",
+          "name": "Orbs of Unlife",
+          "points": 20,
+          "description": "HERETIC ASTARTES NURGLE model only. At the end of the Fight phase, roll one D6 for each enemy unit within 6\" of the bearer: on a 4+, that enemy unit suffers D3 mortal wounds. If the bearer's unit made a Dark Pact this phase, add 1 to each of those rolls.",
+          "modifiers": []
+        }
+      ]
+    }
+  },
   "armyRules": {
     "dark_pacts": {
       "name": "Dark Pacts",
