@@ -1553,3 +1553,34 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-013] Create Build Mode middle panel - Unit Roster
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created UnitRosterPanel as the main container component for the Build Mode middle panel
+- Broke down into smaller, focused sub-components for reusability and maintainability
+- UnitSearchInput provides a search field with clear button for filtering units by name or keywords
+- UnitAccordion provides collapsible sections with chevron icons and unit counts
+- Added helper functions for grouping units by type: getUnitTypeGroup, sortGroupsByPriority
+- Unit types sorted in priority order: Character > Battleline > Infantry > Monster > Mounted > Vehicle > Other
+- RosterUnitRow displays unit info (name, points, model count range) with add button
+- Character units highlighted with purple badge
+- Panel includes loading state with spinner and empty state with search clear option
+- All components use existing UI primitives (Panel, Input, Button, Badge)
+
+**Files created:**
+- `src/components/build/UnitRosterPanel.tsx` - Main panel container with search, grouping, and unit list
+- `src/components/build/UnitSearchInput.tsx` - Search input with icon and clear button
+- `src/components/build/UnitAccordion.tsx` - Collapsible accordion with unit type grouping helpers
+- `src/components/build/RosterUnitRow.tsx` - Unit row with name, points, model count, and add button
+
+**Files changed:**
+- `src/components/build/index.ts` - Added exports for UnitRosterPanel, UnitSearchInput, UnitAccordion, RosterUnitRow, and helper functions
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+
