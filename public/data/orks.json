@@ -258,6 +258,76 @@
         }
       ],
       "keywords": ["Infantry", "Character", "Grenades", "Orks", "Warboss"]
+    },
+    {
+      "id": "nobz",
+      "name": "Nobz",
+      "points": { "5": 105, "10": 210 },
+      "stats": { "m": 6, "t": 5, "sv": "4+", "w": 2, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "slugga-nobz",
+          "name": "Slugga",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "5+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "slugga-choppa"
+        },
+        {
+          "id": "big-choppa-nobz",
+          "name": "Big Choppa",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "slugga-choppa"
+        },
+        {
+          "id": "kombi-weapon-nobz",
+          "name": "Kombi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "5+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "kombi-ccw"
+        },
+        {
+          "id": "close-combat-weapon-nobz",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "kombi-ccw"
+        },
+        {
+          "id": "power-klaw-nobz",
+          "name": "Power Klaw",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 9, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "power-klaw"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "slugga-choppa", "name": "Slugga and Big Choppa", "default": true },
+            { "id": "kombi-ccw", "name": "Kombi-weapon" },
+            { "id": "power-klaw", "name": "Power Klaw" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "da-boss-ladz",
+          "name": "Da Boss' Ladz",
+          "description": "While this unit is being led by a WARBOSS model, each time an attack targets this unit, if the Strength characteristic of that attack exceeds this unit's Toughness characteristic, subtract 1 from the Wound roll."
+        }
+      ],
+      "keywords": ["Infantry", "Grenades", "Orks", "Mob", "Nobz"]
     }
   ],
   "detachments": {

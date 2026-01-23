@@ -5,6 +5,44 @@ Format follows the Ralph technique.
 
 ---
 
+## [orks-006] Add Nobz elite unit
+
+**Date:** 2026-01-23
+
+**Task:** Add Nobz elite unit to orks.json
+
+**Decisions:**
+- Stats from Wahapedia: M6 T5 SV4+ W2 LD7+ OC1 (no invuln)
+- Points: 105 for 5 models, 210 for 10 models
+- Default loadout: Slugga (pistol) and Big Choppa (melee)
+- Weapon options as replacement pattern:
+  - Slugga and Big Choppa (default): Slugga 12" A1 BS5+ S4 AP0 D1, Big Choppa A3 WS3+ S7 AP-1 D2
+  - Kombi-weapon: 24" A1 BS5+ S4 AP0 D1 with Anti-Infantry 4+, Devastating Wounds, Rapid Fire 1 (paired with Close Combat Weapon)
+  - Power Klaw: A3 WS4+ S9 AP-2 D2 (traded for Big Choppa)
+- Ability: Da Boss' Ladz - subtract 1 from Wound rolls when led by WARBOSS and attack Strength exceeds unit Toughness
+- Keywords: Infantry, Grenades, Orks, Mob, Nobz
+
+**Data sources:**
+- Wahapedia 10th edition Orks: https://wahapedia.ru/wh40k10ed/factions/orks/Nobz
+
+**Files changed:**
+- public/data/orks.json - Added Nobz elite unit to units array
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 280 tests passed
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Nobz with points for 5/10 models (105/210)
+2. ✅ Stats: M6 T5 SV4+ W2 LD7+ OC1
+3. ✅ Slugga and choppa standard (Slugga + Big Choppa as default)
+4. ✅ Big choppa, power klaw, kombi-weapon options
+5. ✅ Keywords include Infantry, Orks, Mob
+
+---
+
 ## [orks-004] Add Warboss character
 
 **Date:** 2026-01-23
