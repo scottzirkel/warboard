@@ -1,7 +1,96 @@
 {
   "faction": "Orks",
   "lastUpdated": "2026-01",
-  "units": [],
+  "units": [
+    {
+      "id": "boyz",
+      "name": "Boyz",
+      "points": { "10": 80, "20": 170 },
+      "stats": { "m": 6, "t": 5, "sv": "5+", "w": 1, "ld": "7+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "slugga",
+          "name": "Slugga",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "5+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "slugga-choppa"
+        },
+        {
+          "id": "choppa",
+          "name": "Choppa",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "slugga-choppa"
+        },
+        {
+          "id": "shoota",
+          "name": "Shoota",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 2, "bs": "5+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 1"],
+          "loadoutGroup": "shoota"
+        },
+        {
+          "id": "close-combat-weapon",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "shoota"
+        },
+        {
+          "id": "big-shoota",
+          "name": "Big Shoota",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 3, "bs": "5+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "big-shoota"
+        },
+        {
+          "id": "rokkit-launcha",
+          "name": "Rokkit Launcha",
+          "type": "ranged",
+          "stats": { "range": 24, "a": "D3", "bs": "5+", "s": 9, "ap": -2, "d": 3 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "rokkit-launcha"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "slugga-choppa", "name": "Slugga and Choppa", "default": true },
+            { "id": "shoota", "name": "Shoota" }
+          ]
+        },
+        {
+          "id": "heavy-weapon-1",
+          "name": "Heavy Weapon 1",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "big-shoota", "name": "Big Shoota", "maxModels": 1 },
+            { "id": "rokkit-launcha", "name": "Rokkit Launcha", "maxModels": 1 }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "get-da-good-bitz",
+          "name": "Get Da Good Bitz",
+          "description": "Objective markers you control remain under your control, even if you have no models within range of them, until your opponent controls them at the start or end of any turn."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Orks", "Mob", "Grenades", "Boyz"]
+    }
+  ],
   "detachments": {
     "waaagh_tribe": {
       "name": "Waaagh! Tribe",

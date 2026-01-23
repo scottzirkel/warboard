@@ -3436,3 +3436,42 @@ Format follows the Ralph technique.
 1. ✅ Waaagh! Tribe detachment with Get Stuck In rule (+1 Strength when charging/charged)
 2. ✅ 6 stratagems including Unbridled Carnage, Orks is Never Beaten
 3. ✅ 4 enhancements including Follow Me Ladz, Headwoppa's Killchoppa
+
+
+---
+
+## Task: orks-002 - Add Boyz battleline unit to tyranids.json
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Boyz battleline unit as the first unit in Orks faction units array
+- Points: 80pts for 10 models, 170pts for 20 models (sourced from Wahapedia)
+- Stats: M6 T5 SV5+ W1 LD7+ OC2
+- Weapons:
+  - Slugga (ranged, pistol, 12" A1 BS5+ S4 AP0 D1)
+  - Choppa (melee, A3 WS3+ S4 AP-1 D1) - default loadout
+  - Shoota (ranged, rapid fire 1, 18" A2 BS5+ S4 AP0 D1) - alternative
+  - Close combat weapon (melee, A2 WS3+ S4 AP0 D1) - with shoota
+  - Big Shoota (ranged, rapid fire 2, 36" A3 BS5+ S5 AP0 D1) - heavy option
+  - Rokkit Launcha (ranged, blast, 24" D3 BS5+ S9 AP-2 D3) - heavy option
+- Loadout options:
+  - Main weapon choice: Slugga and Choppa (default) OR Shoota
+  - Heavy weapon addition: Big Shoota or Rokkit Launcha (maxModels: 1 each)
+- Ability: "Get Da Good Bitz" - objective control persists until opponent claims it
+- Keywords: Infantry, Battleline, Orks, Mob, Grenades, Boyz
+
+**Files changed:**
+- public/data/orks.json - Added Boyz unit with full weapons, loadout options, ability, and keywords
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- JSON validation: ✅ Valid JSON syntax verified with python parser
+- Note: Pre-existing TypeScript errors in listService from multiuser-003 task exist but are unrelated to this task
+
+**Acceptance criteria met:**
+1. ✅ Boyz with points for 10/20 models (80/170 pts)
+2. ✅ Stats: M6 T5 SV5+ W1 LD7+ OC2
+3. ✅ Slugga and choppa standard
+4. ✅ Shootas option, big shoota and rokkit launcha options
+5. ✅ Keywords include Infantry, Battleline, Orks, Mob
