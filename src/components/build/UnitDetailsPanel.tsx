@@ -104,7 +104,6 @@ export function UnitDetailsPanel({
         </div>
         <StatsTable
           stats={unit.stats}
-          invuln={unit.invuln}
           modifiers={modifiers}
           modifierSources={modifierSources}
         />

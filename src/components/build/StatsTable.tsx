@@ -5,7 +5,6 @@ import type { UnitStats, Modifier, ModifierSource } from '@/types';
 
 interface StatsTableProps {
   stats: UnitStats;
-  invuln: string | null;
   modifiers?: Modifier[];
   modifierSources?: Record<string, ModifierSource[]>;
   className?: string;
@@ -101,7 +100,6 @@ function buildTooltip(stat: string, sources?: ModifierSource[]): string | undefi
 
 export function StatsTable({
   stats,
-  invuln,
   modifiers,
   modifierSources,
   className = '',
@@ -152,14 +150,6 @@ export function StatsTable({
           modified={ocValue.modified}
           tooltip={ocValue.modified ? buildTooltip('oc', modifierSources?.oc) : getStatDisplayName('oc')}
         />
-        {invuln && (
-          <StatCell
-            label="INV"
-            value={invuln}
-            className="bg-accent-500/10"
-            tooltip="Invulnerable Save"
-          />
-        )}
       </StatRow>
     </div>
   );
