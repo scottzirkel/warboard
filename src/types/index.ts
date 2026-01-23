@@ -403,3 +403,6 @@ export interface UpdateListInput {
   armyId?: string;
   data?: CurrentList;
 }
+
+// Re-export realtime types
+export * from './realtime';

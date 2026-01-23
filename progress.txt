@@ -5,6 +5,65 @@ Format follows the Ralph technique.
 
 ---
 
+## [multiuser-005] Add real-time infrastructure for companion apps
+
+**Date:** 2026-01-23
+
+**Task:** Add Server-Sent Events (SSE) infrastructure for real-time updates to companion apps like scoreboards
+
+**Decisions:**
+- Chose SSE over WebSockets because:
+  - Simpler protocol, works with standard HTTP
+  - Next.js App Router supports SSE well through Response streaming
+  - Sufficient for one-way broadcasts (server → client) which is what scoreboards need
+  - No additional dependencies required
+  - Built-in browser reconnection support
+- Created type-safe event system with defined event types and payloads
+- Implemented in-memory subscriber store (suitable for single-server deployment)
+- Game sessions identified by unique session IDs
+- SSE endpoint requires authentication via NextAuth session
+- Heartbeat system (30-second intervals) to keep connections alive
+- Client hook includes exponential backoff reconnection (up to 30s max delay)
+- Tab visibility handling to reconnect when tab becomes visible again
+
+**Event Types:**
+- `connected` - Sent when connection established with session ID
+- `heartbeat` - Keep-alive signal every 30 seconds
+- `game:state` - Full game state update
+- `game:round` - Battle round changed
+- `game:cp` - Command points changed
+- `game:stratagem` - Stratagem activated/deactivated
+- `game:katah` - Ka'tah stance changed
+- `list:loaded` - Army list loaded
+- `unit:wounds` - Unit wound state changed
+- `unit:destroyed` - Unit destroyed
+
+**Files created:**
+- src/types/realtime.ts - Real-time event types and interfaces
+- src/lib/realtimeService.ts - Server-side subscriber management and broadcasting
+- src/lib/realtimeService.test.ts - 23 tests for realtime service
+- src/app/api/realtime/route.ts - SSE connection endpoint
+- src/app/api/realtime/broadcast/route.ts - Event broadcast endpoint
+- src/hooks/useRealtime.ts - Client-side SSE hook with reconnection
+- src/hooks/useRealtime.test.ts - 14 tests for useRealtime hook
+
+**Files modified:**
+- src/types/index.ts - Added re-export for realtime types
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 317 tests passed (37 new tests)
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Server-Sent Events support added (SSE API route at /api/realtime)
+2. ✅ Real-time updates can be broadcast to connected clients (broadcast endpoint and service)
+3. ✅ Infrastructure ready for scoreboard companion app (event types, hooks, authentication)
+4. ✅ Connection handles reconnection gracefully (exponential backoff, visibility change detection)
+
+---
+
 ## [orks-007] Add Meganobz elite unit
 
 **Date:** 2026-01-23
