@@ -38,8 +38,9 @@ export interface MeleeWeaponStats {
   d: number | string; // Can be "D6", "D6+1", etc.
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface EquipmentStats {
-  // Empty object for equipment type weapons
+  // Empty object for equipment type weapons - represents equipment with no stats
 }
 
 export type WeaponStats = RangedWeaponStats | MeleeWeaponStats | EquipmentStats;

@@ -102,7 +102,8 @@ export function useSavedLists(): UseSavedListsReturn {
 
   // Fetch lists on mount
   useEffect(() => {
-    fetchLists();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Data fetching on mount is a valid pattern
+    void fetchLists();
   }, [fetchLists]);
 
   // -------------------------------------------------------------------------

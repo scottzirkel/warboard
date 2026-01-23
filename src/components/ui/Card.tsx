@@ -6,6 +6,7 @@ interface CardProps {
   onClick?: () => void;
   selected?: boolean;
   hoverable?: boolean;
+  depth?: boolean;
 }
 
 export function Card({
@@ -14,13 +15,14 @@ export function Card({
   onClick,
   selected = false,
   hoverable = false,
+  depth = true,
 }: CardProps) {
   return (
     <div
       className={`
-        bg-gray-800/50 border border-gray-700/50 rounded-lg
-        ${selected ? 'ring-2 ring-accent-500 border-accent-500/50' : ''}
-        ${hoverable ? 'hover:bg-gray-700/50 cursor-pointer transition-colors' : ''}
+        ${depth ? 'card-depth' : 'bg-white/5 rounded-xl'}
+        ${selected ? 'ring-2 ring-accent-500' : ''}
+        ${hoverable ? 'hover:bg-white/10 cursor-pointer transition-colors' : ''}
         ${onClick ? 'cursor-pointer' : ''}
         ${className}
       `}
@@ -40,7 +42,7 @@ interface CardHeaderProps {
 
 export function CardHeader({ children, className = '' }: CardHeaderProps) {
   return (
-    <div className={`px-4 py-3 border-b border-gray-700/50 ${className}`}>
+    <div className={`px-4 py-3 border-b border-white/5 ${className}`}>
       {children}
     </div>
   );
@@ -62,7 +64,7 @@ interface CardFooterProps {
 
 export function CardFooter({ children, className = '' }: CardFooterProps) {
   return (
-    <div className={`px-4 py-3 border-t border-gray-700/50 ${className}`}>
+    <div className={`px-4 py-3 border-t border-white/5 ${className}`}>
       {children}
     </div>
   );

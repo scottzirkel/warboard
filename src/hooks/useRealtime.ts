@@ -36,6 +36,7 @@ export function useRealtime(options: UseRealtimeOptions): UseRealtimeReturn {
   const eventSourceRef = useRef<EventSource | null>(null);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isManualDisconnectRef = useRef(false);
+  const connectRef = useRef<() => void>(() => {});
 
   // Cleanup function
   const cleanup = useCallback(() => {
@@ -130,7 +131,7 @@ export function useRealtime(options: UseRealtimeOptions): UseRealtimeReturn {
 
           reconnectTimeoutRef.current = setTimeout(() => {
             if (!isManualDisconnectRef.current) {
-              connect();
+              connectRef.current();
             }
           }, backoffDelay);
 
@@ -153,7 +154,10 @@ export function useRealtime(options: UseRealtimeOptions): UseRealtimeReturn {
 
   // Auto-connect when enabled changes or gameSessionId changes
   useEffect(() => {
+    // Keep the ref updated with the latest connect function
+    connectRef.current = connect;
     if (enabled && gameSessionId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Connection setup is a valid side effect
       connect();
     } else {
       disconnect();

@@ -1,40 +1,6 @@
 @import "tailwindcss";
 
 /* ============================================
-   TAILWIND THEME - Using CSS Variables
-   ============================================ */
-
-@theme {
-  --color-accent-50: var(--accent-50);
-  --color-accent-100: var(--accent-100);
-  --color-accent-200: var(--accent-200);
-  --color-accent-300: var(--accent-300);
-  --color-accent-400: var(--accent-400);
-  --color-accent-500: var(--accent-500);
-  --color-accent-600: var(--accent-600);
-  --color-accent-700: var(--accent-700);
-  --color-accent-800: var(--accent-800);
-  --color-accent-900: var(--accent-900);
-
-  --color-gold-50: #fdfcf7;
-  --color-gold-100: #fbf7e8;
-  --color-gold-200: #f5ebc6;
-  --color-gold-300: #eddda0;
-  --color-gold-400: #e0c35c;
-  --color-gold-500: #d4a72c;
-  --color-gold-600: #b8871e;
-  --color-gold-700: #96691a;
-  --color-gold-800: #7a541b;
-  --color-gold-900: #66461a;
-
-  --color-custodes-gold: #d4a72c;
-  --color-custodes-red: #8b1e1e;
-  --color-custodes-black: #1a1a1a;
-
-  --font-family-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-/* ============================================
    ARMY THEMES - CSS Custom Properties
    ============================================ */
 
@@ -69,7 +35,7 @@
 }
 
 /* Space Marines - Ultramarine Blue */
-[data-theme="spacemarines"] {
+[data-theme="space-marines"] {
   --accent-50: #eff6ff;
   --accent-100: #dbeafe;
   --accent-200: #bfdbfe;
@@ -114,7 +80,7 @@
 }
 
 /* Chaos - Khorne Red */
-[data-theme="chaosmarines"] {
+[data-theme="chaos"] {
   --accent-50: #fef2f2;
   --accent-100: #fee2e2;
   --accent-200: #fecaca;
@@ -144,8 +110,35 @@
 }
 
 /* ============================================
+   CUSTOM THEME COLORS (Tailwind)
+   ============================================ */
+
+@theme {
+  --color-gold-50: #fdfcf7;
+  --color-gold-100: #fbf7e8;
+  --color-gold-200: #f5ebc6;
+  --color-gold-300: #eddda0;
+  --color-gold-400: #e0c35c;
+  --color-gold-500: #d4a72c;
+  --color-gold-600: #b8871e;
+  --color-gold-700: #96691a;
+  --color-gold-800: #7a541b;
+  --color-gold-900: #66461a;
+
+  --color-custodes-gold: #d4a72c;
+  --color-custodes-red: #8b1e1e;
+  --color-custodes-black: #1a1a1a;
+
+  --font-family-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* ============================================
    BASE STYLES
    ============================================ */
+
+[x-cloak] {
+  display: none !important;
+}
 
 body {
   @apply antialiased;
@@ -329,11 +322,6 @@ body {
 
 .stepper-btn:active {
   background: rgba(118, 118, 128, 0.4);
-}
-
-.stepper-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
 }
 
 .stepper-divider {

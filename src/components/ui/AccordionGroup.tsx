@@ -141,7 +141,7 @@ interface LoadoutGroupAccordionProps {
 }
 
 export function LoadoutGroupAccordion({
-  id,
+  id: _id,
   name,
   modelCount,
   isPaired = false,

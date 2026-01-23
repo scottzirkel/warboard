@@ -1,6 +1,6 @@
 'use client';
 
-import { StatCell, StatRow, Badge } from '@/components/ui';
+import { StatCell, StatRow } from '@/components/ui';
 import type { UnitStats, Modifier, ModifierSource } from '@/types';
 
 interface StatsTableProps {

@@ -29,8 +29,8 @@ interface PlayUnitCardProps {
 
 export function PlayUnitCard({
   unit,
-  listUnit,
-  index,
+  listUnit: _listUnit,
+  index: _index,
   isSelected,
   onSelect,
   currentWounds,
@@ -39,7 +39,7 @@ export function PlayUnitCard({
   totalModels,
   attachedLeaderName,
   attachedLeaderUnit,
-  attachedLeaderListUnit,
+  attachedLeaderListUnit: _attachedLeaderListUnit,
   leaderCurrentWounds = 0,
   leaderMaxWounds = 0,
   leaderModelsAlive = 0,

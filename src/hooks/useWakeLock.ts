@@ -104,9 +104,10 @@ export function useWakeLock(enabled: boolean = false): UseWakeLockResult {
     }
 
     if (enabled) {
-      request();
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Wake lock acquisition is a valid side effect
+      void request();
     } else {
-      release();
+      void release();
     }
 
     // Cleanup on unmount

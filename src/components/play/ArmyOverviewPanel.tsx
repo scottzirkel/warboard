@@ -132,7 +132,7 @@ export function ArmyOverviewPanel({
 
   // Count units for summary
   const totalUnits = visibleUnits.length;
-  const destroyedUnits = visibleUnits.filter(({ listUnit, index }) => {
+  const destroyedUnits = visibleUnits.filter(({ listUnit, index: _index }) => {
     const unit = getUnitById(listUnit.unitId, armyData);
     if (!unit) return false;
 

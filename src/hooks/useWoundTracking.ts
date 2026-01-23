@@ -208,12 +208,13 @@ export function useWoundTracking(
   const hasAttachedLeader = !!listUnit?.attachedLeader;
 
   // Get leader info if attached
+  const leaderAttachedUnitIndex = listUnit?.attachedLeader?.unitIndex;
   const leaderInfo = useMemo(() => {
-    if (!hasAttachedLeader || !listUnit?.attachedLeader || !armyData) {
+    if (!hasAttachedLeader || leaderAttachedUnitIndex === undefined || !armyData) {
       return null;
     }
 
-    const leaderListUnit = units[listUnit.attachedLeader.unitIndex];
+    const leaderListUnit = units[leaderAttachedUnitIndex];
 
     if (!leaderListUnit) {
       return null;
@@ -228,9 +229,9 @@ export function useWoundTracking(
     return {
       unit: leaderUnit,
       listUnit: leaderListUnit,
-      unitIndex: listUnit.attachedLeader.unitIndex,
+      unitIndex: leaderAttachedUnitIndex,
     };
-  }, [hasAttachedLeader, listUnit?.attachedLeader, units, armyData]);
+  }, [hasAttachedLeader, leaderAttachedUnitIndex, units, armyData]);
 
   // Get modified stats for the leader (if attached)
   const { modifiedStats: leaderModifiedStats } = useStatModifiers(

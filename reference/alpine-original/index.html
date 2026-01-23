@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Army Tracker</title>
+</head>
+<body class="text-white h-screen overflow-hidden font-sans" :data-theme="getArmyTheme()" x-data="armyTracker">
+  <div id="app" class="h-full flex flex-col">
+    <!-- Navigation Bar -->
+    <nav class="nav-blur sticky top-0 z-50 flex-shrink-0">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="h-14 flex items-center justify-between">
+          <!-- Army Selector -->
+          <div class="flex items-center gap-3">
+            <select
+              @change="changeArmy($event.target.value)"
+              :value="selectedArmy"
+              class="select-dark text-accent-400 font-semibold text-sm"
+            >
+              <template x-for="army in availableArmies" :key="army.id">
+                <option :value="army.id" :disabled="army.disabled" x-text="army.name + (army.disabled ? ' (Coming Soon)' : '')" class="bg-gray-900 text-white"></option>
+              </template>
+            </select>
+          </div>
+
+          <!-- Mode Segmented Control -->
+          <div class="segmented-control w-52">
+            <div
+              @click="mode = 'build'"
+              :class="mode === 'build' ? 'active' : ''"
+              class="segmented-control-item"
+            >Build</div>
+            <div
+              @click="canPlay && (mode = 'play')"
+              :class="{
+                'active': mode === 'play',
+                'opacity-40 cursor-not-allowed': !canPlay
+              }"
+              class="segmented-control-item"
+              :title="!canPlay ? 'Fix points limit to enable Play Mode' : ''"
+            >Play</div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-2">
+            <button
+              @click="showReferencePanel = !showReferencePanel"
+              :class="showReferencePanel ? 'btn-ios-primary' : 'btn-ios-tinted'"
+              class="btn-ios btn-ios-sm"
+              title="Quick Reference"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 min-h-0 max-w-7xl mx-auto w-full px-4 py-4">
+
+    <!-- ==================== BUILD MODE ==================== -->
+    <div x-show="mode === 'build'" class="h-full flex flex-col gap-4">
+      <!-- Points Summary Bar -->
+      <div class="card-depth p-4 flex-shrink-0">
+        <div class="flex items-center justify-between">
+          <div>
+            <input
+              type="text"
+              x-model="currentList.name"
+              placeholder="List Name"
+              class="bg-transparent border-none text-white font-medium text-lg focus:outline-none placeholder:text-white/40"
+            >
+            <div class="flex items-center gap-2 mt-1">
+              <span class="badge badge-accent" x-text="getDetachment()?.name || 'No Detachment'"></span>
+              <span class="badge badge-purple" x-text="gameFormats[currentList.gameFormat]?.name || 'Standard'"></span>
+            </div>
+          </div>
+          <div class="text-right">
+            <div
+              class="text-3xl font-bold"
+              :class="{
+                'text-accent-400': pointsStatus === 'ok',
+                'text-yellow-400': pointsStatus === 'warning',
+                'text-red-400': pointsStatus === 'error'
+              }"
+              x-text="totalPoints"
+            ></div>
+            <div class="text-sm text-white/50" x-text="'of ' + currentList.pointsLimit + ' pts'"></div>
+          </div>
+        </div>
+        <!-- Progress bar -->
+        <div class="mt-3 h-2 bg-black/30 rounded-full overflow-hidden">
+          <div
+            class="h-full rounded-full transition-all progress-accent"
+            :class="{
+              'bg-yellow-500': pointsStatus === 'warning',
+              'bg-red-500': pointsStatus === 'error'
+            }"
+            :style="'width: ' + Math.min(100, (totalPoints / currentList.pointsLimit) * 100) + '%'"
+          ></div>
+        </div>
+      </div>
+
+      <!-- List Validation Errors (if any) -->
+      <template x-if="listErrors.length > 0">
+        <div class="card-depth p-4 border border-red-500/50 flex-shrink-0">
+          <div class="flex items-start gap-3">
+            <div class="text-red-400 text-lg">!</div>
+            <div class="flex-1">
+              <div class="text-sm font-medium text-red-400 mb-1">List Requirements</div>
+              <ul class="space-y-1">
+                <template x-for="error in listErrors" :key="error">
+                  <li class="text-xs text-white/70" x-text="error"></li>
+                </template>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
+      <!-- Left Panel: Army List Builder -->
+      <div class="lg:col-span-1 card-depth p-4 flex flex-col min-h-0 overflow-hidden">
+        <div class="flex justify-between items-center mb-4 flex-shrink-0">
+          <h2 class="section-header-inline">Army List</h2>
+          <div class="flex gap-2">
+            <button @click="showImportModal = true" class="btn-ios btn-ios-secondary btn-ios-sm">Import</button>
+            <button @click="showLoadModal = true" class="btn-ios btn-ios-secondary btn-ios-sm">Load</button>
+            <button @click="saveList" class="btn-ios btn-ios-primary btn-ios-sm">Save</button>
+          </div>
+        </div>
+
+        <!-- Game Format & Points Limit -->
+        <div class="flex gap-2 mb-3 flex-shrink-0">
+          <select
+            @change="setGameFormat($event.target.value)"
+            :value="currentList.gameFormat"
+            class="flex-1 select-dark text-sm"
+          >
+            <template x-for="(format, key) in gameFormats" :key="key">
+              <option :value="key" x-text="format.name" class="bg-gray-900"></option>
+            </template>
+          </select>
+          <select
+            x-model.number="currentList.pointsLimit"
+            class="w-28 select-dark text-sm"
+          >
+            <template x-for="limit in gameFormats[currentList.gameFormat].pointsOptions" :key="limit">
+              <option :value="limit" x-text="limit + ' pts'" class="bg-gray-900"></option>
+            </template>
+          </select>
+        </div>
+
+        <!-- Detachment -->
+        <select
+          x-model="currentList.detachment"
+          class="w-full select-dark text-sm mb-4 flex-shrink-0"
+        >
+          <template x-for="(det, key) in data.detachments" :key="key">
+            <option :value="key" x-text="det.name" class="bg-gray-900"></option>
+          </template>
+        </select>
+
+        <!-- Army Units -->
+        <div class="space-y-2 flex-1 overflow-y-auto min-h-0 scroll-smooth">
+          <template x-for="(listUnit, index) in currentList.units" :key="index">
+            <div
+              class="card-depth overflow-hidden"
+              :class="{
+                'border-l-2 border-purple-500': getUnitById(listUnit.unitId)?.isAlly,
+                'opacity-60': isUnitAttachedAsLeader(index)
+              }"
+            >
+              <div class="list-row">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="font-semibold truncate" x-text="getUnitById(listUnit.unitId)?.name"></span>
+                    <span x-show="getUnitById(listUnit.unitId)?.isAlly" class="badge badge-purple text-[10px] py-0.5">Ally</span>
+                    <span x-show="isUnitAttachedAsLeader(index)" class="badge badge-purple text-[10px] py-0.5" x-text="'→ ' + getAttachedToUnitName(index)"></span>
+                  </div>
+                  <div class="flex items-center gap-3 mt-1">
+                    <select
+                      x-model.number="listUnit.modelCount"
+                      @change="onModelCountChange(index, $event.target.value)"
+                      class="bg-black/30 border border-white/10 rounded-lg px-2 py-1 text-xs"
+                    >
+                      <template x-for="count in getModelCounts(listUnit.unitId)" :key="count">
+                        <option :value="count" x-text="count + ' models'" class="bg-gray-900"></option>
+                      </template>
+                    </select>
+                    <span class="text-sm text-accent-400 font-semibold" x-text="getUnitPoints(listUnit) + ' pts'"></span>
+                  </div>
+                </div>
+                <button
+                  @click="removeUnitFromList(index)"
+                  class="text-red-400 hover:text-red-300 p-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Enhancement Selector -->
+              <template x-if="canHaveEnhancement(listUnit.unitId)">
+                <div class="px-4 pb-3">
+                  <select
+                    x-model="listUnit.enhancement"
+                    class="w-full select-dark text-sm"
+                  >
+                    <option value="" class="bg-gray-900">No Enhancement</option>
+                    <template x-for="enh in getAvailableEnhancements()" :key="enh.id">
+                      <option :value="enh.id" x-text="enh.name + ' (+' + enh.points + ' pts)'" class="bg-gray-900"></option>
+                    </template>
+                  </select>
+                </div>
+              </template>
+
+              <!-- Leader Attachment Selector -->
+              <template x-if="canHaveLeaderAttached(index)">
+                <div class="px-4 pb-3">
+                  <div class="text-xs text-white/50 mb-1">Attached Leader:</div>
+                  <select
+                    :value="listUnit.attachedLeader?.unitIndex ?? ''"
+                    @change="$event.target.value === '' ? detachLeader(index) : attachLeader(index, parseInt($event.target.value))"
+                    class="w-full select-dark text-sm"
+                  >
+                    <option value="" class="bg-gray-900">None</option>
+                    <template x-for="leader in getAvailableLeaders(index)" :key="leader.unitIndex">
+                      <option :value="leader.unitIndex" x-text="leader.name + (leader.enhancement ? ' (' + getEnhancementById(leader.enhancement)?.name + ')' : '')" class="bg-gray-900"></option>
+                    </template>
+                    <template x-if="listUnit.attachedLeader && !getAvailableLeaders(index).some(l => l.unitIndex === listUnit.attachedLeader.unitIndex)">
+                      <option :value="listUnit.attachedLeader.unitIndex" x-text="getAttachedLeaderName(index)" selected class="bg-gray-900"></option>
+                    </template>
+                  </select>
+                </div>
+              </template>
+
+              <!-- Weapon Loadout -->
+              <template x-if="getWeaponChoices(listUnit.unitId).length > 0">
+                <div class="px-4 pb-3 space-y-3">
+                  <!-- Replacement Options (mutually exclusive weapons) -->
+                  <template x-for="option in getLoadoutOptionsByPattern(listUnit.unitId).replacement" :key="option.id">
+                    <div>
+                      <div class="text-xs text-white/50 mb-2">
+                        <span class="text-blue-400">Replace</span>
+                      </div>
+                      <div class="space-y-1">
+                        <template x-for="choice in option.choices" :key="choice.id">
+                          <div class="flex items-center justify-between bg-black/20 rounded-lg px-3 py-2">
+                            <div class="flex items-center gap-2">
+                              <span class="text-sm" x-text="choice.name"></span>
+                              <span x-show="choice.paired" class="badge badge-blue text-[10px] py-0">Paired</span>
+                            </div>
+                            <div class="stepper">
+                              <button @click="updateWeaponCount(index, choice.id, -1)" class="stepper-btn text-base">-</button>
+                              <div class="stepper-divider"></div>
+                              <div class="w-8 flex items-center justify-center text-sm font-semibold" x-text="listUnit.weaponCounts?.[choice.id] || 0"></div>
+                              <div class="stepper-divider"></div>
+                              <button @click="updateWeaponCount(index, choice.id, 1)" class="stepper-btn text-base">+</button>
+                            </div>
+                          </div>
+                        </template>
+                      </div>
+                    </div>
+                  </template>
+
+                  <!-- Addition Options (optional extras) -->
+                  <template x-for="option in getLoadoutOptionsByPattern(listUnit.unitId).addition" :key="option.id">
+                    <div>
+                      <div class="text-xs text-white/50 mb-2">
+                        <span class="text-green-400">Add</span>
+                      </div>
+                      <div class="space-y-1">
+                        <template x-for="choice in option.choices" :key="choice.id">
+                          <div class="flex items-center justify-between bg-black/20 rounded-lg px-3 py-2 border-l-2 border-green-500">
+                            <div class="flex items-center gap-2">
+                              <span class="text-sm" x-text="choice.name"></span>
+                              <span x-show="choice.maxModels" class="text-[10px] text-white/40" x-text="'(max ' + choice.maxModels + ')'"></span>
+                            </div>
+                            <div class="stepper">
+                              <button @click="updateWeaponCount(index, choice.id, -1)" class="stepper-btn text-base">-</button>
+                              <div class="stepper-divider"></div>
+                              <div class="w-8 flex items-center justify-center text-sm font-semibold" x-text="listUnit.weaponCounts?.[choice.id] || 0"></div>
+                              <div class="stepper-divider"></div>
+                              <button
+                                @click="updateWeaponCount(index, choice.id, 1)"
+                                :class="choice.maxModels && (listUnit.weaponCounts?.[choice.id] || 0) >= choice.maxModels ? 'opacity-30 cursor-not-allowed' : ''"
+                                class="stepper-btn text-base"
+                              >+</button>
+                            </div>
+                          </div>
+                        </template>
+                      </div>
+                    </div>
+                  </template>
+
+                  <!-- Validation -->
+                  <template x-if="getWeaponCountError(listUnit)">
+                    <div class="text-xs text-red-400" x-text="getWeaponCountError(listUnit)"></div>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </template>
+
+          <template x-if="currentList.units.length === 0">
+            <div class="text-center text-white/40 py-12">
+              <p class="text-lg mb-1">No units added yet</p>
+              <p class="text-sm">Select a unit from the roster to add it</p>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- Middle Panel: Unit Browser -->
+      <div class="lg:col-span-1 card-depth p-4 flex flex-col min-h-0 overflow-hidden">
+        <h2 class="section-header-inline mb-4 flex-shrink-0">Unit Roster</h2>
+
+        <!-- Search -->
+        <input
+          type="text"
+          x-model="searchQuery"
+          placeholder="Search units..."
+          class="w-full input-dark text-sm mb-4 flex-shrink-0"
+        >
+
+        <!-- Grouped Unit List (Accordion) -->
+        <div class="space-y-2 flex-1 overflow-y-auto scroll-smooth min-h-0">
+          <template x-for="(group, key) in groupedUnits" :key="key">
+            <div x-show="group.units.length > 0" class="card-depth overflow-hidden">
+              <!-- Accordion Header -->
+              <button
+                @click="toggleGroup(key)"
+                class="w-full flex justify-between items-center px-4 py-3 hover:bg-white/5 transition-colors text-left touch-highlight"
+              >
+                <span class="font-semibold text-accent-300" x-text="group.label"></span>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-white/40" x-text="group.units.length"></span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 text-white/40 transition-transform"
+                    :class="{ 'rotate-180': expandedGroups[key] }"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </button>
+
+              <!-- Accordion Content -->
+              <div x-show="expandedGroups[key]" x-collapse>
+                <template x-for="unit in group.units" :key="unit.id">
+                  <div
+                    class="list-row-compact cursor-pointer hover:bg-white/5 transition-colors border-t border-white/5 touch-highlight"
+                    @click="selectUnit(unit)"
+                    :class="{
+                      'bg-accent-tint-strong': selectedUnit?.id === unit.id,
+                      'border-l-2 border-purple-500': unit.isAlly
+                    }"
+                  >
+                    <div class="flex justify-between items-center w-full">
+                      <div class="flex items-center gap-2">
+                        <span class="font-medium text-sm" x-text="unit.name"></span>
+                        <span x-show="unit.isAlly" class="badge badge-purple text-[10px] py-0">Ally</span>
+                      </div>
+                      <span class="text-accent-400 text-xs font-semibold" x-text="getPointsDisplay(unit)"></span>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- Right Panel: Unit Details -->
+      <div class="lg:col-span-1 card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
+        <template x-if="selectedUnit">
+          <div class="flex flex-col">
+            <div class="flex justify-between items-start mb-4">
+              <h2 class="text-xl font-semibold text-accent-300" x-text="selectedUnit.name"></h2>
+              <button
+                @click="addUnitToList(selectedUnit)"
+                class="btn-ios btn-ios-primary btn-ios-sm"
+              >
+                + Add
+              </button>
+            </div>
+
+            <!-- Stats Table -->
+            <div class="card-depth p-4 mb-4">
+              <div class="grid grid-cols-6 gap-2 mb-3">
+                <div class="stat-cell">
+                  <span class="stat-label">M</span>
+                  <span class="stat-value" x-text="formatInches(selectedUnit.stats.m)"></span>
+                </div>
+                <div class="stat-cell">
+                  <span class="stat-label">T</span>
+                  <span class="stat-value" x-text="selectedUnit.stats.t"></span>
+                </div>
+                <div class="stat-cell">
+                  <span class="stat-label">SV</span>
+                  <span class="stat-value" x-text="selectedUnit.stats.sv"></span>
+                </div>
+                <div class="stat-cell">
+                  <span class="stat-label">W</span>
+                  <span class="stat-value" x-text="selectedUnit.stats.w"></span>
+                </div>
+                <div class="stat-cell">
+                  <span class="stat-label">LD</span>
+                  <span class="stat-value" x-text="selectedUnit.stats.ld"></span>
+                </div>
+                <div class="stat-cell">
+                  <span class="stat-label">OC</span>
+                  <span class="stat-value" x-text="selectedUnit.stats.oc"></span>
+                </div>
+              </div>
+              <template x-if="selectedUnit.invuln">
+                <div class="flex justify-center">
+                  <span class="badge badge-accent" x-text="selectedUnit.invuln + ' Invuln'"></span>
+                </div>
+              </template>
+            </div>
+
+            <!-- Weapons -->
+            <div class="card-depth overflow-hidden mb-4">
+              <div class="section-header">Weapons</div>
+              <div class="px-4 pb-4 space-y-3">
+                <template x-for="weapon in sortedWeapons(selectedUnit.weapons).filter(w => w.type !== 'equipment')" :key="weapon.id">
+                  <div class="bg-black/20 rounded-lg p-3">
+                    <div class="flex justify-between items-center mb-2">
+                      <span class="font-medium text-sm" x-text="weapon.name"></span>
+                      <span class="badge text-[10px] py-0" :class="weapon.type === 'ranged' ? 'badge-blue' : 'badge-red'" x-text="weapon.type"></span>
+                    </div>
+                    <template x-if="weapon.type === 'ranged'">
+                      <table class="weapon-table">
+                        <thead>
+                          <tr>
+                            <th>RNG</th>
+                            <th>A</th>
+                            <th>BS</th>
+                            <th>S</th>
+                            <th>AP</th>
+                            <th>D</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td x-text="formatInches(weapon.stats.range)"></td>
+                            <td x-text="weapon.stats.a"></td>
+                            <td x-text="weapon.stats.bs"></td>
+                            <td x-text="weapon.stats.s"></td>
+                            <td x-text="weapon.stats.ap"></td>
+                            <td x-text="weapon.stats.d"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </template>
+                    <template x-if="weapon.type === 'melee'">
+                      <table class="weapon-table">
+                        <thead>
+                          <tr>
+                            <th>A</th>
+                            <th>WS</th>
+                            <th>S</th>
+                            <th>AP</th>
+                            <th>D</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td x-text="weapon.stats.a"></td>
+                            <td x-text="weapon.stats.ws"></td>
+                            <td x-text="weapon.stats.s"></td>
+                            <td x-text="weapon.stats.ap"></td>
+                            <td x-text="weapon.stats.d"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </template>
+                    <template x-if="weapon.abilities && weapon.abilities.length > 0">
+                      <div class="text-xs text-accent-400 mt-2" x-text="weapon.abilities.join(', ')"></div>
+                    </template>
+                  </div>
+                </template>
+              </div>
+            </div>
+
+            <!-- Abilities -->
+            <div class="card-depth overflow-hidden">
+              <div class="section-header">Abilities</div>
+              <div class="px-4 pb-4 space-y-3">
+                <template x-for="ability in selectedUnit.abilities" :key="ability.id">
+                  <div class="text-sm">
+                    <span class="font-semibold text-accent-300" x-text="ability.name + ': '"></span>
+                    <span class="text-white/70" x-text="ability.description"></span>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <template x-if="!selectedUnit">
+          <div class="flex-1 flex items-center justify-center text-white/40">
+            <p>Select a unit to view details</p>
+          </div>
+        </template>
+      </div>
+    </div>
+    </div>
+
+    <!-- ==================== PLAY MODE ==================== -->
+    <div x-show="mode === 'play'" class="h-full grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <!-- Left Panel: Army Overview -->
+      <div class="lg:col-span-1 card-depth p-4 flex flex-col min-h-0 overflow-hidden">
+        <h2 class="section-header-inline mb-4 flex-shrink-0">Your Army</h2>
+
+        <!-- Battle Info -->
+        <div class="card-depth p-4 mb-4 flex-shrink-0">
+          <div class="text-lg font-semibold" x-text="currentList.name"></div>
+          <div class="flex items-center gap-2 mt-1">
+            <span class="badge badge-accent" x-text="getDetachment()?.name"></span>
+            <span class="text-accent-400 font-bold" x-text="totalPoints + ' pts'"></span>
+          </div>
+        </div>
+
+        <!-- Army Units List -->
+        <div class="space-y-2 flex-1 overflow-y-auto scroll-smooth min-h-0">
+          <template x-for="(listUnit, index) in currentList.units" :key="index">
+            <div
+              x-show="!isUnitAttachedAsLeader(index)"
+              class="card-depth overflow-hidden cursor-pointer transition-all touch-highlight"
+              @click="selectPlayUnit(index)"
+              :class="{ 'ring-2 ring-accent-500': selectedPlayUnitIndex === index }"
+            >
+              <div class="list-row">
+                <div class="flex-1 min-w-0">
+                  <div class="font-semibold truncate" x-text="getCombinedUnitName(index)"></div>
+                  <div class="flex items-center gap-2 mt-1">
+                    <span
+                      class="text-xs"
+                      :class="getModelsAlive(index) < getCombinedModelCount(index) ? 'text-red-400' : 'text-white/50'"
+                      x-text="getModelsAlive(index) + '/' + getCombinedModelCount(index) + ' models'"
+                    ></span>
+                    <template x-if="listUnit.enhancement">
+                      <span class="badge badge-accent text-[10px] py-0" x-text="getEnhancementById(listUnit.enhancement)?.name"></span>
+                    </template>
+                  </div>
+                  <template x-if="listUnit.attachedLeader">
+                    <div class="text-xs text-purple-400 mt-1" x-text="'+ ' + getAttachedLeaderName(index)"></div>
+                  </template>
+                </div>
+                <div class="text-right flex-shrink-0">
+                  <div class="text-sm text-accent-400 font-semibold" x-text="getUnitPoints(listUnit) + ' pts'"></div>
+                  <div class="text-xs text-white/40 mt-1">
+                    <span x-text="'W: ' + (listUnit.currentWounds ?? getMaxWounds(index)) + '/' + getMaxWounds(index)"></span>
+                  </div>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white/30 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </template>
+
+          <template x-if="currentList.units.length === 0">
+            <div class="text-center text-white/40 py-12">
+              <p class="text-lg mb-1">No units in your army</p>
+              <p class="text-sm">Switch to Build Mode to add units</p>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- Middle Panel: Game State & Modifiers -->
+      <div class="lg:col-span-1 card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
+        <h2 class="section-header-inline mb-4 flex-shrink-0">Game State</h2>
+
+        <!-- Battle Round -->
+        <div class="card-depth p-4 mb-4">
+          <div class="flex justify-between items-center">
+            <span class="text-white/60 font-medium">Battle Round</span>
+            <div class="flex items-center gap-4">
+              <div class="stepper">
+                <button @click="gameState.battleRound = Math.max(1, gameState.battleRound - 1)" class="stepper-btn">-</button>
+                <div class="stepper-divider"></div>
+                <button @click="gameState.battleRound = Math.min(5, gameState.battleRound + 1)" class="stepper-btn">+</button>
+              </div>
+              <span class="text-4xl font-bold text-white w-8 text-center" x-text="gameState.battleRound"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Command Points -->
+        <div class="card-depth p-4 mb-4">
+          <div class="flex justify-between items-center">
+            <span class="text-white/60 font-medium">Command Points</span>
+            <div class="flex items-center gap-4">
+              <div class="stepper">
+                <button @click="gameState.commandPoints = Math.max(0, gameState.commandPoints - 1)" class="stepper-btn">-</button>
+                <div class="stepper-divider"></div>
+                <button @click="gameState.commandPoints++" class="stepper-btn">+</button>
+              </div>
+              <span class="text-4xl font-bold text-accent-400 w-8 text-center" x-text="gameState.commandPoints"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Martial Ka'tah -->
+        <div class="card-depth overflow-hidden mb-4">
+          <div class="p-4 pb-3">
+            <div class="text-white/60 font-medium mb-3">Martial Ka'tah</div>
+            <div class="segmented-control">
+              <div
+                @click="currentList.activeKatah = ''"
+                :class="!currentList.activeKatah ? 'active' : ''"
+                class="segmented-control-item"
+              >None</div>
+              <template x-for="stance in data.armyRules?.martial_katah?.stances" :key="stance.id">
+                <div
+                  @click="currentList.activeKatah = stance.id"
+                  :class="currentList.activeKatah === stance.id ? 'active' : ''"
+                  class="segmented-control-item"
+                  x-text="stance.name.replace(' Stance', '')"
+                ></div>
+              </template>
+            </div>
+          </div>
+          <template x-if="currentList.activeKatah">
+            <div class="px-4 py-2 bg-accent-tint flex items-center justify-between">
+              <span class="text-xs font-medium text-accent-300" x-text="getKatahName(currentList.activeKatah).replace(' Stance', '')"></span>
+              <span class="text-xs text-accent-400" x-text="getKatahDescription(currentList.activeKatah).replace('Melee weapons gain ', '')"></span>
+            </div>
+          </template>
+        </div>
+
+        <!-- Active Stratagems -->
+        <div class="card-depth overflow-hidden mb-4">
+          <div class="section-header">Stratagems</div>
+          <div class="space-y-0">
+            <template x-for="strat in getDetachment()?.stratagems" :key="strat.id">
+              <div
+                class="inset-group-item cursor-pointer transition-colors touch-highlight"
+                :class="gameState.activeStratagems.includes(strat.id) ? 'bg-accent-tint-strong' : 'hover:bg-white/5'"
+                @click="toggleStratagem(strat.id)"
+              >
+                <div class="flex-1">
+                  <div class="font-medium text-sm" x-text="strat.name"></div>
+                  <div class="text-xs text-white/40 mt-0.5" x-text="strat.phase"></div>
+                </div>
+                <span class="badge badge-accent" x-text="strat.cost + ' CP'"></span>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- Detachment Rules Reminder -->
+        <div class="card-depth overflow-hidden">
+          <div class="section-header">Detachment Rules</div>
+          <div class="px-4 pb-4 space-y-2">
+            <template x-for="rule in getDetachment()?.rules" :key="rule.id">
+              <div class="text-sm">
+                <span class="font-semibold text-accent-300" x-text="rule.name + ': '"></span>
+                <span class="text-white/70" x-text="rule.description"></span>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Selected Unit with Modified Stats -->
+      <div class="lg:col-span-1 card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
+        <template x-if="selectedPlayUnitIndex !== null && currentList.units[selectedPlayUnitIndex]">
+          <div>
+            <h2 class="text-xl font-semibold text-accent-300 mb-2" x-text="getCombinedUnitName(selectedPlayUnitIndex)"></h2>
+
+            <!-- Enhancement & Leader Badges -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <template x-if="currentList.units[selectedPlayUnitIndex].enhancement">
+                <span class="badge badge-accent" x-text="getEnhancementById(currentList.units[selectedPlayUnitIndex].enhancement)?.name"></span>
+              </template>
+              <template x-if="currentList.units[selectedPlayUnitIndex].attachedLeader">
+                <span class="badge badge-purple" x-text="'+ ' + getAttachedLeaderName(selectedPlayUnitIndex)"></span>
+              </template>
+            </div>
+
+            <!-- Modified Stats Table -->
+            <div class="card-depth p-4 mb-4">
+              <div class="grid grid-cols-6 gap-2 mb-3">
+                <template x-for="stat in ['m', 't', 'sv', 'w', 'ld', 'oc']" :key="stat">
+                  <div class="stat-cell">
+                    <span class="stat-label" x-text="stat"></span>
+                    <span
+                      class="stat-value"
+                      :class="isStatModified(selectedPlayUnitIndex, stat) ? 'modified cursor-help' : ''"
+                      :title="isStatModified(selectedPlayUnitIndex, stat) ? getModifierSources(selectedPlayUnitIndex, stat).join('\n') : ''"
+                      x-text="getModifiedStat(selectedPlayUnitIndex, stat)"
+                    ></span>
+                  </div>
+                </template>
+              </div>
+              <template x-if="getUnitById(currentList.units[selectedPlayUnitIndex].unitId)?.invuln">
+                <div class="flex justify-center">
+                  <span class="badge badge-accent" x-text="getUnitById(currentList.units[selectedPlayUnitIndex].unitId)?.invuln + ' Invuln'"></span>
+                </div>
+              </template>
+            </div>
+
+            <!-- Wounds Tracker -->
+            <div class="card-depth p-4 mb-4">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-white/60 font-medium">Damage</span>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="text-2xl font-bold"
+                    :class="(getModelsAlive(selectedPlayUnitIndex) + getLeaderModelsAlive(selectedPlayUnitIndex)) < getCombinedModelCount(selectedPlayUnitIndex) ? 'text-red-400' : 'text-white'"
+                    x-text="getModelsAlive(selectedPlayUnitIndex) + getLeaderModelsAlive(selectedPlayUnitIndex)"
+                  ></span>
+                  <span class="text-white/40">/</span>
+                  <span class="text-lg text-white/50" x-text="getCombinedModelCount(selectedPlayUnitIndex) + ' models'"></span>
+                </div>
+              </div>
+
+              <!-- Unit Wounds Section -->
+              <div class="bg-black/20 rounded-lg p-3 mb-3">
+                <div class="text-xs text-white/50 text-center mb-2" x-text="getUnitById(currentList.units[selectedPlayUnitIndex].unitId)?.name"></div>
+
+                <!-- Current Model Wounds -->
+                <template x-if="getWoundsPerModel(selectedPlayUnitIndex) > 1 && getModelsAlive(selectedPlayUnitIndex) > 0">
+                  <div class="flex items-center justify-center gap-1 mb-3">
+                    <template x-for="i in getWoundsPerModel(selectedPlayUnitIndex)" :key="i">
+                      <div
+                        class="wound-dot"
+                        :class="i <= getCurrentModelWounds(selectedPlayUnitIndex) ? 'filled' : ''"
+                      ></div>
+                    </template>
+                  </div>
+                </template>
+
+                <!-- Unit Wounds Controls -->
+                <div class="flex items-center justify-center gap-4">
+                  <button
+                    @click="adjustWounds(selectedPlayUnitIndex, -1)"
+                    class="btn-ios btn-ios-secondary px-6"
+                  >
+                    <span class="text-red-400 font-bold">- Wound</span>
+                  </button>
+                  <div class="text-center min-w-[60px]">
+                    <span class="text-xl font-bold" x-text="currentList.units[selectedPlayUnitIndex].currentWounds ?? getMaxWounds(selectedPlayUnitIndex)"></span>
+                    <span class="text-white/40"> / </span>
+                    <span class="text-sm text-white/50" x-text="getMaxWounds(selectedPlayUnitIndex)"></span>
+                  </div>
+                  <button
+                    @click="adjustWounds(selectedPlayUnitIndex, 1)"
+                    class="btn-ios btn-ios-secondary px-6"
+                  >
+                    <span class="text-green-400 font-bold">+ Heal</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Leader Wounds Section -->
+              <template x-if="currentList.units[selectedPlayUnitIndex].attachedLeader">
+                <div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3">
+                  <div class="text-xs text-purple-400 text-center mb-2" x-text="getAttachedLeaderName(selectedPlayUnitIndex)"></div>
+
+                  <template x-if="getLeaderWoundsPerModel(selectedPlayUnitIndex) > 1 && getLeaderModelsAlive(selectedPlayUnitIndex) > 0">
+                    <div class="flex items-center justify-center gap-1 mb-3">
+                      <template x-for="i in getLeaderWoundsPerModel(selectedPlayUnitIndex)" :key="'leader-' + i">
+                        <div
+                          class="w-3 h-3 rounded-full"
+                          :class="i <= getCurrentLeaderModelWounds(selectedPlayUnitIndex) ? 'bg-purple-500' : 'bg-white/10'"
+                        ></div>
+                      </template>
+                    </div>
+                  </template>
+
+                  <div class="flex items-center justify-center gap-4">
+                    <button
+                      @click="adjustLeaderWounds(selectedPlayUnitIndex, -1)"
+                      class="btn-ios btn-ios-secondary btn-ios-sm px-4"
+                    >
+                      <span class="text-red-400 font-bold">-</span>
+                    </button>
+                    <div class="text-center">
+                      <span class="text-xl font-bold text-purple-300" x-text="getLeaderCurrentWounds(selectedPlayUnitIndex)"></span>
+                      <span class="text-white/40"> / </span>
+                      <span class="text-sm text-white/50" x-text="getLeaderMaxWounds(selectedPlayUnitIndex)"></span>
+                    </div>
+                    <button
+                      @click="adjustLeaderWounds(selectedPlayUnitIndex, 1)"
+                      class="btn-ios btn-ios-secondary btn-ios-sm px-4"
+                    >
+                      <span class="text-green-400 font-bold">+</span>
+                    </button>
+                  </div>
+                </div>
+              </template>
+            </div>
+
+            <!-- Active Modifiers Summary -->
+            <div class="card-depth overflow-hidden mb-4">
+              <div class="section-header">Active Modifiers</div>
+              <div class="px-4 pb-4 space-y-1">
+                <template x-if="currentList.activeKatah">
+                  <div class="text-sm px-3 py-2 bg-accent-tint rounded-lg flex items-center justify-between">
+                    <span class="text-accent-300 font-medium" x-text="getKatahName(currentList.activeKatah)"></span>
+                    <span class="text-xs text-accent-400" x-text="getKatahDescription(currentList.activeKatah).replace('Melee weapons gain ', '')"></span>
+                  </div>
+                </template>
+                <template x-if="currentList.units[selectedPlayUnitIndex].enhancement">
+                  <div class="text-sm px-3 py-2 bg-accent-tint rounded-lg">
+                    <span class="text-accent-300" x-text="getEnhancementById(currentList.units[selectedPlayUnitIndex].enhancement)?.name"></span>
+                  </div>
+                </template>
+                <template x-for="stratId in gameState.activeStratagems" :key="stratId">
+                  <div class="text-sm px-3 py-2 bg-accent-tint-strong rounded-lg">
+                    <span x-text="getStratagemById(stratId)?.name"></span>
+                  </div>
+                </template>
+                <template x-if="!currentList.activeKatah && !currentList.units[selectedPlayUnitIndex].enhancement && gameState.activeStratagems.length === 0">
+                  <div class="text-sm text-white/40">No modifiers active</div>
+                </template>
+              </div>
+            </div>
+
+            <!-- Weapons with Modified Stats (Grouped by Loadout) -->
+            <div class="card-depth overflow-hidden">
+              <div class="section-header">Weapons</div>
+              <div class="space-y-3">
+                <template x-for="group in getWeaponsByLoadoutGroup(currentList.units[selectedPlayUnitIndex])" :key="group.id">
+                  <div
+                    class="rounded overflow-hidden transition-colors"
+                    :class="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id) ? 'bg-green-900/40 ring-1 ring-green-600/50' : 'bg-black/20'"
+                  >
+                    <!-- Group Header (Clickable) -->
+                    <div
+                      class="flex items-center gap-2 px-2 py-1.5 cursor-pointer transition-colors"
+                      :class="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id) ? 'hover:bg-green-800/40' : 'hover:bg-white/5'"
+                      @click="toggleLoadoutGroupCollapsed(selectedPlayUnitIndex, group.id)"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-3 w-3 transition-transform"
+                        :class="{
+                          '-rotate-90': isLoadoutGroupCollapsed(selectedPlayUnitIndex, group.id),
+                          'text-green-400': isLoadoutGroupActivated(selectedPlayUnitIndex, group.id),
+                          'text-gray-400': !isLoadoutGroupActivated(selectedPlayUnitIndex, group.id)
+                        }"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                      <span
+                        class="text-xs font-bold"
+                        :class="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id) ? 'text-green-400' : 'text-accent-400'"
+                        x-text="group.modelCount + '×'"
+                      ></span>
+                      <span
+                        class="text-sm font-medium"
+                        :class="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id) ? 'text-green-300' : 'text-gray-200'"
+                        x-text="group.name"
+                      ></span>
+                      <span
+                        x-show="group.isPaired"
+                        class="text-[10px] text-blue-400 font-medium"
+                        title="Paired loadout (equipped together)"
+                      >⬡</span>
+                      <!-- Activation Toggle Button -->
+                      <button
+                        @click.stop="toggleLoadoutGroupActivated(selectedPlayUnitIndex, group.id)"
+                        class="ml-auto px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors"
+                        :class="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id) ? 'bg-green-600 text-white' : 'bg-white/20 hover:bg-white/30 text-white/70'"
+                        :title="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id) ? 'Mark as not activated' : 'Mark as activated'"
+                      >
+                        <span x-show="isLoadoutGroupActivated(selectedPlayUnitIndex, group.id)">✓</span>
+                        <span x-show="!isLoadoutGroupActivated(selectedPlayUnitIndex, group.id)">Act</span>
+                      </button>
+                    </div>
+
+                    <!-- Collapsible Content -->
+                    <div x-show="!isLoadoutGroupCollapsed(selectedPlayUnitIndex, group.id)" x-collapse class="px-2 pb-2">
+                      <!-- Ranged Weapons Subsection -->
+                      <template x-if="group.rangedWeapons.length > 0">
+                        <div class="mb-2">
+                          <div class="text-[10px] uppercase tracking-wide text-blue-400 font-semibold mb-1">Ranged</div>
+                          <div class="space-y-2 pl-2 border-l border-blue-500/30">
+                            <template x-for="weapon in group.rangedWeapons" :key="weapon.id">
+                              <div class="text-sm">
+                                <div class="font-medium text-gray-300" x-text="weapon.name"></div>
+                                <table class="w-full text-center text-xs mt-1">
+                                  <thead>
+                                    <tr class="text-gray-500">
+                                      <th class="font-normal">RNG</th>
+                                      <th class="font-normal">A</th>
+                                      <th class="font-normal">BS</th>
+                                      <th class="font-normal">S</th>
+                                      <th class="font-normal">AP</th>
+                                      <th class="font-normal">D</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody class="text-gray-300">
+                                    <tr>
+                                      <td x-text="formatInches(weapon.stats.range)"></td>
+                                      <td :class="isWeaponStatModified(selectedPlayUnitIndex, weapon, 'a') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 'a')"></td>
+                                      <td x-text="weapon.stats.bs"></td>
+                                      <td :class="isWeaponStatModified(selectedPlayUnitIndex, weapon, 's') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 's')"></td>
+                                      <td :class="isWeaponStatModified(selectedPlayUnitIndex, weapon, 'ap') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 'ap')"></td>
+                                      <td :class="isWeaponStatModified(selectedPlayUnitIndex, weapon, 'd') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 'd')"></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <template x-if="weapon.abilities && weapon.abilities.length > 0">
+                                  <div class="text-xs text-accent-400 mt-1" x-text="weapon.abilities.join(', ')"></div>
+                                </template>
+                              </div>
+                            </template>
+                          </div>
+                        </div>
+                      </template>
+
+                      <!-- Melee Weapons Subsection -->
+                      <template x-if="group.meleeWeapons.length > 0">
+                        <div>
+                          <div class="text-[10px] uppercase tracking-wide text-red-400 font-semibold mb-1">Melee</div>
+                          <div class="space-y-2 pl-2 border-l border-red-500/30">
+                            <template x-for="weapon in group.meleeWeapons" :key="weapon.id">
+                              <div class="text-sm">
+                                <div class="font-medium text-gray-300" x-text="weapon.name"></div>
+                                <table class="w-full text-center text-xs mt-1">
+                                  <thead>
+                                    <tr class="text-gray-500">
+                                      <th class="font-normal">A</th>
+                                      <th class="font-normal">WS</th>
+                                      <th class="font-normal">S</th>
+                                      <th class="font-normal">AP</th>
+                                      <th class="font-normal">D</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody class="text-gray-300">
+                                    <tr>
+                                      <td :class="isWeaponStatModified(selectedPlayUnitIndex, weapon, 'a') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 'a')"></td>
+                                      <td x-text="weapon.stats.ws"></td>
+                                      <td :class="isWeaponStatModified(selectedPlayUnitIndex, weapon, 's') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 's')"></td>
+                                      <td :class="isWeaponStatModified(selectedPlayUnitIndex, weapon, 'ap') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 'ap')"></td>
+                                      <td :class="isWeaponStatModified(selectedPlayUnitIndex, weapon, 'd') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(selectedPlayUnitIndex, weapon, 'd')"></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <template x-if="weapon.abilities && weapon.abilities.length > 0">
+                                  <div class="text-xs text-accent-400 mt-1" x-text="weapon.abilities.join(', ')"></div>
+                                </template>
+                              </div>
+                            </template>
+                          </div>
+                        </div>
+                      </template>
+                    </div>
+                  </div>
+                </template>
+
+                <!-- Leader Weapons (if leader is attached) -->
+                <template x-if="getLeaderWeapons(selectedPlayUnitIndex).length > 0">
+                  <div
+                    class="rounded overflow-hidden mt-3 transition-colors"
+                    :class="isLeaderActivated(selectedPlayUnitIndex) ? 'bg-green-900/40 ring-1 ring-green-600/50' : 'bg-purple-900/30 ring-1 ring-purple-600/50'"
+                  >
+                    <!-- Leader Header (Clickable) -->
+                    <div
+                      class="flex items-center gap-2 px-2 py-1.5 cursor-pointer transition-colors"
+                      :class="isLeaderActivated(selectedPlayUnitIndex) ? 'hover:bg-green-800/40' : 'hover:bg-purple-800/40'"
+                      @click="toggleLeaderCollapsed(selectedPlayUnitIndex)"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-3 w-3 transition-transform"
+                        :class="{
+                          '-rotate-90': isLeaderCollapsed(selectedPlayUnitIndex),
+                          'text-green-400': isLeaderActivated(selectedPlayUnitIndex),
+                          'text-purple-400': !isLeaderActivated(selectedPlayUnitIndex)
+                        }"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                      <span
+                        class="text-sm font-medium"
+                        :class="isLeaderActivated(selectedPlayUnitIndex) ? 'text-green-300' : 'text-purple-300'"
+                        x-text="getAttachedLeaderName(selectedPlayUnitIndex)"
+                      ></span>
+                      <!-- Activation Toggle Button -->
+                      <button
+                        @click.stop="toggleLeaderActivated(selectedPlayUnitIndex)"
+                        class="ml-auto px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors"
+                        :class="isLeaderActivated(selectedPlayUnitIndex) ? 'bg-green-600 text-white' : 'bg-purple-600 hover:bg-purple-500 text-white'"
+                        :title="isLeaderActivated(selectedPlayUnitIndex) ? 'Mark as not activated' : 'Mark as activated'"
+                      >
+                        <span x-show="isLeaderActivated(selectedPlayUnitIndex)">✓</span>
+                        <span x-show="!isLeaderActivated(selectedPlayUnitIndex)">Act</span>
+                      </button>
+                    </div>
+
+                    <!-- Collapsible Content -->
+                    <div x-show="!isLeaderCollapsed(selectedPlayUnitIndex)" x-collapse class="px-2 pb-2">
+                      <template x-for="weapon in getLeaderWeapons(selectedPlayUnitIndex)" :key="'leader-' + weapon.id + '-' + weapon.type">
+                        <div class="text-sm border-b border-gray-600/50 pb-2 last:border-0 mt-2">
+                          <div class="flex justify-between items-center">
+                            <span class="font-medium text-gray-300" x-text="weapon.name"></span>
+                            <span class="text-gray-400 text-xs" x-text="weapon.type"></span>
+                          </div>
+                          <template x-if="weapon.type === 'ranged'">
+                            <table class="w-full text-center text-xs mt-1">
+                              <thead>
+                                <tr class="text-gray-500">
+                                  <th class="font-normal">RNG</th>
+                                  <th class="font-normal">A</th>
+                                  <th class="font-normal">BS</th>
+                                  <th class="font-normal">S</th>
+                                  <th class="font-normal">AP</th>
+                                  <th class="font-normal">D</th>
+                                </tr>
+                              </thead>
+                              <tbody class="text-gray-300">
+                                <tr>
+                                  <td x-text="formatInches(weapon.stats.range)"></td>
+                                  <td :class="isWeaponStatModified(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'a') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'a')"></td>
+                                  <td x-text="weapon.stats.bs"></td>
+                                  <td :class="isWeaponStatModified(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 's') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 's')"></td>
+                                  <td :class="isWeaponStatModified(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'ap') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'ap')"></td>
+                                  <td :class="isWeaponStatModified(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'd') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'd')"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </template>
+                          <template x-if="weapon.type === 'melee'">
+                            <table class="w-full text-center text-xs mt-1">
+                              <thead>
+                                <tr class="text-gray-500">
+                                  <th class="font-normal">A</th>
+                                  <th class="font-normal">WS</th>
+                                  <th class="font-normal">S</th>
+                                  <th class="font-normal">AP</th>
+                                  <th class="font-normal">D</th>
+                                </tr>
+                              </thead>
+                              <tbody class="text-gray-300">
+                                <tr>
+                                  <td :class="isWeaponStatModified(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'a') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'a')"></td>
+                                  <td x-text="weapon.stats.ws"></td>
+                                  <td :class="isWeaponStatModified(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 's') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 's')"></td>
+                                  <td :class="isWeaponStatModified(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'ap') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'ap')"></td>
+                                  <td :class="isWeaponStatModified(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'd') ? 'text-accent-400 font-bold' : ''" x-text="getModifiedWeaponStat(currentList.units[selectedPlayUnitIndex].attachedLeader.unitIndex, weapon, 'd')"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </template>
+                          <template x-if="weapon.abilities && weapon.abilities.length > 0">
+                            <div class="text-xs text-accent-400 mt-1" x-text="weapon.abilities.join(', ')"></div>
+                          </template>
+                        </div>
+                      </template>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <template x-if="selectedPlayUnitIndex === null">
+          <div class="flex-1 flex items-center justify-center text-white/40">
+            <p>Select a unit from your army to view details</p>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    </main>
+
+    <!-- Quick Reference Panel -->
+    <div
+      x-show="showReferencePanel"
+      x-cloak
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="translate-x-full"
+      x-transition:enter-end="translate-x-0"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="translate-x-0"
+      x-transition:leave-end="translate-x-full"
+      class="fixed right-0 top-0 h-full w-80 material-elevated shadow-2xl z-40 flex flex-col"
+    >
+      <!-- Panel Header -->
+      <div class="flex justify-between items-center p-4 border-b border-white/10">
+        <h3 class="text-lg font-semibold text-accent-300">Quick Reference</h3>
+        <button @click="showReferencePanel = false" class="btn-ios btn-ios-secondary btn-ios-sm p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Panel Content -->
+      <div class="flex-1 overflow-y-auto p-4 space-y-6 scroll-smooth">
+        <!-- Detachment Stratagems -->
+        <div>
+          <h4 class="text-xs font-semibold text-purple-400 uppercase tracking-wide mb-3">
+            <span x-text="getDetachment()?.name || 'Detachment'"></span> Stratagems
+          </h4>
+          <div class="space-y-2">
+            <template x-for="strat in getDetachment()?.stratagems || []" :key="strat.id">
+              <div class="bg-black/20 rounded-lg p-3">
+                <div class="flex justify-between items-start">
+                  <span class="font-medium text-sm text-accent-300" x-text="strat.name"></span>
+                  <span class="badge badge-purple text-[10px] py-0" x-text="strat.cost + 'CP'"></span>
+                </div>
+                <div class="text-xs text-white/40 mt-1" x-text="strat.phase"></div>
+                <div class="text-xs text-white/70 mt-1" x-text="strat.description"></div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- Detachment Enhancements -->
+        <div>
+          <h4 class="text-xs font-semibold text-accent-400 uppercase tracking-wide mb-3">
+            <span x-text="getDetachment()?.name || 'Detachment'"></span> Enhancements
+          </h4>
+          <div class="space-y-2">
+            <template x-for="enh in getDetachment()?.enhancements || []" :key="enh.id">
+              <div class="bg-black/20 rounded-lg p-3">
+                <div class="flex justify-between items-start">
+                  <span class="font-medium text-sm text-accent-300" x-text="enh.name"></span>
+                  <span class="badge badge-accent text-[10px] py-0" x-text="enh.points + ' pts'"></span>
+                </div>
+                <div class="text-xs text-white/70 mt-1" x-text="enh.description"></div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- Wargear Abilities -->
+        <template x-if="getWargearAbilities().length > 0">
+          <div>
+            <h4 class="text-xs font-semibold text-orange-400 uppercase tracking-wide mb-3">Wargear Abilities</h4>
+            <div class="space-y-1.5">
+              <template x-for="ability in getWargearAbilities()" :key="ability.name">
+                <div class="bg-black/20 rounded-lg p-3">
+                  <span class="font-medium text-sm text-orange-300" x-text="ability.name"></span>
+                  <div class="text-xs text-white/70 mt-0.5" x-text="ability.description"></div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </template>
+
+        <!-- Weapon Keywords -->
+        <div>
+          <h4 class="text-xs font-semibold text-blue-400 uppercase tracking-wide mb-3">Weapon Abilities</h4>
+          <div class="space-y-1.5">
+            <template x-for="kw in data.keywordGlossary?.weapon || []" :key="kw.name">
+              <div class="bg-black/20 rounded-lg p-3">
+                <span class="font-medium text-sm text-blue-300" x-text="kw.name"></span>
+                <div class="text-xs text-white/70 mt-0.5" x-text="kw.description"></div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- Unit Keywords -->
+        <div>
+          <h4 class="text-xs font-semibold text-green-400 uppercase tracking-wide mb-3">Unit Abilities</h4>
+          <div class="space-y-1.5">
+            <template x-for="kw in data.keywordGlossary?.unit || []" :key="kw.name">
+              <div class="bg-black/20 rounded-lg p-3">
+                <span class="font-medium text-sm text-green-300" x-text="kw.name"></span>
+                <div class="text-xs text-white/70 mt-0.5" x-text="kw.description"></div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div
+      x-show="showImportModal"
+      x-cloak
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
+      @click.self="showImportModal = false"
+    >
+      <div class="card-depth p-6 max-w-lg w-full mx-4 animate-spring">
+        <h3 class="text-xl font-semibold text-accent-300 mb-4">Import Army List</h3>
+        <p class="text-white/50 text-sm mb-4">Paste your Yellowscribe JSON export below:</p>
+        <textarea
+          x-model="importData"
+          rows="10"
+          class="w-full input-dark font-mono text-sm mb-4"
+          placeholder='{"roster": {...}}'
+        ></textarea>
+        <div class="flex justify-end gap-2">
+          <button @click="showImportModal = false" class="btn-ios btn-ios-secondary">Cancel</button>
+          <button @click="importYellowscribe" class="btn-ios btn-ios-primary">Import</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Load Modal -->
+    <div
+      x-show="showLoadModal"
+      x-cloak
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
+      @click.self="showLoadModal = false"
+    >
+      <div class="card-depth p-6 max-w-lg w-full mx-4 animate-spring">
+        <h3 class="text-xl font-semibold text-accent-300 mb-4">Load Army List</h3>
+        <div class="space-y-2 max-h-64 overflow-y-auto mb-4 scroll-smooth">
+          <template x-for="list in savedLists" :key="list.filename">
+            <div
+              class="list-row cursor-pointer hover:bg-white/5 rounded-lg touch-highlight"
+              @click="loadList(list.filename)"
+            >
+              <span class="flex-1" x-text="list.name"></span>
+              <button
+                @click.stop="deleteList(list.filename)"
+                class="text-red-400 hover:text-red-300 p-2"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </template>
+          <template x-if="savedLists.length === 0">
+            <p class="text-white/40 text-center py-8">No saved lists found.</p>
+          </template>
+        </div>
+        <div class="flex justify-end">
+          <button @click="showLoadModal = false" class="btn-ios btn-ios-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div
+      x-show="toast.show"
+      x-cloak
+      x-transition
+      class="fixed bottom-4 right-4 px-4 py-2 rounded shadow-lg"
+      :class="toast.type === 'success' ? 'bg-green-600' : 'bg-red-600'"
+    >
+      <span x-text="toast.message"></span>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

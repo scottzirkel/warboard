@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
+export type ButtonVariant = 'primary' | 'secondary' | 'tinted' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -9,20 +9,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
   isLoading?: boolean;
 }
-
-const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-accent-500 hover:bg-accent-600 text-gray-900 font-semibold',
-  secondary: 'bg-gray-700 hover:bg-gray-600 text-gray-200',
-  ghost: 'bg-transparent hover:bg-gray-700/50 text-gray-300',
-  danger: 'bg-red-600 hover:bg-red-700 text-white',
-};
-
-const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'px-2 py-1 text-xs',
-  md: 'px-3 py-1.5 text-sm',
-  lg: 'px-4 py-2 text-base',
-  icon: 'p-1.5',
-};
 
 export function Button({
   children,
@@ -35,15 +21,33 @@ export function Button({
 }: ButtonProps) {
   const isDisabled = disabled || isLoading;
 
+  // Base iOS button styles
+  const baseClass = 'btn-ios touch-highlight';
+
+  // Variant styles using CSS classes from globals.css
+  const variantClass = {
+    primary: 'btn-ios-primary',
+    secondary: 'btn-ios-secondary',
+    tinted: 'btn-ios-tinted',
+    ghost: 'bg-transparent hover:bg-white/5 text-white/60 hover:text-white/80',
+    danger: 'bg-red-500/20 text-red-400 hover:bg-red-500/30',
+  }[variant];
+
+  // Size styles
+  const sizeClass = {
+    sm: 'btn-ios-sm',
+    md: '',
+    lg: 'min-h-[50px] px-6 text-base',
+    icon: 'min-h-[36px] w-9 p-0',
+  }[size];
+
   return (
     <button
       className={`
-        inline-flex items-center justify-center rounded
-        transition-colors duration-150
-        focus:outline-none focus:ring-2 focus:ring-accent-500/50
-        disabled:opacity-50 disabled:cursor-not-allowed
-        ${variantStyles[variant]}
-        ${sizeStyles[size]}
+        ${baseClass}
+        ${variantClass}
+        ${sizeClass}
+        ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
         ${className}
       `}
       disabled={isDisabled}

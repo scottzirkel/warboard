@@ -19,7 +19,7 @@ interface ChoiceRowProps {
   isReplacement: boolean;
 }
 
-function ChoiceRow({ choice, count, maxCount, onChange, isReplacement }: ChoiceRowProps) {
+function ChoiceRow({ choice, count, maxCount, onChange, isReplacement: _isReplacement }: ChoiceRowProps) {
   const effectiveMax = choice.maxModels !== undefined
     ? Math.min(choice.maxModels, maxCount)
     : maxCount;

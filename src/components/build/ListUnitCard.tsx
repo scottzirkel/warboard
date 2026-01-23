@@ -30,7 +30,7 @@ interface ListUnitCardProps {
 export function ListUnitCard({
   unit,
   listUnit,
-  index,
+  index: _index,
   isSelected,
   onSelect,
   onRemove,

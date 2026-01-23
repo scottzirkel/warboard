@@ -2,6 +2,44 @@
 
 A Warhammer 40k army list builder and game state tracker, currently focused on **Adeptus Custodes**.
 
+## KEEP IT SIMPLE
+
+**This is the project mantra. Never forget it.**
+
+- Don't over-engineer. The simplest solution that works is the best solution.
+- Don't add abstractions until you need them multiple times.
+- Don't add features that weren't asked for.
+- Prefer readable code over clever code.
+- When in doubt, do less.
+
+## Core Principles
+
+- **Readable over clever**: Optimize for human understanding, not brevity
+- **YAGNI**: Build only what's needed
+- **KISS**: Simplest solution wins
+- **DRY**: No code duplication
+- **Single Responsibility**: One purpose per function/class
+- **First Order Retrievability**: No friction, no extra steps
+- **Prefer native**: Use Next.js before building custom
+
+---
+
+## Design Reference: Original Alpine.js App
+
+The Next.js app should match the look, feel, and functionality of the original Alpine.js version.
+
+**Reference files are in `/reference/alpine-original/`:**
+- `index.html` - Original layout and component structure
+- `main.js` - Original Alpine.js app logic (~1700 lines)
+- `style.css` - Original styles including faction themes
+
+**Key design elements to preserve:**
+- iOS-style UI (frosted glass, rounded corners, subtle shadows)
+- Dark theme with accent color theming per faction
+- 3-column layout in Build/Play modes
+- Card depth styling, segmented controls, steppers
+- Smooth transitions and touch-friendly targets
+
 ## Tech Stack
 
 - **Frontend**: Next.js 14+ (App Router) + React + TypeScript
@@ -357,11 +395,39 @@ Character units with the Leader ability can attach to specific bodyguard units:
 
 ## Development Guidelines
 
-### Keep It Simple
-This is a lightweight app. Avoid over-engineering:
+### KEEP IT SIMPLE (KISS)
+This is the project mantra. This is a lightweight app. Avoid over-engineering:
 - Use React components with hooks for state
 - Prefer composition over complex abstractions
 - Keep components focused and single-purpose
+- Match the original Alpine.js app - don't reinvent what already works
+- Reference `/reference/alpine-original/` when unsure about design or behavior
+
+### Faction Themes (Tailwind 4)
+The app uses CSS custom properties for faction-specific accent colors. Themes are defined in the CSS and activated via `data-theme` attribute on the body:
+
+```css
+/* Default: Custodes Gold */
+:root {
+  --accent-400: #e0c35c;
+  --accent-500: #d4a72c;
+  /* ... */
+}
+
+/* Tyranids: Leviathan Purple */
+[data-theme="tyranids"] {
+  --accent-400: #c084fc;
+  --accent-500: #a855f7;
+  /* ... */
+}
+```
+
+**Available themes:** `custodes` (default), `tyranids`, `space-marines`, `necrons`, `orks`, `chaos`, `aeldari`
+
+Use the theme CSS variables via utility classes:
+- `text-accent-400`, `bg-accent-500`, `border-accent-400`
+- `bg-accent-tint` (10% opacity), `bg-accent-tint-strong` (20% opacity)
+- `badge-accent`, `btn-ios-primary`, `progress-accent`
 
 ### Data-Driven
 - Unit stats and rules come from JSON files in `/public/data/`

@@ -1,4 +1,4 @@
-export { Badge, type BadgeVariant, type BadgeSize } from './Badge';
+export { Badge, type BadgeVariant } from './Badge';
 export { Button, type ButtonVariant, type ButtonSize } from './Button';
 export { Select, type SelectOption } from './Select';
 export { Stepper } from './Stepper';

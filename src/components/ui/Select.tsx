@@ -9,29 +9,19 @@ export interface SelectOption {
 interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
   options: SelectOption[];
   placeholder?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg';  // Kept for compatibility, styling is consistent
 }
-
-const sizeStyles = {
-  sm: 'py-1 text-xs',
-  md: 'py-1.5 text-sm',
-  lg: 'py-2 text-base',
-};
 
 export function Select({
   options,
   placeholder,
-  size = 'md',
+  size: _size,  // Destructure but don't pass to native element
   className = '',
   ...props
 }: SelectProps) {
   return (
     <select
-      className={`
-        select-dark w-full
-        ${sizeStyles[size]}
-        ${className}
-      `}
+      className={`select-dark w-full ${className}`}
       {...props}
     >
       {placeholder && (

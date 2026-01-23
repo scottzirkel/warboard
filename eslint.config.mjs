@@ -24,6 +24,7 @@ export default tseslint.config(
       "node_modules/**",
       "dist/**",
       "build/**",
+      "reference/**",
       "*.config.js",
       "*.config.mjs",
       "*.config.ts",

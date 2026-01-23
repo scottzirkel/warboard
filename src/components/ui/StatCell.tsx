@@ -15,21 +15,11 @@ export function StatCell({
 }: StatCellProps) {
   return (
     <div
-      className={`
-        text-center px-2 py-1
-        ${className}
-      `}
+      className={`stat-cell ${className}`}
       title={tooltip}
     >
-      <div className="text-xs text-gray-500 uppercase tracking-wider">
-        {label}
-      </div>
-      <div
-        className={`
-          text-sm font-semibold
-          ${modified ? 'text-accent-400 cursor-help' : 'text-gray-200'}
-        `}
-      >
+      <div className="stat-label">{label}</div>
+      <div className={`stat-value ${modified ? 'modified' : ''}`}>
         {value}
       </div>
     </div>
@@ -43,13 +33,7 @@ interface StatRowProps {
 
 export function StatRow({ children, className = '' }: StatRowProps) {
   return (
-    <div
-      className={`
-        flex items-center divide-x divide-gray-700/50
-        bg-gray-800/30 rounded border border-gray-700/30
-        ${className}
-      `}
-    >
+    <div className={`flex gap-1 ${className}`}>
       {children}
     </div>
   );
