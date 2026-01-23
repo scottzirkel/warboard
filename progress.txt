@@ -1277,3 +1277,34 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-006] Create Zustand store for game state
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created useGameStore in src/stores/gameStore.ts using Zustand
+- Store manages: battleRound, commandPoints, activeStratagems, katah, and loadout group states
+- Battle round clamped to 1-5 range (Warhammer 40k games are 5 rounds)
+- Command points cannot go below 0
+- Activation state automatically resets when battle round changes
+- Auto-collapse loadout groups when marked as activated (visual feedback that models have acted)
+- Used immutable update patterns for all state changes
+- Provided both getter methods (isLoadoutGroupCollapsed, isLoadoutGroupActivated) and setter methods
+
+**Files created:**
+- `src/stores/gameStore.ts` - Zustand store with:
+  - State: gameState (battleRound, commandPoints, activeStratagems, katah, collapsedLoadoutGroups, activatedLoadoutGroups)
+  - Battle round actions: setBattleRound, nextRound, prevRound
+  - Command points actions: setCommandPoints, adjustCommandPoints
+  - Stratagem actions: activateStratagem, deactivateStratagem, toggleStratagem, clearActiveStratagems
+  - Ka'tah action: setKatah
+  - Loadout collapse: isLoadoutGroupCollapsed, toggleLoadoutGroupCollapsed, setLoadoutGroupCollapsed
+  - Loadout activation: isLoadoutGroupActivated, toggleLoadoutGroupActivated, setLoadoutGroupActivated
+  - Reset actions: resetActivationState, resetGameState
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+
