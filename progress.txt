@@ -1340,3 +1340,37 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-008] Create data loading hooks
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created useFactionData hook in src/hooks/useFactionData.ts for fetching and caching faction JSON
+- Implemented simple in-memory cache (Map) to avoid refetching faction data on re-renders
+- Hook returns data, isLoading, error, and refetch function for cache-busting
+- Added utility functions: clearFactionCache, prefetchFactionData, getAvailableArmies
+- Created useSavedLists hook in src/hooks/useSavedLists.ts for list CRUD operations
+- Hook provides lists, isLoading, error, fetchLists, loadList, saveList, deleteList
+- Added utility functions: generateFilename, filenameToDisplayName
+- Both hooks use consistent loading and error state patterns
+- API endpoints will be at /api/lists (to be implemented in nextjs-027)
+- Created index.ts to export all hooks for convenient importing
+
+**Files created:**
+- `src/hooks/useFactionData.ts` - Hook for fetching and caching faction JSON data with:
+  - useFactionData(armyId) hook that returns data, isLoading, error, refetch
+  - In-memory cache using Map for faction data
+  - clearFactionCache and prefetchFactionData utilities
+  - getAvailableArmies helper function
+- `src/hooks/useSavedLists.ts` - Hook for list management operations with:
+  - useSavedLists() hook that returns lists, isLoading, error, and CRUD functions
+  - fetchLists, loadList, saveList, deleteList async operations
+  - generateFilename and filenameToDisplayName utilities
+- `src/hooks/index.ts` - Export barrel file for all hooks
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+
