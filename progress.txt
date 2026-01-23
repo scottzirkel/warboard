@@ -1506,3 +1506,50 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-012] Create Build Mode left panel - Army List
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created ArmyListPanel as the main container component for the Build Mode left panel
+- Broke down into smaller, focused sub-components for reusability and maintainability
+- ListControls provides Import/Load/Save buttons using existing Button component with icons
+- GameFormatSelector uses segmented button style (matching original Alpine.js design)
+- PointsLimitSelector uses Select component with common points limits (500-3000)
+- DetachmentSelector uses Select component, dynamically populated from armyData
+- EnhancementSelector shows "None" option and lists enhancements with point costs
+- WeaponLoadoutSelector handles both "replacement" and "addition" patterns:
+  - Replacement options show blue "⟲ Replace with:" header
+  - Addition options show green "+ Add:" header with green border
+  - Both use Stepper component for count selection
+  - Respects maxModels constraints and shows indicators
+  - Shows paired loadout indicator (⬡) when applicable
+- ListUnitCard displays unit info with all selectors:
+  - Shows points (base + enhancement), character badge
+  - Model count stepper (only shown when multiple model options exist)
+  - Enhancement selector (only for Characters)
+  - Leader attachment dropdown (only for eligible bodyguard units)
+  - Weapon loadout options (when unit has loadoutOptions)
+  - Visual indicator when unit is attached as leader elsewhere
+- ArmyListPanel takes callbacks for all user actions, enabling parent to manage state
+- Components use existing UI primitives (Panel, Card, Select, Stepper, Badge, Button)
+
+**Files created:**
+- `src/components/build/ArmyListPanel.tsx` - Main panel container with configuration and units list
+- `src/components/build/ListControls.tsx` - Import/Load/Save button group
+- `src/components/build/GameFormatSelector.tsx` - Standard/Colosseum format toggle
+- `src/components/build/PointsLimitSelector.tsx` - Points limit dropdown
+- `src/components/build/DetachmentSelector.tsx` - Detachment selection dropdown
+- `src/components/build/EnhancementSelector.tsx` - Enhancement selection dropdown
+- `src/components/build/WeaponLoadoutSelector.tsx` - Weapon loadout with pattern support
+- `src/components/build/ListUnitCard.tsx` - Individual unit card with all controls
+
+**Files changed:**
+- `src/components/build/index.ts` - Added exports for all new components
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+
