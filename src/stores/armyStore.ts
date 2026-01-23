@@ -230,14 +230,26 @@ export const useArmyStore = create<ArmyStore>((set, get) => ({
       return;
     }
 
-    // Initialize weapon counts with defaults
+    // Initialize weapon counts with all choices at 0, then set defaults
     const weaponCounts: Record<string, number> = {};
 
-    if (unit.loadoutOptions) {
+    if (unit.loadoutOptions && unit.loadoutOptions.length > 0) {
+      // First, initialize all choices to 0
       for (const option of unit.loadoutOptions) {
-        const defaultChoice = option.choices.find(c => c.default);
+        for (const choice of option.choices) {
+          if (choice.id !== 'none') {
+            weaponCounts[choice.id] = 0;
+          }
+        }
+      }
 
-        if (defaultChoice) {
+      // Then set default choice to full model count
+      const mainOption = unit.loadoutOptions.find(o => o.type === 'choice') || unit.loadoutOptions[0];
+
+      if (mainOption) {
+        const defaultChoice = mainOption.choices.find(c => c.default) || mainOption.choices[0];
+
+        if (defaultChoice && defaultChoice.id !== 'none') {
           weaponCounts[defaultChoice.id] = modelCount;
         }
       }
@@ -382,12 +394,24 @@ export const useArmyStore = create<ArmyStore>((set, get) => ({
         return state;
       }
 
+      // Build new weapon counts
+      let newWeaponCounts = {
+        ...currentUnit.weaponCounts,
+        [choiceId]: newCount,
+      };
+
+      // For single-model units, enforce mutual exclusivity
+      // When selecting one weapon, zero out all others
+      if (currentUnit.modelCount === 1 && newCount === 1) {
+        newWeaponCounts = Object.keys(newWeaponCounts).reduce((acc, key) => {
+          acc[key] = key === choiceId ? newCount : 0;
+          return acc;
+        }, {} as Record<string, number>);
+      }
+
       units[index] = {
         ...currentUnit,
-        weaponCounts: {
-          ...currentUnit.weaponCounts,
-          [choiceId]: newCount,
-        },
+        weaponCounts: newWeaponCounts,
       };
 
       return {
@@ -438,12 +462,24 @@ export const useArmyStore = create<ArmyStore>((set, get) => ({
         return state;
       }
 
+      // Build new weapon counts
+      let newWeaponCounts = {
+        ...currentUnit.weaponCounts,
+        [choiceId]: newCount,
+      };
+
+      // For single-model units, enforce mutual exclusivity
+      // When selecting one weapon, zero out all others
+      if (currentUnit.modelCount === 1 && newCount === 1) {
+        newWeaponCounts = Object.keys(newWeaponCounts).reduce((acc, key) => {
+          acc[key] = key === choiceId ? newCount : 0;
+          return acc;
+        }, {} as Record<string, number>);
+      }
+
       units[index] = {
         ...currentUnit,
-        weaponCounts: {
-          ...currentUnit.weaponCounts,
-          [choiceId]: newCount,
-        },
+        weaponCounts: newWeaponCounts,
       };
 
       return {
