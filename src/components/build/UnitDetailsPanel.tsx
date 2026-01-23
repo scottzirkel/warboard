@@ -100,7 +100,7 @@ export function UnitDetailsPanel({
       <div className="mb-4 shrink-0">
         <div className="section-header-inline mb-2">
           <span>Stats</span>
-          {unit.invuln && <span className="badge badge-blue">{unit.invuln} Invuln</span>}
+          {unit.invuln && <span className="badge badge-blue ml-auto">{unit.invuln} Invuln</span>}
         </div>
         <StatsTable
           stats={unit.stats}

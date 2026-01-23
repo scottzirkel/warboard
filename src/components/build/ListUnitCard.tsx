@@ -60,6 +60,28 @@ export function ListUnitCard({
   const selectedEnhancement = enhancements.find(e => e.id === listUnit.enhancement);
   const enhancementPoints = selectedEnhancement?.points || 0;
 
+  // Calculate weapon count validation
+  const getWeaponCountTotal = (): number => {
+    if (!listUnit.weaponCounts) return 0;
+    return Object.values(listUnit.weaponCounts).reduce((sum, count) => sum + count, 0);
+  };
+
+  const getWeaponCountError = (): string | null => {
+    // Only validate if unit has loadout options
+    if (!unit.loadoutOptions || unit.loadoutOptions.length === 0) return null;
+
+    const total = getWeaponCountTotal();
+    if (total < listUnit.modelCount) {
+      return `${listUnit.modelCount - total} model(s) need weapons`;
+    }
+    if (total > listUnit.modelCount) {
+      return `${total - listUnit.modelCount} too many weapons assigned`;
+    }
+    return null;
+  };
+
+  const weaponCountError = getWeaponCountError();
+
   return (
     <Card
       selected={isSelected}
@@ -190,6 +212,10 @@ export function ListUnitCard({
                 }}
               />
             ))}
+            {/* Weapon Count Validation Error */}
+            {weaponCountError && (
+              <div className="text-xs text-red-400">{weaponCountError}</div>
+            )}
           </div>
         )}
       </div>
