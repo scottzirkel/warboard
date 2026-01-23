@@ -5,6 +5,48 @@ Format follows the Ralph technique.
 
 ---
 
+## [multiuser-006] Design shared user system for companion apps
+
+**Date:** 2026-01-23
+
+**Task:** Document architecture for game tracker app, spectator scoreboard, shared auth strategy, and real-time data flow between apps
+
+**Decisions:**
+- Created comprehensive architecture documentation in `docs/companion-app-architecture.md`
+- Documented shared authentication strategy using NextAuth.js with Google OAuth
+- All companion apps connect to same database for session sharing
+- SSE (Server-Sent Events) chosen as real-time communication protocol
+- Documented all event types and payloads for companion app integration
+- Included deployment considerations for single-server and multi-server (Redis) scenarios
+- Provided example implementations for scoreboard, game tracker, and tournament board
+- Documented API endpoints for SSE connection and event broadcasting
+- Included security considerations and development workflow
+
+**Architecture Components:**
+1. **Shared User System**: Same database, same OAuth credentials, session sharing across apps
+2. **Game Tracker**: Two-player support with turn tracking, ready for implementation
+3. **Spectator Scoreboard**: Read-only display of game state via SSE subscription
+4. **Real-time Data Flow**: SSE broadcasting from main app to all subscribers
+5. **Scaling Path**: In-memory for single server, Redis pub/sub for multi-server
+
+**Files created:**
+- docs/companion-app-architecture.md - Full architecture documentation
+
+**Verification:**
+- npm run lint: No ESLint warnings or errors
+- npm run typecheck: Passed
+- npm run test: 317 tests passed
+- npm run build: Next.js build successful
+
+**Acceptance criteria met:**
+1. Document architecture for game tracker app
+2. Document architecture for spectator scoreboard
+3. Define shared auth strategy across apps
+4. Define real-time data flow between apps
+5. Ready for companion app development
+
+---
+
 ## [multiuser-005] Add real-time infrastructure for companion apps
 
 **Date:** 2026-01-23
