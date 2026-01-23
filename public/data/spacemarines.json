@@ -77,6 +77,129 @@
         }
       ],
       "keywords": ["Infantry", "Battleline", "Imperium", "Tacticus", "Intercessor Squad"]
+    },
+    {
+      "id": "assault-intercessor-squad",
+      "name": "Assault Intercessor Squad",
+      "points": { "5": 75, "10": 150 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 2, "ld": "6+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "heavy-bolt-pistol",
+          "name": "Heavy Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 1, "bs": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "astartes-chainsword",
+          "name": "Astartes Chainsword",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "shock-assault",
+          "name": "Shock Assault",
+          "description": "Each time a model in this unit targets an enemy unit with a melee attack, re-roll a Wound roll of 1. If that enemy unit is within range of an objective marker, you can re-roll the Wound roll instead."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Imperium", "Tacticus", "Assault Intercessor Squad"]
+    },
+    {
+      "id": "captain-in-terminator-armour",
+      "name": "Captain in Terminator Armour",
+      "points": { "1": 95 },
+      "stats": { "m": 5, "t": 5, "sv": "2+", "w": 6, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "storm-bolter",
+          "name": "Storm Bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "2+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "storm-bolter"
+        },
+        {
+          "id": "combi-weapon",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "2+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "combi-weapon"
+        },
+        {
+          "id": "power-weapon",
+          "name": "Power Weapon",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "power-weapon"
+        },
+        {
+          "id": "relic-weapon",
+          "name": "Relic Weapon",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 5, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "relic-weapon"
+        },
+        {
+          "id": "power-fist",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "2+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "power-fist"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "storm-bolter", "name": "Storm Bolter", "default": true },
+            { "id": "combi-weapon", "name": "Combi-weapon" }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "power-weapon", "name": "Power Weapon", "default": true },
+            { "id": "relic-weapon", "name": "Relic Weapon" },
+            { "id": "power-fist", "name": "Power Fist" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to Terminator Squad.",
+          "eligibleUnits": ["terminator-squad"]
+        },
+        {
+          "id": "rites-of-battle",
+          "name": "Rites of Battle",
+          "description": "Once per battle round, one unit from your army with this ability can use it when its unit is targeted with a Stratagem. If it does, reduce the CP cost of that use of that Stratagem by 1CP."
+        },
+        {
+          "id": "the-imperiums-sword",
+          "name": "The Imperium's Sword",
+          "description": "You can re-roll Charge rolls made for this model's unit."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Imperium", "Terminator", "Captain in Terminator Armour"]
     }
   ],
   "detachments": {},

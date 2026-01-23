@@ -2407,3 +2407,36 @@ Format follows the Ralph technique.
   3. Bolt rifle options (standard, auto, stalker) with correct stats and abilities
   4. Bolt pistol and close combat weapon included
   5. Keywords include Infantry, Battleline, Imperium, Tacticus
+
+---
+
+## [spacemarines-003] Add Assault Intercessor Squad battleline unit
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Added Assault Intercessor Squad as melee-focused battleline option
+- Points: 75 for 5 models, 150 for 10 models (per current Munitorum Field Manual)
+- Stats: M6 T4 SV3+ W2 LD6+ OC2 (same as standard Intercessors)
+- Weapons:
+  - Heavy Bolt Pistol (18" A1 BS3+ S4 AP-1 D1, Pistol)
+  - Astartes Chainsword (A4 WS3+ S4 AP-1 D1)
+- Added Shock Assault ability: re-roll wound roll of 1 in melee, full re-roll vs units on objectives
+- No loadout options included (sergeant options can be added later if needed)
+- Keywords: Infantry, Battleline, Imperium, Tacticus, Assault Intercessor Squad
+
+**Files changed:**
+- public/data/spacemarines.json - Added Assault Intercessor Squad unit to units array
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (191 tests)
+- npm run build passes
+- Acceptance criteria met:
+  1. Assault Intercessor Squad with points for 5/10 models (75/150)
+  2. Stats: M6 T4 SV3+ W2 LD6+ OC2
+  3. Heavy bolt pistol with correct stats (18" A1 BS3+ S4 AP-1 D1, Pistol)
+  4. Astartes chainsword with correct stats (A4 WS3+ S4 AP-1 D1)
+  5. Shock Assault ability included
+  6. Keywords include Infantry, Battleline, Imperium, Tacticus
