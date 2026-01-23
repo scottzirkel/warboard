@@ -3475,3 +3475,45 @@ Format follows the Ralph technique.
 3. ✅ Slugga and choppa standard
 4. ✅ Shootas option, big shoota and rokkit launcha options
 5. ✅ Keywords include Infantry, Battleline, Orks, Mob
+
+---
+
+## [necrons-008] Add Awakened Dynasty detachment
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Awakened Dynasty detachment for Necrons faction
+- Detachment rule "Command Protocols" - select one protocol per battle round from five options:
+  - Protocol of the Eternal Guardian: -1 Damage on objective markers
+  - Protocol of the Sudden Storm: +2" Move
+  - Protocol of the Conquering Tyrant: +1 Objective Control
+  - Protocol of the Hungry Void: +1 AP on melee attacks
+  - Protocol of the Undying Legions: Re-roll Reanimation Protocols rolls
+- Included 6 stratagems:
+  - Protocol of the Conquering Tyrant (1CP): +2 OC on infantry unit
+  - Resurrection Orb (1CP): +1 to Reanimation Protocols rolls
+  - Solar Pulse (1CP): Ignores Cover on shooting attacks
+  - Enslaved Protectors (1CP): Lychguard Guardian Protocols on nearby Characters
+  - Disruption Fields (1CP): +1 Strength on melee attacks
+  - Undying Warriors (2CP): Feel No Pain 5+ until next Command phase
+- Included 4 enhancements:
+  - Veil of Darkness (20pts): Teleport unit once per battle
+  - Sempiternal Weave (15pts): +1 Wound, -1 Damage
+  - Hypermaterial Ablator (25pts): FNP 4+ vs mortal wounds, Stealth when not in engagement
+  - The Sovereign Coronal (20pts): Extra protocol benefits for nearby CORE units
+- Data sourced from Wahapedia and the Necrons Codex
+
+**Files changed:**
+- public/data/necrons.json - Added awakened_dynasty detachment with Command Protocols rules, 6 stratagems, 4 enhancements
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- JSON validation: ✅ Valid JSON syntax verified with python parser
+- Note: Pre-existing TypeScript errors in listService from multiuser-003 task exist but are unrelated to this data-only change
+
+**Acceptance criteria met:**
+1. ✅ Awakened Dynasty with Command Protocols rule (5 protocols, one per round)
+2. ✅ Protocol bonuses each battle round (via protocol selection mechanic)
+3. ✅ 6 stratagems including Protocol of the Conquering Tyrant, Resurrection Orb
+4. ✅ 4 enhancements including Veil of Darkness, Sempiternal Weave

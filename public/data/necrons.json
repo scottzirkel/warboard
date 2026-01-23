@@ -314,7 +314,129 @@
       "keywords": ["Infantry", "Necrons", "Destroyer Cult", "Skorpekh Destroyers"]
     }
   ],
-  "detachments": {},
+  "detachments": {
+    "awakened_dynasty": {
+      "name": "Awakened Dynasty",
+      "rules": [
+        {
+          "id": "command-protocols",
+          "name": "Command Protocols",
+          "description": "At the start of the battle round, you can select one of the Command Protocols listed below to be active for your army until the end of the battle round. Each Command Protocol can only be selected once per battle.",
+          "type": "passive",
+          "protocols": [
+            {
+              "id": "protocol-of-the-eternal-guardian",
+              "name": "Protocol of the Eternal Guardian",
+              "description": "Each time an attack is allocated to a NECRONS model from your army, if that model is within range of an objective marker, subtract 1 from the Damage characteristic of that attack (minimum 1)."
+            },
+            {
+              "id": "protocol-of-the-sudden-storm",
+              "name": "Protocol of the Sudden Storm",
+              "description": "Add 2\" to the Move characteristic of NECRONS models from your army."
+            },
+            {
+              "id": "protocol-of-the-conquering-tyrant",
+              "name": "Protocol of the Conquering Tyrant",
+              "description": "Add 1 to the Objective Control characteristic of NECRONS models from your army."
+            },
+            {
+              "id": "protocol-of-the-hungry-void",
+              "name": "Protocol of the Hungry Void",
+              "description": "Each time a NECRONS model from your army makes a melee attack, improve the Armour Penetration characteristic of that attack by 1."
+            },
+            {
+              "id": "protocol-of-the-undying-legions",
+              "name": "Protocol of the Undying Legions",
+              "description": "Each time a NECRONS unit from your army makes a Reanimation Protocols roll, you can re-roll that roll."
+            }
+          ],
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "protocol-of-the-conquering-tyrant-stratagem",
+          "name": "Protocol of the Conquering Tyrant",
+          "cost": 1,
+          "phase": "Command",
+          "description": "Use this Stratagem at the start of the battle round. Select one NECRONS INFANTRY unit from your army. Until the end of the battle round, add 2 to the Objective Control characteristic of models in that unit (instead of 1 from the Command Protocol).",
+          "modifiers": []
+        },
+        {
+          "id": "resurrection-orb",
+          "name": "Resurrection Orb",
+          "cost": 1,
+          "phase": "Command",
+          "description": "Use this Stratagem at the start of your Command phase. Select one NECRONS unit from your army that is making Reanimation Protocols rolls this phase. Until the end of the phase, each time that unit makes a Reanimation Protocols roll, add 1 to that roll.",
+          "modifiers": []
+        },
+        {
+          "id": "solar-pulse",
+          "name": "Solar Pulse",
+          "cost": 1,
+          "phase": "Shooting",
+          "description": "Use this Stratagem in your Shooting phase, just after a NECRONS unit from your army has selected its targets. Until the end of the phase, each time a model in your unit makes a ranged attack, the target does not receive the benefit of cover against that attack.",
+          "modifiers": []
+        },
+        {
+          "id": "enslaved-protectors",
+          "name": "Enslaved Protectors",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Use this Stratagem at the start of any phase. Select one NECRONS CHARACTER unit from your army that is within 3\" of a friendly LYCHGUARD unit. Until the end of the phase, while your CHARACTER unit is within 3\" of that LYCHGUARD unit, each time an attack is made against your CHARACTER unit, that LYCHGUARD unit can use its Guardian Protocols ability even if your CHARACTER unit is not leading it.",
+          "modifiers": []
+        },
+        {
+          "id": "disruption-fields",
+          "name": "Disruption Fields",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Use this Stratagem in the Fight phase, just after a NECRONS unit from your army has selected its targets. Until the end of the phase, each time a model in your unit makes a melee attack, add 1 to the Strength characteristic of that attack.",
+          "modifiers": []
+        },
+        {
+          "id": "undying-warriors",
+          "name": "Undying Warriors",
+          "cost": 2,
+          "phase": "Command",
+          "description": "Use this Stratagem at the start of your Command phase. Select one NECRONS unit from your army. Until the start of your next Command phase, models in that unit have the Feel No Pain 5+ ability.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "veil-of-darkness",
+          "name": "Veil of Darkness",
+          "points": 20,
+          "description": "NECRONS model only. Once per battle, at the end of your opponent's turn, the bearer's unit can be removed from the battlefield and set up again anywhere on the battlefield that is more than 9\" horizontally away from all enemy models.",
+          "modifiers": []
+        },
+        {
+          "id": "sempiternal-weave",
+          "name": "Sempiternal Weave",
+          "points": 15,
+          "description": "NECRONS model only. Add 1 to the Wounds characteristic of the bearer. In addition, each time an attack is allocated to the bearer, subtract 1 from the Damage characteristic of that attack (minimum 1).",
+          "modifiers": [
+            { "stat": "w", "operation": "add", "value": 1, "scope": "model" }
+          ]
+        },
+        {
+          "id": "hypermaterial-ablator",
+          "name": "Hypermaterial Ablator",
+          "points": 25,
+          "description": "NECRONS model only. The bearer has the Feel No Pain 4+ ability against mortal wounds. In addition, each time a ranged attack targets the bearer's unit, if the bearer is not in engagement range of any enemy units, models in the bearer's unit have the Stealth ability.",
+          "modifiers": []
+        },
+        {
+          "id": "the-sovereign-coronal",
+          "name": "The Sovereign Coronal",
+          "points": 20,
+          "description": "NECRONS model only. While the bearer is on the battlefield, each time you select a Command Protocol to be active for your army, you can select one additional NECRONS CORE unit within 6\" of the bearer. Until the end of the battle round, that unit benefits from that Command Protocol as if it was Battle Round 5 (receiving the maximum bonus).",
+          "modifiers": []
+        }
+      ]
+    }
+  },
   "armyRules": {
     "reanimation_protocols": {
       "name": "Reanimation Protocols",
