@@ -2656,3 +2656,52 @@ Format follows the Ralph technique.
   2. Devastator, Tactical, Assault doctrine bonuses
   3. 6 stratagems including Only In Death Does Duty End, Armour of Contempt
   4. 4 enhancements including Artificer Armour, The Honour Vehement
+
+---
+
+## [nextjs-029] End-to-end testing and bug fixes
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Created comprehensive integration page (src/app/page.tsx) that wires all components together
+- The page uses all three stores (armyStore, gameStore, uiStore) and hooks
+- Build Mode integrates: Navigation, BuildMode layout, ArmyListPanel, UnitRosterPanel, UnitDetailsPanel
+- Play Mode integrates: PlayMode layout, ArmyOverviewPanel, GameStatePanel, SelectedUnitDetailsPanel, QuickReferencePanel
+- Modals: ImportModal, LoadModal, ConfirmModal
+- Toast notifications via ToastContainer
+- Created comprehensive E2E test suite (src/app/page.test.tsx) covering all acceptance criteria:
+  1. Can load Custodes and Tyranids data - Tests faction loading via armyStore
+  2. Can add/remove units and select weapons - Tests unit management actions
+  3. Points calculate correctly - Tests points calculation including enhancements
+  4. Can save/load/delete lists - Tests list management API integration
+  5. Play mode tracks wounds and stratagems - Tests game state tracking
+
+**Key Integration Points:**
+- useLeaderAttachment hook for leader management
+- useStatModifiers hook for stat calculation with modifier sources
+- useWoundTracking hook for wound state
+- useListValidation hook for list validation and play mode gating
+- useSavedLists hook for API-based list persistence
+- Mode toggle between Build and Play with validation gating
+- Army switching with list reset
+- Toast notifications for user feedback
+
+**Files created:**
+- `src/app/page.tsx` - Complete integration page with all components wired together
+- `src/app/page.test.tsx` - E2E test suite with 22 tests covering all acceptance criteria
+
+**Files changed:**
+- None - only new files created
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (213 tests including 22 new E2E tests)
+- npm run build passes
+- All acceptance criteria verified via tests:
+  1. Can load Custodes and Tyranids data
+  2. Can add/remove units and select weapons
+  3. Points calculate correctly
+  4. Can save/load/delete lists
+  5. Play mode tracks wounds and stratagems

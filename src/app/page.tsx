@@ -1,36 +1,634 @@
+'use client';
+
+import { useEffect, useCallback, useMemo } from 'react';
+import { useArmyStore, availableArmies } from '@/stores/armyStore';
+import { useGameStore } from '@/stores/gameStore';
+import { useUIStore } from '@/stores/uiStore';
+import { Navigation } from '@/components/navigation';
+import { BuildMode } from '@/components/build/BuildMode';
+import { ArmyListPanel } from '@/components/build/ArmyListPanel';
+import { UnitRosterPanel } from '@/components/build/UnitRosterPanel';
+import { UnitDetailsPanel } from '@/components/build/UnitDetailsPanel';
+import { PlayMode } from '@/components/play/PlayMode';
+import { ArmyOverviewPanel } from '@/components/play/ArmyOverviewPanel';
+import { GameStatePanel } from '@/components/play/GameStatePanel';
+import { SelectedUnitDetailsPanel } from '@/components/play/SelectedUnitDetailsPanel';
+import { QuickReferencePanel } from '@/components/play/QuickReferencePanel';
+import {
+  ToastContainer,
+  ImportModal,
+  LoadModal,
+  ConfirmModal,
+} from '@/components/ui';
+import {
+  useLeaderAttachment,
+  useStatModifiers,
+  useListValidation,
+  useWoundTracking,
+  useSavedLists,
+} from '@/hooks';
+import type { CurrentList, Unit, GameFormat, LoadoutGroup, Weapon, ModifierSource, ModifierOperation } from '@/types';
+
+// ============================================================================
+// Main App Component
+// ============================================================================
+
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-accent-400 mb-4">
-          Army Tracker
-        </h1>
-        <p className="text-gray-400 text-lg mb-8">
-          Warhammer 40k Army List Builder and Game State Tracker
-        </p>
-        <div className="bg-gray-800 rounded-lg p-6 max-w-md">
-          <p className="text-gray-300 mb-4">
-            Next.js migration in progress. This app is being rebuilt with:
-          </p>
-          <ul className="text-left text-gray-400 space-y-2">
-            <li className="flex items-center gap-2">
-              <span className="text-green-400">✓</span> Next.js 14 with App Router
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-green-400">✓</span> TypeScript
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-green-400">✓</span> Tailwind CSS
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-yellow-400">○</span> Zustand for state management
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-yellow-400">○</span> React components
-            </li>
-          </ul>
+  // -------------------------------------------------------------------------
+  // Store State
+  // -------------------------------------------------------------------------
+  const {
+    armyData,
+    currentList,
+    isLoading: isArmyLoading,
+    loadArmyData,
+    setListName,
+    setPointsLimit,
+    setFormat,
+    setDetachment,
+    addUnit,
+    removeUnit,
+    updateUnitModelCount,
+    setUnitEnhancement,
+    setWeaponCount,
+    attachLeader,
+    detachLeader,
+    setUnitWounds,
+    setLeaderWounds,
+    resetList,
+    loadList,
+    getTotalPoints,
+  } = useArmyStore();
+
+  const {
+    gameState,
+    setBattleRound,
+    setCommandPoints,
+    setKatah,
+    toggleStratagem,
+    isLoadoutGroupCollapsed,
+    toggleLoadoutGroupCollapsed,
+    isLoadoutGroupActivated,
+    toggleLoadoutGroupActivated,
+    resetGameState,
+  } = useGameStore();
+
+  const {
+    mode,
+    selectedUnitIndex,
+    activeModal,
+    confirmModalConfig,
+    toasts,
+    setMode,
+    selectUnit,
+    openModal,
+    closeModal,
+    showSuccess,
+    showError,
+    dismissToast,
+  } = useUIStore();
+
+  // -------------------------------------------------------------------------
+  // Saved Lists Hook
+  // -------------------------------------------------------------------------
+  const {
+    lists: savedLists,
+    isLoading: isListsLoading,
+    fetchLists,
+    loadList: fetchSavedList,
+    saveList: saveSavedList,
+    deleteList: deleteSavedList,
+  } = useSavedLists();
+
+  // -------------------------------------------------------------------------
+  // Leader Attachment Hook
+  // -------------------------------------------------------------------------
+  const leaderAttachment = useLeaderAttachment(
+    armyData,
+    currentList.units,
+    (unitIndex: number, leaderIndex: number) => {
+      attachLeader(unitIndex, leaderIndex);
+    },
+    (unitIndex: number) => {
+      detachLeader(unitIndex);
+    }
+  );
+
+  // -------------------------------------------------------------------------
+  // List Validation Hook
+  // -------------------------------------------------------------------------
+  const listValidation = useListValidation(
+    armyData,
+    currentList
+  );
+
+  // -------------------------------------------------------------------------
+  // Selected Unit Data
+  // -------------------------------------------------------------------------
+  const selectedUnit = useMemo(() => {
+    if (selectedUnitIndex === null || !armyData) return undefined;
+    const listUnit = currentList.units[selectedUnitIndex];
+    if (!listUnit) return undefined;
+    return armyData.units.find((u) => u.id === listUnit.unitId);
+  }, [selectedUnitIndex, armyData, currentList.units]);
+
+  const selectedListUnit = useMemo(() => {
+    if (selectedUnitIndex === null) return undefined;
+    return currentList.units[selectedUnitIndex];
+  }, [selectedUnitIndex, currentList.units]);
+
+  // -------------------------------------------------------------------------
+  // Stat Modifiers Hook (for selected unit)
+  // -------------------------------------------------------------------------
+  const statModifiers = useStatModifiers(
+    armyData,
+    selectedUnit,
+    selectedListUnit,
+    selectedUnitIndex ?? -1,
+    currentList.units,
+    currentList.detachment
+  );
+
+  // -------------------------------------------------------------------------
+  // Wound Tracking Hook (for selected unit)
+  // -------------------------------------------------------------------------
+  const woundTracking = useWoundTracking(
+    armyData,
+    selectedUnit,
+    selectedListUnit,
+    selectedUnitIndex ?? -1,
+    currentList.units,
+    currentList.detachment,
+    (wounds) => {
+      if (selectedUnitIndex !== null) {
+        setUnitWounds(selectedUnitIndex, wounds);
+      }
+    },
+    (wounds) => {
+      if (selectedUnitIndex !== null) {
+        setLeaderWounds(selectedUnitIndex, wounds);
+      }
+    }
+  );
+
+  // -------------------------------------------------------------------------
+  // Effects
+  // -------------------------------------------------------------------------
+
+  // Load default army data on mount
+  useEffect(() => {
+    loadArmyData(currentList.army);
+    fetchLists();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // -------------------------------------------------------------------------
+  // Computed Values
+  // -------------------------------------------------------------------------
+
+  const totalPoints = getTotalPoints();
+  const canPlay = listValidation.canEnterPlayMode;
+
+  // Get enhancement for selected unit
+  const selectedEnhancement = useMemo(() => {
+    if (!selectedListUnit?.enhancement || !armyData) return null;
+    const detachment = armyData.detachments[currentList.detachment];
+    return detachment?.enhancements?.find((e) => e.id === selectedListUnit.enhancement) || null;
+  }, [selectedListUnit, armyData, currentList.detachment]);
+
+  // Get attached leader info for selected unit
+  const attachedLeaderInfo = useMemo(() => {
+    if (selectedUnitIndex === null) return null;
+    return leaderAttachment.getAttachedLeader(selectedUnitIndex);
+  }, [selectedUnitIndex, leaderAttachment]);
+
+  // Get leader unit and listUnit from the available leader info
+  const leaderUnit = useMemo((): Unit | undefined => {
+    if (!attachedLeaderInfo || !armyData) return undefined;
+    return armyData.units.find((u) => u.id === attachedLeaderInfo.unitId);
+  }, [attachedLeaderInfo, armyData]);
+
+  const leaderListUnit = useMemo(() => {
+    if (!attachedLeaderInfo) return undefined;
+    return currentList.units[attachedLeaderInfo.unitIndex];
+  }, [attachedLeaderInfo, currentList.units]);
+
+  // Get leader enhancement
+  const leaderEnhancement = useMemo(() => {
+    if (!attachedLeaderInfo?.enhancement || !armyData) return null;
+    const detachment = armyData.detachments[currentList.detachment];
+    return detachment?.enhancements?.find((e) => e.id === attachedLeaderInfo.enhancement) || null;
+  }, [attachedLeaderInfo, armyData, currentList.detachment]);
+
+  // Build loadout groups for Play Mode weapons display
+  const loadoutGroups = useMemo((): LoadoutGroup[] => {
+    if (!selectedUnit || !selectedListUnit) return [];
+
+    const groups: LoadoutGroup[] = [];
+    const weaponCounts = selectedListUnit.weaponCounts || {};
+
+    // Get weapons without loadoutGroup (always equipped)
+    const alwaysEquipped = selectedUnit.weapons.filter((w) => !w.loadoutGroup);
+
+    if (alwaysEquipped.length > 0) {
+      groups.push({
+        id: 'default',
+        name: 'Standard Equipment',
+        modelCount: selectedListUnit.modelCount,
+        isPaired: false,
+        weapons: alwaysEquipped,
+        rangedWeapons: alwaysEquipped.filter((w) => w.type === 'ranged'),
+        meleeWeapons: alwaysEquipped.filter((w) => w.type === 'melee'),
+      });
+    }
+
+    // Get weapons by loadout group
+    const loadoutGroupIds = [...new Set(selectedUnit.weapons.filter((w) => w.loadoutGroup).map((w) => w.loadoutGroup!))];
+
+    for (const groupId of loadoutGroupIds) {
+      const count = weaponCounts[groupId] || 0;
+      if (count === 0) continue;
+
+      const groupWeapons = selectedUnit.weapons.filter((w) => w.loadoutGroup === groupId);
+      const choice = selectedUnit.loadoutOptions
+        ?.flatMap((opt) => opt.choices)
+        .find((c) => c.id === groupId);
+
+      groups.push({
+        id: groupId,
+        name: choice?.name || groupId,
+        modelCount: count,
+        isPaired: choice?.paired || false,
+        weapons: groupWeapons,
+        rangedWeapons: groupWeapons.filter((w) => w.type === 'ranged'),
+        meleeWeapons: groupWeapons.filter((w) => w.type === 'melee'),
+      });
+    }
+
+    return groups;
+  }, [selectedUnit, selectedListUnit]);
+
+  // Build collapsed/activated state maps for Play Mode
+  const collapsedGroups = useMemo(() => {
+    const map: Record<string, boolean> = {};
+    for (const group of loadoutGroups) {
+      map[group.id] = selectedUnitIndex !== null && isLoadoutGroupCollapsed(selectedUnitIndex, group.id);
+    }
+    return map;
+  }, [loadoutGroups, selectedUnitIndex, isLoadoutGroupCollapsed]);
+
+  const activatedGroups = useMemo(() => {
+    const map: Record<string, boolean> = {};
+    for (const group of loadoutGroups) {
+      map[group.id] = selectedUnitIndex !== null && isLoadoutGroupActivated(selectedUnitIndex, group.id);
+    }
+    return map;
+  }, [loadoutGroups, selectedUnitIndex, isLoadoutGroupActivated]);
+
+  // Get leader weapons for Play Mode
+  const leaderWeapons = useMemo((): Weapon[] | undefined => {
+    if (!leaderUnit) return undefined;
+    return leaderUnit.weapons;
+  }, [leaderUnit]);
+
+  // -------------------------------------------------------------------------
+  // Handlers
+  // -------------------------------------------------------------------------
+
+  const handleArmyChange = useCallback(async (armyId: string) => {
+    resetList();
+    resetGameState();
+    selectUnit(null);
+    await loadArmyData(armyId);
+  }, [resetList, resetGameState, selectUnit, loadArmyData]);
+
+  const handleModeToggle = useCallback(() => {
+    if (mode === 'build') {
+      if (canPlay) {
+        setMode('play');
+      } else {
+        showError('Fix validation errors before entering Play Mode');
+      }
+    } else {
+      setMode('build');
+    }
+  }, [mode, canPlay, setMode, showError]);
+
+  const handleAddUnit = useCallback((unit: Unit) => {
+    const modelCounts = Object.keys(unit.points).map(Number);
+    const defaultModelCount = modelCounts[0];
+    addUnit(unit.id, defaultModelCount);
+    showSuccess(`Added ${unit.name} to your army`);
+  }, [addUnit, showSuccess]);
+
+  const handleRemoveUnit = useCallback((index: number) => {
+    const listUnit = currentList.units[index];
+    const unit = armyData?.units.find((u) => u.id === listUnit?.unitId);
+    removeUnit(index);
+    if (selectedUnitIndex === index) {
+      selectUnit(null);
+    } else if (selectedUnitIndex !== null && selectedUnitIndex > index) {
+      selectUnit(selectedUnitIndex - 1);
+    }
+    showSuccess(`Removed ${unit?.name || 'unit'} from your army`);
+  }, [currentList.units, armyData, removeUnit, selectedUnitIndex, selectUnit, showSuccess]);
+
+  const handleSave = useCallback(async () => {
+    if (!currentList.name.trim()) {
+      showError('Please enter a list name before saving');
+      return;
+    }
+
+    const errors = listValidation.validateList().errors;
+    if (errors.length > 0) {
+      showError(errors[0].message);
+      return;
+    }
+
+    try {
+      await saveSavedList(currentList);
+      showSuccess('List saved successfully');
+    } catch (error) {
+      showError(error instanceof Error ? error.message : 'Failed to save list');
+    }
+  }, [currentList, listValidation, saveSavedList, showSuccess, showError]);
+
+  const handleLoadList = useCallback(async (data: CurrentList) => {
+    try {
+      // Load the army data first if different
+      if (data.army !== currentList.army) {
+        await loadArmyData(data.army);
+      }
+      loadList(data);
+      closeModal();
+      showSuccess('List loaded successfully');
+    } catch (error) {
+      showError(error instanceof Error ? error.message : 'Failed to load list');
+    }
+  }, [currentList.army, loadArmyData, loadList, closeModal, showSuccess, showError]);
+
+  const handleDeleteList = useCallback(async (filename: string) => {
+    try {
+      await deleteSavedList(filename);
+      showSuccess('List deleted');
+    } catch (error) {
+      showError(error instanceof Error ? error.message : 'Failed to delete list');
+    }
+  }, [deleteSavedList, showSuccess, showError]);
+
+  const handleImport = useCallback((data: CurrentList) => {
+    // Set army data if needed
+    if (data.army && data.army !== currentList.army) {
+      loadArmyData(data.army);
+    }
+    loadList(data);
+    closeModal();
+    showSuccess('List imported successfully');
+  }, [currentList.army, loadArmyData, loadList, closeModal, showSuccess]);
+
+  const handleUnitWoundAdjust = useCallback((delta: number) => {
+    if (selectedUnitIndex === null) return;
+    const newWounds = Math.max(0, Math.min(
+      woundTracking.unitWounds.totalWounds,
+      woundTracking.unitWounds.currentWounds + delta
+    ));
+    setUnitWounds(selectedUnitIndex, newWounds);
+  }, [selectedUnitIndex, woundTracking.unitWounds, setUnitWounds]);
+
+  const handleLeaderWoundAdjust = useCallback((delta: number) => {
+    if (selectedUnitIndex === null || !woundTracking.leaderWounds) return;
+    const newWounds = Math.max(0, Math.min(
+      woundTracking.leaderWounds.totalWounds,
+      woundTracking.leaderWounds.currentWounds + delta
+    ));
+    setLeaderWounds(selectedUnitIndex, newWounds);
+  }, [selectedUnitIndex, woundTracking.leaderWounds, setLeaderWounds]);
+
+  // -------------------------------------------------------------------------
+  // Render
+  // -------------------------------------------------------------------------
+
+  // Loading state
+  if (isArmyLoading && !armyData) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-500 mx-auto mb-4" />
+          <p className="text-gray-400">Loading army data...</p>
         </div>
       </div>
-    </main>
-  )
+    );
+  }
+
+  return (
+    <div className="flex flex-col h-screen">
+      {/* Navigation */}
+      <Navigation
+        selectedArmyId={currentList.army}
+        armies={availableArmies}
+        onArmyChange={handleArmyChange}
+        mode={mode}
+        onModeToggle={handleModeToggle}
+        canPlay={canPlay}
+        listName={currentList.name}
+        totalPoints={totalPoints}
+        pointsLimit={currentList.pointsLimit}
+      />
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-hidden">
+        {mode === 'build' ? (
+          <BuildMode
+            listName={currentList.name}
+            currentPoints={totalPoints}
+            pointsLimit={currentList.pointsLimit}
+            validationErrors={listValidation.validateList().errors}
+            leftPanel={
+              armyData && (
+                <ArmyListPanel
+                  armyData={armyData}
+                  currentList={currentList}
+                  selectedUnitIndex={selectedUnitIndex}
+                  onSelectUnit={selectUnit}
+                  onRemoveUnit={handleRemoveUnit}
+                  onModelCountChange={updateUnitModelCount}
+                  onEnhancementChange={setUnitEnhancement}
+                  onWeaponCountChange={(index, choiceId, count) => setWeaponCount(index, choiceId, count)}
+                  onFormatChange={(format: GameFormat) => setFormat(format)}
+                  onPointsLimitChange={setPointsLimit}
+                  onDetachmentChange={setDetachment}
+                  onImport={() => openModal('import')}
+                  onLoad={() => openModal('load')}
+                  onSave={handleSave}
+                  canSave={!!currentList.name.trim()}
+                  getAvailableLeaders={leaderAttachment.getAvailableLeaders}
+                  isUnitAttachedAsLeader={leaderAttachment.isUnitAttachedAsLeader}
+                  getAttachedToUnitName={(index) => leaderAttachment.getAttachedToUnit(index)?.name}
+                  canHaveLeaderAttached={leaderAttachment.canHaveLeaderAttached}
+                  getAttachedLeaderName={(index) => leaderAttachment.getAttachedLeader(index)?.name}
+                  onAttachLeader={leaderAttachment.attachLeader}
+                  onDetachLeader={leaderAttachment.detachLeader}
+                />
+              )
+            }
+            middlePanel={
+              armyData && (
+                <UnitRosterPanel
+                  units={armyData.units}
+                  onAddUnit={handleAddUnit}
+                  selectedUnitId={selectedUnit?.id}
+                  isLoading={isArmyLoading}
+                />
+              )
+            }
+            rightPanel={
+              <UnitDetailsPanel
+                unit={selectedUnit || null}
+                listUnit={selectedListUnit || null}
+                unitIndex={selectedUnitIndex}
+                enhancement={selectedEnhancement}
+                modifiers={statModifiers.modifiers}
+                modifierSources={buildModifierSources(statModifiers)}
+              />
+            }
+          />
+        ) : (
+          <PlayMode
+            listName={currentList.name}
+            totalPoints={totalPoints}
+            pointsLimit={currentList.pointsLimit}
+            armyName={availableArmies.find((a) => a.id === currentList.army)?.name || 'Unknown Army'}
+            battleRound={gameState.battleRound}
+            onModeToggle={handleModeToggle}
+            canPlay={canPlay}
+            validationErrors={listValidation.validateList().errors}
+            leftPanel={
+              armyData && (
+                <ArmyOverviewPanel
+                  armyData={armyData}
+                  units={currentList.units}
+                  selectedUnitIndex={selectedUnitIndex}
+                  detachmentId={currentList.detachment}
+                  onSelectUnit={selectUnit}
+                />
+              )
+            }
+            middlePanel={
+              <GameStatePanel
+                battleRound={gameState.battleRound}
+                onBattleRoundChange={setBattleRound}
+                commandPoints={gameState.commandPoints}
+                onCommandPointsChange={setCommandPoints}
+                selectedKatah={gameState.katah}
+                onKatahChange={setKatah}
+                activeStratagems={gameState.activeStratagems}
+                onToggleStratagem={toggleStratagem}
+                armyData={armyData}
+                detachmentId={currentList.detachment}
+              />
+            }
+            rightPanel={
+              selectedUnit && selectedListUnit && selectedUnitIndex !== null ? (
+                <SelectedUnitDetailsPanel
+                  unit={selectedUnit}
+                  listUnit={selectedListUnit}
+                  unitIndex={selectedUnitIndex}
+                  enhancement={selectedEnhancement}
+                  hasLeader={!!attachedLeaderInfo}
+                  leaderUnit={leaderUnit}
+                  leaderListUnit={leaderListUnit}
+                  leaderEnhancement={leaderEnhancement}
+                  modifiers={statModifiers.modifiers}
+                  modifierSources={buildModifierSources(statModifiers)}
+                  loadoutGroups={loadoutGroups}
+                  leaderWeapons={leaderWeapons}
+                  collapsedGroups={collapsedGroups}
+                  activatedGroups={activatedGroups}
+                  onToggleCollapse={toggleLoadoutGroupCollapsed}
+                  onToggleActivated={toggleLoadoutGroupActivated}
+                  onUnitWoundAdjust={handleUnitWoundAdjust}
+                  onLeaderWoundAdjust={handleLeaderWoundAdjust}
+                />
+              ) : (
+                armyData && (
+                  <QuickReferencePanel
+                    armyData={armyData}
+                    selectedDetachment={currentList.detachment}
+                  />
+                )
+              )
+            }
+          />
+        )}
+      </main>
+
+      {/* Modals */}
+      {activeModal === 'import' && (
+        <ImportModal
+          isOpen={true}
+          onClose={closeModal}
+          onImport={handleImport}
+        />
+      )}
+
+      {activeModal === 'load' && (
+        <LoadModal
+          isOpen={true}
+          onClose={closeModal}
+          lists={savedLists}
+          isLoading={isListsLoading}
+          onLoad={fetchSavedList}
+          onDelete={deleteSavedList}
+          onListLoaded={handleLoadList}
+        />
+      )}
+
+      {activeModal === 'confirm' && confirmModalConfig && (
+        <ConfirmModal
+          isOpen={true}
+          onClose={closeModal}
+          title={confirmModalConfig.title}
+          message={confirmModalConfig.message}
+          confirmText={confirmModalConfig.confirmText}
+          cancelText={confirmModalConfig.cancelText}
+          onConfirm={() => {
+            confirmModalConfig.onConfirm();
+            closeModal();
+          }}
+        />
+      )}
+
+      {/* Toast Notifications */}
+      <ToastContainer
+        toasts={toasts}
+        onDismiss={dismissToast}
+      />
+    </div>
+  );
+}
+
+// ============================================================================
+// Helper Functions
+// ============================================================================
+
+/**
+ * Build modifier sources record from stat modifiers for tooltips
+ */
+function buildModifierSources(
+  statModifiers: ReturnType<typeof useStatModifiers>
+): Record<string, ModifierSource[]> {
+  const sources: Record<string, ModifierSource[]> = {};
+
+  for (const mod of statModifiers.modifiers) {
+    if (!sources[mod.stat]) {
+      sources[mod.stat] = [];
+    }
+    sources[mod.stat].push({
+      name: mod.sourceName,
+      value: mod.value,
+      operation: mod.operation as ModifierOperation,
+    });
+  }
+
+  return sources;
 }
