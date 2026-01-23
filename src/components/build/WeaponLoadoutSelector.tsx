@@ -85,22 +85,24 @@ export function WeaponLoadoutSelector({
         )}
       </div>
 
-      {/* Choices */}
+      {/* Choices - filter out "none" as it's implied when no other choice is selected */}
       <div
         className={`pl-2 ${
           isAddition ? 'border-l-2 border-green-500/30' : ''
         }`}
       >
-        {option.choices.map((choice) => (
-          <ChoiceRow
-            key={choice.id}
-            choice={choice}
-            count={weaponCounts[choice.id] || 0}
-            maxCount={modelCount}
-            onChange={(count) => onCountChange(choice.id, count)}
-            isReplacement={isReplacement}
-          />
-        ))}
+        {option.choices
+          .filter((choice) => choice.id !== 'none')
+          .map((choice) => (
+            <ChoiceRow
+              key={choice.id}
+              choice={choice}
+              count={weaponCounts[choice.id] || 0}
+              maxCount={modelCount}
+              onChange={(count) => onCountChange(choice.id, count)}
+              isReplacement={isReplacement}
+            />
+          ))}
       </div>
     </div>
   );
