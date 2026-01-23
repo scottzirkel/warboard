@@ -423,6 +423,7 @@ Alpine.data('armyTracker', () => ({
 
     if (options.length === 0) return counts
 
+    // Initialize all choices to 0
     for (const option of options) {
       for (const choice of option.choices) {
         if (choice.id !== 'none') {
@@ -431,12 +432,13 @@ Alpine.data('armyTracker', () => ({
       }
     }
 
-    // Set default weapon to full model count
-    const mainOption = options.find(o => o.type === 'choice') || options[0]
-    if (mainOption) {
-      const defaultChoice = mainOption.choices.find(c => c.default) || mainOption.choices[0]
-      if (defaultChoice && defaultChoice.id !== 'none') {
-        counts[defaultChoice.id] = modelCount
+    // Set default for each replacement option
+    for (const option of options) {
+      if (option.pattern === 'replacement') {
+        const defaultChoice = option.choices.find(c => c.default) || option.choices[0]
+        if (defaultChoice && defaultChoice.id !== 'none') {
+          counts[defaultChoice.id] = modelCount
+        }
       }
     }
 
