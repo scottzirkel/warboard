@@ -5,6 +5,45 @@ Format follows the Ralph technique.
 
 ---
 
+## [necrons-004] Add Overlord character
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Overlord as a character/leader unit for Necrons
+- Points: 85 for 1 model (per Wahapedia/Munitorum Field Manual)
+- Stats: M5 T5 SV2+ W6 LD6+ OC1 with 4+ invulnerable save
+- Weapons:
+  - Tachyon Arrow: 72" A1 BS2+ S16 AP-5 D6+2 (One Shot) - extreme range, one-use weapon
+  - Staff of Light (ranged): 18" A3 BS2+ S5 AP-2 D1 - default ranged option
+  - Staff of Light (melee): A4 WS2+ S5 AP-2 D1 - default melee option
+  - Voidscythe: A3 WS3+ S8 AP-3 D2 (Devastating Wounds) - heavy melee alternative
+  - Close Combat Weapon: A4 WS2+ S5 AP0 D1 - fallback melee
+- Loadout options allow choice between Staff of Light vs Tachyon Arrow (ranged), Staff of Light vs Voidscythe (melee)
+- Leader ability with eligibleUnits: immortals, lychguard, necron-warriors
+- My Will Be Done ability: +1 to Hit for models in led unit
+- Resurrection Orb ability: Once per battle, heal 2D3 instead of D3 for one NECRONS unit within 6"
+- Keywords: Infantry, Character, Necrons, Overlord
+
+**Files changed:**
+- public/data/necrons.json - Added Overlord character unit to units array
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed (with db.ts temporarily excluded as it's from incomplete multiuser-001 task)
+- npm run test: ✅ 226 tests passed (12 test files)
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Overlord with points for 1 model (85 points)
+2. ✅ Stats: M5 T5 SV2+ W6 LD6+ OC1 with 4+ invuln
+3. ✅ Tachyon arrow, staff of light, voidscythe options
+4. ✅ My Will Be Done ability (+1 to Hit for led unit)
+5. ✅ Leader ability with eligible units (immortals, lychguard, necron-warriors)
+6. ✅ Keywords include Infantry, Character, Necrons
+
+---
+
 ## [chaosmarines-006] Add Chosen elite unit
 
 **Date:** 2026-01-23
