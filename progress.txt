@@ -3401,3 +3401,38 @@ Format follows the Ralph technique.
 2. ✅ Lists loaded from database (via listService.getListById, getListByName)
 3. ✅ List deletion removes from database (via listService.deleteListById, deleteListByName)
 4. ✅ Existing JSON lists can be imported to user account (via /api/lists/import endpoint)
+
+---
+
+## [orks-008] Add Waaagh! Tribe detachment
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Waaagh! Tribe (also known as War Horde in Codex) detachment for Orks faction
+- Detachment rule "Get Stuck In" provides +1 Strength on charge/charged and [SUSTAINED HITS 1] to melee weapons
+- Included 6 stratagems covering key Ork tactical options:
+  - Unbridled Carnage (1CP): Critical hits on 5+ in melee
+  - Orks Is Never Beaten (2CP): Destroyed models can fight before removal
+  - 'Ere We Go (1CP): +2 to Advance/Charge rolls for infantry
+  - 'Ard as Nails (1CP): -1 to wound rolls against the unit
+  - Mob Rule (1CP): Nearby infantry treated as not Battle-shocked
+  - Careen! (1CP): Guarantee Deadly Demise mortal wounds on 4+
+- Included 4 enhancements:
+  - Follow Me Ladz (25pts): +2" Move for led unit
+  - Headwoppa's Killchoppa (20pts): [DEVASTATING WOUNDS] on melee
+  - Kunnin' But Brutal (15pts): Fall back and still shoot/charge
+  - Supa-Cybork Body (15pts): Feel No Pain 4+
+- Data sourced from Wahapedia and Goonhammer reviews
+
+**Files changed:**
+- public/data/orks.json - Added waaagh_tribe detachment with rules, 6 stratagems, 4 enhancements
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- JSON validation: ✅ Valid JSON syntax
+
+**Acceptance criteria met:**
+1. ✅ Waaagh! Tribe detachment with Get Stuck In rule (+1 Strength when charging/charged)
+2. ✅ 6 stratagems including Unbridled Carnage, Orks is Never Beaten
+3. ✅ 4 enhancements including Follow Me Ladz, Headwoppa's Killchoppa

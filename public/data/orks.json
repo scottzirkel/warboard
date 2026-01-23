@@ -2,7 +2,111 @@
   "faction": "Orks",
   "lastUpdated": "2026-01",
   "units": [],
-  "detachments": {},
+  "detachments": {
+    "waaagh_tribe": {
+      "name": "Waaagh! Tribe",
+      "rules": [
+        {
+          "id": "get-stuck-in",
+          "name": "Get Stuck In",
+          "description": "Each time an ORKS model from your army makes a melee attack, if it made a Charge move this turn, or it was charged this turn, add 1 to the Strength characteristic of that attack. In addition, melee weapons equipped by ORKS models from your army have the [SUSTAINED HITS 1] ability.",
+          "type": "passive",
+          "modifiers": [
+            {
+              "stat": "s",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee",
+              "condition": "on charge or charged"
+            }
+          ],
+          "weaponAbilities": ["Sustained Hits 1"]
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "unbridled-carnage",
+          "name": "Unbridled Carnage",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Use this Stratagem in the Fight phase. Select one ORKS unit from your army that has not been selected to fight this phase. Until the end of the phase, each time a model in that unit makes a melee attack, a Critical Hit is scored on an unmodified Hit roll of 5+ instead of only a 6.",
+          "modifiers": []
+        },
+        {
+          "id": "orks-is-never-beaten",
+          "name": "Orks Is Never Beaten",
+          "cost": 2,
+          "phase": "Fight",
+          "description": "Use this Stratagem in the Fight phase, just after an enemy unit has selected its targets. Select one ORKS unit from your army that was selected as the target of one or more of that enemy unit's attacks. Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, do not remove it from play. The destroyed model can fight after the attacking model's unit has finished making its attacks, and is then removed from play.",
+          "modifiers": []
+        },
+        {
+          "id": "ere-we-go",
+          "name": "'Ere We Go",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Use this Stratagem at the start of your Movement phase. Select one ORKS INFANTRY unit from your army. Until the end of the turn, add 2 to Advance and Charge rolls made for that unit.",
+          "modifiers": []
+        },
+        {
+          "id": "ard-as-nails",
+          "name": "'Ard as Nails",
+          "cost": 1,
+          "phase": "Opponent's Shooting/Fight",
+          "description": "Use this Stratagem in your opponent's Shooting phase or the Fight phase, just after an enemy unit has selected its targets. Select one ORKS unit from your army (excluding GROTS, MONSTER, and VEHICLE units) that was selected as the target of one or more of the attacking unit's attacks. Until the end of the phase, each time an attack targets your unit, subtract 1 from the Wound roll.",
+          "modifiers": []
+        },
+        {
+          "id": "mob-rule",
+          "name": "Mob Rule",
+          "cost": 1,
+          "phase": "Command",
+          "description": "Use this Stratagem at the start of any phase. Select one MOB unit from your army that has 10+ models and is not Below Half-strength. Until the end of the phase, while a friendly ORKS INFANTRY unit (excluding GROTS units) is within 6\" of that MOB unit, that INFANTRY unit is treated as if it were not Battle-shocked.",
+          "modifiers": []
+        },
+        {
+          "id": "careen",
+          "name": "Careen!",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Use this Stratagem in any phase, just after an ORKS VEHICLE model from your army with the Deadly Demise ability is destroyed. Do not roll to see if that model's Deadly Demise ability inflicts any mortal wounds. Instead, before removing that model from play, you can select one enemy unit within 6\" of it and roll one D6: on a 4+, that enemy unit suffers mortal wounds equal to the Deadly Demise value of the destroyed model.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "follow-me-ladz",
+          "name": "Follow Me Ladz",
+          "points": 25,
+          "description": "ORKS model only. While the bearer is leading a unit, add 2\" to the Move characteristic of models in that unit.",
+          "modifiers": [
+            { "stat": "m", "operation": "add", "value": 2, "scope": "unit" }
+          ]
+        },
+        {
+          "id": "headwoppas-killchoppa",
+          "name": "Headwoppa's Killchoppa",
+          "points": 20,
+          "description": "ORKS model only. Melee weapons equipped by the bearer have the [DEVASTATING WOUNDS] ability.",
+          "modifiers": []
+        },
+        {
+          "id": "kunnin-but-brutal",
+          "name": "Kunnin' But Brutal",
+          "points": 15,
+          "description": "ORKS model only. While the bearer is leading a unit, that unit is eligible to shoot and declare a charge in a turn in which it Fell Back.",
+          "modifiers": []
+        },
+        {
+          "id": "supa-cybork-body",
+          "name": "Supa-Cybork Body",
+          "points": 15,
+          "description": "ORKS model only. The bearer has the Feel No Pain 4+ ability.",
+          "modifiers": []
+        }
+      ]
+    }
+  },
   "armyRules": {
     "waaagh": {
       "name": "Waaagh!",
