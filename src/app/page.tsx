@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useArmyStore, availableArmies } from '@/stores/armyStore';
 import { useGameStore } from '@/stores/gameStore';
 import { useUIStore } from '@/stores/uiStore';
@@ -13,7 +13,6 @@ import { PlayMode } from '@/components/play/PlayMode';
 import { ArmyOverviewPanel } from '@/components/play/ArmyOverviewPanel';
 import { GameStatePanel } from '@/components/play/GameStatePanel';
 import { SelectedUnitDetailsPanel } from '@/components/play/SelectedUnitDetailsPanel';
-import { QuickReferencePanel } from '@/components/play/QuickReferencePanel';
 import {
   ToastContainer,
   ImportModal,
@@ -34,6 +33,11 @@ import type { CurrentList, Unit, GameFormat, LoadoutGroup, Weapon, ModifierSourc
 // ============================================================================
 
 export default function Home() {
+  // -------------------------------------------------------------------------
+  // Local State
+  // -------------------------------------------------------------------------
+  const [showReferencePanel, setShowReferencePanel] = useState(false);
+
   // -------------------------------------------------------------------------
   // Store State
   // -------------------------------------------------------------------------
@@ -302,17 +306,17 @@ export default function Home() {
     await loadArmyData(armyId);
   }, [resetList, resetGameState, selectUnit, loadArmyData]);
 
-  const handleModeToggle = useCallback(() => {
-    if (mode === 'build') {
-      if (canPlay) {
-        setMode('play');
-      } else {
-        showError('Fix validation errors before entering Play Mode');
-      }
-    } else {
-      setMode('build');
+  const handleModeChange = useCallback((newMode: 'build' | 'play') => {
+    if (newMode === 'play' && !canPlay) {
+      showError('Fix validation errors before entering Play Mode');
+      return;
     }
-  }, [mode, canPlay, setMode, showError]);
+    setMode(newMode);
+  }, [canPlay, setMode, showError]);
+
+  const handleToggleReferencePanel = useCallback(() => {
+    setShowReferencePanel(prev => !prev);
+  }, []);
 
   const handleAddUnit = useCallback((unit: Unit) => {
     const modelCounts = Object.keys(unit.points).map(Number);
@@ -367,14 +371,6 @@ export default function Home() {
     }
   }, [currentList.army, loadArmyData, loadList, closeModal, showSuccess, showError]);
 
-  const handleDeleteList = useCallback(async (filename: string) => {
-    try {
-      await deleteSavedList(filename);
-      showSuccess('List deleted');
-    } catch (error) {
-      showError(error instanceof Error ? error.message : 'Failed to delete list');
-    }
-  }, [deleteSavedList, showSuccess, showError]);
 
   const handleImport = useCallback((data: CurrentList) => {
     // Set army data if needed
@@ -428,11 +424,10 @@ export default function Home() {
         armies={availableArmies}
         onArmyChange={handleArmyChange}
         mode={mode}
-        onModeToggle={handleModeToggle}
+        onModeChange={handleModeChange}
         canPlay={canPlay}
-        listName={currentList.name}
-        totalPoints={totalPoints}
-        pointsLimit={currentList.pointsLimit}
+        showReferencePanel={showReferencePanel}
+        onToggleReferencePanel={handleToggleReferencePanel}
       />
 
       {/* Main Content */}
@@ -442,6 +437,9 @@ export default function Home() {
             listName={currentList.name}
             currentPoints={totalPoints}
             pointsLimit={currentList.pointsLimit}
+            detachmentName={armyData?.detachments[currentList.detachment]?.name}
+            formatName={currentList.format === 'colosseum' ? 'Colosseum' : 'Standard'}
+            onNameChange={setListName}
             validationErrors={listValidation.validateList().errors}
             leftPanel={
               armyData && (
@@ -499,7 +497,7 @@ export default function Home() {
             pointsLimit={currentList.pointsLimit}
             armyName={availableArmies.find((a) => a.id === currentList.army)?.name || 'Unknown Army'}
             battleRound={gameState.battleRound}
-            onModeToggle={handleModeToggle}
+            onModeToggle={() => handleModeChange('build')}
             canPlay={canPlay}
             validationErrors={listValidation.validateList().errors}
             leftPanel={
@@ -550,17 +548,118 @@ export default function Home() {
                   onLeaderWoundAdjust={handleLeaderWoundAdjust}
                 />
               ) : (
-                armyData && (
-                  <QuickReferencePanel
-                    armyData={armyData}
-                    selectedDetachment={currentList.detachment}
-                  />
-                )
+                <div className="card-depth p-4 h-full flex items-center justify-center">
+                  <p className="text-white/40">Select a unit from your army to view details</p>
+                </div>
               )
             }
           />
         )}
       </main>
+
+      {/* Quick Reference Slide-Out Panel */}
+      {armyData && (
+        <div
+          className={`
+            fixed right-0 top-0 h-full w-80 material-elevated shadow-2xl z-40
+            flex flex-col transition-transform duration-200 ease-out
+            ${showReferencePanel ? 'translate-x-0' : 'translate-x-full'}
+          `}
+        >
+          {/* Panel Header */}
+          <div className="flex justify-between items-center p-4 border-b border-white/10 shrink-0">
+            <h3 className="text-lg font-semibold text-accent-300">Quick Reference</h3>
+            <button
+              onClick={handleToggleReferencePanel}
+              className="btn-ios btn-ios-secondary btn-ios-sm p-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Panel Content */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-6 scroll-smooth">
+            {/* Detachment Stratagems */}
+            {armyData.detachments[currentList.detachment]?.stratagems && (
+              <div>
+                <h4 className="text-xs font-semibold text-purple-400 uppercase tracking-wide mb-3">
+                  {armyData.detachments[currentList.detachment]?.name} Stratagems
+                </h4>
+                <div className="space-y-2">
+                  {armyData.detachments[currentList.detachment]?.stratagems?.map((strat) => (
+                    <div key={strat.id} className="bg-black/20 rounded-lg p-3">
+                      <div className="flex justify-between items-start">
+                        <span className="font-medium text-sm text-accent-300">{strat.name}</span>
+                        <span className="badge badge-purple text-[10px] py-0">{strat.cost}CP</span>
+                      </div>
+                      <div className="text-xs text-white/40 mt-1">{strat.phase}</div>
+                      <div className="text-xs text-white/70 mt-1">{strat.description}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Detachment Enhancements */}
+            {armyData.detachments[currentList.detachment]?.enhancements && (
+              <div>
+                <h4 className="text-xs font-semibold text-accent-400 uppercase tracking-wide mb-3">
+                  {armyData.detachments[currentList.detachment]?.name} Enhancements
+                </h4>
+                <div className="space-y-2">
+                  {armyData.detachments[currentList.detachment]?.enhancements?.map((enh) => (
+                    <div key={enh.id} className="bg-black/20 rounded-lg p-3">
+                      <div className="flex justify-between items-start">
+                        <span className="font-medium text-sm text-accent-300">{enh.name}</span>
+                        <span className="badge badge-accent text-[10px] py-0">{enh.points} pts</span>
+                      </div>
+                      <div className="text-xs text-white/70 mt-1">{enh.description}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Weapon Keywords */}
+            {armyData.keywordGlossary?.weapon && armyData.keywordGlossary.weapon.length > 0 && (
+              <div>
+                <h4 className="text-xs font-semibold text-blue-400 uppercase tracking-wide mb-3">Weapon Abilities</h4>
+                <div className="space-y-1.5">
+                  {armyData.keywordGlossary.weapon.map((kw) => (
+                    <div key={kw.name} className="bg-black/20 rounded-lg p-3">
+                      <span className="font-medium text-sm text-blue-300">{kw.name}</span>
+                      <div className="text-xs text-white/70 mt-0.5">{kw.description}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Unit Keywords */}
+            {armyData.keywordGlossary?.unit && armyData.keywordGlossary.unit.length > 0 && (
+              <div>
+                <h4 className="text-xs font-semibold text-green-400 uppercase tracking-wide mb-3">Unit Abilities</h4>
+                <div className="space-y-1.5">
+                  {armyData.keywordGlossary.unit.map((kw) => (
+                    <div key={kw.name} className="bg-black/20 rounded-lg p-3">
+                      <span className="font-medium text-sm text-green-300">{kw.name}</span>
+                      <div className="text-xs text-white/70 mt-0.5">{kw.description}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Modals */}
       {activeModal === 'import' && (

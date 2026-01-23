@@ -1,10 +1,6 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Panel } from '@/components/ui';
-import { UnitSearchInput } from './UnitSearchInput';
-import { UnitAccordion, getUnitTypeGroup, sortGroupsByPriority, type UnitTypeGroup } from './UnitAccordion';
-import { RosterUnitRow } from './RosterUnitRow';
 import type { Unit } from '@/types';
 
 interface UnitRosterPanelProps {
@@ -15,8 +11,57 @@ interface UnitRosterPanelProps {
   className?: string;
 }
 
-interface GroupedUnits {
-  [key: string]: Unit[];
+// Unit type grouping
+type UnitTypeGroup = 'Characters' | 'Battleline' | 'Infantry' | 'Vehicles' | 'Other';
+
+function getUnitTypeGroup(keywords: string[]): UnitTypeGroup {
+  if (keywords.includes('Character')) return 'Characters';
+  if (keywords.includes('Battleline')) return 'Battleline';
+  if (keywords.includes('Vehicle') || keywords.includes('Monster')) return 'Vehicles';
+  if (keywords.includes('Infantry')) return 'Infantry';
+  return 'Other';
+}
+
+const groupPriority: UnitTypeGroup[] = ['Characters', 'Battleline', 'Infantry', 'Vehicles', 'Other'];
+
+// Simple accordion component
+interface SimpleAccordionProps {
+  title: string;
+  count: number;
+  isOpen: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}
+
+function SimpleAccordion({ title, count, isOpen, onToggle, children }: SimpleAccordionProps) {
+  return (
+    <div className="mb-2">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="w-full flex items-center justify-between px-3 py-2 bg-gray-700/50 rounded-lg hover:bg-gray-600/50 transition-colors"
+      >
+        <div className="flex items-center gap-2">
+          <svg
+            className={`w-4 h-4 transition-transform duration-200 text-gray-400 ${isOpen ? 'rotate-90' : ''}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+          <span className="font-medium text-gray-200">{title}</span>
+        </div>
+        <span className="text-xs text-gray-400">{count}</span>
+      </button>
+
+      <div
+        className={`overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-[2000px] opacity-100 mt-1' : 'max-h-0 opacity-0'}`}
+      >
+        {children}
+      </div>
+    </div>
+  );
 }
 
 export function UnitRosterPanel({
@@ -27,6 +72,7 @@ export function UnitRosterPanel({
   className = '',
 }: UnitRosterPanelProps) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set(groupPriority));
 
   // Filter units by search query
   const filteredUnits = useMemo(() => {
@@ -35,7 +81,6 @@ export function UnitRosterPanel({
     }
 
     const query = searchQuery.toLowerCase();
-
     return units.filter(
       (unit) =>
         unit.name.toLowerCase().includes(query) ||
@@ -45,7 +90,7 @@ export function UnitRosterPanel({
 
   // Group units by type
   const groupedUnits = useMemo(() => {
-    const groups: GroupedUnits = {};
+    const groups: Record<string, Unit[]> = {};
 
     filteredUnits.forEach((unit) => {
       const group = getUnitTypeGroup(unit.keywords);
@@ -67,117 +112,109 @@ export function UnitRosterPanel({
 
   // Get sorted group names
   const sortedGroups = useMemo(() => {
-    const groupNames = Object.keys(groupedUnits) as UnitTypeGroup[];
-
-    return sortGroupsByPriority(groupNames);
+    return groupPriority.filter((g) => groupedUnits[g]?.length > 0);
   }, [groupedUnits]);
 
-  return (
-    <Panel
-      title="Unit Roster"
-      className={className}
-      headerRight={
-        <span className="text-xs text-gray-500">
-          {filteredUnits.length} units
-        </span>
+  const toggleGroup = (group: string) => {
+    setOpenGroups((prev) => {
+      const next = new Set(prev);
+      if (next.has(group)) {
+        next.delete(group);
+      } else {
+        next.add(group);
       }
-    >
-      <div className="flex flex-col h-full">
-        {/* Search Input */}
-        <div className="p-3 border-b border-gray-700/30">
-          <UnitSearchInput
-            value={searchQuery}
-            onChange={setSearchQuery}
-            placeholder="Search by name or keyword..."
-          />
-        </div>
+      return next;
+    });
+  };
 
-        {/* Loading State */}
-        {isLoading && (
-          <div className="flex-1 flex items-center justify-center p-8">
-            <div className="text-center">
-              <svg
-                className="animate-spin h-8 w-8 text-accent-500 mx-auto mb-2"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                />
-              </svg>
-              <span className="text-sm text-gray-400">Loading units...</span>
-            </div>
-          </div>
-        )}
+  // Get minimum points for a unit
+  const getMinPoints = (unit: Unit): number => {
+    const modelCounts = Object.keys(unit.points).map(Number).sort((a, b) => a - b);
+    const minCount = modelCounts[0];
+    return unit.points[String(minCount)] || 0;
+  };
 
-        {/* Empty State */}
-        {!isLoading && filteredUnits.length === 0 && (
-          <div className="flex-1 flex items-center justify-center p-8">
-            <div className="text-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-12 w-12 text-gray-600 mx-auto mb-3"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-              <p className="text-gray-400 text-sm">
-                {searchQuery ? 'No units match your search' : 'No units available'}
-              </p>
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="mt-2 text-xs text-accent-400 hover:text-accent-300 transition-colors"
-                >
-                  Clear search
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Unit List */}
-        {!isLoading && filteredUnits.length > 0 && (
-          <div className="flex-1 overflow-y-auto">
-            {sortedGroups.map((group) => (
-              <UnitAccordion
-                key={group}
-                title={group}
-                count={groupedUnits[group].length}
-                defaultOpen={true}
-              >
-                {groupedUnits[group].map((unit) => (
-                  <RosterUnitRow
-                    key={unit.id}
-                    unit={unit}
-                    onAdd={onAddUnit}
-                    isSelected={unit.id === selectedUnitId}
-                  />
-                ))}
-              </UnitAccordion>
-            ))}
-          </div>
-        )}
+  return (
+    <div className={`flex flex-col h-full ${className}`}>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4 shrink-0">
+        <h3 className="section-header">Unit Roster</h3>
+        <span className="text-xs text-white/40">{filteredUnits.length} units</span>
       </div>
-    </Panel>
+
+      {/* Search Input */}
+      <div className="mb-4 shrink-0">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search units..."
+          className="input-dark w-full"
+        />
+      </div>
+
+      {/* Loading State */}
+      {isLoading && (
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center text-white/40">
+            <div className="animate-spin w-6 h-6 border-2 border-accent-400 border-t-transparent rounded-full mx-auto mb-2" />
+            <span className="text-sm">Loading units...</span>
+          </div>
+        </div>
+      )}
+
+      {/* Empty State */}
+      {!isLoading && filteredUnits.length === 0 && (
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center text-white/40">
+            <p className="text-sm">
+              {searchQuery ? 'No units match your search' : 'No units available'}
+            </p>
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="mt-2 text-xs text-accent-400 hover:text-accent-300"
+              >
+                Clear search
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Unit List */}
+      {!isLoading && filteredUnits.length > 0 && (
+        <div className="flex-1 overflow-y-auto -mx-4 px-4 scroll-smooth">
+          {sortedGroups.map((group) => (
+            <SimpleAccordion
+              key={group}
+              title={group}
+              count={groupedUnits[group].length}
+              isOpen={openGroups.has(group)}
+              onToggle={() => toggleGroup(group)}
+            >
+              <div className="space-y-1">
+                {groupedUnits[group].map((unit) => (
+                  <div
+                    key={unit.id}
+                    onClick={() => onAddUnit(unit)}
+                    className={`
+                      list-row touch-highlight cursor-pointer rounded-lg
+                      ${unit.id === selectedUnitId ? 'bg-accent-tint-strong' : ''}
+                    `}
+                  >
+                    <div className="flex items-center justify-between py-2 px-3">
+                      <span className="text-sm text-white">{unit.name}</span>
+                      <span className="text-xs text-white/50">{getMinPoints(unit)}+ pts</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </SimpleAccordion>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

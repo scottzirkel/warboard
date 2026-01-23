@@ -1,15 +1,10 @@
 'use client';
 
-import { Panel, PanelSection } from '@/components/ui';
-import { ListControls } from './ListControls';
-import { GameFormatSelector } from './GameFormatSelector';
-import { PointsLimitSelector } from './PointsLimitSelector';
-import { DetachmentSelector } from './DetachmentSelector';
+import { Button } from '@/components/ui';
 import { ListUnitCard } from './ListUnitCard';
 import type {
   ArmyData,
   CurrentList,
-  ListUnit,
   Unit,
   GameFormat,
   AvailableLeader,
@@ -70,6 +65,10 @@ export function ArmyListPanel({
 }: ArmyListPanelProps) {
   const detachment = armyData.detachments[currentList.detachment];
   const enhancements = detachment?.enhancements || [];
+  const detachmentNames = Object.entries(armyData.detachments).map(([id, d]) => ({
+    id,
+    name: d.name,
+  }));
 
   // Check if a unit is a Character
   const isCharacter = (unit: Unit): boolean => {
@@ -81,59 +80,109 @@ export function ArmyListPanel({
     return armyData.units.find((u) => u.id === unitId);
   };
 
+  // Points limit options
+  const pointsOptions = [500, 1000, 1500, 2000, 2500, 3000];
+
   return (
-    <Panel
-      title="Army List"
-      headerRight={
-        <ListControls
-          onImport={onImport}
-          onLoad={onLoad}
-          onSave={onSave}
-          isSaving={isSaving}
-          canSave={canSave}
-        />
-      }
-      className={className}
-    >
-      {/* List Configuration Section */}
-      <PanelSection className="border-b border-gray-700/30">
-        <div className="space-y-3">
-          {/* Format Selector */}
-          <div>
-            <label className="text-xs text-gray-400 block mb-1">Game Format</label>
-            <GameFormatSelector
-              value={currentList.format}
-              onChange={onFormatChange}
-            />
-          </div>
+    <div className={`flex flex-col h-full ${className}`}>
+      {/* Header with buttons */}
+      <div className="flex items-center justify-between mb-4 shrink-0">
+        <h3 className="section-header">Army List</h3>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={onImport}
+            className="btn-ios btn-ios-sm btn-ios-tinted"
+          >
+            Import
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={onLoad}
+            className="btn-ios btn-ios-sm btn-ios-tinted"
+          >
+            Load
+          </Button>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={onSave}
+            disabled={!canSave || isSaving}
+            className="btn-ios btn-ios-sm btn-ios-primary"
+          >
+            {isSaving ? 'Saving...' : 'Save'}
+          </Button>
+        </div>
+      </div>
 
-          {/* Points Limit */}
+      {/* Configuration Row */}
+      <div className="space-y-3 mb-4 shrink-0">
+        {/* Format + Points row */}
+        <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="text-xs text-gray-400 block mb-1">Points Limit</label>
-            <PointsLimitSelector
+            <label className="text-xs text-white/50 block mb-1">Format</label>
+            <div className="segmented-control">
+              <div
+                onClick={() => onFormatChange('standard')}
+                className={`segmented-control-item ${currentList.format === 'standard' ? 'active' : ''}`}
+              >
+                Standard
+              </div>
+              <div
+                onClick={() => onFormatChange('colosseum')}
+                className={`segmented-control-item ${currentList.format === 'colosseum' ? 'active' : ''}`}
+              >
+                Colosseum
+              </div>
+            </div>
+          </div>
+          <div>
+            <label className="text-xs text-white/50 block mb-1">Points</label>
+            <select
               value={currentList.pointsLimit}
-              onChange={onPointsLimitChange}
-            />
-          </div>
-
-          {/* Detachment Selector */}
-          <div>
-            <label className="text-xs text-gray-400 block mb-1">Detachment</label>
-            <DetachmentSelector
-              value={currentList.detachment}
-              onChange={onDetachmentChange}
-              detachments={armyData.detachments}
-            />
+              onChange={(e) => onPointsLimitChange(Number(e.target.value))}
+              className="select-dark w-full"
+            >
+              {pointsOptions.map((pts) => (
+                <option key={pts} value={pts}>
+                  {pts} pts
+                </option>
+              ))}
+            </select>
           </div>
         </div>
-      </PanelSection>
 
-      {/* Units List Section */}
-      <PanelSection title="Units">
+        {/* Detachment selector */}
+        <div>
+          <label className="text-xs text-white/50 block mb-1">Detachment</label>
+          <select
+            value={currentList.detachment}
+            onChange={(e) => onDetachmentChange(e.target.value)}
+            className="select-dark w-full"
+          >
+            {detachmentNames.map((d) => (
+              <option key={d.id} value={d.id}>
+                {d.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Units section header */}
+      <div className="section-header-inline mb-2 shrink-0">
+        <span>Units</span>
+        <span className="badge badge-accent">{currentList.units.length}</span>
+      </div>
+
+      {/* Units List */}
+      <div className="flex-1 overflow-y-auto -mx-4 px-4 scroll-smooth">
         {currentList.units.length === 0 ? (
-          <div className="text-center py-8 text-gray-500 text-sm">
-            <p>No units in your army list yet.</p>
-            <p className="mt-1 text-xs">Select units from the roster to add them.</p>
+          <div className="text-center py-8 text-white/40 text-sm">
+            <p>No units added yet</p>
+            <p className="text-xs mt-1">Select units from the roster →</p>
           </div>
         ) : (
           <div className="space-y-2">
@@ -174,7 +223,7 @@ export function ArmyListPanel({
             })}
           </div>
         )}
-      </PanelSection>
-    </Panel>
+      </div>
+    </div>
   );
 }
