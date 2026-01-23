@@ -1184,3 +1184,30 @@ Format follows the Ralph technique.
 - Custom theme colors (text-accent-400) work in page.tsx
 - Standard Tailwind classes (bg-gray-800, text-gray-300, rounded-lg, etc.) compile correctly
 
+---
+
+## [nextjs-003] Move data files and set up folder structure
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created `public/data/` directory for static JSON files that Next.js can serve
+- Copied custodes.json and tyranids.json to `public/data/` (keeping originals in `data/` for now)
+- Verified folder structure in src/ is complete: app, components, hooks, stores, lib, types
+- Files will be accessible at `/data/custodes.json` and `/data/tyranids.json` in the browser
+
+**Files created:**
+- `public/data/custodes.json` - Copy of Custodes faction data for Next.js serving
+- `public/data/tyranids.json` - Copy of Tyranids faction data for Next.js serving
+
+**Folder structure verified:**
+- `src/app/` - Next.js App Router pages and layouts
+- `src/components/` - Reusable UI components
+- `src/hooks/` - Custom React hooks
+- `src/stores/` - Zustand state stores
+- `src/lib/` - Utility functions and helpers
+- `src/types/` - TypeScript type definitions
+
+**Verification:**
+- npm run build passes
+
