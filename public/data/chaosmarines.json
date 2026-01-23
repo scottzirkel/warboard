@@ -1,0 +1,89 @@
+{
+  "faction": "Chaos Space Marines",
+  "lastUpdated": "2026-01",
+  "units": [],
+  "detachments": {},
+  "armyRules": {
+    "dark_pacts": {
+      "name": "Dark Pacts",
+      "description": "Each time a HERETIC ASTARTES unit from your army is selected to shoot or fight, it can make a Dark Pact. If it does, it must first take a Leadership test; if that test is failed, that unit suffers D3 mortal wounds. Then, select one of the following abilities for weapons equipped by models in that unit to gain until the end of the phase: [LETHAL HITS] or [SUSTAINED HITS 1].",
+      "type": "active",
+      "keywords": ["HERETIC ASTARTES"],
+      "choices": [
+        {
+          "id": "lethal-hits",
+          "name": "Lethal Hits",
+          "description": "Critical hits (unmodified hit rolls of 6) automatically wound the target."
+        },
+        {
+          "id": "sustained-hits-1",
+          "name": "Sustained Hits 1",
+          "description": "Critical hits (unmodified hit rolls of 6) generate 1 additional hit."
+        }
+      ]
+    }
+  },
+  "weaponKeywords": {
+    "Devastating Wounds": "Critical wounds (unmodified wound roll of 6) inflict mortal wounds equal to the Damage characteristic, and the attack sequence ends.",
+    "Lethal Hits": "Critical hits (unmodified hit roll of 6) automatically wound the target.",
+    "Sustained Hits": "Critical hits generate additional hits (number specified after the ability name).",
+    "Twin-linked": "Re-roll wound rolls.",
+    "Assault": "Can shoot after Advancing (at -1 to hit).",
+    "Pistol": "Can shoot in Engagement Range, but only at units within Engagement Range.",
+    "Blast": "+1 attack per 5 models in target unit (minimum 3 attacks vs 6+ models).",
+    "Rapid Fire": "Double the Attacks characteristic when targeting within half range.",
+    "Heavy": "+1 to hit if the bearer's unit Remained Stationary this turn.",
+    "Torrent": "Automatically hits the target.",
+    "Anti-": "Improves wound roll against targets with the specified keyword (e.g., Anti-Vehicle 4+ wounds on 4+ vs Vehicles).",
+    "Hazardous": "After resolving attacks, roll one D6. On a 1, bearer suffers 3 mortal wounds.",
+    "Psychic": "This is a Psychic Attack. Some abilities and rules specifically interact with Psychic attacks.",
+    "Precision": "When targeting a unit with an attached Leader, attacks with this ability can target the Character instead of the unit.",
+    "Extra Attacks": "These attacks are made in addition to the bearer's normal attacks, using the weapon's profile.",
+    "Ignores Cover": "The target does not receive the benefit of cover against attacks with this ability.",
+    "Indirect Fire": "Can target units not visible to the bearer, but subtract 1 from Hit rolls when doing so.",
+    "Melta": "When targeting within half range, add X to the Damage characteristic (Melta 2 = +2 Damage)."
+  },
+  "allies": [],
+  "keywordGlossary": {
+    "weapon": [
+      { "name": "Anti-X #+", "description": "Improve AP by 1 and wound on #+ against targets with keyword X." },
+      { "name": "Assault", "description": "Can be shot after Advancing." },
+      { "name": "Blast", "description": "+1 Attack per 5 models in target unit." },
+      { "name": "Devastating Wounds", "description": "Critical wounds inflict mortal wounds equal to Damage, no saves allowed." },
+      { "name": "Extra Attacks", "description": "Attacks with this weapon are made in addition to other weapons." },
+      { "name": "Hazardous", "description": "After resolving attacks, roll D6. On 1, bearer suffers 3 mortal wounds (Characters) or is destroyed (other models)." },
+      { "name": "Heavy", "description": "+1 to Hit if unit Remained Stationary." },
+      { "name": "Ignores Cover", "description": "Target does not benefit from cover." },
+      { "name": "Indirect Fire", "description": "Can target units not visible. -1 to Hit, +1 to target's Save if not visible." },
+      { "name": "Lance", "description": "+1 to Wound if unit charged this turn." },
+      { "name": "Lethal Hits", "description": "Critical hits automatically wound (no wound roll needed)." },
+      { "name": "Melta X", "description": "+X Damage against targets within half range." },
+      { "name": "One Shot", "description": "Can only be used once per battle." },
+      { "name": "Pistol", "description": "Can be shot in Engagement Range, but only at units in Engagement Range." },
+      { "name": "Precision", "description": "On critical wounds, attacker can allocate wound to a Character or Attached model." },
+      { "name": "Psychic", "description": "Weapon has the Psychic keyword for ability interactions." },
+      { "name": "Rapid Fire X", "description": "+X Attacks when targeting units within half range." },
+      { "name": "Sustained Hits X", "description": "Critical hits score X additional hits." },
+      { "name": "Torrent", "description": "Automatically hits (no hit roll needed)." },
+      { "name": "Twin-linked", "description": "Re-roll wound rolls." }
+    ],
+    "faction": [
+      { "name": "Dark Pacts", "description": "When a HERETIC ASTARTES unit shoots or fights, it can take a Leadership test to gain either [LETHAL HITS] or [SUSTAINED HITS 1] on all its weapons until the end of the phase. On a failed test, the unit suffers D3 mortal wounds." },
+      { "name": "Heretic Astartes", "description": "The faction keyword for all Chaos Space Marine units. Represents the corrupted Adeptus Astartes who have turned from the Emperor's light. All CSM units have this keyword and it is used for army-wide rules and ability interactions." },
+      { "name": "Chaos", "description": "Units aligned with the Ruinous Powers. This keyword interacts with many abilities and stratagems across Chaos factions." },
+      { "name": "Daemon", "description": "Units that are partially or fully composed of daemonic entities. Daemons often have invulnerable saves and special abilities related to their unholy nature." },
+      { "name": "Damned", "description": "Mortal followers of Chaos who have sworn themselves to the Dark Gods. Includes Cultists and other non-Astartes servants. These units are expendable but numerous." }
+    ],
+    "unit": [
+      { "name": "Battleline", "description": "Core troop units. May have special rules in certain detachments." },
+      { "name": "Character", "description": "Can lead units, receive Enhancements, and is targeted by Precision." },
+      { "name": "Monster", "description": "Large creatures with powerful stats. Often have high Toughness, many Wounds, and Deadly Demise." },
+      { "name": "Psyker", "description": "Can use Psychic abilities. Chaos Psykers channel the power of the Warp through dark rituals." },
+      { "name": "Leader", "description": "Can be attached to Bodyguard units. Abilities affect the combined unit." },
+      { "name": "Feel No Pain X+", "description": "Roll D6 when losing a wound. On X+, wound is ignored." },
+      { "name": "Deadly Demise X", "description": "When destroyed, roll D6. On a 6, each unit within 6\" suffers X mortal wounds." },
+      { "name": "Scouts X\"", "description": "Make a Normal move of up to X\" before first turn begins." },
+      { "name": "Deep Strike", "description": "During deployment, can be set up in Reserves. Can arrive anywhere on the battlefield more than 9\" from enemy models." }
+    ]
+  }
+}
