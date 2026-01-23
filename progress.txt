@@ -1706,3 +1706,83 @@ Format follows the Ralph technique.
 - npm run test passes
 - npm run build passes
 
+---
+
+## [nextjs-019] Create weapon count and loadout hooks
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created useWeaponCounts hook in src/hooks/useWeaponCounts.ts for managing weapon selections
+- Hook provides comprehensive loadout management with the following features:
+  - `loadoutOptions`: Computed state of all loadout options with their choices
+  - `setCount`: Update count for a specific choice, handling maxModels constraints
+  - `adjustCount`: Increment/decrement count by delta
+  - `isAtMaxLimit`: Check if choice is at maximum allowed count
+  - `isAtMinLimit`: Check if choice is at minimum (0)
+  - `getEffectiveMax`: Get the effective max considering maxModels and mutual exclusivity
+  - `validate`: Validate current counts and return error messages
+  - `resetToDefaults`: Reset to default weapon counts
+- Handles mutual exclusivity for "replacement" pattern loadouts:
+  - When a choice is part of a replacement option, the total across all choices cannot exceed modelCount
+  - setCount automatically limits based on other choices' allocations
+  - getEffectiveMax considers other choices when calculating available models
+- Validates maxModels constraints:
+  - Choices with maxModels limit are enforced during setCount
+  - validate() reports errors when constraints are violated
+- Works with both "replacement" and "addition" patterns
+- Added helper functions as exports:
+  - `calculateDefaultWeaponCounts(unit, modelCount)`: Get default weapon counts for a unit
+  - `validateWeaponCounts(unit, listUnit)`: Validate weapon counts against constraints
+- Used useMemo with a constant empty object to prevent dependency changes on every render (lint fix)
+- Created comprehensive test suite with 25 tests covering all hook functionality
+
+**Files created:**
+- `src/hooks/useWeaponCounts.ts` - Weapon count and loadout management hook
+- `src/hooks/useWeaponCounts.test.ts` - Test suite with 25 tests
+
+**Files changed:**
+- `src/hooks/index.ts` - Added exports for useWeaponCounts, calculateDefaultWeaponCounts, validateWeaponCounts, and related types
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (26 tests, including 25 for useWeaponCounts)
+- npm run build passes
+
+---
+
+## [nextjs-024] Create navigation and army selector
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created Navigation component in src/components/navigation/ as a standalone navigation module
+- Navigation provides all header-level app controls in a single component:
+  - ArmySelector: Dropdown for switching between factions (Custodes, Tyranids)
+  - ModeToggle: Reuses existing component from play/PlayMode.tsx
+  - ListNameDisplay: Shows current list name and points summary
+- ArmySelector is disabled during Play Mode to prevent data changes during a game
+- ArmySelector is disabled during loading state to prevent race conditions
+- Navigation uses the nav-blur class from globals.css for the sticky header effect
+- Points display shows color-coded status (gold for normal, red when over limit)
+- Loading state shows a spinner when army data is being fetched
+- Created AvailableArmy interface to match armyStore's availableArmies structure
+- Fixed tsconfig.json target from ES2017 to ES2020 to support MapIterator in pre-existing code
+
+**Files created:**
+- `src/components/navigation/Navigation.tsx` - Main navigation component with:
+  - ArmySelector subcomponent for faction selection
+  - ListNameDisplay subcomponent for list name and points
+  - Navigation container combining all header controls
+- `src/components/navigation/index.ts` - Export barrel file for navigation components
+
+**Files changed:**
+- `tsconfig.json` - Updated target from ES2017 to ES2020 to fix MapIterator issue
+
+**Verification:**
+- npm run lint passes (pre-existing warnings in useWeaponCounts.ts unrelated to this task)
+- npm run typecheck passes
+- npm run test passes (53 tests)
+- npm run build passes
+
