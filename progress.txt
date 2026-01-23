@@ -2173,3 +2173,134 @@ Format follows the Ralph technique.
   1. public/data/necrons.json exists with faction: Necrons
   2. Army rules include Reanimation Protocols with D3 wounds healed at Command phase
   3. lastUpdated set to 2026-01 (current month)
+
+---
+
+## [nextjs-028] Integrate API routes with hooks
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Verified useSavedLists hook already correctly uses API routes at /api/lists
+- Hook implements all CRUD operations via fetch API with proper error handling
+- Loading states managed via isLoading boolean during all async operations
+- Error handling captures both HTTP errors (non-ok responses) and network errors
+- Hook automatically fetches lists on mount and refreshes after save/delete operations
+- Filenames are URL-encoded when making requests to prevent issues with special characters
+
+**Implementation details:**
+- fetchJson helper wraps fetch calls with error handling and response parsing
+- saveList validates name is not empty before making API call
+- deleteList and loadList URL-encode the filename parameter
+- Lists are automatically refreshed after successful save or delete operations
+
+**Files created:**
+- src/hooks/useSavedLists.test.ts - Comprehensive test suite with 26 tests covering:
+  - Initial fetch on mount
+  - Error handling for API failures and network errors
+  - Loading state management during all operations
+  - Save operations including name validation and list refresh
+  - Load operations with URL encoding and error handling
+  - Delete operations with URL encoding and list refresh
+  - Manual refresh functionality via fetchLists
+  - Utility function tests for generateFilename and filenameToDisplayName
+
+**Verification:**
+- npm run lint passes
+- npm run test passes (161 tests, 26 new for useSavedLists hook)
+- npm run build passes
+- Acceptance criteria met:
+  1. useSavedLists hook uses API routes (/api/lists)
+  2. Save/load/delete operations work end-to-end (verified via tests)
+  3. Error handling for API failures (tested with mock error responses)
+  4. Loading states shown during API calls (tested with isLoading state)
+
+---
+
+## [spacemarines-001] Create spacemarines.json with Ultramarines faction metadata and army rules
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created spacemarines.json following the same structure as custodes.json and tyranids.json
+- Army rule Oath of Moment implemented with re-roll hits and wounds against selected target
+- Added chapter object with Ultramarines metadata and Codex Discipline ability
+- Codex Discipline allows removing one Battle-shock token at start of Command phase
+- Included comprehensive weaponKeywords section with Space Marine relevant keywords (Melta, Lance)
+- Added keywords section with common Space Marine keywords (Tacticus, Gravis, Phobos, Terminator, Primaris)
+- Units array left empty for subsequent tasks (spacemarines-002 through spacemarines-007)
+- Detachments object left empty for subsequent task (spacemarines-008)
+- lastUpdated set to 2026-01 (current month)
+
+**Files created:**
+- public/data/spacemarines.json - Space Marines faction data with army rules and Ultramarines chapter metadata
+
+**Verification:**
+- JSON syntax is valid (verified with Python JSON parser)
+- npm run lint passes
+- npm run build passes
+- npm run test passes (161 tests, excluding unrelated WIP test file)
+- Acceptance criteria met:
+  1. public/data/spacemarines.json exists with faction: Space Marines
+  2. Army rule: Oath of Moment with re-roll hits and wounds vs one target per round
+  3. Chapter: Ultramarines with Codex Discipline ability
+  4. lastUpdated set to 2026-01 (current month)
+
+---
+
+## [orks-001] Create orks.json with Orks faction metadata and army rules
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Created new faction data file following established structure from tyranids.json and custodes.json
+- Army rule "Waaagh!" implemented as once-per-battle ability with structured effects array
+- Effects include +1 Strength (melee), +1 Attacks (melee), and +1 to Charge rolls
+- Added Orks-specific "Dakka" weapon keyword for increased attacks at half range
+- Included comprehensive keywordGlossary with Orks-specific keywords: Mob, Gretchin, Mega Armour
+- Units array left empty for subsequent tasks (orks-002 through orks-007)
+- Detachments object left empty for subsequent task (orks-008)
+
+**Files created:**
+- public/data/orks.json - Orks faction data with army rules and metadata
+
+**Verification:**
+- JSON syntax is valid (verified with Python JSON parser)
+- npm run lint passes
+- npm run build passes
+- Acceptance criteria met:
+  1. public/data/orks.json exists with faction: Orks
+  2. Army rule: Waaagh! (once per battle, +1 Strength, +1 Attack, +1 to charge)
+  3. lastUpdated set to 2026-01 (current month)
+
+---
+
+## [necrons-002] Add Necron Warriors battleline unit to necrons.json
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Necron Warriors unit following the established pattern from other faction units
+- Points set to 60/120 for 10/20 models as per acceptance criteria
+- Stats: M5 T4 SV4+ W1 LD7+ OC2 - standard Necron Warriors profile
+- Added Gauss Flayer as default ranged weapon (24" A1 BS4+ S4 AP0 D1) with Lethal Hits and Rapid Fire 1
+- Added Gauss Reaper as alternative (12" A2 BS4+ S5 AP-1 D1) with Lethal Hits - shorter range but more powerful
+- Included Close Combat Weapon for melee (A1 WS4+ S4 AP0 D1)
+- Added loadoutOptions with ranged weapon replacement pattern for flayer/reaper choice
+- Their Number Is Legion ability allows re-rolling one dice on Reanimation Protocols rolls
+- Keywords include Infantry, Battleline, Necrons, Necron Warriors
+
+**Files changed:**
+- public/data/necrons.json - Added Necron Warriors unit to units array
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (191 tests)
+- npm run build passes
+- Acceptance criteria met:
+  1. Necron Warriors unit with points 60/120 for 10/20 models
+  2. Stats: M5 T4 SV4+ W1 LD7+ OC2
+  3. Gauss flayer and gauss reaper weapon options with loadout choice
+  4. Their Number Is Legion ability (re-roll one dice on Reanimation Protocols)
+  5. Keywords include Infantry, Battleline, Necrons

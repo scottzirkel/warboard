@@ -1,0 +1,65 @@
+{
+  "faction": "Space Marines",
+  "lastUpdated": "2026-01",
+  "chapter": {
+    "name": "Ultramarines",
+    "ability": {
+      "id": "codex-discipline",
+      "name": "Codex Discipline",
+      "description": "If your Army Faction is ADEPTUS ASTARTES, and every unit from your army is ULTRAMARINES (excluding AGENTS OF THE IMPERIUM and UNALIGNED units), at the start of your Command phase, if you have Battle-shock tokens on any of your ULTRAMARINES units, you can remove one of those Battle-shock tokens."
+    }
+  },
+  "units": [],
+  "detachments": {},
+  "armyRules": {
+    "oath_of_moment": {
+      "name": "Oath of Moment",
+      "description": "At the start of your Command phase, select one enemy unit to be the target of your Oath of Moment. Until the start of your next Command phase, each time a model from your army with this ability makes an attack that targets that unit, you can re-roll the Hit roll and you can re-roll the Wound roll.",
+      "phase": "Command",
+      "targetType": "enemy_unit",
+      "effects": [
+        {
+          "type": "reroll",
+          "stat": "hit",
+          "description": "Re-roll Hit rolls against target"
+        },
+        {
+          "type": "reroll",
+          "stat": "wound",
+          "description": "Re-roll Wound rolls against target"
+        }
+      ]
+    }
+  },
+  "weaponKeywords": {
+    "Devastating Wounds": "Critical wounds (unmodified wound roll of 6) inflict mortal wounds equal to the Damage characteristic, and the attack sequence ends.",
+    "Lethal Hits": "Critical hits (unmodified hit roll of 6) automatically wound the target.",
+    "Sustained Hits": "Critical hits generate additional hits (number specified after the ability name).",
+    "Twin-linked": "Re-roll wound rolls.",
+    "Assault": "Can shoot after Advancing (at -1 to hit).",
+    "Pistol": "Can shoot in Engagement Range, but only at units within Engagement Range.",
+    "Blast": "+1 attack per 5 models in target unit (minimum 3 attacks vs 6+ models).",
+    "Rapid Fire": "Double the Attacks characteristic when targeting within half range.",
+    "Heavy": "+1 to hit if the bearer's unit Remained Stationary this turn.",
+    "Torrent": "Automatically hits the target.",
+    "Anti-": "Improves wound roll against targets with the specified keyword (e.g., Anti-Vehicle 4+ wounds on 4+ vs Vehicles).",
+    "Hazardous": "After resolving attacks, roll one D6. On a 1, bearer suffers 3 mortal wounds.",
+    "Precision": "When targeting a unit with an attached Leader, attacks with this ability can target the Character instead of the unit.",
+    "Extra Attacks": "These attacks are made in addition to the bearer's normal attacks, using the weapon's profile.",
+    "Ignores Cover": "The target does not receive the benefit of cover against attacks with this ability.",
+    "Melta": "When targeting within half range, add D6 damage (or D3 for Melta 2, etc.).",
+    "Lance": "+1 to wound on the turn the bearer charged."
+  },
+  "keywords": {
+    "Imperium": "This unit is part of the Imperium of Man.",
+    "Adeptus Astartes": "This unit is a Space Marine.",
+    "Tacticus": "This model wears Mk X Tacticus power armour.",
+    "Gravis": "This model wears Mk X Gravis power armour, providing enhanced protection.",
+    "Phobos": "This model wears Mk X Phobos power armour, designed for stealth operations.",
+    "Terminator": "This model wears Tactical Dreadnought Armour (Terminator armour).",
+    "Character": "This unit is a Character and can be attached to bodyguard units.",
+    "Infantry": "This unit consists of infantry models.",
+    "Battleline": "This unit is a core battleline unit for army composition.",
+    "Primaris": "This model is a Primaris Space Marine."
+  }
+}
