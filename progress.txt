@@ -1990,3 +1990,82 @@ Format follows the Ralph technique.
 - npm run test passes (53 tests)
 - npm run build passes
 
+---
+
+## [nextjs-027] Create API routes for list management
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created Next.js API routes in the App Router format under `src/app/api/lists/`
+- Used the `data/lists/` directory for storing JSON files (existing convention)
+- API routes handle all CRUD operations for army lists:
+  - GET /api/lists: Returns array of {filename, name} objects for all saved lists
+  - POST /api/lists: Saves a new list with auto-generated filename based on list name
+  - GET /api/lists/[filename]: Loads a specific list by filename
+  - DELETE /api/lists/[filename]: Deletes a specific list by filename
+- Filename generation converts spaces to underscores and removes special characters
+- Added security validation in the [filename] route:
+  - Rejects filenames with path traversal attempts (../ or /\\)
+  - Requires .json extension
+- POST route automatically adds savedAt timestamp to list data
+- ensureListsDir() helper creates the lists directory if it doesn't exist
+- Added comprehensive test suites for both route files:
+  - Tests for success cases and error handling
+  - Tests for input validation and edge cases
+  - Mocked fs module to test without actual file system operations
+
+**Files created:**
+- `src/app/api/lists/route.ts` - GET (list all) and POST (save) handlers
+- `src/app/api/lists/[filename]/route.ts` - GET (load) and DELETE handlers
+- `src/app/api/lists/route.test.ts` - Tests for main route (7 tests)
+- `src/app/api/lists/[filename]/route.test.ts` - Tests for dynamic route (7 tests)
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (14 new tests for API routes)
+- npm run build passes
+
+---
+
+## [ux-001] Add Screen Wake Lock to prevent device sleep in Play Mode
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created useWakeLock hook in src/hooks/useWakeLock.ts for managing the Screen Wake Lock API
+- Hook acquires a wake lock when enabled parameter is true, releases when false
+- Gracefully handles browsers without Wake Lock API support (isSupported flag)
+- Re-acquires wake lock when tab regains visibility (handles browser releasing lock on tab switch)
+- Provides error state for cases where wake lock fails (low battery, system policy, etc.)
+- Manual request() and release() functions exposed for programmatic control
+- Integrated hook into PlayMode component - wake lock active when Play Mode is valid and accessible
+- Created TypeScript type definitions for Wake Lock API in src/types/wake-lock.d.ts
+- Created comprehensive test suite with 16 tests covering:
+  - Unsupported browser behavior
+  - Wake lock acquisition and release
+  - Event listener registration
+  - Error handling
+  - Visibility change re-acquisition
+  - Cleanup on unmount
+
+**Files created:**
+- `src/hooks/useWakeLock.ts` - Wake lock management hook with:
+  - isActive, isSupported, error state
+  - request() and release() manual controls
+  - Automatic visibility change handling
+  - Proper cleanup on unmount
+- `src/hooks/useWakeLock.test.ts` - Test suite with 16 tests
+- `src/types/wake-lock.d.ts` - TypeScript type definitions for Wake Lock API
+
+**Files changed:**
+- `src/hooks/index.ts` - Added exports for useWakeLock and UseWakeLockResult
+- `src/components/play/PlayMode.tsx` - Integrated useWakeLock hook
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (83 tests)
+- npm run build passes
+
