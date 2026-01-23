@@ -1410,3 +1410,39 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-010] Create weapon and stat display components
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created WeaponStatsTable component for displaying weapon statistics in table format
+- Separates ranged and melee weapons into distinct sections with appropriate headers
+- Ranged table shows: Weapon, Range, A, BS, S, AP, D, Abilities
+- Melee table shows: Weapon, A, WS, S, AP, D, Abilities
+- Weapon abilities displayed as badges using the existing Badge component
+- Supports optional model count display for loadout-grouped weapons
+- Created WoundIndicator component for tracking unit wounds with visual pips
+- Includes models alive count, current model wounds display, and total wounds
+- Supports both default (gray/green) and leader (purple) variants
+- Includes +/- adjustment buttons with disabled states
+- Added SimpleWoundBar helper for compact wound visualization
+- Created AccordionGroup component system for collapsible content
+- AccordionItem provides basic accordion functionality
+- LoadoutGroupAccordion specialized for Play Mode weapon groups with activation state
+- Supports paired loadout indicator and activation toggle button
+- All components use Tailwind CSS matching existing app color scheme
+
+**Files created:**
+- `src/components/ui/WeaponStatsTable.tsx` - Weapon stats table with ranged/melee sections and ability badges
+- `src/components/ui/WoundIndicator.tsx` - Wound tracking with pips, models alive, and adjustment controls
+- `src/components/ui/AccordionGroup.tsx` - Collapsible accordion with LoadoutGroupAccordion variant
+
+**Files changed:**
+- `src/components/ui/index.ts` - Added exports for WeaponStatsTable, WoundIndicator, SimpleWoundBar, AccordionItem, AccordionGroup, LoadoutGroupAccordion
+
+**Verification:**
+- npm run build passes
+- TypeScript compiles without errors
+

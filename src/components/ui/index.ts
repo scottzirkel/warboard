@@ -7,3 +7,6 @@ export { Card, CardHeader, CardBody, CardFooter } from './Card';
 export { Panel, PanelSection } from './Panel';
 export { StatCell, StatRow } from './StatCell';
 export { ProgressBar, PointsProgress } from './ProgressBar';
+export { WeaponStatsTable } from './WeaponStatsTable';
+export { WoundIndicator, SimpleWoundBar } from './WoundIndicator';
+export { AccordionItem, AccordionGroup, LoadoutGroupAccordion } from './AccordionGroup';
