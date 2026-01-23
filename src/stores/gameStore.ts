@@ -12,6 +12,8 @@ const createDefaultGameState = (): GameState => ({
   katah: null,
   collapsedLoadoutGroups: {},
   activatedLoadoutGroups: {},
+  collapsedLeaders: {},
+  activatedLeaders: {},
 });
 
 // ============================================================================
@@ -50,6 +52,16 @@ interface GameStoreActions {
   isLoadoutGroupActivated: (unitIndex: number, groupId: string) => boolean;
   toggleLoadoutGroupActivated: (unitIndex: number, groupId: string) => void;
   setLoadoutGroupActivated: (unitIndex: number, groupId: string, activated: boolean) => void;
+
+  // Leader Collapse State
+  isLeaderCollapsed: (unitIndex: number) => boolean;
+  toggleLeaderCollapsed: (unitIndex: number) => void;
+  setLeaderCollapsed: (unitIndex: number, collapsed: boolean) => void;
+
+  // Leader Activation State
+  isLeaderActivated: (unitIndex: number) => boolean;
+  toggleLeaderActivated: (unitIndex: number) => void;
+  setLeaderActivated: (unitIndex: number, activated: boolean) => void;
 
   // Activation State Reset
   resetActivationState: () => void;
@@ -247,6 +259,65 @@ export const useGameStore = create<GameStore>((set, get) => ({
   },
 
   // -------------------------------------------------------------------------
+  // Leader Collapse State Actions
+  // -------------------------------------------------------------------------
+
+  isLeaderCollapsed: (unitIndex: number): boolean => {
+    const { gameState } = get();
+
+    return gameState.collapsedLeaders[unitIndex] ?? false;
+  },
+
+  toggleLeaderCollapsed: (unitIndex: number) => {
+    const isCollapsed = get().isLeaderCollapsed(unitIndex);
+    get().setLeaderCollapsed(unitIndex, !isCollapsed);
+  },
+
+  setLeaderCollapsed: (unitIndex: number, collapsed: boolean) => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        collapsedLeaders: {
+          ...state.gameState.collapsedLeaders,
+          [unitIndex]: collapsed,
+        },
+      },
+    }));
+  },
+
+  // -------------------------------------------------------------------------
+  // Leader Activation State Actions
+  // -------------------------------------------------------------------------
+
+  isLeaderActivated: (unitIndex: number): boolean => {
+    const { gameState } = get();
+
+    return gameState.activatedLeaders[unitIndex] ?? false;
+  },
+
+  toggleLeaderActivated: (unitIndex: number) => {
+    const isActivated = get().isLeaderActivated(unitIndex);
+    get().setLeaderActivated(unitIndex, !isActivated);
+
+    // Auto-collapse when activated
+    if (!isActivated) {
+      get().setLeaderCollapsed(unitIndex, true);
+    }
+  },
+
+  setLeaderActivated: (unitIndex: number, activated: boolean) => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        activatedLeaders: {
+          ...state.gameState.activatedLeaders,
+          [unitIndex]: activated,
+        },
+      },
+    }));
+  },
+
+  // -------------------------------------------------------------------------
   // Activation State Reset
   // -------------------------------------------------------------------------
 
@@ -255,6 +326,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
       gameState: {
         ...state.gameState,
         activatedLoadoutGroups: {},
+        activatedLeaders: {},
       },
     }));
   },

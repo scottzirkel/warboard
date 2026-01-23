@@ -310,23 +310,92 @@ export const useArmyStore = create<ArmyStore>((set, get) => ({
     });
   },
 
-  updateUnitModelCount: (index: number, count: number) => {
-    set(state => {
-      const units = [...state.currentList.units];
-      const unit = units[index];
+  updateUnitModelCount: (index: number, newCount: number) => {
+    const { armyData, currentList } = get();
+    const listUnit = currentList.units[index];
 
-      if (!unit) {
-        return state;
+    if (!listUnit || !armyData) {
+      return;
+    }
+
+    const unit = armyData.units.find(u => u.id === listUnit.unitId);
+
+    if (!unit) {
+      return;
+    }
+
+    const oldCount = listUnit.modelCount;
+
+    // If no weapon counts yet, initialize them
+    if (!listUnit.weaponCounts || Object.keys(listUnit.weaponCounts).length === 0) {
+      const weaponCounts: Record<string, number> = {};
+
+      if (unit.loadoutOptions && unit.loadoutOptions.length > 0) {
+        for (const option of unit.loadoutOptions) {
+          for (const choice of option.choices) {
+            if (choice.id !== 'none') {
+              weaponCounts[choice.id] = 0;
+            }
+          }
+        }
+
+        const mainOption = unit.loadoutOptions.find(o => o.type === 'choice') || unit.loadoutOptions[0];
+
+        if (mainOption) {
+          const defaultChoice = mainOption.choices.find(c => c.default) || mainOption.choices[0];
+
+          if (defaultChoice && defaultChoice.id !== 'none') {
+            weaponCounts[defaultChoice.id] = newCount;
+          }
+        }
       }
 
-      units[index] = { ...unit, modelCount: count };
+      set(state => {
+        const units = [...state.currentList.units];
+        units[index] = { ...units[index], modelCount: newCount, weaponCounts };
 
-      return {
-        currentList: {
-          ...state.currentList,
-          units,
-        },
-      };
+        return { currentList: { ...state.currentList, units } };
+      });
+
+      return;
+    }
+
+    // Calculate current total weapon count
+    const total = Object.values(listUnit.weaponCounts).reduce((sum, c) => sum + c, 0);
+
+    const newWeaponCounts = { ...listUnit.weaponCounts };
+
+    if (newCount < oldCount) {
+      // Reducing models - cap each weapon count and adjust to fit
+      let excess = total - newCount;
+
+      for (const [choiceId, count] of Object.entries(newWeaponCounts)) {
+        if (excess > 0 && count > 0) {
+          const reduction = Math.min(count, excess);
+          newWeaponCounts[choiceId] = count - reduction;
+          excess -= reduction;
+        }
+      }
+    } else if (newCount > oldCount) {
+      // Adding models - add to the default weapon
+      const options = unit.loadoutOptions || [];
+      const mainOption = options.find(o => o.type === 'choice') || options[0];
+
+      if (mainOption) {
+        const defaultChoice = mainOption.choices.find(c => c.default) || mainOption.choices[0];
+
+        if (defaultChoice && defaultChoice.id !== 'none') {
+          const diff = newCount - total;
+          newWeaponCounts[defaultChoice.id] = (newWeaponCounts[defaultChoice.id] || 0) + diff;
+        }
+      }
+    }
+
+    set(state => {
+      const units = [...state.currentList.units];
+      units[index] = { ...units[index], modelCount: newCount, weaponCounts: newWeaponCounts };
+
+      return { currentList: { ...state.currentList, units } };
     });
   },
 

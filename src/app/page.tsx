@@ -113,9 +113,23 @@ export default function Home() {
     currentList.units,
     (unitIndex: number, leaderIndex: number) => {
       attachLeader(unitIndex, leaderIndex);
+      const leaderListUnit = currentList.units[leaderIndex];
+      const targetListUnit = currentList.units[unitIndex];
+      const leaderUnit = armyData?.units.find(u => u.id === leaderListUnit?.unitId);
+      const targetUnit = armyData?.units.find(u => u.id === targetListUnit?.unitId);
+      if (leaderUnit && targetUnit) {
+        showSuccess(`${leaderUnit.name} attached to ${targetUnit.name}`);
+      }
     },
     (unitIndex: number) => {
+      const listUnit = currentList.units[unitIndex];
+      const leaderIndex = listUnit?.attachedLeader?.unitIndex;
+      const leaderListUnit = leaderIndex !== undefined ? currentList.units[leaderIndex] : undefined;
+      const leaderUnit = leaderListUnit ? armyData?.units.find(u => u.id === leaderListUnit.unitId) : undefined;
       detachLeader(unitIndex);
+      if (leaderUnit) {
+        showSuccess(`${leaderUnit.name} detached`);
+      }
     }
   );
 

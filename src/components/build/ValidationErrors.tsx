@@ -12,6 +12,7 @@ const errorTypeIcons: Record<ValidationError['type'], string> = {
   format: '📋',
   leader: '👑',
   maxModels: '🔢',
+  loadout: '⚔️',
 };
 
 const errorTypeColors: Record<ValidationError['type'], string> = {
@@ -19,6 +20,7 @@ const errorTypeColors: Record<ValidationError['type'], string> = {
   format: 'border-red-500/50 bg-red-500/10',
   leader: 'border-purple-500/50 bg-purple-500/10',
   maxModels: 'border-orange-500/50 bg-orange-500/10',
+  loadout: 'border-orange-500/50 bg-orange-500/10',
 };
 
 export function ValidationErrors({ errors, className = '' }: ValidationErrorsProps) {

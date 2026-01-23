@@ -283,6 +283,8 @@ export interface GameState {
   katah: string | null;
   collapsedLoadoutGroups: Record<number, Record<string, boolean>>;
   activatedLoadoutGroups: Record<number, Record<string, boolean>>;
+  collapsedLeaders: Record<number, boolean>;
+  activatedLeaders: Record<number, boolean>;
 }
 
 // ============================================================================
@@ -303,7 +305,7 @@ export interface UIState {
 // ============================================================================
 
 export interface ValidationError {
-  type: 'points' | 'format' | 'leader' | 'maxModels';
+  type: 'points' | 'format' | 'leader' | 'maxModels' | 'loadout';
   message: string;
 }
 

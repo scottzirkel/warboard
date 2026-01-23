@@ -21,6 +21,7 @@ export interface UseListValidationReturn {
   validatePoints: () => ValidationError[];
   validateColosseumFormat: () => ValidationError[];
   validateLeaderAttachments: () => ValidationError[];
+  validateMaxModels: () => ValidationError[];
 
   // Quick checks
   isListValid: boolean;
@@ -366,21 +367,68 @@ export function useListValidation(
   }, [armyData, currentList.units, getUnitById]);
 
   /**
+   * Validate maxModels constraints for loadout options.
+   *
+   * Checks that no weapon choice exceeds its maxModels limit.
+   */
+  const validateMaxModels = useCallback((): ValidationError[] => {
+    if (!armyData) {
+      return [];
+    }
+
+    const errors: ValidationError[] = [];
+
+    for (const listUnit of currentList.units) {
+      const unit = getUnitById(listUnit.unitId);
+
+      if (!unit || !unit.loadoutOptions) {
+        continue;
+      }
+
+      const weaponCounts = listUnit.weaponCounts || {};
+
+      for (const option of unit.loadoutOptions) {
+        for (const choice of option.choices) {
+          if (choice.id === 'none') {
+            continue;
+          }
+
+          if (choice.maxModels === undefined) {
+            continue;
+          }
+
+          const count = weaponCounts[choice.id] || 0;
+
+          if (count > choice.maxModels) {
+            errors.push({
+              type: 'loadout',
+              message: `${unit.name}: ${choice.name} limited to ${choice.maxModels} model(s), but ${count} assigned`,
+            });
+          }
+        }
+      }
+    }
+
+    return errors;
+  }, [armyData, currentList.units, getUnitById]);
+
+  /**
    * Run all validations and return the complete result.
    */
   const validateList = useCallback((): ListValidationResult => {
     const pointsErrors = validatePoints();
     const formatErrors = validateColosseumFormat();
     const leaderErrors = validateLeaderAttachments();
+    const maxModelsErrors = validateMaxModels();
 
-    const allErrors = [...pointsErrors, ...formatErrors, ...leaderErrors];
+    const allErrors = [...pointsErrors, ...formatErrors, ...leaderErrors, ...maxModelsErrors];
 
     return {
       isValid: allErrors.length === 0,
       errors: allErrors,
       warnings: [], // Can be used for non-blocking issues in the future
     };
-  }, [validatePoints, validateColosseumFormat, validateLeaderAttachments]);
+  }, [validatePoints, validateColosseumFormat, validateLeaderAttachments, validateMaxModels]);
 
   /**
    * Quick check if the list is valid.
@@ -407,6 +455,7 @@ export function useListValidation(
     validatePoints,
     validateColosseumFormat,
     validateLeaderAttachments,
+    validateMaxModels,
     isListValid,
     canEnterPlayMode,
     totalPoints,
