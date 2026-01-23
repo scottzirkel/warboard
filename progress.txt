@@ -1161,3 +1161,26 @@ Format follows the Ralph technique.
 - npm run build passes with no errors
 - Next.js dev server starts successfully
 
+---
+
+## [nextjs-002] Configure Tailwind CSS for Next.js
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Tailwind CSS v3 was already configured during nextjs-001 initialization
+- Configuration is complete and functional
+- Custom accent color palette (Custodes gold theme) is available via text-accent-400, bg-accent-500, etc.
+- Custom component styles (nav-blur, select-dark, segmented-control) preserved from original app
+
+**Files verified:**
+- `tailwind.config.ts` - Content paths set for Next.js App Router (`./src/app/**/*`, `./src/components/**/*`, `./src/pages/**/*`)
+- `postcss.config.js` - PostCSS configured with tailwindcss and autoprefixer plugins
+- `src/app/globals.css` - Tailwind directives imported, custom scrollbar and component styles included
+- `src/app/layout.tsx` - Global styles imported correctly
+
+**Verification:**
+- npm run build passes
+- Custom theme colors (text-accent-400) work in page.tsx
+- Standard Tailwind classes (bg-gray-800, text-gray-300, rounded-lg, etc.) compile correctly
+
