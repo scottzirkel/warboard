@@ -5,6 +5,45 @@ Format follows the Ralph technique.
 
 ---
 
+## [spacemarines-006] Add Terminator Squad elite unit
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Terminator Squad as an elite infantry unit for Space Marines
+- Points: 185/370 for 5/10 models (per Munitorum Field Manual)
+- Stats: M5 T5 SV2+ W3 LD6+ OC1 with 4+ invulnerable save (signature Terminator profile)
+- Ranged weapons:
+  - Storm Bolter (24" A2 BS3+ S4 AP0 D1, Rapid Fire 2)
+  - Assault Cannon (24" A6 BS3+ S6 AP0 D1, Devastating Wounds) - maxModels: 1
+  - Heavy Flamer (12" D6 auto S5 AP-1 D1, Torrent, Ignores Cover) - maxModels: 1
+  - Cyclone Missile Launcher (Frag: 36" 2D6 BS3+ S4 AP0 D1 Blast; Krak: 36" A2 BS3+ S9 AP-2 D6) - maxModels: 1
+- Melee weapons:
+  - Power Fist (A3 WS3+ S8 AP-2 D2) - default
+  - Chainfist (A3 WS4+ S8 AP-2 D2, Anti-Vehicle 3+) - option
+- loadoutOptions for heavy weapon (none/assault-cannon/heavy-flamer/cyclone) and melee (power-fist/chainfist)
+- Three abilities: Deep Strike, Fury of the First (+1 to hit Oath of Moment target), Teleport Homer (0CP Rapid Ingress)
+- Keywords: Infantry, Imperium, Terminator, Terminator Squad
+
+**Files changed:**
+- public/data/spacemarines.json - Added Terminator Squad unit to units array
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 213 tests passed (11 test files)
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Terminator Squad with points for 5/10 models (185/370)
+2. ✅ Stats: M5 T5 SV2+ W3 LD6+ OC1 with 4+ invuln
+3. ✅ Storm bolter and power fist standard
+4. ✅ Heavy weapon options (assault cannon, heavy flamer, cyclone)
+5. ✅ Deep Strike ability
+6. ✅ Keywords include Infantry, Imperium, Terminator
+
+---
+
 ## [chaosmarines-004] Add Chaos Lord character
 
 **Date:** 2026-01-23
