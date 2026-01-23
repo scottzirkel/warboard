@@ -5,6 +5,39 @@ Format follows the Ralph technique.
 
 ---
 
+## [chaosmarines-007] Add Possessed elite unit
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Possessed as an elite melee unit for Chaos Space Marines
+- Points: 115/230 for 5/10 models (per Wahapedia/Munitorum Field Manual)
+- Stats: M9 T5 SV3+ W3 LD6+ OC1 with 5+ invulnerable save
+- Fast movement (M9) reflects their daemonic agility
+- Hideous mutations melee weapon: A4 WS3+ S5 AP-2 D2
+- Daemonic Mutations ability: On 4+, fight back after being destroyed in melee before being removed
+- Unholy Frenzy ability: Re-roll wound rolls in melee
+- Keywords: Infantry, Chaos, Daemon, Heretic Astartes, Possessed
+- Daemon keyword grants interaction with Dark Pacts and other Chaos abilities
+
+**Files changed:**
+- public/data/chaosmarines.json - Added Possessed unit to units array
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 226 tests passed (12 test files)
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Possessed with points for 5/10 models (115/230)
+2. ✅ Stats: M9 T5 SV3+ W3 LD6+ OC1 with 5+ invuln
+3. ✅ Hideous mutations melee weapon (A4 WS3+ S5 AP-2 D2)
+4. ✅ Daemon keyword grants benefits (through abilities)
+5. ✅ Keywords include Infantry, Chaos, Daemon, Heretic Astartes
+
+---
+
 ## [chaosmarines-005] Add Dark Apostle character
 
 **Date:** 2026-01-23
