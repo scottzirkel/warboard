@@ -1,31 +1,9 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { Panel, Button, Badge } from '@/components/ui';
+import { Button, Badge } from '@/components/ui';
 import { useWakeLock } from '@/hooks';
 import type { ValidationError } from '@/types';
-
-// ============================================================================
-// Placeholder Panel Components (to be replaced by subsequent tasks)
-// ============================================================================
-
-interface PlaceholderPanelProps {
-  title: string;
-  description: string;
-}
-
-function PlaceholderPanel({ title, description }: PlaceholderPanelProps) {
-  return (
-    <Panel title={title}>
-      <div className="p-4 text-center text-gray-500">
-        <p className="text-sm">{description}</p>
-        <p className="text-xs mt-2 text-gray-600">
-          (Component to be implemented in future tasks)
-        </p>
-      </div>
-    </Panel>
-  );
-}
 
 // ============================================================================
 // Validation Gate Component
@@ -39,27 +17,15 @@ interface ValidationGateProps {
 function ValidationGate({ errors, onReturnToBuild }: ValidationGateProps) {
   return (
     <div className="h-full flex flex-col items-center justify-center p-8">
-      <div className="bg-gray-800/70 rounded-lg p-8 max-w-lg w-full border border-red-500/30">
+      <div className="card-depth p-8 max-w-lg w-full border border-red-500/30">
         <div className="flex items-center gap-3 mb-4">
-          <svg
-            className="w-8 h-8 text-red-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-            />
-          </svg>
+          <div className="text-red-400 text-2xl">!</div>
           <h2 className="text-xl font-bold text-gray-100">
             Cannot Enter Play Mode
           </h2>
         </div>
 
-        <p className="text-gray-400 mb-4">
+        <p className="text-white/60 mb-4">
           Your army list has validation errors that must be fixed before starting a game:
         </p>
 
@@ -69,7 +35,7 @@ function ValidationGate({ errors, onReturnToBuild }: ValidationGateProps) {
               <Badge variant="error" size="sm">
                 {error.type}
               </Badge>
-              <span className="text-gray-300 text-sm">{error.message}</span>
+              <span className="text-white/70 text-sm">{error.message}</span>
             </li>
           ))}
         </ul>
@@ -77,74 +43,6 @@ function ValidationGate({ errors, onReturnToBuild }: ValidationGateProps) {
         <Button variant="primary" onClick={onReturnToBuild} className="w-full">
           Return to Build Mode
         </Button>
-      </div>
-    </div>
-  );
-}
-
-// ============================================================================
-// Play Mode Header Component
-// ============================================================================
-
-interface PlayModeHeaderProps {
-  listName: string;
-  totalPoints: number;
-  pointsLimit: number;
-  armyName: string;
-  battleRound?: number;
-  onModeToggle?: () => void;
-}
-
-function PlayModeHeader({
-  listName,
-  totalPoints,
-  pointsLimit,
-  armyName,
-  battleRound,
-  onModeToggle,
-}: PlayModeHeaderProps) {
-  return (
-    <div className="shrink-0 px-4 py-3 bg-gray-800/50 border-b border-gray-700/50">
-      <div className="flex items-center justify-between">
-        {/* Left: List name and army */}
-        <div className="flex items-center gap-4">
-          <h1 className="text-xl font-bold text-gray-100">
-            {listName || 'Unnamed List'}
-          </h1>
-          <span className="text-sm text-gray-400">{armyName}</span>
-          {battleRound !== undefined && (
-            <Badge variant="accent" size="sm">
-              Round {battleRound}
-            </Badge>
-          )}
-        </div>
-
-        {/* Right: Points and mode toggle */}
-        <div className="flex items-center gap-4">
-          <span className="text-sm">
-            <span className="text-accent-400 font-bold">{totalPoints}</span>
-            <span className="text-gray-500"> / {pointsLimit} pts</span>
-          </span>
-
-          {onModeToggle && (
-            <Button variant="secondary" size="sm" onClick={onModeToggle}>
-              <svg
-                className="w-4 h-4 mr-1.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                />
-              </svg>
-              Edit List
-            </Button>
-          )}
-        </div>
       </div>
     </div>
   );
@@ -169,11 +67,6 @@ interface PlayModeProps {
 }
 
 export function PlayMode({
-  listName,
-  totalPoints,
-  pointsLimit,
-  armyName,
-  battleRound,
   leftPanel,
   middlePanel,
   rightPanel,
@@ -182,72 +75,47 @@ export function PlayMode({
   validationErrors = [],
 }: PlayModeProps) {
   // Acquire wake lock to prevent screen sleep during gameplay
-  // Only active when canPlay is true and we're in a valid play state
   const isPlayActive = canPlay && validationErrors.length === 0;
   useWakeLock(isPlayActive);
 
   // If there are validation errors and canPlay is false, show the gate
   if (!canPlay && validationErrors.length > 0) {
     return (
-      <div className="h-full flex flex-col">
-        <PlayModeHeader
-          listName={listName}
-          totalPoints={totalPoints}
-          pointsLimit={pointsLimit}
-          armyName={armyName}
-          onModeToggle={onModeToggle}
-        />
-        <ValidationGate
-          errors={validationErrors}
-          onReturnToBuild={onModeToggle || (() => {})}
-        />
-      </div>
+      <ValidationGate
+        errors={validationErrors}
+        onReturnToBuild={onModeToggle || (() => {})}
+      />
     );
   }
 
+  // Simple 3-column grid layout matching Alpine.js reference
   return (
-    <div className="h-full flex flex-col">
-      {/* Header Bar - Army Info */}
-      <PlayModeHeader
-        listName={listName}
-        totalPoints={totalPoints}
-        pointsLimit={pointsLimit}
-        armyName={armyName}
-        battleRound={battleRound}
-        onModeToggle={onModeToggle}
-      />
+    <div className="h-full grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
+      {/* Left Panel - Army Overview */}
+      <div className="lg:col-span-1 card-depth p-4 flex flex-col min-h-0 overflow-hidden">
+        {leftPanel || (
+          <div className="flex-1 flex items-center justify-center text-white/40">
+            <p>No army overview available</p>
+          </div>
+        )}
+      </div>
 
-      {/* Three Column Grid */}
-      <div className="flex-1 overflow-hidden grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
-        {/* Left Panel - Army Overview */}
-        <div className="overflow-hidden flex flex-col min-h-0">
-          {leftPanel || (
-            <PlaceholderPanel
-              title="Army Overview"
-              description="Unit list with wounds and models alive"
-            />
-          )}
-        </div>
+      {/* Middle Panel - Game State */}
+      <div className="lg:col-span-1 card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
+        {middlePanel || (
+          <div className="flex-1 flex items-center justify-center text-white/40">
+            <p>No game state available</p>
+          </div>
+        )}
+      </div>
 
-        {/* Middle Panel - Game State */}
-        <div className="overflow-hidden flex flex-col min-h-0">
-          {middlePanel || (
-            <PlaceholderPanel
-              title="Game State"
-              description="Battle round, CP, Ka'tah, and stratagems"
-            />
-          )}
-        </div>
-
-        {/* Right Panel - Selected Unit Details */}
-        <div className="overflow-hidden flex flex-col min-h-0">
-          {rightPanel || (
-            <PlaceholderPanel
-              title="Selected Unit"
-              description="Stats, weapons, and damage tracker"
-            />
-          )}
-        </div>
+      {/* Right Panel - Selected Unit Details */}
+      <div className="lg:col-span-1 card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
+        {rightPanel || (
+          <div className="flex-1 flex items-center justify-center text-white/40">
+            <p>Select a unit from your army to view details</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -273,32 +141,24 @@ export function ModeToggle({
   const isDisabled = disabled || (mode === 'build' && !canPlay);
 
   return (
-    <div className="inline-flex rounded-lg bg-gray-800 p-1">
-      <button
+    <div className="segmented-control w-52">
+      <div
         onClick={() => mode === 'play' && onToggle()}
-        className={`
-          px-3 py-1.5 text-sm font-medium rounded-md transition-colors
-          ${mode === 'build'
-            ? 'bg-accent-500 text-gray-900'
-            : 'text-gray-400 hover:text-gray-200'}
-        `}
+        className={`segmented-control-item ${mode === 'build' ? 'active' : ''}`}
       >
         Build
-      </button>
-      <button
-        onClick={() => mode === 'build' && onToggle()}
-        disabled={isDisabled}
+      </div>
+      <div
+        onClick={() => mode === 'build' && !isDisabled && onToggle()}
         className={`
-          px-3 py-1.5 text-sm font-medium rounded-md transition-colors
-          ${mode === 'play'
-            ? 'bg-green-600 text-white'
-            : 'text-gray-400 hover:text-gray-200'}
-          ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
+          segmented-control-item
+          ${mode === 'play' ? 'active' : ''}
+          ${isDisabled ? 'opacity-40 cursor-not-allowed' : ''}
         `}
         title={!canPlay && mode === 'build' ? 'Fix validation errors before playing' : undefined}
       >
         Play
-      </button>
+      </div>
     </div>
   );
 }

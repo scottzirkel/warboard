@@ -9,7 +9,7 @@ Goal: Align the Next.js app with the original Alpine.js design in `/reference/al
 | 1 - Navigation | ✅ Done | Simplified nav, segmented control, Quick Ref button |
 | 2 - Quick Reference | ✅ Done | Slide-out panel from right edge |
 | 3 - Build Mode | ✅ Done | Points summary, Army List, Roster, Unit Details |
-| 4 - Play Mode | 🔴 Not started | Layout refinements needed |
+| 4 - Play Mode | ✅ Done | Removed header, iOS-style controls, wound dots |
 | 5 - Modals | 🔴 Not started | Import/Load styling alignment |
 | 6 - CSS | ✅ Done | All classes present in globals.css |
 
@@ -74,29 +74,47 @@ Changes made:
 
 ---
 
-## Phase 4: Play Mode Layout 🔴 TODO
+## Phase 4: Play Mode Layout ✅ COMPLETE
 
-**Files to update:**
+**Files updated:**
 - `src/components/play/PlayMode.tsx`
 - `src/components/play/ArmyOverviewPanel.tsx`
 - `src/components/play/GameStatePanel.tsx`
 - `src/components/play/SelectedUnitDetailsPanel.tsx`
 
-**Changes needed:**
-1. Remove PlayModeHeader (info now in nav/Points Summary)
-2. Update ArmyOverviewPanel:
-   - Unit cards with wound dots
-   - Leader attachment indicators
-   - Collapsed/expanded states
-3. Update GameStatePanel:
-   - Battle round stepper
-   - Command points stepper
-   - Ka'tah selector (segmented control style)
-   - Stratagems as toggle buttons
-4. Update SelectedUnitDetailsPanel:
-   - Stats with modified values highlighted
-   - Weapon groups with activation toggle
-   - Damage tracker with wound dots
+**Changes made:**
+1. PlayMode.tsx:
+   - Removed PlayModeHeader completely
+   - Simplified to 3-column grid matching Alpine.js reference
+   - Each panel wrapped in `.card-depth` directly
+
+2. ArmyOverviewPanel.tsx:
+   - Added battle info card at top (list name, detachment badge, points)
+   - Uses `.section-header-inline` styling
+   - Removed Panel wrapper, using direct markup
+
+3. GameStatePanel.tsx:
+   - Battle round with `.stepper` CSS controls
+   - Command points with `.stepper` CSS controls
+   - Ka'tah selector as `.segmented-control`
+   - Stratagems as `.inset-group-item` toggle buttons
+   - Added Detachment Rules section
+   - Removed sub-components (BattleRoundControl, CommandPointsControl, etc.)
+
+4. SelectedUnitDetailsPanel.tsx:
+   - Stats using `.stat-cell` with `.modified` class for highlights
+   - Wound dots using `.wound-dot.filled` classes
+   - Active Modifiers summary section
+   - Inline damage tracker with wound/heal buttons
+   - Removed dependency on ModifiedStatsTable and DamageTracker
+
+**Files removed (no longer needed):**
+- BattleRoundControl.tsx
+- CommandPointsControl.tsx
+- MartialKatahSelector.tsx
+- StrategemsToggleList.tsx
+- ModifiedStatsTable.tsx
+- DamageTracker.tsx
 
 ---
 

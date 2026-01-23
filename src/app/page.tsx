@@ -508,6 +508,8 @@ export default function Home() {
                   selectedUnitIndex={selectedUnitIndex}
                   detachmentId={currentList.detachment}
                   onSelectUnit={selectUnit}
+                  listName={currentList.name}
+                  totalPoints={totalPoints}
                 />
               )
             }
@@ -546,12 +548,15 @@ export default function Home() {
                   onToggleActivated={toggleLoadoutGroupActivated}
                   onUnitWoundAdjust={handleUnitWoundAdjust}
                   onLeaderWoundAdjust={handleLeaderWoundAdjust}
+                  activeKatah={gameState.katah}
+                  katahName={armyData?.armyRules?.martial_katah?.stances?.find(s => s.id === gameState.katah)?.name}
+                  katahDescription={armyData?.armyRules?.martial_katah?.stances?.find(s => s.id === gameState.katah)?.description}
+                  activeStratagems={gameState.activeStratagems}
+                  stratagemNames={Object.fromEntries(
+                    armyData?.detachments[currentList.detachment]?.stratagems?.map(s => [s.id, s.name]) || []
+                  )}
                 />
-              ) : (
-                <div className="card-depth p-4 h-full flex items-center justify-center">
-                  <p className="text-white/40">Select a unit from your army to view details</p>
-                </div>
-              )
+              ) : undefined
             }
           />
         )}

@@ -1,13 +1,7 @@
 export { PlayMode, ModeToggle } from './PlayMode';
 export { PlayUnitCard } from './PlayUnitCard';
 export { ArmyOverviewPanel } from './ArmyOverviewPanel';
-export { ModifiedStatsTable } from './ModifiedStatsTable';
-export { DamageTracker } from './DamageTracker';
 export { LoadoutGroupCard, PlayModeWeaponsDisplay } from './PlayModeWeaponsDisplay';
 export { SelectedUnitDetailsPanel } from './SelectedUnitDetailsPanel';
 export { GameStatePanel } from './GameStatePanel';
-export { BattleRoundControl } from './BattleRoundControl';
-export { CommandPointsControl } from './CommandPointsControl';
-export { MartialKatahSelector } from './MartialKatahSelector';
-export { StrategemsToggleList } from './StrategemsToggleList';
 export { QuickReferencePanel } from './QuickReferencePanel';

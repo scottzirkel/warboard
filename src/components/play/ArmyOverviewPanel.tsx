@@ -1,6 +1,5 @@
 'use client';
 
-import { Panel } from '@/components/ui';
 import { PlayUnitCard } from './PlayUnitCard';
 import type { Unit, ListUnit, ArmyData } from '@/types';
 
@@ -110,6 +109,9 @@ interface ArmyOverviewPanelProps {
   selectedUnitIndex: number | null;
   detachmentId: string;
   onSelectUnit: (index: number) => void;
+  // Battle info props
+  listName?: string;
+  totalPoints?: number;
   className?: string;
 }
 
@@ -123,6 +125,8 @@ export function ArmyOverviewPanel({
   selectedUnitIndex,
   detachmentId,
   onSelectUnit,
+  listName,
+  totalPoints,
   className = '',
 }: ArmyOverviewPanelProps) {
   // Filter out units that are attached as leaders (they'll be shown with their host unit)
@@ -130,43 +134,36 @@ export function ArmyOverviewPanel({
     .map((listUnit, index) => ({ listUnit, index }))
     .filter(({ index }) => !isUnitAttachedAsLeader(index, units));
 
-  // Count units for summary
-  const totalUnits = visibleUnits.length;
-  const destroyedUnits = visibleUnits.filter(({ listUnit, index: _index }) => {
-    const unit = getUnitById(listUnit.unitId, armyData);
-    if (!unit) return false;
-
-    const { currentWounds } = calculateUnitWounds(listUnit, unit);
-
-    // Also check attached leader wounds
-    let leaderCurrentWounds = 0;
-    if (listUnit.attachedLeader) {
-      const leaderListUnit = units[listUnit.attachedLeader.unitIndex];
-      const leaderUnit = getUnitById(leaderListUnit?.unitId, armyData);
-      if (leaderListUnit && leaderUnit) {
-        const leaderWounds = calculateLeaderWounds(leaderListUnit, leaderUnit);
-        leaderCurrentWounds = leaderWounds.currentWounds;
-      }
-    }
-
-    return (currentWounds + leaderCurrentWounds) <= 0;
-  }).length;
-  const activeUnits = totalUnits - destroyedUnits;
+  const detachment = armyData.detachments?.[detachmentId];
 
   return (
-    <Panel
-      title="Army Overview"
-      headerRight={
-        <span className="text-sm text-gray-400">
-          {activeUnits}/{totalUnits} active
-        </span>
-      }
-      className={className}
-    >
-      <div className="p-3 space-y-2">
+    <div className={`flex flex-col h-full ${className}`}>
+      {/* Header */}
+      <h2 className="section-header-inline mb-4 shrink-0">Your Army</h2>
+
+      {/* Battle Info Card */}
+      {(listName || detachment || totalPoints !== undefined) && (
+        <div className="card-depth p-4 mb-4 shrink-0">
+          {listName && (
+            <div className="text-lg font-semibold">{listName}</div>
+          )}
+          <div className="flex items-center gap-2 mt-1">
+            {detachment && (
+              <span className="badge badge-accent">{detachment.name}</span>
+            )}
+            {totalPoints !== undefined && (
+              <span className="text-accent-400 font-bold">{totalPoints} pts</span>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Army Units List */}
+      <div className="space-y-2 flex-1 overflow-y-auto scroll-smooth min-h-0">
         {visibleUnits.length === 0 ? (
-          <div className="p-4 text-center text-gray-500">
-            <p className="text-sm">No units in army list</p>
+          <div className="text-center text-white/40 py-12">
+            <p className="text-lg mb-1">No units in your army</p>
+            <p className="text-sm">Switch to Build Mode to add units</p>
           </div>
         ) : (
           visibleUnits.map(({ listUnit, index }) => {
@@ -230,6 +227,6 @@ export function ArmyOverviewPanel({
           })
         )}
       </div>
-    </Panel>
+    </div>
   );
 }
