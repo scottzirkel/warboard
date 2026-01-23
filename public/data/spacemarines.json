@@ -320,7 +320,122 @@
       "keywords": ["Infantry", "Imperium", "Tacticus", "Bladeguard Veteran Squad"]
     }
   ],
-  "detachments": {},
+  "detachments": {
+    "gladius_task_force": {
+      "name": "Gladius Task Force",
+      "rules": [
+        {
+          "id": "combat-doctrines",
+          "name": "Combat Doctrines",
+          "description": "At the start of your Command phase, you can select one of the Combat Doctrines listed below. Until the start of your next Command phase, that Combat Doctrine is active for your army, and its effects apply to all ADEPTUS ASTARTES units from your army. You can only select each Combat Doctrine once per battle.",
+          "type": "passive",
+          "doctrines": [
+            {
+              "id": "devastator-doctrine",
+              "name": "Devastator Doctrine",
+              "description": "Your units are eligible to shoot in a turn in which they Advanced."
+            },
+            {
+              "id": "tactical-doctrine",
+              "name": "Tactical Doctrine",
+              "description": "Your units are eligible to shoot and declare a charge in a turn in which they Fell Back."
+            },
+            {
+              "id": "assault-doctrine",
+              "name": "Assault Doctrine",
+              "description": "Your units are eligible to declare a charge in a turn in which they Advanced."
+            }
+          ],
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "only-in-death-does-duty-end",
+          "name": "Only In Death Does Duty End",
+          "cost": 2,
+          "phase": "Fight",
+          "description": "Use this Stratagem in the Fight phase, just after an enemy unit has selected its targets. Select one ADEPTUS ASTARTES unit from your army that was selected as a target of one or more of the attacking unit's attacks. Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, do not remove it from play. The destroyed model can fight after the attacking model's unit has finished making its attacks, and is then removed from play.",
+          "modifiers": []
+        },
+        {
+          "id": "armour-of-contempt",
+          "name": "Armour of Contempt",
+          "cost": 1,
+          "phase": "Shooting/Fight",
+          "description": "Use this Stratagem in your opponent's Shooting phase or the Fight phase, just after an enemy unit has selected its targets. Select one ADEPTUS ASTARTES unit from your army that was selected as a target of one or more of that enemy unit's attacks. Until the end of the phase, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.",
+          "modifiers": []
+        },
+        {
+          "id": "honour-the-chapter",
+          "name": "Honour the Chapter",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Use this Stratagem in the Fight phase. Select one ADEPTUS ASTARTES unit from your army that has not been selected to fight this phase. Until the end of the phase, melee weapons equipped by models in your unit have the [LANCE] ability. While the Assault Doctrine is active for your army, those melee weapons also have their Armour Penetration characteristic improved by 1.",
+          "modifiers": []
+        },
+        {
+          "id": "storm-of-fire",
+          "name": "Storm of Fire",
+          "cost": 1,
+          "phase": "Shooting",
+          "description": "Use this Stratagem in your Shooting phase. Select one ADEPTUS ASTARTES unit from your army that has not been selected to shoot this phase. Until the end of the phase, ranged weapons equipped by models in your unit have the [IGNORES COVER] ability. While the Devastator Doctrine is active for your army, those ranged weapons also have their Armour Penetration characteristic improved by 1.",
+          "modifiers": []
+        },
+        {
+          "id": "adaptive-strategy",
+          "name": "Adaptive Strategy",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Use this Stratagem at the start of any phase. Select one ADEPTUS ASTARTES unit from your army and select one Combat Doctrine. Until the end of the phase, that Combat Doctrine is considered to be active for that unit instead of any other Combat Doctrine that is currently active for your army, even if you have already selected that Combat Doctrine to be active for your army this battle.",
+          "modifiers": []
+        },
+        {
+          "id": "squad-tactics",
+          "name": "Squad Tactics",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Use this Stratagem in your opponent's Movement phase, just after an enemy unit ends a Normal, Advance or Fall Back move. Select one ADEPTUS ASTARTES INFANTRY or ADEPTUS ASTARTES MOUNTED unit from your army that is within 9\" of that enemy unit and not within Engagement Range of one or more enemy units. Your unit can make a Normal move of up to D6\".",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "artificer-armour",
+          "name": "Artificer Armour",
+          "points": 10,
+          "description": "ADEPTUS ASTARTES model only. The bearer has a Save characteristic of 2+ and the Feel No Pain 5+ ability.",
+          "modifiers": [
+            { "stat": "sv", "operation": "set", "value": "2+", "scope": "model" }
+          ]
+        },
+        {
+          "id": "the-honour-vehement",
+          "name": "The Honour Vehement",
+          "points": 15,
+          "description": "ADEPTUS ASTARTES model only. Add 1 to the Attacks and Strength characteristics of the bearer's melee weapons. While the Assault Doctrine is active for your army, add 2 to the Attacks and Strength characteristics of the bearer's melee weapons instead.",
+          "modifiers": [
+            { "stat": "a", "operation": "add", "value": 1, "scope": "melee" },
+            { "stat": "s", "operation": "add", "value": 1, "scope": "melee" }
+          ]
+        },
+        {
+          "id": "adept-of-the-codex",
+          "name": "Adept of the Codex",
+          "points": 20,
+          "description": "ADEPTUS ASTARTES model only. At the start of your Command phase, if the bearer is on the battlefield, instead of selecting a Combat Doctrine to be active for your army, you can select the Tactical Doctrine. If you do, until the start of your next Command phase, that Combat Doctrine is active for the bearer's unit only, even if you have already selected that Combat Doctrine to be active for your army this battle.",
+          "modifiers": []
+        },
+        {
+          "id": "fire-discipline",
+          "name": "Fire Discipline",
+          "points": 25,
+          "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, ranged weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability.",
+          "modifiers": []
+        }
+      ]
+    }
+  },
   "armyRules": {
     "oath_of_moment": {
       "name": "Oath of Moment",
