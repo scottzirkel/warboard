@@ -33,7 +33,7 @@ interface StatRowProps {
 
 export function StatRow({ children, className = '' }: StatRowProps) {
   return (
-    <div className={`flex gap-1 ${className}`}>
+    <div className={`grid grid-cols-6 gap-2 ${className}`}>
       {children}
     </div>
   );
