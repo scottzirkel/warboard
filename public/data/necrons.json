@@ -53,6 +53,190 @@
         }
       ],
       "keywords": ["Infantry", "Battleline", "Necrons", "Necron Warriors"]
+    },
+    {
+      "id": "immortals",
+      "name": "Immortals",
+      "points": { "5": 70, "10": 150 },
+      "stats": { "m": 5, "t": 5, "sv": "3+", "w": 1, "ld": "7+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "gauss-blaster",
+          "name": "Gauss Blaster",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Lethal Hits"],
+          "loadoutGroup": "blaster"
+        },
+        {
+          "id": "tesla-carbine",
+          "name": "Tesla Carbine",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Assault", "Sustained Hits 2"],
+          "loadoutGroup": "tesla"
+        },
+        {
+          "id": "immortal-close-combat-weapon",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "blaster", "name": "Gauss Blaster", "default": true },
+            { "id": "tesla", "name": "Tesla Carbine" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "implacable-eradication",
+          "name": "Implacable Eradication",
+          "description": "Each time a model in this unit makes an attack, re-roll a Wound roll of 1. If the target is within range of an objective marker, you can re-roll the Wound roll instead."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Necrons", "Immortals"]
+    },
+    {
+      "id": "overlord",
+      "name": "Overlord",
+      "points": { "1": 85 },
+      "stats": { "m": 5, "t": 5, "sv": "2+", "w": 6, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "tachyon-arrow",
+          "name": "Tachyon Arrow",
+          "type": "ranged",
+          "stats": { "range": 72, "a": 1, "bs": "2+", "s": 16, "ap": -5, "d": "D6+2" },
+          "abilities": ["One Shot"],
+          "loadoutGroup": "tachyon"
+        },
+        {
+          "id": "staff-of-light-ranged",
+          "name": "Staff of Light",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 3, "bs": "2+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "staff"
+        },
+        {
+          "id": "staff-of-light-melee",
+          "name": "Staff of Light",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "2+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "staff"
+        },
+        {
+          "id": "voidscythe",
+          "name": "Voidscythe",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Devastating Wounds"],
+          "loadoutGroup": "voidscythe"
+        },
+        {
+          "id": "overlord-close-combat-weapon",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "2+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "staff", "name": "Staff of Light", "default": true },
+            { "id": "tachyon", "name": "Tachyon Arrow" }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "staff", "name": "Staff of Light", "default": true },
+            { "id": "voidscythe", "name": "Voidscythe" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to Immortals, Lychguard, or Necron Warriors.",
+          "eligibleUnits": ["immortals", "lychguard", "necron-warriors"]
+        },
+        {
+          "id": "my-will-be-done",
+          "name": "My Will Be Done",
+          "description": "While this model is leading a unit, add 1 to the Hit roll for attacks made by models in that unit."
+        },
+        {
+          "id": "resurrection-orb",
+          "name": "Resurrection Orb",
+          "description": "Once per battle, at the start of your Command phase, you can select one friendly NECRONS unit within 6\". That unit's Reanimation Protocols heal 2D3 wounds instead of D3 this phase."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Necrons", "Overlord"]
+    },
+    {
+      "id": "royal-warden",
+      "name": "Royal Warden",
+      "points": { "1": 50 },
+      "stats": { "m": 5, "t": 5, "sv": "3+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "relic-gauss-blaster",
+          "name": "Relic Gauss Blaster",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Lethal Hits", "Rapid Fire 2"]
+        },
+        {
+          "id": "royal-warden-ccw",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to Immortals or Necron Warriors.",
+          "eligibleUnits": ["immortals", "necron-warriors"]
+        },
+        {
+          "id": "adaptive-strategy",
+          "name": "Adaptive Strategy",
+          "description": "While this model is leading a unit, that unit is eligible to shoot and declare a charge in a turn in which it Fell Back."
+        },
+        {
+          "id": "engrammatic-logic",
+          "name": "Engrammatic Logic",
+          "description": "Once per battle, at the start of any phase, you can select one friendly NECRONS unit that is Battle-shocked and within 12\" of this model. That unit is no longer Battle-shocked."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Necrons", "Royal Warden"]
     }
   ],
   "detachments": {},

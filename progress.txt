@@ -5,6 +5,38 @@ Format follows the Ralph technique.
 
 ---
 
+## [necrons-003] Add Immortals battleline unit
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Immortals as a second battleline unit for Necrons
+- Points: 70/150 for 5/10 models (per Wahapedia - note slightly higher than Necron Warriors)
+- Stats: M5 T5 SV3+ W1 LD7+ OC2 (tougher and better armored than Warriors)
+- Key differences from Warriors: T5 vs T4, SV3+ vs SV4+, BS3+ vs BS4+
+- Gauss Blaster: 24" A2 BS3+ S5 AP-1 D1 with Lethal Hits (reliable damage output)
+- Tesla Carbine: 24" A2 BS3+ S5 AP0 D1 with Assault and Sustained Hits 2 (more mobile, spike damage)
+- Close Combat Weapon: A2 WS3+ S4 AP0 D1 (basic melee)
+- Implacable Eradication ability: Re-roll wound roll of 1; full re-roll if target near objective
+- Keywords: Infantry, Battleline, Necrons, Immortals
+
+**Files changed:**
+- public/data/necrons.json - Added Immortals unit to units array
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 226 tests passed (12 test files)
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Immortals with points for 5/10 models (70/150)
+2. ✅ Stats: M5 T5 SV3+ W1 LD7+ OC2
+3. ✅ Gauss blaster and tesla carbine options (both available with loadout replacement pattern)
+4. ✅ Keywords include Infantry, Battleline, Necrons
+
+---
+
 ## [chaosmarines-007] Add Possessed elite unit
 
 **Date:** 2026-01-23
