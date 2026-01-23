@@ -37,6 +37,7 @@ export default function Home() {
   // Local State
   // -------------------------------------------------------------------------
   const [showReferencePanel, setShowReferencePanel] = useState(false);
+  const [previewedUnit, setPreviewedUnit] = useState<Unit | null>(null);
 
   // -------------------------------------------------------------------------
   // Store State
@@ -322,8 +323,19 @@ export default function Home() {
     const modelCounts = Object.keys(unit.points).map(Number);
     const defaultModelCount = modelCounts[0];
     addUnit(unit.id, defaultModelCount);
+    setPreviewedUnit(null); // Clear preview after adding
     showSuccess(`Added ${unit.name} to your army`);
   }, [addUnit, showSuccess]);
+
+  const handlePreviewUnit = useCallback((unit: Unit) => {
+    setPreviewedUnit(unit);
+    selectUnit(null); // Clear list selection when previewing from roster
+  }, [selectUnit]);
+
+  const handleSelectListUnit = useCallback((index: number | null) => {
+    selectUnit(index);
+    setPreviewedUnit(null); // Clear preview when selecting from list
+  }, [selectUnit]);
 
   const handleRemoveUnit = useCallback((index: number) => {
     const listUnit = currentList.units[index];
@@ -447,7 +459,7 @@ export default function Home() {
                   armyData={armyData}
                   currentList={currentList}
                   selectedUnitIndex={selectedUnitIndex}
-                  onSelectUnit={selectUnit}
+                  onSelectUnit={handleSelectListUnit}
                   onRemoveUnit={handleRemoveUnit}
                   onModelCountChange={updateUnitModelCount}
                   onEnhancementChange={setUnitEnhancement}
@@ -473,21 +485,32 @@ export default function Home() {
               armyData && (
                 <UnitRosterPanel
                   units={armyData.units}
+                  onSelectUnit={handlePreviewUnit}
                   onAddUnit={handleAddUnit}
-                  selectedUnitId={selectedUnit?.id}
+                  selectedUnitId={previewedUnit?.id}
                   isLoading={isArmyLoading}
                 />
               )
             }
             rightPanel={
-              <UnitDetailsPanel
-                unit={selectedUnit || null}
-                listUnit={selectedListUnit || null}
-                unitIndex={selectedUnitIndex}
-                enhancement={selectedEnhancement}
-                modifiers={statModifiers.modifiers}
-                modifierSources={buildModifierSources(statModifiers)}
-              />
+              previewedUnit ? (
+                <UnitDetailsPanel
+                  unit={previewedUnit}
+                  listUnit={null}
+                  unitIndex={0}
+                  enhancement={null}
+                  onAddUnit={() => handleAddUnit(previewedUnit)}
+                />
+              ) : (
+                <UnitDetailsPanel
+                  unit={selectedUnit || null}
+                  listUnit={selectedListUnit || null}
+                  unitIndex={selectedUnitIndex}
+                  enhancement={selectedEnhancement}
+                  modifiers={statModifiers.modifiers}
+                  modifierSources={buildModifierSources(statModifiers)}
+                />
+              )
             }
           />
         ) : (

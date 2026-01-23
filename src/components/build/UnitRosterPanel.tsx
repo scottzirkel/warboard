@@ -5,6 +5,7 @@ import type { Unit } from '@/types';
 
 interface UnitRosterPanelProps {
   units: Unit[];
+  onSelectUnit: (unit: Unit) => void;
   onAddUnit: (unit: Unit) => void;
   selectedUnitId?: string;
   isLoading?: boolean;
@@ -66,7 +67,8 @@ function SimpleAccordion({ title, count, isOpen, onToggle, children }: SimpleAcc
 
 export function UnitRosterPanel({
   units,
-  onAddUnit,
+  onSelectUnit,
+  onAddUnit: _onAddUnit,
   selectedUnitId,
   isLoading = false,
   className = '',
@@ -198,7 +200,7 @@ export function UnitRosterPanel({
                 {groupedUnits[group].map((unit) => (
                   <div
                     key={unit.id}
-                    onClick={() => onAddUnit(unit)}
+                    onClick={() => onSelectUnit(unit)}
                     className={`
                       list-row touch-highlight cursor-pointer rounded-lg
                       ${unit.id === selectedUnitId ? 'bg-accent-tint-strong' : ''}
