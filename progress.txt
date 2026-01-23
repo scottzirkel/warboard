@@ -1125,3 +1125,39 @@ Format follows the Ralph technique.
 - npm run build passes
 - Total units in tyranids.json: 12
 
+---
+
+## [nextjs-001] Initialize Next.js project and remove Alpine.js files
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Migrated from Alpine.js + Vite to Next.js 14 with App Router
+- Using TypeScript for type safety
+- Switched from Tailwind CSS v4 to v3 for Next.js compatibility
+- Added Zustand for state management (to replace Alpine.js reactive state)
+- Kept data files (custodes.json, tyranids.json) in existing locations
+- Created standard Next.js folder structure: src/app, src/components, src/hooks, src/stores, src/lib, src/types
+
+**Files removed:**
+- `src/main.js` - Old Alpine.js application code
+- `api.php` - Old PHP backend (will be replaced by Next.js API routes)
+- `vite.config.js` - Old Vite configuration
+- `index.html` - Old Alpine.js HTML template
+- `src/style.css` - Old Tailwind v4 styles (incompatible with Next.js)
+
+**Files created:**
+- `package.json` - Updated with Next.js, React, TypeScript, and Zustand dependencies
+- `tsconfig.json` - TypeScript configuration for Next.js
+- `next.config.js` - Next.js configuration
+- `next-env.d.ts` - Next.js TypeScript environment types
+- `tailwind.config.ts` - Tailwind CSS v3 configuration
+- `postcss.config.js` - PostCSS configuration for Tailwind
+- `src/app/layout.tsx` - Root layout component
+- `src/app/page.tsx` - Home page placeholder
+- `src/app/globals.css` - Global styles with Tailwind
+
+**Verification:**
+- npm run build passes with no errors
+- Next.js dev server starts successfully
+
