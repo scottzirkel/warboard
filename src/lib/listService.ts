@@ -1,8 +1,7 @@
 // List service for database operations
 //
 // This service handles all list CRUD operations using Prisma.
-// For now, lists are stored anonymously (without user scoping).
-// User scoping will be added in multiuser-004.
+// All operations are scoped to the authenticated user.
 
 import { prisma } from '@/lib/db';
 import type { CurrentList, DbList } from '@/types';
@@ -23,24 +22,16 @@ export interface ListWithData extends ListInfo {
 }
 
 // ============================================================================
-// Constants
-// ============================================================================
-
-// Temporary anonymous user ID for file-based backward compatibility
-// This will be replaced with real user IDs in multiuser-004
-const ANONYMOUS_USER_ID = 'anonymous';
-
-// ============================================================================
 // Service Functions
 // ============================================================================
 
 /**
- * Get all lists (for anonymous user).
+ * Get all lists for a specific user.
  * Returns list metadata without the full data payload.
  */
-export async function getAllLists(): Promise<ListInfo[]> {
+export async function getAllLists(userId: string): Promise<ListInfo[]> {
   const lists = await prisma.list.findMany({
-    where: { userId: ANONYMOUS_USER_ID },
+    where: { userId },
     select: {
       id: true,
       name: true,
@@ -54,12 +45,12 @@ export async function getAllLists(): Promise<ListInfo[]> {
 }
 
 /**
- * Get a single list by ID.
- * Returns the full list data.
+ * Get a single list by ID for a specific user.
+ * Returns the full list data, or null if not found or not owned by user.
  */
-export async function getListById(id: string): Promise<ListWithData | null> {
-  const list = await prisma.list.findUnique({
-    where: { id },
+export async function getListById(id: string, userId: string): Promise<ListWithData | null> {
+  const list = await prisma.list.findFirst({
+    where: { id, userId },
   });
 
   if (!list) {
@@ -76,13 +67,14 @@ export async function getListById(id: string): Promise<ListWithData | null> {
 }
 
 /**
- * Get a list by name (for backward compatibility with filename-based lookup).
+ * Get a list by name for a specific user.
+ * Used for backward compatibility with filename-based lookup.
  */
-export async function getListByName(name: string): Promise<ListWithData | null> {
+export async function getListByName(name: string, userId: string): Promise<ListWithData | null> {
   const list = await prisma.list.findFirst({
     where: {
-      userId: ANONYMOUS_USER_ID,
-      name: name,
+      userId,
+      name,
     },
   });
 
@@ -100,14 +92,13 @@ export async function getListByName(name: string): Promise<ListWithData | null> 
 }
 
 /**
- * Create or update a list by name.
- * If a list with the same name exists, it will be updated.
- * This provides backward compatibility with the file-based system.
+ * Create or update a list by name for a specific user.
+ * If a list with the same name exists for that user, it will be updated.
  */
-export async function saveList(listData: CurrentList): Promise<DbList> {
+export async function saveList(listData: CurrentList, userId: string): Promise<DbList> {
   const existingList = await prisma.list.findFirst({
     where: {
-      userId: ANONYMOUS_USER_ID,
+      userId,
       name: listData.name,
     },
   });
@@ -126,7 +117,7 @@ export async function saveList(listData: CurrentList): Promise<DbList> {
   // Create new list
   return prisma.list.create({
     data: {
-      userId: ANONYMOUS_USER_ID,
+      userId,
       name: listData.name,
       armyId: listData.army,
       data: JSON.stringify(listData),
@@ -135,10 +126,20 @@ export async function saveList(listData: CurrentList): Promise<DbList> {
 }
 
 /**
- * Delete a list by ID.
+ * Delete a list by ID for a specific user.
+ * Returns false if the list doesn't exist or doesn't belong to the user.
  */
-export async function deleteListById(id: string): Promise<boolean> {
+export async function deleteListById(id: string, userId: string): Promise<boolean> {
   try {
+    // First verify the list belongs to this user
+    const list = await prisma.list.findFirst({
+      where: { id, userId },
+    });
+
+    if (!list) {
+      return false;
+    }
+
     await prisma.list.delete({
       where: { id },
     });
@@ -150,14 +151,15 @@ export async function deleteListById(id: string): Promise<boolean> {
 }
 
 /**
- * Delete a list by name (for backward compatibility).
+ * Delete a list by name for a specific user.
+ * Used for backward compatibility with filename-based deletion.
  */
-export async function deleteListByName(name: string): Promise<boolean> {
+export async function deleteListByName(name: string, userId: string): Promise<boolean> {
   try {
     const list = await prisma.list.findFirst({
       where: {
-        userId: ANONYMOUS_USER_ID,
-        name: name,
+        userId,
+        name,
       },
     });
 
@@ -176,13 +178,14 @@ export async function deleteListByName(name: string): Promise<boolean> {
 }
 
 /**
- * Import a list from JSON file data.
+ * Import a list from JSON file data for a specific user.
  * Used for migrating existing JSON files to the database.
  */
 export async function importList(
   name: string,
   armyId: string,
-  listData: Record<string, unknown>
+  listData: Record<string, unknown>,
+  userId: string
 ): Promise<DbList> {
   // Normalize the list data structure
   const normalizedData: CurrentList = {
@@ -194,5 +197,5 @@ export async function importList(
     units: (listData.units || []) as CurrentList['units'],
   };
 
-  return saveList(normalizedData);
+  return saveList(normalizedData, userId);
 }

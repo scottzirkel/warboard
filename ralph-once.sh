@@ -65,9 +65,13 @@ Keep changes small and focused - one logical change per commit.
 Quality over speed. Small steps compound into big progress.
 
 FEEDBACK LOOPS (all must pass before committing):
-1. Run npm run build (Vite build)
-2. Test manually in browser if needed
+1. Run npm run lint (ESLint)
+2. Run npm run typecheck (TypeScript validation)
+3. Run npm run test (Vitest unit tests - write tests if needed)
+4. Run npm run build (Next.js build)
+Or use: npm run validate (runs all 4 in sequence)
 Do NOT commit if any feedback loop fails. Fix issues first.
+Do NOT push to remote - only commit locally.
 
 COMMIT:
 Update progress.txt with: task completed, decisions made, files changed.
@@ -75,8 +79,7 @@ Update PRD.jsonl to mark the feature passes:true.
 Stage ALL changes (code + progress.txt + PRD.jsonl) and commit together.
 Commit message format: [feature-id] Description
 
-ONLY DO ONE FEATURE.
-If all features are complete, output <promise>COMPLETE</promise>."
+ONLY DO ONE FEATURE. Just complete the task and commit."
 
 echo ""
 echo "======================================"
