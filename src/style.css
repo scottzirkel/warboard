@@ -306,6 +306,8 @@ body {
   background: rgba(118, 118, 128, 0.24);
   border-radius: 9px;
   overflow: hidden;
+  min-width: 120px;
+  flex-shrink: 0;
 }
 
 .stepper-btn {

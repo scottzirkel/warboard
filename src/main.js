@@ -578,12 +578,22 @@ Alpine.data('armyTracker', () => ({
   },
 
   getWeaponCountError(listUnit) {
-    const total = this.getWeaponCountTotal(listUnit)
-    if (total < listUnit.modelCount) {
-      return `${listUnit.modelCount - total} model(s) need weapons`
-    }
-    if (total > listUnit.modelCount) {
-      return `${total - listUnit.modelCount} too many weapons assigned`
+    const unit = this.getUnitById(listUnit.unitId)
+    if (!unit?.loadoutOptions || !listUnit.weaponCounts) return null
+
+    // Validate each replacement loadout option separately
+    for (const option of unit.loadoutOptions) {
+      if (option.pattern !== 'replacement') continue
+
+      const choiceIds = option.choices?.map(c => c.id) || []
+      const total = choiceIds.reduce((sum, id) => sum + (listUnit.weaponCounts[id] || 0), 0)
+
+      if (total < listUnit.modelCount) {
+        return `${listUnit.modelCount - total} model(s) need ${option.name.toLowerCase()}`
+      }
+      if (total > listUnit.modelCount) {
+        return `${total - listUnit.modelCount} too many ${option.name.toLowerCase()} assigned`
+      }
     }
     return null
   },
@@ -598,11 +608,25 @@ Alpine.data('armyTracker', () => ({
     const newCount = Math.max(0, Math.min(upperLimit, current + delta))
     listUnit.weaponCounts[choiceId] = newCount
 
-    // For single-model units, enforce mutual exclusivity
-    if (listUnit.modelCount === 1 && newCount === 1) {
-      for (const key of Object.keys(listUnit.weaponCounts)) {
-        if (key !== choiceId) {
-          listUnit.weaponCounts[key] = 0
+    // For replacement patterns, enforce mutual exclusivity within the same loadout option
+    if (newCount > 0) {
+      const unit = this.getUnitById(listUnit.unitId)
+      const loadoutOption = unit?.loadoutOptions?.find(opt =>
+        opt.pattern === 'replacement' && opt.choices?.some(c => c.id === choiceId)
+      )
+      if (loadoutOption) {
+        const siblingChoiceIds = loadoutOption.choices.map(c => c.id).filter(id => id !== choiceId)
+        const totalInGroup = newCount + siblingChoiceIds.reduce((sum, id) => sum + (listUnit.weaponCounts[id] || 0), 0)
+        // If total exceeds model count, reduce other choices
+        if (totalInGroup > listUnit.modelCount) {
+          let excess = totalInGroup - listUnit.modelCount
+          for (const siblingId of siblingChoiceIds) {
+            if (excess <= 0) break
+            const siblingCount = listUnit.weaponCounts[siblingId] || 0
+            const reduction = Math.min(siblingCount, excess)
+            listUnit.weaponCounts[siblingId] = siblingCount - reduction
+            excess -= reduction
+          }
         }
       }
     }
@@ -615,13 +639,27 @@ Alpine.data('armyTracker', () => ({
     const numValue = parseInt(value) || 0
     const maxModels = this.getChoiceMaxModels(listUnit.unitId, choiceId)
     const upperLimit = maxModels !== null ? Math.min(maxModels, listUnit.modelCount) : listUnit.modelCount
-    listUnit.weaponCounts[choiceId] = Math.max(0, Math.min(upperLimit, numValue))
+    const newCount = Math.max(0, Math.min(upperLimit, numValue))
+    listUnit.weaponCounts[choiceId] = newCount
 
-    // For single-model units, enforce mutual exclusivity
-    if (listUnit.modelCount === 1 && numValue === 1) {
-      for (const key of Object.keys(listUnit.weaponCounts)) {
-        if (key !== choiceId) {
-          listUnit.weaponCounts[key] = 0
+    // For replacement patterns, enforce mutual exclusivity within the same loadout option
+    if (newCount > 0) {
+      const unit = this.getUnitById(listUnit.unitId)
+      const loadoutOption = unit?.loadoutOptions?.find(opt =>
+        opt.pattern === 'replacement' && opt.choices?.some(c => c.id === choiceId)
+      )
+      if (loadoutOption) {
+        const siblingChoiceIds = loadoutOption.choices.map(c => c.id).filter(id => id !== choiceId)
+        const totalInGroup = newCount + siblingChoiceIds.reduce((sum, id) => sum + (listUnit.weaponCounts[id] || 0), 0)
+        if (totalInGroup > listUnit.modelCount) {
+          let excess = totalInGroup - listUnit.modelCount
+          for (const siblingId of siblingChoiceIds) {
+            if (excess <= 0) break
+            const siblingCount = listUnit.weaponCounts[siblingId] || 0
+            const reduction = Math.min(siblingCount, excess)
+            listUnit.weaponCounts[siblingId] = siblingCount - reduction
+            excess -= reduction
+          }
         }
       }
     }

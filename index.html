@@ -21,7 +21,7 @@
               class="select-dark text-accent-400 font-semibold text-sm"
             >
               <template x-for="army in availableArmies" :key="army.id">
-                <option :value="army.id" :disabled="army.disabled" x-text="army.name + (army.disabled ? ' (Coming Soon)' : '')" class="bg-gray-900 text-white"></option>
+                <option :value="army.id" :disabled="army.disabled === true" x-text="army.name + (army.disabled === true ? ' (Coming Soon)' : '')" class="bg-gray-900 text-white"></option>
               </template>
             </select>
           </div>
@@ -249,7 +249,7 @@
                   <template x-for="option in getLoadoutOptionsByPattern(listUnit.unitId).replacement" :key="option.id">
                     <div>
                       <div class="text-xs text-white/50 mb-2">
-                        <span class="text-blue-400">Replace</span>
+                        <span class="text-blue-400" x-text="option.name"></span>
                       </div>
                       <div class="space-y-1">
                         <template x-for="choice in option.choices" :key="choice.id">
@@ -275,7 +275,7 @@
                   <template x-for="option in getLoadoutOptionsByPattern(listUnit.unitId).addition" :key="option.id">
                     <div>
                       <div class="text-xs text-white/50 mb-2">
-                        <span class="text-green-400">Add</span>
+                        <span class="text-green-400" x-text="option.name"></span>
                       </div>
                       <div class="space-y-1">
                         <template x-for="choice in option.choices" :key="choice.id">
