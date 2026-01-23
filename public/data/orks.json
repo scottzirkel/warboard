@@ -328,6 +328,127 @@
         }
       ],
       "keywords": ["Infantry", "Grenades", "Orks", "Mob", "Nobz"]
+    },
+    {
+      "id": "meganobz",
+      "name": "Meganobz",
+      "points": { "2": 65, "3": 95, "5": 160, "6": 190 },
+      "stats": { "m": 5, "t": 6, "sv": "2+", "w": 3, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "kustom-shoota",
+          "name": "Kustom Shoota",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 4, "bs": "5+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "kustom-shoota-klaw"
+        },
+        {
+          "id": "power-klaw-meganobz",
+          "name": "Power Klaw",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 9, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "kustom-shoota-klaw"
+        },
+        {
+          "id": "kombi-weapon-meganobz",
+          "name": "Kombi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "5+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "kombi-klaw"
+        },
+        {
+          "id": "power-klaw-kombi",
+          "name": "Power Klaw",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 9, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "kombi-klaw"
+        },
+        {
+          "id": "kombi-weapon-killsaw",
+          "name": "Kombi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "5+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "kombi-killsaw"
+        },
+        {
+          "id": "killsaw-kombi",
+          "name": "Killsaw",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 12, "ap": -3, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "kombi-killsaw"
+        },
+        {
+          "id": "kustom-shoota-killsaw",
+          "name": "Kustom Shoota",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 4, "bs": "5+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "shoota-killsaw"
+        },
+        {
+          "id": "killsaw-shoota",
+          "name": "Killsaw",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 12, "ap": -3, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "shoota-killsaw"
+        },
+        {
+          "id": "killsaw-klaw-ranged",
+          "name": "Killsaw",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 12, "ap": -3, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "killsaw-klaw"
+        },
+        {
+          "id": "power-klaw-killsaw",
+          "name": "Power Klaw",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 9, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "killsaw-klaw"
+        },
+        {
+          "id": "twin-killsaw",
+          "name": "Twin Killsaw",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 12, "ap": -3, "d": 2 },
+          "abilities": ["Twin-linked"],
+          "loadoutGroup": "twin-killsaw"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "kustom-shoota-klaw", "name": "Kustom Shoota and Power Klaw", "default": true },
+            { "id": "kombi-klaw", "name": "Kombi-weapon and Power Klaw" },
+            { "id": "kombi-killsaw", "name": "Kombi-weapon and Killsaw" },
+            { "id": "shoota-killsaw", "name": "Kustom Shoota and Killsaw" },
+            { "id": "killsaw-klaw", "name": "Killsaw and Power Klaw" },
+            { "id": "twin-killsaw", "name": "Twin Killsaw" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "krumpin-time",
+          "name": "Krumpin' Time",
+          "description": "While a Waaagh! is active for your army, models in this unit have the Feel No Pain 5+ ability."
+        }
+      ],
+      "keywords": ["Infantry", "Grenades", "Orks", "Mega Armour", "Meganobz"]
     }
   ],
   "detachments": {

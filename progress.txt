@@ -5,6 +5,47 @@ Format follows the Ralph technique.
 
 ---
 
+## [orks-007] Add Meganobz elite unit
+
+**Date:** 2026-01-23
+
+**Task:** Add Meganobz elite unit to orks.json
+
+**Decisions:**
+- Stats from Wahapedia: M5 T6 SV2+ W3 LD7+ OC1 (no base invuln, gains 5+ FNP during Waaagh!)
+- Points: 65 for 2 models, 95 for 3 models, 160 for 5 models, 190 for 6 models
+- Default loadout: Kustom Shoota (ranged) and Power Klaw (melee)
+- Weapon options as replacement pattern with 6 choices:
+  - Kustom Shoota and Power Klaw (default): Shoota 18" A4 BS5+ S4 AP0 D1 Rapid Fire 2, Klaw A3 WS4+ S9 AP-2 D2
+  - Kombi-weapon and Power Klaw: Kombi 24" A1 BS5+ S4 AP0 D1 with Anti-Infantry 4+, Devastating Wounds, Rapid Fire 1
+  - Kombi-weapon and Killsaw: Killsaw A2 WS4+ S12 AP-3 D2
+  - Kustom Shoota and Killsaw
+  - Killsaw and Power Klaw (no ranged weapon)
+  - Twin Killsaw (melee only with Twin-linked)
+- Ability: Krumpin' Time - Feel No Pain 5+ while Waaagh! is active
+- Keywords: Infantry, Grenades, Orks, Mega Armour, Meganobz
+
+**Data sources:**
+- Wahapedia 10th edition Orks: https://wahapedia.ru/wh40k10ed/factions/orks/Meganobz
+
+**Files changed:**
+- public/data/orks.json - Added Meganobz elite unit to units array
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 303 tests passed
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Meganobz with points for 2/3/6 models (65/95/190, also 160 for 5 models)
+2. ✅ Stats: M5 T6 SV2+ W3 LD7+ OC1
+3. ✅ Kustom shoota and power klaw standard
+4. ✅ Kill saw and kombi-weapon options
+5. ✅ Keywords include Infantry, Orks, Mega Armour
+
+---
+
 ## [orks-006] Add Nobz elite unit
 
 **Date:** 2026-01-23
