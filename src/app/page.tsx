@@ -75,6 +75,10 @@ export default function Home() {
     toggleLoadoutGroupCollapsed,
     isLoadoutGroupActivated,
     toggleLoadoutGroupActivated,
+    isLeaderCollapsed,
+    toggleLeaderCollapsed,
+    isLeaderActivated,
+    toggleLeaderActivated,
     resetGameState,
   } = useGameStore();
 
@@ -288,13 +292,14 @@ export default function Home() {
   }, [selectedUnit, selectedListUnit]);
 
   // Build collapsed/activated state maps for Play Mode
+  // Note: We depend on gameState directly so the memo re-computes when state changes
   const collapsedGroups = useMemo(() => {
     const map: Record<string, boolean> = {};
     for (const group of loadoutGroups) {
       map[group.id] = selectedUnitIndex !== null && isLoadoutGroupCollapsed(selectedUnitIndex, group.id);
     }
     return map;
-  }, [loadoutGroups, selectedUnitIndex, isLoadoutGroupCollapsed]);
+  }, [loadoutGroups, selectedUnitIndex, isLoadoutGroupCollapsed, gameState.collapsedLoadoutGroups]);
 
   const activatedGroups = useMemo(() => {
     const map: Record<string, boolean> = {};
@@ -302,7 +307,7 @@ export default function Home() {
       map[group.id] = selectedUnitIndex !== null && isLoadoutGroupActivated(selectedUnitIndex, group.id);
     }
     return map;
-  }, [loadoutGroups, selectedUnitIndex, isLoadoutGroupActivated]);
+  }, [loadoutGroups, selectedUnitIndex, isLoadoutGroupActivated, gameState.activatedLoadoutGroups]);
 
   // Get leader weapons for Play Mode
   const leaderWeapons = useMemo((): Weapon[] | undefined => {
@@ -425,6 +430,38 @@ export default function Home() {
     ));
     setLeaderWounds(selectedUnitIndex, newWounds);
   }, [selectedUnitIndex, woundTracking.leaderWounds, setLeaderWounds]);
+
+  // Reset all activations for the selected unit
+  const handleResetUnitActivations = useCallback(() => {
+    if (selectedUnitIndex === null) return;
+
+    // Reset all loadout group activations
+    for (const group of loadoutGroups) {
+      if (isLoadoutGroupActivated(selectedUnitIndex, group.id)) {
+        toggleLoadoutGroupActivated(selectedUnitIndex, group.id);
+      }
+    }
+
+    // Reset leader activation if applicable
+    if (isLeaderActivated(selectedUnitIndex)) {
+      toggleLeaderActivated(selectedUnitIndex);
+    }
+  }, [selectedUnitIndex, loadoutGroups, isLoadoutGroupActivated, toggleLoadoutGroupActivated, isLeaderActivated, toggleLeaderActivated]);
+
+  // Check if selected unit has any activations
+  const hasAnyActivations = useMemo(() => {
+    if (selectedUnitIndex === null) return false;
+
+    // Check loadout groups
+    for (const group of loadoutGroups) {
+      if (activatedGroups[group.id]) return true;
+    }
+
+    // Check leader
+    if (isLeaderActivated(selectedUnitIndex)) return true;
+
+    return false;
+  }, [selectedUnitIndex, loadoutGroups, activatedGroups, isLeaderActivated]);
 
   // -------------------------------------------------------------------------
   // Render
@@ -583,6 +620,10 @@ export default function Home() {
                   activatedGroups={activatedGroups}
                   onToggleCollapse={toggleLoadoutGroupCollapsed}
                   onToggleActivated={toggleLoadoutGroupActivated}
+                  isLeaderCollapsed={isLeaderCollapsed(selectedUnitIndex)}
+                  isLeaderActivated={isLeaderActivated(selectedUnitIndex)}
+                  onToggleLeaderCollapse={() => toggleLeaderCollapsed(selectedUnitIndex)}
+                  onToggleLeaderActivated={() => toggleLeaderActivated(selectedUnitIndex)}
                   onUnitWoundAdjust={handleUnitWoundAdjust}
                   onLeaderWoundAdjust={handleLeaderWoundAdjust}
                   activeKatah={gameState.katah}
@@ -597,6 +638,8 @@ export default function Home() {
                       s => gameState.activeStratagems.includes(s.id)
                     ) || []
                   }
+                  onResetActivations={handleResetUnitActivations}
+                  hasAnyActivations={hasAnyActivations}
                 />
               ) : undefined
             }
@@ -669,6 +712,21 @@ export default function Home() {
                         <span className="badge badge-accent text-[10px] py-0">{enh.points} pts</span>
                       </div>
                       <div className="text-xs text-white/70 mt-1">{enh.description}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Wargear Abilities (from weaponKeywords) */}
+            {armyData.weaponKeywords && Object.keys(armyData.weaponKeywords).length > 0 && (
+              <div>
+                <h4 className="text-xs font-semibold text-orange-400 uppercase tracking-wide mb-3">Wargear Abilities</h4>
+                <div className="space-y-1.5">
+                  {Object.entries(armyData.weaponKeywords).map(([key, kw]) => (
+                    <div key={key} className="bg-black/20 rounded-lg p-3">
+                      <span className="font-medium text-sm text-orange-300">{kw.name}</span>
+                      <div className="text-xs text-white/70 mt-0.5">{kw.description}</div>
                     </div>
                   ))}
                 </div>

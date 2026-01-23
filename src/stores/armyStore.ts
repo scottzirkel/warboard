@@ -175,9 +175,27 @@ export const useArmyStore = create<ArmyStore>((set, get) => ({
   },
 
   setFormat: (format: GameFormat) => {
-    set(state => ({
-      currentList: { ...state.currentList, format },
-    }));
+    // Game format configuration (matching Alpine.js)
+    const gameFormats: Record<GameFormat, { pointsOptions: number[] }> = {
+      standard: { pointsOptions: [500, 1000, 2000] },
+      colosseum: { pointsOptions: [500] },
+    };
+
+    set(state => {
+      const options = gameFormats[format]?.pointsOptions || [500, 1000, 2000];
+      // Auto-adjust points limit if current limit not in new format's options
+      const newPointsLimit = options.includes(state.currentList.pointsLimit)
+        ? state.currentList.pointsLimit
+        : options[0];
+
+      return {
+        currentList: {
+          ...state.currentList,
+          format,
+          pointsLimit: newPointsLimit,
+        },
+      };
+    });
   },
 
   setDetachment: (detachment: string) => {

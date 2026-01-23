@@ -159,6 +159,44 @@ export function ArmyOverviewPanel({
     .map((listUnit, index) => ({ listUnit, index }))
     .filter(({ index }) => !isUnitAttachedAsLeader(index, units));
 
+  // Sort units: alive units first, destroyed units at the bottom
+  const sortedUnits = [...visibleUnits].sort((a, b) => {
+    const unitA = getUnitById(a.listUnit.unitId, armyData);
+    const unitB = getUnitById(b.listUnit.unitId, armyData);
+
+    if (!unitA || !unitB) return 0;
+
+    // Calculate combined wounds for unit A (including leader)
+    const woundsA = calculateUnitWounds(a.listUnit, unitA);
+    let totalWoundsA = woundsA.currentWounds;
+    if (a.listUnit.attachedLeader) {
+      const leaderListUnitA = units[a.listUnit.attachedLeader.unitIndex];
+      const leaderUnitA = leaderListUnitA ? getUnitById(leaderListUnitA.unitId, armyData) : undefined;
+      if (leaderListUnitA && leaderUnitA) {
+        totalWoundsA += calculateLeaderWounds(leaderListUnitA, leaderUnitA).currentWounds;
+      }
+    }
+
+    // Calculate combined wounds for unit B (including leader)
+    const woundsB = calculateUnitWounds(b.listUnit, unitB);
+    let totalWoundsB = woundsB.currentWounds;
+    if (b.listUnit.attachedLeader) {
+      const leaderListUnitB = units[b.listUnit.attachedLeader.unitIndex];
+      const leaderUnitB = leaderListUnitB ? getUnitById(leaderListUnitB.unitId, armyData) : undefined;
+      if (leaderListUnitB && leaderUnitB) {
+        totalWoundsB += calculateLeaderWounds(leaderListUnitB, leaderUnitB).currentWounds;
+      }
+    }
+
+    const destroyedA = totalWoundsA <= 0;
+    const destroyedB = totalWoundsB <= 0;
+
+    // Destroyed units go to the bottom
+    if (destroyedA && !destroyedB) return 1;
+    if (!destroyedA && destroyedB) return -1;
+    return 0;
+  });
+
   const detachment = armyData.detachments?.[detachmentId];
 
   return (
@@ -185,13 +223,13 @@ export function ArmyOverviewPanel({
 
       {/* Army Units List */}
       <div className="space-y-2 flex-1 overflow-y-auto scroll-smooth min-h-0">
-        {visibleUnits.length === 0 ? (
+        {sortedUnits.length === 0 ? (
           <div className="text-center text-white/40 py-12">
             <p className="text-lg mb-1">No units in your army</p>
             <p className="text-sm">Switch to Build Mode to add units</p>
           </div>
         ) : (
-          visibleUnits.map(({ listUnit, index }) => {
+          sortedUnits.map(({ listUnit, index }) => {
             const unit = getUnitById(listUnit.unitId, armyData);
             if (!unit) return null;
 

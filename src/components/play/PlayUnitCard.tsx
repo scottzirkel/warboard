@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Badge } from '@/components/ui';
+import { Badge } from '@/components/ui';
 import type { Unit, ListUnit } from '@/types';
 
 interface PlayUnitCardProps {
@@ -64,33 +64,54 @@ export function PlayUnitCard({
   const isDestroyed = combinedCurrentWounds <= 0;
   const isDamaged = combinedModelsAlive < combinedTotalModels;
 
+  // Health percentage for the bar
+  const healthPercent = combinedMaxWounds > 0
+    ? Math.max(0, Math.min(100, (combinedCurrentWounds / combinedMaxWounds) * 100))
+    : 100;
+
+  // Health bar color based on percentage
+  const getHealthBarColor = () => {
+    if (isDestroyed) return 'bg-gray-600';
+    if (healthPercent <= 25) return 'bg-red-500';
+    if (healthPercent <= 50) return 'bg-orange-500';
+    if (healthPercent <= 75) return 'bg-yellow-500';
+    return 'bg-green-500';
+  };
+
   // Combined unit name (matches Alpine's getCombinedUnitName)
   const displayName = hasAttachedLeader
     ? `${unit.name} + ${attachedLeaderName}`
     : unit.name;
 
   return (
-    <Card
-      selected={isSelected}
-      hoverable
+    <div
       onClick={onSelect}
       className={`
-        ${isDestroyed ? 'opacity-50' : ''}
+        card-depth overflow-hidden cursor-pointer
+        ${isSelected ? 'ring-2 ring-accent-500' : ''}
+        ${isDestroyed ? 'opacity-40' : 'hover:bg-white/10'}
+        transition-colors
         ${className}
       `}
     >
       <div className="list-row">
         <div className="flex-1 min-w-0">
           {/* Combined Unit Name */}
-          <div className="font-semibold truncate">{displayName}</div>
+          <div className={`font-semibold truncate ${isDestroyed ? 'line-through text-white/50' : ''}`}>
+            {displayName}
+          </div>
 
           {/* Models and Enhancement */}
           <div className="flex items-center gap-2 mt-1">
-            <span
-              className={`text-xs ${isDamaged ? 'text-red-400' : 'text-white/50'}`}
-            >
-              {combinedModelsAlive}/{combinedTotalModels} models
-            </span>
+            {isDestroyed ? (
+              <span className="text-xs font-bold text-red-400 uppercase">Out</span>
+            ) : (
+              <span
+                className={`text-xs ${isDamaged ? 'text-red-400' : 'text-white/50'}`}
+              >
+                {combinedModelsAlive}/{combinedTotalModels} models
+              </span>
+            )}
             {enhancementName && (
               <Badge variant="accent" size="sm">{enhancementName}</Badge>
             )}
@@ -125,6 +146,14 @@ export function PlayUnitCard({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </div>
-    </Card>
+
+      {/* Health Bar - spans full width at bottom */}
+      <div className="h-1 bg-gray-700/50">
+        <div
+          className={`h-full transition-all duration-300 ${getHealthBarColor()}`}
+          style={{ width: `${healthPercent}%` }}
+        />
+      </div>
+    </div>
   );
 }

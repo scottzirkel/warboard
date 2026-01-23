@@ -32,6 +32,12 @@ interface SelectedUnitDetailsPanelProps {
   onToggleCollapse: (unitIndex: number, groupId: string) => void;
   onToggleActivated?: (unitIndex: number, groupId: string) => void;
 
+  // Leader collapse/activation state
+  isLeaderCollapsed?: boolean;
+  isLeaderActivated?: boolean;
+  onToggleLeaderCollapse?: () => void;
+  onToggleLeaderActivated?: () => void;
+
   // Wound callbacks
   onUnitWoundAdjust?: (delta: number) => void;
   onLeaderWoundAdjust?: (delta: number) => void;
@@ -43,6 +49,10 @@ interface SelectedUnitDetailsPanelProps {
   activeStratagems?: string[];
   stratagemNames?: Record<string, string>;
   activeStratagemData?: Stratagem[];
+
+  // Reset activations
+  onResetActivations?: () => void;
+  hasAnyActivations?: boolean;
 
   className?: string;
 }
@@ -158,7 +168,7 @@ export function SelectedUnitDetailsPanel({
   hasLeader,
   leaderUnit,
   leaderListUnit,
-  leaderEnhancement,
+  leaderEnhancement: _leaderEnhancement,
 
   modifiers,
   modifierSources,
@@ -171,6 +181,11 @@ export function SelectedUnitDetailsPanel({
   onToggleCollapse,
   onToggleActivated,
 
+  isLeaderCollapsed = false,
+  isLeaderActivated = false,
+  onToggleLeaderCollapse,
+  onToggleLeaderActivated,
+
   onUnitWoundAdjust,
   onLeaderWoundAdjust,
 
@@ -180,6 +195,9 @@ export function SelectedUnitDetailsPanel({
   activeStratagems = [],
   stratagemNames = {},
   activeStratagemData = [],
+
+  onResetActivations,
+  hasAnyActivations = false,
 
   className = '',
 }: SelectedUnitDetailsPanelProps) {
@@ -225,13 +243,13 @@ export function SelectedUnitDetailsPanel({
       {/* Unit Header */}
       <h2 className="text-xl font-semibold text-accent-300 mb-2">{combinedName}</h2>
 
-      {/* Badges */}
+      {/* Badges (matching Alpine.js: unit enhancement + leader name) */}
       <div className="flex flex-wrap gap-2 mb-4">
         {enhancement && (
           <span className="badge badge-accent">{enhancement.name}</span>
         )}
-        {hasLeader && leaderEnhancement && (
-          <span className="badge badge-purple">+ {leaderEnhancement.name}</span>
+        {hasLeader && leaderUnit && (
+          <span className="badge badge-purple">+ {leaderUnit.name}</span>
         )}
       </div>
 
@@ -246,7 +264,7 @@ export function SelectedUnitDetailsPanel({
 
               return (
                 <div key={stat} className="stat-cell">
-                  <span className="stat-label">{stat.toUpperCase()}</span>
+                  <span className="stat-label">{stat}</span>
                   <span
                     className={`stat-value ${modified ? 'modified cursor-help' : ''}`}
                     title={modified ? sources.map(s => `${s.name}: ${s.operation === 'add' ? '+' : ''}${s.value}`).join('\n') : undefined}
@@ -395,9 +413,20 @@ export function SelectedUnitDetailsPanel({
           </div>
         </div>
 
-        {/* Weapons */}
+        {/* Weapons (Alpine.js Play Mode does NOT show Abilities section - only weapons) */}
         <div className="card-depth overflow-hidden">
-          <div className="section-header">Weapons</div>
+          <div className="section-header flex items-center justify-between">
+            <span>Weapons</span>
+            {hasAnyActivations && onResetActivations && (
+              <button
+                onClick={onResetActivations}
+                className="text-[10px] px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-white/70 transition-colors"
+                title="Reset all activations for this unit"
+              >
+                Reset
+              </button>
+            )}
+          </div>
           <PlayModeWeaponsDisplay
             loadoutGroups={loadoutGroups}
             unitIndex={unitIndex}
@@ -407,39 +436,13 @@ export function SelectedUnitDetailsPanel({
             onToggleActivated={onToggleActivated}
             leaderWeapons={leaderWeapons}
             leaderName={leaderUnit?.name}
+            isLeaderCollapsed={isLeaderCollapsed}
+            isLeaderActivated={isLeaderActivated}
+            onToggleLeaderCollapse={onToggleLeaderCollapse}
+            onToggleLeaderActivated={onToggleLeaderActivated}
             activeStratagems={activeStratagemData}
           />
         </div>
-
-        {/* Unit Abilities */}
-        {unit.abilities.length > 0 && (
-          <div className="card-depth overflow-hidden">
-            <div className="section-header">Abilities</div>
-            <div className="px-4 pb-4 space-y-2">
-              {unit.abilities.map((ability) => (
-                <div key={ability.id} className="text-sm">
-                  <span className="font-semibold text-accent-300">{ability.name}: </span>
-                  <span className="text-white/70">{ability.description}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Leader Abilities */}
-        {hasLeader && leaderUnit && leaderUnit.abilities.length > 0 && (
-          <div className="card-depth overflow-hidden border border-purple-500/30">
-            <div className="section-header text-purple-400">Leader Abilities</div>
-            <div className="px-4 pb-4 space-y-2">
-              {leaderUnit.abilities.map((ability) => (
-                <div key={ability.id} className="text-sm">
-                  <span className="font-semibold text-purple-300">{ability.name}: </span>
-                  <span className="text-purple-200/70">{ability.description}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

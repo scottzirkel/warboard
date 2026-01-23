@@ -33,9 +33,11 @@ export function BuildMode({
   rightPanel,
   className = '',
 }: BuildModeProps) {
-  // Points status for color coding
+  // Points status for color coding (matching Alpine.js logic)
+  // Alpine: warning when 1-10 pts over, error when >10 over
   const percentage = pointsLimit > 0 ? (currentPoints / pointsLimit) * 100 : 0;
-  const pointsStatus = currentPoints > pointsLimit ? 'error' : percentage >= 90 ? 'warning' : 'ok';
+  const over = currentPoints - pointsLimit;
+  const pointsStatus = over > 10 ? 'error' : over > 0 ? 'warning' : 'ok';
 
   return (
     <div className={`h-full flex flex-col gap-4 max-w-7xl mx-auto w-full px-4 py-4 ${className}`}>

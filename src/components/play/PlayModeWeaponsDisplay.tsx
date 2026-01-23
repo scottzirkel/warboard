@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, LoadoutGroupAccordion, WeaponStatsTable } from '@/components/ui';
+import { LoadoutGroupAccordion, WeaponStatsTable } from '@/components/ui';
 import type { Weapon, LoadoutGroup, Stratagem } from '@/types';
 
 interface LoadoutGroupCardProps {
@@ -65,6 +65,10 @@ interface PlayModeWeaponsDisplayProps {
   onToggleActivated?: (unitIndex: number, groupId: string) => void;
   leaderWeapons?: Weapon[];
   leaderName?: string;
+  isLeaderCollapsed?: boolean;
+  isLeaderActivated?: boolean;
+  onToggleLeaderCollapse?: () => void;
+  onToggleLeaderActivated?: () => void;
   activeStratagems?: Stratagem[];
   className?: string;
 }
@@ -78,6 +82,10 @@ export function PlayModeWeaponsDisplay({
   onToggleActivated,
   leaderWeapons,
   leaderName,
+  isLeaderCollapsed = false,
+  isLeaderActivated = false,
+  onToggleLeaderCollapse,
+  onToggleLeaderActivated,
   activeStratagems = [],
   className = '',
 }: PlayModeWeaponsDisplayProps) {
@@ -104,39 +112,81 @@ export function PlayModeWeaponsDisplay({
         />
       ))}
 
-      {/* Leader Weapons Section */}
+      {/* Leader Weapons Section (accordion matching Alpine.js) */}
       {hasLeaderWeapons && (
-        <div className="border-2 border-purple-500/30 rounded-lg bg-purple-900/10 p-3">
-          <div className="flex items-center gap-2 mb-3">
-            <Badge variant="purple" size="sm">
-              Leader
-            </Badge>
-            <span className="text-sm font-medium text-purple-300">
+        <div
+          className={`rounded overflow-hidden mt-3 transition-colors ${
+            isLeaderActivated
+              ? 'bg-green-900/40 ring-1 ring-green-600/50'
+              : 'bg-purple-900/30 ring-1 ring-purple-600/50'
+          }`}
+        >
+          {/* Leader Header (Clickable) */}
+          <div
+            className={`flex items-center gap-2 px-2 py-1.5 cursor-pointer transition-colors ${
+              isLeaderActivated ? 'hover:bg-green-800/40' : 'hover:bg-purple-800/40'
+            }`}
+            onClick={onToggleLeaderCollapse}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className={`h-3 w-3 transition-transform ${
+                isLeaderCollapsed ? '-rotate-90' : ''
+              } ${isLeaderActivated ? 'text-green-400' : 'text-purple-400'}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+            <span
+              className={`text-sm font-medium ${
+                isLeaderActivated ? 'text-green-300' : 'text-purple-300'
+              }`}
+            >
               {leaderName}
             </span>
+            {/* Activation Toggle Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleLeaderActivated?.();
+              }}
+              className={`ml-auto px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                isLeaderActivated
+                  ? 'bg-green-600 text-white'
+                  : 'bg-purple-600 hover:bg-purple-500 text-white'
+              }`}
+              title={isLeaderActivated ? 'Mark as not activated' : 'Mark as activated'}
+            >
+              {isLeaderActivated ? '✓' : 'Act'}
+            </button>
           </div>
 
-          <div className="space-y-3">
-            {/* Leader Ranged Weapons */}
-            {leaderRanged.length > 0 && (
-              <div className="border-l-2 border-blue-500/30 pl-3">
-                <div className="text-xs text-blue-400 uppercase tracking-wider mb-2 font-medium">
-                  Ranged
+          {/* Collapsible Content */}
+          {!isLeaderCollapsed && (
+            <div className="px-2 pb-2 space-y-3">
+              {/* Leader Ranged Weapons */}
+              {leaderRanged.length > 0 && (
+                <div className="border-l-2 border-blue-500/30 pl-3">
+                  <div className="text-xs text-blue-400 uppercase tracking-wider mb-2 font-medium">
+                    Ranged
+                  </div>
+                  <WeaponStatsTable weapons={leaderRanged} activeStratagems={activeStratagems} />
                 </div>
-                <WeaponStatsTable weapons={leaderRanged} activeStratagems={activeStratagems} />
-              </div>
-            )}
+              )}
 
-            {/* Leader Melee Weapons */}
-            {leaderMelee.length > 0 && (
-              <div className="border-l-2 border-red-500/30 pl-3">
-                <div className="text-xs text-red-400 uppercase tracking-wider mb-2 font-medium">
-                  Melee
+              {/* Leader Melee Weapons */}
+              {leaderMelee.length > 0 && (
+                <div className="border-l-2 border-red-500/30 pl-3">
+                  <div className="text-xs text-red-400 uppercase tracking-wider mb-2 font-medium">
+                    Melee
+                  </div>
+                  <WeaponStatsTable weapons={leaderMelee} activeStratagems={activeStratagems} />
                 </div>
-                <WeaponStatsTable weapons={leaderMelee} activeStratagems={activeStratagems} />
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 

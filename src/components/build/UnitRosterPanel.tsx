@@ -40,20 +40,20 @@ function SimpleAccordion({ title, count, isOpen, onToggle, children }: SimpleAcc
       <button
         type="button"
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-3 py-2 bg-gray-700/50 rounded-lg hover:bg-gray-600/50 transition-colors"
+        className="w-full flex justify-between items-center px-4 py-3 hover:bg-white/5 transition-colors text-left touch-highlight"
       >
+        <span className="font-semibold text-accent-300">{title}</span>
         <div className="flex items-center gap-2">
+          <span className="text-xs text-gray-400">{count}</span>
           <svg
-            className={`w-4 h-4 transition-transform duration-200 text-gray-400 ${isOpen ? 'rotate-90' : ''}`}
+            className={`w-4 h-4 transition-transform duration-200 text-gray-400 ${isOpen ? 'rotate-180' : ''}`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
-          <span className="font-medium text-gray-200">{title}</span>
         </div>
-        <span className="text-xs text-gray-400">{count}</span>
       </button>
 
       <div
@@ -129,11 +129,18 @@ export function UnitRosterPanel({
     });
   };
 
-  // Get minimum points for a unit
-  const getMinPoints = (unit: Unit): number => {
+  // Get points display for a unit (matching Alpine.js - shows range for multi-model units)
+  const getPointsDisplay = (unit: Unit): string => {
     const modelCounts = Object.keys(unit.points).map(Number).sort((a, b) => a - b);
     const minCount = modelCounts[0];
-    return unit.points[String(minCount)] || 0;
+    const maxCount = modelCounts[modelCounts.length - 1];
+    const minPoints = unit.points[String(minCount)] || 0;
+    const maxPoints = unit.points[String(maxCount)] || 0;
+
+    if (minPoints === maxPoints || modelCounts.length === 1) {
+      return `${minPoints} pts`;
+    }
+    return `${minPoints}-${maxPoints} pts`;
   };
 
   return (
@@ -208,7 +215,7 @@ export function UnitRosterPanel({
                   >
                     <div className="flex items-center justify-between py-2 px-3">
                       <span className="text-sm text-white">{unit.name}</span>
-                      <span className="text-xs text-white/50">{getMinPoints(unit)}+ pts</span>
+                      <span className="text-xs text-white/50">{getPointsDisplay(unit)}</span>
                     </div>
                   </div>
                 ))}

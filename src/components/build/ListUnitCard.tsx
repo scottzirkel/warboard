@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Badge, Stepper, Button } from '@/components/ui';
+import { Card, Badge, Button } from '@/components/ui';
 import { EnhancementSelector } from './EnhancementSelector';
 import { WeaponLoadoutSelector } from './WeaponLoadoutSelector';
 import type { Unit, ListUnit, Enhancement, AvailableLeader } from '@/types';
@@ -50,8 +50,6 @@ export function ListUnitCard({
 }: ListUnitCardProps) {
   // Get available model counts from unit.points
   const modelCounts = Object.keys(unit.points).map(Number).sort((a, b) => a - b);
-  const minModels = modelCounts[0] || 1;
-  const maxModels = modelCounts[modelCounts.length - 1] || 1;
 
   // Get current points
   const currentPoints = unit.points[String(listUnit.modelCount)] || 0;
@@ -88,7 +86,7 @@ export function ListUnitCard({
       hoverable
       onClick={onSelect}
       className={`
-        ${isAttachedAsLeader ? 'opacity-75 border-l-4 border-l-purple-400' : ''}
+        ${isAttachedAsLeader ? 'opacity-60' : ''}
         ${className}
       `}
     >
@@ -132,17 +130,25 @@ export function ListUnitCard({
           </div>
         </div>
 
-        {/* Model Count Selector */}
+        {/* Model Count Selector (dropdown matching Alpine.js) */}
         {modelCounts.length > 1 && (
           <div className="flex items-center justify-between">
             <span className="text-xs text-gray-400">Models</span>
-            <Stepper
+            <select
               value={listUnit.modelCount}
-              min={minModels}
-              max={maxModels}
-              onChange={onModelCountChange}
-              size="sm"
-            />
+              onChange={(e) => {
+                e.stopPropagation();
+                onModelCountChange(Number(e.target.value));
+              }}
+              onClick={(e) => e.stopPropagation()}
+              className="select-dark py-1.5 px-3 text-sm"
+            >
+              {modelCounts.map((count) => (
+                <option key={count} value={count}>
+                  {count} models
+                </option>
+              ))}
+            </select>
           </div>
         )}
 

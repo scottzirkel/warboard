@@ -80,8 +80,14 @@ export function ArmyListPanel({
     return armyData.units.find((u) => u.id === unitId);
   };
 
-  // Points limit options
-  const pointsOptions = [500, 1000, 1500, 2000, 2500, 3000];
+  // Game format configuration (matching Alpine.js)
+  const gameFormats: Record<GameFormat, { name: string; pointsOptions: number[] }> = {
+    standard: { name: 'Standard', pointsOptions: [500, 1000, 2000] },
+    colosseum: { name: 'Colosseum', pointsOptions: [500] },
+  };
+
+  // Points limit options based on current format
+  const pointsOptions = gameFormats[currentList.format]?.pointsOptions || [500, 1000, 2000];
 
   return (
     <div className={`flex flex-col h-full ${className}`}>
@@ -120,25 +126,19 @@ export function ArmyListPanel({
       {/* Configuration Row */}
       <div className="space-y-3 mb-4 shrink-0">
         {/* Format + Points row */}
-        <div className="grid grid-cols-2 gap-3">
-          <div>
+        <div className="flex gap-2">
+          <div className="flex-1">
             <label className="text-xs text-white/50 block mb-1">Format</label>
-            <div className="segmented-control">
-              <div
-                onClick={() => onFormatChange('standard')}
-                className={`segmented-control-item ${currentList.format === 'standard' ? 'active' : ''}`}
-              >
-                Standard
-              </div>
-              <div
-                onClick={() => onFormatChange('colosseum')}
-                className={`segmented-control-item ${currentList.format === 'colosseum' ? 'active' : ''}`}
-              >
-                Colosseum
-              </div>
-            </div>
+            <select
+              value={currentList.format}
+              onChange={(e) => onFormatChange(e.target.value as GameFormat)}
+              className="select-dark w-full"
+            >
+              <option value="standard">Standard</option>
+              <option value="colosseum">Colosseum</option>
+            </select>
           </div>
-          <div>
+          <div className="flex-1">
             <label className="text-xs text-white/50 block mb-1">Points</label>
             <select
               value={currentList.pointsLimit}
@@ -181,8 +181,8 @@ export function ArmyListPanel({
       <div className="flex-1 overflow-y-auto -mx-4 px-4 scroll-smooth">
         {currentList.units.length === 0 ? (
           <div className="text-center py-8 text-white/40 text-sm">
-            <p>No units added yet</p>
-            <p className="text-xs mt-1">Select units from the roster →</p>
+            <p className="text-lg mb-1">No units added yet</p>
+            <p className="text-sm">Select a unit from the roster to add it</p>
           </div>
         ) : (
           <div className="space-y-2">

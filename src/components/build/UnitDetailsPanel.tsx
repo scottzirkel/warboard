@@ -42,12 +42,12 @@ export function UnitDetailsPanel({
   onAddUnit,
   className = '',
 }: UnitDetailsPanelProps) {
-  // No unit selected state
+  // No unit selected state (matching Alpine.js)
   if (!unit || unitIndex === null) {
     return (
-      <div className={`flex flex-col h-full items-center justify-center text-white/40 ${className}`}>
-        <p>Select a unit from your army list</p>
-        <p className="text-xs mt-1">or add one from the roster</p>
+      <div className={`text-center py-8 text-white/40 text-sm ${className}`}>
+        <p className="text-lg mb-1">Select a unit</p>
+        <p className="text-sm">Click on a unit in your army list or roster to view details</p>
       </div>
     );
   }
