@@ -2,6 +2,7 @@
 
 import { Select, type SelectOption } from '@/components/ui';
 import { ModeToggle } from '@/components/play';
+import { UserMenu } from '@/components/auth';
 import type { AppMode } from '@/types';
 
 // ============================================================================
@@ -184,6 +185,11 @@ export function Navigation({
               canPlay={canPlay}
               disabled={isLoading}
             />
+
+            {/* User Menu - Auth state */}
+            <div className="border-l border-gray-700 pl-3 ml-1">
+              <UserMenu />
+            </div>
           </div>
         </div>
       </div>

@@ -5,6 +5,62 @@ Format follows the Ralph technique.
 
 ---
 
+## [multiuser-002] Add Google SSO authentication with NextAuth.js
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Used NextAuth.js v4 (^4.24.13) for authentication - stable, well-documented
+- Used @auth/prisma-adapter for storing sessions/accounts in database
+- Configured Google OAuth provider for SSO
+- Added Session provider wrapper component for client-side auth state
+- Created UserMenu component that shows:
+  - Sign in button (when unauthenticated)
+  - User avatar, name, and sign out button (when authenticated)
+- Added user ID to session via callbacks for client-side access
+- Used Next.js Image component for user avatar with Google's image domain whitelisted
+- Auth UI integrated into Navigation component
+
+**Schema Changes:**
+- Added Account model for OAuth connections
+- Added Session model for session storage
+- Added VerificationToken model for email verification
+- Added emailVerified and image fields to User model
+- All tables have proper indexes and cascade delete
+
+**Files changed:**
+- prisma/schema.prisma - Added Account, Session, VerificationToken models
+- src/lib/auth.ts - NextAuth configuration with Google provider
+- src/app/api/auth/[...nextauth]/route.ts - Auth API route handler
+- src/components/auth/SignInButton.tsx - Sign in with Google button
+- src/components/auth/SignOutButton.tsx - Sign out button
+- src/components/auth/UserMenu.tsx - User menu showing auth state
+- src/components/auth/SessionProvider.tsx - Client-side session provider
+- src/components/auth/index.ts - Auth components barrel export
+- src/components/auth/auth.test.tsx - 14 tests for auth components
+- src/components/navigation/Navigation.tsx - Added UserMenu to nav
+- src/app/layout.tsx - Wrapped app with SessionProvider
+- src/types/next-auth.d.ts - Extended Session type with user ID
+- next.config.js - Added Google images domain
+- .env.example - Added AUTH_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
+- package.json - Added next-auth, @auth/prisma-adapter dependencies
+- src/lib/listService.test.ts - Fixed vi.mock hoisting issue
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 275 tests passed (14 new auth tests)
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ NextAuth.js configured with Google provider
+2. ✅ Sign in with Google button on app (in Navigation)
+3. ✅ User created in database on first login (via PrismaAdapter)
+4. ✅ Session persisted across page loads (via database sessions)
+5. ✅ Sign out functionality works (SignOutButton component)
+
+---
+
 ## [necrons-007] Add Skorpekh Destroyers elite unit
 
 **Date:** 2026-01-23
@@ -3290,3 +3346,58 @@ Format follows the Ralph technique.
 3. ✅ Warscythe or hyperphase sword + shield options (replacement pattern, paired: true for shield)
 4. ✅ Guardian Protocols bodyguard ability
 5. ✅ Keywords include Infantry, Necrons
+
+---
+
+## [multiuser-003] Migrate list storage from JSON files to database
+
+**Date:** 2026-01-23
+
+**Task:** Migrate list storage from file-based JSON to Prisma database storage
+
+**Decisions:**
+- Created listService.ts as a dedicated service layer for all list database operations
+- Lists are stored with a temporary "anonymous" user ID until user authentication is implemented in multiuser-004
+- API routes updated to use the new service layer instead of direct filesystem access
+- Maintained backward compatibility:
+  - Legacy filename-based lookups still work (e.g., "My_List.json")
+  - New database ID-based lookups also supported (cuid format)
+  - Response format includes both `id` and `filename` fields
+- Added import endpoint at `/api/lists/import` to migrate existing JSON files
+- Import endpoint:
+  - Reads files from data/lists/ directory
+  - Skips files that already exist in database (by name)
+  - Normalizes legacy data formats (e.g., `gameFormat` → `format`)
+  - Reports import/skip counts and any errors
+
+**Files created:**
+- src/lib/listService.ts - Database operations service with getAllLists, getListById, getListByName, saveList, deleteListById, deleteListByName, importList
+- src/lib/listService.test.ts - Unit tests for service functions
+- src/app/api/lists/import/route.ts - Import endpoint for JSON file migration
+- src/app/api/lists/import/route.test.ts - Tests for import endpoint
+
+**Files changed:**
+- src/app/api/lists/route.ts - Refactored to use listService instead of filesystem
+- src/app/api/lists/route.test.ts - Updated tests to mock listService
+- src/app/api/lists/[filename]/route.ts - Refactored to use listService, supports both ID and filename lookups
+- src/app/api/lists/[filename]/route.test.ts - Updated tests to mock listService
+- src/components/auth/auth.test.tsx - Fixed pre-existing test issue (added missing `id` field to mock user objects)
+
+**API Changes:**
+- GET /api/lists - Returns lists from database with `id`, `filename`, `name`, `armyId`, `updatedAt`
+- POST /api/lists - Saves to database, returns `id` in addition to `filename`
+- GET /api/lists/[identifier] - Accepts both database ID (cuid) or legacy filename
+- DELETE /api/lists/[identifier] - Accepts both database ID (cuid) or legacy filename
+- POST /api/lists/import - New endpoint to import JSON files to database
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 275 tests passed
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Lists saved to database instead of JSON files (via listService.saveList)
+2. ✅ Lists loaded from database (via listService.getListById, getListByName)
+3. ✅ List deletion removes from database (via listService.deleteListById, deleteListByName)
+4. ✅ Existing JSON lists can be imported to user account (via /api/lists/import endpoint)
