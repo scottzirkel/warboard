@@ -5,6 +5,76 @@ Format follows the Ralph technique.
 
 ---
 
+## [chaosmarines-003] Add Cultist Mob battleline unit
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Cultist Mob as a cheap, expendable battleline unit for Chaos Space Marines
+- Points: 50/100 for 10/20 models (per Munitorum Field Manual)
+- Stats: M6 T3 SV6+ W1 LD7+ OC1 (mortal followers of Chaos, weak individually)
+- No invulnerable save
+- Simple loadout with no options:
+  - Cultist Firearm: 24" A1 BS4+ S3 AP0 D1 (basic ranged weapon)
+  - Brutal Weapons: A2 WS4+ S3 AP0 D1 (crude melee weapons)
+- Added For the Dark Gods ability: OC becomes 2 when within 6" of friendly HERETIC ASTARTES units
+- Keywords: Infantry, Battleline, Chaos, Damned, Cultist Mob
+- Note: Cultist Mob has the Damned keyword (not Heretic Astartes), making them expendable chaff that cannot use Dark Pacts
+
+**Files changed:**
+- public/data/chaosmarines.json - Added Cultist Mob unit to units array
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (213 tests)
+- JSON syntax validated
+- Note: npm run build has pre-existing infrastructure issues with corrupted node_modules - unrelated to this data-only change
+- Acceptance criteria met:
+  1. Cultist Mob with points for 10/20 models (50/100)
+  2. Stats: M6 T3 SV6+ W1 LD7+ OC1
+  3. Cultist firearm and brutal weapons included
+  4. For the Dark Gods ability included
+  5. Keywords include Infantry, Battleline, Chaos, Damned
+
+---
+
+## [chaosmarines-002] Add Legionaries battleline unit
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Legionaries as the primary battleline unit for Chaos Space Marines
+- Points: 90/170 for 5/10 models (per Munitorum Field Manual)
+- Stats: M6 T4 SV3+ W2 LD6+ OC2 (identical to loyal Astartes infantry)
+- No invulnerable save
+- Comprehensive weapon loadout modeled with loadoutGroup system:
+  - Basic weapons: Bolt Pistol (always), Boltgun (default) or Astartes Chainsword
+  - Special weapons (1 per 5 models): Plasma Gun, Meltagun, Flamer
+  - Heavy weapons (1 per unit): Heavy Bolter, Missile Launcher (frag/krak), Lascannon
+  - Heavy melee (1 per unit): Heavy Melee Weapon
+  - Balefire Tome (1 per unit): Psychic ranged weapon
+- All heavy weapons have BS4+ (model becomes Aspiring Champion's helper)
+- Added Veterans of the Long War ability: re-roll wound rolls of 1 in melee, full re-roll if near objective
+- Keywords: Infantry, Battleline, Chaos, Grenades, Heretic Astartes, Legionaries
+
+**Files changed:**
+- public/data/chaosmarines.json - Added Legionaries unit to units array
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (213 tests)
+- npm run build passes
+- Acceptance criteria met:
+  1. Legionaries with points for 5/10 models (90/170)
+  2. Stats: M6 T4 SV3+ W2 LD6+ OC2
+  3. Boltgun, bolt pistol, close combat weapon included
+  4. Heavy weapon options (heavy bolter, missile launcher, lascannon) included
+  5. Keywords include Infantry, Battleline, Chaos, Heretic Astartes
+
+---
+
 ## [spacemarines-005] Add Primaris Lieutenant character
 
 **Date:** 2026-01-23
@@ -2548,3 +2618,41 @@ Format follows the Ralph technique.
   3. Master-crafted power sword and storm shield (4+ invuln)
   4. Shields of the Imperium ability (via Bladeguard ability)
   5. Keywords include Infantry, Imperium, Tacticus
+
+---
+
+## [spacemarines-008] Add Gladius Task Force detachment
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Gladius Task Force detachment with Combat Doctrines rule
+- Combat Doctrines: Three doctrines that can be selected once per battle each:
+  - Devastator Doctrine: Units can shoot after Advancing
+  - Tactical Doctrine: Units can shoot and charge after Falling Back
+  - Assault Doctrine: Units can charge after Advancing
+- Added 6 stratagems:
+  - Only In Death Does Duty End (2CP): Fight phase, models fight before being removed
+  - Armour of Contempt (1CP): Worsen enemy AP by 1
+  - Honour the Chapter (1CP): Melee weapons gain Lance, +1 AP during Assault Doctrine
+  - Storm of Fire (1CP): Ranged weapons gain Ignores Cover, +1 AP during Devastator Doctrine
+  - Adaptive Strategy (1CP): Select a doctrine for one unit regardless of restrictions
+  - Squad Tactics (1CP): React move D6" when enemy ends move nearby
+- Added 4 enhancements:
+  - Artificer Armour (10pts): SV 2+ and Feel No Pain 5+
+  - The Honour Vehement (15pts): +1A/+1S melee, +2A/+2S during Assault Doctrine
+  - Adept of the Codex (20pts): Bearer's unit can use Tactical Doctrine independently
+  - Fire Discipline (25pts): Led unit's ranged weapons gain Sustained Hits 1
+- Data sourced from Goonhammer Gladius Task Force review and community sources
+
+**Files changed:**
+- public/data/spacemarines.json - Added gladius_task_force detachment
+
+**Verification:**
+- JSON is valid (python3 json.tool validation)
+- npm validation affected by environmental node_modules corruption (parallel Ralph processes)
+- Acceptance criteria met:
+  1. Gladius Task Force with Combat Doctrines rule
+  2. Devastator, Tactical, Assault doctrine bonuses
+  3. 6 stratagems including Only In Death Does Duty End, Armour of Contempt
+  4. 4 enhancements including Artificer Armour, The Honour Vehement

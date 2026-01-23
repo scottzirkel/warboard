@@ -1,7 +1,312 @@
 {
   "faction": "Chaos Space Marines",
   "lastUpdated": "2026-01",
-  "units": [],
+  "units": [
+    {
+      "id": "legionaries",
+      "name": "Legionaries",
+      "points": { "5": 90, "10": 170 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 2, "ld": "6+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bolt-pistol",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "boltgun",
+          "name": "Boltgun",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "boltgun"
+        },
+        {
+          "id": "plasma-gun",
+          "name": "Plasma Gun",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "3+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Rapid Fire 1"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "meltagun",
+          "name": "Meltagun",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 9, "ap": -4, "d": "D6" },
+          "abilities": ["Melta 2"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "flamer",
+          "name": "Flamer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "heavy-bolter",
+          "name": "Heavy Bolter",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 3, "bs": "4+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Heavy", "Sustained Hits 1"],
+          "loadoutGroup": "heavy-weapon"
+        },
+        {
+          "id": "missile-launcher-frag",
+          "name": "Missile Launcher - Frag",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D6", "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Blast", "Heavy"],
+          "loadoutGroup": "heavy-weapon"
+        },
+        {
+          "id": "missile-launcher-krak",
+          "name": "Missile Launcher - Krak",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 1, "bs": "4+", "s": 9, "ap": -2, "d": "D6" },
+          "abilities": ["Heavy"],
+          "loadoutGroup": "heavy-weapon"
+        },
+        {
+          "id": "lascannon",
+          "name": "Lascannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 1, "bs": "4+", "s": 12, "ap": -3, "d": "D6+1" },
+          "abilities": ["Heavy"],
+          "loadoutGroup": "heavy-weapon"
+        },
+        {
+          "id": "balefire-tome",
+          "name": "Balefire Tome",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 2, "bs": "3+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Psychic"],
+          "loadoutGroup": "balefire"
+        },
+        {
+          "id": "close-combat-weapon",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "boltgun"
+        },
+        {
+          "id": "astartes-chainsword",
+          "name": "Astartes Chainsword",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "chainsword"
+        },
+        {
+          "id": "heavy-melee-weapon",
+          "name": "Heavy Melee Weapon",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "heavy-melee"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "basic-weapon",
+          "name": "Basic Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "boltgun", "name": "Boltgun", "default": true },
+            { "id": "chainsword", "name": "Astartes Chainsword" }
+          ]
+        },
+        {
+          "id": "special-weapon",
+          "name": "Special Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "special-weapon", "name": "Plasma Gun / Meltagun / Flamer", "maxModels": 2 }
+          ]
+        },
+        {
+          "id": "heavy-weapon",
+          "name": "Heavy Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "heavy-weapon", "name": "Heavy Bolter / Missile Launcher / Lascannon", "maxModels": 1 }
+          ]
+        },
+        {
+          "id": "heavy-melee",
+          "name": "Heavy Melee",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "heavy-melee", "name": "Heavy Melee Weapon", "maxModels": 1 }
+          ]
+        },
+        {
+          "id": "balefire",
+          "name": "Balefire Tome",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "balefire", "name": "Balefire Tome", "maxModels": 1 }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "veterans-of-the-long-war",
+          "name": "Veterans of the Long War",
+          "description": "Each time a model in this unit targets an enemy unit with a melee attack, re-roll a Wound roll of 1. If that enemy unit is within range of an objective marker, you can re-roll the Wound roll instead."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Chaos", "Grenades", "Heretic Astartes", "Legionaries"]
+    },
+    {
+      "id": "chaos-lord",
+      "name": "Chaos Lord",
+      "points": { "1": 90 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 5, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "plasma-pistol-lord",
+          "name": "Plasma Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "2+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "ranged"
+        },
+        {
+          "id": "bolt-pistol-lord",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "2+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "ranged"
+        },
+        {
+          "id": "daemon-hammer",
+          "name": "Daemon Hammer",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "2+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": ["Devastating Wounds"],
+          "loadoutGroup": "melee"
+        },
+        {
+          "id": "accursed-weapon",
+          "name": "Accursed Weapon",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "melee"
+        },
+        {
+          "id": "astartes-chainsword-lord",
+          "name": "Astartes Chainsword",
+          "type": "melee",
+          "stats": { "a": 7, "ws": "2+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "melee"
+        },
+        {
+          "id": "power-fist-lord",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "2+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "melee"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "ranged", "name": "Plasma Pistol", "default": true },
+            { "id": "ranged", "name": "Bolt Pistol" }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "melee", "name": "Daemon Hammer", "default": true },
+            { "id": "melee", "name": "Accursed Weapon" },
+            { "id": "melee", "name": "Astartes Chainsword" },
+            { "id": "melee", "name": "Power Fist" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units: Chosen, Legionaries.",
+          "eligibleUnits": ["chosen", "legionaries"]
+        },
+        {
+          "id": "lord-of-chaos",
+          "name": "Lord of Chaos (Aura)",
+          "description": "Once per battle round, one unit from your army with this ability can use it when targeted by a Stratagem. If it does, reduce the CP cost of that Stratagem by 1CP."
+        },
+        {
+          "id": "chance-for-glory",
+          "name": "Chance for Glory",
+          "description": "Once per battle, at the start of the Fight phase, this model can use this ability. If it does, until the end of the phase, improve the Strength, Attacks, Armor Penetration, and Damage characteristics of melee weapons equipped by this model by 1."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Chaos", "Grenades", "Heretic Astartes", "Chaos Lord"]
+    },
+    {
+      "id": "cultist-mob",
+      "name": "Cultist Mob",
+      "points": { "10": 50, "20": 100 },
+      "stats": { "m": 6, "t": 3, "sv": "6+", "w": 1, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "cultist-firearm",
+          "name": "Cultist Firearm",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 3, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "brutal-weapons",
+          "name": "Brutal Weapons",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 3, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "for-the-dark-gods",
+          "name": "For the Dark Gods",
+          "description": "At the end of your Command phase, if this unit is within 6\" of one or more friendly HERETIC ASTARTES units, this unit's OC characteristic is changed to 2 until the start of your next Command phase."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Chaos", "Damned", "Cultist Mob"]
+    }
+  ],
   "detachments": {},
   "armyRules": {
     "dark_pacts": {
