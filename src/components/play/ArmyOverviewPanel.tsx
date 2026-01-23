@@ -99,6 +99,31 @@ function getEnhancementName(
   return enhancement?.name;
 }
 
+/**
+ * Calculate unit points including enhancement
+ */
+function getUnitPoints(
+  listUnit: ListUnit,
+  unit: Unit,
+  armyData: ArmyData,
+  detachmentId: string
+): number {
+  // Base points for the model count
+  const basePoints = unit.points[String(listUnit.modelCount)] || 0;
+
+  // Enhancement points
+  let enhancementPoints = 0;
+  if (listUnit.enhancement) {
+    const detachment = armyData.detachments?.[detachmentId];
+    const enhancement = detachment?.enhancements?.find(
+      (e) => e.id === listUnit.enhancement
+    );
+    enhancementPoints = enhancement?.points || 0;
+  }
+
+  return basePoints + enhancementPoints;
+}
+
 // ============================================================================
 // Component Types
 // ============================================================================
@@ -202,6 +227,12 @@ export function ArmyOverviewPanel({
                 ? getEnhancementName(attachedLeaderListUnit, armyData, detachmentId)
                 : undefined);
 
+            // Calculate unit points (including leader if attached)
+            let unitPoints = getUnitPoints(listUnit, unit, armyData, detachmentId);
+            if (attachedLeaderListUnit && attachedLeaderUnit) {
+              unitPoints += getUnitPoints(attachedLeaderListUnit, attachedLeaderUnit, armyData, detachmentId);
+            }
+
             return (
               <PlayUnitCard
                 key={index}
@@ -222,6 +253,7 @@ export function ArmyOverviewPanel({
                 leaderModelsAlive={leaderWounds.modelsAlive}
                 leaderTotalModels={leaderWounds.totalModels}
                 enhancementName={enhancementName}
+                unitPoints={unitPoints}
               />
             );
           })

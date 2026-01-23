@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Badge, SimpleWoundBar } from '@/components/ui';
+import { Card, Badge } from '@/components/ui';
 import type { Unit, ListUnit } from '@/types';
 
 interface PlayUnitCardProps {
@@ -24,6 +24,8 @@ interface PlayUnitCardProps {
   leaderTotalModels?: number;
   // Enhancement info
   enhancementName?: string;
+  // Points
+  unitPoints?: number;
   className?: string;
 }
 
@@ -45,10 +47,10 @@ export function PlayUnitCard({
   leaderModelsAlive = 0,
   leaderTotalModels = 0,
   enhancementName,
+  unitPoints,
   className = '',
 }: PlayUnitCardProps) {
   const hasAttachedLeader = !!attachedLeaderName && !!attachedLeaderUnit;
-  const isCharacter = unit.keywords?.includes('Character') || false;
 
   // Combined model count (unit + leader)
   const combinedModelsAlive = modelsAlive + leaderModelsAlive;
@@ -60,9 +62,9 @@ export function PlayUnitCard({
 
   // Determine unit status
   const isDestroyed = combinedCurrentWounds <= 0;
-  const isDamaged = combinedCurrentWounds < combinedMaxWounds;
+  const isDamaged = combinedModelsAlive < combinedTotalModels;
 
-  // Get combined unit name
+  // Combined unit name (matches Alpine's getCombinedUnitName)
   const displayName = hasAttachedLeader
     ? `${unit.name} + ${attachedLeaderName}`
     : unit.name;
@@ -77,77 +79,51 @@ export function PlayUnitCard({
         ${className}
       `}
     >
-      <div className="p-3 space-y-2">
-        {/* Header Row */}
-        <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <h4 className="text-sm font-medium text-gray-200 truncate">
-                {displayName}
-              </h4>
-            </div>
-            {/* Badges */}
-            <div className="flex flex-wrap gap-1 mt-1">
-              {isCharacter && !hasAttachedLeader && (
-                <Badge variant="accent" size="sm">Character</Badge>
-              )}
-              {enhancementName && (
-                <Badge variant="info" size="sm">{enhancementName}</Badge>
-              )}
-              {hasAttachedLeader && (
-                <Badge variant="purple" size="sm">Led</Badge>
-              )}
-              {isDestroyed && (
-                <Badge variant="error" size="sm">Destroyed</Badge>
-              )}
-            </div>
-          </div>
+      <div className="list-row">
+        <div className="flex-1 min-w-0">
+          {/* Combined Unit Name */}
+          <div className="font-semibold truncate">{displayName}</div>
 
-          {/* Models Alive */}
-          <div className="text-right shrink-0">
-            <div className="text-lg font-bold text-gray-200">
-              {combinedModelsAlive}
-              <span className="text-gray-500 text-sm font-normal">
-                /{combinedTotalModels}
-              </span>
-            </div>
-            <div className="text-xs text-gray-500">models</div>
-          </div>
-        </div>
-
-        {/* Wound Bar */}
-        <div className="space-y-1">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-gray-400">Wounds</span>
-            <span className="text-gray-300">
-              {combinedCurrentWounds}/{combinedMaxWounds}
+          {/* Models and Enhancement */}
+          <div className="flex items-center gap-2 mt-1">
+            <span
+              className={`text-xs ${isDamaged ? 'text-red-400' : 'text-white/50'}`}
+            >
+              {combinedModelsAlive}/{combinedTotalModels} models
             </span>
+            {enhancementName && (
+              <Badge variant="accent" size="sm">{enhancementName}</Badge>
+            )}
           </div>
-          <SimpleWoundBar
-            current={combinedCurrentWounds}
-            max={combinedMaxWounds}
-          />
+
+          {/* Leader Indicator (matches Alpine: shows both combined name AND leader indicator) */}
+          {hasAttachedLeader && (
+            <div className="text-xs text-purple-400 mt-0.5">
+              + {attachedLeaderName}
+            </div>
+          )}
         </div>
 
-        {/* Separate display for attached leader wounds when damaged */}
-        {hasAttachedLeader && isDamaged && (
-          <div className="pt-1 border-t border-gray-700/30 space-y-1">
-            {/* Unit wounds */}
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-gray-500">{unit.name}</span>
-              <span className="text-gray-400">
-                {currentWounds}/{maxWounds} W • {modelsAlive}/{totalModels} M
-              </span>
-            </div>
-            {/* Leader wounds */}
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-purple-400">{attachedLeaderName}</span>
-              <span className="text-gray-400">
-                {leaderCurrentWounds}/{leaderMaxWounds} W • {leaderModelsAlive}/{leaderTotalModels} M
-              </span>
-            </div>
+        {/* Right Side: Points and Wounds */}
+        <div className="text-right shrink-0">
+          {unitPoints !== undefined && (
+            <div className="text-sm text-accent-400 font-semibold">{unitPoints} pts</div>
+          )}
+          <div className="text-xs text-white/40 mt-1">
+            W: {combinedCurrentWounds}/{combinedMaxWounds}
           </div>
-        )}
+        </div>
+
+        {/* Chevron */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5 text-white/30 shrink-0"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
       </div>
     </Card>
   );

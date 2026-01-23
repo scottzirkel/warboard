@@ -35,7 +35,7 @@ interface StatCellProps {
 function StatCell({ value, modified, sources, suffix = '' }: StatCellProps) {
   return (
     <td
-      className={`py-1.5 px-2 text-center ${modified ? 'text-green-400 font-bold' : 'text-gray-300'}`}
+      className={`py-1.5 px-2 text-center ${modified ? 'text-accent-400 font-bold' : 'text-gray-300'}`}
       title={modified ? sources.join(', ') : undefined}
     >
       {value}{suffix}
@@ -141,7 +141,7 @@ export function WeaponStatsTable({
               <thead>
                 <tr className="text-xs text-gray-500 uppercase tracking-wider border-b border-gray-700/50">
                   <th className="py-1 px-2 text-left font-medium">Weapon</th>
-                  <th className="py-1 px-2 text-center font-medium">Range</th>
+                  <th className="py-1 px-2 text-center font-medium">RNG</th>
                   <th className="py-1 px-2 text-center font-medium">A</th>
                   <th className="py-1 px-2 text-center font-medium">BS</th>
                   <th className="py-1 px-2 text-center font-medium">S</th>

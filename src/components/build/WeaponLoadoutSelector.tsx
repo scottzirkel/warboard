@@ -19,7 +19,7 @@ interface ChoiceRowProps {
   isReplacement: boolean;
 }
 
-function ChoiceRow({ choice, count, maxCount, onChange, isReplacement: _isReplacement }: ChoiceRowProps) {
+function ChoiceRow({ choice, count, maxCount, onChange, isReplacement }: ChoiceRowProps) {
   const effectiveMax = choice.maxModels !== undefined
     ? Math.min(choice.maxModels, maxCount)
     : maxCount;
@@ -27,12 +27,16 @@ function ChoiceRow({ choice, count, maxCount, onChange, isReplacement: _isReplac
   const hasMaxLimit = choice.maxModels !== undefined;
 
   return (
-    <div className="flex items-center justify-between gap-2 py-1">
+    <div
+      className={`flex items-center justify-between bg-black/20 rounded-lg px-3 py-2 ${
+        !isReplacement ? 'border-l-2 border-green-500' : ''
+      }`}
+    >
       <div className="flex items-center gap-2 min-w-0">
         <span className="text-sm text-gray-300 truncate">{choice.name}</span>
         {choice.paired && (
           <span
-            className="text-yellow-400 text-xs"
+            className="text-blue-400 text-xs"
             title="Paired loadout (equipped together)"
           >
             ⬡
@@ -40,7 +44,7 @@ function ChoiceRow({ choice, count, maxCount, onChange, isReplacement: _isReplac
         )}
         {hasMaxLimit && (
           <span
-            className="text-yellow-400/70 text-xs"
+            className="text-white/40 text-xs"
             title={`Max ${choice.maxModels} model(s) can take this option`}
           >
             (max {choice.maxModels})
@@ -66,16 +70,11 @@ export function WeaponLoadoutSelector({
   className = '',
 }: WeaponLoadoutSelectorProps) {
   const isReplacement = option.pattern === 'replacement';
-  const isAddition = option.pattern === 'addition';
 
   return (
     <div className={`space-y-1 ${className}`}>
       {/* Choices - filter out "none" as it's implied when no other choice is selected */}
-      <div
-        className={`${
-          isAddition ? 'border-l-2 border-green-500/30 pl-2' : ''
-        }`}
-      >
+      <div className="space-y-1">
         {option.choices
           .filter((choice) => choice.id !== 'none')
           .map((choice) => (

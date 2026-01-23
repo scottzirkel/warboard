@@ -97,16 +97,18 @@ export function UnitDetailsPanel({
       </div>
 
       {/* Stats */}
-      <div className="mb-4 shrink-0">
-        <div className="section-header-inline mb-2">
-          <span>Stats</span>
-          {unit.invuln && <span className="badge badge-blue ml-auto">{unit.invuln} Invuln</span>}
-        </div>
+      <div className="card-depth p-4 mb-4 shrink-0">
         <StatsTable
           stats={unit.stats}
           modifiers={modifiers}
           modifierSources={modifierSources}
+          className="mb-3"
         />
+        {unit.invuln && (
+          <div className="flex justify-center">
+            <span className="badge badge-accent">{unit.invuln} Invuln</span>
+          </div>
+        )}
       </div>
 
       {/* Keywords */}
@@ -133,21 +135,15 @@ export function UnitDetailsPanel({
           <div className="mb-3">
             <div className="text-xs text-white/50 uppercase tracking-wide mb-1">Ranged</div>
             {ranged.filter(isRangedStats).map((weapon) => (
-              <div key={weapon.id} className="bg-black/20 rounded-lg p-2 mb-1">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-medium text-white">{weapon.name}</span>
-                  {weapon.abilities && weapon.abilities.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
-                      {weapon.abilities.map((ab) => (
-                        <span key={ab} className="badge badge-blue text-[10px] py-0">{ab}</span>
-                      ))}
-                    </div>
-                  )}
+              <div key={weapon.id} className="bg-black/20 rounded-lg p-3 mb-1">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-medium text-sm">{weapon.name}</span>
+                  <span className="badge badge-blue text-[10px] py-0">ranged</span>
                 </div>
-                <table className="weapon-table text-xs">
+                <table className="weapon-table">
                   <thead>
                     <tr>
-                      <th>Range</th>
+                      <th>RNG</th>
                       <th>A</th>
                       <th>BS</th>
                       <th>S</th>
@@ -166,6 +162,9 @@ export function UnitDetailsPanel({
                     </tr>
                   </tbody>
                 </table>
+                {weapon.abilities && weapon.abilities.length > 0 && (
+                  <div className="text-xs text-accent-400 mt-2">{weapon.abilities.join(', ')}</div>
+                )}
               </div>
             ))}
           </div>
@@ -176,18 +175,12 @@ export function UnitDetailsPanel({
           <div>
             <div className="text-xs text-white/50 uppercase tracking-wide mb-1">Melee</div>
             {melee.filter(isMeleeStats).map((weapon) => (
-              <div key={weapon.id} className="bg-black/20 rounded-lg p-2 mb-1">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-medium text-white">{weapon.name}</span>
-                  {weapon.abilities && weapon.abilities.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
-                      {weapon.abilities.map((ab) => (
-                        <span key={ab} className="badge badge-red text-[10px] py-0">{ab}</span>
-                      ))}
-                    </div>
-                  )}
+              <div key={weapon.id} className="bg-black/20 rounded-lg p-3 mb-1">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-medium text-sm">{weapon.name}</span>
+                  <span className="badge badge-red text-[10px] py-0">melee</span>
                 </div>
-                <table className="weapon-table text-xs">
+                <table className="weapon-table">
                   <thead>
                     <tr>
                       <th>A</th>
@@ -207,6 +200,9 @@ export function UnitDetailsPanel({
                     </tr>
                   </tbody>
                 </table>
+                {weapon.abilities && weapon.abilities.length > 0 && (
+                  <div className="text-xs text-accent-400 mt-2">{weapon.abilities.join(', ')}</div>
+                )}
               </div>
             ))}
           </div>

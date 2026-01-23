@@ -152,9 +152,9 @@ export function LoadoutGroupAccordion({
   children,
   className = '',
 }: LoadoutGroupAccordionProps) {
-  const headerBg = isActivated ? 'bg-green-900/40' : 'bg-gray-600/50';
-  const headerRing = isActivated ? 'ring-1 ring-green-500/30' : '';
-  const countColor = isActivated ? 'text-green-400' : 'text-gray-400';
+  const headerBg = isActivated ? 'bg-green-900/40' : 'bg-black/20';
+  const headerRing = isActivated ? 'ring-1 ring-green-600/50' : '';
+  const countColor = isActivated ? 'text-green-400' : 'text-accent-400';
   const nameColor = isActivated ? 'text-green-300' : 'text-gray-200';
 
   return (
@@ -188,7 +188,7 @@ export function LoadoutGroupAccordion({
           <span className={`font-medium ${nameColor}`}>{name}</span>
           {isPaired && (
             <span
-              className="text-yellow-400 cursor-help"
+              className="text-blue-400 cursor-help"
               title="Paired loadout (equipped together)"
             >
               ⬡
