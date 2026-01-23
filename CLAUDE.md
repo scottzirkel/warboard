@@ -4,27 +4,29 @@ A Warhammer 40k army list builder and game state tracker, currently focused on *
 
 ## Tech Stack
 
-- **Frontend**: Alpine.js (lightweight reactive framework) + Tailwind CSS
-- **Backend**: Simple PHP API (`api.php`) for list persistence
-- **Build Tool**: Vite
-- **Data**: JSON files in `/data/`
-- **Storage**: File-based JSON in `/data/lists/`
-
-No Laravel, Vue, or React. This is intentionally lightweight.
+- **Frontend**: Next.js 14+ (App Router) + React + TypeScript
+- **Styling**: Tailwind CSS
+- **State**: Zustand for state management
+- **Testing**: Vitest + React Testing Library
+- **Data**: JSON files in `/public/data/`
+- **Storage**: File-based JSON in `/data/lists/` via Next.js API routes
 
 ## Project Structure
 
 ```
 army-tracker/
 ├── src/
-│   ├── main.js          # Alpine.js app (~715 lines, all state/logic)
-│   └── style.css        # Tailwind + custom styles
-├── data/
+│   ├── app/             # Next.js App Router pages
+│   ├── components/      # React components (ui/, build/, play/)
+│   ├── hooks/           # Custom React hooks
+│   ├── stores/          # Zustand state stores
+│   ├── lib/             # Utility functions
+│   ├── types/           # TypeScript type definitions
+│   └── test/            # Test setup and utilities
+├── public/data/
 │   ├── custodes.json    # Unit data, detachments, enhancements, abilities
-│   └── lists/           # Saved army lists (JSON files)
-├── api.php              # Backend: save/load/delete lists
-├── index.html           # UI template with Alpine.js bindings
-├── vite.config.js
+│   └── tyranids.json    # Tyranids faction data
+├── data/lists/          # Saved army lists (JSON files)
 └── package.json
 ```
 
@@ -32,10 +34,43 @@ army-tracker/
 
 ```bash
 npm install
-npm run dev          # Starts Vite dev server on localhost:5173
+npm run dev          # Starts Next.js dev server on localhost:3000
+npm run validate     # Runs lint, typecheck, test, and build
 ```
 
-Access at `http://localhost:5173`. The Vite config proxies `/api.php` requests to `http://army-tracker.test` (served by Laravel Herd).
+## Quality Validation
+
+All code must pass validation before committing:
+
+```bash
+npm run lint         # ESLint
+npm run typecheck    # TypeScript validation (tsc --noEmit)
+npm run test         # Vitest unit tests
+npm run build        # Next.js production build
+
+# Or run all at once:
+npm run validate
+```
+
+### Writing Tests
+
+Tests live alongside the code they test or in `src/test/`. Use Vitest with React Testing Library.
+
+```typescript
+// src/components/ui/Button.test.tsx
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { Button } from './Button';
+
+describe('Button', () => {
+  it('renders with children', () => {
+    render(<Button>Click me</Button>);
+    expect(screen.getByRole('button')).toHaveTextContent('Click me');
+  });
+});
+```
+
+Test files should use `.test.ts` or `.test.tsx` extension.
 
 ---
 
@@ -324,30 +359,40 @@ Character units with the Leader ability can attach to specific bodyguard units:
 
 ### Keep It Simple
 This is a lightweight app. Avoid over-engineering:
-- No build abstractions or component libraries
-- Single JS file is intentional
-- Direct DOM manipulation via Alpine.js
+- Use React components with hooks for state
+- Prefer composition over complex abstractions
+- Keep components focused and single-purpose
 
 ### Data-Driven
-- Unit stats and rules come from JSON files
+- Unit stats and rules come from JSON files in `/public/data/`
 - Add new armies by creating new JSON files
 - Modifiers are declarative, not hard-coded
 
 ### State Management
-All state lives in the Alpine.js component:
-- `currentList`: The active army list being built/played
-- `gameState`: Play mode state (round, CP, active stratagems)
-- `data`: Loaded faction data from JSON
+State is managed with Zustand stores in `src/stores/`:
+- `useArmyStore`: Army list state (units, detachment, points)
+- `useGameStore`: Play mode state (round, CP, active stratagems, wounds)
+- `useUIStore`: UI state (mode, selected unit, loading, errors)
+
+Custom hooks in `src/hooks/` provide additional state logic:
+- `useFactionData`: Loads faction JSON data
+- `useSavedLists`: List CRUD operations via API
+- `useStatModifiers`: Calculates modified stats from enhancements/weapons
+- `useLeaderAttachment`: Manages leader attachment logic
+- `useWeaponCounts`: Manages loadout selections
+- `useListValidation`: Validates list against format rules
+- `useWoundTracking`: Manages wound state in Play Mode
 
 ### Testing Changes
 1. Run dev server: `npm run dev`
-2. Access at `http://localhost:5173` (API proxied to Herd)
+2. Access at `http://localhost:3000`
 3. Test both Build and Play modes
 4. Test list save/load functionality
 5. Test Colosseum validation if relevant
+6. Run `npm run validate` before committing
 
 ### Adding Units
-Edit `data/custodes.json`:
+Edit `public/data/custodes.json` (or the appropriate faction file):
 1. Add unit to `units` array
 2. Include all stats, weapons, abilities
 3. Add loadout options if unit has choices
@@ -367,7 +412,7 @@ Example patterns:
 - **Paired**: "1 sentinel blade and 1 praesidium shield" → must take both together
 
 ### Adding Enhancements
-Edit the relevant detachment in `data/custodes.json`:
+Edit the relevant detachment in `public/data/custodes.json`:
 1. Add to `detachments.[detachment].enhancements`
 2. Include modifiers array if it affects stats
 3. Points are required
@@ -419,10 +464,15 @@ Ralph is an automated task runner that uses Claude Code to implement features fr
 1. Ralph reads CLAUDE.md, PRD.jsonl, and progress.txt
 2. Finds incomplete features (`"passes":false`) with met dependencies
 3. Implements ONE feature following project conventions
-4. Runs feedback loops (npm run build)
-5. Updates progress.txt and marks the feature `"passes":true` in PRD.jsonl
-6. Commits all changes together
-7. Repeats until all features complete or max iterations reached
+4. Writes tests for the new code (Vitest)
+5. Runs validation pipeline:
+   - `npm run lint` (ESLint)
+   - `npm run typecheck` (TypeScript)
+   - `npm run test` (Vitest)
+   - `npm run build` (Next.js)
+6. Updates progress.txt and marks the feature `"passes":true` in PRD.jsonl
+7. Commits all changes together (does NOT push to remote)
+8. Repeats until all features complete or max iterations reached
 
 ### Adding Tasks
 

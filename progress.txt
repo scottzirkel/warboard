@@ -5,6 +5,41 @@ Format follows the Ralph technique.
 
 ---
 
+## [nextjs-030] Migrate existing saved lists and update documentation
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Created migration helper in `src/lib/migrateList.ts` to convert old saved list format to new format
+- Migration handles: `gameFormat` → `format`, missing `army` field (auto-detected from detachment), `wargear` → removed (legacy), missing unit fields (`enhancement`, `attachedLeader`, `leaderCurrentWounds`)
+- Auto-detects faction from detachment name patterns (custodes, tyranids, spacemarines, chaosmarines, necrons, orks)
+- Updated `useSavedLists.ts` to automatically migrate old lists when loaded
+- Updated CLAUDE.md to remove all Alpine.js references and document Next.js architecture
+- Updated documentation paths from `data/custodes.json` to `public/data/custodes.json`
+- Updated dev server URL from `localhost:5173` to `localhost:3000`
+- Updated state management section to document Zustand stores and hooks
+- Updated Storage line in tech stack to reflect API routes
+
+**Files changed:**
+- src/lib/migrateList.ts - New migration utility with `needsMigration()` and `migrateList()` functions
+- src/lib/migrateList.test.ts - 13 tests covering migration scenarios including real First_save.json format
+- src/hooks/useSavedLists.ts - Added migration import and auto-migration in `loadList()`
+- CLAUDE.md - Updated Development Guidelines, State Management, and paths for Next.js
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes (226 tests, +13 new migration tests)
+- npm run build succeeds without errors
+
+**Acceptance criteria met:**
+1. ✅ Existing saved lists work with new app (migration helper converts old format)
+2. ✅ CLAUDE.md updated for Next.js setup (Zustand stores, hooks documented)
+3. ✅ Old Alpine.js references removed from docs (replaced with React/Zustand patterns)
+4. ✅ npm run build succeeds without errors
+
+---
+
 ## [spacemarines-009] Enable Space Marines faction in app
 
 **Date:** 2026-01-23

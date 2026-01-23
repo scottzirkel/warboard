@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import type { CurrentList, SavedListInfo, ApiResponse } from '@/types';
+import { migrateList, needsMigration } from '@/lib/migrateList';
 
 // ============================================================================
 // Types
@@ -112,12 +113,22 @@ export function useSavedLists(): UseSavedListsReturn {
     setIsLoading(true);
     setError(null);
 
-    const result = await fetchJson<CurrentList>(`${API_BASE}/${encodeURIComponent(filename)}`);
+    const result = await fetchJson<unknown>(`${API_BASE}/${encodeURIComponent(filename)}`);
 
     setIsLoading(false);
 
     if (result.success && result.data) {
-      return result.data;
+      // Migrate old list format to new format if needed
+      if (needsMigration(result.data)) {
+        try {
+          return migrateList(result.data);
+        } catch {
+          setError('Failed to migrate old list format');
+          return null;
+        }
+      }
+
+      return result.data as CurrentList;
     }
 
     setError(result.error || 'Failed to load list');
