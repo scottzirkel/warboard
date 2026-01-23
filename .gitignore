@@ -30,3 +30,7 @@ Thumbs.db
 
 # TypeScript
 *.tsbuildinfo
+
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal

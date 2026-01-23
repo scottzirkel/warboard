@@ -352,3 +352,54 @@ export interface ApiResponse<T> {
   data?: T;
   error?: string;
 }
+
+// ============================================================================
+// Database Types (matching Prisma schema)
+// ============================================================================
+
+// User record from database
+export interface DbUser {
+  id: string;
+  email: string;
+  name: string | null;
+  googleId: string | null;
+  createdAt: Date;
+}
+
+// List record from database
+export interface DbList {
+  id: string;
+  userId: string;
+  name: string;
+  armyId: string;
+  data: string; // JSON string of CurrentList
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// List with user relation
+export interface DbListWithUser extends DbList {
+  user: DbUser;
+}
+
+// Input type for creating a user
+export interface CreateUserInput {
+  email: string;
+  name?: string;
+  googleId?: string;
+}
+
+// Input type for creating a list
+export interface CreateListInput {
+  userId: string;
+  name: string;
+  armyId: string;
+  data: CurrentList;
+}
+
+// Input type for updating a list
+export interface UpdateListInput {
+  name?: string;
+  armyId?: string;
+  data?: CurrentList;
+}

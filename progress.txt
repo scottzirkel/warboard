@@ -5,6 +5,59 @@ Format follows the Ralph technique.
 
 ---
 
+## [multiuser-001] Add database schema for users and lists
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Chose Prisma ORM for database access - industry standard for Next.js, excellent TypeScript support
+- Chose SQLite for development - simple setup, no external dependencies, easy to upgrade to Postgres later
+- Schema designed with companion app architecture in mind:
+  - `users` table has `google_id` field for SSO across multiple apps
+  - `lists` table has `army_id` field for filtering by faction
+  - `data` field stores full list JSON for flexibility
+- Database file stored in `prisma/dev.db` (gitignored)
+- Prisma client generated via `postinstall` hook to ensure types are available
+
+**Database Schema:**
+- `users` table: id (cuid), email (unique), name, google_id (unique, nullable), created_at
+- `lists` table: id (cuid), user_id (FK), name, army_id, data (JSON string), created_at, updated_at
+- Indexes on user_id and army_id for efficient queries
+- Cascade delete: when user is deleted, their lists are also deleted
+
+**TypeScript Types Added:**
+- `DbUser`: Database user record type
+- `DbList`: Database list record type
+- `DbListWithUser`: List with user relation
+- `CreateUserInput`: Input for creating users
+- `CreateListInput`: Input for creating lists
+- `UpdateListInput`: Input for partial list updates
+
+**Files changed:**
+- prisma/schema.prisma - Database schema with User and List models
+- src/lib/db.ts - Prisma client singleton for Next.js
+- src/lib/db.test.ts - 12 tests for database types and schema design
+- src/types/index.ts - Added database-related TypeScript types
+- package.json - Added Prisma scripts and dependencies
+- .gitignore - Added prisma/dev.db and dev.db-journal
+- .env - Database URL configuration (gitignored)
+- .env.example - Example environment file for reference
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 238 tests passed (12 new tests added)
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Postgres or SQLite database configured (SQLite for dev, schema supports Postgres)
+2. ✅ users table: id, email, name, google_id, created_at
+3. ✅ lists table: id, user_id, name, army_id, data (jsonb), created_at, updated_at
+4. ✅ Database migrations set up (Prisma schema with db:push and db:migrate scripts)
+5. ✅ Schema supports future companion apps sharing users (google_id for SSO, indexed army_id)
+
+---
+
 ## [necrons-004] Add Overlord character
 
 **Date:** 2026-01-23

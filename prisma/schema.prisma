@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// User model for authentication
+// Supports Google SSO and can be shared across companion apps
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  googleId  String?  @unique @map("google_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relationships
+  lists List[]
+
+  @@map("users")
+}
+
+// Army list model
+// Stores user's saved army lists with full data as JSON
+model List {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  name      String
+  armyId    String   @map("army_id")
+  data      String   // JSON string (SQLite doesn't support JSONB, but this stores the same data)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([armyId])
+  @@map("lists")
+}
