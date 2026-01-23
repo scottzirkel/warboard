@@ -14,3 +14,32 @@ export {
   generateFilename,
   filenameToDisplayName,
 } from './useSavedLists';
+
+// ============================================================================
+// Weapon & Loadout Hooks
+// ============================================================================
+
+export {
+  useWeaponCounts,
+  calculateDefaultWeaponCounts,
+  validateWeaponCounts,
+} from './useWeaponCounts';
+
+export type {
+  WeaponCountState,
+  LoadoutOptionState,
+  WeaponCountsResult,
+} from './useWeaponCounts';
+
+// ============================================================================
+// Leader Attachment Hook
+// ============================================================================
+
+export {
+  useLeaderAttachment,
+} from './useLeaderAttachment';
+
+export type {
+  LeaderAttachmentResult,
+  UseLeaderAttachmentReturn,
+} from './useLeaderAttachment';
