@@ -1656,3 +1656,53 @@ Format follows the Ralph technique.
 - npm run build passes
 - TypeScript compiles without errors
 
+---
+
+## [nextjs-017] Create Play Mode middle panel - Game State
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created GameStatePanel as the main container component for the Play Mode middle panel
+- Broke down into smaller, focused sub-components for reusability and maintainability
+- BattleRoundControl provides round 1-5 tracking with:
+  - Visual round indicator buttons (clickable to jump to any round)
+  - Previous/Next navigation arrows
+  - Current round badge display
+  - Contextual phase hint (Game begins, Early/Mid/Late game, Final round)
+- CommandPointsControl provides CP tracking with:
+  - Stepper component for fine control
+  - Quick adjustment buttons (-1, -2, +1, +2) for common operations
+  - Visual feedback when CP is 0 vs available
+  - Reminder about gaining CP in Command Phase
+- MartialKatahSelector provides stance selection for Custodes army rule:
+  - Dynamically loaded stances from armyRules.martial_katah.stances
+  - Toggle behavior (click active to deselect)
+  - Clear visual indication of active stance
+  - Only renders if stances are available (faction-specific)
+- StrategemsToggleList provides stratagem activation with:
+  - Stratagems grouped by phase for easier navigation
+  - Toggle on/off with visual active state
+  - CP cost display on each stratagem
+  - Disabled state when not enough CP to afford
+  - Active stratagem count badge
+  - Scrollable list for many stratagems
+- Added ArmyRuleStance type to support the stances array in armyRules
+
+**Files created:**
+- `src/components/play/BattleRoundControl.tsx` - Round 1-5 tracking with visual indicators
+- `src/components/play/CommandPointsControl.tsx` - CP tracking with stepper and quick adjust
+- `src/components/play/MartialKatahSelector.tsx` - Ka'tah stance selection (Custodes-specific)
+- `src/components/play/StrategemsToggleList.tsx` - Stratagem activation with phase grouping
+- `src/components/play/GameStatePanel.tsx` - Main panel container combining all controls
+
+**Files changed:**
+- `src/components/play/index.ts` - Added exports for all new components
+- `src/types/index.ts` - Added ArmyRuleStance interface and stances field to ArmyRule
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes
+- npm run test passes
+- npm run build passes
+

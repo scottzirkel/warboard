@@ -181,12 +181,20 @@ export interface Detachment {
 // Army Rules
 // ============================================================================
 
+export interface ArmyRuleStance {
+  id: string;
+  name: string;
+  description: string;
+  modifiers?: Modifier[];
+}
+
 export interface ArmyRule {
   name: string;
   description: string;
   range?: number;
   keywords?: string[];
   oncePerBattle?: boolean;
+  stances?: ArmyRuleStance[];
 }
 
 // ============================================================================
@@ -200,7 +208,8 @@ export interface KeywordDefinition {
 
 export interface KeywordGlossary {
   faction?: Record<string, KeywordDefinition>;
-  unit?: Record<string, KeywordDefinition>;
+  unit?: KeywordDefinition[];
+  weapon?: KeywordDefinition[];
 }
 
 // ============================================================================
