@@ -237,6 +237,81 @@
         }
       ],
       "keywords": ["Infantry", "Character", "Necrons", "Royal Warden"]
+    },
+    {
+      "id": "lychguard",
+      "name": "Lychguard",
+      "points": { "5": 85, "10": 170 },
+      "stats": { "m": 5, "t": 5, "sv": "3+", "w": 2, "ld": "7+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "warscythe",
+          "name": "Warscythe",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "3+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Devastating Wounds"],
+          "loadoutGroup": "warscythe"
+        },
+        {
+          "id": "hyperphase-sword",
+          "name": "Hyperphase Sword",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 6, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "sword-shield"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "warscythe", "name": "Warscythe", "default": true },
+            { "id": "sword-shield", "name": "Hyperphase Sword + Dispersion Shield", "paired": true }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "guardian-protocols",
+          "name": "Guardian Protocols",
+          "description": "While a NOBLE model is leading this unit, each time an attack targets this unit, if the Strength characteristic of that attack is greater than this unit's Toughness characteristic, subtract 1 from the Wound roll."
+        }
+      ],
+      "keywords": ["Infantry", "Necrons", "Lychguard"]
+    },
+    {
+      "id": "skorpekh-destroyers",
+      "name": "Skorpekh Destroyers",
+      "points": { "3": 90, "6": 180 },
+      "stats": { "m": 8, "t": 6, "sv": "3+", "w": 3, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "skorpekh-hyperphase-weapons",
+          "name": "Skorpekh Hyperphase Weapons",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 6, "ap": -2, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "whirling-onslaught",
+          "name": "Whirling Onslaught",
+          "description": "Each time a model in this unit makes a melee attack, re-roll a Hit roll of 1. If this unit made a Charge move this turn, you can re-roll the Hit roll instead."
+        },
+        {
+          "id": "devastating-charge",
+          "name": "Devastating Charge",
+          "description": "Each time this unit makes a Charge move, until the end of the turn, melee weapons equipped by models in this unit have the [Devastating Wounds] ability."
+        }
+      ],
+      "keywords": ["Infantry", "Necrons", "Destroyer Cult", "Skorpekh Destroyers"]
     }
   ],
   "detachments": {},

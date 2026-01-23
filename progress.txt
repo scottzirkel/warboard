@@ -3179,3 +3179,37 @@ Format follows the Ralph technique.
 2. Colosseum format validation works - All 4 rules implemented and tested
 3. Error messages display correctly - ValidationErrors component with appropriate styling
 4. All validation rules enforced - Checked on save and before Play Mode entry
+
+---
+
+## [necrons-006] Add Lychguard elite unit to necrons.json
+
+**Date:** 2026-01-23
+
+**Task:** Add Lychguard elite unit to Necrons faction data
+
+**Decisions:**
+- Stats sourced from Wahapedia (10th Edition): M5 T5 SV3+ W2 LD7+ OC1
+- 4+ invuln comes from Dispersion Shield but set at unit level per acceptance criteria
+- Points: 85 for 5 models, 170 for 10 models (current Munitorum Field Manual)
+- Weapon options modeled as replacement pattern with paired choice for sword + shield
+- Warscythe: A2 WS3+ S8 AP-3 D2 with Devastating Wounds
+- Hyperphase Sword: A3 WS3+ S6 AP-2 D1 (no abilities)
+- Guardian Protocols ability: -1 to wound when S > T and led by a NOBLE
+- Overlord already had "lychguard" in eligibleUnits for Leader ability
+
+**Files changed:**
+- public/data/necrons.json - Added Lychguard unit with full stats, weapons, loadout options, and abilities
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 238 tests passed
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Lychguard with points for 5/10 models (85/170)
+2. ✅ Stats: M5 T5 SV3+ W2 LD7+ OC1 with 4+ invuln
+3. ✅ Warscythe or hyperphase sword + shield options (replacement pattern, paired: true for shield)
+4. ✅ Guardian Protocols bodyguard ability
+5. ✅ Keywords include Infantry, Necrons
