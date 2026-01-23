@@ -5,6 +5,35 @@ Format follows the Ralph technique.
 
 ---
 
+## [necrons-009] Enable Necrons faction in app
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Necrons to availableArmies array in armyStore.ts (alphabetically ordered)
+- Faction ID: 'necrons', File: 'necrons.json'
+- Added Canoptek Scarabs unit to meet "at least 7 units" requirement (only 6 were in dependencies)
+- Canoptek Scarabs: Swarm unit with points 40/80/120 for 3/6/9 models, M9 T2 SV6+ W4 LD8+ OC0
+- Canoptek Scarabs have Feeder Mandibles (melee A6 WS5+ S2 AP0 D1 with Lethal Hits) and Self-Destruction ability
+
+**Files changed:**
+- src/stores/armyStore.ts - Added Necrons to availableArmies array
+- public/data/necrons.json - Added Canoptek Scarabs unit (7th unit)
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 280 tests passed
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Necrons added to availableArmies in stores
+2. ✅ App can load necrons.json without errors
+3. ✅ Build Mode shows Necron units
+4. ✅ 7 units available (Necron Warriors, Immortals, Overlord, Royal Warden, Lychguard, Skorpekh Destroyers, Canoptek Scarabs)
+
+---
+
 ## [orks-003] Add Gretchin battleline unit
 
 **Date:** 2026-01-23

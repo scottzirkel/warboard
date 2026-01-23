@@ -89,6 +89,86 @@
         }
       ],
       "keywords": ["Infantry", "Battleline", "Orks", "Mob", "Grenades", "Boyz"]
+    },
+    {
+      "id": "gretchin",
+      "name": "Gretchin",
+      "points": { "10": 40, "20": 80 },
+      "stats": { "m": 6, "t": 2, "sv": "7+", "w": 1, "ld": "8+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "grot-blasta",
+          "name": "Grot Blasta",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "4+", "s": 3, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "close-combat-weapon",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 1, "ws": "5+", "s": 2, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "cowardly",
+          "name": "Cowardly",
+          "description": "After this unit takes a Battle-shock test, if it fails, all models in this unit must take the maximum possible move toward the closest battlefield edge."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Orks", "Gretchin"]
+    },
+    {
+      "id": "weirdboy",
+      "name": "Weirdboy",
+      "points": { "1": 65 },
+      "stats": { "m": 6, "t": 5, "sv": "5+", "w": 4, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "eadbanger",
+          "name": "'Eadbanger",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 6, "ap": -3, "d": 1 },
+          "abilities": ["Precision", "Psychic"]
+        },
+        {
+          "id": "weirdboy-staff",
+          "name": "Weirdboy Staff",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 8, "ap": -1, "d": "D3" },
+          "abilities": ["Psychic"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to a Boyz unit.",
+          "eligibleUnits": ["boyz"]
+        },
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "waaagh-energy",
+          "name": "Waaagh! Energy",
+          "description": "While this model is leading a unit, add 1 to the Strength and Damage characteristics of this model's 'Eadbanger weapon for every 5 models in that unit (rounding down). While that unit contains 10 or more models, that weapon also has the [HAZARDOUS] ability."
+        },
+        {
+          "id": "da-jump",
+          "name": "Da Jump (Psychic)",
+          "description": "Once per turn, at the end of your Movement phase, one Weirdboy from your army can use this ability. If it does, roll one D6: on a 1, that Weirdboy's unit suffers D6 mortal wounds; on a 2+, remove this Weirdboy's unit from the battlefield and set it up again anywhere on the battlefield that is more than 9\" horizontally away from all enemy models."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Orks", "Psyker", "Weirdboy"]
     }
   ],
   "detachments": {
