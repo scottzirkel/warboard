@@ -1,0 +1,66 @@
+{
+  "faction": "Necrons",
+  "lastUpdated": "2026-01",
+  "units": [],
+  "detachments": {},
+  "armyRules": {
+    "reanimation_protocols": {
+      "name": "Reanimation Protocols",
+      "description": "At the start of each of your Command phases, each unit from your army with this ability that has one or more models with fewer than their starting number of wounds heals D3 wounds. Each time such a unit heals wounds, until the end of your Command phase, you can resurrect models in that unit. Each time you do, select one destroyed model from that unit. It is returned to the unit with 1 wound remaining.",
+      "phase": "Command",
+      "healing": "D3"
+    }
+  },
+  "weaponKeywords": {
+    "Devastating Wounds": "Critical wounds (unmodified wound roll of 6) inflict mortal wounds equal to the Damage characteristic, and the attack sequence ends.",
+    "Lethal Hits": "Critical hits (unmodified hit roll of 6) automatically wound the target.",
+    "Sustained Hits": "Critical hits generate additional hits (number specified after the ability name).",
+    "Twin-linked": "Re-roll wound rolls.",
+    "Assault": "Can shoot after Advancing (at -1 to hit).",
+    "Pistol": "Can shoot in Engagement Range, but only at units within Engagement Range.",
+    "Blast": "+1 attack per 5 models in target unit (minimum 3 attacks vs 6+ models).",
+    "Rapid Fire": "Double the Attacks characteristic when targeting within half range.",
+    "Heavy": "+1 to hit if the bearer's unit Remained Stationary this turn.",
+    "Torrent": "Automatically hits the target.",
+    "Anti-": "Improves wound roll against targets with the specified keyword (e.g., Anti-Vehicle 4+ wounds on 4+ vs Vehicles).",
+    "Hazardous": "After resolving attacks, roll one D6. On a 1, bearer suffers 3 mortal wounds.",
+    "Melta": "When targeting within half range, add X to the Damage characteristic (Melta 2 = +2 Damage)."
+  },
+  "allies": [],
+  "keywordGlossary": {
+    "weapon": [
+      { "name": "Anti-X #+", "description": "Improve AP by 1 and wound on #+ against targets with keyword X." },
+      { "name": "Assault", "description": "Can be shot after Advancing." },
+      { "name": "Blast", "description": "+1 Attack per 5 models in target unit." },
+      { "name": "Devastating Wounds", "description": "Critical wounds inflict mortal wounds equal to Damage, no saves allowed." },
+      { "name": "Extra Attacks", "description": "Attacks with this weapon are made in addition to other weapons." },
+      { "name": "Hazardous", "description": "After resolving attacks, roll D6. On 1, bearer suffers 3 mortal wounds (Characters) or is destroyed (other models)." },
+      { "name": "Heavy", "description": "+1 to Hit if unit Remained Stationary." },
+      { "name": "Ignores Cover", "description": "Target does not benefit from cover." },
+      { "name": "Indirect Fire", "description": "Can target units not visible. -1 to Hit, +1 to target's Save if not visible." },
+      { "name": "Lance", "description": "+1 to Wound if unit charged this turn." },
+      { "name": "Lethal Hits", "description": "Critical hits automatically wound (no wound roll needed)." },
+      { "name": "Melta X", "description": "+X Damage against targets within half range." },
+      { "name": "One Shot", "description": "Can only be used once per battle." },
+      { "name": "Pistol", "description": "Can be shot in Engagement Range, but only at units in Engagement Range." },
+      { "name": "Precision", "description": "On critical wounds, attacker can allocate wound to a Character or Attached model." },
+      { "name": "Rapid Fire X", "description": "+X Attacks when targeting units within half range." },
+      { "name": "Sustained Hits X", "description": "Critical hits score X additional hits." },
+      { "name": "Torrent", "description": "Automatically hits (no hit roll needed)." },
+      { "name": "Twin-linked", "description": "Re-roll wound rolls." }
+    ],
+    "faction": [
+      { "name": "Reanimation Protocols", "description": "At the start of each Command phase, units with this ability heal D3 wounds and can resurrect destroyed models. Returned models come back with 1 wound remaining. This represents the Necrons' ability to self-repair and reanimate fallen warriors." },
+      { "name": "Necrons", "description": "The faction keyword for all Necron units. Ancient robotic warriors who once ruled the galaxy, now awakening from millions of years of slumber to reclaim their empire." },
+      { "name": "Destroyer Cult", "description": "Units consumed by hatred and the need to destroy all life. Often have abilities focused on dealing damage. Key units: Skorpekh Destroyers, Lokhust Destroyers." }
+    ],
+    "unit": [
+      { "name": "Battleline", "description": "Core troop units. May have special rules in certain detachments." },
+      { "name": "Character", "description": "Can lead units, receive Enhancements, and is targeted by Precision." },
+      { "name": "Leader", "description": "Can be attached to Bodyguard units. Abilities affect the combined unit." },
+      { "name": "Feel No Pain X+", "description": "Roll D6 when losing a wound. On X+, wound is ignored." },
+      { "name": "Deadly Demise X", "description": "When destroyed, roll D6. On a 6, each unit within 6\" suffers X mortal wounds." },
+      { "name": "Deep Strike", "description": "Can be set up in Reserves. Arrives during Reinforcements step, more than 9\" from enemy units." }
+    ]
+  }
+}

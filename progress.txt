@@ -2147,3 +2147,29 @@ Format follows the Ralph technique.
 - npm run typecheck passes
 - npm run test passes (135 tests total, 32 new tests for useListValidation)
 - npm run build passes
+
+---
+
+## [necrons-001] Create necrons.json with Necrons faction metadata and army rules
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created necrons.json following the same structure as custodes.json and tyranids.json
+- Army rule Reanimation Protocols implemented with D3 healing at Command phase
+- Included phase and healing fields in armyRules for structured data access
+- Added comprehensive weaponKeywords and keywordGlossary sections
+- Included Necrons-specific faction keywords: Reanimation Protocols, Necrons, Destroyer Cult
+- Units array left empty for subsequent tasks (necrons-002 through necrons-007)
+- Detachments object left empty for subsequent task (necrons-008)
+
+**Files created:**
+- public/data/necrons.json - Necrons faction data with army rules and metadata
+
+**Verification:**
+- JSON syntax is valid
+- npm run lint passes
+- Acceptance criteria met:
+  1. public/data/necrons.json exists with faction: Necrons
+  2. Army rules include Reanimation Protocols with D3 wounds healed at Command phase
+  3. lastUpdated set to 2026-01 (current month)
