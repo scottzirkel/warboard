@@ -45,6 +45,34 @@ export type {
 } from './useLeaderAttachment';
 
 // ============================================================================
+// Stat Modifiers Hook
+// ============================================================================
+
+export {
+  useStatModifiers,
+} from './useStatModifiers';
+
+export type {
+  CollectedModifier,
+  ModifiedStat,
+  ModifiedStats,
+  UseStatModifiersReturn,
+} from './useStatModifiers';
+
+// ============================================================================
+// List Validation Hook
+// ============================================================================
+
+export {
+  useListValidation,
+} from './useListValidation';
+
+export type {
+  ListValidationResult,
+  UseListValidationReturn,
+} from './useListValidation';
+
+// ============================================================================
 // Wake Lock Hook
 // ============================================================================
 

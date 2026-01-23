@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react';
 import { Panel, Button, Badge } from '@/components/ui';
+import { useWakeLock } from '@/hooks';
 import type { ValidationError } from '@/types';
 
 // ============================================================================
@@ -180,6 +181,11 @@ export function PlayMode({
   canPlay = true,
   validationErrors = [],
 }: PlayModeProps) {
+  // Acquire wake lock to prevent screen sleep during gameplay
+  // Only active when canPlay is true and we're in a valid play state
+  const isPlayActive = canPlay && validationErrors.length === 0;
+  useWakeLock(isPlayActive);
+
   // If there are validation errors and canPlay is false, show the gate
   if (!canPlay && validationErrors.length > 0) {
     return (

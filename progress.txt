@@ -2069,3 +2069,39 @@ Format follows the Ralph technique.
 - npm run test passes (83 tests)
 - npm run build passes
 
+
+---
+
+## [nextjs-021] Create stat modifier hooks
+
+**Date:** 2026-01-22
+
+**Decisions:**
+- Created useStatModifiers hook to collect and calculate stat modifiers from all sources
+- Hook collects modifiers from three sources: unit enhancement, equipped weapons, and attached leader
+- Modifiers include a sourceType field to distinguish between enhancement, weapon, leader, and leaderEnhancement
+- Weapon modifiers are collected by checking weaponCounts against loadoutGroup - weapons without loadoutGroup are always equipped
+- Duplicate modifiers from same loadoutGroup (e.g., melee and ranged versions) are de-duplicated
+- Leader modifiers only apply if they have unit or all scope (model scope stays with leader)
+- Modified stats preserve original format (e.g., 2+ save format is preserved after modification)
+- Modifier operations are applied in order: set first, then add/subtract, then multiply
+- ModifierSource interface provides name, value, and operation for tooltip display
+
+**Types created:**
+- CollectedModifier: Extended Modifier with sourceName and sourceType
+- ModifiedStat: Contains baseValue, modifiedValue, modifiers array, and hasModifier flag
+- ModifiedStats: Object with ModifiedStat for each unit stat (m, t, sv, w, ld, oc)
+- UseStatModifiersReturn: Return type with modifiers, modifiedStats, and helper functions
+
+**Files created:**
+- src/hooks/useStatModifiers.ts - Stat modifier collection and calculation hook
+- src/hooks/useStatModifiers.test.ts - Test suite with 20 tests covering all functionality
+
+**Files changed:**
+- src/hooks/index.ts - Added exports for useStatModifiers and related types
+
+**Verification:**
+- npm run lint passes
+- npm run typecheck passes  
+- npm run test passes (135 tests total, 20 new tests for useStatModifiers)
+- npm run build passes
