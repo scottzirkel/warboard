@@ -1,6 +1,17 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { NextRequest } from 'next/server';
 
+// Mock next-auth
+const mockGetServerSession = vi.fn();
+
+vi.mock('next-auth', () => ({
+  getServerSession: (...args: unknown[]) => mockGetServerSession(...args),
+}));
+
+vi.mock('@/lib/auth', () => ({
+  authOptions: {},
+}));
+
 // Mock fs module
 vi.mock('fs', () => {
   const promises = {
@@ -19,8 +30,8 @@ const mockImportList = vi.fn();
 const mockGetAllLists = vi.fn();
 
 vi.mock('@/lib/listService', () => ({
-  importList: (name: string, armyId: string, data: unknown) => mockImportList(name, armyId, data),
-  getAllLists: () => mockGetAllLists(),
+  importList: (name: string, armyId: string, data: unknown, userId: string) => mockImportList(name, armyId, data, userId),
+  getAllLists: (userId: string) => mockGetAllLists(userId),
 }));
 
 import { promises as fs } from 'fs';
@@ -29,13 +40,34 @@ import { POST } from './route';
 const mockFs = vi.mocked(fs);
 
 describe('API /api/lists/import', () => {
+  const mockUserId = 'test-user-123';
+
   beforeEach(() => {
     vi.clearAllMocks();
     mockGetAllLists.mockResolvedValue([]);
+    // Default to authenticated session
+    mockGetServerSession.mockResolvedValue({
+      user: { id: mockUserId, name: 'Test User', email: 'test@example.com' },
+    });
   });
 
   afterEach(() => {
     vi.clearAllMocks();
+  });
+
+  it('returns 401 when not authenticated', async () => {
+    mockGetServerSession.mockResolvedValue(null);
+
+    const request = new NextRequest('http://localhost/api/lists/import', {
+      method: 'POST',
+      body: JSON.stringify({}),
+    });
+
+    const response = await POST(request);
+    const data = await response.json();
+
+    expect(response.status).toBe(401);
+    expect(data.error).toBe('Authentication required');
   });
 
   it('returns success with zero imports when directory is empty', async () => {
@@ -110,6 +142,13 @@ describe('API /api/lists/import', () => {
     expect(data.success).toBe(true);
     expect(data.imported).toBe(2);
     expect(mockImportList).toHaveBeenCalledTimes(2);
+    // Verify userId is passed
+    expect(mockImportList).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.any(String),
+      expect.any(Object),
+      mockUserId
+    );
   });
 
   it('skips non-JSON files', async () => {
@@ -139,7 +178,7 @@ describe('API /api/lists/import', () => {
     expect(mockImportList).toHaveBeenCalledTimes(1);
   });
 
-  it('skips lists that already exist in database', async () => {
+  it('skips lists that already exist in database for this user', async () => {
     mockGetAllLists.mockResolvedValue([
       { id: 'existing-id', name: 'My List', armyId: 'custodes', updatedAt: new Date() },
     ]);
@@ -178,6 +217,8 @@ describe('API /api/lists/import', () => {
     expect(data.success).toBe(true);
     expect(data.imported).toBe(1);
     expect(data.skipped).toBe(1);
+    // Verify getAllLists is called with userId
+    expect(mockGetAllLists).toHaveBeenCalledWith(mockUserId);
   });
 
   it('handles import errors gracefully', async () => {

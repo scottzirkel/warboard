@@ -2,6 +2,17 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { NextRequest } from 'next/server';
 import type { CurrentList } from '@/types';
 
+// Mock next-auth
+const mockGetServerSession = vi.fn();
+
+vi.mock('next-auth', () => ({
+  getServerSession: () => mockGetServerSession(),
+}));
+
+vi.mock('@/lib/auth', () => ({
+  authOptions: {},
+}));
+
 // Mock listService
 const mockGetListById = vi.fn();
 const mockGetListByName = vi.fn();
@@ -9,10 +20,10 @@ const mockDeleteListById = vi.fn();
 const mockDeleteListByName = vi.fn();
 
 vi.mock('@/lib/listService', () => ({
-  getListById: (id: string) => mockGetListById(id),
-  getListByName: (name: string) => mockGetListByName(name),
-  deleteListById: (id: string) => mockDeleteListById(id),
-  deleteListByName: (name: string) => mockDeleteListByName(name),
+  getListById: (id: string, userId: string) => mockGetListById(id, userId),
+  getListByName: (name: string, userId: string) => mockGetListByName(name, userId),
+  deleteListById: (id: string, userId: string) => mockDeleteListById(id, userId),
+  deleteListByName: (name: string, userId: string) => mockDeleteListByName(name, userId),
 }));
 
 import { GET, DELETE } from './route';
@@ -24,8 +35,14 @@ function createMockContext(filename: string) {
 }
 
 describe('API /api/lists/[filename]', () => {
+  const mockUserId = 'test-user-123';
+
   beforeEach(() => {
     vi.clearAllMocks();
+    // Default to authenticated session
+    mockGetServerSession.mockResolvedValue({
+      user: { id: mockUserId, name: 'Test User', email: 'test@example.com' },
+    });
   });
 
   afterEach(() => {
@@ -42,6 +59,19 @@ describe('API /api/lists/[filename]', () => {
       units: [],
     };
 
+    it('returns 401 when not authenticated', async () => {
+      mockGetServerSession.mockResolvedValue(null);
+
+      const request = new NextRequest('http://localhost/api/lists/My_List.json');
+      const context = createMockContext('My_List.json');
+
+      const response = await GET(request, context);
+      const data = await response.json();
+
+      expect(response.status).toBe(401);
+      expect(data.error).toBe('Authentication required');
+    });
+
     it('returns list data when found by legacy filename', async () => {
       mockGetListByName.mockResolvedValue({
         id: 'cid123',
@@ -57,7 +87,7 @@ describe('API /api/lists/[filename]', () => {
       const response = await GET(request, context);
       const data = await response.json();
 
-      expect(mockGetListByName).toHaveBeenCalledWith('My List');
+      expect(mockGetListByName).toHaveBeenCalledWith('My List', mockUserId);
       expect(data.name).toBe('My List');
       expect(data.id).toBe('cid123');
       expect(data.army).toBe('custodes');
@@ -78,7 +108,7 @@ describe('API /api/lists/[filename]', () => {
       const response = await GET(request, context);
       const data = await response.json();
 
-      expect(mockGetListById).toHaveBeenCalledWith('clxyz123456789012345678');
+      expect(mockGetListById).toHaveBeenCalledWith('clxyz123456789012345678', mockUserId);
       expect(data.name).toBe('My List');
       expect(data.id).toBe('clxyz123456789012345678');
     });
@@ -122,6 +152,21 @@ describe('API /api/lists/[filename]', () => {
   });
 
   describe('DELETE /api/lists/[filename]', () => {
+    it('returns 401 when not authenticated', async () => {
+      mockGetServerSession.mockResolvedValue(null);
+
+      const request = new NextRequest('http://localhost/api/lists/My_List.json', {
+        method: 'DELETE',
+      });
+      const context = createMockContext('My_List.json');
+
+      const response = await DELETE(request, context);
+      const data = await response.json();
+
+      expect(response.status).toBe(401);
+      expect(data.error).toBe('Authentication required');
+    });
+
     it('deletes list by legacy filename', async () => {
       mockDeleteListByName.mockResolvedValue(true);
 
@@ -133,7 +178,7 @@ describe('API /api/lists/[filename]', () => {
       const response = await DELETE(request, context);
       const data = await response.json();
 
-      expect(mockDeleteListByName).toHaveBeenCalledWith('My List');
+      expect(mockDeleteListByName).toHaveBeenCalledWith('My List', mockUserId);
       expect(data.success).toBe(true);
     });
 
@@ -148,7 +193,7 @@ describe('API /api/lists/[filename]', () => {
       const response = await DELETE(request, context);
       const data = await response.json();
 
-      expect(mockDeleteListById).toHaveBeenCalledWith('clxyz123456789012345678');
+      expect(mockDeleteListById).toHaveBeenCalledWith('clxyz123456789012345678', mockUserId);
       expect(data.success).toBe(true);
     });
 

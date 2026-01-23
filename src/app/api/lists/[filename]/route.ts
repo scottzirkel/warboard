@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { getListById, getListByName, deleteListById, deleteListByName } from '@/lib/listService';
 
 // ============================================================================
@@ -40,6 +42,15 @@ export async function GET(
   context: RouteParams
 ): Promise<NextResponse> {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { filename } = await context.params;
 
     if (!filename) {
@@ -49,16 +60,16 @@ export async function GET(
       );
     }
 
-    // Try to find the list by ID or name
+    // Try to find the list by ID or name for the authenticated user
     let list;
 
     if (isCuid(filename)) {
       // New ID-based lookup
-      list = await getListById(filename);
+      list = await getListById(filename, session.user.id);
     } else {
       // Legacy filename-based lookup
       const name = filenameToName(filename);
-      list = await getListByName(name);
+      list = await getListByName(name, session.user.id);
     }
 
     if (!list) {
@@ -93,6 +104,15 @@ export async function DELETE(
   context: RouteParams
 ): Promise<NextResponse> {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { filename } = await context.params;
 
     if (!filename) {
@@ -105,12 +125,12 @@ export async function DELETE(
     let deleted = false;
 
     if (isCuid(filename)) {
-      // New ID-based deletion
-      deleted = await deleteListById(filename);
+      // New ID-based deletion (only deletes if owned by user)
+      deleted = await deleteListById(filename, session.user.id);
     } else {
-      // Legacy filename-based deletion
+      // Legacy filename-based deletion (only deletes if owned by user)
       const name = filenameToName(filename);
-      deleted = await deleteListByName(name);
+      deleted = await deleteListByName(name, session.user.id);
     }
 
     if (!deleted) {

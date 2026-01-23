@@ -5,6 +5,107 @@ Format follows the Ralph technique.
 
 ---
 
+## [orks-003] Add Gretchin battleline unit
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Gretchin as the second battleline unit for Orks faction
+- Points: 40pts for 10 models, 80pts for 20 models (simplified from full rulebook which includes Runtherds)
+- Stats: M6 T2 SV7+ W1 LD8+ OC1 (per Wahapedia - notably fragile with T2 and 7+ save)
+- Weapons:
+  - Grot Blasta (ranged, pistol, 12" A1 BS4+ S3 AP0 D1) - better BS than Orks due to survival instinct
+  - Close Combat Weapon (melee, A1 WS5+ S2 AP0 D1) - poor melee capability
+- No loadout options - fixed equipment
+- Ability: "Cowardly" - thematic ability capturing their tendency to flee
+- Keywords: Infantry, Battleline, Orks, Gretchin
+- Simplified to 10/20 model counts without Runtherd for straightforward gameplay in this app
+
+**Data sources:**
+- Wahapedia 10th edition Orks: https://wahapedia.ru/wh40k10ed/factions/orks/Gretchin
+
+**Files changed:**
+- public/data/orks.json - Added Gretchin battleline unit to units array
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 280 tests passed
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Gretchin with points for 10/20 models (40/80 pts)
+2. ✅ Stats: M6 T2 SV7+ W1 LD8+ OC1
+3. ✅ Grot blasta ranged weapon (12" A1 BS4+ S3 AP0 D1)
+4. ✅ Cowardly ability (flee behavior when Battle-shocked)
+5. ✅ Keywords include Infantry, Battleline, Orks, Gretchin
+
+---
+
+## [chaosmarines-009] Enable Chaos Space Marines faction in app
+
+**Date:** 2026-01-23
+
+**Decisions:**
+- Added Chaos Space Marines to availableArmies array in armyStore.ts
+- Faction ID: 'chaosmarines', File: 'chaosmarines.json'
+- 6 units available (Legionaries, Chaos Lord, Dark Apostle, Chosen, Cultist Mob, Possessed)
+- Note: Acceptance criteria mentioned 7 units but only 6 were defined in dependent tasks
+- Fixed pre-existing test issues from multiuser-003/004 in listService.test.ts
+
+**Files changed:**
+- src/stores/armyStore.ts - Added Chaos Space Marines to availableArmies
+- src/lib/listService.test.ts - Updated tests to pass userId to all service functions
+
+**Verification:**
+- npm run lint: ✅ No ESLint warnings or errors
+- npm run typecheck: ✅ Passed
+- npm run test: ✅ 280 tests passed
+- npm run build: ✅ Next.js build successful
+
+**Acceptance criteria met:**
+1. ✅ Chaos Space Marines added to availableArmies in stores
+2. ✅ App can load chaosmarines.json without errors
+3. ✅ Build Mode shows CSM units
+4. ✅ 6 units available (Legionaries, Chaos Lord, Dark Apostle, Chosen, Cultist Mob, Possessed)
+
+---
+
+## [multiuser-004] Scope API routes to authenticated user
+
+**Date:** 2026-01-23
+
+**Task:** Require authentication on all list API routes and scope operations to the authenticated user
+
+**Decisions:**
+- All list API routes now require authentication via NextAuth.js session
+- Unauthenticated requests return 401 with "Authentication required" error
+- User ID is passed from session to all listService functions for scoping
+- Users can only access, modify, and delete their own lists
+- The listService functions already support userId parameter from multiuser-003
+
+**Files changed:**
+- src/app/api/lists/route.ts - Added auth check to POST, passes userId to saveList
+- src/app/api/lists/[filename]/route.ts - Added auth check to GET and DELETE, passes userId to service functions
+- src/app/api/lists/import/route.ts - Added auth check to POST, passes userId to getAllLists and importList
+- src/app/api/lists/route.test.ts - Updated tests to mock session, added 401 tests
+- src/app/api/lists/[filename]/route.test.ts - Updated tests to mock session, added 401 tests
+- src/app/api/lists/import/route.test.ts - Updated tests to mock session, added 401 test
+
+**Verification:**
+- npm run lint: No ESLint warnings or errors
+- npm run typecheck: Passed
+- npm run test: 280 tests passed (added 4 new auth tests)
+- npm run build: Next.js build successful
+
+**Acceptance criteria met:**
+1. API routes require authentication - All /api/lists routes check for session
+2. Users can only access their own lists - userId passed to all service functions
+3. Unauthenticated requests return 401 - "Authentication required" error returned
+4. GET /api/lists returns only current user's lists - Already implemented in multiuser-003, now properly scoped
+
+---
+
 ## [multiuser-002] Add Google SSO authentication with NextAuth.js
 
 **Date:** 2026-01-23

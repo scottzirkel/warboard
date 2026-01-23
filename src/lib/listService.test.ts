@@ -39,6 +39,8 @@ import {
 } from './listService';
 
 describe('listService', () => {
+  const testUserId = 'test-user-123';
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -51,11 +53,11 @@ describe('listService', () => {
     it('returns empty array when no lists exist', async () => {
       mockPrisma.list.findMany.mockResolvedValue([]);
 
-      const result = await getAllLists();
+      const result = await getAllLists(testUserId);
 
       expect(result).toEqual([]);
       expect(mockPrisma.list.findMany).toHaveBeenCalledWith({
-        where: { userId: 'anonymous' },
+        where: { userId: testUserId },
         select: {
           id: true,
           name: true,
@@ -73,7 +75,7 @@ describe('listService', () => {
       ];
       mockPrisma.list.findMany.mockResolvedValue(mockLists);
 
-      const result = await getAllLists();
+      const result = await getAllLists(testUserId);
 
       expect(result).toEqual(mockLists);
     });
@@ -81,9 +83,9 @@ describe('listService', () => {
 
   describe('getListById', () => {
     it('returns null when list does not exist', async () => {
-      mockPrisma.list.findUnique.mockResolvedValue(null);
+      mockPrisma.list.findFirst.mockResolvedValue(null);
 
-      const result = await getListById('nonexistent');
+      const result = await getListById('nonexistent', testUserId);
 
       expect(result).toBeNull();
     });
@@ -104,9 +106,9 @@ describe('listService', () => {
         data: JSON.stringify(listData),
         updatedAt: new Date('2026-01-01'),
       };
-      mockPrisma.list.findUnique.mockResolvedValue(mockList);
+      mockPrisma.list.findFirst.mockResolvedValue(mockList);
 
-      const result = await getListById('cid123');
+      const result = await getListById('cid123', testUserId);
 
       expect(result).toEqual({
         id: 'cid123',
@@ -122,7 +124,7 @@ describe('listService', () => {
     it('returns null when list does not exist', async () => {
       mockPrisma.list.findFirst.mockResolvedValue(null);
 
-      const result = await getListByName('Nonexistent');
+      const result = await getListByName('Nonexistent', testUserId);
 
       expect(result).toBeNull();
     });
@@ -145,7 +147,7 @@ describe('listService', () => {
       };
       mockPrisma.list.findFirst.mockResolvedValue(mockList);
 
-      const result = await getListByName('My List');
+      const result = await getListByName('My List', testUserId);
 
       expect(result).toEqual({
         id: 'cid456',
@@ -171,7 +173,7 @@ describe('listService', () => {
       mockPrisma.list.findFirst.mockResolvedValue(null);
       mockPrisma.list.create.mockResolvedValue({
         id: 'cid789',
-        userId: 'anonymous',
+        userId: testUserId,
         name: 'New List',
         armyId: 'custodes',
         data: JSON.stringify(listData),
@@ -179,11 +181,11 @@ describe('listService', () => {
         updatedAt: new Date(),
       });
 
-      await saveList(listData);
+      await saveList(listData, testUserId);
 
       expect(mockPrisma.list.create).toHaveBeenCalledWith({
         data: {
-          userId: 'anonymous',
+          userId: testUserId,
           name: 'New List',
           armyId: 'custodes',
           data: JSON.stringify(listData),
@@ -198,7 +200,7 @@ describe('listService', () => {
       });
       mockPrisma.list.update.mockResolvedValue({
         id: 'existing-id',
-        userId: 'anonymous',
+        userId: testUserId,
         name: 'New List',
         armyId: 'custodes',
         data: JSON.stringify(listData),
@@ -206,7 +208,7 @@ describe('listService', () => {
         updatedAt: new Date(),
       });
 
-      await saveList(listData);
+      await saveList(listData, testUserId);
 
       expect(mockPrisma.list.update).toHaveBeenCalledWith({
         where: { id: 'existing-id' },
@@ -220,9 +222,10 @@ describe('listService', () => {
 
   describe('deleteListById', () => {
     it('returns true when list is deleted successfully', async () => {
+      mockPrisma.list.findFirst.mockResolvedValue({ id: 'cid123' });
       mockPrisma.list.delete.mockResolvedValue({});
 
-      const result = await deleteListById('cid123');
+      const result = await deleteListById('cid123', testUserId);
 
       expect(result).toBe(true);
       expect(mockPrisma.list.delete).toHaveBeenCalledWith({
@@ -230,10 +233,10 @@ describe('listService', () => {
       });
     });
 
-    it('returns false when deletion fails', async () => {
-      mockPrisma.list.delete.mockRejectedValue(new Error('Not found'));
+    it('returns false when list not found for user', async () => {
+      mockPrisma.list.findFirst.mockResolvedValue(null);
 
-      const result = await deleteListById('nonexistent');
+      const result = await deleteListById('nonexistent', testUserId);
 
       expect(result).toBe(false);
     });
@@ -247,7 +250,7 @@ describe('listService', () => {
       });
       mockPrisma.list.delete.mockResolvedValue({});
 
-      const result = await deleteListByName('Test List');
+      const result = await deleteListByName('Test List', testUserId);
 
       expect(result).toBe(true);
     });
@@ -255,7 +258,7 @@ describe('listService', () => {
     it('returns false when list is not found', async () => {
       mockPrisma.list.findFirst.mockResolvedValue(null);
 
-      const result = await deleteListByName('Nonexistent');
+      const result = await deleteListByName('Nonexistent', testUserId);
 
       expect(result).toBe(false);
     });
@@ -266,7 +269,7 @@ describe('listService', () => {
       mockPrisma.list.findFirst.mockResolvedValue(null);
       mockPrisma.list.create.mockResolvedValue({
         id: 'cid999',
-        userId: 'anonymous',
+        userId: testUserId,
         name: 'Imported List',
         armyId: 'custodes',
         data: '{}',
@@ -282,7 +285,7 @@ describe('listService', () => {
         units: [],
       };
 
-      await importList('Imported List', 'custodes', importData);
+      await importList('Imported List', 'custodes', importData, testUserId);
 
       expect(mockPrisma.list.create).toHaveBeenCalledWith({
         data: expect.objectContaining({
@@ -296,7 +299,7 @@ describe('listService', () => {
       mockPrisma.list.findFirst.mockResolvedValue(null);
       mockPrisma.list.create.mockResolvedValue({
         id: 'cid888',
-        userId: 'anonymous',
+        userId: testUserId,
         name: 'Legacy List',
         armyId: 'custodes',
         data: '{}',
@@ -310,7 +313,7 @@ describe('listService', () => {
         units: [],
       };
 
-      await importList('Legacy List', 'custodes', importData);
+      await importList('Legacy List', 'custodes', importData, testUserId);
 
       // Verify the data was normalized with format instead of gameFormat
       const callArgs = mockPrisma.list.create.mock.calls[0][0];

@@ -20,6 +20,8 @@ export interface AvailableArmy {
 
 export const availableArmies: AvailableArmy[] = [
   { id: 'custodes', name: 'Adeptus Custodes', file: 'custodes.json' },
+  { id: 'chaosmarines', name: 'Chaos Space Marines', file: 'chaosmarines.json' },
+  { id: 'necrons', name: 'Necrons', file: 'necrons.json' },
   { id: 'spacemarines', name: 'Space Marines', file: 'spacemarines.json' },
   { id: 'tyranids', name: 'Tyranids', file: 'tyranids.json' },
 ];

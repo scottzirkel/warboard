@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { importList, getAllLists } from '@/lib/listService';
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -16,15 +18,24 @@ const LISTS_DIR = path.join(process.cwd(), 'data', 'lists');
 /**
  * Import existing JSON files from data/lists/ to the database.
  * This endpoint migrates saved lists from the old file-based storage
- * to the new database storage.
+ * to the new database storage for the authenticated user.
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json().catch(() => ({}));
     const importAll = body.importAll !== false; // Default to true
 
-    // Get existing lists in database to avoid duplicates
-    const existingLists = await getAllLists();
+    // Get existing lists in database for this user to avoid duplicates
+    const existingLists = await getAllLists(session.user.id);
     const existingNames = new Set(existingLists.map(l => l.name));
 
     // Read JSON files from data/lists/
@@ -78,7 +89,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         // Extract army ID from the list data
         const armyId = (listData.army as string) || 'custodes';
 
-        await importList(name, armyId, listData);
+        await importList(name, armyId, listData, session.user.id);
         results.imported++;
       } catch (error) {
         results.errors.push(`Failed to import ${filename}: ${error instanceof Error ? error.message : 'Unknown error'}`);

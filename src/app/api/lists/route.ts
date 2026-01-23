@@ -1,14 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { getAllLists, saveList } from '@/lib/listService';
 import type { CurrentList } from '@/types';
 
 // ============================================================================
-// GET /api/lists - Returns saved list metadata
+// GET /api/lists - Returns saved list metadata for authenticated user
 // ============================================================================
 
 export async function GET(): Promise<NextResponse> {
   try {
-    const lists = await getAllLists();
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    const lists = await getAllLists(session.user.id);
 
     // Map to backward-compatible format for existing clients
     const response = lists.map(list => ({
@@ -36,6 +47,15 @@ export async function GET(): Promise<NextResponse> {
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
 
     if (!body.name) {
@@ -55,7 +75,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       units: body.units || [],
     };
 
-    const savedList = await saveList(listData);
+    const savedList = await saveList(listData, session.user.id);
 
     return NextResponse.json({
       success: true,

@@ -1,20 +1,37 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { NextRequest } from 'next/server';
 
+// Mock next-auth
+const mockGetServerSession = vi.fn();
+
+vi.mock('next-auth', () => ({
+  getServerSession: () => mockGetServerSession(),
+}));
+
+vi.mock('@/lib/auth', () => ({
+  authOptions: {},
+}));
+
 // Mock listService
 const mockGetAllLists = vi.fn();
 const mockSaveList = vi.fn();
 
 vi.mock('@/lib/listService', () => ({
-  getAllLists: () => mockGetAllLists(),
-  saveList: (data: unknown) => mockSaveList(data),
+  getAllLists: (userId: string) => mockGetAllLists(userId),
+  saveList: (data: unknown, userId: string) => mockSaveList(data, userId),
 }));
 
 import { GET, POST } from './route';
 
 describe('API /api/lists', () => {
+  const mockUserId = 'test-user-123';
+
   beforeEach(() => {
     vi.clearAllMocks();
+    // Default to authenticated session
+    mockGetServerSession.mockResolvedValue({
+      user: { id: mockUserId, name: 'Test User', email: 'test@example.com' },
+    });
   });
 
   afterEach(() => {
@@ -22,12 +39,23 @@ describe('API /api/lists', () => {
   });
 
   describe('GET /api/lists', () => {
+    it('returns 401 when not authenticated', async () => {
+      mockGetServerSession.mockResolvedValue(null);
+
+      const response = await GET();
+      const data = await response.json();
+
+      expect(response.status).toBe(401);
+      expect(data.error).toBe('Authentication required');
+    });
+
     it('returns empty array when no lists exist', async () => {
       mockGetAllLists.mockResolvedValue([]);
 
       const response = await GET();
       const data = await response.json();
 
+      expect(mockGetAllLists).toHaveBeenCalledWith(mockUserId);
       expect(data).toEqual([]);
     });
 
@@ -40,6 +68,7 @@ describe('API /api/lists', () => {
       const response = await GET();
       const data = await response.json();
 
+      expect(mockGetAllLists).toHaveBeenCalledWith(mockUserId);
       expect(data).toEqual([
         { id: 'cid1', filename: 'My_List.json', name: 'My List', armyId: 'custodes', updatedAt: '2026-01-01T00:00:00.000Z' },
         { id: 'cid2', filename: 'Another_List.json', name: 'Another List', armyId: 'tyranids', updatedAt: '2026-01-02T00:00:00.000Z' },
@@ -58,6 +87,21 @@ describe('API /api/lists', () => {
   });
 
   describe('POST /api/lists', () => {
+    it('returns 401 when not authenticated', async () => {
+      mockGetServerSession.mockResolvedValue(null);
+
+      const request = new NextRequest('http://localhost/api/lists', {
+        method: 'POST',
+        body: JSON.stringify({ name: 'Test List' }),
+      });
+
+      const response = await POST(request);
+      const data = await response.json();
+
+      expect(response.status).toBe(401);
+      expect(data.error).toBe('Authentication required');
+    });
+
     it('saves a list and returns success', async () => {
       const listData = {
         name: 'My Test List',
@@ -81,6 +125,10 @@ describe('API /api/lists', () => {
       const response = await POST(request);
       const data = await response.json();
 
+      expect(mockSaveList).toHaveBeenCalledWith(
+        expect.objectContaining({ name: 'My Test List' }),
+        mockUserId
+      );
       expect(data.success).toBe(true);
       expect(data.id).toBe('cid123');
       expect(data.filename).toBe('My_Test_List.json');
@@ -128,10 +176,11 @@ describe('API /api/lists', () => {
       const data = await response.json();
 
       expect(data.success).toBe(true);
-      // Verify saveList was called with normalized format
-      expect(mockSaveList).toHaveBeenCalledWith(expect.objectContaining({
-        format: 'colosseum',
-      }));
+      // Verify saveList was called with normalized format and userId
+      expect(mockSaveList).toHaveBeenCalledWith(
+        expect.objectContaining({ format: 'colosseum' }),
+        mockUserId
+      );
     });
 
     it('returns 500 when database error occurs', async () => {
