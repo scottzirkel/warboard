@@ -18,7 +18,7 @@ export interface Toast {
 // Modal Types
 // ============================================================================
 
-export type ModalType = 'import' | 'load' | 'save' | 'confirm' | null;
+export type ModalType = 'import' | 'export' | 'load' | 'save' | 'confirm' | null;
 
 export interface ConfirmModalConfig {
   title: string;

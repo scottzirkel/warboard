@@ -23,10 +23,13 @@ interface ArmyListPanelProps {
   onPointsLimitChange: (limit: number) => void;
   onDetachmentChange: (detachment: string) => void;
   onImport: () => void;
+  onExport: () => void;
   onLoad: () => void;
   onSave: () => void;
   isSaving?: boolean;
+  isExporting?: boolean;
   canSave?: boolean;
+  canExport?: boolean;
   getAvailableLeaders: (unitIndex: number) => AvailableLeader[];
   isUnitAttachedAsLeader: (unitIndex: number) => boolean;
   getAttachedToUnitName: (unitIndex: number) => string | undefined;
@@ -50,10 +53,13 @@ export function ArmyListPanel({
   onPointsLimitChange,
   onDetachmentChange,
   onImport,
+  onExport,
   onLoad,
   onSave,
   isSaving = false,
+  isExporting = false,
   canSave = true,
+  canExport = false,
   getAvailableLeaders,
   isUnitAttachedAsLeader,
   getAttachedToUnitName,
@@ -127,6 +133,16 @@ export function ArmyListPanel({
             className="btn-ios btn-ios-sm btn-ios-tinted"
           >
             Import
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={onExport}
+            disabled={!canExport || isExporting}
+            className="btn-ios btn-ios-sm btn-ios-tinted"
+            title="Export to Yellowscribe for TTS"
+          >
+            {isExporting ? 'Exporting...' : 'Export'}
           </Button>
           <Button
             variant="secondary"

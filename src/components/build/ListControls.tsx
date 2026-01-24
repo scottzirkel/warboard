@@ -4,19 +4,25 @@ import { Button } from '@/components/ui';
 
 interface ListControlsProps {
   onImport: () => void;
+  onExport: () => void;
   onLoad: () => void;
   onSave: () => void;
   isSaving?: boolean;
+  isExporting?: boolean;
   canSave?: boolean;
+  canExport?: boolean;
   className?: string;
 }
 
 export function ListControls({
   onImport,
+  onExport,
   onLoad,
   onSave,
   isSaving = false,
+  isExporting = false,
   canSave = true,
+  canExport = false,
   className = '',
 }: ListControlsProps) {
   return (
@@ -41,6 +47,30 @@ export function ListControls({
           />
         </svg>
         Import
+      </Button>
+
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={onExport}
+        disabled={!canExport}
+        isLoading={isExporting}
+        title="Export to Yellowscribe for TTS"
+      >
+        <svg
+          className="w-4 h-4 mr-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+          />
+        </svg>
+        Export
       </Button>
 
       <Button

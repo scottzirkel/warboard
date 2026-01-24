@@ -7,8 +7,33 @@ import type { CurrentList } from '@/types';
 // Mock Setup
 // ============================================================================
 
-const mockFetch = vi.fn();
-global.fetch = mockFetch;
+const STORAGE_KEY = 'army-tracker-saved-lists';
+
+// Mock localStorage
+const localStorageMock = (() => {
+  let store: Record<string, string> = {};
+  return {
+    getItem: vi.fn((key: string) => store[key] || null),
+    setItem: vi.fn((key: string, value: string) => {
+      store[key] = value;
+    }),
+    removeItem: vi.fn((key: string) => {
+      delete store[key];
+    }),
+    clear: vi.fn(() => {
+      store = {};
+    }),
+    get length() {
+      return Object.keys(store).length;
+    },
+    key: vi.fn((index: number) => Object.keys(store)[index] || null),
+  };
+})();
+
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+  writable: true,
+});
 
 // ============================================================================
 // Test Data
@@ -23,35 +48,14 @@ const mockList: CurrentList = {
   units: [],
 };
 
-const mockSavedLists = [
-  { filename: 'Test_Army.json', name: 'Test Army' },
-  { filename: 'Another_List.json', name: 'Another List' },
-];
-
-// ============================================================================
-// Helper Functions
-// ============================================================================
-
-function createMockResponse<T>(data: T, ok = true, statusText = 'OK'): Response {
-  return {
-    ok,
-    status: ok ? 200 : 500,
-    statusText,
-    json: () => Promise.resolve(data),
-    headers: new Headers(),
-    redirected: false,
-    type: 'basic',
-    url: '',
-    clone: () => createMockResponse(data, ok, statusText),
-    body: null,
-    bodyUsed: false,
-    arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
-    blob: () => Promise.resolve(new Blob()),
-    formData: () => Promise.resolve(new FormData()),
-    text: () => Promise.resolve(JSON.stringify(data)),
-    bytes: () => Promise.resolve(new Uint8Array()),
-  } as Response;
-}
+const mockList2: CurrentList = {
+  name: 'Another List',
+  army: 'custodes',
+  pointsLimit: 1000,
+  format: 'standard',
+  detachment: 'shield_host',
+  units: [],
+};
 
 // ============================================================================
 // Tests
@@ -60,10 +64,12 @@ function createMockResponse<T>(data: T, ok = true, statusText = 'OK'): Response 
 describe('useSavedLists', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    localStorageMock.clear();
   });
 
   afterEach(() => {
     vi.clearAllMocks();
+    localStorageMock.clear();
   });
 
   // --------------------------------------------------------------------------
@@ -71,8 +77,14 @@ describe('useSavedLists', () => {
   // --------------------------------------------------------------------------
 
   describe('initial fetch', () => {
-    it('fetches lists on mount', async () => {
-      mockFetch.mockResolvedValue(createMockResponse(mockSavedLists));
+    it('fetches lists on mount from localStorage', async () => {
+      const storedData = {
+        lists: {
+          'test-army.json': mockList,
+          'another-list.json': mockList2,
+        },
+      };
+      localStorageMock.getItem.mockReturnValue(JSON.stringify(storedData));
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -80,13 +92,13 @@ describe('useSavedLists', () => {
         expect(result.current.isLoading).toBe(false);
       });
 
-      expect(result.current.lists).toEqual(mockSavedLists);
+      expect(result.current.lists).toHaveLength(2);
       expect(result.current.error).toBeNull();
-      expect(mockFetch).toHaveBeenCalledWith('/api/lists', expect.any(Object));
+      expect(localStorageMock.getItem).toHaveBeenCalledWith(STORAGE_KEY);
     });
 
-    it('sets error when fetch fails', async () => {
-      mockFetch.mockResolvedValue(createMockResponse({ error: 'Server error' }, false, 'Error'));
+    it('returns empty list when localStorage is empty', async () => {
+      localStorageMock.getItem.mockReturnValue(null);
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -94,12 +106,12 @@ describe('useSavedLists', () => {
         expect(result.current.isLoading).toBe(false);
       });
 
-      expect(result.current.error).toBe('Request failed: Error');
       expect(result.current.lists).toEqual([]);
+      expect(result.current.error).toBeNull();
     });
 
-    it('handles network errors', async () => {
-      mockFetch.mockRejectedValue(new Error('Network error'));
+    it('handles malformed localStorage data gracefully', async () => {
+      localStorageMock.getItem.mockReturnValue('not valid json');
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -107,7 +119,6 @@ describe('useSavedLists', () => {
         expect(result.current.isLoading).toBe(false);
       });
 
-      expect(result.current.error).toBe('Network error');
       expect(result.current.lists).toEqual([]);
     });
   });
@@ -118,9 +129,12 @@ describe('useSavedLists', () => {
 
   describe('loadList', () => {
     it('loads a list by filename', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse([])) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse(mockList)); // Load list
+      const storedData = {
+        lists: {
+          'test-army.json': mockList,
+        },
+      };
+      localStorageMock.getItem.mockReturnValue(JSON.stringify(storedData));
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -130,42 +144,15 @@ describe('useSavedLists', () => {
 
       let loadedList: CurrentList | null = null;
       await act(async () => {
-        loadedList = await result.current.loadList('Test_Army.json');
+        loadedList = await result.current.loadList('test-army.json');
       });
 
       expect(loadedList).toEqual(mockList);
       expect(result.current.error).toBeNull();
-      expect(mockFetch).toHaveBeenCalledWith(
-        '/api/lists/Test_Army.json',
-        expect.any(Object)
-      );
     });
 
-    it('encodes filename in URL', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse([])) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse(mockList)); // Load list
-
-      const { result } = renderHook(() => useSavedLists());
-
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
-
-      await act(async () => {
-        await result.current.loadList('My List.json');
-      });
-
-      expect(mockFetch).toHaveBeenCalledWith(
-        '/api/lists/My%20List.json',
-        expect.any(Object)
-      );
-    });
-
-    it('returns null and sets error on failure', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse([])) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse({ error: 'Not found' }, false, 'Error')); // Load list
+    it('returns null and sets error when list not found', async () => {
+      localStorageMock.getItem.mockReturnValue(JSON.stringify({ lists: {} }));
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -175,17 +162,15 @@ describe('useSavedLists', () => {
 
       let loadedList: CurrentList | null = null;
       await act(async () => {
-        loadedList = await result.current.loadList('Nonexistent.json');
+        loadedList = await result.current.loadList('nonexistent.json');
       });
 
       expect(loadedList).toBeNull();
-      expect(result.current.error).toBe('Request failed: Error');
+      expect(result.current.error).toBe('List not found');
     });
 
     it('shows loading state during operation', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse([])) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse(mockList)); // Load list
+      localStorageMock.getItem.mockReturnValue(JSON.stringify({ lists: { 'test-army.json': mockList } }));
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -193,9 +178,8 @@ describe('useSavedLists', () => {
         expect(result.current.isLoading).toBe(false);
       });
 
-      // Verify isLoading goes false after operation
       await act(async () => {
-        await result.current.loadList('Test_Army.json');
+        await result.current.loadList('test-army.json');
       });
 
       expect(result.current.isLoading).toBe(false);
@@ -207,11 +191,8 @@ describe('useSavedLists', () => {
   // --------------------------------------------------------------------------
 
   describe('saveList', () => {
-    it('saves a list successfully', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse([])) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse({ success: true, filename: 'Test_Army.json' })) // Save
-        .mockResolvedValueOnce(createMockResponse(mockSavedLists)); // Refresh lists
+    it('saves a list successfully to localStorage', async () => {
+      localStorageMock.getItem.mockReturnValue(JSON.stringify({ lists: {} }));
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -226,18 +207,13 @@ describe('useSavedLists', () => {
 
       expect(success).toBe(true);
       expect(result.current.error).toBeNull();
-      expect(mockFetch).toHaveBeenCalledWith('/api/lists', {
-        method: 'POST',
-        body: JSON.stringify(mockList),
-        headers: { 'Content-Type': 'application/json' },
-      });
+      expect(localStorageMock.setItem).toHaveBeenCalled();
     });
 
-    it('refreshes list after successful save', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse([])) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse({ success: true, filename: 'Test_Army.json' })) // Save
-        .mockResolvedValueOnce(createMockResponse(mockSavedLists)); // Refresh lists
+    it('updates existing list when saving with same name', async () => {
+      localStorageMock.getItem.mockReturnValue(JSON.stringify({
+        lists: { 'test-army.json': mockList },
+      }));
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -245,17 +221,17 @@ describe('useSavedLists', () => {
         expect(result.current.isLoading).toBe(false);
       });
 
+      const updatedList = { ...mockList, pointsLimit: 1500 };
+
       await act(async () => {
-        await result.current.saveList(mockList);
+        await result.current.saveList(updatedList);
       });
 
-      await waitFor(() => {
-        expect(result.current.lists).toEqual(mockSavedLists);
-      });
+      expect(localStorageMock.setItem).toHaveBeenCalled();
     });
 
     it('returns false when name is empty', async () => {
-      mockFetch.mockResolvedValue(createMockResponse([])); // Initial fetch
+      localStorageMock.getItem.mockReturnValue(JSON.stringify({ lists: {} }));
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -274,31 +250,8 @@ describe('useSavedLists', () => {
       expect(result.current.error).toBe('List name is required');
     });
 
-    it('returns false and sets error on failure', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse([])) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse({ error: 'Save failed' }, false, 'Error')); // Save failure
-
-      const { result } = renderHook(() => useSavedLists());
-
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
-
-      let success = false;
-      await act(async () => {
-        success = await result.current.saveList(mockList);
-      });
-
-      expect(success).toBe(false);
-      expect(result.current.error).toBe('Request failed: Error');
-    });
-
     it('shows loading state during operation', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse([])) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse({ success: true, filename: 'Test_Army.json' })) // Save
-        .mockResolvedValueOnce(createMockResponse(mockSavedLists)); // Refresh lists
+      localStorageMock.getItem.mockReturnValue(JSON.stringify({ lists: {} }));
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -306,7 +259,6 @@ describe('useSavedLists', () => {
         expect(result.current.isLoading).toBe(false);
       });
 
-      // Verify isLoading goes false after operation
       await act(async () => {
         await result.current.saveList(mockList);
       });
@@ -320,58 +272,32 @@ describe('useSavedLists', () => {
   // --------------------------------------------------------------------------
 
   describe('deleteList', () => {
-    it('deletes a list successfully', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse(mockSavedLists)) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse({ success: true })) // Delete
-        .mockResolvedValueOnce(createMockResponse([mockSavedLists[1]])); // Refresh lists
+    it('deletes a list successfully from localStorage', async () => {
+      localStorageMock.getItem.mockReturnValue(JSON.stringify({
+        lists: {
+          'test-army.json': mockList,
+          'another-list.json': mockList2,
+        },
+      }));
 
       const { result } = renderHook(() => useSavedLists());
 
       await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
+        expect(result.current.lists).toHaveLength(2);
       });
 
       let success = false;
       await act(async () => {
-        success = await result.current.deleteList('Test_Army.json');
+        success = await result.current.deleteList('test-army.json');
       });
 
       expect(success).toBe(true);
       expect(result.current.error).toBeNull();
-      expect(mockFetch).toHaveBeenCalledWith('/api/lists/Test_Army.json', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-      });
+      expect(localStorageMock.setItem).toHaveBeenCalled();
     });
 
-    it('refreshes list after successful delete', async () => {
-      const remainingLists = [mockSavedLists[1]];
-
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse(mockSavedLists)) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse({ success: true })) // Delete
-        .mockResolvedValueOnce(createMockResponse(remainingLists)); // Refresh lists
-
-      const { result } = renderHook(() => useSavedLists());
-
-      await waitFor(() => {
-        expect(result.current.lists).toEqual(mockSavedLists);
-      });
-
-      await act(async () => {
-        await result.current.deleteList('Test_Army.json');
-      });
-
-      await waitFor(() => {
-        expect(result.current.lists).toEqual(remainingLists);
-      });
-    });
-
-    it('returns false and sets error on failure', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse([])) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse({ error: 'Not found' }, false, 'Error')); // Delete failure
+    it('returns false when list not found', async () => {
+      localStorageMock.getItem.mockReturnValue(JSON.stringify({ lists: {} }));
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -381,40 +307,17 @@ describe('useSavedLists', () => {
 
       let success = false;
       await act(async () => {
-        success = await result.current.deleteList('Nonexistent.json');
+        success = await result.current.deleteList('nonexistent.json');
       });
 
       expect(success).toBe(false);
-      expect(result.current.error).toBe('Request failed: Error');
-    });
-
-    it('encodes filename in URL', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse([])) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse({ success: true })) // Delete
-        .mockResolvedValueOnce(createMockResponse([])); // Refresh lists
-
-      const { result } = renderHook(() => useSavedLists());
-
-      await waitFor(() => {
-        expect(result.current.isLoading).toBe(false);
-      });
-
-      await act(async () => {
-        await result.current.deleteList('My List.json');
-      });
-
-      expect(mockFetch).toHaveBeenCalledWith(
-        '/api/lists/My%20List.json',
-        expect.any(Object)
-      );
+      expect(result.current.error).toBe('List not found');
     });
 
     it('shows loading state during operation', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse(mockSavedLists)) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse({ success: true })) // Delete
-        .mockResolvedValueOnce(createMockResponse([])); // Refresh lists
+      localStorageMock.getItem.mockReturnValue(JSON.stringify({
+        lists: { 'test-army.json': mockList },
+      }));
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -422,9 +325,8 @@ describe('useSavedLists', () => {
         expect(result.current.isLoading).toBe(false);
       });
 
-      // Verify isLoading goes false after operation
       await act(async () => {
-        await result.current.deleteList('Test_Army.json');
+        await result.current.deleteList('test-army.json');
       });
 
       expect(result.current.isLoading).toBe(false);
@@ -437,9 +339,7 @@ describe('useSavedLists', () => {
 
   describe('fetchLists', () => {
     it('can manually refresh the list', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse([])) // Initial fetch
-        .mockResolvedValueOnce(createMockResponse(mockSavedLists)); // Manual refresh
+      localStorageMock.getItem.mockReturnValue(JSON.stringify({ lists: {} }));
 
       const { result } = renderHook(() => useSavedLists());
 
@@ -449,30 +349,38 @@ describe('useSavedLists', () => {
 
       expect(result.current.lists).toEqual([]);
 
-      await act(async () => {
-        await result.current.fetchLists();
+      // Update localStorage and refresh
+      localStorageMock.getItem.mockReturnValue(JSON.stringify({
+        lists: { 'test-army.json': mockList },
+      }));
+
+      act(() => {
+        result.current.fetchLists();
       });
 
-      expect(result.current.lists).toEqual(mockSavedLists);
+      await waitFor(() => {
+        expect(result.current.lists).toHaveLength(1);
+      });
     });
 
-    it('clears error on successful refresh', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse({ error: 'Error' }, false, 'Error')) // Initial fetch fails
-        .mockResolvedValueOnce(createMockResponse(mockSavedLists)); // Manual refresh succeeds
+    it('sorts lists alphabetically by name', async () => {
+      localStorageMock.getItem.mockReturnValue(JSON.stringify({
+        lists: {
+          'zebra.json': { ...mockList, name: 'Zebra' },
+          'alpha.json': { ...mockList, name: 'Alpha' },
+          'beta.json': { ...mockList, name: 'Beta' },
+        },
+      }));
 
       const { result } = renderHook(() => useSavedLists());
 
       await waitFor(() => {
-        expect(result.current.error).not.toBeNull();
+        expect(result.current.lists).toHaveLength(3);
       });
 
-      await act(async () => {
-        await result.current.fetchLists();
-      });
-
-      expect(result.current.error).toBeNull();
-      expect(result.current.lists).toEqual(mockSavedLists);
+      expect(result.current.lists[0].name).toBe('Alpha');
+      expect(result.current.lists[1].name).toBe('Beta');
+      expect(result.current.lists[2].name).toBe('Zebra');
     });
   });
 });

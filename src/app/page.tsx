@@ -16,7 +16,9 @@ import { SelectedUnitDetailsPanel } from '@/components/play/SelectedUnitDetailsP
 import {
   ToastContainer,
   ImportModal,
+  ExportModal,
   LoadModal,
+  SaveModal,
   ConfirmModal,
 } from '@/components/ui';
 import {
@@ -39,6 +41,9 @@ export default function Home() {
   const [showReferencePanel, setShowReferencePanel] = useState(false);
   const [previewedUnit, setPreviewedUnit] = useState<Unit | null>(null);
   const [missionTwists, setMissionTwists] = useState<MissionTwist[]>([]);
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportCode, setExportCode] = useState<string | null>(null);
+  const [exportError, setExportError] = useState<string | null>(null);
 
   // -------------------------------------------------------------------------
   // Store State
@@ -442,25 +447,34 @@ export default function Home() {
     showSuccess(`Removed ${unit?.name || 'unit'} from your army`);
   }, [currentList.units, armyData, removeUnit, selectedUnitIndex, selectUnit, showSuccess]);
 
-  const handleSave = useCallback(async () => {
-    if (!currentList.name.trim()) {
-      showError('Please enter a list name before saving');
-      return;
-    }
+  const handleOpenSaveModal = useCallback(() => {
+    openModal('save');
+  }, [openModal]);
 
+  const handleSaveWithName = useCallback(async (name: string): Promise<boolean> => {
     const errors = listValidation.validateList().errors;
+
     if (errors.length > 0) {
       showError(errors[0].message);
-      return;
+      return false;
     }
 
     try {
-      await saveSavedList(currentList);
-      showSuccess('List saved successfully');
+      // Update the list name and save
+      const listToSave = { ...currentList, name };
+      const success = await saveSavedList(listToSave);
+
+      if (success) {
+        setListName(name);
+        showSuccess('List saved successfully');
+      }
+
+      return success;
     } catch (error) {
       showError(error instanceof Error ? error.message : 'Failed to save list');
+      return false;
     }
-  }, [currentList, listValidation, saveSavedList, showSuccess, showError]);
+  }, [currentList, listValidation, saveSavedList, setListName, showSuccess, showError]);
 
   const handleLoadList = useCallback(async (data: CurrentList) => {
     try {
@@ -486,6 +500,44 @@ export default function Home() {
     closeModal();
     showSuccess('List imported successfully');
   }, [currentList.army, loadArmyData, loadList, closeModal, showSuccess]);
+
+  const handleExport = useCallback(async () => {
+    if (!armyData || currentList.units.length === 0) return;
+
+    setIsExporting(true);
+    setExportCode(null);
+    setExportError(null);
+    openModal('export');
+
+    try {
+      const response = await fetch('/api/yellowscribe/export', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          list: currentList,
+          armyData,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success && result.code) {
+        setExportCode(result.code);
+      } else {
+        setExportError(result.error || 'Failed to get export code');
+      }
+    } catch (error) {
+      setExportError(error instanceof Error ? error.message : 'Network error');
+    } finally {
+      setIsExporting(false);
+    }
+  }, [armyData, currentList, openModal]);
+
+  const handleCloseExportModal = useCallback(() => {
+    closeModal();
+    setExportCode(null);
+    setExportError(null);
+  }, [closeModal]);
 
   const handleUnitWoundAdjust = useCallback((delta: number) => {
     if (selectedUnitIndex === null) return;
@@ -593,9 +645,12 @@ export default function Home() {
                   onPointsLimitChange={setPointsLimit}
                   onDetachmentChange={setDetachment}
                   onImport={() => openModal('import')}
+                  onExport={handleExport}
                   onLoad={() => openModal('load')}
-                  onSave={handleSave}
-                  canSave={!!currentList.name.trim()}
+                  onSave={handleOpenSaveModal}
+                  canSave={true}
+                  canExport={currentList.units.length > 0}
+                  isExporting={isExporting}
                   getAvailableLeaders={leaderAttachment.getAvailableLeaders}
                   isUnitAttachedAsLeader={leaderAttachment.isUnitAttachedAsLeader}
                   getAttachedToUnitName={(index) => leaderAttachment.getAttachedToUnit(index)?.name}
@@ -864,6 +919,18 @@ export default function Home() {
           isOpen={true}
           onClose={closeModal}
           onImport={handleImport}
+          armyData={armyData}
+          armyId={currentList.army}
+        />
+      )}
+
+      {activeModal === 'export' && (
+        <ExportModal
+          isOpen={true}
+          onClose={handleCloseExportModal}
+          code={exportCode}
+          isLoading={isExporting}
+          error={exportError}
         />
       )}
 
@@ -876,6 +943,16 @@ export default function Home() {
           onLoad={fetchSavedList}
           onDelete={deleteSavedList}
           onListLoaded={handleLoadList}
+        />
+      )}
+
+      {activeModal === 'save' && (
+        <SaveModal
+          isOpen={true}
+          onClose={closeModal}
+          onSave={handleSaveWithName}
+          initialName={currentList.name}
+          existingNames={savedLists.map(l => l.name)}
         />
       )}
 
