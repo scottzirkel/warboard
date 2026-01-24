@@ -1,7 +1,7 @@
 'use client';
 
 import { PlayModeWeaponsDisplay } from './PlayModeWeaponsDisplay';
-import type { Unit, ListUnit, Enhancement, Weapon, Modifier, ModifierSource, LoadoutGroup, Stratagem } from '@/types';
+import type { Unit, ListUnit, Enhancement, Weapon, Modifier, ModifierSource, LoadoutGroup, Stratagem, MissionTwist } from '@/types';
 
 interface SelectedUnitDetailsPanelProps {
   // Unit data
@@ -42,13 +42,14 @@ interface SelectedUnitDetailsPanelProps {
   onUnitWoundAdjust?: (delta: number) => void;
   onLeaderWoundAdjust?: (delta: number) => void;
 
-  // Active modifiers (Ka'tah, Stratagems)
+  // Active modifiers (Ka'tah, Stratagems, Twists)
   activeKatah?: string | null;
   katahName?: string;
   katahDescription?: string;
   activeStratagems?: string[];
   stratagemNames?: Record<string, string>;
   activeStratagemData?: Stratagem[];
+  activeTwistData?: MissionTwist[];
 
   // Reset activations
   onResetActivations?: () => void;
@@ -250,6 +251,7 @@ export function SelectedUnitDetailsPanel({
   activeStratagems = [],
   stratagemNames: _stratagemNames = {},
   activeStratagemData = [],
+  activeTwistData = [],
 
   onResetActivations,
   hasAnyActivations = false,
@@ -473,7 +475,16 @@ export function SelectedUnitDetailsPanel({
                 <div className="text-xs text-white/70 mt-1">{strat.description}</div>
               </div>
             ))}
-            {!activeKatah && !enhancement && activeStratagems.length === 0 && (
+            {activeTwistData.map((twist) => (
+              <div key={twist.id} className="text-sm px-3 py-2 bg-accent-tint rounded-lg">
+                <div className="flex justify-between items-start">
+                  <span className="font-medium text-accent-300">{twist.name}</span>
+                  <span className="text-[10px] text-white/40 capitalize">{twist.affects}</span>
+                </div>
+                <div className="text-xs text-white/70 mt-1">{twist.description}</div>
+              </div>
+            ))}
+            {!activeKatah && !enhancement && activeStratagems.length === 0 && activeTwistData.length === 0 && (
               <div className="text-sm text-white/40">No modifiers active</div>
             )}
           </div>

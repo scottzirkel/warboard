@@ -1,6 +1,6 @@
 'use client';
 
-import type { ArmyData, Detachment, Stratagem } from '@/types';
+import type { ArmyData, Detachment, Stratagem, MissionTwist } from '@/types';
 
 // ============================================================================
 // Types
@@ -28,6 +28,11 @@ interface GameStatePanelProps {
   // Stratagems state
   activeStratagems: string[];
   onToggleStratagem: (stratagemId: string) => void;
+
+  // Twists state (Chapter Approved)
+  activeTwists: string[];
+  onToggleTwist: (twistId: string) => void;
+  availableTwists: MissionTwist[];
 
   // Army data for dynamic content
   armyData: ArmyData | null;
@@ -74,6 +79,9 @@ export function GameStatePanel({
   onKatahChange,
   activeStratagems,
   onToggleStratagem,
+  activeTwists,
+  onToggleTwist,
+  availableTwists,
   armyData,
   detachmentId,
   className = '',
@@ -198,6 +206,33 @@ export function GameStatePanel({
             )}
           </div>
         </div>
+
+        {/* Mission Twists (Chapter Approved) */}
+        {availableTwists.length > 0 && (
+          <div className="card-depth overflow-hidden">
+            <div className="section-header">Mission Twists</div>
+            <div className="space-y-0">
+              {availableTwists.map((twist) => (
+                <div
+                  key={twist.id}
+                  className={`
+                    inset-group-item cursor-pointer transition-colors touch-highlight
+                    ${activeTwists.includes(twist.id) ? 'bg-accent-tint-strong' : 'hover:bg-white/5'}
+                  `}
+                  onClick={() => onToggleTwist(twist.id)}
+                >
+                  <div className="flex-1">
+                    <div className="font-medium text-sm">{twist.name}</div>
+                    <div className="text-xs text-white/40 mt-0.5 capitalize">{twist.affects}</div>
+                  </div>
+                  {twist.modifiers && twist.modifiers.length > 0 && (
+                    <span className="badge badge-accent">Modifier</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Detachment Rules */}
         {detachment?.rules && detachment.rules.length > 0 && (

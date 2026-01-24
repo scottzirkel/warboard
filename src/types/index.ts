@@ -142,6 +142,19 @@ export interface Stratagem {
 }
 
 // ============================================================================
+// Mission Twists (Chapter Approved)
+// ============================================================================
+
+export interface MissionTwist {
+  id: string;
+  name: string;
+  description: string;
+  /** Which player this affects: 'both', 'attacker', 'defender', 'overlord', 'underdog' */
+  affects: 'both' | 'attacker' | 'defender' | 'overlord' | 'underdog';
+  modifiers?: Modifier[];
+}
+
+// ============================================================================
 // Detachment Rules
 // ============================================================================
 
@@ -227,13 +240,19 @@ export interface WeaponKeyword {
 // Army Data (Full Faction JSON)
 // ============================================================================
 
+export interface AllyFaction {
+  name: string;
+  description: string;
+  units: Unit[];
+}
+
 export interface ArmyData {
   faction: string;
   lastUpdated: string;
   armyRules?: Record<string, ArmyRule>;
   units: Unit[];
   detachments: Record<string, Detachment>;
-  allies?: unknown[];
+  allies?: Record<string, AllyFaction>;
   weaponKeywords?: Record<string, WeaponKeyword>;
   keywordGlossary?: KeywordGlossary;
   glossary?: Record<string, unknown>;
@@ -281,6 +300,8 @@ export interface GameState {
   battleRound: number;
   commandPoints: number;
   activeStratagems: string[];
+  /** Active mission twists (Chapter Approved) */
+  activeTwists: string[];
   katah: string | null;
   collapsedLoadoutGroups: Record<number, Record<string, boolean>>;
   activatedLoadoutGroups: Record<number, Record<string, boolean>>;

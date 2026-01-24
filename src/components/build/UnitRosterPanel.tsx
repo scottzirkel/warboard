@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import type { Unit } from '@/types';
 
 interface UnitRosterPanelProps {
-  units: Unit[];
+  units: (Unit & { isAlly?: boolean; allyFaction?: string })[];
   onSelectUnit: (unit: Unit) => void;
   onAddUnit: (unit: Unit) => void;
   selectedUnitId?: string;
@@ -12,10 +12,20 @@ interface UnitRosterPanelProps {
   className?: string;
 }
 
-// Unit type grouping
-type UnitTypeGroup = 'Characters' | 'Battleline' | 'Infantry' | 'Vehicles' | 'Other';
+// Extended Unit type with ally info
+interface ExtendedUnit extends Unit {
+  isAlly?: boolean;
+  allyFaction?: string;
+}
 
-function getUnitTypeGroup(keywords: string[]): UnitTypeGroup {
+// Unit type grouping
+type UnitTypeGroup = 'Characters' | 'Battleline' | 'Infantry' | 'Vehicles' | 'Other' | 'Allies';
+
+function getUnitTypeGroup(unit: ExtendedUnit): UnitTypeGroup {
+  // Allies go in their own group
+  if (unit.isAlly) return 'Allies';
+
+  const keywords = unit.keywords || [];
   if (keywords.includes('Character')) return 'Characters';
   if (keywords.includes('Battleline')) return 'Battleline';
   if (keywords.includes('Vehicle') || keywords.includes('Monster')) return 'Vehicles';
@@ -23,7 +33,7 @@ function getUnitTypeGroup(keywords: string[]): UnitTypeGroup {
   return 'Other';
 }
 
-const groupPriority: UnitTypeGroup[] = ['Characters', 'Battleline', 'Infantry', 'Vehicles', 'Other'];
+const groupPriority: UnitTypeGroup[] = ['Characters', 'Battleline', 'Infantry', 'Vehicles', 'Other', 'Allies'];
 
 // Simple accordion component
 interface SimpleAccordionProps {
@@ -92,10 +102,10 @@ export function UnitRosterPanel({
 
   // Group units by type
   const groupedUnits = useMemo(() => {
-    const groups: Record<string, Unit[]> = {};
+    const groups: Record<string, ExtendedUnit[]> = {};
 
     filteredUnits.forEach((unit) => {
-      const group = getUnitTypeGroup(unit.keywords);
+      const group = getUnitTypeGroup(unit);
 
       if (!groups[group]) {
         groups[group] = [];

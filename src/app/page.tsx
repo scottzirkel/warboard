@@ -26,7 +26,7 @@ import {
   useWoundTracking,
   useSavedLists,
 } from '@/hooks';
-import type { CurrentList, Unit, GameFormat, LoadoutGroup, Weapon, ModifierSource, ModifierOperation } from '@/types';
+import type { CurrentList, Unit, GameFormat, LoadoutGroup, Weapon, ModifierSource, ModifierOperation, MissionTwist } from '@/types';
 
 // ============================================================================
 // Main App Component
@@ -38,6 +38,7 @@ export default function Home() {
   // -------------------------------------------------------------------------
   const [showReferencePanel, setShowReferencePanel] = useState(false);
   const [previewedUnit, setPreviewedUnit] = useState<Unit | null>(null);
+  const [missionTwists, setMissionTwists] = useState<MissionTwist[]>([]);
 
   // -------------------------------------------------------------------------
   // Store State
@@ -71,6 +72,7 @@ export default function Home() {
     setCommandPoints,
     setKatah,
     toggleStratagem,
+    toggleTwist,
     isLoadoutGroupCollapsed,
     toggleLoadoutGroupCollapsed,
     isLoadoutGroupActivated,
@@ -148,14 +150,55 @@ export default function Home() {
   );
 
   // -------------------------------------------------------------------------
+  // Combined Units (includes allies) - matches Alpine's allUnits getter
+  // -------------------------------------------------------------------------
+  const allUnits = useMemo(() => {
+    if (!armyData) return [];
+
+    // Regular units
+    const regularUnits = armyData.units.map((u) => ({ ...u, isAlly: false as const }));
+
+    // Ally units
+    const allyUnits: (Unit & { isAlly: true; allyFaction: string })[] = [];
+    if (armyData.allies) {
+      for (const faction of Object.values(armyData.allies)) {
+        for (const unit of faction.units || []) {
+          allyUnits.push({ ...unit, isAlly: true as const, allyFaction: faction.name });
+        }
+      }
+    }
+
+    return [...regularUnits, ...allyUnits];
+  }, [armyData]);
+
+  // Helper to find unit by ID (checks both regular units and allies)
+  const findUnitById = useCallback((unitId: string): Unit | undefined => {
+    if (!armyData) return undefined;
+
+    // Check regular units first
+    const regularUnit = armyData.units.find((u) => u.id === unitId);
+    if (regularUnit) return regularUnit;
+
+    // Check allies
+    if (armyData.allies) {
+      for (const faction of Object.values(armyData.allies)) {
+        const allyUnit = faction.units?.find((u) => u.id === unitId);
+        if (allyUnit) return allyUnit;
+      }
+    }
+
+    return undefined;
+  }, [armyData]);
+
+  // -------------------------------------------------------------------------
   // Selected Unit Data
   // -------------------------------------------------------------------------
   const selectedUnit = useMemo(() => {
     if (selectedUnitIndex === null || !armyData) return undefined;
     const listUnit = currentList.units[selectedUnitIndex];
     if (!listUnit) return undefined;
-    return armyData.units.find((u) => u.id === listUnit.unitId);
-  }, [selectedUnitIndex, armyData, currentList.units]);
+    return findUnitById(listUnit.unitId);
+  }, [selectedUnitIndex, armyData, currentList.units, findUnitById]);
 
   const selectedListUnit = useMemo(() => {
     if (selectedUnitIndex === null) return undefined;
@@ -205,6 +248,20 @@ export default function Home() {
     loadArmyData(currentList.army);
     fetchLists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Load mission data (Chapter Approved twists)
+  useEffect(() => {
+    const loadMissionData = async () => {
+      try {
+        const res = await fetch('/data/missions.json');
+        const data = await res.json();
+        setMissionTwists(data.twists || []);
+      } catch (err) {
+        console.error('Failed to load mission data:', err);
+      }
+    };
+    loadMissionData();
   }, []);
 
   // -------------------------------------------------------------------------
@@ -552,7 +609,7 @@ export default function Home() {
             middlePanel={
               armyData && (
                 <UnitRosterPanel
-                  units={armyData.units}
+                  units={allUnits}
                   onSelectUnit={handlePreviewUnit}
                   onAddUnit={handleAddUnit}
                   selectedUnitId={previewedUnit?.id}
@@ -614,6 +671,9 @@ export default function Home() {
                 onKatahChange={setKatah}
                 activeStratagems={gameState.activeStratagems}
                 onToggleStratagem={toggleStratagem}
+                activeTwists={gameState.activeTwists || []}
+                onToggleTwist={toggleTwist}
+                availableTwists={missionTwists}
                 armyData={armyData}
                 detachmentId={currentList.detachment}
               />
@@ -654,6 +714,9 @@ export default function Home() {
                     armyData?.detachments[currentList.detachment]?.stratagems?.filter(
                       s => gameState.activeStratagems.includes(s.id)
                     ) || []
+                  }
+                  activeTwistData={
+                    missionTwists.filter(t => (gameState.activeTwists || []).includes(t.id))
                   }
                   onResetActivations={handleResetUnitActivations}
                   hasAnyActivations={hasAnyActivations}

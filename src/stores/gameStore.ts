@@ -10,6 +10,7 @@ const createDefaultGameState = (): GameState => ({
   battleRound: 1,
   commandPoints: 0,
   activeStratagems: [],
+  activeTwists: [],
   katah: null,
   collapsedLoadoutGroups: {},
   activatedLoadoutGroups: {},
@@ -41,6 +42,10 @@ interface GameStoreActions {
   deactivateStratagem: (stratagemId: string) => void;
   toggleStratagem: (stratagemId: string) => void;
   clearActiveStratagems: () => void;
+
+  // Mission Twists (Chapter Approved)
+  toggleTwist: (twistId: string) => void;
+  clearActiveTwists: () => void;
 
   // Martial Ka'tah (Custodes army rule)
   setKatah: (katah: string | null) => void;
@@ -187,6 +192,34 @@ export const useGameStore = create<GameStore>()(
       gameState: {
         ...state.gameState,
         activeStratagems: [],
+      },
+    }));
+  },
+
+  // -------------------------------------------------------------------------
+  // Mission Twist Actions
+  // -------------------------------------------------------------------------
+
+  toggleTwist: (twistId: string) => {
+    set(state => {
+      const activeTwists = state.gameState.activeTwists || [];
+      const isActive = activeTwists.includes(twistId);
+
+      return {
+        gameState: {
+          ...state.gameState,
+          // Only one twist at a time - toggle off if active, otherwise set as the only active twist
+          activeTwists: isActive ? [] : [twistId],
+        },
+      };
+    });
+  },
+
+  clearActiveTwists: () => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        activeTwists: [],
       },
     }));
   },
