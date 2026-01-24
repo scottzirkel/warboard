@@ -954,7 +954,7 @@
     {
       "id": "the-swarmlord",
       "name": "The Swarmlord",
-      "points": { "1": 240 },
+      "points": { "1": 220 },
       "stats": { "m": 8, "t": 10, "sv": "2+", "w": 10, "ld": "7+", "oc": 3 },
       "invuln": "4+",
       "weapons": [
@@ -1007,7 +1007,7 @@
     {
       "id": "old-one-eye",
       "name": "Old One Eye",
-      "points": { "1": 140 },
+      "points": { "1": 150 },
       "stats": { "m": 8, "t": 9, "sv": "2+", "w": 9, "ld": "8+", "oc": 3 },
       "invuln": null,
       "weapons": [
@@ -1161,7 +1161,7 @@
     {
       "id": "parasite-of-mortrex",
       "name": "Parasite of Mortrex",
-      "points": { "1": 90 },
+      "points": { "1": 80 },
       "stats": { "m": 12, "t": 5, "sv": "4+", "w": 5, "ld": "8+", "oc": 1 },
       "invuln": null,
       "weapons": [
@@ -1213,7 +1213,7 @@
     {
       "id": "tervigon",
       "name": "Tervigon",
-      "points": { "1": 200 },
+      "points": { "1": 160 },
       "stats": { "m": 8, "t": 11, "sv": "2+", "w": 16, "ld": "7+", "oc": 5 },
       "invuln": null,
       "weapons": [
@@ -1410,7 +1410,7 @@
     {
       "id": "pyrovores",
       "name": "Pyrovores",
-      "points": { "1": 35, "2": 70, "3": 105 },
+      "points": { "1": 40, "2": 70, "3": 105 },
       "stats": { "m": 5, "t": 6, "sv": "3+", "w": 5, "ld": "8+", "oc": 1 },
       "invuln": null,
       "weapons": [
@@ -1447,7 +1447,7 @@
     {
       "id": "raveners",
       "name": "Raveners",
-      "points": { "3": 75, "6": 150 },
+      "points": { "5": 125 },
       "stats": { "m": 10, "t": 5, "sv": "4+", "w": 3, "ld": "8+", "oc": 1 },
       "invuln": null,
       "weapons": [
@@ -1547,7 +1547,7 @@
     {
       "id": "ripper-swarms",
       "name": "Ripper Swarms",
-      "points": { "3": 40, "6": 80 },
+      "points": { "1": 25, "2": 40, "3": 50 },
       "stats": { "m": 6, "t": 2, "sv": "6+", "w": 4, "ld": "8+", "oc": 0 },
       "invuln": null,
       "weapons": [
@@ -1638,7 +1638,7 @@
     {
       "id": "exocrine",
       "name": "Exocrine",
-      "points": { "1": 135 },
+      "points": { "1": 140 },
       "stats": { "m": 8, "t": 10, "sv": "3+", "w": 14, "ld": "8+", "oc": 4 },
       "invuln": null,
       "weapons": [
@@ -1680,7 +1680,7 @@
     {
       "id": "harpy",
       "name": "Harpy",
-      "points": { "1": 180 },
+      "points": { "1": 215 },
       "stats": { "m": 20, "t": 9, "sv": "3+", "w": 12, "ld": "8+", "oc": 0 },
       "invuln": null,
       "weapons": [
@@ -1931,7 +1931,7 @@
     {
       "id": "mawloc",
       "name": "Mawloc",
-      "points": { "1": 145 },
+      "points": { "1": 135 },
       "stats": { "m": 10, "t": 10, "sv": "3+", "w": 14, "ld": "8+", "oc": 4 },
       "invuln": null,
       "weapons": [
@@ -2023,7 +2023,7 @@
     {
       "id": "norn-assimilator",
       "name": "Norn Assimilator",
-      "points": { "1": 290 },
+      "points": { "1": 275 },
       "stats": { "m": 10, "t": 11, "sv": "2+", "w": 16, "ld": "7+", "oc": 5 },
       "invuln": null,
       "weapons": [
@@ -2077,7 +2077,7 @@
     {
       "id": "norn-emissary",
       "name": "Norn Emissary",
-      "points": { "1": 275 },
+      "points": { "1": 260 },
       "stats": { "m": 10, "t": 11, "sv": "2+", "w": 16, "ld": "7+", "oc": 5 },
       "invuln": "4+",
       "weapons": [
@@ -2160,7 +2160,7 @@
     {
       "id": "psychophage",
       "name": "Psychophage",
-      "points": { "1": 125 },
+      "points": { "1": 110 },
       "stats": { "m": 8, "t": 9, "sv": "3+", "w": 10, "ld": "8+", "oc": 3 },
       "invuln": null,
       "weapons": [
@@ -2286,7 +2286,7 @@
     {
       "id": "toxicrene",
       "name": "Toxicrene",
-      "points": { "1": 165 },
+      "points": { "1": 150 },
       "stats": { "m": 8, "t": 11, "sv": "3+", "w": 14, "ld": "8+", "oc": 4 },
       "invuln": null,
       "weapons": [
@@ -2328,7 +2328,7 @@
     {
       "id": "trygon",
       "name": "Trygon",
-      "points": { "1": 170 },
+      "points": { "1": 140 },
       "stats": { "m": 10, "t": 10, "sv": "3+", "w": 14, "ld": "8+", "oc": 4 },
       "invuln": null,
       "weapons": [
@@ -2370,7 +2370,7 @@
     {
       "id": "tyrannofex",
       "name": "Tyrannofex",
-      "points": { "1": 190 },
+      "points": { "1": 200 },
       "stats": { "m": 9, "t": 12, "sv": "2+", "w": 16, "ld": "8+", "oc": 5 },
       "invuln": null,
       "weapons": [

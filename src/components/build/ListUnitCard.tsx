@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Card, Badge, Button } from '@/components/ui';
 import { EnhancementSelector } from './EnhancementSelector';
 import { WeaponLoadoutSelector } from './WeaponLoadoutSelector';
@@ -80,11 +81,27 @@ export function ListUnitCard({
 
   const weaponCountError = getWeaponCountError();
 
+  // Compact by default - expand on click
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Check if unit has configurable options
+  const hasOptions = (modelCounts.length > 1) ||
+    (isCharacter && enhancements.length > 0) ||
+    canHaveLeaderAttached ||
+    (unit.loadoutOptions && unit.loadoutOptions.length > 0);
+
+  const handleCardClick = () => {
+    if (hasOptions) {
+      setIsExpanded(!isExpanded);
+    }
+    onSelect();
+  };
+
   return (
     <Card
       selected={isSelected}
       hoverable
-      onClick={onSelect}
+      onClick={handleCardClick}
       className={`
         ${isAttachedAsLeader ? 'opacity-60' : ''}
         ${className}
@@ -95,17 +112,37 @@ export function ListUnitCard({
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
+              {hasOptions && (
+                <svg
+                  className={`w-4 h-4 text-gray-400 transition-transform shrink-0 ${isExpanded ? 'rotate-90' : ''}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              )}
               <h4 className="text-sm font-medium text-gray-200 truncate">
                 {unit.name}
               </h4>
               {isCharacter && (
                 <Badge variant="accent" size="sm">Character</Badge>
               )}
+              {/* Show model count in compact view */}
+              {!isExpanded && modelCounts.length > 1 && (
+                <span className="text-xs text-gray-500">×{listUnit.modelCount}</span>
+              )}
             </div>
             {isAttachedAsLeader && attachedToUnitName && (
-              <Badge variant="purple" size="sm" className="mt-1">
+              <Badge variant="purple" size="sm" className="mt-1 ml-6">
                 → {attachedToUnitName}
               </Badge>
+            )}
+            {/* Show enhancement name in compact view */}
+            {!isExpanded && selectedEnhancement && (
+              <div className="text-xs text-purple-400 mt-0.5 ml-6 truncate">
+                {selectedEnhancement.name}
+              </div>
             )}
           </div>
 
@@ -130,99 +167,104 @@ export function ListUnitCard({
           </div>
         </div>
 
-        {/* Model Count Selector (dropdown matching Alpine.js) */}
-        {modelCounts.length > 1 && (
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-400">Models</span>
-            <select
-              value={listUnit.modelCount}
-              onChange={(e) => {
-                e.stopPropagation();
-                onModelCountChange(Number(e.target.value));
-              }}
-              onClick={(e) => e.stopPropagation()}
-              className="select-dark py-1.5 px-3 text-sm"
-            >
-              {modelCounts.map((count) => (
-                <option key={count} value={count}>
-                  {count} models
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
-        {/* Enhancement Selector (Characters only) */}
-        {isCharacter && enhancements.length > 0 && (
-          <div className="space-y-1">
-            <span className="text-xs text-gray-400">Enhancement</span>
-            <EnhancementSelector
-              value={listUnit.enhancement}
-              onChange={onEnhancementChange}
-              enhancements={enhancements}
-            />
-          </div>
-        )}
-
-        {/* Leader Attachment (non-Characters that can have leaders) */}
-        {canHaveLeaderAttached && (
-          <div className="space-y-1">
-            <span className="text-xs text-gray-400">Attached Leader</span>
-            <select
-              value={listUnit.attachedLeader?.unitIndex.toString() ?? ''}
-              onChange={(e) => {
-                const value = e.target.value;
-                if (value === '') {
-                  onDetachLeader();
-                } else {
-                  onAttachLeader(parseInt(value, 10));
-                }
-              }}
-              onClick={(e) => e.stopPropagation()}
-              className="select-dark w-full py-1.5 text-sm"
-            >
-              <option value="">None</option>
-              {/* Show currently attached leader even if not in available list */}
-              {attachedLeaderName && listUnit.attachedLeader && (
-                <option value={listUnit.attachedLeader.unitIndex}>
-                  {attachedLeaderName}
-                </option>
-              )}
-              {availableLeaders
-                .filter(leader =>
-                  // Don't show the already attached leader twice
-                  !listUnit.attachedLeader ||
-                  leader.unitIndex !== listUnit.attachedLeader.unitIndex
-                )
-                .map((leader) => (
-                  <option key={leader.unitIndex} value={leader.unitIndex}>
-                    {leader.name}
-                    {leader.enhancement && ` (${leader.enhancement})`}
-                  </option>
-                ))}
-            </select>
-          </div>
-        )}
-
-        {/* Weapon Loadout Options */}
-        {unit.loadoutOptions && unit.loadoutOptions.length > 0 && (
-          <div className="space-y-2 pt-1 border-t border-gray-700/50">
-            {unit.loadoutOptions.map((option) => (
-              <WeaponLoadoutSelector
-                key={option.id}
-                option={option}
-                modelCount={listUnit.modelCount}
-                weaponCounts={listUnit.weaponCounts || {}}
-                onCountChange={(choiceId, count) => {
-                  onWeaponCountChange(choiceId, count);
-                }}
-              />
-            ))}
-            {/* Weapon Count Validation Error */}
-            {weaponCountError && (
-              <div className="text-xs text-red-400">{weaponCountError}</div>
+        {/* Expandable Content */}
+        {isExpanded && (
+          <>
+            {/* Model Count Selector (dropdown matching Alpine.js) */}
+            {modelCounts.length > 1 && (
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-400">Models</span>
+                <select
+                  value={listUnit.modelCount}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    onModelCountChange(Number(e.target.value));
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="select-dark py-1.5 px-3 text-sm"
+                >
+                  {modelCounts.map((count) => (
+                    <option key={count} value={count}>
+                      {count} models
+                    </option>
+                  ))}
+                </select>
+              </div>
             )}
-          </div>
+
+            {/* Enhancement Selector (Characters only) */}
+            {isCharacter && enhancements.length > 0 && (
+              <div className="space-y-1">
+                <span className="text-xs text-gray-400">Enhancement</span>
+                <EnhancementSelector
+                  value={listUnit.enhancement}
+                  onChange={onEnhancementChange}
+                  enhancements={enhancements}
+                />
+              </div>
+            )}
+
+            {/* Leader Attachment (non-Characters that can have leaders) */}
+            {canHaveLeaderAttached && (
+              <div className="space-y-1">
+                <span className="text-xs text-gray-400">Attached Leader</span>
+                <select
+                  value={listUnit.attachedLeader?.unitIndex.toString() ?? ''}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '') {
+                      onDetachLeader();
+                    } else {
+                      onAttachLeader(parseInt(value, 10));
+                    }
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="select-dark w-full py-1.5 text-sm"
+                >
+                  <option value="">None</option>
+                  {/* Show currently attached leader even if not in available list */}
+                  {attachedLeaderName && listUnit.attachedLeader && (
+                    <option value={listUnit.attachedLeader.unitIndex}>
+                      {attachedLeaderName}
+                    </option>
+                  )}
+                  {availableLeaders
+                    .filter(leader =>
+                      // Don't show the already attached leader twice
+                      !listUnit.attachedLeader ||
+                      leader.unitIndex !== listUnit.attachedLeader.unitIndex
+                    )
+                    .map((leader) => (
+                      <option key={leader.unitIndex} value={leader.unitIndex}>
+                        {leader.name}
+                        {leader.enhancement && ` (${leader.enhancement})`}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            )}
+
+            {/* Weapon Loadout Options */}
+            {unit.loadoutOptions && unit.loadoutOptions.length > 0 && (
+              <div className="space-y-2 pt-1 border-t border-gray-700/50">
+                {unit.loadoutOptions.map((option) => (
+                  <WeaponLoadoutSelector
+                    key={option.id}
+                    option={option}
+                    modelCount={listUnit.modelCount}
+                    weaponCounts={listUnit.weaponCounts || {}}
+                    onCountChange={(choiceId, count) => {
+                      onWeaponCountChange(choiceId, count);
+                    }}
+                  />
+                ))}
+                {/* Weapon Count Validation Error */}
+                {weaponCountError && (
+                  <div className="text-xs text-red-400">{weaponCountError}</div>
+                )}
+              </div>
+            )}
+          </>
         )}
       </div>
     </Card>

@@ -84,7 +84,8 @@ export function UnitRosterPanel({
   className = '',
 }: UnitRosterPanelProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set(groupPriority));
+  // Groups collapsed by default for a cleaner view
+  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
 
   // Filter units by search query
   const filteredUnits = useMemo(() => {
