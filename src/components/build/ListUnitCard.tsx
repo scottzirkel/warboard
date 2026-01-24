@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Badge, Button } from '@/components/ui';
+import { Card, Badge } from '@/components/ui';
 import { EnhancementSelector } from './EnhancementSelector';
 import { WeaponLoadoutSelector } from './WeaponLoadoutSelector';
 import type { Unit, ListUnit, Enhancement, AvailableLeader } from '@/types';
@@ -58,6 +58,14 @@ export function ListUnitCard({
   const selectedEnhancement = enhancements.find(e => e.id === listUnit.enhancement);
   const enhancementPoints = selectedEnhancement?.points || 0;
 
+  // Get unit type from keywords (Infantry, Monster, Vehicle, etc.)
+  const getUnitType = (): string | null => {
+    const typeKeywords = ['Infantry', 'Monster', 'Vehicle', 'Mounted', 'Beast', 'Swarm', 'Battleline'];
+    return unit.keywords?.find(k => typeKeywords.includes(k)) || null;
+  };
+
+  const unitType = getUnitType();
+
   // Calculate weapon count validation
   const getWeaponCountTotal = (): number => {
     if (!listUnit.weaponCounts) return 0;
@@ -90,140 +98,145 @@ export function ListUnitCard({
         ${className}
       `}
     >
-      <div className="p-3 space-y-3">
-        {/* Header Row */}
-        <div className="flex items-start justify-between gap-2">
+      <div className="space-y-2">
+        {/* Header Row: Name + Remove Button */}
+        <div className="flex items-start justify-between gap-2 px-3 pt-3">
           <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <h4 className="text-sm font-medium text-gray-200 truncate">
-                {unit.name}
-              </h4>
+            <h4 className="text-sm font-medium text-gray-200 truncate">
+              {unit.name}
+            </h4>
+          </div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove();
+            }}
+            title="Remove unit"
+            className="shrink-0 w-6 h-6 flex items-center justify-center rounded text-gray-400 hover:text-red-400 hover:bg-red-500/20 transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Card Body */}
+        <div className="px-3 pb-3 space-y-2">
+          {/* Badges + Points Row */}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              {unitType && (
+                <Badge variant="default" size="sm">{unitType}</Badge>
+              )}
               {isCharacter && (
                 <Badge variant="accent" size="sm">Character</Badge>
               )}
+              {isAttachedAsLeader && attachedToUnitName && (
+                <Badge variant="purple" size="sm">
+                  → {attachedToUnitName}
+                </Badge>
+              )}
             </div>
-            {isAttachedAsLeader && attachedToUnitName && (
-              <Badge variant="purple" size="sm" className="mt-1">
-                → {attachedToUnitName}
-              </Badge>
-            )}
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-accent-400 font-medium whitespace-nowrap">
+            <span className="text-sm text-accent-400 font-semibold tabular-nums">
               {currentPoints + enhancementPoints} pts
             </span>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={(e) => {
-                e.stopPropagation();
-                onRemove();
-              }}
-              title="Remove unit"
-              className="text-red-400 hover:text-red-300 hover:bg-red-500/20"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </Button>
           </div>
-        </div>
 
-        {/* Model Count Selector (dropdown matching Alpine.js) */}
-        {modelCounts.length > 1 && (
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-400">Models</span>
-            <select
-              value={listUnit.modelCount}
-              onChange={(e) => {
-                e.stopPropagation();
-                onModelCountChange(Number(e.target.value));
-              }}
-              onClick={(e) => e.stopPropagation()}
-              className="select-dark py-1.5 px-3 text-sm"
-            >
-              {modelCounts.map((count) => (
-                <option key={count} value={count}>
-                  {count} models
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
-        {/* Enhancement Selector (Characters only) */}
-        {isCharacter && enhancements.length > 0 && (
-          <div className="space-y-1">
-            <span className="text-xs text-gray-400">Enhancement</span>
-            <EnhancementSelector
-              value={listUnit.enhancement}
-              onChange={onEnhancementChange}
-              enhancements={enhancements}
-            />
-          </div>
-        )}
-
-        {/* Leader Attachment (non-Characters that can have leaders) */}
-        {canHaveLeaderAttached && (
-          <div className="space-y-1">
-            <span className="text-xs text-gray-400">Attached Leader</span>
-            <select
-              value={listUnit.attachedLeader?.unitIndex.toString() ?? ''}
-              onChange={(e) => {
-                const value = e.target.value;
-                if (value === '') {
-                  onDetachLeader();
-                } else {
-                  onAttachLeader(parseInt(value, 10));
-                }
-              }}
-              onClick={(e) => e.stopPropagation()}
-              className="select-dark w-full py-1.5 text-sm"
-            >
-              <option value="">None</option>
-              {/* Show currently attached leader even if not in available list */}
-              {attachedLeaderName && listUnit.attachedLeader && (
-                <option value={listUnit.attachedLeader.unitIndex}>
-                  {attachedLeaderName}
-                </option>
-              )}
-              {availableLeaders
-                .filter(leader =>
-                  // Don't show the already attached leader twice
-                  !listUnit.attachedLeader ||
-                  leader.unitIndex !== listUnit.attachedLeader.unitIndex
-                )
-                .map((leader) => (
-                  <option key={leader.unitIndex} value={leader.unitIndex}>
-                    {leader.name}
-                    {leader.enhancement && ` (${leader.enhancement})`}
+          {/* Model Count Selector (dropdown matching Alpine.js) */}
+          {modelCounts.length > 1 && (
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-gray-400">Models</span>
+              <select
+                value={listUnit.modelCount}
+                onChange={(e) => {
+                  e.stopPropagation();
+                  onModelCountChange(Number(e.target.value));
+                }}
+                onClick={(e) => e.stopPropagation()}
+                className="select-dark py-1.5 px-3 text-sm"
+              >
+                {modelCounts.map((count) => (
+                  <option key={count} value={count}>
+                    {count} models
                   </option>
                 ))}
-            </select>
-          </div>
-        )}
+              </select>
+            </div>
+          )}
 
-        {/* Weapon Loadout Options */}
-        {unit.loadoutOptions && unit.loadoutOptions.length > 0 && (
-          <div className="space-y-2 pt-1 border-t border-gray-700/50">
-            {unit.loadoutOptions.map((option) => (
-              <WeaponLoadoutSelector
-                key={option.id}
-                option={option}
-                modelCount={listUnit.modelCount}
-                weaponCounts={listUnit.weaponCounts || {}}
-                onCountChange={(choiceId, count) => {
-                  onWeaponCountChange(choiceId, count);
-                }}
+          {/* Enhancement Selector (Characters only) */}
+          {isCharacter && enhancements.length > 0 && (
+            <div className="space-y-1">
+              <span className="text-xs text-gray-400">Enhancement</span>
+              <EnhancementSelector
+                value={listUnit.enhancement}
+                onChange={onEnhancementChange}
+                enhancements={enhancements}
               />
-            ))}
-            {/* Weapon Count Validation Error */}
-            {weaponCountError && (
-              <div className="text-xs text-red-400">{weaponCountError}</div>
-            )}
-          </div>
-        )}
+            </div>
+          )}
+
+          {/* Leader Attachment (non-Characters that can have leaders) */}
+          {canHaveLeaderAttached && (
+            <div className="space-y-1">
+              <span className="text-xs text-gray-400">Attached Leader</span>
+              <select
+                value={listUnit.attachedLeader?.unitIndex.toString() ?? ''}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value === '') {
+                    onDetachLeader();
+                  } else {
+                    onAttachLeader(parseInt(value, 10));
+                  }
+                }}
+                onClick={(e) => e.stopPropagation()}
+                className="select-dark w-full py-1.5 text-sm"
+              >
+                <option value="">None</option>
+                {/* Show currently attached leader even if not in available list */}
+                {attachedLeaderName && listUnit.attachedLeader && (
+                  <option value={listUnit.attachedLeader.unitIndex}>
+                    {attachedLeaderName}
+                  </option>
+                )}
+                {availableLeaders
+                  .filter(leader =>
+                    // Don't show the already attached leader twice
+                    !listUnit.attachedLeader ||
+                    leader.unitIndex !== listUnit.attachedLeader.unitIndex
+                  )
+                  .map((leader) => (
+                    <option key={leader.unitIndex} value={leader.unitIndex}>
+                      {leader.name}
+                      {leader.enhancement && ` (${leader.enhancement})`}
+                    </option>
+                  ))}
+              </select>
+            </div>
+          )}
+
+          {/* Weapon Loadout Options */}
+          {unit.loadoutOptions && unit.loadoutOptions.length > 0 && (
+            <div className="space-y-2 pt-1 border-t border-gray-700/50">
+              {unit.loadoutOptions.map((option) => (
+                <WeaponLoadoutSelector
+                  key={option.id}
+                  option={option}
+                  modelCount={listUnit.modelCount}
+                  weaponCounts={listUnit.weaponCounts || {}}
+                  onCountChange={(choiceId, count) => {
+                    onWeaponCountChange(choiceId, count);
+                  }}
+                />
+              ))}
+              {/* Weapon Count Validation Error */}
+              {weaponCountError && (
+                <div className="text-xs text-red-400">{weaponCountError}</div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </Card>
   );
