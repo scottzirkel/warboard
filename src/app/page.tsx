@@ -79,6 +79,8 @@ export default function Home() {
     toggleLeaderCollapsed,
     isLeaderActivated,
     toggleLeaderActivated,
+    incrementLoadoutCasualties,
+    decrementLoadoutCasualties,
     resetGameState,
   } = useGameStore();
 
@@ -309,11 +311,26 @@ export default function Home() {
     return map;
   }, [loadoutGroups, selectedUnitIndex, isLoadoutGroupActivated, gameState.activatedLoadoutGroups]);
 
-  // Get leader weapons for Play Mode
+  // Get leader weapons for Play Mode (filtered by leader's loadout selection)
   const leaderWeapons = useMemo((): Weapon[] | undefined => {
-    if (!leaderUnit) return undefined;
-    return leaderUnit.weapons;
-  }, [leaderUnit]);
+    if (!leaderUnit || !leaderListUnit) return undefined;
+
+    const weaponCounts = leaderListUnit.weaponCounts || {};
+
+    // Get weapons without loadoutGroup (always equipped)
+    const alwaysEquipped = leaderUnit.weapons.filter((w) => !w.loadoutGroup);
+
+    // Get weapons from selected loadout groups
+    const selectedWeapons: Weapon[] = [];
+    for (const [groupId, count] of Object.entries(weaponCounts)) {
+      if (count > 0) {
+        const groupWeapons = leaderUnit.weapons.filter((w) => w.loadoutGroup === groupId);
+        selectedWeapons.push(...groupWeapons);
+      }
+    }
+
+    return [...alwaysEquipped, ...selectedWeapons];
+  }, [leaderUnit, leaderListUnit]);
 
   // -------------------------------------------------------------------------
   // Handlers
@@ -640,6 +657,9 @@ export default function Home() {
                   }
                   onResetActivations={handleResetUnitActivations}
                   hasAnyActivations={hasAnyActivations}
+                  loadoutCasualties={gameState.loadoutCasualties?.[selectedUnitIndex] || {}}
+                  onIncrementCasualties={(groupId) => incrementLoadoutCasualties(selectedUnitIndex, groupId)}
+                  onDecrementCasualties={(groupId) => decrementLoadoutCasualties(selectedUnitIndex, groupId)}
                 />
               ) : undefined
             }
@@ -649,31 +669,39 @@ export default function Home() {
 
       {/* Quick Reference Slide-Out Panel */}
       {armyData && (
-        <div
-          className={`
-            fixed right-0 top-0 h-full w-80 material-elevated shadow-2xl z-40
-            flex flex-col transition-transform duration-200 ease-out
-            ${showReferencePanel ? 'translate-x-0' : 'translate-x-full'}
-          `}
-        >
-          {/* Panel Header */}
-          <div className="flex justify-between items-center p-4 border-b border-white/10 shrink-0">
-            <h3 className="text-lg font-semibold text-accent-300">Quick Reference</h3>
-            <button
+        <>
+          {/* Backdrop - click to close */}
+          {showReferencePanel && (
+            <div
+              className="fixed inset-0 bg-black/50 z-50"
               onClick={handleToggleReferencePanel}
-              className="btn-ios btn-ios-secondary btn-ios-sm p-2"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            />
+          )}
+          <div
+            className={`
+              fixed right-0 top-0 h-full w-96 material-elevated shadow-2xl z-50
+              flex flex-col transition-transform duration-200 ease-out
+              ${showReferencePanel ? 'translate-x-0' : 'translate-x-full'}
+            `}
+          >
+            {/* Panel Header */}
+            <div className="flex justify-between items-center p-4 border-b border-white/10 shrink-0">
+              <h3 className="text-lg font-semibold text-accent-300">Quick Reference</h3>
+              <button
+                onClick={handleToggleReferencePanel}
+                className="btn-ios btn-ios-secondary btn-ios-sm p-2"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
 
           {/* Panel Content */}
           <div className="flex-1 overflow-y-auto p-4 space-y-6 scroll-smooth">
@@ -762,8 +790,9 @@ export default function Home() {
                 </div>
               </div>
             )}
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Modals */}

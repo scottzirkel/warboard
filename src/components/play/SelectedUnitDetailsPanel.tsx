@@ -54,10 +54,15 @@ interface SelectedUnitDetailsPanelProps {
   onResetActivations?: () => void;
   hasAnyActivations?: boolean;
 
+  // Loadout casualties (tracking which weapon profiles lost models)
+  loadoutCasualties?: Record<string, number>;
+  onIncrementCasualties?: (groupId: string) => void;
+  onDecrementCasualties?: (groupId: string) => void;
+
   className?: string;
 }
 
-// Helper to calculate wounds info
+// Helper to calculate wounds info accounting for mixed loadouts
 function calculateWoundInfo(
   listUnit: ListUnit | null | undefined,
   unit: Unit | null | undefined,
@@ -73,36 +78,86 @@ function calculateWoundInfo(
     };
   }
 
-  // Get base wounds per model
-  let woundsPerModel = unit.stats.w;
+  const baseWoundsPerModel = unit.stats.w;
+  const weaponCounts = listUnit.weaponCounts || {};
+  const totalModels = listUnit.modelCount;
 
-  // Apply modifiers to wounds
-  const woundModifiers = modifiers.filter(
-    (m) => m.stat === 'w' && (m.scope === 'model' || m.scope === 'unit')
-  );
-  for (const mod of woundModifiers) {
-    switch (mod.operation) {
-      case 'add':
-        woundsPerModel += mod.value;
-        break;
-      case 'subtract':
-        woundsPerModel -= mod.value;
-        break;
-      case 'set':
-        woundsPerModel = mod.value;
-        break;
+  // Find wound modifiers from each equipped loadout
+  const woundModsByLoadout = new Map<string, number>();
+  const processedGroups = new Set<string>();
+
+  for (const weapon of unit.weapons) {
+    if (!weapon.modifiers || weapon.modifiers.length === 0) continue;
+    if (!weapon.loadoutGroup) continue;
+    if (processedGroups.has(weapon.loadoutGroup)) continue;
+
+    processedGroups.add(weapon.loadoutGroup);
+
+    const count = weaponCounts[weapon.loadoutGroup] || 0;
+    if (count === 0) continue;
+
+    let woundMod = 0;
+    for (const mod of weapon.modifiers) {
+      if (mod.stat === 'w' && mod.scope === 'model') {
+        if (mod.operation === 'add') {
+          woundMod += mod.value;
+        } else if (mod.operation === 'subtract') {
+          woundMod -= mod.value;
+        }
+      }
+    }
+
+    if (woundMod !== 0) {
+      woundModsByLoadout.set(weapon.loadoutGroup, woundMod);
     }
   }
 
-  const totalModels = listUnit.modelCount;
-  const maxWounds = woundsPerModel * totalModels;
+  // Calculate total wounds accounting for mixed loadouts
+  let maxWounds = 0;
+  let modelsWithModifiers = 0;
+
+  if (woundModsByLoadout.size === 0) {
+    // No loadouts with wound modifiers - apply enhancement/other modifiers uniformly
+    let woundsPerModel = baseWoundsPerModel;
+    const woundModifiers = modifiers.filter(
+      (m) => m.stat === 'w' && (m.scope === 'model' || m.scope === 'unit')
+    );
+    for (const mod of woundModifiers) {
+      switch (mod.operation) {
+        case 'add':
+          woundsPerModel += mod.value;
+          break;
+        case 'subtract':
+          woundsPerModel -= mod.value;
+          break;
+        case 'set':
+          woundsPerModel = mod.value;
+          break;
+      }
+    }
+    maxWounds = woundsPerModel * totalModels;
+  } else {
+    // Calculate wounds per loadout group
+    for (const [loadoutGroup, woundMod] of woundModsByLoadout) {
+      const modelsWithLoadout = weaponCounts[loadoutGroup] || 0;
+      const woundsForThisLoadout = baseWoundsPerModel + woundMod;
+      maxWounds += modelsWithLoadout * woundsForThisLoadout;
+      modelsWithModifiers += modelsWithLoadout;
+    }
+
+    // Remaining models have base wounds
+    const modelsWithBaseWounds = totalModels - modelsWithModifiers;
+    maxWounds += modelsWithBaseWounds * baseWoundsPerModel;
+  }
+
+  const avgWoundsPerModel = totalModels > 0 ? maxWounds / totalModels : baseWoundsPerModel;
   const currentWounds = listUnit.currentWounds !== null ? listUnit.currentWounds : maxWounds;
-  const modelsAlive = currentWounds > 0 ? Math.ceil(currentWounds / woundsPerModel) : 0;
+  const modelsAlive = currentWounds > 0 ? Math.ceil(currentWounds / avgWoundsPerModel) : 0;
 
   return {
     currentWounds,
     maxWounds,
-    woundsPerModel,
+    woundsPerModel: avgWoundsPerModel,
     modelsAlive,
     totalModels,
   };
@@ -193,11 +248,15 @@ export function SelectedUnitDetailsPanel({
   katahName,
   katahDescription,
   activeStratagems = [],
-  stratagemNames = {},
+  stratagemNames: _stratagemNames = {},
   activeStratagemData = [],
 
   onResetActivations,
   hasAnyActivations = false,
+
+  loadoutCasualties = {},
+  onIncrementCasualties,
+  onDecrementCasualties,
 
   className = '',
 }: SelectedUnitDetailsPanelProps) {
@@ -393,7 +452,9 @@ export function SelectedUnitDetailsPanel({
               <div className="text-sm px-3 py-2 bg-accent-tint rounded-lg flex items-center justify-between">
                 <span className="text-accent-300 font-medium">{katahName}</span>
                 {katahDescription && (
-                  <span className="text-xs text-accent-400">{katahDescription}</span>
+                  <span className="text-xs text-accent-400">
+                    {katahDescription.replace('Melee weapons gain ', '').replace(/\.$/, '')}
+                  </span>
                 )}
               </div>
             )}
@@ -402,9 +463,14 @@ export function SelectedUnitDetailsPanel({
                 <span className="text-accent-300">{enhancement.name}</span>
               </div>
             )}
-            {activeStratagems.map((stratId) => (
-              <div key={stratId} className="text-sm px-3 py-2 bg-accent-tint-strong rounded-lg">
-                <span>{stratagemNames[stratId] || stratId}</span>
+            {activeStratagemData.map((strat) => (
+              <div key={strat.id} className="text-sm px-3 py-2 bg-accent-tint rounded-lg">
+                <div className="flex justify-between items-start">
+                  <span className="font-medium text-accent-300">{strat.name}</span>
+                  <span className="text-[10px] text-accent-400">{strat.cost}CP</span>
+                </div>
+                <div className="text-[10px] text-white/40 mt-0.5">{strat.phase}</div>
+                <div className="text-xs text-white/70 mt-1">{strat.description}</div>
               </div>
             ))}
             {!activeKatah && !enhancement && activeStratagems.length === 0 && (
@@ -441,6 +507,9 @@ export function SelectedUnitDetailsPanel({
             onToggleLeaderCollapse={onToggleLeaderCollapse}
             onToggleLeaderActivated={onToggleLeaderActivated}
             activeStratagems={activeStratagemData}
+            loadoutCasualties={loadoutCasualties}
+            onIncrementCasualties={onIncrementCasualties}
+            onDecrementCasualties={onDecrementCasualties}
           />
         </div>
       </div>

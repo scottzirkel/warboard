@@ -50,15 +50,15 @@ function RangedWeaponDisplay({ weapon, activeStratagems = [] }: { weapon: Weapon
   return (
     <div className="text-sm">
       <div className="font-medium text-gray-300">{weapon.name}</div>
-      <table className="w-full text-center text-xs mt-1">
+      <table className="w-full text-center text-xs mt-1 table-fixed">
         <thead>
           <tr className="text-gray-500">
-            <th className="font-normal">RNG</th>
-            <th className="font-normal">A</th>
-            <th className="font-normal">BS</th>
-            <th className="font-normal">S</th>
-            <th className="font-normal">AP</th>
-            <th className="font-normal">D</th>
+            <th className="font-normal w-[16.67%]">RNG</th>
+            <th className="font-normal w-[16.67%]">A</th>
+            <th className="font-normal w-[16.67%]">BS</th>
+            <th className="font-normal w-[16.67%]">S</th>
+            <th className="font-normal w-[16.67%]">AP</th>
+            <th className="font-normal w-[16.67%]">D</th>
           </tr>
         </thead>
         <tbody className="text-gray-300">
@@ -89,15 +89,15 @@ function MeleeWeaponDisplay({ weapon, activeStratagems = [] }: { weapon: Weapon 
   return (
     <div className="text-sm">
       <div className="font-medium text-gray-300">{weapon.name}</div>
-      <table className="w-full text-center text-xs mt-1">
+      <table className="w-full text-center text-xs mt-1 table-fixed">
         <thead>
           <tr className="text-gray-500">
-            <th className="font-normal"></th>
-            <th className="font-normal">A</th>
-            <th className="font-normal">WS</th>
-            <th className="font-normal">S</th>
-            <th className="font-normal">AP</th>
-            <th className="font-normal">D</th>
+            <th className="font-normal w-[16.67%]"></th>
+            <th className="font-normal w-[16.67%]">A</th>
+            <th className="font-normal w-[16.67%]">WS</th>
+            <th className="font-normal w-[16.67%]">S</th>
+            <th className="font-normal w-[16.67%]">AP</th>
+            <th className="font-normal w-[16.67%]">D</th>
           </tr>
         </thead>
         <tbody className="text-gray-300">

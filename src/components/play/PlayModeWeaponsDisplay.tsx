@@ -10,6 +10,9 @@ interface LoadoutGroupCardProps {
   onToggleCollapse: () => void;
   onToggleActivated?: () => void;
   activeStratagems?: Stratagem[];
+  casualties?: number;
+  onIncrementCasualties?: () => void;
+  onDecrementCasualties?: () => void;
 }
 
 export function LoadoutGroupCard({
@@ -19,12 +22,18 @@ export function LoadoutGroupCard({
   onToggleCollapse,
   onToggleActivated,
   activeStratagems = [],
+  casualties = 0,
+  onIncrementCasualties,
+  onDecrementCasualties,
 }: LoadoutGroupCardProps) {
   return (
     <LoadoutGroupAccordion
       id={group.id}
       name={group.name}
       modelCount={group.modelCount}
+      casualties={casualties}
+      onIncrementCasualties={onIncrementCasualties}
+      onDecrementCasualties={onDecrementCasualties}
       isPaired={group.isPaired}
       isCollapsed={isCollapsed}
       isActivated={isActivated}
@@ -70,6 +79,9 @@ interface PlayModeWeaponsDisplayProps {
   onToggleLeaderCollapse?: () => void;
   onToggleLeaderActivated?: () => void;
   activeStratagems?: Stratagem[];
+  loadoutCasualties?: Record<string, number>;
+  onIncrementCasualties?: (groupId: string) => void;
+  onDecrementCasualties?: (groupId: string) => void;
   className?: string;
 }
 
@@ -86,6 +98,9 @@ export function PlayModeWeaponsDisplay({
   isLeaderActivated = false,
   onToggleLeaderCollapse,
   onToggleLeaderActivated,
+  loadoutCasualties = {},
+  onIncrementCasualties,
+  onDecrementCasualties,
   activeStratagems = [],
   className = '',
 }: PlayModeWeaponsDisplayProps) {
@@ -109,6 +124,17 @@ export function PlayModeWeaponsDisplay({
               : undefined
           }
           activeStratagems={activeStratagems}
+          casualties={loadoutCasualties[group.id] || 0}
+          onIncrementCasualties={
+            onIncrementCasualties
+              ? () => onIncrementCasualties(group.id)
+              : undefined
+          }
+          onDecrementCasualties={
+            onDecrementCasualties
+              ? () => onDecrementCasualties(group.id)
+              : undefined
+          }
         />
       ))}
 

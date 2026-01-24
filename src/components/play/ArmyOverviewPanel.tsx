@@ -27,7 +27,7 @@ function getUnitById(unitId: string, armyData: ArmyData): Unit | undefined {
 }
 
 /**
- * Calculate wounds for a unit
+ * Calculate wounds for a unit, accounting for mixed loadouts with different wound modifiers
  */
 function calculateUnitWounds(
   listUnit: ListUnit,
@@ -39,18 +39,70 @@ function calculateUnitWounds(
   totalModels: number;
   woundsPerModel: number;
 } {
-  const woundsPerModel = unit.stats.w;
+  const baseWoundsPerModel = unit.stats.w;
   const totalModels = listUnit.modelCount;
-  const maxWounds = woundsPerModel * totalModels;
-  const currentWounds = listUnit.currentWounds ?? maxWounds;
-  const modelsAlive = Math.ceil(currentWounds / woundsPerModel);
+  const weaponCounts = listUnit.weaponCounts || {};
+
+  // Find wound modifiers from each equipped loadout
+  const woundModsByLoadout = new Map<string, number>();
+  const processedGroups = new Set<string>();
+
+  for (const weapon of unit.weapons) {
+    if (!weapon.modifiers || weapon.modifiers.length === 0) continue;
+    if (!weapon.loadoutGroup) continue;
+    if (processedGroups.has(weapon.loadoutGroup)) continue;
+
+    processedGroups.add(weapon.loadoutGroup);
+
+    const count = weaponCounts[weapon.loadoutGroup] || 0;
+    if (count === 0) continue;
+
+    let woundMod = 0;
+    for (const mod of weapon.modifiers) {
+      if (mod.stat === 'w' && mod.scope === 'model') {
+        if (mod.operation === 'add') {
+          woundMod += mod.value;
+        } else if (mod.operation === 'subtract') {
+          woundMod -= mod.value;
+        }
+      }
+    }
+
+    if (woundMod !== 0) {
+      woundModsByLoadout.set(weapon.loadoutGroup, woundMod);
+    }
+  }
+
+  // Calculate max wounds accounting for mixed loadouts
+  let maxWounds = 0;
+  let modelsWithModifiers = 0;
+
+  if (woundModsByLoadout.size === 0) {
+    maxWounds = baseWoundsPerModel * totalModels;
+  } else {
+    for (const [loadoutGroup, woundMod] of woundModsByLoadout) {
+      const modelsWithLoadout = weaponCounts[loadoutGroup] || 0;
+      const woundsForThisLoadout = baseWoundsPerModel + woundMod;
+      maxWounds += modelsWithLoadout * woundsForThisLoadout;
+      modelsWithModifiers += modelsWithLoadout;
+    }
+    const modelsWithBaseWounds = totalModels - modelsWithModifiers;
+    maxWounds += modelsWithBaseWounds * baseWoundsPerModel;
+  }
+
+  const avgWoundsPerModel = totalModels > 0 ? maxWounds / totalModels : baseWoundsPerModel;
+
+  // Cap currentWounds at maxWounds (handles stale data from before calculation changes)
+  const storedWounds = listUnit.currentWounds ?? maxWounds;
+  const currentWounds = Math.min(storedWounds, maxWounds);
+  const modelsAlive = currentWounds > 0 ? Math.ceil(currentWounds / avgWoundsPerModel) : 0;
 
   return {
     currentWounds,
     maxWounds,
     modelsAlive,
     totalModels,
-    woundsPerModel,
+    woundsPerModel: avgWoundsPerModel,
   };
 }
 

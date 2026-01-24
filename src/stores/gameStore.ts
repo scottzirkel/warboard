@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import type { GameState } from '@/types';
 
 // ============================================================================
@@ -14,6 +15,7 @@ const createDefaultGameState = (): GameState => ({
   activatedLoadoutGroups: {},
   collapsedLeaders: {},
   activatedLeaders: {},
+  loadoutCasualties: {},
 });
 
 // ============================================================================
@@ -63,6 +65,13 @@ interface GameStoreActions {
   toggleLeaderActivated: (unitIndex: number) => void;
   setLeaderActivated: (unitIndex: number, activated: boolean) => void;
 
+  // Loadout Casualties (tracking which weapon profiles lost models)
+  getLoadoutCasualties: (unitIndex: number, groupId: string) => number;
+  setLoadoutCasualties: (unitIndex: number, groupId: string, count: number) => void;
+  incrementLoadoutCasualties: (unitIndex: number, groupId: string) => void;
+  decrementLoadoutCasualties: (unitIndex: number, groupId: string) => void;
+  resetUnitCasualties: (unitIndex: number) => void;
+
   // Activation State Reset
   resetActivationState: () => void;
 
@@ -76,7 +85,9 @@ type GameStore = GameStoreState & GameStoreActions;
 // Store Implementation
 // ============================================================================
 
-export const useGameStore = create<GameStore>((set, get) => ({
+export const useGameStore = create<GameStore>()(
+  persist(
+    (set, get) => ({
   // Initial State
   gameState: createDefaultGameState(),
 
@@ -318,6 +329,53 @@ export const useGameStore = create<GameStore>((set, get) => ({
   },
 
   // -------------------------------------------------------------------------
+  // Loadout Casualties Actions
+  // -------------------------------------------------------------------------
+
+  getLoadoutCasualties: (unitIndex: number, groupId: string): number => {
+    const { gameState } = get();
+    return gameState.loadoutCasualties?.[unitIndex]?.[groupId] ?? 0;
+  },
+
+  setLoadoutCasualties: (unitIndex: number, groupId: string, count: number) => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        loadoutCasualties: {
+          ...(state.gameState.loadoutCasualties || {}),
+          [unitIndex]: {
+            ...(state.gameState.loadoutCasualties?.[unitIndex] || {}),
+            [groupId]: Math.max(0, count),
+          },
+        },
+      },
+    }));
+  },
+
+  incrementLoadoutCasualties: (unitIndex: number, groupId: string) => {
+    const current = get().getLoadoutCasualties(unitIndex, groupId);
+    get().setLoadoutCasualties(unitIndex, groupId, current + 1);
+  },
+
+  decrementLoadoutCasualties: (unitIndex: number, groupId: string) => {
+    const current = get().getLoadoutCasualties(unitIndex, groupId);
+    get().setLoadoutCasualties(unitIndex, groupId, current - 1);
+  },
+
+  resetUnitCasualties: (unitIndex: number) => {
+    set(state => {
+      const newCasualties = { ...(state.gameState.loadoutCasualties || {}) };
+      delete newCasualties[unitIndex];
+      return {
+        gameState: {
+          ...state.gameState,
+          loadoutCasualties: newCasualties,
+        },
+      };
+    });
+  },
+
+  // -------------------------------------------------------------------------
   // Activation State Reset
   // -------------------------------------------------------------------------
 
@@ -340,4 +398,12 @@ export const useGameStore = create<GameStore>((set, get) => ({
       gameState: createDefaultGameState(),
     });
   },
-}));
+}),
+    {
+      name: 'army-tracker-game',
+      partialize: (state) => ({
+        gameState: state.gameState,
+      }),
+    }
+  )
+);

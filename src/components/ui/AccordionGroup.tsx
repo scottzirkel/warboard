@@ -131,6 +131,9 @@ interface LoadoutGroupAccordionProps {
   id: string;
   name: string;
   modelCount: number;
+  casualties?: number;
+  onIncrementCasualties?: () => void;
+  onDecrementCasualties?: () => void;
   isPaired?: boolean;
   isCollapsed: boolean;
   isActivated?: boolean;
@@ -150,6 +153,9 @@ export function LoadoutGroupAccordion({
   id: _id,
   name,
   modelCount,
+  casualties = 0,
+  onIncrementCasualties,
+  onDecrementCasualties,
   isPaired = false,
   isCollapsed,
   isActivated = false,
@@ -158,11 +164,37 @@ export function LoadoutGroupAccordion({
   children,
   className = '',
 }: LoadoutGroupAccordionProps) {
-  const headerBg = isActivated ? 'bg-green-900/40' : 'bg-black/20';
-  const headerRing = isActivated ? 'ring-1 ring-green-600/50' : '';
-  const chevronColor = isActivated ? 'text-green-400' : 'text-gray-400';
-  const countColor = isActivated ? 'text-green-400' : 'text-accent-400';
-  const nameColor = isActivated ? 'text-green-300' : 'text-gray-200';
+  const currentModels = modelCount - casualties;
+  const hasCasualties = casualties > 0;
+  const isDestroyed = currentModels <= 0;
+
+  const headerBg = isDestroyed
+    ? 'bg-red-900/30'
+    : isActivated
+      ? 'bg-green-900/40'
+      : 'bg-black/20';
+  const headerRing = isDestroyed
+    ? 'ring-1 ring-red-600/30'
+    : isActivated
+      ? 'ring-1 ring-green-600/50'
+      : '';
+  const chevronColor = isDestroyed
+    ? 'text-red-400'
+    : isActivated
+      ? 'text-green-400'
+      : 'text-gray-400';
+  const countColor = isDestroyed
+    ? 'text-red-400'
+    : hasCasualties
+      ? 'text-yellow-400'
+      : isActivated
+        ? 'text-green-400'
+        : 'text-accent-400';
+  const nameColor = isDestroyed
+    ? 'text-red-300 line-through'
+    : isActivated
+      ? 'text-green-300'
+      : 'text-gray-200';
   const hoverBg = isActivated ? 'hover:bg-green-800/40' : 'hover:bg-white/5';
 
   return (
@@ -181,7 +213,42 @@ export function LoadoutGroupAccordion({
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
-        <span className={`text-xs font-bold ${countColor}`}>{modelCount}×</span>
+
+        {/* Model count with casualty controls */}
+        <div className="flex items-center gap-1">
+          {onDecrementCasualties && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDecrementCasualties();
+              }}
+              disabled={casualties <= 0}
+              className="w-4 h-4 flex items-center justify-center rounded text-[10px] font-bold bg-green-600/80 hover:bg-green-500 disabled:opacity-30 disabled:cursor-not-allowed text-white"
+              title="Restore model"
+            >
+              +
+            </button>
+          )}
+          <span className={`text-xs font-bold ${countColor}`}>
+            {currentModels}×
+          </span>
+          {onIncrementCasualties && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onIncrementCasualties();
+              }}
+              disabled={currentModels <= 0}
+              className="w-4 h-4 flex items-center justify-center rounded text-[10px] font-bold bg-red-600/80 hover:bg-red-500 disabled:opacity-30 disabled:cursor-not-allowed text-white"
+              title="Remove model"
+            >
+              −
+            </button>
+          )}
+        </div>
+
         <span className={`text-sm font-medium ${nameColor}`}>{name}</span>
         {isPaired && (
           <span

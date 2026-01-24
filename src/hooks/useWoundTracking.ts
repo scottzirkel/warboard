@@ -141,6 +141,91 @@ function parseStatToNumber(value: number | string): number {
   return isNaN(parsed) ? 0 : parsed;
 }
 
+/**
+ * Calculate total wounds for a unit accounting for mixed loadouts and enhancements.
+ * Different models may have different wound counts based on their equipped weapons.
+ * Enhancement modifiers apply uniformly to all models.
+ */
+function calculateTotalWoundsForUnit(
+  unit: Unit | undefined,
+  listUnit: ListUnit | undefined,
+  baseWoundsPerModel: number,
+  enhancementWoundMod: number = 0
+): { totalWounds: number; woundsPerModel: number } {
+  if (!unit || !listUnit) {
+    return { totalWounds: 0, woundsPerModel: 0 };
+  }
+
+  const weaponCounts = listUnit.weaponCounts || {};
+  const totalModels = listUnit.modelCount;
+
+  // Apply enhancement modifier to base wounds (affects all models)
+  const baseWithEnhancement = baseWoundsPerModel + enhancementWoundMod;
+
+  // Find all unique wound modifiers from equipped loadouts
+  const woundModsByLoadout = new Map<string, number>();
+  const processedGroups = new Set<string>();
+
+  for (const weapon of unit.weapons) {
+    if (!weapon.modifiers || weapon.modifiers.length === 0) continue;
+    if (!weapon.loadoutGroup) continue;
+    if (processedGroups.has(weapon.loadoutGroup)) continue;
+
+    processedGroups.add(weapon.loadoutGroup);
+
+    // Check if this loadout is equipped and has wound modifiers
+    const count = weaponCounts[weapon.loadoutGroup] || 0;
+    if (count === 0) continue;
+
+    // Sum up wound modifiers for this loadout
+    let woundMod = 0;
+    for (const mod of weapon.modifiers) {
+      if (mod.stat === 'w' && mod.scope === 'model') {
+        if (mod.operation === 'add') {
+          woundMod += mod.value;
+        } else if (mod.operation === 'subtract') {
+          woundMod -= mod.value;
+        }
+      }
+    }
+
+    if (woundMod !== 0) {
+      woundModsByLoadout.set(weapon.loadoutGroup, woundMod);
+    }
+  }
+
+  // If no loadouts with wound modifiers, use simple calculation
+  if (woundModsByLoadout.size === 0) {
+    return {
+      totalWounds: baseWithEnhancement * totalModels,
+      woundsPerModel: baseWithEnhancement,
+    };
+  }
+
+  // Calculate total wounds by summing up models with each wound value
+  let totalWounds = 0;
+  let modelsWithModifiers = 0;
+
+  for (const [loadoutGroup, woundMod] of woundModsByLoadout) {
+    const modelsWithLoadout = weaponCounts[loadoutGroup] || 0;
+    const woundsForThisLoadout = baseWithEnhancement + woundMod;
+    totalWounds += modelsWithLoadout * woundsForThisLoadout;
+    modelsWithModifiers += modelsWithLoadout;
+  }
+
+  // Remaining models have base wounds (with enhancement)
+  const modelsWithBaseWounds = totalModels - modelsWithModifiers;
+  totalWounds += modelsWithBaseWounds * baseWithEnhancement;
+
+  // Average wounds per model for display purposes
+  const avgWoundsPerModel = totalModels > 0 ? totalWounds / totalModels : baseWithEnhancement;
+
+  return {
+    totalWounds,
+    woundsPerModel: avgWoundsPerModel,
+  };
+}
+
 // ============================================================================
 // Hook Implementation
 // ============================================================================
@@ -194,16 +279,6 @@ export function useWoundTracking(
   onSetUnitWounds: (wounds: number | null) => void,
   onSetLeaderWounds: (wounds: number | null) => void
 ): UseWoundTrackingReturn {
-  // Get modified stats for the unit
-  const { modifiedStats } = useStatModifiers(
-    armyData,
-    unit,
-    listUnit,
-    unitIndex,
-    units,
-    detachment
-  );
-
   // Check if there's an attached leader
   const hasAttachedLeader = !!listUnit?.attachedLeader;
 
@@ -257,9 +332,36 @@ export function useWoundTracking(
       };
     }
 
-    const woundsPerModel = parseStatToNumber(modifiedStats.w.modifiedValue);
+    // Get base wounds per model (without weapon modifiers - those are handled by calculateTotalWoundsForUnit)
+    const baseWoundsPerModel = unit.stats.w;
     const modelCount = listUnit.modelCount;
-    const totalWounds = woundsPerModel * modelCount;
+
+    // Calculate enhancement wound modifier
+    let enhancementWoundMod = 0;
+    if (listUnit.enhancement && armyData?.detachments[detachment]) {
+      const enhancement = armyData.detachments[detachment].enhancements?.find(
+        e => e.id === listUnit.enhancement
+      );
+      if (enhancement?.modifiers) {
+        for (const mod of enhancement.modifiers) {
+          if (mod.stat === 'w' && (mod.scope === 'model' || mod.scope === 'unit')) {
+            if (mod.operation === 'add') {
+              enhancementWoundMod += mod.value;
+            } else if (mod.operation === 'subtract') {
+              enhancementWoundMod -= mod.value;
+            }
+          }
+        }
+      }
+    }
+
+    // Calculate total wounds accounting for mixed loadouts with different wound values
+    const { totalWounds, woundsPerModel } = calculateTotalWoundsForUnit(
+      unit,
+      listUnit,
+      baseWoundsPerModel,
+      enhancementWoundMod
+    );
 
     // If currentWounds is null, unit is at full health
     const currentWounds = listUnit.currentWounds ?? totalWounds;
@@ -281,7 +383,7 @@ export function useWoundTracking(
       isFullHealth: listUnit.currentWounds === null || listUnit.currentWounds >= totalWounds,
       isDestroyed: currentWounds <= 0,
     };
-  }, [unit, listUnit, modifiedStats.w.modifiedValue]);
+  }, [unit, listUnit, armyData, detachment]);
 
   // Calculate leader wound tracking state
   const leaderWounds = useMemo((): LeaderWoundTrackingState => {

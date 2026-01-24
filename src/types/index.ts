@@ -125,6 +125,7 @@ export interface Enhancement {
   points: number;
   description: string;
   modifiers?: Modifier[];
+  eligibleKeywords?: string[]; // Unit must have at least one of these keywords
 }
 
 // ============================================================================
@@ -285,6 +286,8 @@ export interface GameState {
   activatedLoadoutGroups: Record<number, Record<string, boolean>>;
   collapsedLeaders: Record<number, boolean>;
   activatedLeaders: Record<number, boolean>;
+  /** Tracks casualties per weapon loadout group per unit (unitIndex -> groupId -> casualty count) */
+  loadoutCasualties: Record<number, Record<string, number>>;
 }
 
 // ============================================================================
