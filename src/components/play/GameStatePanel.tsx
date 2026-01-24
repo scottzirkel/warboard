@@ -82,8 +82,6 @@ export function GameStatePanel({
   const detachment = getDetachment(armyData, detachmentId);
   const stratagems = getStratagems(detachment);
 
-  const activeStance = katahStances.find((s) => s.id === selectedKatah);
-
   return (
     <div className={`flex flex-col h-full ${className}`}>
       <h2 className="section-header-inline mb-4 shrink-0">Game State</h2>
@@ -169,16 +167,6 @@ export function GameStatePanel({
                 ))}
               </div>
             </div>
-            {activeStance && (
-              <div className="px-4 py-2 bg-accent-tint flex items-center justify-between">
-                <span className="text-xs font-medium text-accent-300">
-                  {activeStance.name.replace(' Stance', '')}
-                </span>
-                <span className="text-xs text-accent-400">
-                  {activeStance.description.replace('Melee weapons gain ', '')}
-                </span>
-              </div>
-            )}
           </div>
         )}
 

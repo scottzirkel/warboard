@@ -1,57 +1,26 @@
 {
   "faction": "Necrons",
   "lastUpdated": "2026-01",
+  "armyRule": {
+    "name": "Reanimation Protocols",
+    "description": "At the end of your Command phase, each unit from your army with this ability that is on the battlefield activates its Reanimation Protocols and reanimates D3 wounds. Each time such a unit reanimates a wound, if that unit contains one or more models that have lost one or more wounds, one of those models regains one lost wound. Once all such models have their full wounds restored, if that unit's Reanimation Protocols are still reanimating wounds, and that unit contains one or more destroyed models, one of those destroyed models is returned to the unit with one wound remaining."
+  },
   "units": [
     {
       "id": "necron-warriors",
       "name": "Necron Warriors",
-      "points": { "10": 60, "20": 120 },
+      "points": { "10": 90, "20": 180 },
       "stats": { "m": 5, "t": 4, "sv": "4+", "w": 1, "ld": "7+", "oc": 2 },
       "invuln": null,
       "weapons": [
-        {
-          "id": "gauss-flayer",
-          "name": "Gauss Flayer",
-          "type": "ranged",
-          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
-          "abilities": ["Lethal Hits", "Rapid Fire 1"],
-          "loadoutGroup": "flayer"
-        },
-        {
-          "id": "gauss-reaper",
-          "name": "Gauss Reaper",
-          "type": "ranged",
-          "stats": { "range": 12, "a": 2, "bs": "4+", "s": 5, "ap": -1, "d": 1 },
-          "abilities": ["Lethal Hits"],
-          "loadoutGroup": "reaper"
-        },
-        {
-          "id": "close-combat-weapon",
-          "name": "Close Combat Weapon",
-          "type": "melee",
-          "stats": { "a": 1, "ws": "4+", "s": 4, "ap": 0, "d": 1 },
-          "abilities": []
-        }
+        { "id": "gauss-flayer", "name": "Gauss Flayer", "type": "ranged", "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 }, "abilities": ["Lethal Hits", "Rapid Fire 1"], "loadoutGroup": "flayer" },
+        { "id": "gauss-reaper", "name": "Gauss Reaper", "type": "ranged", "stats": { "range": 12, "a": 2, "bs": "4+", "s": 4, "ap": -1, "d": 1 }, "abilities": ["Lethal Hits"], "loadoutGroup": "reaper" },
+        { "id": "close-combat-weapon", "name": "Close Combat Weapon", "type": "melee", "stats": { "a": 1, "ws": "4+", "s": 4, "ap": 0, "d": 1 }, "abilities": [] }
       ],
       "loadoutOptions": [
-        {
-          "id": "ranged-weapon",
-          "name": "Ranged Weapon",
-          "type": "choice",
-          "pattern": "replacement",
-          "choices": [
-            { "id": "flayer", "name": "Gauss Flayer", "default": true },
-            { "id": "reaper", "name": "Gauss Reaper" }
-          ]
-        }
+        { "id": "ranged-weapon", "name": "Ranged Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "flayer", "name": "Gauss Flayer", "default": true }, { "id": "reaper", "name": "Gauss Reaper" }] }
       ],
-      "abilities": [
-        {
-          "id": "their-number-is-legion",
-          "name": "Their Number Is Legion",
-          "description": "Each time this unit makes a Reanimation Protocols roll, you can re-roll one of the dice."
-        }
-      ],
+      "abilities": [{ "id": "their-number-is-legion", "name": "Their Number is Legion", "description": "Each time this unit's Reanimation Protocols activate, if it is within range of an objective marker, this unit reanimates D3+1 wounds instead of D3." }],
       "keywords": ["Infantry", "Battleline", "Necrons", "Necron Warriors"]
     },
     {
@@ -61,50 +30,187 @@
       "stats": { "m": 5, "t": 5, "sv": "3+", "w": 1, "ld": "7+", "oc": 2 },
       "invuln": null,
       "weapons": [
-        {
-          "id": "gauss-blaster",
-          "name": "Gauss Blaster",
-          "type": "ranged",
-          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 5, "ap": -1, "d": 1 },
-          "abilities": ["Lethal Hits"],
-          "loadoutGroup": "blaster"
-        },
-        {
-          "id": "tesla-carbine",
-          "name": "Tesla Carbine",
-          "type": "ranged",
-          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 5, "ap": 0, "d": 1 },
-          "abilities": ["Assault", "Sustained Hits 2"],
-          "loadoutGroup": "tesla"
-        },
-        {
-          "id": "immortal-close-combat-weapon",
-          "name": "Close Combat Weapon",
-          "type": "melee",
-          "stats": { "a": 2, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
-          "abilities": []
-        }
+        { "id": "gauss-blaster", "name": "Gauss Blaster", "type": "ranged", "stats": { "range": 24, "a": 2, "bs": "3+", "s": 5, "ap": -1, "d": 1 }, "abilities": ["Lethal Hits"], "loadoutGroup": "blaster" },
+        { "id": "tesla-carbine", "name": "Tesla Carbine", "type": "ranged", "stats": { "range": 24, "a": 2, "bs": "3+", "s": 5, "ap": 0, "d": 1 }, "abilities": ["Assault", "Sustained Hits 2"], "loadoutGroup": "tesla" },
+        { "id": "close-combat-weapon", "name": "Close Combat Weapon", "type": "melee", "stats": { "a": 2, "ws": "3+", "s": 4, "ap": 0, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [{ "id": "ranged-weapon", "name": "Ranged Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "blaster", "name": "Gauss Blaster", "default": true }, { "id": "tesla", "name": "Tesla Carbine" }] }],
+      "abilities": [{ "id": "implacable-eradication", "name": "Implacable Eradication", "description": "Each time a model in this unit makes an attack, re-roll a Wound roll of 1. While this unit is within range of an objective marker you control, you can re-roll the Wound roll instead." }],
+      "keywords": ["Infantry", "Battleline", "Necrons", "Immortals"]
+    },
+    {
+      "id": "lychguard",
+      "name": "Lychguard",
+      "points": { "5": 85, "10": 170 },
+      "stats": { "m": 5, "t": 5, "sv": "3+", "w": 2, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        { "id": "warscythe", "name": "Warscythe", "type": "melee", "stats": { "a": 2, "ws": "3+", "s": 8, "ap": -3, "d": 2 }, "abilities": ["Devastating Wounds"], "loadoutGroup": "scythe" },
+        { "id": "hyperphase-sword", "name": "Hyperphase Sword", "type": "melee", "stats": { "a": 3, "ws": "3+", "s": 6, "ap": -2, "d": 1 }, "abilities": [], "loadoutGroup": "sword", "modifiers": [{ "stat": "invuln", "operation": "set", "value": "4+", "scope": "model", "source": "Dispersion Shield" }] }
+      ],
+      "loadoutOptions": [{ "id": "melee-weapon", "name": "Melee Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "scythe", "name": "Warscythe", "default": true }, { "id": "sword", "name": "Hyperphase Sword + Shield", "paired": true }] }],
+      "abilities": [{ "id": "guardian-protocols", "name": "Guardian Protocols", "description": "While this unit is being led by a NOBLE model, each time an attack with a Strength characteristic greater than this unit's Toughness characteristic targets this unit, subtract 1 from the Wound roll." }],
+      "keywords": ["Infantry", "Necrons", "Lychguard"]
+    },
+    {
+      "id": "triarch-praetorians",
+      "name": "Triarch Praetorians",
+      "points": { "5": 90, "10": 180 },
+      "stats": { "m": 10, "t": 5, "sv": "3+", "w": 2, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        { "id": "rod-of-covenant-ranged", "name": "Rod of Covenant", "type": "ranged", "stats": { "range": 12, "a": 1, "bs": "3+", "s": 5, "ap": -2, "d": 2 }, "abilities": [], "loadoutGroup": "rod" },
+        { "id": "rod-of-covenant-melee", "name": "Rod of Covenant", "type": "melee", "stats": { "a": 3, "ws": "3+", "s": 5, "ap": -2, "d": 2 }, "abilities": [], "loadoutGroup": "rod" },
+        { "id": "particle-caster", "name": "Particle Caster", "type": "ranged", "stats": { "range": 12, "a": 3, "bs": "3+", "s": 5, "ap": 0, "d": 1 }, "abilities": ["Devastating Wounds", "Pistol"], "loadoutGroup": "voidblade" },
+        { "id": "voidblade", "name": "Voidblade", "type": "melee", "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 1 }, "abilities": [], "loadoutGroup": "voidblade" }
+      ],
+      "loadoutOptions": [{ "id": "weapon", "name": "Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "rod", "name": "Rod of Covenant", "default": true }, { "id": "voidblade", "name": "Particle Caster + Voidblade" }] }],
+      "abilities": [
+        { "id": "deep-strike", "name": "Deep Strike", "description": "This unit can be set up in Reserves and arrive more than 9\" from enemies." },
+        { "id": "relentless-combatants", "name": "Relentless Combatants", "description": "You can re-roll Charge rolls made for this unit. This unit is eligible to declare a charge in a turn in which it Fell Back." }
+      ],
+      "keywords": ["Infantry", "Fly", "Triarch", "Necrons", "Triarch Praetorians"]
+    },
+    {
+      "id": "flayed-ones",
+      "name": "Flayed Ones",
+      "points": { "5": 60, "10": 120 },
+      "stats": { "m": 5, "t": 4, "sv": "4+", "w": 1, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [{ "id": "flayer-claws", "name": "Flayer Claws", "type": "melee", "stats": { "a": 4, "ws": "3+", "s": 4, "ap": -1, "d": 1 }, "abilities": ["Sustained Hits 1", "Twin-linked"] }],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "infiltrators", "name": "Infiltrators", "description": "During deployment, this unit can be set up anywhere on the battlefield that is more than 9\" horizontally away from the enemy deployment zone and all enemy models." },
+        { "id": "stealth", "name": "Stealth", "description": "Each time a ranged attack is made against this unit, subtract 1 from that attack's Hit roll." },
+        { "id": "flesh-hunger", "name": "Flesh Hunger", "description": "Each time a model in this unit makes a melee attack, if the target is Below Half-strength, a successful Hit roll scores a Critical Hit." }
+      ],
+      "keywords": ["Infantry", "Necrons", "Flayed Ones"]
+    },
+    {
+      "id": "deathmarks",
+      "name": "Deathmarks",
+      "points": { "5": 60, "10": 120 },
+      "stats": { "m": 5, "t": 5, "sv": "3+", "w": 1, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        { "id": "synaptic-disintegrator", "name": "Synaptic Disintegrator", "type": "ranged", "stats": { "range": 36, "a": 1, "bs": "3+", "s": 5, "ap": -2, "d": 2 }, "abilities": ["Heavy", "Precision"] },
+        { "id": "close-combat-weapon", "name": "Close Combat Weapon", "type": "melee", "stats": { "a": 2, "ws": "3+", "s": 4, "ap": 0, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "deep-strike", "name": "Deep Strike", "description": "This unit can be set up in Reserves and arrive more than 9\" from enemies." },
+        { "id": "hyperspace-hunters", "name": "Hyperspace Hunters", "description": "Once per turn, in your opponent's Movement phase, when an enemy unit is set up from Reserves within 18\" of and visible to this unit, this unit can shoot at that enemy unit." }
+      ],
+      "keywords": ["Infantry", "Necrons", "Deathmarks"]
+    },
+    {
+      "id": "skorpekh-destroyers",
+      "name": "Skorpekh Destroyers",
+      "points": { "3": 90, "6": 180 },
+      "stats": { "m": 8, "t": 6, "sv": "3+", "w": 3, "ld": "7+", "oc": 2 },
+      "invuln": null,
+      "weapons": [{ "id": "skorpekh-hyperphase-weapons", "name": "Skorpekh Hyperphase Weapons", "type": "melee", "stats": { "a": 4, "ws": "3+", "s": 7, "ap": -2, "d": 2 }, "abilities": [] }],
+      "loadoutOptions": [{ "id": "plasmacyte", "name": "Plasmacyte", "type": "optional", "pattern": "addition", "choices": [{ "id": "none", "name": "None", "default": true }, { "id": "plasmacyte", "name": "Plasmacyte", "maxModels": 2 }] }],
+      "abilities": [
+        { "id": "whirling-onslaught", "name": "Whirling Onslaught", "description": "Each time a model in this unit makes a melee attack, re-roll a Hit roll of 1. If this unit made a Charge move this turn, you can re-roll the Hit roll instead." },
+        { "id": "plasmacyte-ability", "name": "Plasmacyte", "description": "Once per battle, when this unit is selected to fight, melee weapons equipped by models in this unit have the [DEVASTATING WOUNDS] ability until the end of the phase.", "loadoutGroup": "plasmacyte" }
+      ],
+      "keywords": ["Infantry", "Destroyer Cult", "Necrons", "Skorpekh Destroyers"]
+    },
+    {
+      "id": "ophydian-destroyers",
+      "name": "Ophydian Destroyers",
+      "points": { "3": 80, "6": 160 },
+      "stats": { "m": 10, "t": 5, "sv": "4+", "w": 3, "ld": "7+", "oc": 2 },
+      "invuln": null,
+      "weapons": [{ "id": "ophydian-hyperphase-weapons", "name": "Ophydian Hyperphase Weapons", "type": "melee", "stats": { "a": 5, "ws": "3+", "s": 4, "ap": -2, "d": 2 }, "abilities": [] }],
+      "loadoutOptions": [{ "id": "plasmacyte", "name": "Plasmacyte", "type": "optional", "pattern": "addition", "choices": [{ "id": "none", "name": "None", "default": true }, { "id": "plasmacyte", "name": "Plasmacyte", "maxModels": 2 }] }],
+      "abilities": [
+        { "id": "tunnelling-horrors", "name": "Tunnelling Horrors", "description": "At the end of your opponent's turn, if this unit is not within Engagement Range of enemy units, you can remove it from the battlefield. In the Reinforcements step of your next Movement phase, set it up anywhere on the battlefield more than 9\" from all enemy models." },
+        { "id": "plasmacyte-ability", "name": "Plasmacyte", "description": "Once per battle, when this unit is selected to fight, melee weapons equipped by models in this unit have the [DEVASTATING WOUNDS] ability until the end of the phase.", "loadoutGroup": "plasmacyte" }
+      ],
+      "keywords": ["Infantry", "Destroyer Cult", "Necrons", "Ophydian Destroyers"]
+    },
+    {
+      "id": "lokhust-destroyers",
+      "name": "Lokhust Destroyers",
+      "points": { "1": 40, "2": 60, "3": 90, "6": 180 },
+      "stats": { "m": 8, "t": 6, "sv": "3+", "w": 3, "ld": "7+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        { "id": "gauss-cannon", "name": "Gauss Cannon", "type": "ranged", "stats": { "range": 24, "a": 3, "bs": "3+", "s": 5, "ap": -2, "d": 2 }, "abilities": ["Lethal Hits"] },
+        { "id": "close-combat-weapon", "name": "Close Combat Weapon", "type": "melee", "stats": { "a": 2, "ws": "3+", "s": 4, "ap": 0, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [{ "id": "hard-wired-for-destruction", "name": "Hard-wired for Destruction", "description": "Each time a model in this unit makes an attack that targets the closest eligible enemy unit, re-roll a Hit roll of 1. If the target is within range of an objective marker, you can re-roll the Hit roll instead." }],
+      "keywords": ["Mounted", "Fly", "Destroyer Cult", "Necrons", "Lokhust Destroyers"]
+    },
+    {
+      "id": "lokhust-heavy-destroyers",
+      "name": "Lokhust Heavy Destroyers",
+      "points": { "1": 55, "2": 110, "3": 165 },
+      "stats": { "m": 8, "t": 6, "sv": "3+", "w": 4, "ld": "7+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        { "id": "gauss-destructor", "name": "Gauss Destructor", "type": "ranged", "stats": { "range": 48, "a": 1, "bs": "3+", "s": 14, "ap": -4, "d": 6 }, "abilities": ["Heavy", "Lethal Hits"], "loadoutGroup": "destructor" },
+        { "id": "enmitic-exterminator", "name": "Enmitic Exterminator", "type": "ranged", "stats": { "range": 36, "a": 6, "bs": "3+", "s": 6, "ap": -1, "d": 1 }, "abilities": ["Heavy", "Rapid Fire 6", "Sustained Hits 1"], "loadoutGroup": "exterminator" },
+        { "id": "close-combat-weapon", "name": "Close Combat Weapon", "type": "melee", "stats": { "a": 2, "ws": "3+", "s": 4, "ap": 0, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [{ "id": "ranged-weapon", "name": "Ranged Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "destructor", "name": "Gauss Destructor", "default": true }, { "id": "exterminator", "name": "Enmitic Exterminator" }] }],
+      "abilities": [{ "id": "optimised-for-slaughter", "name": "Optimised for Slaughter", "description": "Re-roll Wound rolls of 1. When attacking with a gauss destructor, this applies only to MONSTER or VEHICLE targets. When attacking with an enmitic exterminator, this applies only to non-MONSTER, non-VEHICLE targets." }],
+      "keywords": ["Mounted", "Fly", "Destroyer Cult", "Necrons", "Lokhust Heavy Destroyers"]
+    },
+    {
+      "id": "canoptek-wraiths",
+      "name": "Canoptek Wraiths",
+      "points": { "3": 110, "6": 220 },
+      "stats": { "m": 10, "t": 6, "sv": "3+", "w": 4, "ld": "8+", "oc": 2 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "particle-caster", "name": "Particle Caster", "type": "ranged", "stats": { "range": 12, "a": 3, "bs": "4+", "s": 5, "ap": 0, "d": 1 }, "abilities": ["Devastating Wounds", "Pistol"], "loadoutGroup": "caster" },
+        { "id": "transdimensional-beamer", "name": "Transdimensional Beamer", "type": "ranged", "stats": { "range": 12, "a": 1, "bs": "4+", "s": 4, "ap": -2, "d": 3 }, "abilities": [], "loadoutGroup": "beamer" },
+        { "id": "vicious-claws", "name": "Vicious Claws", "type": "melee", "stats": { "a": 4, "ws": "4+", "s": 6, "ap": -1, "d": 2 }, "abilities": [], "loadoutGroup": "claws" },
+        { "id": "whip-coils", "name": "Whip Coils", "type": "melee", "stats": { "a": 8, "ws": "4+", "s": 5, "ap": 0, "d": 1 }, "abilities": [], "loadoutGroup": "coils" }
       ],
       "loadoutOptions": [
-        {
-          "id": "ranged-weapon",
-          "name": "Ranged Weapon",
-          "type": "choice",
-          "pattern": "replacement",
-          "choices": [
-            { "id": "blaster", "name": "Gauss Blaster", "default": true },
-            { "id": "tesla", "name": "Tesla Carbine" }
-          ]
-        }
+        { "id": "ranged-weapon", "name": "Ranged Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "caster", "name": "Particle Caster", "default": true }, { "id": "beamer", "name": "Transdimensional Beamer" }] },
+        { "id": "melee-weapon", "name": "Melee Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "claws", "name": "Vicious Claws", "default": true }, { "id": "coils", "name": "Whip Coils" }] }
       ],
+      "abilities": [{ "id": "wraith-form", "name": "Wraith Form", "description": "Each time this unit ends a Normal move, you can select one enemy unit it moved over during that move and roll one D6 for each model in this unit: for each 4+, that enemy unit suffers 1 mortal wound." }],
+      "keywords": ["Beasts", "Fly", "Canoptek", "Necrons", "Canoptek Wraiths"]
+    },
+    {
+      "id": "canoptek-scarab-swarms",
+      "name": "Canoptek Scarab Swarms",
+      "points": { "3": 40, "6": 80 },
+      "stats": { "m": 10, "t": 2, "sv": "6+", "w": 4, "ld": "8+", "oc": 0 },
+      "invuln": null,
+      "weapons": [{ "id": "feeder-mandibles", "name": "Feeder Mandibles", "type": "melee", "stats": { "a": 6, "ws": "5+", "s": 2, "ap": 0, "d": 1 }, "abilities": ["Lethal Hits"] }],
+      "loadoutOptions": [],
       "abilities": [
-        {
-          "id": "implacable-eradication",
-          "name": "Implacable Eradication",
-          "description": "Each time a model in this unit makes an attack, re-roll a Wound roll of 1. If the target is within range of an objective marker, you can re-roll the Wound roll instead."
-        }
+        { "id": "self-destruction", "name": "Self-destruction", "description": "At the start of the Fight phase, if this unit is within Engagement Range of one or more enemy units, you can destroy one model in this unit. If you do, roll one D6: on a 2-5, one enemy unit within Engagement Range suffers D3 mortal wounds; on a 6, that enemy unit suffers 3 mortal wounds." },
+        { "id": "chittering-swarm", "name": "Chittering Swarm", "description": "Enemy units within Engagement Range of this unit subtract 1 from their Objective Control characteristic (minimum 1). While this unit is within 6\" of a friendly CRYPTEK model, this unit has an Objective Control characteristic of 1." }
       ],
-      "keywords": ["Infantry", "Battleline", "Necrons", "Immortals"]
+      "keywords": ["Swarm", "Fly", "Canoptek", "Necrons", "Canoptek Scarab Swarms"]
+    },
+    {
+      "id": "tomb-blades",
+      "name": "Tomb Blades",
+      "points": { "3": 75, "6": 150 },
+      "stats": { "m": 12, "t": 5, "sv": "4+", "w": 2, "ld": "7+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        { "id": "twin-gauss-blaster", "name": "Twin Gauss Blaster", "type": "ranged", "stats": { "range": 24, "a": 2, "bs": "3+", "s": 5, "ap": -1, "d": 1 }, "abilities": ["Lethal Hits", "Twin-linked"], "loadoutGroup": "gauss" },
+        { "id": "twin-tesla-carbine", "name": "Twin Tesla Carbine", "type": "ranged", "stats": { "range": 24, "a": 2, "bs": "3+", "s": 5, "ap": 0, "d": 1 }, "abilities": ["Assault", "Sustained Hits 2", "Twin-linked"], "loadoutGroup": "tesla" },
+        { "id": "particle-beamer", "name": "Particle Beamer", "type": "ranged", "stats": { "range": 18, "a": "D6", "bs": "3+", "s": 5, "ap": 0, "d": 1 }, "abilities": ["Devastating Wounds", "Blast"], "loadoutGroup": "particle" },
+        { "id": "close-combat-weapon", "name": "Close Combat Weapon", "type": "melee", "stats": { "a": 1, "ws": "4+", "s": 4, "ap": 0, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [{ "id": "ranged-weapon", "name": "Ranged Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "gauss", "name": "Twin Gauss Blaster", "default": true }, { "id": "tesla", "name": "Twin Tesla Carbine" }, { "id": "particle", "name": "Particle Beamer" }] }],
+      "abilities": [
+        { "id": "scouts-9", "name": "Scouts 9\"", "description": "This unit can make a Normal move of up to 9\" before the first turn begins." },
+        { "id": "evasion-engrams", "name": "Evasion Engrams", "description": "In your Shooting phase, after this unit has shot, it can make a Normal move of up to 6\". It cannot declare a charge this turn." }
+      ],
+      "keywords": ["Mounted", "Fly", "Necrons", "Tomb Blades"]
     },
     {
       "id": "overlord",
@@ -113,87 +219,24 @@
       "stats": { "m": 5, "t": 5, "sv": "2+", "w": 6, "ld": "6+", "oc": 1 },
       "invuln": "4+",
       "weapons": [
-        {
-          "id": "tachyon-arrow",
-          "name": "Tachyon Arrow",
-          "type": "ranged",
-          "stats": { "range": 72, "a": 1, "bs": "2+", "s": 16, "ap": -5, "d": "D6+2" },
-          "abilities": ["One Shot"],
-          "loadoutGroup": "tachyon"
-        },
-        {
-          "id": "staff-of-light-ranged",
-          "name": "Staff of Light",
-          "type": "ranged",
-          "stats": { "range": 18, "a": 3, "bs": "2+", "s": 5, "ap": -2, "d": 1 },
-          "abilities": [],
-          "loadoutGroup": "staff"
-        },
-        {
-          "id": "staff-of-light-melee",
-          "name": "Staff of Light",
-          "type": "melee",
-          "stats": { "a": 4, "ws": "2+", "s": 5, "ap": -2, "d": 1 },
-          "abilities": [],
-          "loadoutGroup": "staff"
-        },
-        {
-          "id": "voidscythe",
-          "name": "Voidscythe",
-          "type": "melee",
-          "stats": { "a": 3, "ws": "3+", "s": 8, "ap": -3, "d": 2 },
-          "abilities": ["Devastating Wounds"],
-          "loadoutGroup": "voidscythe"
-        },
-        {
-          "id": "overlord-close-combat-weapon",
-          "name": "Close Combat Weapon",
-          "type": "melee",
-          "stats": { "a": 4, "ws": "2+", "s": 5, "ap": 0, "d": 1 },
-          "abilities": []
-        }
+        { "id": "staff-of-light-ranged", "name": "Staff of Light", "type": "ranged", "stats": { "range": 18, "a": 3, "bs": "2+", "s": 5, "ap": -2, "d": 1 }, "abilities": [], "loadoutGroup": "staff" },
+        { "id": "tachyon-arrow", "name": "Tachyon Arrow", "type": "ranged", "stats": { "range": 72, "a": 1, "bs": "2+", "s": 16, "ap": -5, "d": "D6+2" }, "abilities": ["One Shot", "Ignores Cover"], "loadoutGroup": "arrow" },
+        { "id": "staff-of-light-melee", "name": "Staff of Light", "type": "melee", "stats": { "a": 4, "ws": "2+", "s": 5, "ap": -2, "d": 1 }, "abilities": [], "loadoutGroup": "staff" },
+        { "id": "overlords-blade", "name": "Overlord's Blade", "type": "melee", "stats": { "a": 4, "ws": "2+", "s": 8, "ap": -3, "d": 2 }, "abilities": ["Devastating Wounds"], "loadoutGroup": "blade" },
+        { "id": "voidscythe", "name": "Voidscythe", "type": "melee", "stats": { "a": 3, "ws": "3+", "s": 12, "ap": -3, "d": 3 }, "abilities": ["Devastating Wounds"], "loadoutGroup": "scythe" }
       ],
       "loadoutOptions": [
-        {
-          "id": "ranged-weapon",
-          "name": "Ranged Weapon",
-          "type": "choice",
-          "pattern": "replacement",
-          "choices": [
-            { "id": "staff", "name": "Staff of Light", "default": true },
-            { "id": "tachyon", "name": "Tachyon Arrow" }
-          ]
-        },
-        {
-          "id": "melee-weapon",
-          "name": "Melee Weapon",
-          "type": "choice",
-          "pattern": "replacement",
-          "choices": [
-            { "id": "staff", "name": "Staff of Light", "default": true },
-            { "id": "voidscythe", "name": "Voidscythe" }
-          ]
-        }
+        { "id": "ranged-weapon", "name": "Ranged Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "arrow", "name": "Tachyon Arrow", "default": true }, { "id": "staff", "name": "Staff of Light" }] },
+        { "id": "melee-weapon", "name": "Melee Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "blade", "name": "Overlord's Blade", "default": true }, { "id": "scythe", "name": "Voidscythe" }, { "id": "staff", "name": "Staff of Light" }] },
+        { "id": "resurrection-orb", "name": "Resurrection Orb", "type": "optional", "pattern": "addition", "choices": [{ "id": "none", "name": "None", "default": true }, { "id": "orb", "name": "Resurrection Orb" }] }
       ],
       "abilities": [
-        {
-          "id": "leader",
-          "name": "Leader",
-          "description": "This model can be attached to Immortals, Lychguard, or Necron Warriors.",
-          "eligibleUnits": ["immortals", "lychguard", "necron-warriors"]
-        },
-        {
-          "id": "my-will-be-done",
-          "name": "My Will Be Done",
-          "description": "While this model is leading a unit, add 1 to the Hit roll for attacks made by models in that unit."
-        },
-        {
-          "id": "resurrection-orb",
-          "name": "Resurrection Orb",
-          "description": "Once per battle, at the start of your Command phase, you can select one friendly NECRONS unit within 6\". That unit's Reanimation Protocols heal 2D3 wounds instead of D3 this phase."
-        }
+        { "id": "leader", "name": "Leader", "description": "This model can be attached to the following units: Immortals, Lychguard, Necron Warriors.", "eligibleUnits": ["immortals", "lychguard", "necron-warriors"] },
+        { "id": "my-will-be-done", "name": "My Will Be Done", "description": "Once per battle round, when this unit is targeted with a Stratagem, reduce the CP cost by 1CP." },
+        { "id": "implacable-resilience", "name": "Implacable Resilience", "description": "Each time an attack is allocated to this model, subtract 1 from that attack's Damage characteristic." },
+        { "id": "resurrection-orb-ability", "name": "Resurrection Orb", "description": "Once per battle, at the end of your Command phase, while the bearer is leading a unit, that unit's Reanimation Protocols activate and reanimate D6 wounds instead of D3.", "loadoutGroup": "orb" }
       ],
-      "keywords": ["Infantry", "Character", "Necrons", "Overlord"]
+      "keywords": ["Infantry", "Character", "Noble", "Necrons", "Overlord"]
     },
     {
       "id": "royal-warden",
@@ -202,324 +245,633 @@
       "stats": { "m": 5, "t": 5, "sv": "3+", "w": 4, "ld": "6+", "oc": 1 },
       "invuln": null,
       "weapons": [
-        {
-          "id": "relic-gauss-blaster",
-          "name": "Relic Gauss Blaster",
-          "type": "ranged",
-          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 5, "ap": -1, "d": 2 },
-          "abilities": ["Lethal Hits", "Rapid Fire 2"]
-        },
-        {
-          "id": "royal-warden-ccw",
-          "name": "Close Combat Weapon",
-          "type": "melee",
-          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": 0, "d": 1 },
-          "abilities": []
-        }
+        { "id": "relic-gauss-blaster", "name": "Relic Gauss Blaster", "type": "ranged", "stats": { "range": 24, "a": 2, "bs": "3+", "s": 5, "ap": -1, "d": 2 }, "abilities": ["Lethal Hits", "Rapid Fire 2"] },
+        { "id": "close-combat-weapon", "name": "Close Combat Weapon", "type": "melee", "stats": { "a": 4, "ws": "3+", "s": 5, "ap": 0, "d": 1 }, "abilities": [] }
       ],
       "loadoutOptions": [],
       "abilities": [
-        {
-          "id": "leader",
-          "name": "Leader",
-          "description": "This model can be attached to Immortals or Necron Warriors.",
-          "eligibleUnits": ["immortals", "necron-warriors"]
-        },
-        {
-          "id": "adaptive-strategy",
-          "name": "Adaptive Strategy",
-          "description": "While this model is leading a unit, that unit is eligible to shoot and declare a charge in a turn in which it Fell Back."
-        },
-        {
-          "id": "engrammatic-logic",
-          "name": "Engrammatic Logic",
-          "description": "Once per battle, at the start of any phase, you can select one friendly NECRONS unit that is Battle-shocked and within 12\" of this model. That unit is no longer Battle-shocked."
-        }
+        { "id": "leader", "name": "Leader", "description": "This model can be attached to the following units: Immortals, Necron Warriors.", "eligibleUnits": ["immortals", "necron-warriors"] },
+        { "id": "adaptive-strategy", "name": "Adaptive Strategy", "description": "This model's unit is eligible to shoot and declare a charge in a turn in which it Fell Back." },
+        { "id": "engrammatic-logic", "name": "Engrammatic Logic", "description": "Once per battle, at the start of any phase, select one friendly NECRONS unit that is Battle-shocked and within 12\" of this model. That unit is no longer Battle-shocked." }
       ],
       "keywords": ["Infantry", "Character", "Necrons", "Royal Warden"]
     },
     {
-      "id": "lychguard",
-      "name": "Lychguard",
-      "points": { "5": 85, "10": 170 },
-      "stats": { "m": 5, "t": 5, "sv": "3+", "w": 2, "ld": "7+", "oc": 1 },
+      "id": "lokhust-lord",
+      "name": "Lokhust Lord",
+      "points": { "1": 80 },
+      "stats": { "m": 8, "t": 6, "sv": "3+", "w": 6, "ld": "6+", "oc": 2 },
       "invuln": "4+",
       "weapons": [
-        {
-          "id": "warscythe",
-          "name": "Warscythe",
-          "type": "melee",
-          "stats": { "a": 2, "ws": "3+", "s": 8, "ap": -3, "d": 2 },
-          "abilities": ["Devastating Wounds"],
-          "loadoutGroup": "warscythe"
-        },
-        {
-          "id": "hyperphase-sword",
-          "name": "Hyperphase Sword",
-          "type": "melee",
-          "stats": { "a": 3, "ws": "3+", "s": 6, "ap": -2, "d": 1 },
-          "abilities": [],
-          "loadoutGroup": "sword-shield"
-        }
+        { "id": "staff-of-light-ranged", "name": "Staff of Light", "type": "ranged", "stats": { "range": 18, "a": 3, "bs": "2+", "s": 5, "ap": -2, "d": 1 }, "abilities": [], "loadoutGroup": "staff" },
+        { "id": "staff-of-light-melee", "name": "Staff of Light", "type": "melee", "stats": { "a": 4, "ws": "2+", "s": 5, "ap": -2, "d": 1 }, "abilities": [], "loadoutGroup": "staff" },
+        { "id": "lords-blade", "name": "Lord's Blade", "type": "melee", "stats": { "a": 4, "ws": "2+", "s": 8, "ap": -3, "d": 2 }, "abilities": ["Devastating Wounds"], "loadoutGroup": "blade" }
+      ],
+      "loadoutOptions": [{ "id": "melee-weapon", "name": "Melee Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "blade", "name": "Lord's Blade", "default": true }, { "id": "staff", "name": "Staff of Light" }] }],
+      "abilities": [
+        { "id": "leader", "name": "Leader", "description": "This model can be attached to Lokhust Destroyers or Lokhust Heavy Destroyers.", "eligibleUnits": ["lokhust-destroyers", "lokhust-heavy-destroyers"] },
+        { "id": "destroyer-cult", "name": "Destroyer Cult", "description": "While this model is leading a unit, each time a model in that unit makes a ranged attack, an unmodified Hit roll of 5+ scores a Critical Hit." },
+        { "id": "driven-by-hatred", "name": "Driven by Hatred", "description": "Each time this model makes an attack that targets a unit that is Below Half-strength, you can re-roll the Hit roll and you can re-roll the Wound roll." }
+      ],
+      "keywords": ["Mounted", "Character", "Fly", "Destroyer Cult", "Necrons", "Lokhust Lord"]
+    },
+    {
+      "id": "skorpekh-lord",
+      "name": "Skorpekh Lord",
+      "points": { "1": 90 },
+      "stats": { "m": 8, "t": 7, "sv": "3+", "w": 7, "ld": "6+", "oc": 2 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "enmitic-annihilator", "name": "Enmitic Annihilator", "type": "ranged", "stats": { "range": 18, "a": 2, "bs": "2+", "s": 6, "ap": -1, "d": 1 }, "abilities": ["Rapid Fire 2"] },
+        { "id": "flensing-claw", "name": "Flensing Claw", "type": "melee", "stats": { "a": 8, "ws": "2+", "s": 6, "ap": -1, "d": 1 }, "abilities": [] },
+        { "id": "hyperphase-harvester", "name": "Hyperphase Harvester", "type": "melee", "stats": { "a": 4, "ws": "2+", "s": 10, "ap": -3, "d": 3 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "leader", "name": "Leader", "description": "This model can be attached to a Skorpekh Destroyers unit.", "eligibleUnits": ["skorpekh-destroyers"] },
+        { "id": "united-in-destruction", "name": "United in Destruction", "description": "While this model is leading a unit, melee weapons equipped by models in that unit have the [LETHAL HITS] ability." },
+        { "id": "crimson-harvest", "name": "Crimson Harvest", "description": "Each time this model ends a Charge move, select one enemy unit within Engagement Range and roll one D6: on a 2-5, that unit suffers D3 mortal wounds; on a 6, that unit suffers D3+3 mortal wounds." }
+      ],
+      "keywords": ["Infantry", "Character", "Destroyer Cult", "Necrons", "Skorpekh Lord"]
+    },
+    {
+      "id": "hexmark-destroyer",
+      "name": "Hexmark Destroyer",
+      "points": { "1": 75 },
+      "stats": { "m": 8, "t": 5, "sv": "3+", "w": 5, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        { "id": "enmitic-disintegrator-pistols", "name": "Enmitic Disintegrator Pistols", "type": "ranged", "stats": { "range": 18, "a": 6, "bs": "2+", "s": 6, "ap": -2, "d": 1 }, "abilities": ["Pistol", "Ignores Cover"] },
+        { "id": "close-combat-weapon", "name": "Close Combat Weapon", "type": "melee", "stats": { "a": 4, "ws": "3+", "s": 5, "ap": 0, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "deep-strike", "name": "Deep Strike", "description": "This unit can be set up in Reserves and arrive more than 9\" from enemies." },
+        { "id": "lone-operative", "name": "Lone Operative", "description": "Unless this model is within 6\" of a friendly NECRONS BATTLELINE unit, it can only be selected as the target of a ranged attack if the attacking model is within 12\"." },
+        { "id": "inescapable-death", "name": "Inescapable Death", "description": "Once per turn, this unit can use the Fire Overwatch Stratagem for 0CP. When it does, it hits on 2+ instead of 6+." },
+        { "id": "multi-threat-eliminator", "name": "Multi-threat Eliminator", "description": "In your opponent's Shooting phase, when an enemy unit within 3\" of this model shoots a friendly NECRONS unit, after that unit has shot, this model can shoot at that enemy unit." }
+      ],
+      "keywords": ["Infantry", "Character", "Destroyer Cult", "Necrons", "Hexmark Destroyer"]
+    },
+    {
+      "id": "chronomancer",
+      "name": "Chronomancer",
+      "points": { "1": 65 },
+      "stats": { "m": 5, "t": 4, "sv": "4+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "aeonstave-ranged", "name": "Aeonstave", "type": "ranged", "stats": { "range": 18, "a": "D6", "bs": "4+", "s": 5, "ap": -1, "d": 1 }, "abilities": ["Blast"] },
+        { "id": "aeonstave-melee", "name": "Aeonstave", "type": "melee", "stats": { "a": 3, "ws": "4+", "s": 5, "ap": -1, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "leader", "name": "Leader", "description": "This model can be attached to Immortals or Necron Warriors. Can join a unit that already has a NOBLE Character attached.", "eligibleUnits": ["immortals", "necron-warriors"] },
+        { "id": "timesplinter-mantle", "name": "Timesplinter Mantle", "description": "While this model is leading a unit, each time a ranged attack targets that unit, subtract 1 from the Hit roll." },
+        { "id": "chronometron", "name": "Chronometron", "description": "In your Shooting phase, after this model's unit has shot, if it is not within Engagement Range of enemy units, that unit can make a Normal move of up to 5\". It cannot charge this turn." }
+      ],
+      "keywords": ["Infantry", "Character", "Cryptek", "Necrons", "Chronomancer"]
+    },
+    {
+      "id": "technomancer",
+      "name": "Technomancer",
+      "points": { "1": 80 },
+      "stats": { "m": 5, "t": 4, "sv": "4+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        { "id": "staff-of-light-ranged", "name": "Staff of Light", "type": "ranged", "stats": { "range": 18, "a": 3, "bs": "4+", "s": 5, "ap": -2, "d": 1 }, "abilities": [] },
+        { "id": "staff-of-light-melee", "name": "Staff of Light", "type": "melee", "stats": { "a": 2, "ws": "4+", "s": 5, "ap": -2, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "leader", "name": "Leader", "description": "This model can be attached to Canoptek Wraiths, Immortals, or Necron Warriors.", "eligibleUnits": ["canoptek-wraiths", "immortals", "necron-warriors"] },
+        { "id": "rites-of-reanimation", "name": "Rites of Reanimation", "description": "While this model is leading a unit, models in that unit have the Feel No Pain 5+ ability." },
+        { "id": "technomancer-ability", "name": "Technomancer", "description": "At the end of your Movement phase, select one friendly NECRONS model within 6\" of this model. That model regains up to D3 lost wounds." }
+      ],
+      "keywords": ["Infantry", "Character", "Cryptek", "Fly", "Necrons", "Technomancer"]
+    },
+    {
+      "id": "plasmancer",
+      "name": "Plasmancer",
+      "points": { "1": 55 },
+      "stats": { "m": 5, "t": 4, "sv": "4+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        { "id": "plasmic-lance-ranged", "name": "Plasmic Lance", "type": "ranged", "stats": { "range": 18, "a": 3, "bs": "4+", "s": 7, "ap": -3, "d": 2 }, "abilities": [] },
+        { "id": "plasmic-lance-melee", "name": "Plasmic Lance", "type": "melee", "stats": { "a": 2, "ws": "4+", "s": 7, "ap": -3, "d": 2 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "leader", "name": "Leader", "description": "This model can be attached to Immortals or Necron Warriors.", "eligibleUnits": ["immortals", "necron-warriors"] },
+        { "id": "harbinger-of-destruction", "name": "Harbinger of Destruction", "description": "While this model is leading a unit, each time a model in that unit makes a ranged attack, an unmodified Hit roll of 5+ scores a Critical Hit." },
+        { "id": "living-lightning", "name": "Living Lightning", "description": "In your Shooting phase, select one visible enemy unit within 18\" of this model and roll 4D6: for each 4+, that enemy unit suffers 1 mortal wound." }
+      ],
+      "keywords": ["Infantry", "Character", "Cryptek", "Necrons", "Plasmancer"]
+    },
+    {
+      "id": "psychomancer",
+      "name": "Psychomancer",
+      "points": { "1": 55 },
+      "stats": { "m": 5, "t": 4, "sv": "4+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        { "id": "abyssal-lance-ranged", "name": "Abyssal Lance", "type": "ranged", "stats": { "range": 18, "a": 1, "bs": "4+", "s": 6, "ap": -3, "d": 3 }, "abilities": [] },
+        { "id": "abyssal-lance-melee", "name": "Abyssal Lance", "type": "melee", "stats": { "a": 1, "ws": "4+", "s": 6, "ap": -3, "d": 3 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "leader", "name": "Leader", "description": "This model can be attached to Immortals or Necron Warriors.", "eligibleUnits": ["immortals", "necron-warriors"] },
+        { "id": "nightmare-shroud", "name": "Nightmare Shroud", "description": "In your opponent's Command phase, each enemy unit that is Below Starting Strength and within 6\" of this model must take a Battle-shock test, subtracting 1 from the result." },
+        { "id": "harbinger-of-despair", "name": "Harbinger of Despair", "description": "Once per turn, at the start of any phase, select one enemy unit within 18\" of this model. That unit must take a Battle-shock test, subtracting 1 from the result." }
+      ],
+      "keywords": ["Infantry", "Character", "Cryptek", "Necrons", "Psychomancer"]
+    },
+    {
+      "id": "catacomb-command-barge",
+      "name": "Catacomb Command Barge",
+      "points": { "1": 120 },
+      "stats": { "m": 10, "t": 8, "sv": "3+", "w": 9, "ld": "6+", "oc": 3 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "gauss-cannon", "name": "Gauss Cannon", "type": "ranged", "stats": { "range": 24, "a": 3, "bs": "3+", "s": 5, "ap": -2, "d": 2 }, "abilities": ["Lethal Hits"], "loadoutGroup": "gauss" },
+        { "id": "tesla-cannon", "name": "Tesla Cannon", "type": "ranged", "stats": { "range": 24, "a": 4, "bs": "3+", "s": 6, "ap": 0, "d": 1 }, "abilities": ["Sustained Hits 2"], "loadoutGroup": "tesla" },
+        { "id": "staff-of-light-ranged", "name": "Staff of Light", "type": "ranged", "stats": { "range": 18, "a": 3, "bs": "2+", "s": 5, "ap": -2, "d": 1 }, "abilities": [], "loadoutGroup": "staff" },
+        { "id": "staff-of-light-melee", "name": "Staff of Light", "type": "melee", "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 1 }, "abilities": [], "loadoutGroup": "staff" },
+        { "id": "overlords-blade", "name": "Overlord's Blade", "type": "melee", "stats": { "a": 4, "ws": "2+", "s": 8, "ap": -3, "d": 2 }, "abilities": ["Devastating Wounds"], "loadoutGroup": "blade" }
       ],
       "loadoutOptions": [
-        {
-          "id": "melee-weapon",
-          "name": "Melee Weapon",
-          "type": "choice",
-          "pattern": "replacement",
-          "choices": [
-            { "id": "warscythe", "name": "Warscythe", "default": true },
-            { "id": "sword-shield", "name": "Hyperphase Sword + Dispersion Shield", "paired": true }
-          ]
-        }
+        { "id": "turret-weapon", "name": "Turret Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "gauss", "name": "Gauss Cannon", "default": true }, { "id": "tesla", "name": "Tesla Cannon" }] },
+        { "id": "melee-weapon", "name": "Melee Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "staff", "name": "Staff of Light", "default": true }, { "id": "blade", "name": "Overlord's Blade" }] }
       ],
       "abilities": [
-        {
-          "id": "guardian-protocols",
-          "name": "Guardian Protocols",
-          "description": "While a NOBLE model is leading this unit, each time an attack targets this unit, if the Strength characteristic of that attack is greater than this unit's Toughness characteristic, subtract 1 from the Wound roll."
-        }
+        { "id": "deadly-demise-1", "name": "Deadly Demise 1", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers 1 mortal wound." },
+        { "id": "carrier-wave", "name": "Carrier Wave", "description": "While a friendly NECRONS unit is within 6\" of this model, add 1 to the Objective Control characteristic of models in that unit." },
+        { "id": "advanced-quantum-shielding", "name": "Advanced Quantum Shielding", "description": "Each time an attack targets this model, if the Strength of that attack is greater than this model's Toughness, subtract 1 from the Wound roll." }
       ],
-      "keywords": ["Infantry", "Necrons", "Lychguard"]
+      "keywords": ["Vehicle", "Character", "Fly", "Necrons", "Catacomb Command Barge"]
     },
     {
-      "id": "skorpekh-destroyers",
-      "name": "Skorpekh Destroyers",
-      "points": { "3": 90, "6": 180 },
-      "stats": { "m": 8, "t": 6, "sv": "3+", "w": 3, "ld": "7+", "oc": 1 },
-      "invuln": null,
+      "id": "triarch-stalker",
+      "name": "Triarch Stalker",
+      "points": { "1": 110 },
+      "stats": { "m": 8, "t": 8, "sv": "3+", "w": 12, "ld": "7+", "oc": 4 },
+      "invuln": "4+",
       "weapons": [
-        {
-          "id": "skorpekh-hyperphase-weapons",
-          "name": "Skorpekh Hyperphase Weapons",
-          "type": "melee",
-          "stats": { "a": 4, "ws": "3+", "s": 6, "ap": -2, "d": 2 },
-          "abilities": []
-        }
+        { "id": "heat-ray-dispersed", "name": "Heat Ray (Dispersed)", "type": "ranged", "stats": { "range": 12, "a": "2D6", "bs": "N/A", "s": 5, "ap": -1, "d": 1 }, "abilities": ["Ignores Cover", "Torrent"], "loadoutGroup": "heat" },
+        { "id": "heat-ray-focused", "name": "Heat Ray (Focused)", "type": "ranged", "stats": { "range": 18, "a": 2, "bs": "3+", "s": 9, "ap": -4, "d": "D6" }, "abilities": ["Melta 4"], "loadoutGroup": "heat" },
+        { "id": "particle-shredder", "name": "Particle Shredder", "type": "ranged", "stats": { "range": 18, "a": "D6+6", "bs": "2+", "s": 7, "ap": 0, "d": 1 }, "abilities": ["Blast", "Devastating Wounds"], "loadoutGroup": "particle" },
+        { "id": "stalker-forelimbs", "name": "Stalker's Forelimbs", "type": "melee", "stats": { "a": 4, "ws": "3+", "s": 7, "ap": -1, "d": 3 }, "abilities": [] }
+      ],
+      "loadoutOptions": [{ "id": "main-weapon", "name": "Main Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "heat", "name": "Heat Ray", "default": true }, { "id": "particle", "name": "Particle Shredder" }] }],
+      "abilities": [
+        { "id": "deadly-demise-d3", "name": "Deadly Demise D3", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds." },
+        { "id": "scouts-8", "name": "Scouts 8\"", "description": "This unit can make a Normal move of up to 8\" before the first turn begins." },
+        { "id": "targeting-relay", "name": "Targeting Relay", "description": "In your Shooting phase, after this model has shot, select one enemy unit that was hit by one or more of those attacks. Until the end of the phase, that enemy unit cannot have the Benefit of Cover." }
+      ],
+      "keywords": ["Vehicle", "Walker", "Triarch", "Necrons", "Triarch Stalker"]
+    },
+    {
+      "id": "annihilation-barge",
+      "name": "Annihilation Barge",
+      "points": { "1": 105 },
+      "stats": { "m": 10, "t": 8, "sv": "3+", "w": 9, "ld": "7+", "oc": 3 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "gauss-cannon", "name": "Gauss Cannon", "type": "ranged", "stats": { "range": 24, "a": 3, "bs": "3+", "s": 5, "ap": -2, "d": 2 }, "abilities": ["Lethal Hits"], "loadoutGroup": "gauss" },
+        { "id": "tesla-cannon", "name": "Tesla Cannon", "type": "ranged", "stats": { "range": 24, "a": 4, "bs": "3+", "s": 6, "ap": 0, "d": 1 }, "abilities": ["Sustained Hits 2"], "loadoutGroup": "tesla" },
+        { "id": "twin-tesla-destructor", "name": "Twin Tesla Destructor", "type": "ranged", "stats": { "range": 36, "a": 6, "bs": "3+", "s": 8, "ap": 0, "d": 2 }, "abilities": ["Sustained Hits 2", "Twin-linked"] },
+        { "id": "armoured-bulk", "name": "Armoured Bulk", "type": "melee", "stats": { "a": 3, "ws": "4+", "s": 6, "ap": 0, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [{ "id": "secondary-weapon", "name": "Secondary Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "gauss", "name": "Gauss Cannon", "default": true }, { "id": "tesla", "name": "Tesla Cannon" }] }],
+      "abilities": [
+        { "id": "deadly-demise-1", "name": "Deadly Demise 1", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers 1 mortal wound." },
+        { "id": "malevolent-arcing", "name": "Malevolent Arcing", "description": "Each time this model shoots its twin tesla destructor, after resolving those attacks, roll one D6 for each other unit (friend or foe) within 3\" of the target: on a 5+, that unit suffers D3 mortal wounds." }
+      ],
+      "keywords": ["Vehicle", "Fly", "Necrons", "Annihilation Barge"]
+    },
+    {
+      "id": "doomsday-ark",
+      "name": "Doomsday Ark",
+      "points": { "1": 200 },
+      "stats": { "m": 10, "t": 9, "sv": "3+", "w": 14, "ld": "7+", "oc": 5 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "doomsday-cannon", "name": "Doomsday Cannon", "type": "ranged", "stats": { "range": 72, "a": "D6+1", "bs": "3+", "s": 18, "ap": -4, "d": 4 }, "abilities": ["Blast", "Heavy"] },
+        { "id": "gauss-flayer-array", "name": "Gauss Flayer Array", "type": "ranged", "stats": { "range": 24, "a": 5, "bs": "3+", "s": 4, "ap": 0, "d": 1 }, "abilities": ["Lethal Hits", "Rapid Fire 5"] },
+        { "id": "armoured-bulk", "name": "Armoured Bulk", "type": "melee", "stats": { "a": 3, "ws": "4+", "s": 6, "ap": 0, "d": 1 }, "abilities": [] }
       ],
       "loadoutOptions": [],
       "abilities": [
-        {
-          "id": "whirling-onslaught",
-          "name": "Whirling Onslaught",
-          "description": "Each time a model in this unit makes a melee attack, re-roll a Hit roll of 1. If this unit made a Charge move this turn, you can re-roll the Hit roll instead."
-        },
-        {
-          "id": "devastating-charge",
-          "name": "Devastating Charge",
-          "description": "Each time this unit makes a Charge move, until the end of the turn, melee weapons equipped by models in this unit have the [Devastating Wounds] ability."
-        }
+        { "id": "deadly-demise-d3", "name": "Deadly Demise D3", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds." },
+        { "id": "overwhelming-obliteration", "name": "Overwhelming Obliteration", "description": "In your Movement phase, if this model Remains Stationary, until the end of the turn, its doomsday cannon has the [DEVASTATING WOUNDS] ability." },
+        { "id": "damaged", "name": "Damaged: 1-5 Wounds Remaining", "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll." }
       ],
-      "keywords": ["Infantry", "Necrons", "Destroyer Cult", "Skorpekh Destroyers"]
+      "keywords": ["Vehicle", "Fly", "Necrons", "Doomsday Ark"]
     },
     {
-      "id": "canoptek-scarabs",
-      "name": "Canoptek Scarabs",
-      "points": { "3": 40, "6": 80, "9": 120 },
-      "stats": { "m": 9, "t": 2, "sv": "6+", "w": 4, "ld": "8+", "oc": 0 },
-      "invuln": null,
+      "id": "ghost-ark",
+      "name": "Ghost Ark",
+      "points": { "1": 115 },
+      "stats": { "m": 10, "t": 9, "sv": "3+", "w": 14, "ld": "7+", "oc": 3 },
+      "invuln": "4+",
       "weapons": [
-        {
-          "id": "feeder-mandibles",
-          "name": "Feeder Mandibles",
-          "type": "melee",
-          "stats": { "a": 6, "ws": "5+", "s": 2, "ap": 0, "d": 1 },
-          "abilities": ["Lethal Hits"]
-        }
+        { "id": "gauss-flayer-array", "name": "Gauss Flayer Array", "type": "ranged", "stats": { "range": 24, "a": 5, "bs": "3+", "s": 4, "ap": 0, "d": 1 }, "abilities": ["Lethal Hits", "Rapid Fire 5"] },
+        { "id": "armoured-bulk", "name": "Armoured Bulk", "type": "melee", "stats": { "a": 3, "ws": "4+", "s": 6, "ap": 0, "d": 1 }, "abilities": [] }
       ],
       "loadoutOptions": [],
       "abilities": [
-        {
-          "id": "self-destruction",
-          "name": "Self-Destruction",
-          "description": "Once per battle, at the start of the Fight phase, you can select one enemy unit within Engagement Range of this unit. Roll one D6 for each model in this unit: for each 2+, that enemy unit suffers 1 mortal wound."
-        }
+        { "id": "deadly-demise-d3", "name": "Deadly Demise D3", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds." },
+        { "id": "repair-barge", "name": "Repair Barge", "description": "In your opponent's Shooting phase, just after an enemy unit has shot, select one friendly NECRON WARRIORS unit within 3\" of this model. That unit's Reanimation Protocols activate." },
+        { "id": "transport", "name": "Transport", "description": "This model can transport 10 NECRON WARRIORS models and 1 NECRONS INFANTRY CHARACTER model." }
       ],
-      "keywords": ["Swarm", "Fly", "Necrons", "Canoptek", "Canoptek Scarabs"]
+      "keywords": ["Vehicle", "Fly", "Transport", "Dedicated Transport", "Necrons", "Ghost Ark"]
+    },
+    {
+      "id": "night-scythe",
+      "name": "Night Scythe",
+      "points": { "1": 145 },
+      "stats": { "m": 20, "t": 9, "sv": "3+", "w": 12, "ld": "7+", "oc": 0 },
+      "invuln": null,
+      "weapons": [
+        { "id": "twin-tesla-destructor", "name": "Twin Tesla Destructor", "type": "ranged", "stats": { "range": 36, "a": 6, "bs": "3+", "s": 8, "ap": 0, "d": 2 }, "abilities": ["Sustained Hits 2", "Twin-linked"] },
+        { "id": "armoured-bulk", "name": "Armoured Bulk", "type": "melee", "stats": { "a": 3, "ws": "4+", "s": 6, "ap": 0, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "deadly-demise-d3", "name": "Deadly Demise D3", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds." },
+        { "id": "deep-strike", "name": "Deep Strike", "description": "This unit can be set up in Reserves and arrive more than 9\" from enemies." },
+        { "id": "translocation-beams", "name": "Translocation Beams", "description": "At the end of the Fight phase, a friendly NECRONS INFANTRY unit wholly within 6\" of this model can embark within it." },
+        { "id": "transport", "name": "Transport", "description": "This model can transport 1 NECRONS INFANTRY unit." }
+      ],
+      "keywords": ["Vehicle", "Aircraft", "Fly", "Transport", "Necrons", "Night Scythe"]
+    },
+    {
+      "id": "doom-scythe",
+      "name": "Doom Scythe",
+      "points": { "1": 230 },
+      "stats": { "m": 20, "t": 9, "sv": "3+", "w": 12, "ld": "7+", "oc": 0 },
+      "invuln": null,
+      "weapons": [
+        { "id": "heavy-death-ray", "name": "Heavy Death Ray", "type": "ranged", "stats": { "range": 36, "a": 3, "bs": "3+", "s": 16, "ap": -4, "d": "D6+1" }, "abilities": ["Sustained Hits D3"] },
+        { "id": "twin-tesla-destructor", "name": "Twin Tesla Destructor", "type": "ranged", "stats": { "range": 36, "a": 6, "bs": "3+", "s": 8, "ap": 0, "d": 2 }, "abilities": ["Sustained Hits 2", "Twin-linked"] },
+        { "id": "armoured-bulk", "name": "Armoured Bulk", "type": "melee", "stats": { "a": 3, "ws": "4+", "s": 6, "ap": 0, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "deadly-demise-d3", "name": "Deadly Demise D3", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds." },
+        { "id": "atavistic-instigation", "name": "Atavistic Instigation", "description": "Each time this model shoots, select one enemy unit that was hit. That unit must choose to either stand firm or duck for cover. If it stands firm, until the end of the phase, each time an attack targets that unit, a successful unmodified Hit roll of 5+ scores a Critical Hit. If it ducks for cover, until the start of your next Shooting phase, models in that unit have a -1 modifier to their Hit rolls." },
+        { "id": "damaged", "name": "Damaged: 1-4 Wounds Remaining", "description": "While this model has 1-4 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll." }
+      ],
+      "keywords": ["Vehicle", "Aircraft", "Fly", "Necrons", "Doom Scythe"]
+    },
+    {
+      "id": "imotekh-the-stormlord",
+      "name": "Imotekh the Stormlord",
+      "points": { "1": 100 },
+      "stats": { "m": 5, "t": 5, "sv": "2+", "w": 6, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "gauntlet-of-fire", "name": "Gauntlet of Fire", "type": "ranged", "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 5, "ap": -1, "d": 1 }, "abilities": ["Torrent", "Ignores Cover"] },
+        { "id": "staff-of-the-destroyer", "name": "Staff of the Destroyer", "type": "melee", "stats": { "a": 4, "ws": "2+", "s": 6, "ap": -3, "d": 2 }, "abilities": ["Devastating Wounds"] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "leader", "name": "Leader", "description": "This model can be attached to Immortals, Lychguard, or Necron Warriors.", "eligibleUnits": ["immortals", "lychguard", "necron-warriors"] },
+        { "id": "grand-strategist", "name": "Grand Strategist", "description": "At the start of your Command phase, if this model is on the battlefield, you gain 1CP." },
+        { "id": "lord-of-the-storm", "name": "Lord of the Storm", "description": "Once per battle, at the end of your Command phase, roll one D6 for each enemy unit within 12\" of this model: on a 2-5, that unit suffers D3 mortal wounds; on a 6, that unit suffers D3+3 mortal wounds." }
+      ],
+      "keywords": ["Infantry", "Character", "Epic Hero", "Noble", "Necrons", "Imotekh the Stormlord"]
+    },
+    {
+      "id": "trazyn-the-infinite",
+      "name": "Trazyn the Infinite",
+      "points": { "1": 75 },
+      "stats": { "m": 5, "t": 5, "sv": "2+", "w": 6, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [{ "id": "empathic-obliterator", "name": "Empathic Obliterator", "type": "melee", "stats": { "a": 4, "ws": "2+", "s": 7, "ap": 0, "d": "D3" }, "abilities": ["Sustained Hits D3"] }],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "leader", "name": "Leader", "description": "This model can be attached to Immortals, Lychguard, or Necron Warriors.", "eligibleUnits": ["immortals", "lychguard", "necron-warriors"] },
+        { "id": "ancient-collector", "name": "Ancient Collector", "description": "While this model is leading a unit that is within range of an objective marker, that objective marker remains under your control even if you have no models within range of it, unless your opponent controls it at the end of any turn." },
+        { "id": "surrogate-hosts", "name": "Surrogate Hosts", "description": "At the start of your Command phase, you can destroy one other friendly NECRONS INFANTRY CHARACTER model anywhere on the battlefield. If you do, remove this model from the battlefield and set it up anywhere within 3\" of where that destroyed model was and not within Engagement Range of any enemy units, with all of its wounds remaining." }
+      ],
+      "keywords": ["Infantry", "Character", "Epic Hero", "Noble", "Necrons", "Trazyn the Infinite"]
+    },
+    {
+      "id": "orikan-the-diviner",
+      "name": "Orikan the Diviner",
+      "points": { "1": 80 },
+      "stats": { "m": 5, "t": 4, "sv": "4+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [{ "id": "staff-of-tomorrow", "name": "Staff of Tomorrow", "type": "melee", "stats": { "a": 2, "ws": "3+", "s": 4, "ap": -3, "d": "D3" }, "abilities": ["Devastating Wounds"] }],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "leader", "name": "Leader", "description": "This model can be attached to Immortals or Necron Warriors. Can join a unit that already has a ROYAL WARDEN or NOBLE attached.", "eligibleUnits": ["immortals", "necron-warriors"] },
+        { "id": "master-chronomancer", "name": "Master Chronomancer", "description": "While this model is leading a unit, models in that unit have a 4+ invulnerable save." },
+        { "id": "the-stars-are-right", "name": "The Stars Are Right", "description": "Once per battle, at the start of the Fight phase, until the end of the phase, this model's Staff of Tomorrow has an Attacks characteristic of 6, a Strength characteristic of 12, and each successful Wound roll scores a Critical Wound." }
+      ],
+      "keywords": ["Infantry", "Character", "Epic Hero", "Cryptek", "Chronomancer", "Necrons", "Orikan the Diviner"]
+    },
+    {
+      "id": "illuminor-szeras",
+      "name": "Illuminor Szeras",
+      "points": { "1": 165 },
+      "stats": { "m": 8, "t": 8, "sv": "2+", "w": 9, "ld": "6+", "oc": 3 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "eldritch-lance-ranged", "name": "Eldritch Lance", "type": "ranged", "stats": { "range": 36, "a": 3, "bs": "3+", "s": 9, "ap": -3, "d": 3 }, "abilities": [] },
+        { "id": "eldritch-lance-melee", "name": "Eldritch Lance", "type": "melee", "stats": { "a": 4, "ws": "3+", "s": 9, "ap": -3, "d": 3 }, "abilities": [] },
+        { "id": "impaling-legs", "name": "Impaling Legs", "type": "melee", "stats": { "a": 4, "ws": "3+", "s": 6, "ap": -1, "d": 1 }, "abilities": ["Extra Attacks"] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "lone-operative", "name": "Lone Operative", "description": "While this model is within 3\" of a friendly NECRONS unit, it can only be selected as the target of a ranged attack if the attacking model is within 12\"." },
+        { "id": "mechanical-augmentation", "name": "Mechanical Augmentation", "description": "While a friendly NECRONS BATTLELINE unit is within 3\" of this model, each time a model in that unit makes an attack, improve the Armour Penetration of that attack by 1. In addition, each time an attack targets that BATTLELINE unit, worsen the Armour Penetration of that attack by 1." },
+        { "id": "atomic-energy-manipulator", "name": "Atomic Energy Manipulator", "description": "Each time this model destroys an enemy model in the Fight phase, until the end of the battle, increase the range of this model's Mechanical Augmentation ability by 3\" (to a maximum of 12\")." }
+      ],
+      "keywords": ["Infantry", "Character", "Epic Hero", "Cryptek", "Necrons", "Illuminor Szeras"]
+    },
+    {
+      "id": "ctan-shard-of-the-nightbringer",
+      "name": "C'tan Shard of the Nightbringer",
+      "points": { "1": 315 },
+      "stats": { "m": 10, "t": 11, "sv": "3+", "w": 16, "ld": "6+", "oc": 4 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "gaze-of-death", "name": "Gaze of Death", "type": "ranged", "stats": { "range": 18, "a": "D3", "bs": "2+", "s": 12, "ap": -3, "d": "D6+3" }, "abilities": [] },
+        { "id": "scythe-of-the-nightbringer-strike", "name": "Scythe of the Nightbringer - Strike", "type": "melee", "stats": { "a": 6, "ws": "2+", "s": 14, "ap": -4, "d": "D6+2" }, "abilities": ["Devastating Wounds"] },
+        { "id": "scythe-of-the-nightbringer-sweep", "name": "Scythe of the Nightbringer - Sweep", "type": "melee", "stats": { "a": 14, "ws": "2+", "s": 8, "ap": -2, "d": 2 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "deadly-demise-d6", "name": "Deadly Demise D6", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D6 mortal wounds." },
+        { "id": "deep-strike", "name": "Deep Strike", "description": "This unit can be set up in Reserves and arrive more than 9\" from enemies." },
+        { "id": "feel-no-pain-5", "name": "Feel No Pain 5+", "description": "Each time this model would lose a wound, roll one D6: on a 5+, that wound is not lost." },
+        { "id": "drain-life", "name": "Drain Life", "description": "At the end of the Fight phase, roll one D6 for each enemy unit within 6\" of this model: on a 4+, that enemy unit suffers D3 mortal wounds." },
+        { "id": "necrodermis", "name": "Necrodermis", "description": "Each time an attack is allocated to this model, subtract 1 from the Damage characteristic of that attack." },
+        { "id": "enslaved-star-god", "name": "Enslaved Star God", "description": "This model cannot be your Warlord." }
+      ],
+      "keywords": ["Monster", "Character", "Epic Hero", "Fly", "Necrons", "C'tan Shard of the Nightbringer"]
+    },
+    {
+      "id": "ctan-shard-of-the-deceiver",
+      "name": "C'tan Shard of the Deceiver",
+      "points": { "1": 285 },
+      "stats": { "m": 8, "t": 11, "sv": "3+", "w": 16, "ld": "6+", "oc": 4 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "cosmic-insanity", "name": "Cosmic Insanity", "type": "ranged", "stats": { "range": 18, "a": 6, "bs": "2+", "s": 6, "ap": -2, "d": 2 }, "abilities": ["Anti-Character 4+", "Devastating Wounds", "Precision"] },
+        { "id": "golden-fists", "name": "Golden Fists", "type": "melee", "stats": { "a": 8, "ws": "2+", "s": 10, "ap": -3, "d": 3 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "deadly-demise-d6", "name": "Deadly Demise D6", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D6 mortal wounds." },
+        { "id": "deep-strike", "name": "Deep Strike", "description": "This unit can be set up in Reserves and arrive more than 9\" from enemies." },
+        { "id": "feel-no-pain-5", "name": "Feel No Pain 5+", "description": "Each time this model would lose a wound, roll one D6: on a 5+, that wound is not lost." },
+        { "id": "stealth", "name": "Stealth", "description": "Each time a ranged attack is made against this model, subtract 1 from that attack's Hit roll." },
+        { "id": "grand-illusion", "name": "Grand Illusion", "description": "After both players have deployed, you can select up to three NECRONS units from your army and redeploy them into Strategic Reserves." },
+        { "id": "necrodermis", "name": "Necrodermis", "description": "Each time an attack is allocated to this model, subtract 1 from the Damage characteristic of that attack." },
+        { "id": "enslaved-star-god", "name": "Enslaved Star God", "description": "This model cannot be your Warlord." }
+      ],
+      "keywords": ["Monster", "Character", "Epic Hero", "Fly", "Necrons", "C'tan Shard of the Deceiver"]
+    },
+    {
+      "id": "ctan-shard-of-the-void-dragon",
+      "name": "C'tan Shard of the Void Dragon",
+      "points": { "1": 310 },
+      "stats": { "m": 10, "t": 11, "sv": "3+", "w": 16, "ld": "6+", "oc": 4 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "spear-of-the-void-dragon-ranged", "name": "Spear of the Void Dragon", "type": "ranged", "stats": { "range": 12, "a": "D3", "bs": "2+", "s": 8, "ap": -3, "d": "D6+2" }, "abilities": ["Anti-Vehicle 2+"] },
+        { "id": "voltaic-storm", "name": "Voltaic Storm", "type": "ranged", "stats": { "range": 18, "a": "D6+3", "bs": "2+", "s": 7, "ap": -1, "d": 2 }, "abilities": ["Blast", "Sustained Hits 2"] },
+        { "id": "spear-of-the-void-dragon-strike", "name": "Spear of the Void Dragon - Strike", "type": "melee", "stats": { "a": 5, "ws": "2+", "s": 12, "ap": -4, "d": "D6+2" }, "abilities": ["Anti-Vehicle 2+"] },
+        { "id": "spear-of-the-void-dragon-sweep", "name": "Spear of the Void Dragon - Sweep", "type": "melee", "stats": { "a": 10, "ws": "2+", "s": 8, "ap": -1, "d": 2 }, "abilities": [] },
+        { "id": "canoptek-tail-blades", "name": "Canoptek Tail Blades", "type": "melee", "stats": { "a": 6, "ws": "2+", "s": 6, "ap": -1, "d": 1 }, "abilities": ["Extra Attacks"] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "deadly-demise-d6", "name": "Deadly Demise D6", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D6 mortal wounds." },
+        { "id": "deep-strike", "name": "Deep Strike", "description": "This unit can be set up in Reserves and arrive more than 9\" from enemies." },
+        { "id": "feel-no-pain-5", "name": "Feel No Pain 5+", "description": "Each time this model would lose a wound, roll one D6: on a 5+, that wound is not lost." },
+        { "id": "matter-absorption", "name": "Matter Absorption", "description": "At the start of your Command phase, select one enemy VEHICLE unit within 6\" of this model. That unit suffers 1 mortal wound. This model then regains 1 lost wound." },
+        { "id": "necrodermis", "name": "Necrodermis", "description": "Each time an attack is allocated to this model, subtract 1 from the Damage characteristic of that attack." },
+        { "id": "enslaved-star-god", "name": "Enslaved Star God", "description": "This model cannot be your Warlord." }
+      ],
+      "keywords": ["Monster", "Character", "Epic Hero", "Fly", "Necrons", "C'tan Shard of the Void Dragon"]
+    },
+    {
+      "id": "transcendent-ctan",
+      "name": "Transcendent C'tan",
+      "points": { "1": 305 },
+      "stats": { "m": 8, "t": 11, "sv": "3+", "w": 16, "ld": "6+", "oc": 4 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "seismic-assault", "name": "Seismic Assault", "type": "ranged", "stats": { "range": 12, "a": 6, "bs": "2+", "s": 8, "ap": -2, "d": 2 }, "abilities": ["Assault", "Sustained Hits 1"] },
+        { "id": "crackling-tendrils", "name": "Crackling Tendrils", "type": "melee", "stats": { "a": 8, "ws": "2+", "s": 10, "ap": -3, "d": "D6" }, "abilities": ["Sustained Hits 1"] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "deadly-demise-d6", "name": "Deadly Demise D6", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D6 mortal wounds." },
+        { "id": "deep-strike", "name": "Deep Strike", "description": "This unit can be set up in Reserves and arrive more than 9\" from enemies." },
+        { "id": "feel-no-pain-5", "name": "Feel No Pain 5+", "description": "Each time this model would lose a wound, roll one D6: on a 5+, that wound is not lost." },
+        { "id": "transdimensional-displacement", "name": "Transdimensional Displacement", "description": "Each time this model Advances, instead of making an Advance roll, you can remove it from the battlefield and set it up again anywhere on the battlefield more than 9\" from all enemy models." },
+        { "id": "necrodermis", "name": "Necrodermis", "description": "Each time an attack is allocated to this model, subtract 1 from the Damage characteristic of that attack." },
+        { "id": "enslaved-star-god", "name": "Enslaved Star God", "description": "This model cannot be your Warlord and cannot have Enhancements." }
+      ],
+      "keywords": ["Monster", "Character", "Fly", "Necrons", "Transcendent C'tan"]
+    },
+    {
+      "id": "the-silent-king",
+      "name": "The Silent King",
+      "points": { "1": 400 },
+      "stats": { "m": 8, "t": 10, "sv": "2+", "w": 16, "ld": "6+", "oc": 6 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "annihilator-beam", "name": "Annihilator Beam", "type": "ranged", "stats": { "range": 24, "a": 1, "bs": "2+", "s": 14, "ap": -4, "d": "D6" }, "abilities": [] },
+        { "id": "sceptre-of-eternal-glory", "name": "Sceptre of Eternal Glory", "type": "ranged", "stats": { "range": 24, "a": 2, "bs": "2+", "s": 10, "ap": -3, "d": "D3" }, "abilities": ["Devastating Wounds"] },
+        { "id": "staff-of-stars", "name": "Staff of Stars", "type": "ranged", "stats": { "range": 24, "a": 12, "bs": "2+", "s": 6, "ap": -1, "d": 1 }, "abilities": ["Indirect Fire"] },
+        { "id": "weapons-of-the-final-triarch", "name": "Weapons of the Final Triarch", "type": "melee", "stats": { "a": 12, "ws": "2+", "s": 8, "ap": -3, "d": 2 }, "abilities": ["Lethal Hits"] },
+        { "id": "armoured-bulk", "name": "Armoured Bulk", "type": "melee", "stats": { "a": 1, "ws": "4+", "s": 4, "ap": 0, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "deadly-demise-d6-3", "name": "Deadly Demise D6+3", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D6+3 mortal wounds." },
+        { "id": "supreme-commander", "name": "Supreme Commander", "description": "This model must be your Warlord." },
+        { "id": "voice-of-the-triarch", "name": "Voice of the Triarch", "description": "At the start of each battle round, select one ability to be active until the start of the next battle round: Phaeron of the Stars (re-roll Hit/Wound rolls of 1 for friendly NECRONS within 6\"), Phaeron of the Blades (re-roll Charge rolls and +1 Strength in melee for friendly NECRONS within 6\"), or Relentless March (+2\" Movement for friendly NECRONS within 6\")." },
+        { "id": "the-silent-king-ability", "name": "The Silent King", "description": "While a friendly NECRONS unit is within 6\" of this model, improve that unit's Leadership characteristic by 1." },
+        { "id": "triarchal-menhirs", "name": "Triarchal Menhirs", "description": "This model has 2 Triarchal Menhirs (each T10, 2+ Sv, 5W, 4+ invuln, OC 1). The Menhirs are destroyed if Szarekh is destroyed. Menhirs do not count for Damaged profiles." }
+      ],
+      "keywords": ["Vehicle", "Character", "Epic Hero", "Triarch", "Necrons", "The Silent King"]
+    },
+    {
+      "id": "monolith",
+      "name": "Monolith",
+      "points": { "1": 400 },
+      "stats": { "m": 8, "t": 13, "sv": "2+", "w": 22, "ld": "7+", "oc": 8 },
+      "invuln": null,
+      "weapons": [
+        { "id": "death-ray", "name": "Death Ray", "type": "ranged", "stats": { "range": 24, "a": 1, "bs": "3+", "s": 12, "ap": -4, "d": "D6+1" }, "abilities": ["Sustained Hits D3"], "loadoutGroup": "death-ray" },
+        { "id": "particle-whip", "name": "Particle Whip", "type": "ranged", "stats": { "range": 24, "a": "3D6", "bs": "3+", "s": 8, "ap": -1, "d": 2 }, "abilities": ["Blast", "Devastating Wounds"], "loadoutGroup": "particle-whip" },
+        { "id": "gauss-flux-arc", "name": "Gauss Flux Arc", "type": "ranged", "stats": { "range": 24, "a": 3, "bs": "3+", "s": 6, "ap": -1, "d": 1 }, "abilities": ["Lethal Hits", "Rapid Fire 3"] },
+        { "id": "portal-of-exile", "name": "Portal of Exile", "type": "melee", "stats": { "a": 6, "ws": "2+", "s": 8, "ap": -2, "d": 3 }, "abilities": [] }
+      ],
+      "loadoutOptions": [{ "id": "main-weapon", "name": "Main Weapon", "type": "choice", "pattern": "replacement", "choices": [{ "id": "death-ray", "name": "Death Ray", "default": true }, { "id": "particle-whip", "name": "Particle Whip" }] }],
+      "abilities": [
+        { "id": "deadly-demise-d6", "name": "Deadly Demise D6", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D6 mortal wounds." },
+        { "id": "deep-strike", "name": "Deep Strike", "description": "This unit can be set up in Reserves and arrive more than 9\" from enemies." },
+        { "id": "eternity-gate", "name": "Eternity Gate", "description": "In the Reinforcements step of your Movement phase, you can select one friendly NECRONS INFANTRY unit that is in Reserves or Strategic Reserves. Set that unit up wholly within 6\" of this model and more than 9\" from all enemy models." },
+        { "id": "damaged", "name": "Damaged: 1-7 Wounds Remaining", "description": "While this model has 1-7 wounds remaining, subtract 4 from its Objective Control characteristic and subtract 1 from all Hit rolls." }
+      ],
+      "keywords": ["Vehicle", "Titanic", "Fly", "Towering", "Necrons", "Monolith"]
+    },
+    {
+      "id": "tesseract-vault",
+      "name": "Tesseract Vault",
+      "points": { "1": 425 },
+      "stats": { "m": 8, "t": 12, "sv": "2+", "w": 24, "ld": "7+", "oc": 8 },
+      "invuln": "4+",
+      "weapons": [
+        { "id": "tesla-spheres", "name": "Tesla Spheres", "type": "ranged", "stats": { "range": 24, "a": 6, "bs": "3+", "s": 7, "ap": 0, "d": 1 }, "abilities": ["Sustained Hits 2"] },
+        { "id": "antimatter-meteor", "name": "Antimatter Meteor", "type": "ranged", "stats": { "range": 24, "a": "D6+3", "bs": "3+", "s": 10, "ap": -3, "d": 3 }, "abilities": ["Blast", "Devastating Wounds", "Indirect Fire"] },
+        { "id": "cosmic-fire", "name": "Cosmic Fire", "type": "ranged", "stats": { "range": 18, "a": "3D6", "bs": "N/A", "s": 6, "ap": -2, "d": 1 }, "abilities": ["Ignores Cover", "Devastating Wounds", "Torrent"] },
+        { "id": "times-arrow", "name": "Time's Arrow", "type": "ranged", "stats": { "range": 24, "a": 1, "bs": "2+", "s": 3, "ap": -2, "d": 6 }, "abilities": ["Anti-Character 4+", "Devastating Wounds", "Precision"] },
+        { "id": "armoured-bulk", "name": "Armoured Bulk", "type": "melee", "stats": { "a": 6, "ws": "4+", "s": 8, "ap": 0, "d": 1 }, "abilities": [] }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        { "id": "deadly-demise-d6-3", "name": "Deadly Demise D6+3", "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D6+3 mortal wounds." },
+        { "id": "powers-of-the-ctan", "name": "Powers of the C'tan", "description": "Each time this model shoots, select up to two different C'tan Power weapons (Antimatter Meteor, Cosmic Fire, Time's Arrow) to shoot with. While this model has 1-8 wounds remaining, you can only select one." },
+        { "id": "damaged", "name": "Damaged: 1-8 Wounds Remaining", "description": "While this model has 1-8 wounds remaining, subtract 4 from its Objective Control characteristic and you can only use one C'tan Power weapon." }
+      ],
+      "keywords": ["Vehicle", "Titanic", "Fly", "Towering", "Necrons", "Tesseract Vault"]
     }
   ],
   "detachments": {
-    "awakened_dynasty": {
+    "awakened-dynasty": {
       "name": "Awakened Dynasty",
-      "rules": [
-        {
-          "id": "command-protocols",
-          "name": "Command Protocols",
-          "description": "At the start of the battle round, you can select one of the Command Protocols listed below to be active for your army until the end of the battle round. Each Command Protocol can only be selected once per battle.",
-          "type": "passive",
-          "protocols": [
-            {
-              "id": "protocol-of-the-eternal-guardian",
-              "name": "Protocol of the Eternal Guardian",
-              "description": "Each time an attack is allocated to a NECRONS model from your army, if that model is within range of an objective marker, subtract 1 from the Damage characteristic of that attack (minimum 1)."
-            },
-            {
-              "id": "protocol-of-the-sudden-storm",
-              "name": "Protocol of the Sudden Storm",
-              "description": "Add 2\" to the Move characteristic of NECRONS models from your army."
-            },
-            {
-              "id": "protocol-of-the-conquering-tyrant",
-              "name": "Protocol of the Conquering Tyrant",
-              "description": "Add 1 to the Objective Control characteristic of NECRONS models from your army."
-            },
-            {
-              "id": "protocol-of-the-hungry-void",
-              "name": "Protocol of the Hungry Void",
-              "description": "Each time a NECRONS model from your army makes a melee attack, improve the Armour Penetration characteristic of that attack by 1."
-            },
-            {
-              "id": "protocol-of-the-undying-legions",
-              "name": "Protocol of the Undying Legions",
-              "description": "Each time a NECRONS unit from your army makes a Reanimation Protocols roll, you can re-roll that roll."
-            }
-          ],
-          "modifiers": []
-        }
+      "rule": { "name": "Command Protocols", "description": "While a NECRONS CHARACTER model is leading a unit from your army, each time a model in that unit makes an attack, add 1 to the Hit roll." },
+      "enhancements": [
+        { "id": "veil-of-darkness", "name": "Veil of Darkness", "points": 20, "description": "Once per battle, at the end of your opponent's turn, if the bearer's unit is not within Engagement Range of enemy units, remove it from the battlefield. Set it up in the Reinforcements step of your next Movement phase anywhere more than 9\" from all enemies." },
+        { "id": "hypermaterial-ablator", "name": "Hypermaterial Ablator", "points": 15, "description": "While the bearer is leading a unit, models in that unit have the Stealth ability. While not within 12\" of enemies, models in the bearer's unit have the Benefit of Cover." },
+        { "id": "phasal-subjugator", "name": "Phasal Subjugator", "points": 25, "description": "While a friendly NECRONS unit that does not contain a CHARACTER is within 6\" of the bearer, each time a model in that unit makes an attack, add 1 to the Hit roll." },
+        { "id": "enaegic-dermal-bond", "name": "Enaegic Dermal Bond", "points": 10, "description": "Each time an attack is allocated to the bearer, subtract 1 from the Damage characteristic of that attack." }
       ],
       "stratagems": [
-        {
-          "id": "protocol-of-the-conquering-tyrant-stratagem",
-          "name": "Protocol of the Conquering Tyrant",
-          "cost": 1,
-          "phase": "Command",
-          "description": "Use this Stratagem at the start of the battle round. Select one NECRONS INFANTRY unit from your army. Until the end of the battle round, add 2 to the Objective Control characteristic of models in that unit (instead of 1 from the Command Protocol).",
-          "modifiers": []
-        },
-        {
-          "id": "resurrection-orb",
-          "name": "Resurrection Orb",
-          "cost": 1,
-          "phase": "Command",
-          "description": "Use this Stratagem at the start of your Command phase. Select one NECRONS unit from your army that is making Reanimation Protocols rolls this phase. Until the end of the phase, each time that unit makes a Reanimation Protocols roll, add 1 to that roll.",
-          "modifiers": []
-        },
-        {
-          "id": "solar-pulse",
-          "name": "Solar Pulse",
-          "cost": 1,
-          "phase": "Shooting",
-          "description": "Use this Stratagem in your Shooting phase, just after a NECRONS unit from your army has selected its targets. Until the end of the phase, each time a model in your unit makes a ranged attack, the target does not receive the benefit of cover against that attack.",
-          "modifiers": []
-        },
-        {
-          "id": "enslaved-protectors",
-          "name": "Enslaved Protectors",
-          "cost": 1,
-          "phase": "Any",
-          "description": "Use this Stratagem at the start of any phase. Select one NECRONS CHARACTER unit from your army that is within 3\" of a friendly LYCHGUARD unit. Until the end of the phase, while your CHARACTER unit is within 3\" of that LYCHGUARD unit, each time an attack is made against your CHARACTER unit, that LYCHGUARD unit can use its Guardian Protocols ability even if your CHARACTER unit is not leading it.",
-          "modifiers": []
-        },
-        {
-          "id": "disruption-fields",
-          "name": "Disruption Fields",
-          "cost": 1,
-          "phase": "Fight",
-          "description": "Use this Stratagem in the Fight phase, just after a NECRONS unit from your army has selected its targets. Until the end of the phase, each time a model in your unit makes a melee attack, add 1 to the Strength characteristic of that attack.",
-          "modifiers": []
-        },
-        {
-          "id": "undying-warriors",
-          "name": "Undying Warriors",
-          "cost": 2,
-          "phase": "Command",
-          "description": "Use this Stratagem at the start of your Command phase. Select one NECRONS unit from your army. Until the start of your next Command phase, models in that unit have the Feel No Pain 5+ ability.",
-          "modifiers": []
-        }
-      ],
+        { "id": "protocol-eternal-revenant", "name": "Protocol of the Eternal Revenant", "cost": 1, "type": "Epic Deed", "when": "Any phase, just after a NECRONS INFANTRY CHARACTER is destroyed.", "effect": "At the end of the phase, set that model back up as close as possible to where it was destroyed, not within Engagement Range of enemies, with half its starting wounds." },
+        { "id": "protocol-undying-legions", "name": "Protocol of the Undying Legions", "cost": 1, "type": "Strategic Ploy", "when": "Opponent's Shooting or Fight phase, after an enemy unit resolves attacks.", "effect": "One NECRONS unit that had models destroyed reanimates D3 wounds (D3+1 if CHARACTER-led)." },
+        { "id": "protocol-vengeful-stars", "name": "Protocol of the Vengeful Stars", "cost": 2, "type": "Strategic Ploy", "when": "Opponent's Shooting phase, after an enemy unit resolves attacks.", "effect": "One NECRONS unit that was targeted can shoot back at the attacking unit. If CHARACTER-led, gains [IGNORES COVER]." },
+        { "id": "protocol-hungry-void", "name": "Protocol of the Hungry Void", "cost": 1, "type": "Battle Tactic", "when": "Fight phase.", "effect": "One NECRONS unit gains +1 Strength on melee weapons. If CHARACTER-led, also +1 AP." },
+        { "id": "protocol-conquering-tyrant", "name": "Protocol of the Conquering Tyrant", "cost": 1, "type": "Battle Tactic", "when": "Your Shooting phase.", "effect": "One NECRONS unit re-rolls Hit rolls of 1 at half range. If CHARACTER-led, full re-rolls." },
+        { "id": "protocol-sudden-storm", "name": "Protocol of the Sudden Storm", "cost": 1, "type": "Battle Tactic", "when": "Your Movement phase.", "effect": "One NECRONS unit's ranged weapons gain [ASSAULT]. If CHARACTER-led, re-roll Advance rolls." }
+      ]
+    },
+    "annihilation-legion": {
+      "name": "Annihilation Legion",
+      "rule": { "name": "Annihilation Protocols", "description": "DESTROYER CULT and FLAYED ONES units can re-roll Charge rolls. When targeting a Below Half-strength unit, add 1 to Charge rolls." },
       "enhancements": [
-        {
-          "id": "veil-of-darkness",
-          "name": "Veil of Darkness",
-          "points": 20,
-          "description": "NECRONS model only. Once per battle, at the end of your opponent's turn, the bearer's unit can be removed from the battlefield and set up again anywhere on the battlefield that is more than 9\" horizontally away from all enemy models.",
-          "modifiers": []
-        },
-        {
-          "id": "sempiternal-weave",
-          "name": "Sempiternal Weave",
-          "points": 15,
-          "description": "NECRONS model only. Add 1 to the Wounds characteristic of the bearer. In addition, each time an attack is allocated to the bearer, subtract 1 from the Damage characteristic of that attack (minimum 1).",
-          "modifiers": [
-            { "stat": "w", "operation": "add", "value": 1, "scope": "model" }
-          ]
-        },
-        {
-          "id": "hypermaterial-ablator",
-          "name": "Hypermaterial Ablator",
-          "points": 25,
-          "description": "NECRONS model only. The bearer has the Feel No Pain 4+ ability against mortal wounds. In addition, each time a ranged attack targets the bearer's unit, if the bearer is not in engagement range of any enemy units, models in the bearer's unit have the Stealth ability.",
-          "modifiers": []
-        },
-        {
-          "id": "the-sovereign-coronal",
-          "name": "The Sovereign Coronal",
-          "points": 20,
-          "description": "NECRONS model only. While the bearer is on the battlefield, each time you select a Command Protocol to be active for your army, you can select one additional NECRONS CORE unit within 6\" of the bearer. Until the end of the battle round, that unit benefits from that Command Protocol as if it was Battle Round 5 (receiving the maximum bonus).",
-          "modifiers": []
-        }
+        { "id": "eternal-madness", "name": "Eternal Madness", "points": 25, "description": "When a model in the bearer's unit is destroyed, roll one D6: on a 4+, that model can fight before being removed." },
+        { "id": "ingrained-superiority", "name": "Ingrained Superiority", "points": 10, "description": "Each time the bearer makes an attack, a Critical Wound improves the AP of that attack by 1." },
+        { "id": "soulless-reaper", "name": "Soulless Reaper", "points": 20, "description": "DESTROYER CULT only. Enemy units within Engagement Range of the bearer's unit cannot Fall Back unless they roll a 3+ on a D6." },
+        { "id": "eldritch-nightmare", "name": "Eldritch Nightmare", "points": 15, "description": "DESTROYER CULT only. At the start of each phase, enemy units within Engagement Range of the bearer's unit must take a Battle-shock test." }
+      ],
+      "stratagems": [
+        { "id": "masks-of-death", "name": "Masks of Death", "cost": 1, "type": "Strategic Ploy", "when": "Opponent's Shooting or Fight phase.", "effect": "One DESTROYER CULT or FLAYED ONES unit gains -1 to Hit rolls for attacks targeting it." },
+        { "id": "the-spoor-of-frailty", "name": "The Spoor of Frailty", "cost": 1, "type": "Battle Tactic", "when": "Your Shooting or Fight phase.", "effect": "One DESTROYER CULT or FLAYED ONES unit gains +1 to Hit vs Below Starting Strength units, and +1 to Wound vs Below Half-strength units." },
+        { "id": "murderous-reanimation", "name": "Murderous Reanimation", "cost": 1, "type": "Battle Tactic", "when": "Fight phase, after your unit destroys an enemy unit.", "effect": "Your DESTROYER CULT or FLAYED ONES unit's Reanimation Protocols activate." },
+        { "id": "pitiless-hunters", "name": "Pitiless Hunters", "cost": 1, "type": "Battle Tactic", "when": "Fight phase.", "effect": "One DESTROYER CULT or FLAYED ONES unit can Pile In and Consolidate up to 6\" instead of 3\"." },
+        { "id": "blood-fuelled-cruelty", "name": "Blood-fuelled Cruelty", "cost": 1, "type": "Battle Tactic", "when": "Opponent's Movement phase, after an enemy unit Falls Back.", "effect": "Roll one D6 for each model in your DESTROYER CULT or FLAYED ONES unit that was in Engagement Range: on a 4+, the enemy unit suffers 1 mortal wound." },
+        { "id": "insanitys-ire", "name": "Insanity's Ire", "cost": 1, "type": "Strategic Ploy", "when": "Opponent's Shooting phase, after your unit is targeted.", "effect": "One DESTROYER CULT or FLAYED ONES unit that lost models can make a Normal move toward the attacking unit." }
+      ]
+    },
+    "canoptek-court": {
+      "name": "Canoptek Court",
+      "rule": { "name": "Power Matrix", "description": "CRYPTEK and CANOPTEK units re-roll Hit rolls of 1. If entirely within your Power Matrix (your deployment zone, or No Man's Land/enemy deployment zone if you control half+ objectives there), they can re-roll all Hit rolls instead." },
+      "enhancements": [
+        { "id": "dimensional-sanctum", "name": "Dimensional Sanctum", "points": 20, "description": "CRYPTEK only. The bearer's unit gains the Infiltrators ability." },
+        { "id": "hyperphasic-fulcrum", "name": "Hyperphasic Fulcrum", "points": 15, "description": "CRYPTEK only. While the bearer's unit is entirely within your Power Matrix, re-roll Wound rolls of 1." },
+        { "id": "autodivinator", "name": "Autodivinator", "points": 15, "description": "CRYPTEK only. Each time your opponent gains a CP from an ability, roll one D6: on a 2+, you also gain 1CP." },
+        { "id": "metalodermal-tesla-weave", "name": "Metalodermal Tesla Weave", "points": 10, "description": "CRYPTEK only. Once per phase, when the bearer's unit is charged, roll one D6: on a 2-5, the charging unit suffers D3 mortal wounds; on a 6, it suffers 3 mortal wounds." }
+      ],
+      "stratagems": [
+        { "id": "curse-of-the-cryptek", "name": "Curse of the Cryptek", "cost": 1, "type": "Battle Tactic", "when": "Any phase, after an enemy unit destroys a CRYPTEK model.", "effect": "For the rest of the battle, CANOPTEK units gain +1 to Hit and +1 to Wound against that enemy unit." },
+        { "id": "cynosure-of-eradication", "name": "Cynosure of Eradication", "cost": 2, "type": "Battle Tactic", "when": "Your Shooting or Fight phase.", "effect": "One CRYPTEK or CANOPTEK unit entirely within your Power Matrix gains [DEVASTATING WOUNDS] on its weapons until end of phase." },
+        { "id": "solar-pulse", "name": "Solar Pulse", "cost": 1, "type": "Strategic Ploy", "when": "Your Shooting phase.", "effect": "One CRYPTEK unit's attacks gain [IGNORES COVER] against units within range of an objective marker." },
+        { "id": "reactive-subroutines", "name": "Reactive Subroutines", "cost": 1, "type": "Strategic Ploy", "when": "Opponent's Movement phase, after an enemy unit finishes a move.", "effect": "One CANOPTEK unit within 9\" can make a Normal move of up to 6\"." },
+        { "id": "countertemporal-shift", "name": "Countertemporal Shift", "cost": 1, "type": "Strategic Ploy", "when": "Opponent's Shooting phase, after an enemy unit selects targets.", "effect": "One targeted CANOPTEK unit can only be selected as a ranged target by models within 12\" until end of phase." },
+        { "id": "suboptimal-facade", "name": "Suboptimal Facade", "cost": 1, "type": "Strategic Ploy", "when": "Opponent's Charge phase, after an enemy unit charges.", "effect": "One CANOPTEK unit entirely within your Power Matrix that was charged has its Reanimation Protocols activate." }
+      ]
+    },
+    "obeisance-phalanx": {
+      "name": "Obeisance Phalanx",
+      "rule": { "name": "Worthy Foes", "description": "In your Command phase, select one enemy unit. Until your next Command phase, each time a NOBLE, LYCHGUARD, or TRIARCH unit makes an attack targeting that unit, add 1 to the Wound roll." },
+      "enhancements": [
+        { "id": "honourable-combatant", "name": "Honourable Combatant", "points": 10, "description": "NOBLE only. Each time the bearer destroys an enemy CHARACTER model, your opponent loses 1CP." },
+        { "id": "unflinching-will", "name": "Unflinching Will", "points": 20, "description": "NOBLE only. The bearer's melee weapons gain [PRECISION] and [ANTI-INFANTRY 5+]." },
+        { "id": "warrior-noble", "name": "Warrior Noble", "points": 15, "description": "NOBLE only. Each time a melee attack targets the bearer, subtract 1 from the Hit roll." },
+        { "id": "eternal-conqueror", "name": "Eternal Conqueror", "points": 25, "description": "NOBLE only. Each time the bearer makes an attack against a unit within range of an objective marker, you can re-roll the Hit roll." }
+      ],
+      "stratagems": [
+        { "id": "your-time-is-nigh", "name": "Your Time is Nigh", "cost": 1, "type": "Epic Deed", "when": "Any phase, after your opponent's WARLORD is destroyed.", "effect": "For the rest of the battle, each time an enemy unit takes a Battle-shock or Leadership test, subtract 1 from the result." },
+        { "id": "enslaved-artifice", "name": "Enslaved Artifice", "cost": 1, "type": "Battle Tactic", "when": "Your Shooting or Fight phase.", "effect": "One NECRONS unit (not TITANIC) gains unmodified Hit rolls of 5+ score Critical Hits until end of phase." },
+        { "id": "nanoassembly-protocols", "name": "Nanoassembly Protocols", "cost": 1, "type": "Battle Tactic", "when": "Opponent's Shooting or Fight phase, after your VEHICLE is targeted.", "effect": "Subtract 1 from the Damage characteristic of attacks targeting that VEHICLE." },
+        { "id": "sentinels-of-eternity", "name": "Sentinels of Eternity", "cost": 1, "type": "Epic Deed", "when": "Fight phase, after a LYCHGUARD or TRIARCH PRAETORIANS model is destroyed.", "effect": "Roll one D6: on a 4+, that model can fight before being removed." },
+        { "id": "suffer-no-rival", "name": "Suffer No Rival", "cost": 1, "type": "Battle Tactic", "when": "Fight phase.", "effect": "One LYCHGUARD or TRIARCH unit's melee weapons gain [PRECISION]." },
+        { "id": "territorial-obsession", "name": "Territorial Obsession", "cost": 1, "type": "Strategic Ploy", "when": "Your Command phase.", "effect": "One LYCHGUARD or TRIARCH PRAETORIANS unit gains +1 OC. One VEHICLE unit within 6\" of an objective gains +3 OC." }
+      ]
+    },
+    "hypercrypt-legion": {
+      "name": "Hypercrypt Legion",
+      "rule": { "name": "Hyperphasing", "description": "At the end of your opponent's turn, you can select up to 2 NECRONS units (3 in Strike Force, 4 in Onslaught) that are not within Engagement Range of enemy units and place them into Strategic Reserves." },
+      "enhancements": [
+        { "id": "dimensional-overseer", "name": "Dimensional Overseer", "points": 10, "description": "Increase the number of units you can Hyperphase by 1." },
+        { "id": "arisen-tyrant", "name": "Arisen Tyrant", "points": 25, "description": "The bearer's unit re-rolls Hit rolls of 1. If the unit was set up this turn, re-roll all Hit rolls instead." },
+        { "id": "hyperspatial-transfer-node", "name": "Hyperspatial Transfer Node", "points": 15, "description": "Each time the bearer's unit Advances, add 6\" to the Move characteristic instead of rolling." },
+        { "id": "osteoclave-fulcrum", "name": "Osteoclave Fulcrum", "points": 20, "description": "The bearer's unit gains the Deep Strike ability." }
+      ],
+      "stratagems": [
+        { "id": "hyperphasic-recall", "name": "Hyperphasic Recall", "cost": 2, "type": "Strategic Ploy", "when": "Any phase, after a NECRONS INFANTRY unit is destroyed.", "effect": "At the end of the phase, if there is a MONOLITH on the battlefield, set up that unit wholly within 6\" of the MONOLITH and more than 9\" from enemies." },
+        { "id": "quantum-deflection", "name": "Quantum Deflection", "cost": 1, "type": "Wargear", "when": "Opponent's Shooting phase, after your VEHICLE is targeted.", "effect": "That VEHICLE has a 4+ invulnerable save until end of phase." },
+        { "id": "reanimation-crypts", "name": "Reanimation Crypts", "cost": 1, "type": "Strategic Ploy", "when": "Your Command phase.", "effect": "For each NECRONS unit in Reserves, that unit's Reanimation Protocols activate." },
+        { "id": "cosmic-precision", "name": "Cosmic Precision", "cost": 1, "type": "Strategic Ploy", "when": "Your Movement phase, when a NECRONS INFANTRY unit arrives from Deep Strike or Hyperphasing.", "effect": "That unit can be set up anywhere more than 3\" from enemies but cannot charge this turn." },
+        { "id": "dimensional-corridor", "name": "Dimensional Corridor", "cost": 2, "type": "Strategic Ploy", "when": "Your Movement phase, after a unit is set up by a MONOLITH's Eternity Gate.", "effect": "That unit is eligible to declare a charge this turn." },
+        { "id": "entropic-damping", "name": "Entropic Damping", "cost": 1, "type": "Wargear", "when": "Opponent's Shooting phase, after your TITANIC model is targeted.", "effect": "Attacking weapons gain [HAZARDOUS] until end of phase." }
+      ]
+    },
+    "starshatter-arsenal": {
+      "name": "Starshatter Arsenal",
+      "rule": { "name": "Relentless Onslaught", "description": "Each time a NECRONS model targets a unit within range of an objective marker, add 1 to the Hit roll. VEHICLE and MOUNTED models (not TITANIC) have ranged weapons with [ASSAULT]." },
+      "enhancements": [
+        { "id": "dread-majesty", "name": "Dread Majesty", "points": 30, "description": "OVERLORD or CATACOMB COMMAND BARGE only. While friendly non-TITANIC NECRONS units are within 6\" of the bearer, they can re-roll Hit and Wound rolls of 1." },
+        { "id": "miniaturised-nebuloscope", "name": "Miniaturised Nebuloscope", "points": 15, "description": "The bearer's ranged weapons gain [IGNORES COVER]." },
+        { "id": "demanding-leader", "name": "Demanding Leader", "points": 10, "description": "One VEHICLE or MOUNTED unit within 6\" of the bearer can shoot after Falling Back." },
+        { "id": "chrono-impedance-fields", "name": "Chrono-Impedance Fields", "points": 25, "description": "While the bearer is leading a VEHICLE or MOUNTED unit, each time an attack is allocated to a model in that unit, subtract 1 from the Damage characteristic." }
+      ],
+      "stratagems": [
+        { "id": "merciless-reclamation", "name": "Merciless Reclamation", "cost": 1, "type": "Battle Tactic", "when": "Your Shooting or Fight phase.", "effect": "One NECRONS unit targeting a unit within range of an objective marker gains +1 to Wound." },
+        { "id": "unyielding-forms", "name": "Unyielding Forms", "cost": 1, "type": "Battle Tactic", "when": "Opponent's Shooting or Fight phase, after your VEHICLE or MOUNTED unit is targeted.", "effect": "If the weapon's Strength exceeds the unit's Toughness, subtract 1 from the Wound roll." },
+        { "id": "chronoshift", "name": "Chronoshift", "cost": 1, "type": "Strategic Ploy", "when": "Your Movement phase.", "effect": "One VEHICLE or MOUNTED unit adds 6\" to its Move characteristic when Advancing instead of rolling." },
+        { "id": "dimensional-tunnel", "name": "Dimensional Tunnel", "cost": 1, "type": "Strategic Ploy", "when": "Your Movement phase.", "effect": "One VEHICLE or MOUNTED unit can move horizontally through models and terrain features." },
+        { "id": "endless-servitude", "name": "Endless Servitude", "cost": 1, "type": "Strategic Ploy", "when": "Your Command phase.", "effect": "One NECRONS unit within range of an objective marker you control has its Reanimation Protocols activate." },
+        { "id": "reactive-reposition", "name": "Reactive Reposition", "cost": 1, "type": "Strategic Ploy", "when": "Opponent's Shooting phase, after your unit is shot.", "effect": "That unit can make a D6\" Normal move (6\" if VEHICLE or MOUNTED)." }
       ]
     }
   },
-  "armyRules": {
-    "reanimation_protocols": {
-      "name": "Reanimation Protocols",
-      "description": "At the start of each of your Command phases, each unit from your army with this ability that has one or more models with fewer than their starting number of wounds heals D3 wounds. Each time such a unit heals wounds, until the end of your Command phase, you can resurrect models in that unit. Each time you do, select one destroyed model from that unit. It is returned to the unit with 1 wound remaining.",
-      "phase": "Command",
-      "healing": "D3"
-    }
-  },
-  "weaponKeywords": {
-    "Devastating Wounds": "Critical wounds (unmodified wound roll of 6) inflict mortal wounds equal to the Damage characteristic, and the attack sequence ends.",
-    "Lethal Hits": "Critical hits (unmodified hit roll of 6) automatically wound the target.",
-    "Sustained Hits": "Critical hits generate additional hits (number specified after the ability name).",
-    "Twin-linked": "Re-roll wound rolls.",
-    "Assault": "Can shoot after Advancing (at -1 to hit).",
-    "Pistol": "Can shoot in Engagement Range, but only at units within Engagement Range.",
-    "Blast": "+1 attack per 5 models in target unit (minimum 3 attacks vs 6+ models).",
-    "Rapid Fire": "Double the Attacks characteristic when targeting within half range.",
-    "Heavy": "+1 to hit if the bearer's unit Remained Stationary this turn.",
-    "Torrent": "Automatically hits the target.",
-    "Anti-": "Improves wound roll against targets with the specified keyword (e.g., Anti-Vehicle 4+ wounds on 4+ vs Vehicles).",
-    "Hazardous": "After resolving attacks, roll one D6. On a 1, bearer suffers 3 mortal wounds.",
-    "Melta": "When targeting within half range, add X to the Damage characteristic (Melta 2 = +2 Damage)."
-  },
-  "allies": [],
-  "keywordGlossary": {
-    "weapon": [
-      { "name": "Anti-X #+", "description": "Improve AP by 1 and wound on #+ against targets with keyword X." },
-      { "name": "Assault", "description": "Can be shot after Advancing." },
-      { "name": "Blast", "description": "+1 Attack per 5 models in target unit." },
-      { "name": "Devastating Wounds", "description": "Critical wounds inflict mortal wounds equal to Damage, no saves allowed." },
-      { "name": "Extra Attacks", "description": "Attacks with this weapon are made in addition to other weapons." },
-      { "name": "Hazardous", "description": "After resolving attacks, roll D6. On 1, bearer suffers 3 mortal wounds (Characters) or is destroyed (other models)." },
-      { "name": "Heavy", "description": "+1 to Hit if unit Remained Stationary." },
-      { "name": "Ignores Cover", "description": "Target does not benefit from cover." },
-      { "name": "Indirect Fire", "description": "Can target units not visible. -1 to Hit, +1 to target's Save if not visible." },
-      { "name": "Lance", "description": "+1 to Wound if unit charged this turn." },
-      { "name": "Lethal Hits", "description": "Critical hits automatically wound (no wound roll needed)." },
-      { "name": "Melta X", "description": "+X Damage against targets within half range." },
-      { "name": "One Shot", "description": "Can only be used once per battle." },
-      { "name": "Pistol", "description": "Can be shot in Engagement Range, but only at units in Engagement Range." },
-      { "name": "Precision", "description": "On critical wounds, attacker can allocate wound to a Character or Attached model." },
-      { "name": "Rapid Fire X", "description": "+X Attacks when targeting units within half range." },
-      { "name": "Sustained Hits X", "description": "Critical hits score X additional hits." },
-      { "name": "Torrent", "description": "Automatically hits (no hit roll needed)." },
-      { "name": "Twin-linked", "description": "Re-roll wound rolls." }
-    ],
-    "faction": [
-      { "name": "Reanimation Protocols", "description": "At the start of each Command phase, units with this ability heal D3 wounds and can resurrect destroyed models. Returned models come back with 1 wound remaining. This represents the Necrons' ability to self-repair and reanimate fallen warriors." },
-      { "name": "Necrons", "description": "The faction keyword for all Necron units. Ancient robotic warriors who once ruled the galaxy, now awakening from millions of years of slumber to reclaim their empire." },
-      { "name": "Destroyer Cult", "description": "Units consumed by hatred and the need to destroy all life. Often have abilities focused on dealing damage. Key units: Skorpekh Destroyers, Lokhust Destroyers." }
-    ],
-    "unit": [
-      { "name": "Battleline", "description": "Core troop units. May have special rules in certain detachments." },
-      { "name": "Character", "description": "Can lead units, receive Enhancements, and is targeted by Precision." },
-      { "name": "Leader", "description": "Can be attached to Bodyguard units. Abilities affect the combined unit." },
-      { "name": "Feel No Pain X+", "description": "Roll D6 when losing a wound. On X+, wound is ignored." },
-      { "name": "Deadly Demise X", "description": "When destroyed, roll D6. On a 6, each unit within 6\" suffers X mortal wounds." },
-      { "name": "Deep Strike", "description": "Can be set up in Reserves. Arrives during Reinforcements step, more than 9\" from enemy units." }
-    ]
+  "weaponAbilities": {
+    "Anti-X Y+": "Improve wound roll to Y+ against targets with keyword X.",
+    "Assault": "Can shoot after Advancing, with -1 to Hit.",
+    "Blast": "Add 1 to Attacks per 5 models in target unit (min 3 attacks vs 6+ models).",
+    "Devastating Wounds": "Critical Wounds inflict mortal wounds equal to Damage instead of normal damage.",
+    "Extra Attacks": "Attacks with this weapon are made in addition to other melee weapons.",
+    "Heavy": "Add 1 to Hit rolls if the unit Remained Stationary.",
+    "Ignores Cover": "Target cannot have the Benefit of Cover.",
+    "Indirect Fire": "Can target units not visible. -1 to Hit, +1 to target's Save if not visible.",
+    "Lethal Hits": "Critical Hits automatically wound.",
+    "Melta X": "Add X to Damage at half range.",
+    "One Shot": "Can only be used once per battle.",
+    "Pistol": "Can shoot in Engagement Range, targeting units in Engagement Range.",
+    "Precision": "On Critical Wounds, allocate attack to a CHARACTER in the target unit.",
+    "Rapid Fire X": "Add X to Attacks at half range.",
+    "Sustained Hits X": "Critical Hits generate X additional hits.",
+    "Torrent": "Automatically hits (no hit roll).",
+    "Twin-linked": "Re-roll Wound rolls."
   }
 }

@@ -75,6 +75,31 @@ export function ArmyListPanel({
     return unit.keywords.includes('Character');
   };
 
+  // Check if a unit is an Epic Hero (cannot take enhancements)
+  const isEpicHero = (unit: Unit): boolean => {
+    return unit.keywords.includes('Epic Hero');
+  };
+
+  // Get enhancements eligible for a specific unit
+  const getEligibleEnhancements = (unit: Unit) => {
+    // Epic Heroes cannot take enhancements
+    if (isEpicHero(unit)) {
+      return [];
+    }
+
+    return enhancements.filter((enhancement) => {
+      // If no eligibleKeywords specified, enhancement is available to any Character
+      if (!enhancement.eligibleKeywords || enhancement.eligibleKeywords.length === 0) {
+        return true;
+      }
+
+      // Unit must have at least one of the eligible keywords
+      return enhancement.eligibleKeywords.some((keyword) =>
+        unit.keywords.includes(keyword)
+      );
+    });
+  };
+
   // Get unit by ID
   const getUnitById = (unitId: string): Unit | undefined => {
     return armyData.units.find((u) => u.id === unitId);
@@ -209,7 +234,7 @@ export function ArmyListPanel({
                   onWeaponCountChange={(choiceId, count) =>
                     onWeaponCountChange(index, choiceId, count)
                   }
-                  enhancements={enhancements}
+                  enhancements={getEligibleEnhancements(unit)}
                   isCharacter={isCharacter(unit)}
                   isAttachedAsLeader={isUnitAttachedAsLeader(index)}
                   attachedToUnitName={getAttachedToUnitName(index)}

@@ -209,11 +209,11 @@ export function UnitRosterPanel({
                     key={unit.id}
                     onClick={() => onSelectUnit(unit)}
                     className={`
-                      list-row touch-highlight cursor-pointer rounded-lg
+                      list-row touch-highlight cursor-pointer rounded-lg w-full
                       ${unit.id === selectedUnitId ? 'bg-accent-tint-strong' : ''}
                     `}
                   >
-                    <div className="flex items-center justify-between py-2 px-3">
+                    <div className="flex items-center justify-between py-2 px-3 w-full">
                       <span className="text-sm text-white">{unit.name}</span>
                       <span className="text-xs text-white/50">{getPointsDisplay(unit)}</span>
                     </div>

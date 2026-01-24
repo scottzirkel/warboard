@@ -1,0 +1,58 @@
+{
+  "name": "Colosseum - Da List",
+  "army": "custodes",
+  "pointsLimit": 500,
+  "format": "colosseum",
+  "detachment": "shield_host",
+  "units": [
+    {
+      "unitId": "shield-captain",
+      "modelCount": 1,
+      "enhancement": "from-the-hall-of-armouries",
+      "loadout": {},
+      "weaponCounts": {
+        "spear": 1
+      },
+      "currentWounds": null,
+      "leaderCurrentWounds": null,
+      "attachedLeader": null
+    },
+    {
+      "unitId": "custodian-guard",
+      "modelCount": 4,
+      "enhancement": "",
+      "loadout": {},
+      "weaponCounts": {
+        "spears": 3,
+        "blades": 0,
+        "vexilla": 1
+      },
+      "currentWounds": null,
+      "leaderCurrentWounds": null,
+      "attachedLeader": null
+    },
+    {
+      "unitId": "allarus-custodians",
+      "modelCount": 3,
+      "enhancement": "",
+      "loadout": {},
+      "weaponCounts": {
+        "spears": 2,
+        "axes": 1
+      },
+      "currentWounds": null,
+      "leaderCurrentWounds": null,
+      "attachedLeader": null
+    },
+    {
+      "unitId": "prosecutors",
+      "modelCount": 4,
+      "enhancement": "",
+      "loadout": {},
+      "weaponCounts": {},
+      "currentWounds": null,
+      "leaderCurrentWounds": null,
+      "attachedLeader": null
+    }
+  ]
+}

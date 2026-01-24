@@ -187,7 +187,7 @@
           "type": "ranged",
           "stats": { "range": 12, "a": 1, "bs": "2+", "s": 7, "ap": -2, "d": 1 },
           "abilities": ["Pistol"],
-          "loadoutGroup": "ranged"
+          "loadoutGroup": "plasma"
         },
         {
           "id": "bolt-pistol-lord",
@@ -195,7 +195,7 @@
           "type": "ranged",
           "stats": { "range": 12, "a": 1, "bs": "2+", "s": 4, "ap": 0, "d": 1 },
           "abilities": ["Pistol"],
-          "loadoutGroup": "ranged"
+          "loadoutGroup": "bolt"
         },
         {
           "id": "daemon-hammer",
@@ -203,7 +203,7 @@
           "type": "melee",
           "stats": { "a": 5, "ws": "2+", "s": 8, "ap": -2, "d": 2 },
           "abilities": ["Devastating Wounds"],
-          "loadoutGroup": "melee"
+          "loadoutGroup": "hammer"
         },
         {
           "id": "accursed-weapon",
@@ -211,7 +211,7 @@
           "type": "melee",
           "stats": { "a": 6, "ws": "2+", "s": 5, "ap": -2, "d": 1 },
           "abilities": [],
-          "loadoutGroup": "melee"
+          "loadoutGroup": "accursed"
         },
         {
           "id": "astartes-chainsword-lord",
@@ -219,7 +219,7 @@
           "type": "melee",
           "stats": { "a": 7, "ws": "2+", "s": 4, "ap": -1, "d": 1 },
           "abilities": [],
-          "loadoutGroup": "melee"
+          "loadoutGroup": "chainsword"
         },
         {
           "id": "power-fist-lord",
@@ -227,7 +227,7 @@
           "type": "melee",
           "stats": { "a": 5, "ws": "2+", "s": 8, "ap": -2, "d": 2 },
           "abilities": [],
-          "loadoutGroup": "melee"
+          "loadoutGroup": "fist"
         }
       ],
       "loadoutOptions": [
@@ -237,8 +237,8 @@
           "type": "choice",
           "pattern": "replacement",
           "choices": [
-            { "id": "ranged", "name": "Plasma Pistol", "default": true },
-            { "id": "ranged", "name": "Bolt Pistol" }
+            { "id": "plasma", "name": "Plasma Pistol", "default": true },
+            { "id": "bolt", "name": "Bolt Pistol" }
           ]
         },
         {
@@ -247,10 +247,10 @@
           "type": "choice",
           "pattern": "replacement",
           "choices": [
-            { "id": "melee", "name": "Daemon Hammer", "default": true },
-            { "id": "melee", "name": "Accursed Weapon" },
-            { "id": "melee", "name": "Astartes Chainsword" },
-            { "id": "melee", "name": "Power Fist" }
+            { "id": "hammer", "name": "Daemon Hammer", "default": true },
+            { "id": "accursed", "name": "Accursed Weapon" },
+            { "id": "chainsword", "name": "Astartes Chainsword" },
+            { "id": "fist", "name": "Power Fist" }
           ]
         }
       ],
@@ -273,6 +273,91 @@
         }
       ],
       "keywords": ["Infantry", "Character", "Chaos", "Grenades", "Heretic Astartes", "Chaos Lord"]
+    },
+    {
+      "id": "chaos-lord-terminator",
+      "name": "Chaos Lord in Terminator Armour",
+      "points": { "1": 85 },
+      "stats": { "m": 5, "t": 5, "sv": "2+", "w": 6, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "combi-bolter-lord",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "2+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"]
+        },
+        {
+          "id": "combi-weapon-lord",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "combi"
+        },
+        {
+          "id": "accursed-weapon-term-lord",
+          "name": "Accursed Weapon",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "accursed"
+        },
+        {
+          "id": "chainfist-lord",
+          "name": "Chainfist",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": ["Anti-Vehicle 3+"],
+          "loadoutGroup": "chainfist"
+        },
+        {
+          "id": "power-fist-term-lord",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "2+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "fist"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "accursed", "name": "Accursed Weapon", "default": true },
+            { "id": "chainfist", "name": "Chainfist" },
+            { "id": "fist", "name": "Power Fist" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units: Chaos Terminator Squad.",
+          "eligibleUnits": ["chaos-terminator-squad"]
+        },
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and deployed more than 9\" from enemy models."
+        },
+        {
+          "id": "lord-of-chaos",
+          "name": "Lord of Chaos (Aura)",
+          "description": "Once per battle round, one unit from your army with this ability can use it when targeted by a Stratagem. If it does, reduce the CP cost of that Stratagem by 1CP."
+        },
+        {
+          "id": "champions-of-chaos",
+          "name": "Champions of Chaos",
+          "description": "Once per battle, at the start of the Fight phase, this model can use this ability. Until the end of the phase, improve the Attacks, Strength, AP, and Damage characteristics of this model's melee weapons by 1."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Terminator", "Chaos", "Heretic Astartes", "Chaos Lord"]
     },
     {
       "id": "dark-apostle",
@@ -301,8 +386,8 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units: Accursed Cultists, Chosen, Cultist Mob, Legionaries, Nemesis Claw.",
-          "eligibleUnits": ["accursed-cultists", "chosen", "cultist-mob", "legionaries", "nemesis-claw"]
+          "description": "This model can be attached to the following units: Accursed Cultists, Chosen, Cultist Mob, Legionaries.",
+          "eligibleUnits": ["accursed-cultists", "chosen", "cultist-mob", "legionaries"]
         },
         {
           "id": "dark-zealotry",
@@ -316,6 +401,162 @@
         }
       ],
       "keywords": ["Infantry", "Character", "Chaos", "Grenades", "Heretic Astartes", "Dark Apostle"]
+    },
+    {
+      "id": "sorcerer",
+      "name": "Sorcerer",
+      "points": { "1": 60 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bolt-pistol-sorcerer",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "infernal-gaze",
+          "name": "Infernal Gaze",
+          "type": "ranged",
+          "stats": { "range": 24, "a": "D6", "bs": "3+", "s": 5, "ap": -1, "d": "D3" },
+          "abilities": ["Psychic"],
+          "loadoutGroup": "standard"
+        },
+        {
+          "id": "infernal-gaze-focused",
+          "name": "Infernal Gaze - Focused",
+          "type": "ranged",
+          "stats": { "range": 24, "a": "D6", "bs": "3+", "s": 6, "ap": -2, "d": "D3" },
+          "abilities": ["Devastating Wounds", "Hazardous", "Psychic"],
+          "loadoutGroup": "focused"
+        },
+        {
+          "id": "force-weapon",
+          "name": "Force Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 6, "ap": -1, "d": "D3" },
+          "abilities": ["Psychic"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units: Chosen, Legionaries.",
+          "eligibleUnits": ["chosen", "legionaries"]
+        },
+        {
+          "id": "prescience",
+          "name": "Prescience (Psychic)",
+          "description": "While this model is leading a unit, each time a model in that unit makes an attack, add 1 to the Hit roll."
+        },
+        {
+          "id": "gift-of-chaos",
+          "name": "Gift of Chaos (Psychic)",
+          "description": "Once per battle, in your Shooting phase, select one enemy unit within 18\" of and visible to this Psyker. That unit must take a Battle-shock test, subtracting 2 from the result."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Psyker", "Chaos", "Grenades", "Heretic Astartes", "Sorcerer"]
+    },
+    {
+      "id": "master-of-executions",
+      "name": "Master of Executions",
+      "points": { "1": 80 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bolt-pistol-moe",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "axe-of-dismemberment",
+          "name": "Axe of Dismemberment",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "2+", "s": 7, "ap": -2, "d": 2 },
+          "abilities": ["Devastating Wounds", "Precision"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units: Chosen, Legionaries.",
+          "eligibleUnits": ["chosen", "legionaries"]
+        },
+        {
+          "id": "warp-sighted-butcher",
+          "name": "Warp-sighted Butcher",
+          "description": "While this model is leading a unit, each time a model in that unit makes a melee attack that targets an enemy unit that is below its Starting Strength, you can re-roll the Hit roll. If that enemy unit is below Half-strength, you can re-roll the Wound roll as well."
+        },
+        {
+          "id": "trophy-taker",
+          "name": "Trophy Taker",
+          "description": "Each time this model destroys an enemy CHARACTER model, you gain 1CP."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Chaos", "Grenades", "Heretic Astartes", "Master of Executions"]
+    },
+    {
+      "id": "daemon-prince",
+      "name": "Daemon Prince",
+      "points": { "1": 165 },
+      "stats": { "m": 8, "t": 10, "sv": "2+", "w": 10, "ld": "6+", "oc": 3 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "infernal-cannon",
+          "name": "Infernal Cannon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 3, "bs": "2+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": []
+        },
+        {
+          "id": "hellforged-weapons-strike",
+          "name": "Hellforged Weapons - Strike",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 8, "ap": -2, "d": 3 },
+          "abilities": []
+        },
+        {
+          "id": "hellforged-weapons-sweep",
+          "name": "Hellforged Weapons - Sweep",
+          "type": "melee",
+          "stats": { "a": 14, "ws": "2+", "s": 6, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "daemonic-allegiance",
+          "name": "Daemonic Allegiance",
+          "description": "When adding to your army, select one: KHORNE (+2 Strength), TZEENTCH (+3 Attacks to Infernal Cannon), NURGLE (+1 Toughness), or SLAANESH (+2\" Movement)."
+        },
+        {
+          "id": "dark-blessing",
+          "name": "Dark Blessing (Aura)",
+          "description": "While a friendly HERETIC ASTARTES INFANTRY unit is within 6\" of this model, models in that unit have the Benefit of Cover."
+        },
+        {
+          "id": "ascended-daemon",
+          "name": "Ascended Daemon",
+          "description": "Once per phase, you can re-roll one Hit roll or one Wound roll made for this model."
+        }
+      ],
+      "keywords": ["Monster", "Character", "Chaos", "Daemon", "Heretic Astartes", "Daemon Prince"]
     },
     {
       "id": "chosen",
@@ -368,7 +609,7 @@
           "name": "Paired Accursed Weapons",
           "type": "melee",
           "stats": { "a": 5, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
-          "abilities": [],
+          "abilities": ["Twin-linked"],
           "loadoutGroup": "paired-accursed"
         },
         {
@@ -432,6 +673,148 @@
       "keywords": ["Infantry", "Chaos", "Grenades", "Heretic Astartes", "Chosen"]
     },
     {
+      "id": "chaos-terminator-squad",
+      "name": "Chaos Terminator Squad",
+      "points": { "5": 180, "10": 360 },
+      "stats": { "m": 5, "t": 5, "sv": "2+", "w": 3, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "combi-bolter-term",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "combi-bolter"
+        },
+        {
+          "id": "combi-weapon-term",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "combi-weapon"
+        },
+        {
+          "id": "heavy-flamer-term",
+          "name": "Heavy Flamer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent"],
+          "loadoutGroup": "heavy-flamer"
+        },
+        {
+          "id": "reaper-autocannon",
+          "name": "Reaper Autocannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 4, "bs": "3+", "s": 7, "ap": -1, "d": 1 },
+          "abilities": ["Sustained Hits 1"],
+          "loadoutGroup": "reaper"
+        },
+        {
+          "id": "accursed-weapon-term",
+          "name": "Accursed Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "accursed"
+        },
+        {
+          "id": "chainfist-term",
+          "name": "Chainfist",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": ["Anti-Vehicle 3+"],
+          "loadoutGroup": "chainfist"
+        },
+        {
+          "id": "paired-accursed-weapons-term",
+          "name": "Paired Accursed Weapons",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": ["Twin-linked"],
+          "loadoutGroup": "paired"
+        },
+        {
+          "id": "power-fist-term",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "fist"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "combi-bolter", "name": "Combi-bolter", "default": true },
+            { "id": "combi-weapon", "name": "Combi-weapon" },
+            { "id": "heavy-flamer", "name": "Heavy Flamer", "maxModels": 1 },
+            { "id": "reaper", "name": "Reaper Autocannon", "maxModels": 1 }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "accursed", "name": "Accursed Weapon", "default": true },
+            { "id": "chainfist", "name": "Chainfist", "maxModels": 1 },
+            { "id": "paired", "name": "Paired Accursed Weapons", "maxModels": 1 },
+            { "id": "fist", "name": "Power Fist", "maxModels": 3 }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and deployed more than 9\" from enemy models."
+        },
+        {
+          "id": "despoilers",
+          "name": "Despoilers",
+          "description": "Each time this unit makes a Dark Pact, until the end of the phase, each time a model in this unit makes an attack, you can re-roll the Hit roll."
+        }
+      ],
+      "keywords": ["Infantry", "Chaos", "Terminator", "Heretic Astartes", "Chaos Terminator Squad"]
+    },
+    {
+      "id": "possessed",
+      "name": "Possessed",
+      "points": { "5": 115, "10": 230 },
+      "stats": { "m": 9, "t": 5, "sv": "3+", "w": 3, "ld": "6+", "oc": 1 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "hideous-mutations",
+          "name": "Hideous Mutations",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "daemonic-mutations",
+          "name": "Daemonic Mutations",
+          "description": "Each time a model in this unit is destroyed by a melee attack, if that model has not fought this phase, roll one D6: on a 4+, do not remove it from play. The destroyed model can fight after the attacking model's unit has finished making its attacks, and is then removed from play."
+        },
+        {
+          "id": "unholy-frenzy",
+          "name": "Unholy Frenzy",
+          "description": "Each time a model in this unit makes a melee attack, you can re-roll the Wound roll."
+        }
+      ],
+      "keywords": ["Infantry", "Chaos", "Daemon", "Heretic Astartes", "Possessed"]
+    },
+    {
       "id": "cultist-mob",
       "name": "Cultist Mob",
       "points": { "10": 50, "20": 100 },
@@ -464,34 +847,3712 @@
       "keywords": ["Infantry", "Battleline", "Chaos", "Damned", "Cultist Mob"]
     },
     {
-      "id": "possessed",
-      "name": "Possessed",
-      "points": { "5": 115, "10": 230 },
-      "stats": { "m": 9, "t": 5, "sv": "3+", "w": 3, "ld": "6+", "oc": 1 },
-      "invuln": "5+",
+      "id": "accursed-cultists",
+      "name": "Accursed Cultists",
+      "points": { "8": 90, "16": 195 },
+      "stats": { "m": 6, "t": 4, "sv": "6+", "w": 1, "ld": "7+", "oc": 1 },
+      "invuln": null,
       "weapons": [
         {
-          "id": "hideous-mutations",
-          "name": "Hideous Mutations",
+          "id": "blasphemous-appendages",
+          "name": "Blasphemous Appendages",
           "type": "melee",
-          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 2 },
+          "stats": { "a": 2, "ws": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "hideous-mutations-torment",
+          "name": "Hideous Mutations (Torment)",
+          "type": "melee",
+          "stats": { "a": "D6+2", "ws": "4+", "s": 5, "ap": -1, "d": 2 },
           "abilities": []
         }
       ],
       "loadoutOptions": [],
       "abilities": [
         {
-          "id": "daemonic-mutations",
-          "name": "Daemonic Mutations",
-          "description": "Each time a model in this unit is destroyed by a melee attack, if that model has not fought this phase, roll one D6: on a 4+, do not remove it from play. The destroyed model can fight after the attacking model's unit has finished making its attacks, and is then removed from play."
+          "id": "feel-no-pain-6",
+          "name": "Feel No Pain 6+",
+          "description": "Each time this unit would lose a wound, roll one D6: on a 6, that wound is not lost."
         },
         {
-          "id": "unholy-frenzy",
-          "name": "Unholy Frenzy",
-          "description": "Each time a model in this unit makes a melee attack, you can re-roll the Wound roll."
+          "id": "scouts-6",
+          "name": "Scouts 6\"",
+          "description": "This unit can make a Normal move of up to 6\" before the first turn begins."
+        },
+        {
+          "id": "accursed-horde",
+          "name": "Accursed Horde",
+          "description": "Each time an enemy unit has shot, if one or more models from this unit were destroyed, this unit can make a Horde move of up to D6\" toward the closest enemy unit."
         }
       ],
-      "keywords": ["Infantry", "Chaos", "Daemon", "Heretic Astartes", "Possessed"]
+      "keywords": ["Infantry", "Chaos", "Damned", "Heretic Astartes", "Accursed Cultists"]
+    },
+    {
+      "id": "havocs",
+      "name": "Havocs",
+      "points": { "5": 125 },
+      "stats": { "m": 5, "t": 5, "sv": "3+", "w": 2, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "boltgun-havoc",
+          "name": "Boltgun",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "flamer-havoc",
+          "name": "Flamer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent"],
+          "loadoutGroup": "special"
+        },
+        {
+          "id": "meltagun-havoc",
+          "name": "Meltagun",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 9, "ap": -4, "d": "D6" },
+          "abilities": ["Melta 2"],
+          "loadoutGroup": "special"
+        },
+        {
+          "id": "havoc-autocannon",
+          "name": "Havoc Autocannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 2, "bs": "3+", "s": 9, "ap": -1, "d": 3 },
+          "abilities": [],
+          "loadoutGroup": "heavy"
+        },
+        {
+          "id": "havoc-heavy-bolter",
+          "name": "Havoc Heavy Bolter",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 3, "bs": "3+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Sustained Hits 1"],
+          "loadoutGroup": "heavy"
+        },
+        {
+          "id": "havoc-lascannon",
+          "name": "Havoc Lascannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 1, "bs": "3+", "s": 12, "ap": -3, "d": "D6+1" },
+          "abilities": [],
+          "loadoutGroup": "heavy"
+        },
+        {
+          "id": "havoc-missile-launcher-frag",
+          "name": "Havoc Missile Launcher - Frag",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D6", "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "heavy"
+        },
+        {
+          "id": "havoc-missile-launcher-krak",
+          "name": "Havoc Missile Launcher - Krak",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 1, "bs": "3+", "s": 9, "ap": -2, "d": "D6" },
+          "abilities": [],
+          "loadoutGroup": "heavy"
+        },
+        {
+          "id": "havoc-reaper-chaincannon",
+          "name": "Reaper Chaincannon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 8, "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "heavy"
+        },
+        {
+          "id": "accursed-weapon-havoc",
+          "name": "Accursed Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "close-combat-weapon-havoc",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "heavy-weapon",
+          "name": "Heavy Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "heavy", "name": "Autocannon / Heavy Bolter / Lascannon / Missile Launcher / Chaincannon", "default": true }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "stabilisation-talons",
+          "name": "Stabilisation Talons",
+          "description": "Each time a model in this unit makes an attack with a ranged weapon, you can ignore any or all modifiers to the Hit roll and any or all modifiers to the Ballistic Skill characteristic."
+        }
+      ],
+      "keywords": ["Infantry", "Chaos", "Heretic Astartes", "Havocs"]
+    },
+    {
+      "id": "raptors",
+      "name": "Raptors",
+      "points": { "5": 110, "10": 210 },
+      "stats": { "m": 12, "t": 4, "sv": "3+", "w": 2, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bolt-pistol-raptor",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "plasma-pistol-raptor",
+          "name": "Plasma Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "plasma-pistol"
+        },
+        {
+          "id": "meltagun-raptor",
+          "name": "Meltagun",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 9, "ap": -4, "d": "D6" },
+          "abilities": ["Melta 2"],
+          "loadoutGroup": "special"
+        },
+        {
+          "id": "plasma-gun-raptor",
+          "name": "Plasma Gun",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "3+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Rapid Fire 1"],
+          "loadoutGroup": "special"
+        },
+        {
+          "id": "astartes-chainsword-raptor",
+          "name": "Astartes Chainsword",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "chainsword"
+        },
+        {
+          "id": "accursed-weapon-raptor",
+          "name": "Accursed Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "accursed"
+        },
+        {
+          "id": "close-combat-weapon-raptor",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "special-weapon",
+          "name": "Special Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "special", "name": "Meltagun / Plasma Gun", "maxModels": 2 }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "chainsword", "name": "Astartes Chainsword", "default": true },
+            { "id": "accursed", "name": "Accursed Weapon" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and deployed more than 9\" from enemy models."
+        },
+        {
+          "id": "fearsome",
+          "name": "Fearsome (Aura)",
+          "description": "While an enemy unit is within 6\" of this unit, each time that enemy unit takes a Battle-shock or Leadership test, subtract 1 from the result."
+        },
+        {
+          "id": "terrifying-assault",
+          "name": "Terrifying Assault",
+          "description": "At the start of the Fight phase, each enemy unit within Engagement Range of this unit must take a Battle-shock test."
+        }
+      ],
+      "keywords": ["Infantry", "Fly", "Jump Pack", "Chaos", "Grenades", "Heretic Astartes", "Raptors"]
+    },
+    {
+      "id": "warp-talons",
+      "name": "Warp Talons",
+      "points": { "5": 125, "10": 270 },
+      "stats": { "m": 12, "t": 4, "sv": "3+", "w": 2, "ld": "6+", "oc": 1 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "warp-claws",
+          "name": "Warp Claws",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": ["Twin-linked"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and deployed more than 9\" from enemy models."
+        },
+        {
+          "id": "warp-strike",
+          "name": "Warp Strike",
+          "description": "At the end of the Fight phase, if one or more enemy models were destroyed by this unit's attacks this phase and this unit is not within Engagement Range of any enemy units, you can remove this unit from the battlefield and place it into Strategic Reserves."
+        }
+      ],
+      "keywords": ["Infantry", "Fly", "Jump Pack", "Chaos", "Daemon", "Grenades", "Heretic Astartes", "Warp Talons"]
+    },
+    {
+      "id": "obliterators",
+      "name": "Obliterators",
+      "points": { "2": 160 },
+      "stats": { "m": 4, "t": 7, "sv": "2+", "w": 5, "ld": "6+", "oc": 2 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "fleshmetal-guns-melta",
+          "name": "Fleshmetal Guns - Focused Malice",
+          "type": "ranged",
+          "stats": { "range": 18, "a": "D3", "bs": "3+", "s": 12, "ap": -3, "d": 4 },
+          "abilities": ["Melta 2"]
+        },
+        {
+          "id": "fleshmetal-guns-salvo",
+          "name": "Fleshmetal Guns - Ruinous Salvo",
+          "type": "ranged",
+          "stats": { "range": 24, "a": "D6", "bs": "3+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": ["Blast"]
+        },
+        {
+          "id": "fleshmetal-guns-hail",
+          "name": "Fleshmetal Guns - Warp Hail",
+          "type": "ranged",
+          "stats": { "range": 24, "a": "D6+3", "bs": "3+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Sustained Hits 1"]
+        },
+        {
+          "id": "crushing-fists",
+          "name": "Crushing Fists",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 9, "ap": -2, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and deployed more than 9\" from enemy models."
+        },
+        {
+          "id": "warp-rift-firepower",
+          "name": "Warp Rift Firepower",
+          "description": "Once per battle, when this unit is selected to shoot, it can use this ability. If it does, until the end of the phase, ranged weapons equipped by models in this unit have the [INDIRECT FIRE] ability."
+        }
+      ],
+      "keywords": ["Infantry", "Chaos", "Daemon", "Heretic Astartes", "Obliterators"]
+    },
+    {
+      "id": "chaos-spawn",
+      "name": "Chaos Spawn",
+      "points": { "2": 70 },
+      "stats": { "m": 8, "t": 5, "sv": "4+", "w": 4, "ld": "7+", "oc": 0 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "hideous-mutations-spawn",
+          "name": "Hideous Mutations",
+          "type": "melee",
+          "stats": { "a": "D6+2", "ws": "4+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "feel-no-pain-5",
+          "name": "Feel No Pain 5+",
+          "description": "Each time this unit would lose a wound, roll one D6: on a 5+, that wound is not lost."
+        },
+        {
+          "id": "mind-breaking-mutations",
+          "name": "Mind-breaking Mutations (Aura)",
+          "description": "While an enemy unit (excluding VEHICLE units) is within 3\" of this unit, subtract 1 from the Objective Control characteristic of models in that enemy unit."
+        }
+      ],
+      "keywords": ["Beast", "Chaos", "Heretic Astartes", "Chaos Spawn"]
+    },
+    {
+      "id": "helbrute",
+      "name": "Helbrute",
+      "points": { "1": 130 },
+      "stats": { "m": 6, "t": 9, "sv": "2+", "w": 8, "ld": "6+", "oc": 3 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "combi-bolter-helbrute",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"]
+        },
+        {
+          "id": "heavy-flamer-helbrute",
+          "name": "Heavy Flamer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent"],
+          "loadoutGroup": "ranged"
+        },
+        {
+          "id": "helbrute-plasma-cannon",
+          "name": "Helbrute Plasma Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D3", "bs": "3+", "s": 8, "ap": -3, "d": 3 },
+          "abilities": ["Blast", "Hazardous"],
+          "loadoutGroup": "ranged"
+        },
+        {
+          "id": "missile-launcher-helbrute-frag",
+          "name": "Missile Launcher - Frag",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D6", "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "ranged"
+        },
+        {
+          "id": "missile-launcher-helbrute-krak",
+          "name": "Missile Launcher - Krak",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 1, "bs": "3+", "s": 9, "ap": -2, "d": "D6" },
+          "abilities": [],
+          "loadoutGroup": "ranged"
+        },
+        {
+          "id": "multi-melta-helbrute",
+          "name": "Multi-melta",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 2, "bs": "3+", "s": 9, "ap": -4, "d": "D6" },
+          "abilities": ["Melta 2"],
+          "loadoutGroup": "ranged"
+        },
+        {
+          "id": "twin-autocannon-helbrute",
+          "name": "Twin Autocannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 2, "bs": "3+", "s": 9, "ap": -1, "d": 3 },
+          "abilities": ["Twin-linked"],
+          "loadoutGroup": "ranged"
+        },
+        {
+          "id": "twin-heavy-bolter-helbrute",
+          "name": "Twin Heavy Bolter",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 3, "bs": "3+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Sustained Hits 1", "Twin-linked"],
+          "loadoutGroup": "ranged"
+        },
+        {
+          "id": "twin-lascannon-helbrute",
+          "name": "Twin Lascannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 1, "bs": "3+", "s": 12, "ap": -3, "d": "D6+1" },
+          "abilities": ["Twin-linked"],
+          "loadoutGroup": "ranged"
+        },
+        {
+          "id": "close-combat-weapon-helbrute",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 6, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "helbrute-fist",
+          "name": "Helbrute Fist",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 12, "ap": -2, "d": 3 },
+          "abilities": [],
+          "loadoutGroup": "melee"
+        },
+        {
+          "id": "helbrute-hammer",
+          "name": "Helbrute Hammer",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "4+", "s": 14, "ap": -3, "d": "D6+1" },
+          "abilities": [],
+          "loadoutGroup": "melee"
+        },
+        {
+          "id": "power-scourge",
+          "name": "Power Scourge",
+          "type": "melee",
+          "stats": { "a": 8, "ws": "3+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "melee"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "ranged", "name": "Heavy Flamer / Plasma Cannon / Missile Launcher / Multi-melta / Twin Autocannon / Twin Heavy Bolter / Twin Lascannon", "default": true }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "melee", "name": "Helbrute Fist / Helbrute Hammer / Power Scourge", "default": true }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-1",
+          "name": "Deadly Demise 1",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers 1 mortal wound."
+        },
+        {
+          "id": "dark-ascension",
+          "name": "Dark Ascension (Aura)",
+          "description": "While a friendly HERETIC ASTARTES unit is within 6\" of this model, each time that unit makes a Dark Pact, if it does not fail the resulting Leadership test, until the end of the phase, weapons equipped by models in that unit have both the [LETHAL HITS] and [SUSTAINED HITS 1] abilities instead of just one."
+        },
+        {
+          "id": "devoted-to-destruction",
+          "name": "Devoted to Destruction",
+          "description": "If this model is equipped with two ranged weapons, each time it makes a ranged attack, add 1 to the Hit roll. If equipped with two melee weapons, each time it makes a melee attack, add 2 to the Attacks characteristic of those weapons."
+        }
+      ],
+      "keywords": ["Vehicle", "Walker", "Chaos", "Heretic Astartes", "Helbrute"]
+    },
+    {
+      "id": "forgefiend",
+      "name": "Forgefiend",
+      "points": { "1": 170 },
+      "stats": { "m": 8, "t": 10, "sv": "3+", "w": 12, "ld": "6+", "oc": 3 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "ectoplasma-cannon",
+          "name": "Ectoplasma Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": "D3", "bs": "3+", "s": 10, "ap": -3, "d": 3 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "ectoplasma"
+        },
+        {
+          "id": "hades-autocannon",
+          "name": "Hades Autocannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 6, "bs": "3+", "s": 8, "ap": -1, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "hades"
+        },
+        {
+          "id": "forgefiend-jaws",
+          "name": "Forgefiend Jaws",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 7, "ap": 0, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "ectoplasma"
+        },
+        {
+          "id": "armoured-limbs",
+          "name": "Armoured Limbs",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "3+", "s": 6, "ap": 0, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "hades"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapons",
+          "name": "Main Weapons",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "ectoplasma", "name": "2x Ectoplasma Cannon + Jaws", "default": true },
+            { "id": "hades", "name": "2x Hades Autocannon + Limbs" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "daemonic-ordnance",
+          "name": "Daemonic Ordnance",
+          "description": "Each time this model is selected to shoot, you can use this ability. If you do, until the end of the phase, ranged weapons equipped by this model have the [DEVASTATING WOUNDS] and [HAZARDOUS] abilities."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-4 Wounds Remaining",
+          "description": "While this model has 1-4 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Vehicle", "Walker", "Chaos", "Daemon", "Heretic Astartes", "Forgefiend"]
+    },
+    {
+      "id": "maulerfiend",
+      "name": "Maulerfiend",
+      "points": { "1": 130 },
+      "stats": { "m": 10, "t": 10, "sv": "3+", "w": 12, "ld": "6+", "oc": 3 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "magma-cutters",
+          "name": "Magma Cutters",
+          "type": "ranged",
+          "stats": { "range": 6, "a": 2, "bs": "3+", "s": 9, "ap": -4, "d": "D6" },
+          "abilities": ["Melta 2"],
+          "loadoutGroup": "cutters"
+        },
+        {
+          "id": "lasher-tendrils",
+          "name": "Lasher Tendrils",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "3+", "s": 7, "ap": -1, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "tendrils"
+        },
+        {
+          "id": "maulerfiend-fists",
+          "name": "Maulerfiend Fists",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "3+", "s": 14, "ap": -2, "d": "D6+1" },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "secondary-weapons",
+          "name": "Secondary Weapons",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "cutters", "name": "Magma Cutters", "default": true },
+            { "id": "tendrils", "name": "Lasher Tendrils" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "siege-crawler",
+          "name": "Siege Crawler",
+          "description": "You can ignore any or all modifiers to this model's Move characteristic and to any Advance and Charge rolls made for this model."
+        },
+        {
+          "id": "damaged",
+          "name": "Damaged: 1-4 Wounds Remaining",
+          "description": "While this model has 1-4 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Vehicle", "Walker", "Chaos", "Daemon", "Heretic Astartes", "Maulerfiend"]
+    },
+    {
+      "id": "abaddon-the-despoiler",
+      "name": "Abaddon the Despoiler",
+      "points": { "1": 270 },
+      "stats": { "m": 5, "t": 5, "sv": "2+", "w": 9, "ld": "5+", "oc": 4 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "talon-of-horus-ranged",
+          "name": "Talon of Horus",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 4, "bs": "2+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Rapid Fire 4"]
+        },
+        {
+          "id": "drach-nyen-strike",
+          "name": "Drach'nyen - Strike",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 14, "ap": -4, "d": 3 },
+          "abilities": []
+        },
+        {
+          "id": "drach-nyen-sweep",
+          "name": "Drach'nyen - Sweep",
+          "type": "melee",
+          "stats": { "a": 14, "ws": "2+", "s": 8, "ap": -3, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "talon-of-horus-melee",
+          "name": "Talon of Horus",
+          "type": "melee",
+          "stats": { "a": 7, "ws": "2+", "s": 5, "ap": -2, "d": 2 },
+          "abilities": ["Extra Attacks"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units: Chaos Terminator Squad.",
+          "eligibleUnits": ["chaos-terminator-squad"]
+        },
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves and deployed more than 9\" from enemy models."
+        },
+        {
+          "id": "paragon-of-hatred",
+          "name": "Paragon of Hatred (Aura)",
+          "description": "While a friendly HERETIC ASTARTES unit is within 6\" of this model, each time a model in that unit makes an attack, you can re-roll the Hit roll."
+        },
+        {
+          "id": "mark-of-chaos-ascendant",
+          "name": "Mark of Chaos Ascendant (Aura)",
+          "description": "While a friendly HERETIC ASTARTES INFANTRY or HERETIC ASTARTES MOUNTED unit is within 6\" of this model, models in that unit have a 4+ invulnerable save."
+        },
+        {
+          "id": "lord-of-traitor-legions",
+          "name": "Lord of the Traitor Legions",
+          "description": "While a friendly HERETIC ASTARTES unit is within 6\" of this model, you can re-roll Leadership tests and Battle-shock tests taken for that unit."
+        },
+        {
+          "id": "lord-of-chaos-abaddon",
+          "name": "Lord of Chaos",
+          "description": "Once per battle round, one HERETIC ASTARTES unit from your army with this ability can use it when targeted by a Stratagem. If it does, reduce the CP cost of that Stratagem by 1CP."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Epic Hero", "Terminator", "Chaos", "Heretic Astartes", "Abaddon the Despoiler"]
+    },
+    {
+      "id": "warpsmith",
+      "name": "Warpsmith",
+      "points": { "1": 70 },
+      "stats": { "m": 6, "t": 4, "sv": "2+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "flamer-tendril-pistol",
+          "name": "Flamer Tendril Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 3, "ap": 0, "d": 1 },
+          "abilities": ["Torrent", "Ignores Cover"]
+        },
+        {
+          "id": "melta-tendril-pistol",
+          "name": "Melta Tendril Pistol",
+          "type": "ranged",
+          "stats": { "range": 6, "a": 1, "bs": "2+", "s": 8, "ap": -4, "d": "D3" },
+          "abilities": ["Melta 2"]
+        },
+        {
+          "id": "plasma-pistol-warpsmith",
+          "name": "Plasma Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "2+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "plasma-standard"
+        },
+        {
+          "id": "plasma-pistol-warpsmith-supercharge",
+          "name": "Plasma Pistol (Supercharge)",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "2+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Pistol", "Hazardous"],
+          "loadoutGroup": "plasma-supercharge"
+        },
+        {
+          "id": "forge-weapon",
+          "name": "Forge Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 6, "ap": -2, "d": 2 },
+          "abilities": ["Anti-Vehicle 4+"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to Chosen, Havocs, Legionaries, or Nemesis Claw units.",
+          "eligibleUnits": ["chosen", "havocs", "legionaries"]
+        },
+        {
+          "id": "warpsmith-ability",
+          "name": "Warpsmith",
+          "description": "While this model is within 3\" of one or more friendly HERETIC ASTARTES VEHICLE units, it has the Lone Operative ability."
+        },
+        {
+          "id": "master-of-mechanisms",
+          "name": "Master of Mechanisms",
+          "description": "In your Command phase, select one friendly HERETIC ASTARTES VEHICLE unit within 3\" of this model. That unit regains D3 lost wounds and, until the start of your next Command phase, each time a model in that unit makes an attack, add 1 to the Hit roll."
+        },
+        {
+          "id": "enrage-machine-spirits",
+          "name": "Enrage Machine Spirits",
+          "description": "At the end of your Movement phase, select one enemy VEHICLE unit within 12\" of and visible to this model. That unit must take a Battle-shock test."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Grenades", "Chaos", "Warpsmith", "Heretic Astartes"]
+    },
+    {
+      "id": "master-of-possession",
+      "name": "Master of Possession",
+      "points": { "1": 60 },
+      "stats": { "m": 8, "t": 4, "sv": "3+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "bolt-pistol-mop",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "rite-of-possession",
+          "name": "Rite of Possession (Witchfire)",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 2, "bs": "3+", "s": 4, "ap": -3, "d": 2 },
+          "abilities": ["Anti-Psyker 2+", "Pistol", "Precision", "Psychic"],
+          "loadoutGroup": "witchfire"
+        },
+        {
+          "id": "rite-of-possession-focused",
+          "name": "Rite of Possession (Focused)",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 2, "bs": "3+", "s": 6, "ap": -3, "d": 3 },
+          "abilities": ["Anti-Psyker 2+", "Hazardous", "Pistol", "Precision", "Psychic"],
+          "loadoutGroup": "focused-witchfire"
+        },
+        {
+          "id": "staff-of-possession",
+          "name": "Staff of Possession",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 6, "ap": -1, "d": "D3" },
+          "abilities": ["Anti-Psyker 2+", "Psychic"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to Chosen, Legionaries, Nemesis Claw, or Possessed units.",
+          "eligibleUnits": ["chosen", "legionaries", "possessed"]
+        },
+        {
+          "id": "daemonkin",
+          "name": "Daemonkin (Psychic)",
+          "description": "While this model is leading a unit, add 1 to Advance and Charge rolls made for that unit."
+        },
+        {
+          "id": "sacrificial-dagger",
+          "name": "Sacrificial Dagger",
+          "description": "Once per phase, when this model's unit is selected to shoot or fight, it can use this ability. If it does, that unit suffers 1 mortal wound and, until the end of the phase, each time this model makes a Psychic Attack, add 1 to the Hit roll and add 1 to the Wound roll."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Psyker", "Chaos", "Master of Possession", "Heretic Astartes"]
+    },
+    {
+      "id": "daemon-prince-with-wings",
+      "name": "Daemon Prince with Wings",
+      "points": { "1": 180 },
+      "stats": { "m": 12, "t": 9, "sv": "2+", "w": 10, "ld": "6+", "oc": 3 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "infernal-cannon-wings",
+          "name": "Infernal Cannon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 3, "bs": "2+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": []
+        },
+        {
+          "id": "hellforged-weapons-strike-wings",
+          "name": "Hellforged Weapons (Strike)",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 8, "ap": -2, "d": 3 },
+          "abilities": []
+        },
+        {
+          "id": "hellforged-weapons-sweep-wings",
+          "name": "Hellforged Weapons (Sweep)",
+          "type": "melee",
+          "stats": { "a": 14, "ws": "2+", "s": 6, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3-dp-wings",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "deep-strike-dp-wings",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves instead of being set up on the battlefield. If it is, it can be set up in the Reinforcements step of any of your Movement phases, anywhere on the battlefield that is more than 9\" away from all enemy models."
+        },
+        {
+          "id": "daemonic-allegiance-wings",
+          "name": "Daemonic Allegiance",
+          "description": "When this unit is added to your army, select one: KHORNE (+2 Strength to melee weapons), TZEENTCH (+3 Attacks to infernal cannon), NURGLE (+1 Toughness), or SLAANESH (+2\" Movement)."
+        },
+        {
+          "id": "daemonic-destruction",
+          "name": "Daemonic Destruction",
+          "description": "Each time this model ends a Charge move, you can select one enemy unit within Engagement Range of this model and roll one D6 for each wound this model has remaining: for each 4+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds)."
+        },
+        {
+          "id": "flying-horror",
+          "name": "Flying Horror",
+          "description": "Each time this model ends a Normal or Advance move, you can select one enemy unit it moved over during that move. That enemy unit must take a Battle-shock test."
+        }
+      ],
+      "keywords": ["Monster", "Fly", "Character", "Chaos", "Daemon", "Daemon Prince with Wings", "Heretic Astartes"]
+    },
+    {
+      "id": "sorcerer-terminator",
+      "name": "Sorcerer in Terminator Armour",
+      "points": { "1": 80 },
+      "stats": { "m": 5, "t": 5, "sv": "2+", "w": 5, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "combi-bolter-sorc-term",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "combi-bolter"
+        },
+        {
+          "id": "combi-weapon-sorc-term",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "combi-weapon"
+        },
+        {
+          "id": "infernal-gaze-sorc-term",
+          "name": "Infernal Gaze (Witchfire)",
+          "type": "ranged",
+          "stats": { "range": 24, "a": "D6", "bs": "3+", "s": 5, "ap": -1, "d": "D3" },
+          "abilities": ["Psychic"]
+        },
+        {
+          "id": "infernal-gaze-focused-sorc-term",
+          "name": "Infernal Gaze (Focused)",
+          "type": "ranged",
+          "stats": { "range": 24, "a": "D6", "bs": "3+", "s": 6, "ap": -2, "d": "D3" },
+          "abilities": ["Devastating Wounds", "Hazardous", "Psychic"]
+        },
+        {
+          "id": "force-weapon-sorc-term",
+          "name": "Force Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 6, "ap": -1, "d": "D3" },
+          "abilities": ["Psychic"]
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon-sorc-term",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "combi-bolter", "name": "Combi-bolter", "default": true },
+            { "id": "combi-weapon", "name": "Combi-weapon" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader-sorc-term",
+          "name": "Leader",
+          "description": "This model can be attached to a Chaos Terminator Squad unit.",
+          "eligibleUnits": ["chaos-terminator-squad"]
+        },
+        {
+          "id": "deep-strike-sorc-term",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves instead of being set up on the battlefield."
+        },
+        {
+          "id": "warptime",
+          "name": "Warptime (Psychic)",
+          "description": "While this model is leading a unit, you can re-roll Advance and Charge rolls made for that unit."
+        },
+        {
+          "id": "death-hex",
+          "name": "Death Hex (Psychic)",
+          "description": "At the start of your Shooting phase, you can select one enemy unit within 12\" of and visible to this model and roll one D6: on a 1, this model's unit suffers D3 mortal wounds; on a 2+, until the start of your next Movement phase, each time an attack is made against that enemy unit, improve the Armour Penetration characteristic of that attack by 1."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Psyker", "Chaos", "Terminator", "Sorcerer in Terminator Armour", "Heretic Astartes"]
+    },
+    {
+      "id": "dark-commune",
+      "name": "Dark Commune",
+      "points": { "5": 90 },
+      "stats": { "m": 6, "t": 3, "sv": "6+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "composition": "1 Cult Demagogue (1W), 1 Mindwitch, 1 Iconarch, 2 Blessed Blades (all others 4W total)",
+      "weapons": [
+        {
+          "id": "autopistol-dc",
+          "name": "Autopistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "4+", "s": 3, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "warp-curse",
+          "name": "Warp Curse (Witchfire)",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 3, "bs": "3+", "s": 4, "ap": -1, "d": 2 },
+          "abilities": ["Psychic"]
+        },
+        {
+          "id": "warp-curse-focused",
+          "name": "Warp Curse (Focused)",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 3, "bs": "3+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Hazardous", "Sustained Hits 2", "Psychic"]
+        },
+        {
+          "id": "close-combat-weapon-dc",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 1, "ws": "4+", "s": 3, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "commune-blade",
+          "name": "Commune Blade",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 4, "ap": -2, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "commune-stave",
+          "name": "Commune Stave",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 3, "ap": 0, "d": "D3" },
+          "abilities": ["Devastating Wounds"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader-dc",
+          "name": "Leader",
+          "description": "This unit can be attached to a Cultist Mob or Accursed Cultists unit.",
+          "eligibleUnits": ["cultist-mob", "accursed-cultists"]
+        },
+        {
+          "id": "faithful-flock",
+          "name": "Faithful Flock",
+          "description": "While this unit contains the Cult Demagogue model and is leading a unit, models in that unit have a 5+ invulnerable save."
+        },
+        {
+          "id": "dark-ritual",
+          "name": "Dark Ritual",
+          "description": "Once per battle, in your Command phase, this unit can use this ability. If it does, until the end of the turn, this unit is eligible to declare a charge in a turn in which it Advanced and, until the end of the turn, each time a model in this unit makes an attack, add 1 to the Hit roll and add 1 to the Wound roll."
+        },
+        {
+          "id": "chaos-icon-dc",
+          "name": "Chaos Icon",
+          "description": "Each time this unit takes a Leadership test for the Dark Pacts ability, you can re-roll that test."
+        }
+      ],
+      "keywords": ["Infantry", "Grenades", "Chaos", "Damned", "Dark Commune", "Heretic Astartes"]
+    },
+    {
+      "id": "lord-discordant",
+      "name": "Lord Discordant on Helstalker",
+      "points": { "1": 160 },
+      "stats": { "m": 14, "t": 9, "sv": "2+", "w": 10, "ld": "6+", "oc": 4 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "helstalker-autocannon",
+          "name": "Helstalker Autocannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 3, "bs": "2+", "s": 9, "ap": -1, "d": 3 },
+          "abilities": [],
+          "loadoutGroup": "autocannon"
+        },
+        {
+          "id": "baleflamer-ld",
+          "name": "Baleflamer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6+3", "bs": "N/A", "s": 6, "ap": -1, "d": 2 },
+          "abilities": ["Ignores Cover", "Torrent"],
+          "loadoutGroup": "baleflamer"
+        },
+        {
+          "id": "bolt-pistol-ld",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "2+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "magma-cutter",
+          "name": "Magma Cutter",
+          "type": "ranged",
+          "stats": { "range": 6, "a": 2, "bs": "3+", "s": 9, "ap": -4, "d": "D6" },
+          "abilities": ["Melta 2"],
+          "loadoutGroup": "magma"
+        },
+        {
+          "id": "impaler-chainglaive",
+          "name": "Impaler Chainglaive",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "2+", "s": 8, "ap": -3, "d": 3 },
+          "abilities": ["Lance"]
+        },
+        {
+          "id": "bladed-limbs-ld",
+          "name": "Bladed Limbs",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 6, "ap": -1, "d": 2 },
+          "abilities": ["Extra Attacks"]
+        },
+        {
+          "id": "techno-virus-injector",
+          "name": "Techno-virus Injector",
+          "type": "melee",
+          "stats": { "a": 1, "ws": "3+", "s": 3, "ap": -3, "d": 2 },
+          "abilities": ["Anti-Vehicle 2+", "Extra Attacks"],
+          "loadoutGroup": "injector"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-ranged",
+          "name": "Main Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "autocannon", "name": "Helstalker Autocannon", "default": true },
+            { "id": "baleflamer", "name": "Baleflamer" }
+          ]
+        },
+        {
+          "id": "secondary-melee",
+          "name": "Secondary Melee",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "injector", "name": "Techno-virus Injector", "default": true },
+            { "id": "magma", "name": "Magma Cutter" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "corrupt-machine-spirits",
+          "name": "Corrupt Machine Spirits",
+          "description": "At the start of your Shooting phase, you can select one enemy VEHICLE unit within 12\" of and visible to this model. Roll one D6: on a 2-3, that unit suffers D3 mortal wounds; on a 4-5, that unit suffers 3 mortal wounds; on a 6, that unit suffers D3+3 mortal wounds."
+        },
+        {
+          "id": "spirit-thief",
+          "name": "Spirit Thief",
+          "description": "At the start of your Shooting phase, you can select one enemy VEHICLE unit within 12\" of and visible to this model. Until the end of the phase, each time a friendly HERETIC ASTARTES model makes an attack that targets that unit, you can re-roll a Wound roll of 1."
+        }
+      ],
+      "keywords": ["Mounted", "Character", "Chaos", "Daemon", "Lord Discordant on Helstalker", "Heretic Astartes"]
+    },
+    {
+      "id": "chaos-bikers",
+      "name": "Chaos Bikers",
+      "points": { "3": 70, "6": 130 },
+      "stats": { "m": 12, "t": 5, "sv": "3+", "w": 3, "ld": "6+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bolt-pistol-biker",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "combi-bolter-biker",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "combi-bolter"
+        },
+        {
+          "id": "combi-weapon-biker",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "combi-weapon"
+        },
+        {
+          "id": "flamer-biker",
+          "name": "Flamer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "meltagun-biker",
+          "name": "Meltagun",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 9, "ap": -4, "d": "D6" },
+          "abilities": ["Melta 2"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "plasma-gun-biker",
+          "name": "Plasma Gun",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "3+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Rapid Fire 1"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "plasma-gun-biker-supercharge",
+          "name": "Plasma Gun (Supercharge)",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "3+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Hazardous", "Rapid Fire 1"],
+          "loadoutGroup": "special-weapon-supercharge"
+        },
+        {
+          "id": "plasma-pistol-biker",
+          "name": "Plasma Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "plasma-pistol"
+        },
+        {
+          "id": "plasma-pistol-biker-supercharge",
+          "name": "Plasma Pistol (Supercharge)",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Hazardous", "Pistol"],
+          "loadoutGroup": "plasma-pistol-supercharge"
+        },
+        {
+          "id": "close-combat-weapon-biker",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "ccw"
+        },
+        {
+          "id": "astartes-chainsword-biker",
+          "name": "Astartes Chainsword",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "chainsword"
+        },
+        {
+          "id": "accursed-weapon-biker",
+          "name": "Accursed Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "accursed"
+        },
+        {
+          "id": "power-fist-biker",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "fist"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "champion-pistol",
+          "name": "Champion Pistol",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "bolt-pistol", "name": "Bolt Pistol", "default": true },
+            { "id": "plasma-pistol", "name": "Plasma Pistol" }
+          ]
+        },
+        {
+          "id": "champion-melee",
+          "name": "Champion Melee",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "ccw", "name": "Close Combat Weapon", "default": true },
+            { "id": "chainsword", "name": "Astartes Chainsword" },
+            { "id": "accursed", "name": "Accursed Weapon" },
+            { "id": "fist", "name": "Power Fist" }
+          ]
+        },
+        {
+          "id": "special-weapon",
+          "name": "Special Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "special-weapon", "name": "Combi-weapon / Flamer / Meltagun / Plasma Gun", "maxModels": 2 }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "outmanoeuvre",
+          "name": "Outmanoeuvre",
+          "description": "Each time a model in this unit makes a melee attack, if this unit made a Charge move this turn, add 1 to the Strength characteristic of that attack."
+        }
+      ],
+      "keywords": ["Mounted", "Grenades", "Chaos", "Chaos Bikers", "Heretic Astartes"]
+    },
+    {
+      "id": "chaos-rhino",
+      "name": "Chaos Rhino",
+      "points": { "1": 75 },
+      "stats": { "m": 12, "t": 9, "sv": "3+", "w": 10, "ld": "6+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "combi-bolter-rhino",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"]
+        },
+        {
+          "id": "combi-weapon-rhino",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "combi-weapon"
+        },
+        {
+          "id": "havoc-launcher-rhino",
+          "name": "Havoc Launcher",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D6", "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "havoc"
+        },
+        {
+          "id": "armoured-tracks-rhino",
+          "name": "Armoured Tracks",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 6, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "havoc-launcher",
+          "name": "Havoc Launcher",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "havoc", "name": "Havoc Launcher" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3-rhino",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "firing-deck-2",
+          "name": "Firing Deck 2",
+          "description": "Each time this Transport shoots, select up to 2 models embarked within it. Until that shooting is resolved, this model counts as equipped with all ranged weapons those embarked models are equipped with."
+        },
+        {
+          "id": "self-repair",
+          "name": "Self Repair",
+          "description": "At the start of your Command phase, this model regains 1 lost wound."
+        }
+      ],
+      "keywords": ["Vehicle", "Transport", "Dedicated Transport", "Smoke", "Chaos", "Rhino", "Heretic Astartes"],
+      "transportCapacity": "12 HERETIC ASTARTES INFANTRY models. Cannot transport TERMINATOR, JUMP PACK, OBLITERATOR, or POSSESSED models."
+    },
+    {
+      "id": "venomcrawler",
+      "name": "Venomcrawler",
+      "points": { "1": 110 },
+      "stats": { "m": 12, "t": 9, "sv": "3+", "w": 9, "ld": "6+", "oc": 3 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "excruciator-cannon",
+          "name": "Excruciator Cannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 6, "bs": "3+", "s": 6, "ap": -1, "d": 2 },
+          "abilities": []
+        },
+        {
+          "id": "soulflayer-tendrils",
+          "name": "Soulflayer Tendrils and Claws",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "3+", "s": 6, "ap": -1, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3-venomcrawler",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "soul-eater",
+          "name": "Soul Eater",
+          "description": "At the end of the Fight phase, if one or more enemy units were destroyed by attacks made by this model this phase, until the end of the battle, add 1 to the Attacks characteristic of this model's weapons."
+        }
+      ],
+      "keywords": ["Vehicle", "Walker", "Chaos", "Daemon", "Venomcrawler", "Heretic Astartes"]
+    },
+    {
+      "id": "defiler",
+      "name": "Defiler",
+      "points": { "1": 190 },
+      "stats": { "m": 8, "t": 10, "sv": "3+", "w": 14, "ld": "6+", "oc": 5 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "defiler-cannon",
+          "name": "Defiler Cannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D6+3", "bs": "3+", "s": 10, "ap": -1, "d": 3 },
+          "abilities": ["Blast"]
+        },
+        {
+          "id": "combi-bolter-defiler",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "combi-bolter"
+        },
+        {
+          "id": "combi-weapon-defiler",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "combi-weapon"
+        },
+        {
+          "id": "havoc-launcher-defiler",
+          "name": "Havoc Launcher",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D6", "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "havoc"
+        },
+        {
+          "id": "reaper-autocannon-defiler",
+          "name": "Reaper Autocannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 4, "bs": "3+", "s": 7, "ap": -1, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "reaper"
+        },
+        {
+          "id": "twin-heavy-bolter-defiler",
+          "name": "Twin Heavy Bolter",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 3, "bs": "3+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Sustained Hits 1", "Twin-linked"],
+          "loadoutGroup": "heavy-bolter"
+        },
+        {
+          "id": "twin-heavy-flamer-defiler",
+          "name": "Twin Heavy Flamer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent", "Twin-linked"],
+          "loadoutGroup": "heavy-flamer"
+        },
+        {
+          "id": "twin-lascannon-defiler",
+          "name": "Twin Lascannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 1, "bs": "3+", "s": 12, "ap": -3, "d": "D6+1" },
+          "abilities": ["Twin-linked"],
+          "loadoutGroup": "lascannon"
+        },
+        {
+          "id": "defiler-claws",
+          "name": "Defiler Claws",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 16, "ap": -3, "d": "D6+1" },
+          "abilities": []
+        },
+        {
+          "id": "defiler-scourge",
+          "name": "Defiler Scourge",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 12, "ap": -1, "d": 2 },
+          "abilities": ["Extra Attacks"],
+          "loadoutGroup": "scourge"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "secondary-ranged",
+          "name": "Secondary Ranged",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "reaper", "name": "Reaper Autocannon", "default": true },
+            { "id": "heavy-bolter", "name": "Twin Heavy Bolter" },
+            { "id": "heavy-flamer", "name": "Twin Heavy Flamer" },
+            { "id": "lascannon", "name": "Twin Lascannon" }
+          ]
+        },
+        {
+          "id": "havoc-launcher-option",
+          "name": "Havoc Launcher",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "havoc", "name": "Havoc Launcher" }
+          ]
+        },
+        {
+          "id": "scourge-option",
+          "name": "Defiler Scourge",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "scourge", "name": "Defiler Scourge" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3-defiler",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "daemonforge-defiler",
+          "name": "Daemonforge",
+          "description": "Each time this model is selected to fight, you can use this ability. If you do, until the end of the phase, each time this model makes an attack, you can re-roll the Hit roll and you can re-roll the Wound roll."
+        },
+        {
+          "id": "scuttling-walker",
+          "name": "Scuttling Walker",
+          "description": "Each time this model makes a Normal, Advance or Fall Back move, it can move over friendly MONSTER and VEHICLE models and terrain features that are 4\" or less in height as if they were not there."
+        },
+        {
+          "id": "damaged-defiler",
+          "name": "Damaged: 1-5 Wounds Remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Vehicle", "Walker", "Smoke", "Chaos", "Daemon", "Defiler", "Heretic Astartes"]
+    },
+    {
+      "id": "heldrake",
+      "name": "Heldrake",
+      "points": { "1": 205 },
+      "stats": { "m": 20, "t": 9, "sv": "3+", "w": 12, "ld": "6+", "oc": 0 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "baleflamer-heldrake",
+          "name": "Baleflamer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6+3", "bs": "N/A", "s": 6, "ap": -1, "d": 2 },
+          "abilities": ["Ignores Cover", "Torrent"],
+          "loadoutGroup": "baleflamer"
+        },
+        {
+          "id": "hades-autocannon-heldrake",
+          "name": "Hades Autocannon",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 6, "bs": "3+", "s": 8, "ap": -1, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "hades"
+        },
+        {
+          "id": "heldrake-claws",
+          "name": "Heldrake Claws",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": ["Anti-Fly 2+", "Devastating Wounds"]
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-ranged-heldrake",
+          "name": "Main Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "hades", "name": "Hades Autocannon", "default": true },
+            { "id": "baleflamer", "name": "Baleflamer" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3-heldrake",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "hover",
+          "name": "Hover",
+          "description": "This model can Hover. In your Movement phase, you can choose not to move this model. If you do, it can shoot as normal this turn."
+        },
+        {
+          "id": "airborne-predator",
+          "name": "Airborne Predator",
+          "description": "Each time this model makes a ranged attack that targets a unit that can FLY, add 1 to the Hit roll."
+        }
+      ],
+      "keywords": ["Vehicle", "Fly", "Aircraft", "Chaos", "Daemon", "Heldrake", "Heretic Astartes"]
+    },
+    {
+      "id": "noise-marines",
+      "name": "Noise Marines",
+      "points": { "6": 145 },
+      "stats": { "m": 6, "t": 5, "sv": "3+", "w": 2, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "composition": "1 Disharmonist + 5 Noise Marines",
+      "weapons": [
+        {
+          "id": "sonic-blaster",
+          "name": "Sonic Blaster",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 3, "bs": "3+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Ignores Cover"],
+          "loadoutGroup": "sonic"
+        },
+        {
+          "id": "blastmaster-single",
+          "name": "Blastmaster (Single Frequency)",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 3, "bs": "3+", "s": 10, "ap": -2, "d": 3 },
+          "abilities": ["Ignores Cover"],
+          "loadoutGroup": "blastmaster"
+        },
+        {
+          "id": "blastmaster-varied",
+          "name": "Blastmaster (Varied Frequency)",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 6, "bs": "3+", "s": 6, "ap": -2, "d": 1 },
+          "abilities": ["Ignores Cover"],
+          "loadoutGroup": "blastmaster"
+        },
+        {
+          "id": "screamer-pistol",
+          "name": "Screamer Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 3, "bs": "3+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Ignores Cover", "Pistol"],
+          "loadoutGroup": "screamer"
+        },
+        {
+          "id": "close-combat-weapon-nm",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "ccw"
+        },
+        {
+          "id": "power-sword-nm",
+          "name": "Power Sword",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "sword"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "disharmonist-weapon",
+          "name": "Disharmonist Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "sonic", "name": "Sonic Blaster", "default": true },
+            { "id": "screamer", "name": "Screamer Pistol + Power Sword" }
+          ]
+        },
+        {
+          "id": "blastmaster-option",
+          "name": "Blastmaster",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "blastmaster", "name": "Blastmaster", "maxModels": 2 }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "terrifying-crescendo",
+          "name": "Terrifying Crescendo",
+          "description": "In your Shooting phase, after this unit has shot, select one enemy unit that was hit by one or more of those attacks. Until the start of your next Shooting phase, each time that enemy unit takes a Battle-shock test or a Leadership test, subtract 1 from that test."
+        }
+      ],
+      "keywords": ["Infantry", "Chaos", "Slaanesh", "Noise Marines", "Emperor's Children", "Heretic Astartes"]
+    },
+    {
+      "id": "chaos-lord-jump-pack",
+      "name": "Chaos Lord with Jump Pack",
+      "points": { "1": 80 },
+      "stats": { "m": 12, "t": 4, "sv": "3+", "w": 5, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "bolt-pistol-jp-lord",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "2+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "bolt"
+        },
+        {
+          "id": "plasma-pistol-jp-lord",
+          "name": "Plasma Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "2+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "plasma"
+        },
+        {
+          "id": "plasma-pistol-jp-lord-supercharge",
+          "name": "Plasma Pistol (Supercharge)",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "2+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Hazardous", "Pistol"],
+          "loadoutGroup": "plasma-super"
+        },
+        {
+          "id": "accursed-weapon-jp-lord",
+          "name": "Accursed Weapon",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "accursed"
+        },
+        {
+          "id": "power-fist-jp-lord",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "2+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "fist"
+        },
+        {
+          "id": "twin-lightning-claws-jp-lord",
+          "name": "Twin Lightning Claws",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": ["Twin-linked"],
+          "loadoutGroup": "claws"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon-jp-lord",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "bolt", "name": "Bolt Pistol", "default": true },
+            { "id": "plasma", "name": "Plasma Pistol" }
+          ]
+        },
+        {
+          "id": "melee-weapon-jp-lord",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "accursed", "name": "Accursed Weapon", "default": true },
+            { "id": "fist", "name": "Power Fist" },
+            { "id": "claws", "name": "Twin Lightning Claws" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader-jp-lord",
+          "name": "Leader",
+          "description": "This model can be attached to a Raptors unit.",
+          "eligibleUnits": ["raptors"]
+        },
+        {
+          "id": "deep-strike-jp-lord",
+          "name": "Deep Strike",
+          "description": "This unit can be set up in Reserves instead of being set up on the battlefield."
+        },
+        {
+          "id": "lord-of-chaos-jp",
+          "name": "Lord of Chaos",
+          "description": "Once per battle round, one HERETIC ASTARTES unit from your army with this ability can use it when targeted by a Stratagem. If it does, reduce the CP cost of that Stratagem by 1CP."
+        },
+        {
+          "id": "cruel-hunter",
+          "name": "Cruel Hunter",
+          "description": "While this model is leading a unit, each time a model in that unit makes a Pile-in or Consolidation move, it can move up to 6\" instead of up to 3\"."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Jump Pack", "Fly", "Grenades", "Chaos", "Chaos Lord", "Heretic Astartes"]
+    },
+    {
+      "id": "khorne-berzerkers",
+      "name": "Khorne Berzerkers",
+      "points": { "10": 180, "20": 360 },
+      "stats": { "m": 8, "t": 4, "sv": "3+", "w": 2, "ld": "6+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bolt-pistol-berzerker",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "plasma-pistol-berzerker",
+          "name": "Plasma Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "4+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "plasma"
+        },
+        {
+          "id": "plasma-pistol-berzerker-supercharge",
+          "name": "Plasma Pistol (Supercharge)",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "4+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Hazardous", "Pistol"],
+          "loadoutGroup": "plasma-super"
+        },
+        {
+          "id": "chainblade",
+          "name": "Chainblade",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "chainblade"
+        },
+        {
+          "id": "khornate-eviscerator",
+          "name": "Khornate Eviscerator",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "eviscerator"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "champion-pistol-berzerker",
+          "name": "Champion Pistol",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "bolt", "name": "Bolt Pistol", "default": true },
+            { "id": "plasma", "name": "Plasma Pistol" }
+          ]
+        },
+        {
+          "id": "plasma-pistol-option",
+          "name": "Plasma Pistol",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "plasma", "name": "Plasma Pistol", "maxModels": 2 }
+          ]
+        },
+        {
+          "id": "eviscerator-option",
+          "name": "Khornate Eviscerator",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "eviscerator", "name": "Khornate Eviscerator", "maxModels": 2 }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "blood-surge",
+          "name": "Blood Surge",
+          "description": "In your opponent's Shooting phase, after an enemy unit has selected its targets, if one or more models in this unit were destroyed as a result of attacks made by that enemy unit, this unit can make a Blood Surge move. When doing so, roll one D6 and add 2 to the result: each model in this unit can move a distance in inches up to the result, moving toward the nearest enemy unit. This unit can move within Engagement Range of enemy units."
+        },
+        {
+          "id": "icon-of-khorne",
+          "name": "Icon of Khorne",
+          "description": "Each time this unit destroys an enemy unit, it gains 1 Bloodshed point. When this unit makes a Blessings of Khorne roll, roll one additional D6 for each Bloodshed point it has."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Grenades", "Chaos", "Khorne", "Berzerkers", "Heretic Astartes", "World Eaters"]
+    },
+    {
+      "id": "chaos-land-raider",
+      "name": "Chaos Land Raider",
+      "points": { "1": 220 },
+      "stats": { "m": 10, "t": 12, "sv": "2+", "w": 16, "ld": "6+", "oc": 5 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "soulshatter-lascannon",
+          "name": "Soulshatter Lascannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 2, "bs": "3+", "s": 12, "ap": -3, "d": "D6+1" },
+          "abilities": []
+        },
+        {
+          "id": "twin-heavy-bolter-lr",
+          "name": "Twin Heavy Bolter",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 3, "bs": "3+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Sustained Hits 1", "Twin-linked"]
+        },
+        {
+          "id": "combi-bolter-lr",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "combi-bolter"
+        },
+        {
+          "id": "combi-weapon-lr",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "combi-weapon"
+        },
+        {
+          "id": "havoc-launcher-lr",
+          "name": "Havoc Launcher",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D6", "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "havoc"
+        },
+        {
+          "id": "armoured-tracks-lr",
+          "name": "Armoured Tracks",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "4+", "s": 8, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "pintle-weapon",
+          "name": "Pintle Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "combi-bolter", "name": "Combi-bolter", "default": true },
+            { "id": "combi-weapon", "name": "Combi-weapon" }
+          ]
+        },
+        {
+          "id": "havoc-option-lr",
+          "name": "Havoc Launcher",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "havoc", "name": "Havoc Launcher" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d6",
+          "name": "Deadly Demise D6",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D6 mortal wounds."
+        },
+        {
+          "id": "assault-ramp",
+          "name": "Assault Ramp",
+          "description": "Each time a unit disembarks from this model after it has made a Normal move, that unit is still eligible to declare a charge this turn."
+        },
+        {
+          "id": "damaged-lr",
+          "name": "Damaged: 1-5 Wounds Remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Vehicle", "Transport", "Smoke", "Chaos", "Land Raider", "Heretic Astartes"],
+      "transportCapacity": "12 HERETIC ASTARTES INFANTRY models. Cannot transport OBLITERATOR or JUMP PACK models. POSSESSED and TERMINATOR models each count as 2 models."
+    },
+    {
+      "id": "chaos-predator-annihilator",
+      "name": "Chaos Predator Annihilator",
+      "points": { "1": 135 },
+      "stats": { "m": 10, "t": 10, "sv": "3+", "w": 11, "ld": "6+", "oc": 3 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "predator-twin-lascannon",
+          "name": "Predator Twin Lascannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 1, "bs": "3+", "s": 14, "ap": -3, "d": "D6+1" },
+          "abilities": ["Twin-linked"]
+        },
+        {
+          "id": "lascannon-pred",
+          "name": "Lascannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 1, "bs": "3+", "s": 12, "ap": -3, "d": "D6+1" },
+          "abilities": [],
+          "loadoutGroup": "lascannon"
+        },
+        {
+          "id": "heavy-bolter-pred",
+          "name": "Heavy Bolter",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 3, "bs": "3+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Sustained Hits 1"],
+          "loadoutGroup": "heavy-bolter"
+        },
+        {
+          "id": "combi-bolter-pred",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "combi-bolter"
+        },
+        {
+          "id": "combi-weapon-pred",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "combi-weapon"
+        },
+        {
+          "id": "havoc-launcher-pred",
+          "name": "Havoc Launcher",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D6", "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "havoc"
+        },
+        {
+          "id": "armoured-tracks-pred",
+          "name": "Armoured Tracks",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 6, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "sponson-weapons",
+          "name": "Sponson Weapons",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "heavy-bolter", "name": "2x Heavy Bolter" },
+            { "id": "lascannon", "name": "2x Lascannon" }
+          ]
+        },
+        {
+          "id": "pintle-weapon-pred",
+          "name": "Pintle Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "combi-bolter", "name": "Combi-bolter", "default": true },
+            { "id": "combi-weapon", "name": "Combi-weapon" }
+          ]
+        },
+        {
+          "id": "havoc-option-pred",
+          "name": "Havoc Launcher",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "havoc", "name": "Havoc Launcher" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3-pred-anni",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "annihilator",
+          "name": "Annihilator",
+          "description": "Each time a ranged attack made by this model targets a MONSTER or VEHICLE unit, you can re-roll the Damage roll."
+        },
+        {
+          "id": "damaged-pred-anni",
+          "name": "Damaged: 1-4 Wounds Remaining",
+          "description": "While this model has 1-4 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Vehicle", "Smoke", "Chaos", "Predator Annihilator", "Heretic Astartes"]
+    },
+    {
+      "id": "chaos-predator-destructor",
+      "name": "Chaos Predator Destructor",
+      "points": { "1": 140 },
+      "stats": { "m": 10, "t": 10, "sv": "3+", "w": 11, "ld": "6+", "oc": 3 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "predator-autocannon",
+          "name": "Predator Autocannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 4, "bs": "3+", "s": 9, "ap": -1, "d": 3 },
+          "abilities": ["Rapid Fire 2"]
+        },
+        {
+          "id": "lascannon-pred-dest",
+          "name": "Lascannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 1, "bs": "3+", "s": 12, "ap": -3, "d": "D6+1" },
+          "abilities": [],
+          "loadoutGroup": "lascannon"
+        },
+        {
+          "id": "heavy-bolter-pred-dest",
+          "name": "Heavy Bolter",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 3, "bs": "3+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Sustained Hits 1"],
+          "loadoutGroup": "heavy-bolter"
+        },
+        {
+          "id": "combi-bolter-pred-dest",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "combi-bolter"
+        },
+        {
+          "id": "combi-weapon-pred-dest",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "combi-weapon"
+        },
+        {
+          "id": "havoc-launcher-pred-dest",
+          "name": "Havoc Launcher",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D6", "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "havoc"
+        },
+        {
+          "id": "armoured-tracks-pred-dest",
+          "name": "Armoured Tracks",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 6, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "sponson-weapons-dest",
+          "name": "Sponson Weapons",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "heavy-bolter", "name": "2x Heavy Bolter" },
+            { "id": "lascannon", "name": "2x Lascannon" }
+          ]
+        },
+        {
+          "id": "pintle-weapon-pred-dest",
+          "name": "Pintle Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "combi-bolter", "name": "Combi-bolter", "default": true },
+            { "id": "combi-weapon", "name": "Combi-weapon" }
+          ]
+        },
+        {
+          "id": "havoc-option-pred-dest",
+          "name": "Havoc Launcher",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "havoc", "name": "Havoc Launcher" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3-pred-dest",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "destructor",
+          "name": "Destructor",
+          "description": "Each time a ranged attack made by this model targets an enemy INFANTRY unit, improve the Armour Penetration characteristic of that attack by 1."
+        },
+        {
+          "id": "damaged-pred-dest",
+          "name": "Damaged: 1-4 Wounds Remaining",
+          "description": "While this model has 1-4 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Vehicle", "Smoke", "Chaos", "Predator Destructor", "Heretic Astartes"]
+    },
+    {
+      "id": "chaos-vindicator",
+      "name": "Chaos Vindicator",
+      "points": { "1": 185 },
+      "stats": { "m": 9, "t": 11, "sv": "2+", "w": 11, "ld": "6+", "oc": 3 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "demolisher-cannon",
+          "name": "Demolisher Cannon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": "D6+3", "bs": "3+", "s": 14, "ap": -3, "d": "D6" },
+          "abilities": ["Blast"]
+        },
+        {
+          "id": "combi-bolter-vind",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "combi-bolter"
+        },
+        {
+          "id": "combi-weapon-vind",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Rapid Fire 1"],
+          "loadoutGroup": "combi-weapon"
+        },
+        {
+          "id": "havoc-launcher-vind",
+          "name": "Havoc Launcher",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D6", "bs": "3+", "s": 5, "ap": 0, "d": 1 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "havoc"
+        },
+        {
+          "id": "armoured-tracks-vind",
+          "name": "Armoured Tracks",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 6, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "pintle-weapon-vind",
+          "name": "Pintle Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "combi-bolter", "name": "Combi-bolter", "default": true },
+            { "id": "combi-weapon", "name": "Combi-weapon" }
+          ]
+        },
+        {
+          "id": "havoc-option-vind",
+          "name": "Havoc Launcher",
+          "type": "choice",
+          "pattern": "addition",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "havoc", "name": "Havoc Launcher" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "deadly-demise-d3-vind",
+          "name": "Deadly Demise D3",
+          "description": "When this model is destroyed, roll one D6. On a 6, each unit within 6\" suffers D3 mortal wounds."
+        },
+        {
+          "id": "siege-shield",
+          "name": "Siege Shield",
+          "description": "This model does not suffer the penalty to its Hit rolls for making ranged attacks while enemy units are within Engagement Range of it. In addition, ranged weapons equipped by this model can target enemy units within Engagement Range of it, but only if no other friendly units are also within Engagement Range of that enemy unit."
+        },
+        {
+          "id": "damaged-vind",
+          "name": "Damaged: 1-4 Wounds Remaining",
+          "description": "While this model has 1-4 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Vehicle", "Smoke", "Chaos", "Vindicator", "Heretic Astartes"]
+    },
+    {
+      "id": "traitor-guardsmen-squad",
+      "name": "Traitor Guardsmen Squad",
+      "points": { "10": 70 },
+      "stats": { "m": 6, "t": 3, "sv": "5+", "w": 1, "ld": "7+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "lasgun-tg",
+          "name": "Lasgun",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 3, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 1"],
+          "loadoutGroup": "lasgun"
+        },
+        {
+          "id": "boltgun-tg",
+          "name": "Boltgun",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 1"],
+          "loadoutGroup": "boltgun"
+        },
+        {
+          "id": "corrupted-pistol",
+          "name": "Corrupted Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "4+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "flamer-tg",
+          "name": "Flamer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent"],
+          "loadoutGroup": "special"
+        },
+        {
+          "id": "meltagun-tg",
+          "name": "Meltagun",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "4+", "s": 9, "ap": -4, "d": "D6" },
+          "abilities": ["Melta 2"],
+          "loadoutGroup": "special"
+        },
+        {
+          "id": "plasma-gun-tg",
+          "name": "Plasma Gun",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Rapid Fire 1"],
+          "loadoutGroup": "special"
+        },
+        {
+          "id": "plasma-gun-tg-supercharge",
+          "name": "Plasma Gun (Supercharge)",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Hazardous", "Rapid Fire 1"],
+          "loadoutGroup": "special-super"
+        },
+        {
+          "id": "cultist-grenade-launcher-frag",
+          "name": "Cultist Grenade Launcher (Frag)",
+          "type": "ranged",
+          "stats": { "range": 24, "a": "D3", "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "grenade-launcher"
+        },
+        {
+          "id": "cultist-grenade-launcher-krak",
+          "name": "Cultist Grenade Launcher (Krak)",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "4+", "s": 9, "ap": -2, "d": "D3" },
+          "abilities": [],
+          "loadoutGroup": "grenade-launcher"
+        },
+        {
+          "id": "cultist-sniper-rifle",
+          "name": "Cultist Sniper Rifle",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 1, "bs": "4+", "s": 4, "ap": -2, "d": 2 },
+          "abilities": ["Heavy", "Precision"],
+          "loadoutGroup": "sniper"
+        },
+        {
+          "id": "close-combat-weapon-tg",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 1, "ws": "4+", "s": 3, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "chainsword-tg",
+          "name": "Chainsword",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 3, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "chainsword"
+        },
+        {
+          "id": "power-weapon-tg",
+          "name": "Power Weapon",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 4, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "power-weapon"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "special-weapons-tg",
+          "name": "Special Weapons",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "special", "name": "Flamer / Meltagun / Plasma Gun / Grenade Launcher / Sniper Rifle", "maxModels": 3 }
+          ]
+        },
+        {
+          "id": "sergeant-melee-tg",
+          "name": "Sergeant Melee",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "ccw", "name": "Close Combat Weapon", "default": true },
+            { "id": "chainsword", "name": "Chainsword" },
+            { "id": "power-weapon", "name": "Power Weapon" }
+          ]
+        },
+        {
+          "id": "sergeant-ranged-tg",
+          "name": "Sergeant Ranged",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "corrupted-pistol", "name": "Corrupted Pistol", "default": true },
+            { "id": "boltgun", "name": "Boltgun" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "twisted-defence-force",
+          "name": "Twisted Defence Force",
+          "description": "While this unit is within range of an objective marker, each time a ranged attack targets this unit, models in this unit have the Benefit of Cover against that attack."
+        }
+      ],
+      "keywords": ["Infantry", "Grenades", "Chaos", "Damned", "Traitor Guardsmen Squad", "Heretic Astartes"]
+    },
+    {
+      "id": "fellgor-beastmen",
+      "name": "Fellgor Beastmen",
+      "points": { "10": 70 },
+      "stats": { "m": 6, "t": 4, "sv": "5+", "w": 1, "ld": "7+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "autopistol-fellgor",
+          "name": "Autopistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "4+", "s": 3, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "bolt-pistol-fellgor",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "plasma-pistol-fellgor",
+          "name": "Plasma Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "4+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "plasma"
+        },
+        {
+          "id": "plasma-pistol-fellgor-supercharge",
+          "name": "Plasma Pistol (Supercharge)",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "4+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Hazardous", "Pistol"],
+          "loadoutGroup": "plasma-super"
+        },
+        {
+          "id": "corrupted-stave-ranged",
+          "name": "Corrupted Stave",
+          "type": "ranged",
+          "stats": { "range": 18, "a": "D3", "bs": "4+", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Devastating Wounds", "Psychic"],
+          "loadoutGroup": "stave"
+        },
+        {
+          "id": "close-combat-weapon-fellgor",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "chainsword-fellgor",
+          "name": "Chainsword",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "corrupted-stave-melee",
+          "name": "Corrupted Stave",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "4+", "s": 4, "ap": -1, "d": "D3" },
+          "abilities": ["Devastating Wounds", "Psychic"],
+          "loadoutGroup": "stave"
+        },
+        {
+          "id": "great-weapon-fellgor",
+          "name": "Great Weapon",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "5+", "s": 8, "ap": -1, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "great-weapon"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "champion-pistol-fellgor",
+          "name": "Champion Pistol",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "bolt", "name": "Bolt Pistol", "default": true },
+            { "id": "plasma", "name": "Plasma Pistol" }
+          ]
+        },
+        {
+          "id": "great-weapon-option",
+          "name": "Great Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "great-weapon", "name": "Great Weapon", "maxModels": 1 }
+          ]
+        },
+        {
+          "id": "stave-option",
+          "name": "Corrupted Stave",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "stave", "name": "Corrupted Stave", "maxModels": 1 }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "bestial-raiders",
+          "name": "Bestial Raiders",
+          "description": "This unit can be set up in Strategic Reserves. When in Strategic Reserves, treat the current battle round number as being one higher than it actually is for the purposes of determining when this unit can arrive from Strategic Reserves."
+        }
+      ],
+      "keywords": ["Infantry", "Grenades", "Chaos", "Damned", "Fellgor Beastmen", "Heretic Astartes"]
+    },
+    {
+      "id": "cypher",
+      "name": "Cypher",
+      "points": { "1": 90 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 5, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "cyphers-bolt-pistol",
+          "name": "Cypher's Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 6, "bs": "2+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": ["Assault", "Pistol", "Sustained Hits 1"]
+        },
+        {
+          "id": "cyphers-plasma-pistol",
+          "name": "Cypher's Plasma Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 3, "bs": "2+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Assault", "Pistol", "Sustained Hits 1"]
+        },
+        {
+          "id": "cyphers-bolt-pistol-melee",
+          "name": "Cypher's Bolt Pistol",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": ["Sustained Hits 1"]
+        },
+        {
+          "id": "cyphers-plasma-pistol-melee",
+          "name": "Cypher's Plasma Pistol",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "2+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Extra Attacks", "Sustained Hits 1"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "lone-operative-cypher",
+          "name": "Lone Operative",
+          "description": "Unless part of an Attached unit, this unit can only be selected as the target of a ranged attack if the attacking model is within 12\"."
+        },
+        {
+          "id": "agent-of-discord",
+          "name": "Agent of Discord (Aura)",
+          "description": "Each time an enemy unit is targeted by a Stratagem, if that enemy unit is within 12\" of this model, increase the cost of that Stratagem by 1CP."
+        },
+        {
+          "id": "guns-blazing",
+          "name": "Guns Blazing",
+          "description": "Once per turn, in your opponent's Shooting phase, when an enemy unit targets a friendly HERETIC ASTARTES unit within 3\" of this model, this model can shoot at that enemy unit as if it were your Shooting phase."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Epic Hero", "Chaos", "Fallen", "Cypher", "Heretic Astartes"]
+    },
+    {
+      "id": "huron-blackheart",
+      "name": "Huron Blackheart",
+      "points": { "1": 80 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 5, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "tyrants-claw-ranged",
+          "name": "Tyrant's Claw",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 6, "ap": -1, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent"]
+        },
+        {
+          "id": "exalted-weapon",
+          "name": "Exalted Weapon",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 5, "ap": -2, "d": 2 },
+          "abilities": []
+        },
+        {
+          "id": "tyrants-claw-melee",
+          "name": "Tyrant's Claw",
+          "type": "melee",
+          "stats": { "a": 10, "ws": "2+", "s": 4, "ap": -2, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader-huron",
+          "name": "Leader",
+          "description": "This model can be attached to a Chosen or Legionaries unit.",
+          "eligibleUnits": ["chosen", "legionaries"]
+        },
+        {
+          "id": "tyrant-of-badab",
+          "name": "The Tyrant of Badab",
+          "description": "While this model is leading a unit, add 1 to the Objective Control characteristic of models in that unit."
+        },
+        {
+          "id": "red-corsairs",
+          "name": "Red Corsairs",
+          "description": "After both players have deployed their armies, select up to three HERETIC ASTARTES INFANTRY units from your army and redeploy them into Strategic Reserves, regardless of how many units are already in Strategic Reserves and regardless of any restrictions placed on when those units can arrive from Strategic Reserves."
+        },
+        {
+          "id": "hamadryas-knowledge",
+          "name": "Hamadrya's Knowledge (Psychic)",
+          "description": "Once per battle, when an enemy unit ends a move within 9\" of this model and this model's unit is not within Engagement Range of one or more enemy units, this model's unit can make a Normal move of up to D6\"."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Epic Hero", "Chaos", "Chaos Undivided", "Huron Blackheart", "Heretic Astartes"]
+    },
+    {
+      "id": "cultist-firebrand",
+      "name": "Cultist Firebrand",
+      "points": { "1": 45 },
+      "stats": { "m": 6, "t": 4, "sv": "4+", "w": 4, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "balefire-pike",
+          "name": "Balefire Pike",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6+3", "bs": "N/A", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent"]
+        },
+        {
+          "id": "close-combat-weapon-firebrand",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "4+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader-firebrand",
+          "name": "Leader",
+          "description": "This model can be attached to an Accursed Cultists or Cultist Mob unit.",
+          "eligibleUnits": ["accursed-cultists", "cultist-mob"]
+        },
+        {
+          "id": "fiery-faith",
+          "name": "Fiery Faith",
+          "description": "While this model is leading a unit, you can re-roll Leadership tests taken for that unit."
+        },
+        {
+          "id": "cursed-flames",
+          "name": "Cursed Flames",
+          "description": "In your Shooting phase, after this model has shot, select one enemy INFANTRY unit that was hit by one or more of those attacks. That unit must take a Battle-shock test."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Grenades", "Chaos", "Damned", "Cultist Firebrand", "Heretic Astartes"]
+    },
+    {
+      "id": "fabius-bile",
+      "name": "Fabius Bile",
+      "points": { "1": 100 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 5, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "unitComposition": "1 Fabius Bile, 1 Surgeon Acolyte",
+      "weapons": [
+        {
+          "id": "xyclos-needler",
+          "name": "Xyclos Needler",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 3, "bs": "2+", "s": 2, "ap": -1, "d": 2 },
+          "abilities": ["Anti-Infantry 2+", "Pistol"]
+        },
+        {
+          "id": "rod-of-torment",
+          "name": "Rod of Torment",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 5, "ap": -1, "d": 3 },
+          "abilities": []
+        },
+        {
+          "id": "chirurgeon-melee",
+          "name": "Chirurgeon",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "2+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": []
+        },
+        {
+          "id": "surgeon-acolyte-tools",
+          "name": "Surgeon Acolyte's Tools",
+          "type": "melee",
+          "stats": { "a": 1, "ws": "5+", "s": 3, "ap": 0, "d": 1 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader-fabius",
+          "name": "Leader",
+          "description": "This model can be attached to Accursed Cultists, Chosen, Cultist Mob, or Legionaries.",
+          "eligibleUnits": ["accursed-cultists", "chosen", "cultist-mob", "legionaries"]
+        },
+        {
+          "id": "enhanced-warriors",
+          "name": "Enhanced Warriors",
+          "description": "If this unit is attached to a unit at the start of battle, add 1 to Strength of melee weapons and 1 to Toughness of Bodyguard models in that unit."
+        },
+        {
+          "id": "surgeon-acolyte",
+          "name": "Surgeon Acolyte",
+          "description": "Once per turn, when an attack is allocated to a model in this unit, if this unit contains Fabius Bile, you can change the Damage characteristic of that attack to 0."
+        },
+        {
+          "id": "chirurgeon",
+          "name": "Chirurgeon",
+          "description": "The first time this unit's Fabius Bile model is destroyed, at the end of the phase roll one D6: on a 2+, set it back up on the battlefield, as close as possible to where it was destroyed and not within Engagement Range of any enemy models, with its full wounds remaining."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Epic Hero", "Chaos", "Chaos Undivided", "Fabius Bile", "Heretic Astartes"]
+    },
+    {
+      "id": "haarken-worldclaimer",
+      "name": "Haarken Worldclaimer",
+      "points": { "1": 90 },
+      "stats": { "m": 12, "t": 4, "sv": "3+", "w": 5, "ld": "6+", "oc": 1 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "helspear-ranged",
+          "name": "Helspear",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "2+", "s": 8, "ap": -3, "d": 3 },
+          "abilities": ["Assault", "Sustained Hits D3"]
+        },
+        {
+          "id": "heralds-talon",
+          "name": "Herald's Talon",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 5, "ap": -2, "d": 2 },
+          "abilities": ["Precision"]
+        },
+        {
+          "id": "helspear-melee",
+          "name": "Helspear",
+          "type": "melee",
+          "stats": { "a": 1, "ws": "2+", "s": 8, "ap": -3, "d": 3 },
+          "abilities": ["Extra Attacks", "Lance", "Sustained Hits D3"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader-haarken",
+          "name": "Leader",
+          "description": "This model can be attached to a Raptors unit.",
+          "eligibleUnits": ["raptors"]
+        },
+        {
+          "id": "head-taker",
+          "name": "Head Taker",
+          "description": "Each time this model's unit makes a Charge move, roll one D6 for each model in this model's unit that is within Engagement Range of one or more enemy units: for each 4+, one enemy unit within Engagement Range suffers 1 mortal wound."
+        },
+        {
+          "id": "herald-of-the-apocalypse",
+          "name": "Herald of the Apocalypse (Aura)",
+          "description": "While an enemy unit is within 6\" of this model, each time that enemy unit takes a Battle-shock test, if it is below its Starting Strength, it must take that test as if it were below Half-strength instead."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Epic Hero", "Fly", "Jump Pack", "Chaos", "Chaos Undivided", "Haarken Worldclaimer", "Heretic Astartes"]
+    },
+    {
+      "id": "vashtorr-the-arkifane",
+      "name": "Vashtorr the Arkifane",
+      "points": { "1": 175 },
+      "stats": { "m": 12, "t": 10, "sv": "2+", "w": 14, "ld": "6+", "oc": 3 },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "vashtorrs-claw",
+          "name": "Vashtorr's Claw",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 5, "ap": -2, "d": 1 },
+          "abilities": ["Anti-Vehicle 4+", "Torrent"]
+        },
+        {
+          "id": "vashtorrs-hammer-strike",
+          "name": "Vashtorr's Hammer – strike",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "2+", "s": 14, "ap": -3, "d": 3 },
+          "abilities": ["Anti-Vehicle 4+", "Devastating Wounds"]
+        },
+        {
+          "id": "vashtorrs-hammer-sweep",
+          "name": "Vashtorr's Hammer – sweep",
+          "type": "melee",
+          "stats": { "a": 12, "ws": "2+", "s": 8, "ap": -1, "d": 2 },
+          "abilities": ["Anti-Vehicle 4+", "Devastating Wounds"]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "unholy-mechanisms",
+          "name": "Unholy Mechanisms (Aura)",
+          "description": "While a friendly DAEMON VEHICLE unit is within 6\" of this model, add 2 to the Strength characteristic of weapons equipped by models in that unit."
+        },
+        {
+          "id": "reorder-reality",
+          "name": "Reorder Reality",
+          "description": "Each time a ranged attack targets this model, if the attacking model is within 18\", subtract 1 from the Hit roll. After that attacking unit has finished making its attacks, if any of those attacks targeted this model, ranged weapons equipped by models in that unit have the [HAZARDOUS] ability until the end of the phase."
+        },
+        {
+          "id": "indentured-daemon-engines",
+          "name": "Indentured Daemon Engines",
+          "description": "While this model is within 3\" of one or more friendly DAEMON VEHICLE units, this model has the Lone Operative ability."
+        }
+      ],
+      "keywords": ["Monster", "Character", "Epic Hero", "Fly", "Chaos", "Daemon", "Vashtorr the Arkifane", "Heretic Astartes"]
+    },
+    {
+      "id": "traitor-enforcer",
+      "name": "Traitor Enforcer",
+      "points": { "1": 55 },
+      "stats": { "m": 6, "t": 3, "sv": "5+", "w": 3, "ld": "6+", "oc": 1 },
+      "invuln": "5+",
+      "unitComposition": "1 Traitor Enforcer, 1 Traitor Ogryn",
+      "weapons": [
+        {
+          "id": "bolt-pistol-enforcer",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "power-fist-enforcer",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 6, "ap": -2, "d": 2 },
+          "abilities": []
+        },
+        {
+          "id": "ogryn-weapons",
+          "name": "Ogryn Weapons",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 7, "ap": -1, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "leader-enforcer",
+          "name": "Leader",
+          "description": "This unit can be attached to a Traitor Guardsmen Squad.",
+          "eligibleUnits": ["traitor-guardsmen-squad"]
+        },
+        {
+          "id": "brutal-example",
+          "name": "Brutal Example",
+          "description": "Once per turn, while this unit is leading a unit and contains a TRAITOR ENFORCER model, you can target that unit with the Fire Overwatch Stratagem for 0CP, and can do so even if you have already targeted a different unit from your army with that Stratagem this turn."
+        },
+        {
+          "id": "mutated-bodyguard",
+          "name": "Mutated Bodyguard",
+          "description": "While this unit contains a Traitor Ogryn model, CHARACTER models in this unit have the Feel No Pain 4+ ability."
+        }
+      ],
+      "keywords": ["Infantry", "Character", "Grenades", "Chaos", "Damned", "Traitor Enforcer", "Heretic Astartes"]
+    },
+    {
+      "id": "plague-marines",
+      "name": "Plague Marines",
+      "points": { "5": 95, "7": 130, "10": 190 },
+      "stats": { "m": 5, "t": 6, "sv": "3+", "w": 2, "ld": "6+", "oc": 2 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bolt-pistol-plague",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Lethal Hits", "Pistol"]
+        },
+        {
+          "id": "boltgun-plague",
+          "name": "Boltgun",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Lethal Hits"],
+          "loadoutGroup": "boltgun"
+        },
+        {
+          "id": "blight-launcher",
+          "name": "Blight Launcher",
+          "type": "ranged",
+          "stats": { "range": 24, "a": "D3", "bs": "3+", "s": 6, "ap": -1, "d": 2 },
+          "abilities": ["Blast", "Lethal Hits"],
+          "loadoutGroup": "blight-launcher"
+        },
+        {
+          "id": "plague-spewer",
+          "name": "Plague Spewer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Anti-Infantry 2+", "Ignores Cover", "Torrent"],
+          "loadoutGroup": "plague-spewer"
+        },
+        {
+          "id": "plague-belcher",
+          "name": "Plague Belcher",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Ignores Cover", "Torrent"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "meltagun-plague",
+          "name": "Meltagun",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 9, "ap": -4, "d": "D6" },
+          "abilities": ["Melta 2"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "plasma-gun-plague",
+          "name": "Plasma Gun – standard",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "3+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Rapid Fire 1"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "plasma-gun-supercharge-plague",
+          "name": "Plasma Gun – supercharge",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "3+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Hazardous", "Rapid Fire 1"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "plasma-pistol-plague",
+          "name": "Plasma Pistol – standard",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "champion-ranged"
+        },
+        {
+          "id": "plasma-pistol-supercharge-plague",
+          "name": "Plasma Pistol – supercharge",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Hazardous", "Pistol"],
+          "loadoutGroup": "champion-ranged"
+        },
+        {
+          "id": "plague-knives",
+          "name": "Plague Knives",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Lethal Hits"],
+          "loadoutGroup": "boltgun"
+        },
+        {
+          "id": "bubotic-weapons",
+          "name": "Bubotic Weapons",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": ["Lethal Hits"],
+          "loadoutGroup": "bubotic"
+        },
+        {
+          "id": "heavy-plague-weapon",
+          "name": "Heavy Plague Weapon",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "4+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": ["Lethal Hits"],
+          "loadoutGroup": "heavy-plague"
+        },
+        {
+          "id": "power-fist-plague",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": ["Lethal Hits"],
+          "loadoutGroup": "champion-melee"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "blight-launcher-option",
+          "name": "Blight Launcher",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "blight-launcher", "name": "Blight Launcher", "maxModels": 2 }
+          ]
+        },
+        {
+          "id": "plague-spewer-option",
+          "name": "Plague Spewer",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "plague-spewer", "name": "Plague Spewer", "maxModels": 2 }
+          ]
+        },
+        {
+          "id": "special-weapon-option",
+          "name": "Special Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "special-weapon", "name": "Meltagun / Plague Belcher / Plasma Gun", "maxModels": 2 }
+          ]
+        },
+        {
+          "id": "bubotic-option",
+          "name": "Bubotic Weapons",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "bubotic", "name": "Bubotic Weapons", "maxModels": 4 }
+          ]
+        },
+        {
+          "id": "heavy-plague-option",
+          "name": "Heavy Plague Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "heavy-plague", "name": "Heavy Plague Weapon", "maxModels": 4 }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "nurgles-gift",
+          "name": "Nurgle's Gift (Aura)",
+          "description": "In your Shooting phase, each time this unit is selected to shoot, after this unit has shot, select one enemy unit hit by one or more of those attacks. Until the start of your next turn, that enemy unit is Afflicted."
+        },
+        {
+          "id": "icon-of-despair",
+          "name": "Icon of Despair (Aura)",
+          "description": "While an enemy unit is within 6\" of the bearer, worsen the Leadership characteristic of models in that unit by 1."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Grenades", "Chaos", "Nurgle", "Plague Marines", "Heretic Astartes"]
+    },
+    {
+      "id": "rubric-marines",
+      "name": "Rubric Marines",
+      "points": { "5": 100, "10": 190 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 2, "ld": "7+", "oc": 2 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "inferno-bolt-pistol",
+          "name": "Inferno Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "sorcerer-pistol"
+        },
+        {
+          "id": "inferno-boltgun",
+          "name": "Inferno Boltgun",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "inferno-boltgun"
+        },
+        {
+          "id": "malefic-curse",
+          "name": "Malefic Curse",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 3, "bs": "3+", "s": 4, "ap": -3, "d": 1 },
+          "abilities": ["Anti-Infantry 4+", "Devastating Wounds", "Psychic"]
+        },
+        {
+          "id": "soulreaper-cannon",
+          "name": "Soulreaper Cannon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 6, "bs": "3+", "s": 6, "ap": -2, "d": 1 },
+          "abilities": ["Devastating Wounds"],
+          "loadoutGroup": "soulreaper"
+        },
+        {
+          "id": "warpflame-pistol",
+          "name": "Warpflame Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 3, "ap": -1, "d": 1 },
+          "abilities": ["Ignores Cover", "Pistol", "Torrent"],
+          "loadoutGroup": "sorcerer-pistol"
+        },
+        {
+          "id": "warpflamer",
+          "name": "Warpflamer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 4, "ap": -1, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent"],
+          "loadoutGroup": "warpflamer"
+        },
+        {
+          "id": "close-combat-weapon-rubric",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 2, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "inferno-boltgun"
+        },
+        {
+          "id": "force-weapon",
+          "name": "Force Weapon",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 6, "ap": -1, "d": "D3" },
+          "abilities": ["Psychic"]
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "sorcerer-pistol-option",
+          "name": "Sorcerer Pistol",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "inferno-bolt-pistol", "name": "Inferno Bolt Pistol", "default": true },
+            { "id": "warpflame-pistol", "name": "Warpflame Pistol" }
+          ]
+        },
+        {
+          "id": "soulreaper-option",
+          "name": "Soulreaper Cannon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "soulreaper", "name": "Soulreaper Cannon", "maxModels": 1 }
+          ]
+        },
+        {
+          "id": "warpflamer-option",
+          "name": "Warpflamers",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "warpflamer", "name": "Warpflamers" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "bringers-of-change",
+          "name": "Bringers of Change",
+          "description": "Each time a model in this unit makes a ranged attack, re-roll a Wound roll of 1. If that attack targets a unit within range of an objective marker you do not control, you can re-roll the Wound roll instead."
+        },
+        {
+          "id": "icon-of-flame",
+          "name": "Icon of Flame",
+          "description": "Ranged weapons equipped by models in the bearer's unit (excluding CHARACTERS) have the [IGNORES COVER] ability."
+        }
+      ],
+      "keywords": ["Infantry", "Battleline", "Chaos", "Tzeentch", "Psyker", "Rubric Marines", "Heretic Astartes"]
+    },
+    {
+      "id": "terrax-pattern-termite",
+      "name": "Terrax-pattern Termite",
+      "points": { "1": 200 },
+      "stats": { "m": 8, "t": 10, "sv": "3+", "w": 14, "ld": "6+", "oc": 2 },
+      "invuln": null,
+      "transportCapacity": 12,
+      "weapons": [
+        {
+          "id": "combi-bolter-termite",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Rapid Fire 2"],
+          "loadoutGroup": "sponson"
+        },
+        {
+          "id": "heavy-flamer-termite",
+          "name": "Heavy Flamer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 5, "ap": -1, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent"],
+          "loadoutGroup": "sponson"
+        },
+        {
+          "id": "twin-volkite-charger",
+          "name": "Twin Volkite Charger",
+          "type": "ranged",
+          "stats": { "range": 18, "a": 2, "bs": "3+", "s": 5, "ap": 0, "d": 2 },
+          "abilities": ["Devastating Wounds", "Twin-linked"],
+          "loadoutGroup": "sponson"
+        },
+        {
+          "id": "terrax-melta-cutter",
+          "name": "Terrax Melta Cutter",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 5, "bs": "3+", "s": 9, "ap": -4, "d": "D6" },
+          "abilities": ["Melta 2"]
+        },
+        {
+          "id": "termite-drill",
+          "name": "Termite Drill",
+          "type": "melee",
+          "stats": { "a": 6, "ws": "4+", "s": 14, "ap": -2, "d": "D3+3" },
+          "abilities": ["Anti-Vehicle 3+"]
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "sponson-weapons",
+          "name": "Sponson Weapons",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "combi-bolter", "name": "2x Combi-bolter", "default": true },
+            { "id": "heavy-flamer", "name": "2x Heavy Flamer" },
+            { "id": "twin-volkite-charger", "name": "2x Twin Volkite Charger" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "termite-assault",
+          "name": "Termite Assault",
+          "description": "This model must start the battle in Reserves, but neither it nor any units embarked within it are counted towards any limits placed on the maximum number of Reserves units you can start the battle with. This model can be set up in the Reinforcements step of your first, second or third Movement phase, regardless of any mission rules. Any units embarked within this model can disembark after it has been set up on the battlefield, and if they do they must be set up more than 9\" away from all enemy models."
+        },
+        {
+          "id": "damaged-termite",
+          "name": "Damaged: 1-5 Wounds Remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Vehicle", "Chaos", "Transport", "Dedicated Transport", "Terrax-pattern Termite", "Heretic Astartes"]
+    },
+    {
+      "id": "noctilith-crown",
+      "name": "Noctilith Crown",
+      "points": { "1": 125 },
+      "stats": { "m": "-", "t": 11, "sv": "3+", "w": 14, "ld": "6+", "oc": 0 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "lashing-warp-energies",
+          "name": "Lashing Warp Energies",
+          "type": "ranged",
+          "stats": { "range": 6, "a": 8, "bs": "4+", "s": 8, "ap": -1, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "malevolent-locus",
+          "name": "Malevolent Locus (Aura)",
+          "description": "While a friendly HERETIC ASTARTES unit is wholly within 9\" of this FORTIFICATION, improve that unit's Leadership characteristic by 1."
+        },
+        {
+          "id": "malign-cover",
+          "name": "Malign Cover",
+          "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this FORTIFICATION, that model has the Benefit of Cover against that attack."
+        },
+        {
+          "id": "fortification-rules",
+          "name": "Fortification",
+          "description": "While an enemy unit is only within Engagement Range of one or more FORTIFICATIONS from your army: that unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol weapon, subtract 1 from the Hit roll; models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked."
+        }
+      ],
+      "keywords": ["Fortification", "Chaos", "Noctilith Crown", "Heretic Astartes"]
+    },
+    {
+      "id": "khorne-lord-of-skulls",
+      "name": "Khorne Lord of Skulls",
+      "points": { "1": 450 },
+      "stats": { "m": 8, "t": 13, "sv": "3+", "w": 24, "ld": "6+", "oc": 8 },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "gorestorm-cannon",
+          "name": "Gorestorm Cannon",
+          "type": "ranged",
+          "stats": { "range": 24, "a": "D6+3", "bs": "3+", "s": 10, "ap": -2, "d": 3 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "cannon"
+        },
+        {
+          "id": "daemongore-cannon",
+          "name": "Daemongore Cannon",
+          "type": "ranged",
+          "stats": { "range": 18, "a": "D6", "bs": "3+", "s": 14, "ap": -4, "d": "D6+2" },
+          "abilities": ["Blast"],
+          "loadoutGroup": "cannon"
+        },
+        {
+          "id": "ichor-cannon",
+          "name": "Ichor Cannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "2D6", "bs": "3+", "s": 7, "ap": -2, "d": 2 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "cannon"
+        },
+        {
+          "id": "hades-gatling-cannon",
+          "name": "Hades Gatling Cannon",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 12, "bs": "3+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": ["Sustained Hits 1"],
+          "loadoutGroup": "gatling"
+        },
+        {
+          "id": "skullhurler",
+          "name": "Skullhurler",
+          "type": "ranged",
+          "stats": { "range": 60, "a": "2D6", "bs": "3+", "s": 14, "ap": -3, "d": 3 },
+          "abilities": ["Blast"],
+          "loadoutGroup": "gatling"
+        },
+        {
+          "id": "great-cleaver-strike",
+          "name": "Great Cleaver of Khorne – strike",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 16, "ap": -4, "d": 8 },
+          "abilities": []
+        },
+        {
+          "id": "great-cleaver-sweep",
+          "name": "Great Cleaver of Khorne – sweep",
+          "type": "melee",
+          "stats": { "a": 15, "ws": "3+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "cannon-option",
+          "name": "Cannon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "gorestorm-cannon", "name": "Gorestorm Cannon", "default": true },
+            { "id": "daemongore-cannon", "name": "Daemongore Cannon" },
+            { "id": "ichor-cannon", "name": "Ichor Cannon" }
+          ]
+        },
+        {
+          "id": "gatling-option",
+          "name": "Gatling/Skullhurler",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "hades-gatling-cannon", "name": "Hades Gatling Cannon", "default": true },
+            { "id": "skullhurler", "name": "Skullhurler" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "plough-through-enemy",
+          "name": "Plough Through the Enemy",
+          "description": "Each time this model destroys an enemy unit in the Fight phase, every enemy unit within 6\" of this model must take a Battle-shock test."
+        },
+        {
+          "id": "damaged-los",
+          "name": "Damaged: 1-8 Wounds Remaining",
+          "description": "While this model has 1-8 wounds remaining, subtract 4 from its Objective Control characteristic and each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": ["Vehicle", "Titanic", "Towering", "Chaos", "Khorne", "Daemon", "Lord of Skulls", "Heretic Astartes"]
+    },
+    {
+      "id": "nemesis-claw",
+      "name": "Nemesis Claw",
+      "points": { "5": 110, "10": 190 },
+      "stats": { "m": 6, "t": 4, "sv": "3+", "w": 2, "ld": "6+", "oc": 1 },
+      "invuln": null,
+      "weapons": [
+        {
+          "id": "bolt-pistol-nemesis",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Pistol"]
+        },
+        {
+          "id": "boltgun-nemesis",
+          "name": "Boltgun",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 2, "bs": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "boltgun"
+        },
+        {
+          "id": "flamer-nemesis",
+          "name": "Flamer",
+          "type": "ranged",
+          "stats": { "range": 12, "a": "D6", "bs": "N/A", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Ignores Cover", "Torrent"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "meltagun-nemesis",
+          "name": "Meltagun",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 9, "ap": -4, "d": "D6" },
+          "abilities": ["Melta 2"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "plasma-gun-nemesis",
+          "name": "Plasma Gun – standard",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "3+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Rapid Fire 1"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "plasma-gun-supercharge-nemesis",
+          "name": "Plasma Gun – supercharge",
+          "type": "ranged",
+          "stats": { "range": 24, "a": 1, "bs": "3+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Hazardous", "Rapid Fire 1"],
+          "loadoutGroup": "special-weapon"
+        },
+        {
+          "id": "plasma-pistol-nemesis",
+          "name": "Plasma Pistol – standard",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 7, "ap": -2, "d": 1 },
+          "abilities": ["Pistol"],
+          "loadoutGroup": "visionary-pistol"
+        },
+        {
+          "id": "plasma-pistol-supercharge-nemesis",
+          "name": "Plasma Pistol – supercharge",
+          "type": "ranged",
+          "stats": { "range": 12, "a": 1, "bs": "3+", "s": 8, "ap": -3, "d": 2 },
+          "abilities": ["Hazardous", "Pistol"],
+          "loadoutGroup": "visionary-pistol"
+        },
+        {
+          "id": "heavy-bolter-nemesis",
+          "name": "Heavy Bolter",
+          "type": "ranged",
+          "stats": { "range": 36, "a": 3, "bs": "4+", "s": 5, "ap": -1, "d": 2 },
+          "abilities": ["Heavy", "Sustained Hits 1"],
+          "loadoutGroup": "heavy-weapon"
+        },
+        {
+          "id": "missile-launcher-frag-nemesis",
+          "name": "Missile Launcher – frag",
+          "type": "ranged",
+          "stats": { "range": 48, "a": "D6", "bs": "4+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": ["Blast", "Heavy"],
+          "loadoutGroup": "heavy-weapon"
+        },
+        {
+          "id": "missile-launcher-krak-nemesis",
+          "name": "Missile Launcher – krak",
+          "type": "ranged",
+          "stats": { "range": 48, "a": 1, "bs": "4+", "s": 9, "ap": -2, "d": "D6" },
+          "abilities": ["Heavy"],
+          "loadoutGroup": "heavy-weapon"
+        },
+        {
+          "id": "close-combat-weapon-nemesis",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 4, "ap": 0, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "boltgun"
+        },
+        {
+          "id": "astartes-chainsword-nemesis",
+          "name": "Astartes Chainsword",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "chainsword"
+        },
+        {
+          "id": "nostraman-chainblade",
+          "name": "Nostraman Chainblade",
+          "type": "melee",
+          "stats": { "a": 5, "ws": "3+", "s": 4, "ap": -1, "d": 1 },
+          "abilities": ["Sustained Hits 1"],
+          "loadoutGroup": "visionary-melee"
+        },
+        {
+          "id": "nostraman-chainglaive",
+          "name": "Nostraman Chainglaive",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 8, "ap": -2, "d": 1 },
+          "abilities": ["Sustained Hits 1"],
+          "loadoutGroup": "special-melee"
+        },
+        {
+          "id": "accursed-weapon-nemesis",
+          "name": "Accursed Weapon",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": [],
+          "loadoutGroup": "special-melee"
+        },
+        {
+          "id": "paired-accursed-weapons",
+          "name": "Paired Accursed Weapons",
+          "type": "melee",
+          "stats": { "a": 4, "ws": "3+", "s": 5, "ap": -2, "d": 1 },
+          "abilities": ["Twin-linked"],
+          "loadoutGroup": "special-melee"
+        },
+        {
+          "id": "power-fist-nemesis",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": { "a": 3, "ws": "3+", "s": 8, "ap": -2, "d": 2 },
+          "abilities": [],
+          "loadoutGroup": "visionary-melee"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "basic-weapon",
+          "name": "Basic Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "boltgun", "name": "Boltgun", "default": true },
+            { "id": "chainsword", "name": "Astartes Chainsword" }
+          ]
+        },
+        {
+          "id": "special-weapon",
+          "name": "Special Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "special-weapon", "name": "Flamer / Meltagun / Plasma Gun", "maxModels": 1 }
+          ]
+        },
+        {
+          "id": "heavy-weapon",
+          "name": "Heavy Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "heavy-weapon", "name": "Heavy Bolter / Missile Launcher", "maxModels": 1 }
+          ]
+        },
+        {
+          "id": "special-melee",
+          "name": "Special Melee",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "None", "default": true },
+            { "id": "special-melee", "name": "Accursed Weapon / Chainglaive / Paired Accursed", "maxModels": 4 }
+          ]
+        },
+        {
+          "id": "visionary-pistol",
+          "name": "Visionary Pistol",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "none", "name": "Bolt Pistol", "default": true },
+            { "id": "visionary-pistol", "name": "Plasma Pistol", "maxModels": 1 }
+          ]
+        },
+        {
+          "id": "visionary-melee",
+          "name": "Visionary Melee",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            { "id": "nostraman-chainblade", "name": "Nostraman Chainblade", "default": true },
+            { "id": "accursed-weapon-nemesis", "name": "Accursed Weapon" },
+            { "id": "power-fist-nemesis", "name": "Power Fist" }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "stealth-nemesis",
+          "name": "Stealth",
+          "description": "This unit has the Benefit of Cover."
+        },
+        {
+          "id": "visions-of-suffering",
+          "name": "Visions of Suffering (Psychic)",
+          "description": "Each time a model in this unit makes an attack that targets an enemy unit that is below its Starting Strength, add 1 to the Hit roll. If that enemy unit is Below Half-strength, add 1 to the Wound roll as well."
+        },
+        {
+          "id": "voice-eater",
+          "name": "Voice Eater",
+          "description": "Enemy units (excluding MONSTERS and VEHICLES) cannot be targeted with Stratagems while they are within Engagement Range of the bearer's unit."
+        }
+      ],
+      "keywords": ["Infantry", "Psyker", "Chaos", "Grenades", "Nemesis Claw", "Heretic Astartes"]
     }
   ],
   "detachments": {
@@ -539,7 +4600,7 @@
           "name": "Profane Zeal",
           "cost": 1,
           "phase": "Shooting/Fight",
-          "description": "Use this Stratagem in your Shooting phase or the Fight phase. Select one HERETIC ASTARTES unit from your army that has not been selected to shoot or fight this phase. Until the end of the phase, each time a model in your unit makes an attack, you can re-roll a Hit roll of 1 and you can re-roll a Wound roll of 1. If your unit has the CHAOS UNDIVIDED keyword, you can re-roll the Hit roll and you can re-roll the Wound roll instead.",
+          "description": "Select one HERETIC ASTARTES unit from your army that has not been selected to shoot or fight this phase. Until the end of the phase, each time a model in your unit makes an attack, you can re-roll a Hit roll of 1 and you can re-roll a Wound roll of 1. If your unit has the CHAOS UNDIVIDED keyword, you can re-roll the Hit roll and you can re-roll the Wound roll instead.",
           "modifiers": []
         },
         {
@@ -547,7 +4608,7 @@
           "name": "Dark Obscuration",
           "cost": 1,
           "phase": "Opponent's Shooting",
-          "description": "Use this Stratagem in your opponent's Shooting phase, just after an enemy unit has selected its targets. Select one HERETIC ASTARTES unit from your army that was selected as the target of one or more of the attacking unit's attacks. Until the end of the phase, your unit has the Stealth ability. If your unit has the NURGLE keyword, until the end of the phase, it can only be selected as the target of a ranged attack if the attacking model is within 12\".",
+          "description": "Select one HERETIC ASTARTES unit from your army that was selected as the target of one or more of the attacking unit's attacks. Until the end of the phase, your unit has the Stealth ability. If your unit has the NURGLE keyword, until the end of the phase, it can only be selected as the target of a ranged attack if the attacking model is within 12\".",
           "modifiers": []
         },
         {
@@ -555,7 +4616,7 @@
           "name": "Infernal Rites",
           "cost": 2,
           "phase": "Opponent's Shooting/Fight",
-          "description": "Use this Stratagem in your opponent's Shooting phase or the Fight phase, just after an enemy unit has selected its targets. Select one HERETIC ASTARTES unit from your army that was selected as the target of one or more of that enemy unit's attacks. Until the end of the phase, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.",
+          "description": "Select one HERETIC ASTARTES unit from your army that was selected as the target of one or more of that enemy unit's attacks. Until the end of the phase, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.",
           "modifiers": []
         },
         {
@@ -563,7 +4624,7 @@
           "name": "Skinshift",
           "cost": 1,
           "phase": "Command",
-          "description": "Use this Stratagem in your Command phase. Select one HERETIC ASTARTES unit from your army. One model in your unit regains up to 3 lost wounds. If your unit has the TZEENTCH keyword and is below its Starting Strength, one destroyed model (excluding CHARACTER models) is returned to your unit with its full wounds remaining.",
+          "description": "Select one HERETIC ASTARTES unit from your army. One model in your unit regains up to 3 lost wounds. If your unit has the TZEENTCH keyword and is below its Starting Strength, one destroyed model (excluding CHARACTER models) is returned to your unit with its full wounds remaining.",
           "modifiers": []
         },
         {
@@ -571,7 +4632,7 @@
           "name": "Eternal Hate",
           "cost": 1,
           "phase": "Fight",
-          "description": "Use this Stratagem in the Fight phase, just after an enemy unit has selected its targets. Select one HERETIC ASTARTES unit from your army that was selected as the target of one or more of the attacking unit's attacks. Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6: on a 4+, do not remove it from play. The destroyed model can fight after the attacking model's unit has finished making its attacks, and is then removed from play. If your unit has the KHORNE keyword, add 1 to that roll.",
+          "description": "Select one HERETIC ASTARTES unit from your army that was selected as the target of one or more of the attacking unit's attacks. Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6: on a 4+, do not remove it from play. The destroyed model can fight after the attacking model's unit has finished making its attacks, and is then removed from play. If your unit has the KHORNE keyword, add 1 to that roll.",
           "modifiers": []
         },
         {
@@ -579,7 +4640,7 @@
           "name": "Unnatural Swiftness",
           "cost": 1,
           "phase": "Movement",
-          "description": "Use this Stratagem in your Movement phase, just after a HERETIC ASTARTES unit from your army Falls Back. Until the end of the turn, your unit is eligible to shoot and declare a charge. If your unit has the SLAANESH keyword, until the end of the turn, your unit is also eligible to shoot and declare a charge in a turn in which it Advanced.",
+          "description": "Use this Stratagem after a HERETIC ASTARTES unit from your army Falls Back. Until the end of the turn, your unit is eligible to shoot and declare a charge. If your unit has the SLAANESH keyword, until the end of the turn, your unit is also eligible to shoot and declare a charge in a turn in which it Advanced.",
           "modifiers": []
         }
       ],
@@ -613,6 +4674,98 @@
           "name": "Orbs of Unlife",
           "points": 20,
           "description": "HERETIC ASTARTES NURGLE model only. At the end of the Fight phase, roll one D6 for each enemy unit within 6\" of the bearer: on a 4+, that enemy unit suffers D3 mortal wounds. If the bearer's unit made a Dark Pact this phase, add 1 to each of those rolls.",
+          "modifiers": []
+        }
+      ]
+    },
+    "veterans_of_the_long_war": {
+      "name": "Veterans of the Long War",
+      "rules": [
+        {
+          "id": "focus-of-hatred",
+          "name": "Focus of Hatred",
+          "description": "At the start of your Command phase, select one enemy unit. Until the start of your next Command phase, each time a friendly non-DAMNED HERETIC ASTARTES unit makes an attack that targets that enemy unit, you can re-roll the Hit roll.",
+          "type": "passive",
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "contemptuous-disregard",
+          "name": "Contemptuous Disregard",
+          "cost": 1,
+          "phase": "Opponent's Shooting/Fight",
+          "description": "When a HERETIC ASTARTES unit from your army is selected as the target of an attack, until the end of the phase, each time an attack targets that unit, worsen the Armor Penetration characteristic of that attack by 1.",
+          "modifiers": []
+        },
+        {
+          "id": "millennia-of-experience",
+          "name": "Millennia of Experience",
+          "cost": 1,
+          "phase": "Opponent's Movement",
+          "description": "When an enemy unit ends a move within 9\" of one of your HERETIC ASTARTES units, your unit can make a Normal move of up to 6\".",
+          "modifiers": []
+        },
+        {
+          "id": "bringers-of-despair",
+          "name": "Bringers of Despair",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Select one non-DAMNED HERETIC ASTARTES unit from your army. Until the end of the phase, that unit has the Fights First ability, but only when targeting your Focus of Hatred.",
+          "modifiers": []
+        },
+        {
+          "id": "black-crusade",
+          "name": "Black Crusade",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Select one HERETIC ASTARTES unit from your army. Until the end of the turn, that unit can shoot in a turn in which it Advanced or Fell Back. In addition, bolt weapons equipped by models in that unit have the [DEVASTATING WOUNDS] ability this turn.",
+          "modifiers": []
+        },
+        {
+          "id": "let-the-galaxy-burn",
+          "name": "Let the Galaxy Burn",
+          "cost": 1,
+          "phase": "Shooting",
+          "description": "Select one HERETIC ASTARTES unit from your army. Until the end of the phase, ranged attacks made by that unit ignore the benefits of cover. In addition, flamer weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability.",
+          "modifiers": []
+        },
+        {
+          "id": "endless-ire",
+          "name": "Endless Ire",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Select one HERETIC ASTARTES unit from your army that destroyed an enemy unit this phase. That unit can consolidate up to 6\" instead of 3\".",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "mark-of-legend",
+          "name": "Mark of Legend",
+          "points": 15,
+          "description": "HERETIC ASTARTES model only. Once per turn, you can re-roll one Hit roll, one Wound roll, or one saving throw made for the bearer.",
+          "modifiers": []
+        },
+        {
+          "id": "eye-of-abaddon",
+          "name": "Eye of Abaddon",
+          "points": 25,
+          "description": "HERETIC ASTARTES model only. Each time the bearer's unit destroys an enemy unit that is your Focus of Hatred, you gain 1CP.",
+          "modifiers": []
+        },
+        {
+          "id": "warmasters-gift",
+          "name": "Warmaster's Gift",
+          "points": 20,
+          "description": "HERETIC ASTARTES model only. Each time the bearer makes an attack, an unmodified Wound roll of 5+ scores a Critical Wound.",
+          "modifiers": []
+        },
+        {
+          "id": "eager-for-vengeance",
+          "name": "Eager for Vengeance",
+          "points": 30,
+          "description": "HERETIC ASTARTES model only. The bearer's unit can Fall Back, shoot, and charge in the same turn. In addition, each time the bearer's unit targets your Focus of Hatred, add 1 to the Hit roll and add 1 to Charge rolls made for that unit.",
           "modifiers": []
         }
       ]
@@ -652,7 +4805,7 @@
     "Anti-": "Improves wound roll against targets with the specified keyword (e.g., Anti-Vehicle 4+ wounds on 4+ vs Vehicles).",
     "Hazardous": "After resolving attacks, roll one D6. On a 1, bearer suffers 3 mortal wounds.",
     "Psychic": "This is a Psychic Attack. Some abilities and rules specifically interact with Psychic attacks.",
-    "Precision": "When targeting a unit with an attached Leader, attacks with this ability can target the Character instead of the unit.",
+    "Precision": "On critical wounds, attacker can allocate wound to a Character or Attached model.",
     "Extra Attacks": "These attacks are made in addition to the bearer's normal attacks, using the weapon's profile.",
     "Ignores Cover": "The target does not receive the benefit of cover against attacks with this ability.",
     "Indirect Fire": "Can target units not visible to the bearer, but subtract 1 from Hit rolls when doing so.",
@@ -661,7 +4814,7 @@
   "allies": [],
   "keywordGlossary": {
     "weapon": [
-      { "name": "Anti-X #+", "description": "Improve AP by 1 and wound on #+ against targets with keyword X." },
+      { "name": "Anti-X #+", "description": "Improve wound roll against targets with keyword X, wounding on #+." },
       { "name": "Assault", "description": "Can be shot after Advancing." },
       { "name": "Blast", "description": "+1 Attack per 5 models in target unit." },
       { "name": "Devastating Wounds", "description": "Critical wounds inflict mortal wounds equal to Damage, no saves allowed." },
@@ -684,10 +4837,10 @@
     ],
     "faction": [
       { "name": "Dark Pacts", "description": "When a HERETIC ASTARTES unit shoots or fights, it can take a Leadership test to gain either [LETHAL HITS] or [SUSTAINED HITS 1] on all its weapons until the end of the phase. On a failed test, the unit suffers D3 mortal wounds." },
-      { "name": "Heretic Astartes", "description": "The faction keyword for all Chaos Space Marine units. Represents the corrupted Adeptus Astartes who have turned from the Emperor's light. All CSM units have this keyword and it is used for army-wide rules and ability interactions." },
+      { "name": "Heretic Astartes", "description": "The faction keyword for all Chaos Space Marine units. Represents the corrupted Adeptus Astartes who have turned from the Emperor's light." },
       { "name": "Chaos", "description": "Units aligned with the Ruinous Powers. This keyword interacts with many abilities and stratagems across Chaos factions." },
-      { "name": "Daemon", "description": "Units that are partially or fully composed of daemonic entities. Daemons often have invulnerable saves and special abilities related to their unholy nature." },
-      { "name": "Damned", "description": "Mortal followers of Chaos who have sworn themselves to the Dark Gods. Includes Cultists and other non-Astartes servants. These units are expendable but numerous." }
+      { "name": "Daemon", "description": "Units that are partially or fully composed of daemonic entities. Daemons often have invulnerable saves and special abilities." },
+      { "name": "Damned", "description": "Mortal followers of Chaos who have sworn themselves to the Dark Gods. Includes Cultists and other non-Astartes servants." }
     ],
     "unit": [
       { "name": "Battleline", "description": "Core troop units. May have special rules in certain detachments." },
@@ -698,7 +4851,9 @@
       { "name": "Feel No Pain X+", "description": "Roll D6 when losing a wound. On X+, wound is ignored." },
       { "name": "Deadly Demise X", "description": "When destroyed, roll D6. On a 6, each unit within 6\" suffers X mortal wounds." },
       { "name": "Scouts X\"", "description": "Make a Normal move of up to X\" before first turn begins." },
-      { "name": "Deep Strike", "description": "During deployment, can be set up in Reserves. Can arrive anywhere on the battlefield more than 9\" from enemy models." }
+      { "name": "Deep Strike", "description": "During deployment, can be set up in Reserves. Can arrive anywhere on the battlefield more than 9\" from enemy models." },
+      { "name": "Epic Hero", "description": "Unique named character. Limited to 1 per army." },
+      { "name": "Terminator", "description": "Elite infantry in Terminator armor. Typically have 2+ Save, 4+ Invulnerable, and Deep Strike." }
     ]
   }
 }

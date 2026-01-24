@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import type {
   ArmyData,
   CurrentList,
@@ -23,7 +24,7 @@ export const availableArmies: AvailableArmy[] = [
   { id: 'chaosmarines', name: 'Chaos Space Marines', file: 'chaosmarines.json' },
   { id: 'necrons', name: 'Necrons', file: 'necrons.json' },
   { id: 'orks', name: 'Orks', file: 'orks.json' },
-  { id: 'spacemarines', name: 'Space Marines', file: 'spacemarines.json' },
+  { id: 'spacemarines', name: 'Ultramarines', file: 'spacemarines.json' },
   { id: 'tyranids', name: 'Tyranids', file: 'tyranids.json' },
 ];
 
@@ -107,7 +108,9 @@ type ArmyStore = ArmyStoreState & ArmyStoreActions;
 // Store Implementation
 // ============================================================================
 
-export const useArmyStore = create<ArmyStore>((set, get) => ({
+export const useArmyStore = create<ArmyStore>()(
+  persist(
+    (set, get) => ({
   // Initial State
   armyData: null,
   currentList: createDefaultList(),
@@ -735,4 +738,12 @@ export const useArmyStore = create<ArmyStore>((set, get) => ({
 
     return total;
   },
-}));
+}),
+    {
+      name: 'army-tracker-state',
+      partialize: (state) => ({
+        currentList: state.currentList,
+      }),
+    }
+  )
+);
