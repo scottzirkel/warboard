@@ -501,13 +501,20 @@ export default function Home() {
     showSuccess('List imported successfully');
   }, [currentList.army, loadArmyData, loadList, closeModal, showSuccess]);
 
-  const handleExport = useCallback(async () => {
+  const handleExport = useCallback(() => {
     if (!armyData || currentList.units.length === 0) return;
+
+    setExportCode(null);
+    setExportError(null);
+    openModal('export');
+  }, [armyData, currentList.units.length, openModal]);
+
+  const handleExportYellowscribe = useCallback(async () => {
+    if (!armyData) return;
 
     setIsExporting(true);
     setExportCode(null);
     setExportError(null);
-    openModal('export');
 
     try {
       const response = await fetch('/api/yellowscribe/export', {
@@ -531,7 +538,7 @@ export default function Home() {
     } finally {
       setIsExporting(false);
     }
-  }, [armyData, currentList, openModal]);
+  }, [armyData, currentList]);
 
   const handleCloseExportModal = useCallback(() => {
     closeModal();
@@ -924,13 +931,16 @@ export default function Home() {
         />
       )}
 
-      {activeModal === 'export' && (
+      {activeModal === 'export' && armyData && (
         <ExportModal
           isOpen={true}
           onClose={handleCloseExportModal}
-          code={exportCode}
-          isLoading={isExporting}
-          error={exportError}
+          list={currentList}
+          armyData={armyData}
+          yellowscribeCode={exportCode}
+          yellowscribeLoading={isExporting}
+          yellowscribeError={exportError}
+          onExportYellowscribe={handleExportYellowscribe}
         />
       )}
 

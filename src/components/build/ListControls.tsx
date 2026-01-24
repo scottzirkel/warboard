@@ -55,7 +55,7 @@ export function ListControls({
         onClick={onExport}
         disabled={!canExport}
         isLoading={isExporting}
-        title="Export to Yellowscribe for TTS"
+        title="Export army list"
       >
         <svg
           className="w-4 h-4 mr-1"
