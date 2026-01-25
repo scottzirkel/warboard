@@ -105,6 +105,7 @@ export interface UnitStats {
 
 export interface Unit {
   id: string;
+  bsdataId?: string; // BSData entry ID for .rosz export
   name: string;
   points: Record<string, number>; // { "4": 150, "5": 190 }
   stats: UnitStats;
@@ -249,6 +250,9 @@ export interface AllyFaction {
 export interface ArmyData {
   faction: string;
   lastUpdated: string;
+  // BSData metadata for .rosz export
+  catalogueId?: string; // BSData catalogue ID (e.g., "1f19-6509-d906-ca10")
+  gameSystemId?: string; // BSData game system ID (e.g., "sys-352e-adc2-7639-d6a9")
   armyRules?: Record<string, ArmyRule>;
   units: Unit[];
   detachments: Record<string, Detachment>;

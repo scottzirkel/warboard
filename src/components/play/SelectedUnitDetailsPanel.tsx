@@ -164,6 +164,22 @@ function calculateWoundInfo(
   };
 }
 
+// Parse a stat value that might be a string like "2+"
+function parseStatValue(value: number | string): number {
+  if (typeof value === 'number') return value;
+  const match = value.match(/^(\d+)\+?$/);
+  if (match) return parseInt(match[1], 10);
+  const parsed = parseInt(value, 10);
+  return isNaN(parsed) ? 0 : parsed;
+}
+
+// Format a stat value back to its display format
+function formatStatValue(value: number, originalFormat: string | number): string | number {
+  if (typeof originalFormat === 'number') return value;
+  if (originalFormat.match(/^\d+\+$/)) return `${value}+`;
+  return value;
+}
+
 // Get modified stat value
 function getModifiedStat(
   unit: Unit,
@@ -173,11 +189,10 @@ function getModifiedStat(
   const baseStat = unit.stats[stat as keyof typeof unit.stats];
   if (baseStat === undefined) return '-';
 
-  // For string stats (like '2+'), return as-is
-  if (typeof baseStat === 'string') return baseStat;
+  // Parse the base value
+  let value = parseStatValue(baseStat);
 
   // Apply modifiers
-  let value = baseStat;
   const statModifiers = modifiers.filter(
     (m) => m.stat === stat && (m.scope === 'model' || m.scope === 'unit')
   );
@@ -195,7 +210,7 @@ function getModifiedStat(
     }
   }
 
-  return value;
+  return formatStatValue(value, baseStat);
 }
 
 // Check if stat is modified
@@ -490,7 +505,7 @@ export function SelectedUnitDetailsPanel({
           </div>
         </div>
 
-        {/* Weapons (Alpine.js Play Mode does NOT show Abilities section - only weapons) */}
+        {/* Weapons */}
         <div className="card-depth overflow-hidden">
           <div className="section-header flex items-center justify-between">
             <span>Weapons</span>
@@ -522,6 +537,36 @@ export function SelectedUnitDetailsPanel({
             onIncrementCasualties={onIncrementCasualties}
             onDecrementCasualties={onDecrementCasualties}
           />
+        </div>
+
+        {/* Abilities */}
+        {unit.abilities && unit.abilities.length > 0 && (
+          <div className="card-depth overflow-hidden">
+            <div className="section-header flex items-center justify-between">
+              <span>Abilities</span>
+              <span className="badge">{unit.abilities.length}</span>
+            </div>
+            <div className="px-4 pb-4 space-y-2">
+              {unit.abilities.map((ability) => (
+                <div key={ability.id} className="bg-black/20 rounded-lg p-2">
+                  <div className="text-sm font-medium text-accent-300">{ability.name}</div>
+                  <div className="text-xs text-white/70 mt-0.5">{ability.description}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Keywords */}
+        <div className="card-depth overflow-hidden">
+          <div className="section-header">Keywords</div>
+          <div className="px-4 pb-4">
+            <div className="flex flex-wrap gap-1">
+              {unit.keywords.map((kw) => (
+                <span key={kw} className="badge">{kw}</span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -123,9 +123,9 @@ export function ArmyListPanel({
   return (
     <div className={`flex flex-col h-full ${className}`}>
       {/* Header with buttons */}
-      <div className="flex items-center justify-between mb-4 shrink-0">
-        <h3 className="section-header">Army List</h3>
-        <div className="flex items-center gap-2">
+      <div className="flex items-start justify-between gap-3 mb-3 shrink-0">
+        <h3 className="text-sm font-semibold text-white/55 uppercase tracking-wide">Army List</h3>
+        <div className="flex items-center gap-2 shrink-0">
           <Button
             variant="secondary"
             size="sm"

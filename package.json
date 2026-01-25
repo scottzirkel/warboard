@@ -15,7 +15,10 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "bsdata:parse": "npx tsx scripts/bsdata/parse-catalogue.ts",
+    "bsdata:generate": "npx tsx scripts/bsdata/generate-custodes.ts",
+    "bsdata:build": "npm run bsdata:parse && npm run bsdata:generate"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
@@ -24,6 +27,8 @@
     "@prisma/adapter-libsql": "^7.3.0",
     "@prisma/client": "^7.3.0",
     "@tailwindcss/postcss": "^4.1.18",
+    "@types/archiver": "^7.0.0",
+    "archiver": "^7.0.1",
     "next": "^16.1.4",
     "next-auth": "^4.24.13",
     "prisma": "^7.3.0",
@@ -45,6 +50,7 @@
     "eslint-config-next": "^16.1.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.26",
+    "fast-xml-parser": "^5.3.3",
     "jsdom": "^27.4.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",

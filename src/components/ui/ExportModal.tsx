@@ -3,13 +3,14 @@
 import { useState, useCallback, useMemo } from 'react';
 import { Modal } from './Modal';
 import { exportToPlainText, exportToJson } from '@/lib/plainTextExport';
+import { generateRosz, downloadRoster } from '@/lib/roszExport';
 import type { CurrentList, ArmyData } from '@/types';
 
 // ============================================================================
 // Types
 // ============================================================================
 
-export type ExportFormat = 'plaintext' | 'json' | 'yellowscribe';
+export type ExportFormat = 'plaintext' | 'json' | 'yellowscribe' | 'battlescribe';
 
 interface ExportModalProps {
   isOpen: boolean;
@@ -80,6 +81,21 @@ const FORMAT_OPTIONS: FormatOption[] = [
       </svg>
     ),
   },
+  {
+    id: 'battlescribe',
+    name: 'BattleScribe',
+    description: 'Roster file (.rosz)',
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+        />
+      </svg>
+    ),
+  },
 ];
 
 // ============================================================================
@@ -98,10 +114,15 @@ export function ExportModal({
 }: ExportModalProps) {
   const [selectedFormat, setSelectedFormat] = useState<ExportFormat | null>(null);
   const [copied, setCopied] = useState(false);
+  const [battlescribeExporting, setBattlescribeExporting] = useState(false);
+  const [battlescribeSuccess, setBattlescribeSuccess] = useState(false);
+  const [battlescribeError, setBattlescribeError] = useState<string | null>(null);
 
   // Generate export content based on format
   const exportContent = useMemo(() => {
-    if (!selectedFormat || selectedFormat === 'yellowscribe') return null;
+    if (!selectedFormat || selectedFormat === 'yellowscribe' || selectedFormat === 'battlescribe') {
+      return null;
+    }
 
     if (selectedFormat === 'plaintext') {
       return exportToPlainText(list, armyData);
@@ -135,19 +156,49 @@ export function ExportModal({
   const handleClose = useCallback(() => {
     setSelectedFormat(null);
     setCopied(false);
+    setBattlescribeExporting(false);
+    setBattlescribeSuccess(false);
+    setBattlescribeError(null);
     onClose();
   }, [onClose]);
 
   const handleBack = useCallback(() => {
     setSelectedFormat(null);
     setCopied(false);
+    setBattlescribeExporting(false);
+    setBattlescribeSuccess(false);
+    setBattlescribeError(null);
   }, []);
+
+  const handleBattlescribeExport = useCallback(async () => {
+    setBattlescribeExporting(true);
+    setBattlescribeError(null);
+    setBattlescribeSuccess(false);
+
+    try {
+      const blob = await generateRosz(list, armyData);
+      const filename = (list.name || 'army-list').replace(/[^a-z0-9-_]/gi, '-');
+      downloadRoster(blob, filename, true);
+      setBattlescribeSuccess(true);
+    } catch (error) {
+      setBattlescribeError(
+        error instanceof Error ? error.message : 'Failed to generate roster file'
+      );
+    } finally {
+      setBattlescribeExporting(false);
+    }
+  }, [list, armyData]);
 
   const handleSelectFormat = useCallback((format: ExportFormat) => {
     setSelectedFormat(format);
 
     if (format === 'yellowscribe') {
       onExportYellowscribe();
+    } else if (format === 'battlescribe') {
+      // Trigger export immediately for file download
+      setBattlescribeExporting(false);
+      setBattlescribeSuccess(false);
+      setBattlescribeError(null);
     }
   }, [onExportYellowscribe]);
 
@@ -302,6 +353,98 @@ export function ExportModal({
                 </div>
               </>
             )}
+
+            <div className="flex justify-between pt-2">
+              <button className="btn-ios btn-ios-secondary" onClick={handleBack}>
+                Back
+              </button>
+              <button className="btn-ios btn-ios-secondary" onClick={handleClose}>
+                Close
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* BattleScribe Export */}
+        {selectedFormat === 'battlescribe' && (
+          <>
+            <p className="text-sm text-white/60">
+              Export your army list as a BattleScribe roster file (.rosz). This file can be imported
+              into BattleScribe, New Recruit, or other compatible tools.
+            </p>
+
+            {/* Export Button */}
+            {!battlescribeSuccess && !battlescribeError && (
+              <button
+                onClick={handleBattlescribeExport}
+                disabled={battlescribeExporting}
+                className="w-full py-3 px-4 rounded-xl bg-accent-500 hover:bg-accent-400 disabled:bg-accent-500/50 text-white font-medium transition-colors flex items-center justify-center gap-2"
+              >
+                {battlescribeExporting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
+                    <span>Generating...</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                      />
+                    </svg>
+                    <span>Download .rosz File</span>
+                  </>
+                )}
+              </button>
+            )}
+
+            {/* Success State */}
+            {battlescribeSuccess && (
+              <div className="flex items-center gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/30">
+                <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-sm text-green-300">
+                  Roster file downloaded successfully!
+                </span>
+              </div>
+            )}
+
+            {/* Error State */}
+            {battlescribeError && (
+              <div className="flex items-start gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                <svg
+                  className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <div>
+                  <p className="text-sm text-red-300">{battlescribeError}</p>
+                  <button
+                    onClick={handleBattlescribeExport}
+                    className="text-xs text-red-300/80 underline mt-1 hover:text-red-300"
+                  >
+                    Try again
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="text-xs text-white/40 space-y-1">
+              <p><strong>Note:</strong> Uses BSData catalogue IDs for maximum compatibility.</p>
+              <p>Import the .rosz file in BattleScribe using File → Import Roster.</p>
+            </div>
 
             <div className="flex justify-between pt-2">
               <button className="btn-ios btn-ios-secondary" onClick={handleBack}>

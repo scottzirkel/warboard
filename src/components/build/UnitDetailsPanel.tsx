@@ -66,17 +66,24 @@ export function UnitDetailsPanel({
   return (
     <div className={`flex flex-col h-full ${className}`}>
       {/* Header */}
-      <div className="flex items-center justify-between mb-4 shrink-0">
-        <div>
-          <h3 className="section-header text-lg">{unit.name}</h3>
+      <div className="flex items-start justify-between gap-3 mb-3 shrink-0">
+        <div className="flex-1 min-w-0">
+          <h3 className="text-sm font-semibold text-white/90 uppercase tracking-wide leading-tight">{unit.name}</h3>
           {listUnit && (
             <span className="text-xs text-white/50">
               {listUnit.modelCount} model{listUnit.modelCount !== 1 ? 's' : ''}
             </span>
           )}
+          {/* Badges inline with title info */}
+          {(isCharacter || enhancement) && (
+            <div className="flex flex-wrap gap-1 mt-1">
+              {isCharacter && <span className="badge badge-accent">Character</span>}
+              {enhancement && <span className="badge badge-purple">{enhancement.name}</span>}
+            </div>
+          )}
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-accent-400 font-bold">{totalPoints} pts</span>
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-accent-400 font-bold whitespace-nowrap">{totalPoints} pts</span>
           {onAddUnit && (
             <Button
               variant="primary"
@@ -88,12 +95,6 @@ export function UnitDetailsPanel({
             </Button>
           )}
         </div>
-      </div>
-
-      {/* Badges */}
-      <div className="flex flex-wrap gap-1 mb-4 shrink-0">
-        {isCharacter && <span className="badge badge-accent">Character</span>}
-        {enhancement && <span className="badge badge-purple">{enhancement.name}</span>}
       </div>
 
       {/* Stats */}

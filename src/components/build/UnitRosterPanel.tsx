@@ -157,9 +157,9 @@ export function UnitRosterPanel({
   return (
     <div className={`flex flex-col h-full ${className}`}>
       {/* Header */}
-      <div className="flex items-center justify-between mb-4 shrink-0">
-        <h3 className="section-header">Unit Roster</h3>
-        <span className="text-xs text-white/40">{filteredUnits.length} units</span>
+      <div className="flex items-start justify-between gap-3 mb-3 shrink-0">
+        <h3 className="text-sm font-semibold text-white/55 uppercase tracking-wide">Unit Roster</h3>
+        <span className="text-xs text-white/40 shrink-0">{filteredUnits.length} units</span>
       </div>
 
       {/* Search Input */}

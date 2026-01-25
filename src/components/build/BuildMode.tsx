@@ -43,21 +43,21 @@ export function BuildMode({
     <div className={`h-full flex flex-col gap-4 max-w-7xl mx-auto w-full px-4 py-4 ${className}`}>
       {/* Points Summary Bar */}
       <div className="card-depth p-4 shrink-0">
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex-1 min-w-0">
             <input
               type="text"
               value={listName}
               onChange={(e) => onNameChange?.(e.target.value)}
               placeholder="List Name"
-              className="bg-transparent border-none text-white font-medium text-lg focus:outline-none placeholder:text-white/40"
+              className="w-full bg-transparent border-none text-white font-medium text-lg focus:outline-none placeholder:text-white/40"
             />
             <div className="flex items-center gap-2 mt-1">
               <span className="badge badge-accent">{detachmentName || 'No Detachment'}</span>
               <span className="badge badge-purple">{formatName || 'Standard'}</span>
             </div>
           </div>
-          <div className="text-right">
+          <div className="text-right shrink-0">
             <div
               className={`text-3xl font-bold ${
                 pointsStatus === 'ok' ? 'text-accent-400' :

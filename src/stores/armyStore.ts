@@ -222,14 +222,49 @@ export const useArmyStore = create<ArmyStore>()(
   },
 
   loadList: (list: CurrentList) => {
-    // Migrate legacy list data if needed
-    const migratedUnits = list.units.map(unit => ({
-      ...unit,
-      weaponCounts: unit.weaponCounts || {},
-      currentWounds: unit.currentWounds ?? null,
-      leaderCurrentWounds: unit.leaderCurrentWounds ?? null,
-      attachedLeader: unit.attachedLeader ?? null,
-    }));
+    const { armyData } = get();
+
+    // Migrate legacy list data and initialize weapon defaults
+    const migratedUnits = list.units.map(unit => {
+      let weaponCounts = unit.weaponCounts || {};
+
+      // If weaponCounts is empty and we have armyData, initialize with defaults
+      if (Object.keys(weaponCounts).length === 0 && armyData) {
+        const unitDef = armyData.units.find(u => u.id === unit.unitId);
+
+        if (unitDef?.loadoutOptions) {
+          weaponCounts = {};
+
+          // Initialize all choices to 0
+          for (const option of unitDef.loadoutOptions) {
+            for (const choice of option.choices) {
+              if (choice.id !== 'none') {
+                weaponCounts[choice.id] = 0;
+              }
+            }
+          }
+
+          // Set default for 'choice' type options
+          for (const option of unitDef.loadoutOptions) {
+            if (option.type === 'choice') {
+              const defaultChoice = option.choices.find(c => c.default) || option.choices[0];
+
+              if (defaultChoice && defaultChoice.id !== 'none') {
+                weaponCounts[defaultChoice.id] = unit.modelCount;
+              }
+            }
+          }
+        }
+      }
+
+      return {
+        ...unit,
+        weaponCounts,
+        currentWounds: unit.currentWounds ?? null,
+        leaderCurrentWounds: unit.leaderCurrentWounds ?? null,
+        attachedLeader: unit.attachedLeader ?? null,
+      };
+    });
 
     set({
       currentList: {

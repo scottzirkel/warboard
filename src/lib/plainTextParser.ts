@@ -533,6 +533,7 @@ function findDetachment(
 
 /**
  * Map loadout names to weapon counts.
+ * Always initializes all choices to 0, then sets defaults or matched loadouts.
  */
 function mapLoadout(
   armyData: ArmyData,
@@ -542,15 +543,44 @@ function mapLoadout(
 ): Record<string, number> {
   const unit = armyData.units.find((u) => u.id === unitId);
 
-  if (!unit || !unit.loadoutOptions || !loadout || loadout.length === 0) {
+  if (!unit || !unit.loadoutOptions) {
     return {};
   }
 
   const weaponCounts: Record<string, number> = {};
 
-  // Check each loadout option
+  // First, initialize all choices to 0
   for (const option of unit.loadoutOptions) {
     for (const choice of option.choices) {
+      if (choice.id !== 'none') {
+        weaponCounts[choice.id] = 0;
+      }
+    }
+  }
+
+  // If no loadout specified, apply defaults
+  if (!loadout || loadout.length === 0) {
+    for (const option of unit.loadoutOptions) {
+      // Only apply defaults for 'choice' type options
+      if (option.type === 'choice') {
+        const defaultChoice = option.choices.find(c => c.default) || option.choices[0];
+
+        if (defaultChoice && defaultChoice.id !== 'none') {
+          weaponCounts[defaultChoice.id] = modelCount;
+        }
+      }
+    }
+
+    return weaponCounts;
+  }
+
+  // Check each loadout option for matches
+  for (const option of unit.loadoutOptions) {
+    let hasMatch = false;
+
+    for (const choice of option.choices) {
+      if (choice.id === 'none') continue;
+
       const choiceNormalized = normalizeLoadoutName(choice.name);
 
       // Check if any loadout item matches this choice
@@ -566,9 +596,16 @@ function mapLoadout(
       if (matches) {
         // Use maxModels if specified, otherwise use model count
         weaponCounts[choice.id] = choice.maxModels || modelCount;
-      } else if (choice.default && !weaponCounts[choice.id]) {
-        // Apply default if nothing else matched
-        weaponCounts[choice.id] = modelCount;
+        hasMatch = true;
+      }
+    }
+
+    // If no match found for a 'choice' type option, apply default
+    if (!hasMatch && option.type === 'choice') {
+      const defaultChoice = option.choices.find(c => c.default) || option.choices[0];
+
+      if (defaultChoice && defaultChoice.id !== 'none') {
+        weaponCounts[defaultChoice.id] = modelCount;
       }
     }
   }

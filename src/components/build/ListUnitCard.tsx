@@ -66,23 +66,31 @@ export function ListUnitCard({
 
   const unitType = getUnitType();
 
-  // Calculate weapon count validation
-  const getWeaponCountTotal = (): number => {
-    if (!listUnit.weaponCounts) return 0;
-    return Object.values(listUnit.weaponCounts).reduce((sum, count) => sum + count, 0);
-  };
-
+  // Calculate weapon count validation - only for "replacement" type options
   const getWeaponCountError = (): string | null => {
     // Only validate if unit has loadout options
     if (!unit.loadoutOptions || unit.loadoutOptions.length === 0) return null;
 
-    const total = getWeaponCountTotal();
-    if (total < listUnit.modelCount) {
-      return `${listUnit.modelCount - total} model(s) need weapons`;
+    const weaponCounts = listUnit.weaponCounts || {};
+
+    // Only validate "replacement" type options (where total must equal modelCount)
+    // "addition" type options are optional and don't need to equal modelCount
+    for (const option of unit.loadoutOptions) {
+      if (option.pattern !== 'replacement') continue;
+
+      // Sum counts for choices in this replacement option
+      const optionTotal = option.choices
+        .filter(c => c.id !== 'none')
+        .reduce((sum, choice) => sum + (weaponCounts[choice.id] || 0), 0);
+
+      if (optionTotal < listUnit.modelCount) {
+        return `${listUnit.modelCount - optionTotal} model(s) need weapons`;
+      }
+      if (optionTotal > listUnit.modelCount) {
+        return `${optionTotal - listUnit.modelCount} too many weapons assigned`;
+      }
     }
-    if (total > listUnit.modelCount) {
-      return `${total - listUnit.modelCount} too many weapons assigned`;
-    }
+
     return null;
   };
 

@@ -352,6 +352,16 @@ export default function Home() {
       });
     }
 
+    // Sort groups: ranged weapons first, then melee-only
+    // Groups with ranged weapons come before groups with only melee
+    groups.sort((a, b) => {
+      const aHasRanged = a.rangedWeapons.length > 0;
+      const bHasRanged = b.rangedWeapons.length > 0;
+      if (aHasRanged && !bHasRanged) return -1;
+      if (!aHasRanged && bHasRanged) return 1;
+      return 0;
+    });
+
     return groups;
   }, [selectedUnit, selectedListUnit]);
 
