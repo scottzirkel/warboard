@@ -1,7 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import { PlayModeWeaponsDisplay } from './PlayModeWeaponsDisplay';
-import type { Unit, ListUnit, Enhancement, Weapon, Modifier, ModifierSource, LoadoutGroup, Stratagem, MissionTwist } from '@/types';
+import { Tooltip, TooltipBadge } from '../ui/Tooltip';
+import type { Unit, ListUnit, Enhancement, Weapon, Modifier, ModifierSource, LoadoutGroup, Stratagem, MissionTwist, KeywordDefinition } from '@/types';
 
 interface SelectedUnitDetailsPanelProps {
   // Unit data
@@ -59,6 +61,10 @@ interface SelectedUnitDetailsPanelProps {
   loadoutCasualties?: Record<string, number>;
   onIncrementCasualties?: (groupId: string) => void;
   onDecrementCasualties?: (groupId: string) => void;
+
+  // Keyword glossary for tooltips
+  unitKeywordGlossary?: KeywordDefinition[];
+  weaponKeywordGlossary?: KeywordDefinition[];
 
   className?: string;
 }
@@ -263,7 +269,7 @@ export function SelectedUnitDetailsPanel({
   activeKatah,
   katahName,
   katahDescription,
-  activeStratagems = [],
+  activeStratagems: _activeStratagems = [],
   stratagemNames: _stratagemNames = {},
   activeStratagemData = [],
   activeTwistData = [],
@@ -275,8 +281,24 @@ export function SelectedUnitDetailsPanel({
   onIncrementCasualties,
   onDecrementCasualties,
 
+  unitKeywordGlossary = [],
+  weaponKeywordGlossary = [],
+
   className = '',
 }: SelectedUnitDetailsPanelProps) {
+  // Build keyword lookup map for tooltips
+  const unitKeywordMap = new Map(
+    unitKeywordGlossary.map((kw) => [kw.name.toLowerCase(), kw.description])
+  );
+
+  // Helper to find keyword description
+  const getKeywordDescription = (keyword: string): string | null => {
+    return unitKeywordMap.get(keyword.toLowerCase()) || null;
+  };
+  // Collapse state for Abilities (default open)
+  // Note: Hooks must be called before any early returns
+  const [abilitiesOpen, setAbilitiesOpen] = useState(true);
+
   // Empty state when no unit selected
   if (!unit || !listUnit || unitIndex === null) {
     return (
@@ -305,14 +327,17 @@ export function SelectedUnitDetailsPanel({
     ? `${unit.name} + ${leaderUnit.name}`
     : unit.name;
 
-  // Combined models
-  const combinedModelsAlive = unitWoundInfo.modelsAlive + (leaderWoundInfo?.modelsAlive ?? 0);
-  const combinedTotalModels = unitWoundInfo.totalModels + (leaderWoundInfo?.totalModels ?? 0);
-
   // Current model wounds for wound dots display
   const currentModelWounds = unitWoundInfo.woundsPerModel > 1 && unitWoundInfo.modelsAlive > 0
     ? unitWoundInfo.currentWounds % unitWoundInfo.woundsPerModel || unitWoundInfo.woundsPerModel
     : 0;
+
+  // Count active modifiers for summary
+  const activeModifierCount =
+    (activeKatah ? 1 : 0) +
+    (enhancement ? 1 : 0) +
+    activeStratagemData.length +
+    activeTwistData.length;
 
   return (
     <div className={`flex flex-col h-full ${className}`}>
@@ -331,22 +356,31 @@ export function SelectedUnitDetailsPanel({
 
       <div className="space-y-4 flex-1 overflow-y-auto scroll-smooth">
         {/* Stats Table with Modifiers */}
-        <div className="card-depth p-4">
-          <div className="grid grid-cols-6 gap-2 mb-3">
+        <div className="card-depth p-3">
+          <div className="grid grid-cols-6 gap-2 mb-2">
             {['m', 't', 'sv', 'w', 'ld', 'oc'].map((stat) => {
               const value = getModifiedStat(unit, stat, modifiers);
               const modified = isStatModified(unit, stat, modifiers);
               const sources = modifierSources[stat] || [];
 
+              const tooltipContent = modified
+                ? sources.map(s => `${s.name}: ${s.operation === 'add' ? '+' : ''}${s.value}`).join('\n')
+                : null;
+
               return (
                 <div key={stat} className="stat-cell">
                   <span className="stat-label">{stat}</span>
-                  <span
-                    className={`stat-value ${modified ? 'modified cursor-help' : ''}`}
-                    title={modified ? sources.map(s => `${s.name}: ${s.operation === 'add' ? '+' : ''}${s.value}`).join('\n') : undefined}
-                  >
-                    {stat === 'm' && typeof value === 'number' ? formatInches(value) : value}
-                  </span>
+                  {modified && tooltipContent ? (
+                    <Tooltip content={tooltipContent}>
+                      <span className="stat-value modified">
+                        {stat === 'm' && typeof value === 'number' ? formatInches(value) : value}
+                      </span>
+                    </Tooltip>
+                  ) : (
+                    <span className="stat-value">
+                      {stat === 'm' && typeof value === 'number' ? formatInches(value) : value}
+                    </span>
+                  )}
                 </div>
               );
             })}
@@ -358,152 +392,122 @@ export function SelectedUnitDetailsPanel({
           )}
         </div>
 
-        {/* Damage Tracker */}
-        <div className="card-depth p-4">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-white/60 font-medium">Damage</span>
-            <div className="flex items-center gap-2">
-              <span
-                className={`text-2xl font-bold ${
-                  combinedModelsAlive < combinedTotalModels ? 'text-red-400' : 'text-white'
-                }`}
-              >
-                {combinedModelsAlive}
-              </span>
-              <span className="text-white/40">/</span>
-              <span className="text-lg text-white/50">{combinedTotalModels} models</span>
-            </div>
-          </div>
-
-          {/* Unit Wounds Section */}
-          <div className="bg-black/20 rounded-lg p-3 mb-3">
-            <div className="text-xs text-white/50 text-center mb-2">{unit.name}</div>
-
-            {/* Wound Dots */}
-            {unitWoundInfo.woundsPerModel > 1 && unitWoundInfo.modelsAlive > 0 && (
-              <div className="flex items-center justify-center gap-1 mb-3">
-                {Array.from({ length: unitWoundInfo.woundsPerModel }).map((_, i) => (
-                  <div
-                    key={i}
-                    className={`wound-dot ${i < currentModelWounds ? 'filled' : ''}`}
-                  />
-                ))}
-              </div>
-            )}
-
-            {/* Unit Wounds Controls */}
-            <div className="flex items-center justify-center gap-4">
-              <button
-                onClick={() => onUnitWoundAdjust?.(-1)}
-                className="btn-ios btn-ios-secondary px-6"
-                disabled={unitWoundInfo.currentWounds <= 0}
-              >
-                <span className="text-red-400 font-bold">- Wound</span>
-              </button>
-              <div className="text-center min-w-[60px]">
-                <span className="text-xl font-bold">{unitWoundInfo.currentWounds}</span>
-                <span className="text-white/40"> / </span>
-                <span className="text-sm text-white/50">{unitWoundInfo.maxWounds}</span>
-              </div>
-              <button
-                onClick={() => onUnitWoundAdjust?.(1)}
-                className="btn-ios btn-ios-secondary px-6"
-                disabled={unitWoundInfo.currentWounds >= unitWoundInfo.maxWounds}
-              >
-                <span className="text-green-400 font-bold">+ Heal</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Leader Wounds Section */}
-          {hasLeader && leaderWoundInfo && leaderUnit && (
-            <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3">
-              <div className="text-xs text-purple-400 text-center mb-2">{leaderUnit.name}</div>
-
-              {/* Leader Wound Dots */}
-              {leaderWoundInfo.woundsPerModel > 1 && leaderWoundInfo.modelsAlive > 0 && (
-                <div className="flex items-center justify-center gap-1 mb-3">
-                  {Array.from({ length: leaderWoundInfo.woundsPerModel }).map((_, i) => (
+        {/* Damage Tracker - Compact */}
+        <div className="card-depth p-3">
+          {/* Unit Wounds Row */}
+          <div className="flex items-center justify-between gap-2 bg-black/20 rounded-lg px-3 py-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="text-xs text-white/50 truncate">{unit.name}</span>
+              {/* Wound Dots inline */}
+              {unitWoundInfo.woundsPerModel > 1 && unitWoundInfo.modelsAlive > 0 && (
+                <div className="flex items-center gap-0.5">
+                  {Array.from({ length: unitWoundInfo.woundsPerModel }).map((_, i) => (
                     <div
                       key={i}
-                      className={`w-3 h-3 rounded-full ${
-                        i < (leaderWoundInfo.currentWounds % leaderWoundInfo.woundsPerModel || leaderWoundInfo.woundsPerModel)
-                          ? 'bg-purple-500'
-                          : 'bg-white/10'
-                      }`}
+                      className={`w-2 h-2 rounded-full ${i < currentModelWounds ? 'bg-accent-400' : 'bg-white/20'}`}
                     />
                   ))}
                 </div>
               )}
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => onUnitWoundAdjust?.(-1)}
+                className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-30 flex items-center justify-center transition-colors"
+                disabled={unitWoundInfo.currentWounds <= 0}
+              >
+                <span className="text-red-400 font-bold text-sm">−</span>
+              </button>
+              <div className="text-center min-w-[50px]">
+                <span className="text-base font-bold">{unitWoundInfo.currentWounds}</span>
+                <span className="text-white/40 text-xs"> / {unitWoundInfo.maxWounds}</span>
+              </div>
+              <button
+                onClick={() => onUnitWoundAdjust?.(1)}
+                className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-30 flex items-center justify-center transition-colors"
+                disabled={unitWoundInfo.currentWounds >= unitWoundInfo.maxWounds}
+              >
+                <span className="text-green-400 font-bold text-sm">+</span>
+              </button>
+            </div>
+          </div>
 
-              <div className="flex items-center justify-center gap-4">
+          {/* Leader Wounds Row */}
+          {hasLeader && leaderWoundInfo && leaderUnit && (
+            <div className="flex items-center justify-between gap-2 bg-purple-500/10 border border-purple-500/30 rounded-lg px-3 py-2 mt-2">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="text-xs text-purple-400 truncate">{leaderUnit.name}</span>
+                {/* Leader Wound Dots inline */}
+                {leaderWoundInfo.woundsPerModel > 1 && leaderWoundInfo.modelsAlive > 0 && (
+                  <div className="flex items-center gap-0.5">
+                    {Array.from({ length: leaderWoundInfo.woundsPerModel }).map((_, i) => (
+                      <div
+                        key={i}
+                        className={`w-2 h-2 rounded-full ${
+                          i < (leaderWoundInfo.currentWounds % leaderWoundInfo.woundsPerModel || leaderWoundInfo.woundsPerModel)
+                            ? 'bg-purple-500'
+                            : 'bg-white/20'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={() => onLeaderWoundAdjust?.(-1)}
-                  className="btn-ios btn-ios-secondary btn-ios-sm px-4"
+                  className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-30 flex items-center justify-center transition-colors"
                   disabled={(leaderWoundInfo?.currentWounds ?? 0) <= 0}
                 >
-                  <span className="text-red-400 font-bold">-</span>
+                  <span className="text-red-400 font-bold text-sm">−</span>
                 </button>
-                <div className="text-center">
-                  <span className="text-xl font-bold text-purple-300">{leaderWoundInfo.currentWounds}</span>
-                  <span className="text-white/40"> / </span>
-                  <span className="text-sm text-white/50">{leaderWoundInfo.maxWounds}</span>
+                <div className="text-center min-w-[50px]">
+                  <span className="text-base font-bold text-purple-300">{leaderWoundInfo.currentWounds}</span>
+                  <span className="text-white/40 text-xs"> / {leaderWoundInfo.maxWounds}</span>
                 </div>
                 <button
                   onClick={() => onLeaderWoundAdjust?.(1)}
-                  className="btn-ios btn-ios-secondary btn-ios-sm px-4"
+                  className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-30 flex items-center justify-center transition-colors"
                   disabled={(leaderWoundInfo?.currentWounds ?? 0) >= (leaderWoundInfo?.maxWounds ?? 0)}
                 >
-                  <span className="text-green-400 font-bold">+</span>
+                  <span className="text-green-400 font-bold text-sm">+</span>
                 </button>
               </div>
             </div>
           )}
         </div>
 
-        {/* Active Modifiers Summary */}
-        <div className="card-depth overflow-hidden">
-          <div className="section-header">Active Modifiers</div>
-          <div className="px-4 pb-4 space-y-1">
+        {/* Active Modifiers Summary - Inline badges with tooltips */}
+        {activeModifierCount > 0 && (
+          <div className="flex flex-wrap gap-1.5 px-1">
             {activeKatah && katahName && (
-              <div className="text-sm px-3 py-2 bg-accent-tint rounded-lg flex items-center justify-between">
-                <span className="text-accent-300 font-medium">{katahName}</span>
-                {katahDescription && (
-                  <span className="text-xs text-accent-400">
-                    {katahDescription.replace('Melee weapons gain ', '').replace(/\.$/, '')}
-                  </span>
-                )}
-              </div>
+              <TooltipBadge tooltip={katahDescription || katahName}>
+                {katahName.replace(' Stance', '')}
+              </TooltipBadge>
             )}
             {enhancement && (
-              <div className="text-sm px-3 py-2 bg-accent-tint rounded-lg">
-                <span className="text-accent-300">{enhancement.name}</span>
-              </div>
+              <TooltipBadge tooltip={enhancement.description}>
+                {enhancement.name}
+              </TooltipBadge>
             )}
             {activeStratagemData.map((strat) => (
-              <div key={strat.id} className="text-sm px-3 py-2 bg-accent-tint rounded-lg">
-                <div className="flex justify-between items-start">
-                  <span className="font-medium text-accent-300">{strat.name}</span>
-                  <span className="text-[10px] text-accent-400">{strat.cost}CP</span>
-                </div>
-                <div className="text-[10px] text-white/40 mt-0.5">{strat.phase}</div>
-                <div className="text-xs text-white/70 mt-1">{strat.description}</div>
-              </div>
+              <TooltipBadge
+                key={strat.id}
+                tooltip={`${strat.name} (${strat.cost}CP) - ${strat.phase}\n\n${strat.description}`}
+              >
+                {strat.name}
+              </TooltipBadge>
             ))}
             {activeTwistData.map((twist) => (
-              <div key={twist.id} className="text-sm px-3 py-2 bg-accent-tint rounded-lg">
-                <div className="flex justify-between items-start">
-                  <span className="font-medium text-accent-300">{twist.name}</span>
-                  <span className="text-[10px] text-white/40 capitalize">{twist.affects}</span>
-                </div>
-                <div className="text-xs text-white/70 mt-1">{twist.description}</div>
-              </div>
+              <TooltipBadge
+                key={twist.id}
+                tooltip={`${twist.name} (${twist.affects})\n\n${twist.description}`}
+              >
+                {twist.name}
+              </TooltipBadge>
             ))}
-            {!activeKatah && !enhancement && activeStratagems.length === 0 && activeTwistData.length === 0 && (
-              <div className="text-sm text-white/40">No modifiers active</div>
-            )}
           </div>
-        </div>
+        )}
 
         {/* Weapons */}
         <div className="card-depth overflow-hidden">
@@ -533,40 +537,60 @@ export function SelectedUnitDetailsPanel({
             onToggleLeaderCollapse={onToggleLeaderCollapse}
             onToggleLeaderActivated={onToggleLeaderActivated}
             activeStratagems={activeStratagemData}
+            activeTwists={activeTwistData}
+            weaponKeywordGlossary={weaponKeywordGlossary}
             loadoutCasualties={loadoutCasualties}
             onIncrementCasualties={onIncrementCasualties}
             onDecrementCasualties={onDecrementCasualties}
           />
         </div>
 
-        {/* Abilities */}
+        {/* Abilities - Collapsible, default open */}
         {unit.abilities && unit.abilities.length > 0 && (
           <div className="card-depth overflow-hidden">
-            <div className="section-header flex items-center justify-between">
+            <button
+              onClick={() => setAbilitiesOpen(!abilitiesOpen)}
+              className="section-header w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors"
+            >
               <span>Abilities</span>
-              <span className="badge">{unit.abilities.length}</span>
-            </div>
-            <div className="px-4 pb-4 space-y-2">
-              {unit.abilities.map((ability) => (
-                <div key={ability.id} className="bg-black/20 rounded-lg p-2">
-                  <div className="text-sm font-medium text-accent-300">{ability.name}</div>
-                  <div className="text-xs text-white/70 mt-0.5">{ability.description}</div>
-                </div>
-              ))}
+              <div className="flex items-center gap-2">
+                <span className="badge">{unit.abilities.length}</span>
+                <svg
+                  className={`w-3 h-3 text-white/40 transition-transform duration-200 ${abilitiesOpen ? '' : '-rotate-90'}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </button>
+            <div className={`overflow-hidden transition-all duration-200 ${abilitiesOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+              <div className="px-4 pb-4 space-y-2">
+                {unit.abilities.map((ability) => (
+                  <div key={ability.id} className="bg-black/20 rounded-lg p-2">
+                    <div className="text-sm font-medium text-accent-300">{ability.name}</div>
+                    <div className="text-xs text-white/70 mt-0.5">{ability.description}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
 
-        {/* Keywords */}
-        <div className="card-depth overflow-hidden">
-          <div className="section-header">Keywords</div>
-          <div className="px-4 pb-4">
-            <div className="flex flex-wrap gap-1">
-              {unit.keywords.map((kw) => (
-                <span key={kw} className="badge">{kw}</span>
-              ))}
-            </div>
-          </div>
+        {/* Keywords - Simplified inline badges with tooltips for glossary terms */}
+        <div className="flex flex-wrap gap-1 px-1">
+          {unit.keywords.map((kw) => {
+            const description = getKeywordDescription(kw);
+            return description ? (
+              <TooltipBadge key={kw} tooltip={description} variant="default" className="text-[10px]">
+                {kw}
+              </TooltipBadge>
+            ) : (
+              <span key={kw} className="badge text-[10px]">{kw}</span>
+            );
+          })}
         </div>
       </div>
     </div>

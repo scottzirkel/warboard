@@ -16,3 +16,4 @@ export { ExportModal } from './ExportModal';
 export { LoadModal } from './LoadModal';
 export { SaveModal } from './SaveModal';
 export { ToastNotification, ToastContainer } from './ToastNotification';
+export { Tooltip, TooltipBadge } from './Tooltip';

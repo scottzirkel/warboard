@@ -1,7 +1,7 @@
 'use client';
 
 import { LoadoutGroupAccordion, WeaponStatsTable } from '@/components/ui';
-import type { Weapon, LoadoutGroup, Stratagem } from '@/types';
+import type { Weapon, LoadoutGroup, Stratagem, MissionTwist, KeywordDefinition } from '@/types';
 
 interface LoadoutGroupCardProps {
   group: LoadoutGroup;
@@ -10,6 +10,8 @@ interface LoadoutGroupCardProps {
   onToggleCollapse: () => void;
   onToggleActivated?: () => void;
   activeStratagems?: Stratagem[];
+  activeTwists?: MissionTwist[];
+  weaponKeywordGlossary?: KeywordDefinition[];
   casualties?: number;
   onIncrementCasualties?: () => void;
   onDecrementCasualties?: () => void;
@@ -22,6 +24,8 @@ export function LoadoutGroupCard({
   onToggleCollapse,
   onToggleActivated,
   activeStratagems = [],
+  activeTwists = [],
+  weaponKeywordGlossary = [],
   casualties = 0,
   onIncrementCasualties,
   onDecrementCasualties,
@@ -47,7 +51,12 @@ export function LoadoutGroupCard({
             <div className="text-xs text-blue-400 uppercase tracking-wider mb-2 font-medium">
               Ranged
             </div>
-            <WeaponStatsTable weapons={group.rangedWeapons} activeStratagems={activeStratagems} />
+            <WeaponStatsTable
+              weapons={group.rangedWeapons}
+              activeStratagems={activeStratagems}
+              activeTwists={activeTwists}
+              weaponKeywordGlossary={weaponKeywordGlossary}
+            />
           </div>
         )}
 
@@ -57,7 +66,12 @@ export function LoadoutGroupCard({
             <div className="text-xs text-red-400 uppercase tracking-wider mb-2 font-medium">
               Melee
             </div>
-            <WeaponStatsTable weapons={group.meleeWeapons} activeStratagems={activeStratagems} />
+            <WeaponStatsTable
+              weapons={group.meleeWeapons}
+              activeStratagems={activeStratagems}
+              activeTwists={activeTwists}
+              weaponKeywordGlossary={weaponKeywordGlossary}
+            />
           </div>
         )}
       </div>
@@ -79,6 +93,8 @@ interface PlayModeWeaponsDisplayProps {
   onToggleLeaderCollapse?: () => void;
   onToggleLeaderActivated?: () => void;
   activeStratagems?: Stratagem[];
+  activeTwists?: MissionTwist[];
+  weaponKeywordGlossary?: KeywordDefinition[];
   loadoutCasualties?: Record<string, number>;
   onIncrementCasualties?: (groupId: string) => void;
   onDecrementCasualties?: (groupId: string) => void;
@@ -102,6 +118,8 @@ export function PlayModeWeaponsDisplay({
   onIncrementCasualties,
   onDecrementCasualties,
   activeStratagems = [],
+  activeTwists = [],
+  weaponKeywordGlossary = [],
   className = '',
 }: PlayModeWeaponsDisplayProps) {
   const hasLeaderWeapons = leaderWeapons && leaderWeapons.length > 0;
@@ -124,6 +142,8 @@ export function PlayModeWeaponsDisplay({
               : undefined
           }
           activeStratagems={activeStratagems}
+          activeTwists={activeTwists}
+          weaponKeywordGlossary={weaponKeywordGlossary}
           casualties={loadoutCasualties[group.id] || 0}
           onIncrementCasualties={
             onIncrementCasualties
@@ -198,7 +218,12 @@ export function PlayModeWeaponsDisplay({
                   <div className="text-xs text-blue-400 uppercase tracking-wider mb-2 font-medium">
                     Ranged
                   </div>
-                  <WeaponStatsTable weapons={leaderRanged} activeStratagems={activeStratagems} />
+                  <WeaponStatsTable
+                    weapons={leaderRanged}
+                    activeStratagems={activeStratagems}
+                    activeTwists={activeTwists}
+                    weaponKeywordGlossary={weaponKeywordGlossary}
+                  />
                 </div>
               )}
 
@@ -208,7 +233,12 @@ export function PlayModeWeaponsDisplay({
                   <div className="text-xs text-red-400 uppercase tracking-wider mb-2 font-medium">
                     Melee
                   </div>
-                  <WeaponStatsTable weapons={leaderMelee} activeStratagems={activeStratagems} />
+                  <WeaponStatsTable
+                    weapons={leaderMelee}
+                    activeStratagems={activeStratagems}
+                    activeTwists={activeTwists}
+                    weaponKeywordGlossary={weaponKeywordGlossary}
+                  />
                 </div>
               )}
             </div>

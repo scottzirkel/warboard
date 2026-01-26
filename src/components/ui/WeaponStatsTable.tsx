@@ -1,9 +1,12 @@
-import type { Weapon, RangedWeaponStats, MeleeWeaponStats, Stratagem } from '@/types';
+import type { Weapon, RangedWeaponStats, MeleeWeaponStats, Stratagem, MissionTwist, KeywordDefinition } from '@/types';
 import { getModifiedWeaponStat } from '@/hooks/useWeaponModifiers';
+import { Tooltip } from './Tooltip';
 
 interface WeaponStatsTableProps {
   weapons: Weapon[];
   activeStratagems?: Stratagem[];
+  activeTwists?: MissionTwist[];
+  weaponKeywordGlossary?: KeywordDefinition[];
   className?: string;
 }
 
@@ -23,13 +26,85 @@ interface StatCellProps {
 }
 
 function StatCell({ value, modified, sources, suffix = '' }: StatCellProps) {
+  const content = `${value}${suffix}`;
+
+  if (modified && sources.length > 0) {
+    return (
+      <td className="text-accent-400 font-bold">
+        <Tooltip content={sources.join(', ')}>
+          <span>{content}</span>
+        </Tooltip>
+      </td>
+    );
+  }
+
+  return <td>{content}</td>;
+}
+
+/**
+ * Helper to find ability description from glossary.
+ * Handles pattern matching for abilities like "Anti-X #+" or "Melta X".
+ */
+function findAbilityDescription(ability: string, glossary: KeywordDefinition[]): string | null {
+  const normalized = ability.toLowerCase().trim();
+
+  // Try exact match first
+  const exactMatch = glossary.find((kw) => kw.name.toLowerCase() === normalized);
+  if (exactMatch) return exactMatch.description;
+
+  // Pattern matching for parameterized abilities
+  if (normalized.startsWith('anti-')) {
+    const pattern = glossary.find((kw) => kw.name.toLowerCase() === 'anti-x #+');
+    if (pattern) return pattern.description;
+  }
+  if (normalized.startsWith('melta ')) {
+    const pattern = glossary.find((kw) => kw.name.toLowerCase() === 'melta x');
+    if (pattern) return pattern.description;
+  }
+  if (normalized.startsWith('sustained hits ')) {
+    const pattern = glossary.find((kw) => kw.name.toLowerCase() === 'sustained hits x');
+    if (pattern) return pattern.description;
+  }
+  if (normalized.startsWith('rapid fire ')) {
+    const pattern = glossary.find((kw) => kw.name.toLowerCase() === 'rapid fire x');
+    if (pattern) return pattern.description;
+  }
+
+  return null;
+}
+
+/**
+ * Renders weapon abilities with tooltips for glossary terms.
+ */
+function WeaponAbilities({
+  abilities,
+  glossary,
+}: {
+  abilities: string[];
+  glossary: KeywordDefinition[];
+}) {
+  if (!abilities || abilities.length === 0) return null;
+
   return (
-    <td
-      className={modified ? 'text-accent-400 font-bold' : ''}
-      title={modified ? sources.join(', ') : undefined}
-    >
-      {value}{suffix}
-    </td>
+    <div className="text-xs text-accent-400 mt-1">
+      {abilities.map((ability, index) => {
+        const description = findAbilityDescription(ability, glossary);
+        return (
+          <span key={ability}>
+            {description ? (
+              <Tooltip content={description}>
+                <span className="cursor-help border-b border-dotted border-accent-400/50">
+                  {ability}
+                </span>
+              </Tooltip>
+            ) : (
+              ability
+            )}
+            {index < abilities.length - 1 && ', '}
+          </span>
+        );
+      })}
+    </div>
   );
 }
 
@@ -39,13 +114,23 @@ function StatCell({ value, modified, sources, suffix = '' }: StatCellProps) {
  * - Stats-only table (no weapon/abilities columns)
  * - Abilities as text below table
  */
-function RangedWeaponDisplay({ weapon, activeStratagems = [] }: { weapon: Weapon & { stats: RangedWeaponStats }; activeStratagems?: Stratagem[] }) {
-  const range = getModifiedWeaponStat(weapon, 'range', activeStratagems);
-  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems);
-  const bs = getModifiedWeaponStat(weapon, 'bs', activeStratagems);
-  const s = getModifiedWeaponStat(weapon, 's', activeStratagems);
-  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems);
-  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems);
+function RangedWeaponDisplay({
+  weapon,
+  activeStratagems = [],
+  activeTwists = [],
+  weaponKeywordGlossary = [],
+}: {
+  weapon: Weapon & { stats: RangedWeaponStats };
+  activeStratagems?: Stratagem[];
+  activeTwists?: MissionTwist[];
+  weaponKeywordGlossary?: KeywordDefinition[];
+}) {
+  const range = getModifiedWeaponStat(weapon, 'range', activeStratagems, activeTwists);
+  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems, activeTwists);
+  const bs = getModifiedWeaponStat(weapon, 'bs', activeStratagems, activeTwists);
+  const s = getModifiedWeaponStat(weapon, 's', activeStratagems, activeTwists);
+  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems, activeTwists);
+  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems, activeTwists);
 
   return (
     <div className="text-sm">
@@ -72,19 +157,27 @@ function RangedWeaponDisplay({ weapon, activeStratagems = [] }: { weapon: Weapon
           </tr>
         </tbody>
       </table>
-      {weapon.abilities && weapon.abilities.length > 0 && (
-        <div className="text-xs text-accent-400 mt-1">{weapon.abilities.join(', ')}</div>
-      )}
+      <WeaponAbilities abilities={weapon.abilities || []} glossary={weaponKeywordGlossary} />
     </div>
   );
 }
 
-function MeleeWeaponDisplay({ weapon, activeStratagems = [] }: { weapon: Weapon & { stats: MeleeWeaponStats }; activeStratagems?: Stratagem[] }) {
-  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems);
-  const ws = getModifiedWeaponStat(weapon, 'ws', activeStratagems);
-  const s = getModifiedWeaponStat(weapon, 's', activeStratagems);
-  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems);
-  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems);
+function MeleeWeaponDisplay({
+  weapon,
+  activeStratagems = [],
+  activeTwists = [],
+  weaponKeywordGlossary = [],
+}: {
+  weapon: Weapon & { stats: MeleeWeaponStats };
+  activeStratagems?: Stratagem[];
+  activeTwists?: MissionTwist[];
+  weaponKeywordGlossary?: KeywordDefinition[];
+}) {
+  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems, activeTwists);
+  const ws = getModifiedWeaponStat(weapon, 'ws', activeStratagems, activeTwists);
+  const s = getModifiedWeaponStat(weapon, 's', activeStratagems, activeTwists);
+  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems, activeTwists);
+  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems, activeTwists);
 
   return (
     <div className="text-sm">
@@ -111,9 +204,7 @@ function MeleeWeaponDisplay({ weapon, activeStratagems = [] }: { weapon: Weapon 
           </tr>
         </tbody>
       </table>
-      {weapon.abilities && weapon.abilities.length > 0 && (
-        <div className="text-xs text-accent-400 mt-1">{weapon.abilities.join(', ')}</div>
-      )}
+      <WeaponAbilities abilities={weapon.abilities || []} glossary={weaponKeywordGlossary} />
     </div>
   );
 }
@@ -127,6 +218,8 @@ function MeleeWeaponDisplay({ weapon, activeStratagems = [] }: { weapon: Weapon 
 export function WeaponStatsTable({
   weapons,
   activeStratagems = [],
+  activeTwists = [],
+  weaponKeywordGlossary = [],
   className = '',
 }: WeaponStatsTableProps) {
   return (
@@ -138,6 +231,8 @@ export function WeaponStatsTable({
               key={weapon.id}
               weapon={weapon}
               activeStratagems={activeStratagems}
+              activeTwists={activeTwists}
+              weaponKeywordGlossary={weaponKeywordGlossary}
             />
           );
         }
@@ -147,6 +242,8 @@ export function WeaponStatsTable({
               key={weapon.id}
               weapon={weapon}
               activeStratagems={activeStratagems}
+              activeTwists={activeTwists}
+              weaponKeywordGlossary={weaponKeywordGlossary}
             />
           );
         }

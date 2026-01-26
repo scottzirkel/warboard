@@ -64,6 +64,7 @@ export default function Home() {
     setWeaponCount,
     attachLeader,
     detachLeader,
+    setWarlord,
     setUnitWounds,
     setLeaderWounds,
     resetList,
@@ -675,6 +676,7 @@ export default function Home() {
                   getAttachedLeaderName={(index) => leaderAttachment.getAttachedLeader(index)?.name}
                   onAttachLeader={leaderAttachment.attachLeader}
                   onDetachLeader={leaderAttachment.detachLeader}
+                  onSetWarlord={setWarlord}
                 />
               )
             }
@@ -788,13 +790,23 @@ export default function Home() {
                     ) || []
                   }
                   activeTwistData={
-                    missionTwists.filter(t => (gameState.activeTwists || []).includes(t.id))
+                    missionTwists
+                      .filter(t => (gameState.activeTwists || []).includes(t.id))
+                      .filter(t => {
+                        // If twist only applies to warlord, only include if this unit is warlord
+                        if (t.appliesToWarlord) {
+                          return selectedListUnit?.isWarlord === true;
+                        }
+                        return true;
+                      })
                   }
                   onResetActivations={handleResetUnitActivations}
                   hasAnyActivations={hasAnyActivations}
                   loadoutCasualties={gameState.loadoutCasualties?.[selectedUnitIndex] || {}}
                   onIncrementCasualties={(groupId) => incrementLoadoutCasualties(selectedUnitIndex, groupId)}
                   onDecrementCasualties={(groupId) => decrementLoadoutCasualties(selectedUnitIndex, groupId)}
+                  unitKeywordGlossary={armyData?.keywordGlossary?.unit || []}
+                  weaponKeywordGlossary={armyData?.keywordGlossary?.weapon || []}
                 />
               ) : undefined
             }
