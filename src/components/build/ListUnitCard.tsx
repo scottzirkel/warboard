@@ -24,6 +24,7 @@ interface ListUnitCardProps {
   canHaveLeaderAttached: boolean;
   onAttachLeader: (leaderIndex: number) => void;
   onDetachLeader: () => void;
+  onToggleWarlord?: () => void;
   className?: string;
 }
 
@@ -46,6 +47,7 @@ export function ListUnitCard({
   canHaveLeaderAttached,
   onAttachLeader,
   onDetachLeader,
+  onToggleWarlord,
   className = '',
 }: ListUnitCardProps) {
   // Get available model counts from unit.points
@@ -107,25 +109,53 @@ export function ListUnitCard({
       `}
     >
       <div className="space-y-2">
-        {/* Header Row: Name + Remove Button */}
+        {/* Header Row: Name + Warlord Toggle + Remove Button */}
         <div className="flex items-start justify-between gap-2 px-3 pt-3">
-          <div className="min-w-0 flex-1">
+          <div className="min-w-0 flex-1 flex items-center gap-2">
             <h4 className="text-sm font-medium text-gray-200 truncate">
               {unit.name}
             </h4>
+            {listUnit.isWarlord && (
+              <span className="text-accent-400" title="Warlord">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+                </svg>
+              </span>
+            )}
           </div>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onRemove();
-            }}
-            title="Remove unit"
-            className="shrink-0 w-6 h-6 flex items-center justify-center rounded text-gray-400 hover:text-red-400 hover:bg-red-500/20 transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+          <div className="flex items-center gap-1 shrink-0">
+            {/* Warlord Toggle (Characters only, not Epic Heroes) */}
+            {isCharacter && onToggleWarlord && !unit.keywords?.includes('Epic Hero') && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleWarlord();
+                }}
+                title={listUnit.isWarlord ? "Remove as Warlord" : "Set as Warlord"}
+                className={`w-6 h-6 flex items-center justify-center rounded transition-colors ${
+                  listUnit.isWarlord
+                    ? 'text-accent-400 bg-accent-500/20'
+                    : 'text-gray-500 hover:text-accent-400 hover:bg-accent-500/10'
+                }`}
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+                </svg>
+              </button>
+            )}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemove();
+              }}
+              title="Remove unit"
+              className="w-6 h-6 flex items-center justify-center rounded text-gray-400 hover:text-red-400 hover:bg-red-500/20 transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Card Body */}

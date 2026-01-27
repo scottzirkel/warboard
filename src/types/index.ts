@@ -152,6 +152,8 @@ export interface MissionTwist {
   description: string;
   /** Which player this affects: 'both', 'attacker', 'defender', 'overlord', 'underdog' */
   affects: 'both' | 'attacker' | 'defender' | 'overlord' | 'underdog';
+  /** If true, modifiers only apply to the designated Warlord unit */
+  appliesToWarlord?: boolean;
   modifiers?: Modifier[];
 }
 
@@ -279,6 +281,7 @@ export interface ListUnit {
   currentWounds: number | null; // null = full health
   leaderCurrentWounds: number | null; // null = full health
   attachedLeader: AttachedLeader | null;
+  isWarlord?: boolean; // true if this unit is designated as the army's Warlord
 }
 
 // ============================================================================

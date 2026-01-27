@@ -3,69 +3,70 @@
   "version": "2025-26",
   "twists": [
     {
+      "id": "lords-of-war",
+      "name": "Lords of War",
+      "description": "Add 3 to the Attacks characteristic of each weapon equipped by WARLORD models (excluding VEHICLES).",
+      "affects": "both",
+      "appliesToWarlord": true,
+      "modifiers": [
+        { "stat": "a", "operation": "add", "value": 3, "scope": "weapon", "source": "Lords of War" }
+      ]
+    },
+    {
       "id": "bloodlust",
       "name": "Bloodlust",
-      "description": "Units can declare a charge from 18\" away and roll 3D6 for charge distance.",
+      "description": "Units are eligible to charge if they are within 18\" of one or more enemy units (instead of 12\"), and roll 3D6 for Charge rolls.",
       "affects": "both",
       "modifiers": []
     },
     {
       "id": "night-fighting",
       "name": "Night Fighting",
-      "description": "All ranged attacks must target units within 18\".",
+      "description": "Each unit can only be the target of a ranged attack if the attacking model is within 18\".",
       "affects": "both",
       "modifiers": [
         { "stat": "range", "operation": "set", "value": 18, "scope": "ranged", "source": "Night Fighting" }
       ]
     },
     {
-      "id": "hi-octane",
-      "name": "Hi-Octane",
-      "description": "All units advance 6\" instead of rolling.",
+      "id": "high-octane",
+      "name": "High Octane",
+      "description": "Each time a unit Advances, do not make an Advance roll. Instead, until the end of the phase, add 6\" to the Move characteristic of models in that unit.",
       "affects": "both",
       "modifiers": []
     },
     {
-      "id": "warlord-ascendant",
-      "name": "Warlord Ascendant",
-      "description": "The Overlord's Warlord gains +3 Attacks.",
-      "affects": "overlord",
-      "modifiers": [
-        { "stat": "a", "operation": "add", "value": 3, "scope": "melee", "source": "Warlord Ascendant" }
-      ]
-    },
-    {
-      "id": "dawn-raid",
-      "name": "Dawn Raid",
-      "description": "In the first battle round, all units have the Scouts 6\" ability.",
+      "id": "martial-pride",
+      "name": "Martial Pride",
+      "description": "BATTLELINE units can start Actions even if they Advanced, and can make ranged attacks while performing an Action.",
       "affects": "both",
       "modifiers": []
     },
     {
-      "id": "fog-of-war",
-      "name": "Fog of War",
-      "description": "Units cannot be targeted by ranged attacks if they are more than 12\" away and have the Benefit of Cover.",
+      "id": "ruinscape",
+      "name": "Ruinscape",
+      "description": "Each time a unit makes a Normal move or Advances, it can move horizontally through terrain features.",
       "affects": "both",
       "modifiers": []
     },
     {
-      "id": "witch-hunt",
-      "name": "Witch Hunt",
-      "description": "PSYKER units suffer -1 to their invulnerable saves.",
+      "id": "adapt-or-die",
+      "name": "Adapt or Die",
+      "description": "At the start of each battle round after the first, each player can change one of their selected Secondary Missions.",
       "affects": "both",
       "modifiers": []
     },
     {
-      "id": "scorching-heat",
-      "name": "Scorching Heat",
-      "description": "Units with 10+ models suffer -1 to hit rolls.",
+      "id": "point-blank",
+      "name": "Point Blank",
+      "description": "All ranged weapons have the Pistol ability (except weapons with the Blast ability).",
       "affects": "both",
       "modifiers": []
     },
     {
-      "id": "killing-ground",
-      "name": "Killing Ground",
-      "description": "Units do not receive the Benefit of Cover while in No Man's Land.",
+      "id": "rapid-escalation",
+      "name": "Rapid Escalation",
+      "description": "In the first battle round, up to 20% of your army's points can arrive from Strategic Reserves (no Deep Strike).",
       "affects": "both",
       "modifiers": []
     }

@@ -92,6 +92,9 @@ interface ArmyStoreActions {
   attachLeader: (unitIndex: number, leaderIndex: number) => void;
   detachLeader: (unitIndex: number) => void;
 
+  // Warlord Selection
+  setWarlord: (index: number) => void;
+
   // Wound Tracking
   setUnitWounds: (index: number, wounds: number | null) => void;
   setLeaderWounds: (index: number, wounds: number | null) => void;
@@ -660,6 +663,26 @@ export const useArmyStore = create<ArmyStore>()(
       }
 
       units[unitIndex] = { ...unit, attachedLeader: null };
+
+      return {
+        currentList: {
+          ...state.currentList,
+          units,
+        },
+      };
+    });
+  },
+
+  // -------------------------------------------------------------------------
+  // Warlord Selection Actions
+  // -------------------------------------------------------------------------
+
+  setWarlord: (index: number) => {
+    set(state => {
+      const units = state.currentList.units.map((unit, i) => ({
+        ...unit,
+        isWarlord: i === index ? !unit.isWarlord : false,
+      }));
 
       return {
         currentList: {

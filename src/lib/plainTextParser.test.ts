@@ -337,6 +337,111 @@ Hive Tyrant - 235pts
     });
   });
 
+  describe('BattleScribe/New Recruit format', () => {
+    it('skips model composition lines that match the unit name', () => {
+      const text = `
+Custodian Guard (150 pts)
+
+4x Custodian Guard
+
+4x Guardian Spear
+`;
+      const result = parsePlainText(text);
+
+      expect(result.units.length).toBe(1);
+      expect(result.units[0].name).toBe('Custodian Guard');
+      expect(result.units[0].modelCount).toBe(4);
+      expect(result.units[0].points).toBe(150);
+    });
+
+    it('skips model composition lines with different model names', () => {
+      const text = `
+Witchseekers (65 pts)
+
+1x Witchseeker Sister Superior
+
+Close combat weapon
+Witchseeker Flamer
+
+4x Witchseeker
+
+Close combat weapon
+Witchseeker Flamer
+`;
+      const result = parsePlainText(text);
+
+      expect(result.units.length).toBe(1);
+      expect(result.units[0].name).toBe('Witchseekers');
+      expect(result.units[0].modelCount).toBe(4); // Should use the higher count
+      expect(result.units[0].points).toBe(65);
+    });
+
+    it('parses full BattleScribe export format', () => {
+      const text = `
+Adeptus Custodes — 500 Points
+Detachment: Shield Host
+
+CHARACTERS
+Shield-Captain (135 pts)
+
+Warlord
+Guardian Spear
+Enhancement: From the Halls of Armories
+
+
+BATTLELINE
+Custodian Guard (150 pts)
+
+4x Custodian Guard
+
+4x Sentinel Blade
+4x Praesidium Shield
+
+
+
+Custodian Guard (150 pts)
+
+4x Custodian Guard
+
+4x Guardian Spear
+
+
+
+
+OTHER DATASHEETS
+Witchseekers (65 pts)
+
+1x Witchseeker Sister Superior
+
+Close combat weapon
+Witchseeker Flamer
+
+
+4x Witchseeker
+
+Close combat weapon
+Witchseeker Flamer
+
+
+
+
+Total: 500 pts
+`;
+      const result = parsePlainText(text);
+
+      expect(result.detachment).toBe('Shield Host');
+      expect(result.units.length).toBe(4);
+      expect(result.units[0].name).toBe('Shield-Captain');
+      expect(result.units[0].points).toBe(135);
+      expect(result.units[1].name).toBe('Custodian Guard');
+      expect(result.units[1].modelCount).toBe(4);
+      expect(result.units[2].name).toBe('Custodian Guard');
+      expect(result.units[2].modelCount).toBe(4);
+      expect(result.units[3].name).toBe('Witchseekers');
+      expect(result.units[3].points).toBe(65);
+    });
+  });
+
   describe('edge cases', () => {
     it('skips empty lines', () => {
       const text = `

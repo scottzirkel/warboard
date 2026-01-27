@@ -106,6 +106,13 @@ function parseLine(line: string): ParsedTextUnit | null {
   if (/^\*?\*?total\*?\*?:?\s*\d*/i.test(trimmed)) return null; // Total lines
   if (/^---+$/.test(trimmed)) return null; // Horizontal rules
 
+  // Skip section headers (CHARACTERS, BATTLELINE, HQ, etc.)
+  if (/^(?:characters?|battleline|other\s*datasheets?|hq|troops?|elites?|fast\s*attack|heavy\s*support|dedicated\s*transport|flyers?|fortifications?|lords?\s*of\s*war)$/i.test(trimmed)) return null;
+
+  // Skip army header lines like "Adeptus Custodes — 500 Points"
+  // These use em-dash (—) or en-dash (–) and typically end with capital "Points"
+  if (/^[a-z\s]+[—–]+\s*\d+\s*Points$/i.test(trimmed)) return null;
+
   // Remove list markers (1., -, *, •)
   let text = trimmed.replace(/^[\d]+[.)]\s*/, '').replace(/^[-*•]\s*/, '');
 
@@ -129,10 +136,12 @@ function parseLine(line: string): ParsedTextUnit | null {
 
   // Clean up remaining text (the unit name)
   // Remove common separators and extra whitespace
+  // Note: preserve regular hyphens (-) in unit names like "Shield-Captain", but remove trailing separators
   text = text
-    .replace(/[|–—-]+/g, ' ')
+    .replace(/[|–—]+/g, ' ')  // Only replace pipes, en-dash, em-dash (not regular hyphen)
     .replace(/\s+/g, ' ')
     .replace(/[,;:]+$/, '')
+    .replace(/\s*[-–—]+\s*$/, '')  // Remove trailing separators like " - " or " — "
     .trim();
 
   if (!text) return null;
@@ -264,6 +273,53 @@ function isIndentedSubItem(line: string): boolean {
 }
 
 /**
+ * Check if a line is a model composition line (e.g., "4x Custodian Guard")
+ * that describes the contents of a previous unit entry rather than a new unit.
+ */
+function isModelCompositionLine(line: string, previousUnitName: string | null, previousHadPoints: boolean): boolean {
+  if (!previousUnitName) return false;
+
+  const trimmed = line.trim();
+
+  // Must have a model count pattern like "4x" or "x4"
+  if (!/\b\d+\s*x\b|\bx\s*\d+\b/i.test(trimmed)) return false;
+
+  // Must NOT have points (lines with points are unit entries)
+  if (/\d+\s*(?:pts?|points?)/i.test(trimmed)) return false;
+  if (/\(\d+\)/.test(trimmed)) return false;
+
+  // Extract the unit name from the line (remove model count)
+  const { remaining } = extractModelCount(trimmed);
+  const lineUnitName = remaining.replace(/[|–—]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
+  const prevNormalized = previousUnitName.toLowerCase().replace(/\s+/g, ' ').trim();
+
+  // Check if the names match (fuzzy)
+  const namesMatch = lineUnitName.includes(prevNormalized) ||
+    prevNormalized.includes(lineUnitName) ||
+    normalizeUnitName(lineUnitName) === normalizeUnitName(prevNormalized);
+
+  if (namesMatch) return true;
+
+  // If it looks like a weapon/equipment, it's NOT a composition line
+  // (e.g., "4x Sentinel Blade" is a weapon description, not "4x Model Name")
+  if (isWeaponOrEquipmentLine(remaining)) return false;
+
+  // If the previous unit had points and this line doesn't, it's likely a model
+  // composition line (e.g., "1x Witchseeker Sister Superior" after "Witchseekers (65 pts)")
+  // This handles cases where model names differ from unit names
+  if (previousHadPoints) {
+    // Check if it looks like a model description (simple name, no special chars except spaces)
+    // and not a section header or other metadata
+    const isSimpleName = /^[a-z\s'-]+$/i.test(lineUnitName) && lineUnitName.length > 2;
+    const isNotSectionHeader = !/^(?:characters?|battleline|other|troops?|hq|elite|fast|heavy|dedicated|flyer|fortification|lord of war)/i.test(lineUnitName);
+
+    return isSimpleName && isNotSectionHeader;
+  }
+
+  return false;
+}
+
+/**
  * Parse an indented sub-item line for enhancement or weapon info.
  */
 function parseSubItem(line: string): { enhancement?: string; weapon?: string } {
@@ -286,12 +342,43 @@ function parseSubItem(line: string): { enhancement?: string; weapon?: string } {
 }
 
 /**
+ * Check if a line looks like a weapon or equipment description rather than a unit.
+ */
+function isWeaponOrEquipmentLine(line: string): boolean {
+  const trimmed = line.trim().toLowerCase();
+
+  // Common weapon/equipment patterns
+  const weaponPatterns = [
+    /\bweapon\b/,
+    /\bflamer\b/,
+    /\bpistol\b/,
+    /\brifle\b/,
+    /\bcannon\b/,
+    /\bsword\b/,
+    /\bblade\b/,
+    /\bspear\b/,
+    /\baxe\b/,
+    /\bshield\b/,
+    /\btalon\b/,
+    /\bclaw\b/,
+    /\bgun\b/,
+    /\blauncher\b/,
+    /\bbolter\b/,
+    /\bmelta\b/,
+    /\bplasma\b/,
+  ];
+
+  return weaponPatterns.some((pattern) => pattern.test(trimmed));
+}
+
+/**
  * Parse plain list format (one unit per line), with support for
  * hierarchical markdown format where enhancements/weapons are indented.
  */
 function parseListFormat(lines: string[]): ParsedTextUnit[] {
   const units: ParsedTextUnit[] = [];
   let currentUnit: ParsedTextUnit | null = null;
+  let currentUnitHadPoints = false;
 
   for (const line of lines) {
     // Check if this is an indented sub-item belonging to the current unit
@@ -313,16 +400,72 @@ function parseListFormat(lines: string[]): ParsedTextUnit[] {
       continue;
     }
 
+    // Check for standalone "Warlord" line (marks current unit as warlord)
+    if (currentUnit && currentUnitHadPoints && /^\s*warlord\s*$/i.test(line)) {
+      currentUnit.isWarlord = true;
+      continue;
+    }
+
+    // Check for standalone "Enhancement: Name" line
+    const enhancementLineMatch = line.trim().match(/^Enhancement:\s*(.+)$/i);
+
+    if (currentUnit && currentUnitHadPoints && enhancementLineMatch) {
+      currentUnit.enhancement = enhancementLineMatch[1].replace(/\s*\(\d+\s*(?:pts?)?\)$/, '').trim();
+      continue;
+    }
+
+    // Check if this is a model composition line like "4x Custodian Guard"
+    // that describes the contents of the previous unit, not a new unit
+    if (currentUnit && isModelCompositionLine(line, currentUnit.name, currentUnitHadPoints)) {
+      // Extract model count from this line and update if it's higher
+      const { count } = extractModelCount(line.trim());
+
+      if (count > currentUnit.modelCount) {
+        currentUnit.modelCount = count;
+      }
+
+      continue;
+    }
+
     // Try to parse as a unit line
     const parsed = parseLine(line);
 
     if (parsed) {
+      // If we're in a unit context (after a unit with points) and this line
+      // has no points, check if it's unit metadata or loadout
+      if (currentUnit && currentUnitHadPoints && parsed.points === undefined) {
+        // Check for "Warlord" standalone line
+        if (/^warlord$/i.test(parsed.name)) {
+          currentUnit.isWarlord = true;
+          continue;
+        }
+
+        // Check for "Enhancement: Name" line
+        const enhancementMatch = parsed.name.match(/^Enhancement:\s*(.+)$/i);
+
+        if (enhancementMatch) {
+          currentUnit.enhancement = enhancementMatch[1].replace(/\s*\(\d+\s*(?:pts?)?\)$/, '').trim();
+          continue;
+        }
+
+        // Check if this looks like a weapon line
+        if (isWeaponOrEquipmentLine(parsed.name)) {
+          if (!currentUnit.loadout) {
+            currentUnit.loadout = [];
+          }
+
+          currentUnit.loadout.push(parsed.name);
+          continue;
+        }
+      }
+
       // Save previous unit if exists
       if (currentUnit) {
         units.push(currentUnit);
       }
 
       currentUnit = parsed;
+      currentUnitHadPoints = parsed.points !== undefined;
     }
   }
 
@@ -489,6 +632,7 @@ function findUnit(armyData: ArmyData, name: string): string | undefined {
 
 /**
  * Find a matching enhancement in the detachment.
+ * Uses fuzzy matching to handle spelling variations (e.g., "Armories" vs "Armouries")
  */
 function findEnhancement(
   armyData: ArmyData,
@@ -502,12 +646,30 @@ function findEnhancement(
   if (!detachment) return '';
 
   const normalized = normalizeEnhancementName(name);
-  const enhancement = detachment.enhancements.find(
+
+  // Direct match
+  const directMatch = detachment.enhancements.find(
     (e) =>
       e.id === normalized || normalizeEnhancementName(e.name) === normalized
   );
 
-  return enhancement?.id || '';
+  if (directMatch) return directMatch.id;
+
+  // Fuzzy match - handle spelling variations like "Halls"/"Hall" or "Armories"/"Armouries"
+  const normalizedWords = normalized.split('-').filter(w => w.length > 2);
+  const fuzzyMatch = detachment.enhancements.find((e) => {
+    const enhNorm = normalizeEnhancementName(e.name);
+    const enhWords = enhNorm.split('-').filter(w => w.length > 2);
+
+    // Check if most significant words match
+    const matchingWords = normalizedWords.filter(w =>
+      enhWords.some(ew => ew.includes(w) || w.includes(ew))
+    );
+
+    return matchingWords.length >= Math.min(normalizedWords.length, enhWords.length) - 1;
+  });
+
+  return fuzzyMatch?.id || '';
 }
 
 /**

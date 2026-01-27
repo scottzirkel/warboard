@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui';
+import { DropdownMenu } from '@/components/ui/DropdownMenu';
 import { ListUnitCard } from './ListUnitCard';
 import type {
   ArmyData,
@@ -26,6 +27,7 @@ interface ArmyListPanelProps {
   onExport: () => void;
   onLoad: () => void;
   onSave: () => void;
+  onClear: () => void;
   isSaving?: boolean;
   isExporting?: boolean;
   canSave?: boolean;
@@ -37,6 +39,7 @@ interface ArmyListPanelProps {
   getAttachedLeaderName: (unitIndex: number) => string | undefined;
   onAttachLeader: (unitIndex: number, leaderIndex: number) => void;
   onDetachLeader: (unitIndex: number) => void;
+  onSetWarlord: (unitIndex: number) => void;
   className?: string;
 }
 
@@ -56,6 +59,7 @@ export function ArmyListPanel({
   onExport,
   onLoad,
   onSave,
+  onClear,
   isSaving = false,
   isExporting = false,
   canSave = true,
@@ -67,6 +71,7 @@ export function ArmyListPanel({
   getAttachedLeaderName,
   onAttachLeader,
   onDetachLeader,
+  onSetWarlord,
   className = '',
 }: ArmyListPanelProps) {
   const detachment = armyData.detachments[currentList.detachment];
@@ -126,32 +131,36 @@ export function ArmyListPanel({
       <div className="flex items-start justify-between gap-3 mb-3 shrink-0">
         <h3 className="text-sm font-semibold text-white/55 uppercase tracking-wide">Army List</h3>
         <div className="flex items-center gap-2 shrink-0">
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={onImport}
-            className="btn-ios btn-ios-sm btn-ios-tinted"
-          >
-            Import
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={onExport}
-            disabled={!canExport || isExporting}
-            className="btn-ios btn-ios-sm btn-ios-tinted"
-            title="Export to Yellowscribe for TTS"
-          >
-            {isExporting ? 'Exporting...' : 'Export'}
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={onLoad}
-            className="btn-ios btn-ios-sm btn-ios-tinted"
-          >
-            Load
-          </Button>
+          <DropdownMenu
+            align="right"
+            trigger={
+              <Button
+                variant="secondary"
+                size="sm"
+                className="btn-ios btn-ios-sm btn-ios-tinted flex items-center gap-1"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                Actions
+              </Button>
+            }
+            items={[
+              { label: 'Load List', onClick: onLoad },
+              { label: 'Import', onClick: onImport },
+              {
+                label: isExporting ? 'Exporting...' : 'Export',
+                onClick: onExport,
+                disabled: !canExport || isExporting,
+              },
+              {
+                label: 'Clear List',
+                onClick: onClear,
+                variant: 'danger',
+                disabled: currentList.units.length === 0,
+              },
+            ]}
+          />
           <Button
             variant="primary"
             size="sm"
@@ -259,6 +268,7 @@ export function ArmyListPanel({
                   canHaveLeaderAttached={canHaveLeaderAttached(index)}
                   onAttachLeader={(leaderIndex) => onAttachLeader(index, leaderIndex)}
                   onDetachLeader={() => onDetachLeader(index)}
+                  onToggleWarlord={() => onSetWarlord(index)}
                 />
               );
             })}
