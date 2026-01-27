@@ -24,8 +24,9 @@ interface PlayUnitCardProps {
   leaderTotalModels?: number;
   // Enhancement info
   enhancementName?: string;
-  // Points
-  unitPoints?: number;
+  // Warlord indicator
+  isWarlord?: boolean;
+  isLeaderWarlord?: boolean;
   className?: string;
 }
 
@@ -47,7 +48,8 @@ export function PlayUnitCard({
   leaderModelsAlive = 0,
   leaderTotalModels = 0,
   enhancementName,
-  unitPoints,
+  isWarlord = false,
+  isLeaderWarlord = false,
   className = '',
 }: PlayUnitCardProps) {
   const hasAttachedLeader = !!attachedLeaderName && !!attachedLeaderUnit;
@@ -125,10 +127,14 @@ export function PlayUnitCard({
           )}
         </div>
 
-        {/* Right Side: Points and Wounds */}
+        {/* Right Side: Warlord indicator and Wounds */}
         <div className="text-right shrink-0">
-          {unitPoints !== undefined && (
-            <div className="text-sm text-accent-400 font-semibold">{unitPoints} pts</div>
+          {(isWarlord || isLeaderWarlord) && (
+            <div className="text-yellow-400 flex items-center justify-end gap-1" title={isLeaderWarlord ? "Attached leader is Warlord" : "Warlord"}>
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+              </svg>
+            </div>
           )}
           <div className="text-xs text-white/40 mt-1">
             W: {combinedCurrentWounds}/{combinedMaxWounds}

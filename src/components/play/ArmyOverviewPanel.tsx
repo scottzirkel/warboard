@@ -317,11 +317,9 @@ export function ArmyOverviewPanel({
                 ? getEnhancementName(attachedLeaderListUnit, armyData, detachmentId)
                 : undefined);
 
-            // Calculate unit points (including leader if attached)
-            let unitPoints = getUnitPoints(listUnit, unit, armyData, detachmentId);
-            if (attachedLeaderListUnit && attachedLeaderUnit) {
-              unitPoints += getUnitPoints(attachedLeaderListUnit, attachedLeaderUnit, armyData, detachmentId);
-            }
+            // Warlord status
+            const isWarlord = listUnit.isWarlord === true;
+            const isLeaderWarlord = attachedLeaderListUnit?.isWarlord === true;
 
             return (
               <PlayUnitCard
@@ -343,7 +341,8 @@ export function ArmyOverviewPanel({
                 leaderModelsAlive={leaderWounds.modelsAlive}
                 leaderTotalModels={leaderWounds.totalModels}
                 enhancementName={enhancementName}
-                unitPoints={unitPoints}
+                isWarlord={isWarlord}
+                isLeaderWarlord={isLeaderWarlord}
               />
             );
           })

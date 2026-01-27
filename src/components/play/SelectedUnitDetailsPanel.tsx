@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { PlayModeWeaponsDisplay } from './PlayModeWeaponsDisplay';
 import { Tooltip, TooltipBadge } from '../ui/Tooltip';
-import type { Unit, ListUnit, Enhancement, Weapon, Modifier, ModifierSource, LoadoutGroup, Stratagem, MissionTwist, KeywordDefinition } from '@/types';
+import type { Unit, ListUnit, Enhancement, Weapon, Modifier, ModifierSource, LoadoutGroup, Stratagem, MissionTwist, KeywordDefinition, ArmyRuleStance, StatKey } from '@/types';
 
 interface SelectedUnitDetailsPanelProps {
   // Unit data
@@ -19,6 +19,7 @@ interface SelectedUnitDetailsPanelProps {
   leaderUnit?: Unit;
   leaderListUnit?: ListUnit;
   leaderEnhancement?: Enhancement | null;
+  isLeaderWarlord?: boolean;
 
   // Modifiers
   modifiers: Modifier[];
@@ -48,6 +49,7 @@ interface SelectedUnitDetailsPanelProps {
   activeKatah?: string | null;
   katahName?: string;
   katahDescription?: string;
+  katahStance?: ArmyRuleStance | null;
   activeStratagems?: string[];
   stratagemNames?: Record<string, string>;
   activeStratagemData?: Stratagem[];
@@ -235,6 +237,46 @@ function formatInches(value: number): string {
   return `${value}"`;
 }
 
+// Stat name display mapping
+const STAT_NAMES: Record<StatKey, string> = {
+  m: 'M',
+  t: 'T',
+  sv: 'SV',
+  w: 'W',
+  ld: 'LD',
+  oc: 'OC',
+  a: 'A',
+  s: 'S',
+  ap: 'AP',
+  d: 'D',
+  bs: 'BS',
+  ws: 'WS',
+  range: 'Range',
+};
+
+// Format a single modifier as a short string (e.g., "+2 W", "-1 AP")
+function formatModifierShort(mod: Modifier): string {
+  const statName = STAT_NAMES[mod.stat] || mod.stat.toUpperCase();
+  switch (mod.operation) {
+    case 'add':
+      return `+${mod.value} ${statName}`;
+    case 'subtract':
+      return `-${mod.value} ${statName}`;
+    case 'set':
+      return `${statName}=${mod.value}`;
+    case 'multiply':
+      return `${statName}×${mod.value}`;
+    default:
+      return `${statName}: ${mod.value}`;
+  }
+}
+
+// Format modifiers array as a summary string (e.g., "+2 W, -1 AP")
+function formatModifiersSummary(modifiers: Modifier[] | undefined): string {
+  if (!modifiers || modifiers.length === 0) return '';
+  return modifiers.map(formatModifierShort).join(', ');
+}
+
 export function SelectedUnitDetailsPanel({
   unit,
   listUnit,
@@ -245,7 +287,8 @@ export function SelectedUnitDetailsPanel({
   hasLeader,
   leaderUnit,
   leaderListUnit,
-  leaderEnhancement: _leaderEnhancement,
+  leaderEnhancement,
+  isLeaderWarlord = false,
 
   modifiers,
   modifierSources,
@@ -269,6 +312,7 @@ export function SelectedUnitDetailsPanel({
   activeKatah,
   katahName,
   katahDescription,
+  katahStance,
   activeStratagems: _activeStratagems = [],
   stratagemNames: _stratagemNames = {},
   activeStratagemData = [],
@@ -344,13 +388,24 @@ export function SelectedUnitDetailsPanel({
       {/* Unit Header */}
       <h2 className="text-xl font-semibold text-accent-300 mb-2">{combinedName}</h2>
 
-      {/* Badges (matching Alpine.js: unit enhancement + leader name) */}
+      {/* Badges (matching Alpine.js: unit enhancement + leader name + warlord) */}
       <div className="flex flex-wrap gap-2 mb-4">
         {enhancement && (
-          <span className="badge badge-accent">{enhancement.name}</span>
+          <TooltipBadge tooltip={enhancement.description} variant="accent">
+            {enhancement.name}
+          </TooltipBadge>
         )}
         {hasLeader && leaderUnit && (
           <span className="badge badge-purple">+ {leaderUnit.name}</span>
+        )}
+        {/* Warlord indicator */}
+        {(listUnit?.isWarlord || isLeaderWarlord) && (
+          <span className="badge bg-yellow-600/30 text-yellow-400 flex items-center gap-1">
+            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+            </svg>
+            {isLeaderWarlord ? 'Leader is Warlord' : 'Warlord'}
+          </span>
         )}
       </div>
 
@@ -477,35 +532,63 @@ export function SelectedUnitDetailsPanel({
           )}
         </div>
 
-        {/* Active Modifiers Summary - Inline badges with tooltips */}
+        {/* Active Modifiers Summary - Shows stat changes with full details on hover */}
         {activeModifierCount > 0 && (
-          <div className="flex flex-wrap gap-1.5 px-1">
-            {activeKatah && katahName && (
-              <TooltipBadge tooltip={katahDescription || katahName}>
-                {katahName.replace(' Stance', '')}
-              </TooltipBadge>
-            )}
-            {enhancement && (
-              <TooltipBadge tooltip={enhancement.description}>
-                {enhancement.name}
-              </TooltipBadge>
-            )}
-            {activeStratagemData.map((strat) => (
-              <TooltipBadge
-                key={strat.id}
-                tooltip={`${strat.name} (${strat.cost}CP) - ${strat.phase}\n\n${strat.description}`}
-              >
-                {strat.name}
-              </TooltipBadge>
-            ))}
-            {activeTwistData.map((twist) => (
-              <TooltipBadge
-                key={twist.id}
-                tooltip={`${twist.name} (${twist.affects})\n\n${twist.description}`}
-              >
-                {twist.name}
-              </TooltipBadge>
-            ))}
+          <div className="card-depth p-3 space-y-2">
+            <div className="text-xs text-white/50 font-medium uppercase tracking-wider">Active Modifiers</div>
+            <div className="space-y-1.5">
+              {activeKatah && katahName && (
+                <TooltipBadge tooltip={katahDescription || katahName} className="w-full justify-start">
+                  <div className="flex items-center justify-between w-full gap-2">
+                    <span className="text-accent-300">{katahName.replace(' Stance', '')}</span>
+                    {katahStance?.modifiers && katahStance.modifiers.length > 0 && (
+                      <span className="text-white/70 text-xs">{formatModifiersSummary(katahStance.modifiers)}</span>
+                    )}
+                  </div>
+                </TooltipBadge>
+              )}
+              {enhancement && (
+                <TooltipBadge tooltip={enhancement.description} className="w-full justify-start">
+                  <div className="flex items-center justify-between w-full gap-2">
+                    <span className="text-accent-300">{enhancement.name}</span>
+                    {enhancement.modifiers && enhancement.modifiers.length > 0 && (
+                      <span className="text-white/70 text-xs">{formatModifiersSummary(enhancement.modifiers)}</span>
+                    )}
+                  </div>
+                </TooltipBadge>
+              )}
+              {activeStratagemData.map((strat) => (
+                <TooltipBadge
+                  key={strat.id}
+                  tooltip={`${strat.name} (${strat.cost}CP) - ${strat.phase}\n\n${strat.description}`}
+                  className="w-full justify-start"
+                >
+                  <div className="flex items-center justify-between w-full gap-2">
+                    <span className="text-accent-300">{strat.name}</span>
+                    <div className="flex items-center gap-2">
+                      {strat.modifiers && strat.modifiers.length > 0 && (
+                        <span className="text-white/70 text-xs">{formatModifiersSummary(strat.modifiers)}</span>
+                      )}
+                      <span className="text-accent-400 text-xs">{strat.cost}CP</span>
+                    </div>
+                  </div>
+                </TooltipBadge>
+              ))}
+              {activeTwistData.map((twist) => (
+                <TooltipBadge
+                  key={twist.id}
+                  tooltip={`${twist.name} (${twist.affects})\n\n${twist.description}`}
+                  className="w-full justify-start"
+                >
+                  <div className="flex items-center justify-between w-full gap-2">
+                    <span className="text-purple-300">{twist.name}</span>
+                    {twist.modifiers && twist.modifiers.length > 0 && (
+                      <span className="text-white/70 text-xs">{formatModifiersSummary(twist.modifiers)}</span>
+                    )}
+                  </div>
+                </TooltipBadge>
+              ))}
+            </div>
           </div>
         )}
 
@@ -539,6 +622,10 @@ export function SelectedUnitDetailsPanel({
             activeStratagems={activeStratagemData}
             activeTwists={activeTwistData}
             weaponKeywordGlossary={weaponKeywordGlossary}
+            enhancement={enhancement}
+            activeStance={katahStance}
+            leaderEnhancement={leaderEnhancement}
+            isLeaderWarlord={isLeaderWarlord}
             loadoutCasualties={loadoutCasualties}
             onIncrementCasualties={onIncrementCasualties}
             onDecrementCasualties={onDecrementCasualties}

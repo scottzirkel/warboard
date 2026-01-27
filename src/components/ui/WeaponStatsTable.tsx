@@ -1,4 +1,4 @@
-import type { Weapon, RangedWeaponStats, MeleeWeaponStats, Stratagem, MissionTwist, KeywordDefinition } from '@/types';
+import type { Weapon, RangedWeaponStats, MeleeWeaponStats, Stratagem, MissionTwist, KeywordDefinition, Enhancement, ArmyRuleStance } from '@/types';
 import { getModifiedWeaponStat } from '@/hooks/useWeaponModifiers';
 import { Tooltip } from './Tooltip';
 
@@ -7,6 +7,8 @@ interface WeaponStatsTableProps {
   activeStratagems?: Stratagem[];
   activeTwists?: MissionTwist[];
   weaponKeywordGlossary?: KeywordDefinition[];
+  enhancement?: Enhancement | null;
+  activeStance?: ArmyRuleStance | null;
   className?: string;
 }
 
@@ -75,13 +77,16 @@ function findAbilityDescription(ability: string, glossary: KeywordDefinition[]):
 
 /**
  * Renders weapon abilities with tooltips for glossary terms.
+ * Stance abilities are highlighted with a special style.
  */
 function WeaponAbilities({
   abilities,
   glossary,
+  stanceAbility = null,
 }: {
   abilities: string[];
   glossary: KeywordDefinition[];
+  stanceAbility?: string | null;
 }) {
   if (!abilities || abilities.length === 0) return null;
 
@@ -89,16 +94,30 @@ function WeaponAbilities({
     <div className="text-xs text-accent-400 mt-1">
       {abilities.map((ability, index) => {
         const description = findAbilityDescription(ability, glossary);
+        const isStanceAbility = ability === stanceAbility;
+
         return (
           <span key={ability}>
             {description ? (
               <Tooltip content={description}>
-                <span className="cursor-help border-b border-dotted border-accent-400/50">
+                <span
+                  className={`cursor-help border-b border-dotted ${
+                    isStanceAbility
+                      ? 'text-green-400 border-green-400/50 font-medium'
+                      : 'border-accent-400/50'
+                  }`}
+                >
                   {ability}
                 </span>
               </Tooltip>
             ) : (
-              ability
+              <span
+                className={
+                  isStanceAbility ? 'text-green-400 font-medium' : ''
+                }
+              >
+                {ability}
+              </span>
             )}
             {index < abilities.length - 1 && ', '}
           </span>
@@ -119,18 +138,22 @@ function RangedWeaponDisplay({
   activeStratagems = [],
   activeTwists = [],
   weaponKeywordGlossary = [],
+  enhancement = null,
+  activeStance = null,
 }: {
   weapon: Weapon & { stats: RangedWeaponStats };
   activeStratagems?: Stratagem[];
   activeTwists?: MissionTwist[];
   weaponKeywordGlossary?: KeywordDefinition[];
+  enhancement?: Enhancement | null;
+  activeStance?: ArmyRuleStance | null;
 }) {
-  const range = getModifiedWeaponStat(weapon, 'range', activeStratagems, activeTwists);
-  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems, activeTwists);
-  const bs = getModifiedWeaponStat(weapon, 'bs', activeStratagems, activeTwists);
-  const s = getModifiedWeaponStat(weapon, 's', activeStratagems, activeTwists);
-  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems, activeTwists);
-  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems, activeTwists);
+  const range = getModifiedWeaponStat(weapon, 'range', activeStratagems, activeTwists, enhancement, activeStance);
+  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems, activeTwists, enhancement, activeStance);
+  const bs = getModifiedWeaponStat(weapon, 'bs', activeStratagems, activeTwists, enhancement, activeStance);
+  const s = getModifiedWeaponStat(weapon, 's', activeStratagems, activeTwists, enhancement, activeStance);
+  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems, activeTwists, enhancement, activeStance);
+  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems, activeTwists, enhancement, activeStance);
 
   return (
     <div className="text-sm">
@@ -162,22 +185,48 @@ function RangedWeaponDisplay({
   );
 }
 
+/**
+ * Get the ability granted by an active stance for melee weapons.
+ */
+function getStanceAbility(activeStance: ArmyRuleStance | null): string | null {
+  if (!activeStance) return null;
+
+  // Map stance IDs to their granted abilities
+  const stanceAbilities: Record<string, string> = {
+    'dacatarai': 'Sustained Hits 1',
+    'rendax': 'Lethal Hits',
+  };
+
+  return stanceAbilities[activeStance.id] || null;
+}
+
 function MeleeWeaponDisplay({
   weapon,
   activeStratagems = [],
   activeTwists = [],
   weaponKeywordGlossary = [],
+  enhancement = null,
+  activeStance = null,
 }: {
   weapon: Weapon & { stats: MeleeWeaponStats };
   activeStratagems?: Stratagem[];
   activeTwists?: MissionTwist[];
   weaponKeywordGlossary?: KeywordDefinition[];
+  enhancement?: Enhancement | null;
+  activeStance?: ArmyRuleStance | null;
 }) {
-  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems, activeTwists);
-  const ws = getModifiedWeaponStat(weapon, 'ws', activeStratagems, activeTwists);
-  const s = getModifiedWeaponStat(weapon, 's', activeStratagems, activeTwists);
-  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems, activeTwists);
-  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems, activeTwists);
+  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems, activeTwists, enhancement, activeStance);
+  const ws = getModifiedWeaponStat(weapon, 'ws', activeStratagems, activeTwists, enhancement, activeStance);
+  const s = getModifiedWeaponStat(weapon, 's', activeStratagems, activeTwists, enhancement, activeStance);
+  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems, activeTwists, enhancement, activeStance);
+  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems, activeTwists, enhancement, activeStance);
+
+  // Combine weapon abilities with stance ability if active
+  const baseAbilities = weapon.abilities || [];
+  const stanceAbility = getStanceAbility(activeStance);
+  const combinedAbilities = stanceAbility
+    ? [...baseAbilities, stanceAbility]
+    : baseAbilities;
 
   return (
     <div className="text-sm">
@@ -204,7 +253,7 @@ function MeleeWeaponDisplay({
           </tr>
         </tbody>
       </table>
-      <WeaponAbilities abilities={weapon.abilities || []} glossary={weaponKeywordGlossary} />
+      <WeaponAbilities abilities={combinedAbilities} glossary={weaponKeywordGlossary} stanceAbility={stanceAbility} />
     </div>
   );
 }
@@ -220,6 +269,8 @@ export function WeaponStatsTable({
   activeStratagems = [],
   activeTwists = [],
   weaponKeywordGlossary = [],
+  enhancement = null,
+  activeStance = null,
   className = '',
 }: WeaponStatsTableProps) {
   return (
@@ -233,6 +284,8 @@ export function WeaponStatsTable({
               activeStratagems={activeStratagems}
               activeTwists={activeTwists}
               weaponKeywordGlossary={weaponKeywordGlossary}
+              enhancement={enhancement}
+              activeStance={activeStance}
             />
           );
         }
@@ -244,6 +297,8 @@ export function WeaponStatsTable({
               activeStratagems={activeStratagems}
               activeTwists={activeTwists}
               weaponKeywordGlossary={weaponKeywordGlossary}
+              enhancement={enhancement}
+              activeStance={activeStance}
             />
           );
         }

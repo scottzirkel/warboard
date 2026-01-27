@@ -666,6 +666,7 @@ export default function Home() {
                   onExport={handleExport}
                   onLoad={() => openModal('load')}
                   onSave={handleOpenSaveModal}
+                  onClear={resetList}
                   canSave={true}
                   canExport={currentList.units.length > 0}
                   isExporting={isExporting}
@@ -763,6 +764,7 @@ export default function Home() {
                   leaderUnit={leaderUnit}
                   leaderListUnit={leaderListUnit}
                   leaderEnhancement={leaderEnhancement}
+                  isLeaderWarlord={leaderListUnit?.isWarlord === true}
                   modifiers={statModifiers.modifiers}
                   modifierSources={buildModifierSources(statModifiers)}
                   loadoutGroups={loadoutGroups}
@@ -780,6 +782,7 @@ export default function Home() {
                   activeKatah={gameState.katah}
                   katahName={armyData?.armyRules?.martial_katah?.stances?.find(s => s.id === gameState.katah)?.name}
                   katahDescription={armyData?.armyRules?.martial_katah?.stances?.find(s => s.id === gameState.katah)?.description}
+                  katahStance={armyData?.armyRules?.martial_katah?.stances?.find(s => s.id === gameState.katah)}
                   activeStratagems={gameState.activeStratagems}
                   stratagemNames={Object.fromEntries(
                     armyData?.detachments[currentList.detachment]?.stratagems?.map(s => [s.id, s.name]) || []
@@ -793,9 +796,14 @@ export default function Home() {
                     missionTwists
                       .filter(t => (gameState.activeTwists || []).includes(t.id))
                       .filter(t => {
-                        // If twist only applies to warlord, only include if this unit is warlord
+                        // If twist only applies to warlord, check if unit OR attached leader is warlord
                         if (t.appliesToWarlord) {
-                          return selectedListUnit?.isWarlord === true;
+                          const isUnitWarlord = selectedListUnit?.isWarlord === true;
+                          const attachedLeaderIndex = selectedListUnit?.attachedLeader?.unitIndex;
+                          const isAttachedLeaderWarlord = attachedLeaderIndex !== undefined
+                            ? currentList.units[attachedLeaderIndex]?.isWarlord === true
+                            : false;
+                          return isUnitWarlord || isAttachedLeaderWarlord;
                         }
                         return true;
                       })

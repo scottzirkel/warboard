@@ -1,7 +1,7 @@
 'use client';
 
 import { LoadoutGroupAccordion, WeaponStatsTable } from '@/components/ui';
-import type { Weapon, LoadoutGroup, Stratagem, MissionTwist, KeywordDefinition } from '@/types';
+import type { Weapon, LoadoutGroup, Stratagem, MissionTwist, KeywordDefinition, Enhancement, ArmyRuleStance } from '@/types';
 
 interface LoadoutGroupCardProps {
   group: LoadoutGroup;
@@ -12,6 +12,8 @@ interface LoadoutGroupCardProps {
   activeStratagems?: Stratagem[];
   activeTwists?: MissionTwist[];
   weaponKeywordGlossary?: KeywordDefinition[];
+  enhancement?: Enhancement | null;
+  activeStance?: ArmyRuleStance | null;
   casualties?: number;
   onIncrementCasualties?: () => void;
   onDecrementCasualties?: () => void;
@@ -26,6 +28,8 @@ export function LoadoutGroupCard({
   activeStratagems = [],
   activeTwists = [],
   weaponKeywordGlossary = [],
+  enhancement = null,
+  activeStance = null,
   casualties = 0,
   onIncrementCasualties,
   onDecrementCasualties,
@@ -56,6 +60,8 @@ export function LoadoutGroupCard({
               activeStratagems={activeStratagems}
               activeTwists={activeTwists}
               weaponKeywordGlossary={weaponKeywordGlossary}
+              enhancement={enhancement}
+              activeStance={activeStance}
             />
           </div>
         )}
@@ -71,6 +77,8 @@ export function LoadoutGroupCard({
               activeStratagems={activeStratagems}
               activeTwists={activeTwists}
               weaponKeywordGlossary={weaponKeywordGlossary}
+              enhancement={enhancement}
+              activeStance={activeStance}
             />
           </div>
         )}
@@ -95,6 +103,11 @@ interface PlayModeWeaponsDisplayProps {
   activeStratagems?: Stratagem[];
   activeTwists?: MissionTwist[];
   weaponKeywordGlossary?: KeywordDefinition[];
+  enhancement?: Enhancement | null;
+  activeStance?: ArmyRuleStance | null;
+  leaderEnhancement?: Enhancement | null;
+  /** Whether the attached leader is the warlord (for applying warlord-only twists) */
+  isLeaderWarlord?: boolean;
   loadoutCasualties?: Record<string, number>;
   onIncrementCasualties?: (groupId: string) => void;
   onDecrementCasualties?: (groupId: string) => void;
@@ -120,11 +133,20 @@ export function PlayModeWeaponsDisplay({
   activeStratagems = [],
   activeTwists = [],
   weaponKeywordGlossary = [],
+  enhancement = null,
+  activeStance = null,
+  leaderEnhancement = null,
+  isLeaderWarlord = false,
   className = '',
 }: PlayModeWeaponsDisplayProps) {
   const hasLeaderWeapons = leaderWeapons && leaderWeapons.length > 0;
   const leaderRanged = leaderWeapons?.filter((w) => w.type === 'ranged') || [];
   const leaderMelee = leaderWeapons?.filter((w) => w.type === 'melee') || [];
+
+  // Filter out warlord-only twists for unit weapons (they only apply to the warlord model)
+  const unitTwists = activeTwists.filter(t => !t.appliesToWarlord);
+  // Leader gets all twists (including warlord-only if they are the warlord)
+  const leaderTwists = isLeaderWarlord ? activeTwists : activeTwists.filter(t => !t.appliesToWarlord);
 
   return (
     <div className={`space-y-3 ${className}`}>
@@ -142,8 +164,10 @@ export function PlayModeWeaponsDisplay({
               : undefined
           }
           activeStratagems={activeStratagems}
-          activeTwists={activeTwists}
+          activeTwists={unitTwists}
           weaponKeywordGlossary={weaponKeywordGlossary}
+          enhancement={enhancement}
+          activeStance={activeStance}
           casualties={loadoutCasualties[group.id] || 0}
           onIncrementCasualties={
             onIncrementCasualties
@@ -221,8 +245,10 @@ export function PlayModeWeaponsDisplay({
                   <WeaponStatsTable
                     weapons={leaderRanged}
                     activeStratagems={activeStratagems}
-                    activeTwists={activeTwists}
+                    activeTwists={leaderTwists}
                     weaponKeywordGlossary={weaponKeywordGlossary}
+                    enhancement={leaderEnhancement}
+                    activeStance={activeStance}
                   />
                 </div>
               )}
@@ -236,8 +262,10 @@ export function PlayModeWeaponsDisplay({
                   <WeaponStatsTable
                     weapons={leaderMelee}
                     activeStratagems={activeStratagems}
-                    activeTwists={activeTwists}
+                    activeTwists={leaderTwists}
                     weaponKeywordGlossary={weaponKeywordGlossary}
+                    enhancement={leaderEnhancement}
+                    activeStance={activeStance}
                   />
                 </div>
               )}

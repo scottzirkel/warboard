@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { Weapon, Stratagem, Modifier } from '@/types';
+import type { Weapon, Stratagem, Modifier, MissionTwist, Enhancement, ArmyRuleStance } from '@/types';
 
 export interface WeaponStatModifier {
   stat: string;
@@ -8,29 +8,51 @@ export interface WeaponStatModifier {
   source: string;
 }
 
+/** Any source that can provide weapon modifiers */
+interface ModifierSource {
+  name: string;
+  modifiers?: Modifier[];
+}
+
 /**
- * Collects modifiers from active stratagems that apply to a specific weapon stat.
+ * Collects modifiers from active sources (stratagems, twists, enhancements, stances) that apply to a specific weapon stat.
  */
 export function collectWeaponModifiers(
   weapon: Weapon,
   stat: string,
-  activeStratagems: Stratagem[]
+  activeStratagems: Stratagem[],
+  activeTwists: MissionTwist[] = [],
+  enhancement: Enhancement | null = null,
+  activeStance: ArmyRuleStance | null = null
 ): WeaponStatModifier[] {
   const modifiers: WeaponStatModifier[] = [];
 
-  for (const strat of activeStratagems) {
-    if (!strat.modifiers) continue;
+  // Combine all modifier sources
+  const sources: ModifierSource[] = [...activeStratagems, ...activeTwists];
 
-    for (const mod of strat.modifiers as Modifier[]) {
+  // Add enhancement if present
+  if (enhancement) {
+    sources.push(enhancement);
+  }
+
+  // Add active stance if present
+  if (activeStance) {
+    sources.push(activeStance);
+  }
+
+  for (const source of sources) {
+    if (!source.modifiers) continue;
+
+    for (const mod of source.modifiers as Modifier[]) {
       if (mod.stat !== stat) continue;
 
       // Check if modifier scope matches weapon type
       if (mod.scope === 'melee' && weapon.type === 'melee') {
-        modifiers.push({ ...mod, source: strat.name });
+        modifiers.push({ ...mod, source: source.name });
       } else if (mod.scope === 'ranged' && weapon.type === 'ranged') {
-        modifiers.push({ ...mod, source: strat.name });
+        modifiers.push({ ...mod, source: source.name });
       } else if (mod.scope === 'all' || mod.scope === 'weapon') {
-        modifiers.push({ ...mod, source: strat.name });
+        modifiers.push({ ...mod, source: source.name });
       }
     }
   }
@@ -77,7 +99,10 @@ export function applyModifiers(
 export function getModifiedWeaponStat(
   weapon: Weapon,
   stat: string,
-  activeStratagems: Stratagem[]
+  activeStratagems: Stratagem[],
+  activeTwists: MissionTwist[] = [],
+  enhancement: Enhancement | null = null,
+  activeStance: ArmyRuleStance | null = null
 ): { value: number | string; modified: boolean; sources: string[] } {
   const baseValue = weapon.stats[stat as keyof typeof weapon.stats];
 
@@ -85,7 +110,7 @@ export function getModifiedWeaponStat(
     return { value: '-', modified: false, sources: [] };
   }
 
-  const modifiers = collectWeaponModifiers(weapon, stat, activeStratagems);
+  const modifiers = collectWeaponModifiers(weapon, stat, activeStratagems, activeTwists, enhancement, activeStance);
 
   if (modifiers.length === 0) {
     return { value: baseValue, modified: false, sources: [] };
@@ -106,7 +131,8 @@ export function getModifiedWeaponStat(
  */
 export function useWeaponModifiers(
   weapons: Weapon[],
-  activeStratagems: Stratagem[]
+  activeStratagems: Stratagem[],
+  activeTwists: MissionTwist[] = []
 ) {
   return useMemo(() => {
     return weapons.map(weapon => {
@@ -114,7 +140,7 @@ export function useWeaponModifiers(
 
       // Get all stat keys from the weapon
       for (const stat of Object.keys(weapon.stats)) {
-        stats[stat] = getModifiedWeaponStat(weapon, stat, activeStratagems);
+        stats[stat] = getModifiedWeaponStat(weapon, stat, activeStratagems, activeTwists);
       }
 
       return {
@@ -122,5 +148,5 @@ export function useWeaponModifiers(
         stats,
       };
     });
-  }, [weapons, activeStratagems]);
+  }, [weapons, activeStratagems, activeTwists]);
 }
