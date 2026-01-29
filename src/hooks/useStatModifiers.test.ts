@@ -87,6 +87,7 @@ const createMockGameState = (overrides: Partial<GameState> = {}): GameState => (
   stratagemUsage: {},
   katah: null,
   activeRuleChoices: {},
+  pendingRoundConfirmations: {},
   collapsedLoadoutGroups: {},
   activatedLoadoutGroups: {},
   collapsedLeaders: {},

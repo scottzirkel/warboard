@@ -19,6 +19,10 @@ interface GameStatePanelProps {
   selectedKatah: string | null;
   onKatahChange: (katahId: string | null) => void;
 
+  // Per-round confirmation state
+  pendingConfirmations: Record<string, boolean>;
+  onConfirmRoundSelection: (ruleId: string) => void;
+
   // Command points (for stratagem usage)
   commandPoints: number;
   onCommandPointsChange: (points: number) => void;
@@ -171,6 +175,8 @@ function sortStratagemsByPhase(stratagems: Stratagem[]): Stratagem[] {
 export function GameStatePanel({
   selectedKatah,
   onKatahChange,
+  pendingConfirmations,
+  onConfirmRoundSelection,
   commandPoints,
   onCommandPointsChange,
   activeStratagems,
@@ -282,35 +288,61 @@ export function GameStatePanel({
             </button>
             <div className={`overflow-hidden transition-all duration-200 ${detachmentRulesOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
               <div className="px-4 pb-4 space-y-3">
-                {detachment.rules.map((rule) => (
-                  <div key={rule.id} className="text-sm">
-                    <div className="font-semibold text-accent-300 mb-1">{rule.name}</div>
-                    <div className="text-white/70 text-xs mb-2">{rule.description}</div>
-                    {/* Show choices for selection-type rules */}
-                    {rule.type === 'selection' && rule.choices && rule.choices.length > 0 && (
-                      <div className="flex justify-center">
-                        <div className="segmented-control">
-                          <div
-                            onClick={() => onSetRuleChoice(rule.id, null)}
-                            className={`segmented-control-item ${!activeRuleChoices[rule.id] ? 'active' : ''}`}
-                          >
-                            None
-                          </div>
-                          {rule.choices.map((choice) => (
-                            <div
-                              key={choice.id}
-                              onClick={() => onSetRuleChoice(rule.id, choice.id)}
-                              className={`segmented-control-item ${activeRuleChoices[rule.id] === choice.id ? 'active' : ''}`}
-                              title={choice.effect}
-                            >
-                              {choice.name}
-                            </div>
-                          ))}
-                        </div>
+                {detachment.rules.map((rule) => {
+                  const isPending = rule.resetsEachRound && (pendingConfirmations[rule.id] ?? false);
+                  const currentChoice = activeRuleChoices[rule.id];
+                  const currentChoiceName = rule.choices?.find(c => c.id === currentChoice)?.name;
+
+                  return (
+                    <div
+                      key={rule.id}
+                      className={`text-sm rounded-lg transition-all ${isPending ? 'ring-2 ring-amber-500/50 p-3 -mx-1 bg-amber-500/5' : ''}`}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <div className="font-semibold text-accent-300">{rule.name}</div>
+                        {isPending && (
+                          <span className="text-xs text-amber-400 font-medium animate-pulse">
+                            New Round
+                          </span>
+                        )}
                       </div>
-                    )}
-                  </div>
-                ))}
+                      <div className="text-white/70 text-xs mb-2">{rule.description}</div>
+                      {/* Show choices for selection-type rules */}
+                      {rule.type === 'selection' && rule.choices && rule.choices.length > 0 && (
+                        <>
+                          <div className="flex justify-center">
+                            <div className="segmented-control">
+                              <div
+                                onClick={() => onSetRuleChoice(rule.id, null)}
+                                className={`segmented-control-item ${!currentChoice ? 'active' : ''}`}
+                              >
+                                None
+                              </div>
+                              {rule.choices.map((choice) => (
+                                <div
+                                  key={choice.id}
+                                  onClick={() => onSetRuleChoice(rule.id, choice.id)}
+                                  className={`segmented-control-item ${currentChoice === choice.id ? 'active' : ''}`}
+                                  title={choice.effect}
+                                >
+                                  {choice.name}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          {isPending && currentChoice && (
+                            <button
+                              onClick={() => onConfirmRoundSelection(rule.id)}
+                              className="w-full mt-3 py-2 text-sm font-medium text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 rounded-lg transition-colors"
+                            >
+                              Confirm {currentChoiceName}
+                            </button>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

@@ -19,6 +19,7 @@ const createDefaultGameState = (): GameState => ({
   stratagemUsage: {},
   katah: null,
   activeRuleChoices: {},
+  pendingRoundConfirmations: {},
   collapsedLoadoutGroups: {},
   activatedLoadoutGroups: {},
   collapsedLeaders: {},
@@ -79,6 +80,12 @@ interface GameStoreActions {
 
   // Martial Ka'tah (Custodes army rule)
   setKatah: (katah: string | null) => void;
+
+  // Per-Round Confirmation Tracking
+  markPendingConfirmation: (ruleId: string) => void;
+  confirmRoundSelection: (ruleId: string) => void;
+  isPendingConfirmation: (ruleId: string) => boolean;
+  markPerRoundRulesPending: (ruleIds: string[]) => void;
 
   // Detachment Rule Choices
   setRuleChoice: (ruleId: string, choiceId: string | null) => void;
@@ -471,6 +478,57 @@ export const useGameStore = create<GameStore>()(
   },
 
   // -------------------------------------------------------------------------
+  // Per-Round Confirmation Tracking Actions
+  // -------------------------------------------------------------------------
+
+  markPendingConfirmation: (ruleId: string) => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        pendingRoundConfirmations: {
+          ...state.gameState.pendingRoundConfirmations,
+          [ruleId]: true,
+        },
+      },
+    }));
+  },
+
+  confirmRoundSelection: (ruleId: string) => {
+    set(state => {
+      const newPending = { ...state.gameState.pendingRoundConfirmations };
+      delete newPending[ruleId];
+
+      return {
+        gameState: {
+          ...state.gameState,
+          pendingRoundConfirmations: newPending,
+        },
+      };
+    });
+  },
+
+  isPendingConfirmation: (ruleId: string): boolean => {
+    return get().gameState.pendingRoundConfirmations[ruleId] ?? false;
+  },
+
+  markPerRoundRulesPending: (ruleIds: string[]) => {
+    set(state => {
+      const newPending = { ...state.gameState.pendingRoundConfirmations };
+
+      for (const ruleId of ruleIds) {
+        newPending[ruleId] = true;
+      }
+
+      return {
+        gameState: {
+          ...state.gameState,
+          pendingRoundConfirmations: newPending,
+        },
+      };
+    });
+  },
+
+  // -------------------------------------------------------------------------
   // Detachment Rule Choice Actions
   // -------------------------------------------------------------------------
 
@@ -482,10 +540,16 @@ export const useGameStore = create<GameStore>()(
       } else {
         newChoices[ruleId] = choiceId;
       }
+
+      // Clear pending confirmation when user makes/changes a selection
+      const newPending = { ...state.gameState.pendingRoundConfirmations };
+      delete newPending[ruleId];
+
       return {
         gameState: {
           ...state.gameState,
           activeRuleChoices: newChoices,
+          pendingRoundConfirmations: newPending,
         },
       };
     });
@@ -671,13 +735,23 @@ export const useGameStore = create<GameStore>()(
   // -------------------------------------------------------------------------
 
   resetActivationState: () => {
-    set(state => ({
-      gameState: {
-        ...state.gameState,
-        activatedLoadoutGroups: {},
-        activatedLeaders: {},
-      },
-    }));
+    set(state => {
+      // Mark all active rule choices as pending confirmation
+      // The UI will filter based on which rules have resetsEachRound: true
+      const newPending = { ...state.gameState.pendingRoundConfirmations };
+      for (const ruleId of Object.keys(state.gameState.activeRuleChoices)) {
+        newPending[ruleId] = true;
+      }
+
+      return {
+        gameState: {
+          ...state.gameState,
+          activatedLoadoutGroups: {},
+          activatedLeaders: {},
+          pendingRoundConfirmations: newPending,
+        },
+      };
+    });
   },
 
   // -------------------------------------------------------------------------

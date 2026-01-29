@@ -189,6 +189,8 @@ export interface DetachmentRule {
   modifiers?: Modifier[];
   bonuses?: DetachmentRuleBonus[];
   choices?: DetachmentRuleChoice[];
+  /** If true, selection resets each round (preserved but marked as needing confirmation) */
+  resetsEachRound?: boolean;
 }
 
 // ============================================================================
@@ -220,6 +222,8 @@ export interface ArmyRule {
   keywords?: string[];
   oncePerBattle?: boolean;
   stances?: ArmyRuleStance[];
+  /** If true, selection resets each round (preserved but marked as needing confirmation) */
+  resetsEachRound?: boolean;
 }
 
 // ============================================================================
@@ -330,6 +334,8 @@ export interface GameState {
   katah: string | null;
   /** Tracks active detachment rule choices (ruleId -> choiceId) */
   activeRuleChoices: Record<string, string>;
+  /** Tracks per-round selections that need confirmation after round change (ruleId -> true) */
+  pendingRoundConfirmations: Record<string, boolean>;
   collapsedLoadoutGroups: Record<number, Record<string, boolean>>;
   activatedLoadoutGroups: Record<number, Record<string, boolean>>;
   collapsedLeaders: Record<number, boolean>;

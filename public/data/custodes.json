@@ -3310,6 +3310,7 @@
           "name": "Martial Mastery",
           "description": "At the start of each battle round, select one option. Applies to units with Martial Ka'tah.",
           "type": "selection",
+          "resetsEachRound": true,
           "modifiers": [],
           "choices": [
             {

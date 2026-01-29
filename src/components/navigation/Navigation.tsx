@@ -468,8 +468,14 @@ export function Navigation({
     <nav className="nav-blur sticky top-0 z-50 shrink-0 overflow-x-hidden">
       <div className="px-2 lg:px-4">
         <div className="h-14 flex items-center justify-between gap-2 lg:gap-4">
-          {/* Left: Mobile Panel Switcher (Build and Play modes) */}
+          {/* Left: Quick Reference + Mobile Panel Switcher */}
           <div className="flex items-center gap-3 shrink-0 min-w-0">
+            {onToggleReferencePanel && (
+              <QuickRefButton
+                isOpen={showReferencePanel}
+                onClick={onToggleReferencePanel}
+              />
+            )}
             {onMobilePanelChange && (
               <div className="flex lg:hidden items-center bg-white/10 rounded-lg overflow-hidden">
                 <button
@@ -559,13 +565,6 @@ export function Navigation({
               onToggle={onModeToggle}
               canPlay={canPlay}
             />
-
-            {onToggleReferencePanel && (
-              <QuickRefButton
-                isOpen={showReferencePanel}
-                onClick={onToggleReferencePanel}
-              />
-            )}
           </div>
         </div>
       </div>

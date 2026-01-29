@@ -83,6 +83,7 @@ export default function Home() {
     togglePlayerTurn,
     setKatah,
     setRuleChoice,
+    confirmRoundSelection,
     toggleStratagem,
     toggleTwist,
     incrementStratagemUsage,
@@ -791,6 +792,8 @@ export default function Home() {
               <GameStatePanel
                 selectedKatah={gameState.katah}
                 onKatahChange={setKatah}
+                pendingConfirmations={gameState.pendingRoundConfirmations ?? {}}
+                onConfirmRoundSelection={confirmRoundSelection}
                 commandPoints={gameState.commandPoints}
                 onCommandPointsChange={setCommandPoints}
                 activeStratagems={gameState.activeStratagems}
