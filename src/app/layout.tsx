@@ -7,8 +7,12 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Army Tracker',
+  title: 'WarBoard',
   description: 'Warhammer 40k army list builder and game state tracker',
+  robots: {
+    index: false,
+    follow: false,
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
