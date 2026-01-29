@@ -436,7 +436,7 @@ export function SelectedUnitDetailsPanel({
           const displayModifiers = showLeaderStats ? [] : modifiers;
 
           return (
-            <div className={`card-depth p-3 ${showLeaderStats ? 'border border-purple-500/30' : ''}`}>
+            <div className={`card-depth p-2 lg:p-3 ${showLeaderStats ? 'border border-purple-500/30' : ''}`}>
               {showLeaderStats && leaderUnit && (
                 <div className="text-xs text-purple-400 mb-2 text-center">Showing {leaderUnit.name} stats</div>
               )}
@@ -479,7 +479,7 @@ export function SelectedUnitDetailsPanel({
         })()}
 
         {/* Damage Tracker - Compact */}
-        <div className="card-depth p-3">
+        <div className="card-depth p-2 lg:p-3">
           {/* Unit Wounds Row */}
           <div className="flex items-center justify-between gap-2 bg-black/20 rounded-lg px-3 py-2">
             <div className="flex items-center gap-2 min-w-0">
@@ -581,7 +581,7 @@ export function SelectedUnitDetailsPanel({
 
         {/* Active Modifiers Summary - Shows stat changes with full details on hover */}
         {activeModifierCount > 0 && (
-          <div className="card-depth p-3 space-y-2">
+          <div className="card-depth p-2 lg:p-3 space-y-2">
             <div className="text-xs text-white/50 font-medium uppercase tracking-wider">Active Modifiers</div>
             <div className="space-y-1.5">
               {activeKatah && katahName && (

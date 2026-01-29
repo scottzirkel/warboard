@@ -104,11 +104,13 @@ export default function Home() {
   const {
     mode,
     selectedUnitIndex,
+    mobilePanel,
     activeModal,
     confirmModalConfig,
     toasts,
     setMode,
     selectUnit,
+    setMobilePanel,
     openModal,
     closeModal,
     showSuccess,
@@ -453,11 +455,13 @@ export default function Home() {
   const handlePreviewUnit = useCallback((unit: Unit) => {
     setPreviewedUnit(unit);
     selectUnit(null); // Clear list selection when previewing from roster
-  }, [selectUnit]);
+    setMobilePanel('details'); // Auto-switch to details panel on mobile
+  }, [selectUnit, setMobilePanel]);
 
   const handleSelectListUnit = useCallback((index: number | null) => {
     selectUnit(index);
     setPreviewedUnit(null); // Clear preview when selecting from list
+    // Don't auto-switch panels - user stays on list panel to edit the unit
   }, [selectUnit]);
 
   const handleRemoveUnit = useCallback((index: number) => {
@@ -638,17 +642,14 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col min-h-screen lg:h-screen overflow-x-hidden">
       {/* Navigation */}
       <Navigation
-        selectedArmyId={currentList.army}
-        armies={availableArmies}
-        onArmyChange={handleArmyChange}
         mode={mode}
         onModeToggle={handleModeToggle}
         canPlay={canPlay}
-        listName={currentList.name}
-        detachmentName={armyData?.detachments[currentList.detachment]?.name}
+        mobilePanel={mobilePanel}
+        onMobilePanelChange={setMobilePanel}
         battleRound={gameState.battleRound}
         onBattleRoundChange={setBattleRound}
         commandPoints={gameState.commandPoints}
@@ -668,7 +669,7 @@ export default function Home() {
       />
 
       {/* Main Content */}
-      <main className="flex-1 overflow-hidden">
+      <main className="flex-1 lg:overflow-hidden">
         {mode === 'build' ? (
           <BuildMode
             listName={currentList.name}
@@ -678,12 +679,16 @@ export default function Home() {
             formatName={currentList.format === 'colosseum' ? 'Colosseum' : 'Standard'}
             onNameChange={setListName}
             validationErrors={listValidation.validateList().errors}
+            mobilePanel={mobilePanel}
             leftPanel={
               armyData && (
                 <ArmyListPanel
                   armyData={armyData}
                   currentList={currentList}
                   selectedUnitIndex={selectedUnitIndex}
+                  armies={availableArmies}
+                  selectedArmyId={currentList.army}
+                  onArmyChange={handleArmyChange}
                   onSelectUnit={handleSelectListUnit}
                   onRemoveUnit={handleRemoveUnit}
                   onModelCountChange={updateUnitModelCount}
@@ -750,9 +755,22 @@ export default function Home() {
             pointsLimit={currentList.pointsLimit}
             armyName={availableArmies.find((a) => a.id === currentList.army)?.name || 'Unknown Army'}
             battleRound={gameState.battleRound}
+            commandPoints={gameState.commandPoints}
+            primaryVP={gameState.primaryVP}
+            secondaryVP={gameState.secondaryVP}
+            currentPhase={gameState.currentPhase}
+            playerTurn={gameState.playerTurn}
+            onBattleRoundChange={setBattleRound}
+            onCommandPointsChange={setCommandPoints}
+            onPrimaryVPChange={setPrimaryVP}
+            onSecondaryVPChange={setSecondaryVP}
+            onToggleTurn={togglePlayerTurn}
+            onAdvance={advanceGameState}
+            onReset={resetGameState}
             onModeToggle={() => handleModeChange('build')}
             canPlay={canPlay}
             validationErrors={listValidation.validateList().errors}
+            mobilePanel={mobilePanel}
             leftPanel={
               armyData && (
                 <ArmyOverviewPanel
@@ -760,7 +778,12 @@ export default function Home() {
                   units={currentList.units}
                   selectedUnitIndex={selectedUnitIndex}
                   detachmentId={currentList.detachment}
-                  onSelectUnit={selectUnit}
+                  onSelectUnit={(index) => {
+                    selectUnit(index);
+                    if (index !== null) {
+                      setMobilePanel('details'); // Auto-switch to unit details on mobile
+                    }
+                  }}
                 />
               )
             }
@@ -781,6 +804,7 @@ export default function Home() {
                 onSetRuleChoice={setRuleChoice}
                 armyData={armyData}
                 detachmentId={currentList.detachment}
+                currentPhase={gameState.currentPhase}
               />
             }
             rightPanel={

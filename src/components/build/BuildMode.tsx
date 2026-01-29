@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react';
 import type { ValidationError } from '@/types';
+import type { MobilePanel } from '@/stores/uiStore';
 
 interface BuildModeProps {
   // Points Summary
@@ -17,6 +18,8 @@ interface BuildModeProps {
   leftPanel: ReactNode;
   middlePanel: ReactNode;
   rightPanel: ReactNode;
+  // Mobile panel state
+  mobilePanel?: MobilePanel;
   className?: string;
 }
 
@@ -31,6 +34,7 @@ export function BuildMode({
   leftPanel,
   middlePanel,
   rightPanel,
+  mobilePanel = 'list',
   className = '',
 }: BuildModeProps) {
   // Points status for color coding (matching Alpine.js logic)
@@ -40,46 +44,51 @@ export function BuildMode({
   const pointsStatus = over > 10 ? 'error' : over > 0 ? 'warning' : 'ok';
 
   return (
-    <div className={`h-full flex flex-col gap-4 w-full px-4 py-4 ${className}`}>
-      {/* Points Summary Bar */}
-      <div className="card-depth p-4 shrink-0">
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex-1 min-w-0">
-            <input
-              type="text"
-              value={listName}
-              onChange={(e) => onNameChange?.(e.target.value)}
-              placeholder="List Name"
-              className="w-full bg-transparent border-none text-white font-medium text-lg focus:outline-none placeholder:text-white/40"
-            />
-            <div className="flex items-center gap-2 mt-1">
-              <span className="badge badge-accent">{detachmentName || 'No Detachment'}</span>
-              <span className="badge badge-purple">{formatName || 'Standard'}</span>
+    <div className={`lg:h-full flex flex-col gap-4 w-full px-4 py-4 ${className}`}>
+      {/* Spacer for fixed header on mobile */}
+      <div className="h-[116px] lg:hidden shrink-0" />
+
+      {/* Points Summary Bar - fixed on mobile, static on desktop */}
+      <div className="fixed lg:static top-14 left-0 right-0 z-40 px-4 lg:px-0 pb-2 lg:pb-0 bg-gradient-to-b from-[#1c1c1e] via-[#1c1c1e] to-transparent lg:bg-none lg:shrink-0">
+        <div className="card-depth p-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <input
+                type="text"
+                value={listName}
+                onChange={(e) => onNameChange?.(e.target.value)}
+                placeholder="List Name"
+                className="w-full bg-transparent border-none text-white font-medium text-lg focus:outline-none placeholder:text-white/40"
+              />
+              <div className="flex items-center gap-2 mt-1">
+                <span className="badge badge-accent">{detachmentName || 'No Detachment'}</span>
+                <span className="badge badge-purple">{formatName || 'Standard'}</span>
+              </div>
+            </div>
+            <div className="text-right shrink-0">
+              <div
+                className={`text-3xl font-bold ${
+                  pointsStatus === 'ok' ? 'text-accent-400' :
+                  pointsStatus === 'warning' ? 'text-yellow-400' :
+                  'text-red-400'
+                }`}
+              >
+                {currentPoints}
+              </div>
+              <div className="text-sm text-white/50">of {pointsLimit} pts</div>
             </div>
           </div>
-          <div className="text-right shrink-0">
+          {/* Progress bar */}
+          <div className="mt-3 h-2 bg-black/30 rounded-full overflow-hidden">
             <div
-              className={`text-3xl font-bold ${
-                pointsStatus === 'ok' ? 'text-accent-400' :
-                pointsStatus === 'warning' ? 'text-yellow-400' :
-                'text-red-400'
+              className={`h-full rounded-full transition-all ${
+                pointsStatus === 'error' ? 'bg-red-500' :
+                pointsStatus === 'warning' ? 'bg-yellow-500' :
+                'progress-accent'
               }`}
-            >
-              {currentPoints}
-            </div>
-            <div className="text-sm text-white/50">of {pointsLimit} pts</div>
+              style={{ width: `${Math.min(100, percentage)}%` }}
+            />
           </div>
-        </div>
-        {/* Progress bar */}
-        <div className="mt-3 h-2 bg-black/30 rounded-full overflow-hidden">
-          <div
-            className={`h-full rounded-full transition-all ${
-              pointsStatus === 'error' ? 'bg-red-500' :
-              pointsStatus === 'warning' ? 'bg-yellow-500' :
-              'progress-accent'
-            }`}
-            style={{ width: `${Math.min(100, percentage)}%` }}
-          />
         </div>
       </div>
 
@@ -100,8 +109,8 @@ export function BuildMode({
         </div>
       )}
 
-      {/* Three-column grid layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-1 min-h-0">
+      {/* Desktop: Three-column grid layout (hidden on mobile) */}
+      <div className="hidden lg:grid lg:grid-cols-3 gap-4 flex-1 min-h-0">
         {/* Left Panel - Army List */}
         <div className="card-depth p-4 flex flex-col min-h-0 overflow-hidden">
           {leftPanel}
@@ -115,6 +124,15 @@ export function BuildMode({
         {/* Right Panel - Unit Details */}
         <div className="card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
           {rightPanel}
+        </div>
+      </div>
+
+      {/* Mobile: Single panel view */}
+      <div className="flex lg:hidden flex-col">
+        <div className="card-depth p-4">
+          {mobilePanel === 'roster' ? middlePanel :
+           mobilePanel === 'details' ? rightPanel :
+           leftPanel}
         </div>
       </div>
     </div>

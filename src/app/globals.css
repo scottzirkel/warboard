@@ -147,6 +147,10 @@
    BASE STYLES
    ============================================ */
 
+html {
+  background: #000000;
+}
+
 body {
   @apply antialiased;
   background: linear-gradient(180deg, #1c1c1e 0%, #000000 100%);

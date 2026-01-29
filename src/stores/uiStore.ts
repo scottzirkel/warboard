@@ -34,12 +34,21 @@ export interface ConfirmModalConfig {
 // Store Interface
 // ============================================================================
 
+// ============================================================================
+// Mobile Panel Type
+// ============================================================================
+
+export type MobilePanel = 'list' | 'roster' | 'details';
+
 interface UIStoreState {
   // App Mode
   mode: AppMode;
 
   // Unit Selection
   selectedUnitIndex: number | null;
+
+  // Mobile Panel (Build mode only)
+  mobilePanel: MobilePanel;
 
   // Modal States
   activeModal: ModalType;
@@ -63,6 +72,9 @@ interface UIStoreActions {
   // Unit Selection
   selectUnit: (index: number | null) => void;
   clearSelection: () => void;
+
+  // Mobile Panel
+  setMobilePanel: (panel: MobilePanel) => void;
 
   // Modal Management
   openModal: (modal: ModalType) => void;
@@ -102,6 +114,7 @@ const generateToastId = (): string => {
 const createDefaultUIState = (): UIStoreState => ({
   mode: 'build',
   selectedUnitIndex: null,
+  mobilePanel: 'list',
   activeModal: null,
   confirmModalConfig: null,
   toasts: [],
@@ -151,6 +164,14 @@ export const useUIStore = create<UIStore>()(
 
   clearSelection: () => {
     set({ selectedUnitIndex: null });
+  },
+
+  // -------------------------------------------------------------------------
+  // Mobile Panel Actions
+  // -------------------------------------------------------------------------
+
+  setMobilePanel: (panel: MobilePanel) => {
+    set({ mobilePanel: panel });
   },
 
   // -------------------------------------------------------------------------
@@ -245,6 +266,7 @@ export const useUIStore = create<UIStore>()(
       partialize: (state) => ({
         mode: state.mode,
         selectedUnitIndex: state.selectedUnitIndex,
+        mobilePanel: state.mobilePanel,
       }),
     }
   )

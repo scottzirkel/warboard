@@ -44,6 +44,9 @@ interface GameStatePanelProps {
   armyData: ArmyData | null;
   detachmentId: string;
 
+  // Current game phase for highlighting relevant stratagems
+  currentPhase?: string;
+
   className?: string;
 }
 
@@ -118,6 +121,49 @@ function canUseStratagem(stratagem: Stratagem, usageCount: number): boolean {
   return usageCount < maxUses;
 }
 
+/**
+ * Check if a stratagem matches the current game phase.
+ * Returns true if the stratagem can be used in the current phase or is usable in "any" phase.
+ */
+function stratagemMatchesPhase(stratagem: Stratagem, currentPhase: string | undefined): boolean {
+  if (!currentPhase) return true; // If no phase specified, show all
+
+  const stratagemPhase = stratagem.phase.toLowerCase();
+  const gamePhase = currentPhase.toLowerCase();
+
+  // "Any phase" or "Any" stratagems are always relevant
+  if (stratagemPhase.includes('any')) return true;
+
+  // Check if the stratagem phase contains the current game phase
+  // e.g., "Command phase" matches "command", "Shooting Phase" matches "shooting"
+  return stratagemPhase.includes(gamePhase);
+}
+
+/**
+ * Get the sort order for a stratagem based on its phase.
+ * Follows the game flow: Any -> Command -> Movement -> Shooting -> Charge -> Fight
+ */
+function getPhaseOrder(stratagem: Stratagem): number {
+  const phase = stratagem.phase.toLowerCase();
+
+  if (phase.includes('any')) return 0;
+  if (phase.includes('command')) return 1;
+  if (phase.includes('movement')) return 2;
+  if (phase.includes('shooting')) return 3;
+  if (phase.includes('charge')) return 4;
+  if (phase.includes('fight')) return 5;
+
+  // Unknown phases go last
+  return 99;
+}
+
+/**
+ * Sort stratagems by phase order (game flow order).
+ */
+function sortStratagemsByPhase(stratagems: Stratagem[]): Stratagem[] {
+  return [...stratagems].sort((a, b) => getPhaseOrder(a) - getPhaseOrder(b));
+}
+
 // ============================================================================
 // Main Component
 // ============================================================================
@@ -138,15 +184,16 @@ export function GameStatePanel({
   onSetRuleChoice,
   armyData,
   detachmentId,
+  currentPhase,
   className = '',
 }: GameStatePanelProps) {
   const katahStances = getKatahStances(armyData);
   const detachment = getDetachment(armyData, detachmentId);
-  const stratagems = getStratagems(detachment);
+  const stratagems = sortStratagemsByPhase(getStratagems(detachment));
 
-  // Collapse state: Stratagems default expanded, Detachment Rules and Twists default collapsed
+  // Collapse state: Detachment Rules and Stratagems default expanded, Twists default collapsed
+  const [detachmentRulesOpen, setDetachmentRulesOpen] = useState(true);
   const [stratagemsSectionOpen, setStratagemsSectionOpen] = useState(true);
-  const [detachmentRulesOpen, setDetachmentRulesOpen] = useState(false);
   const [twistsSectionOpen, setTwistsSectionOpen] = useState(false);
 
   // Selected stratagem for detail modal
@@ -212,78 +259,7 @@ export function GameStatePanel({
           </div>
         )}
 
-        {/* Stratagems - Collapsible, default expanded */}
-        <div className="card-depth overflow-hidden">
-          <button
-            onClick={() => setStratagemsSectionOpen(!stratagemsSectionOpen)}
-            className="section-header w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors"
-          >
-            <span>Stratagems</span>
-            <div className="flex items-center gap-2">
-              <span className="badge">{stratagems.length}</span>
-              <svg
-                className={`w-3 h-3 text-white/40 transition-transform duration-200 ${stratagemsSectionOpen ? '' : '-rotate-90'}`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-          </button>
-          <div className={`overflow-hidden transition-all duration-200 ${stratagemsSectionOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
-            <div className="space-y-0">
-              {stratagems.length === 0 ? (
-                <div className="px-4 py-8 text-center text-white/40 text-sm">
-                  No stratagems available
-                </div>
-              ) : (
-                stratagems.map((strat) => {
-                  const usageCount = (stratagemUsage ?? {})[strat.id] || 0;
-                  const opacityClass = getStratagemOpacity(strat, usageCount);
-                  const maxUses = getMaxUses(strat);
-                  const isExhausted = !canUseStratagem(strat, usageCount);
-
-                  return (
-                    <div
-                      key={strat.id}
-                      className={`
-                        inset-group-item cursor-pointer transition-colors touch-highlight
-                        ${activeStratagems.includes(strat.id) ? 'bg-accent-tint-strong' : 'hover:bg-white/5'}
-                        ${opacityClass}
-                      `}
-                      onClick={() => setSelectedStratagem(strat)}
-                    >
-                      <div className="flex-1">
-                        <div className="font-medium text-sm">{strat.name}</div>
-                        <div className="text-xs text-white/40 mt-0.5">
-                          {strat.phase}
-                          {maxUses !== Infinity && (
-                            <span className="ml-2">
-                              ({usageCount}/{maxUses} used)
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {isExhausted && (
-                          <span className="text-xs text-red-400 font-medium">Exhausted</span>
-                        )}
-                        {activeStratagems.includes(strat.id) && !isExhausted && (
-                          <span className="text-xs text-accent-400 font-medium">Active</span>
-                        )}
-                        <span className="badge badge-accent">{strat.cost} CP</span>
-                      </div>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Detachment Rules - Collapsible, default collapsed */}
+        {/* Detachment Rules - Collapsible, default expanded */}
         {detachment?.rules && detachment.rules.length > 0 && (
           <div className="card-depth overflow-hidden">
             <button
@@ -339,6 +315,80 @@ export function GameStatePanel({
             </div>
           </div>
         )}
+
+        {/* Stratagems - Collapsible, default expanded */}
+        <div className="card-depth overflow-hidden">
+          <button
+            onClick={() => setStratagemsSectionOpen(!stratagemsSectionOpen)}
+            className="section-header w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors"
+          >
+            <span>Stratagems</span>
+            <div className="flex items-center gap-2">
+              <span className="badge">{stratagems.length}</span>
+              <svg
+                className={`w-3 h-3 text-white/40 transition-transform duration-200 ${stratagemsSectionOpen ? '' : '-rotate-90'}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </button>
+          <div className={`overflow-hidden transition-all duration-200 ${stratagemsSectionOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+            <div className="space-y-0">
+              {stratagems.length === 0 ? (
+                <div className="px-4 py-8 text-center text-white/40 text-sm">
+                  No stratagems available
+                </div>
+              ) : (
+                stratagems.map((strat) => {
+                  const usageCount = (stratagemUsage ?? {})[strat.id] || 0;
+                  const usageOpacityClass = getStratagemOpacity(strat, usageCount);
+                  const maxUses = getMaxUses(strat);
+                  const isExhausted = !canUseStratagem(strat, usageCount);
+                  const matchesPhase = stratagemMatchesPhase(strat, currentPhase);
+                  // Lowlight non-matching phase stratagems (unless exhausted which already has opacity)
+                  const phaseOpacityClass = !matchesPhase && !usageOpacityClass ? 'opacity-40' : '';
+
+                  return (
+                    <div
+                      key={strat.id}
+                      className={`
+                        inset-group-item cursor-pointer transition-colors touch-highlight
+                        ${activeStratagems.includes(strat.id) ? 'bg-accent-tint-strong' : 'hover:bg-white/5'}
+                        ${usageOpacityClass || phaseOpacityClass}
+                      `}
+                      onClick={() => setSelectedStratagem(strat)}
+                    >
+                      <div className="flex-1">
+                        <div className="font-medium text-sm">{strat.name}</div>
+                        <div className="text-xs text-white/40 mt-0.5">
+                          {strat.phase}
+                          {maxUses !== Infinity && (
+                            <span className="ml-2">
+                              ({usageCount}/{maxUses} used)
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {isExhausted && (
+                          <span className="text-xs text-red-400 font-medium">Exhausted</span>
+                        )}
+                        {activeStratagems.includes(strat.id) && !isExhausted && (
+                          <span className="text-xs text-accent-400 font-medium">Active</span>
+                        )}
+                        <span className="badge badge-accent">{strat.cost} CP</span>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        </div>
 
         {/* Mission Twists (Chapter Approved) - Collapsible, default collapsed */}
         {availableTwists.length > 0 && (

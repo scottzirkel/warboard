@@ -1,59 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import type { SelectOption } from '@/components/ui';
 import type { AppMode, GamePhase, PlayerTurn } from '@/types';
 import { GAME_PHASES } from '@/types';
-
-// ============================================================================
-// Army Selector Component
-// ============================================================================
-
-export interface AvailableArmy {
-  id: string;
-  name: string;
-  disabled?: boolean;
-}
-
-interface ArmySelectorProps {
-  armies: AvailableArmy[];
-  selectedArmyId: string;
-  onArmyChange: (armyId: string) => void;
-  disabled?: boolean;
-}
-
-export function ArmySelector({
-  armies,
-  selectedArmyId,
-  onArmyChange,
-  disabled = false,
-}: ArmySelectorProps) {
-  const options: SelectOption[] = armies.map(army => ({
-    value: army.id,
-    label: army.name + (army.disabled ? ' (Coming Soon)' : ''),
-    disabled: army.disabled,
-  }));
-
-  return (
-    <select
-      value={selectedArmyId}
-      onChange={(e) => onArmyChange(e.target.value)}
-      disabled={disabled}
-      className="select-dark text-accent-400 font-semibold text-sm"
-    >
-      {options.map(opt => (
-        <option
-          key={opt.value}
-          value={opt.value}
-          disabled={opt.disabled}
-          className="bg-gray-900 text-white"
-        >
-          {opt.label}
-        </option>
-      ))}
-    </select>
-  );
-}
+import type { MobilePanel } from '@/stores/uiStore';
 
 // ============================================================================
 // Mode Toggle Button Component
@@ -447,19 +397,14 @@ function GameStateBar({
 // ============================================================================
 
 interface NavigationProps {
-  // Army selection
-  armies: AvailableArmy[];
-  selectedArmyId: string;
-  onArmyChange: (armyId: string) => void;
-
   // Mode toggle
   mode: AppMode;
   onModeToggle: () => void;
   canPlay?: boolean;
 
-  // Play mode display
-  listName?: string;
-  detachmentName?: string;
+  // Mobile panel switcher
+  mobilePanel?: MobilePanel;
+  onMobilePanelChange?: (panel: MobilePanel) => void;
 
   // Game state (Play mode)
   battleRound?: number;
@@ -486,14 +431,11 @@ interface NavigationProps {
 }
 
 export function Navigation({
-  armies,
-  selectedArmyId,
-  onArmyChange,
   mode,
   onModeToggle,
   canPlay = true,
-  listName,
-  detachmentName,
+  mobilePanel,
+  onMobilePanelChange,
   battleRound = 1,
   onBattleRoundChange,
   commandPoints = 0,
@@ -523,31 +465,50 @@ export function Navigation({
     onReset;
 
   return (
-    <nav className="nav-blur sticky top-0 z-50 shrink-0">
-      <div className="px-4">
-        <div className="h-14 flex items-center justify-between gap-4">
-          {/* Left: Army Selector (Build) or List Info (Play) */}
-          <div className="flex items-center gap-3 shrink-0">
-            {mode === 'play' ? (
-              <div className="flex items-center gap-2">
-                <span className="text-white font-medium text-sm truncate max-w-[120px]">{listName || 'Unnamed List'}</span>
-                {detachmentName && (
-                  <span className="badge badge-accent text-xs">{detachmentName}</span>
-                )}
+    <nav className="nav-blur sticky top-0 z-50 shrink-0 overflow-x-hidden">
+      <div className="px-2 lg:px-4">
+        <div className="h-14 flex items-center justify-between gap-2 lg:gap-4">
+          {/* Left: Mobile Panel Switcher (Build and Play modes) */}
+          <div className="flex items-center gap-3 shrink-0 min-w-0">
+            {onMobilePanelChange && (
+              <div className="flex lg:hidden items-center bg-white/10 rounded-lg overflow-hidden">
+                <button
+                  onClick={() => onMobilePanelChange('list')}
+                  className={`px-3 py-1.5 text-sm font-medium transition-colors ${
+                    mobilePanel === 'list'
+                      ? 'bg-accent-500 text-white'
+                      : 'text-white/60'
+                  }`}
+                >
+                  {mode === 'build' ? 'List' : 'Army'}
+                </button>
+                <button
+                  onClick={() => onMobilePanelChange('roster')}
+                  className={`px-3 py-1.5 text-sm font-medium transition-colors ${
+                    mobilePanel === 'roster'
+                      ? 'bg-accent-500 text-white'
+                      : 'text-white/60'
+                  }`}
+                >
+                  {mode === 'build' ? 'Add' : 'Game'}
+                </button>
+                <button
+                  onClick={() => onMobilePanelChange('details')}
+                  className={`px-3 py-1.5 text-sm font-medium transition-colors ${
+                    mobilePanel === 'details'
+                      ? 'bg-accent-500 text-white'
+                      : 'text-white/60'
+                  }`}
+                >
+                  {mode === 'build' ? 'Info' : 'Unit'}
+                </button>
               </div>
-            ) : (
-              <ArmySelector
-                armies={armies}
-                selectedArmyId={selectedArmyId}
-                onArmyChange={onArmyChange}
-                disabled={isLoading}
-              />
             )}
           </div>
 
-          {/* Center: Game State (Play mode only) */}
+          {/* Center: Game State (Play mode only, hidden on mobile) */}
           {showGameState && (
-            <div className="flex-1 flex justify-center">
+            <div className="hidden lg:flex flex-1 justify-center">
               <GameStateBar
                 battleRound={battleRound}
                 onBattleRoundChange={onBattleRoundChange}

@@ -11,10 +11,21 @@ import type {
   AvailableLeader,
 } from '@/types';
 
+export interface AvailableArmy {
+  id: string;
+  name: string;
+  disabled?: boolean;
+}
+
 interface ArmyListPanelProps {
   armyData: ArmyData;
   currentList: CurrentList;
   selectedUnitIndex: number | null;
+  // Army selection
+  armies: AvailableArmy[];
+  selectedArmyId: string;
+  onArmyChange: (armyId: string) => void;
+  // Unit actions
   onSelectUnit: (index: number) => void;
   onRemoveUnit: (index: number) => void;
   onModelCountChange: (index: number, count: number) => void;
@@ -47,6 +58,9 @@ export function ArmyListPanel({
   armyData,
   currentList,
   selectedUnitIndex,
+  armies,
+  selectedArmyId,
+  onArmyChange,
   onSelectUnit,
   onRemoveUnit,
   onModelCountChange,
@@ -175,6 +189,27 @@ export function ArmyListPanel({
 
       {/* Configuration Row */}
       <div className="space-y-3 mb-4 shrink-0">
+        {/* Army selector */}
+        <div>
+          <label className="text-xs text-white/50 block mb-1">Army</label>
+          <select
+            value={selectedArmyId}
+            onChange={(e) => onArmyChange(e.target.value)}
+            className="select-dark w-full text-accent-400 font-semibold"
+          >
+            {armies.map((army) => (
+              <option
+                key={army.id}
+                value={army.id}
+                disabled={army.disabled}
+                className="bg-gray-900 text-white"
+              >
+                {army.name}{army.disabled ? ' (Coming Soon)' : ''}
+              </option>
+            ))}
+          </select>
+        </div>
+
         {/* Format + Points row */}
         <div className="flex gap-2">
           <div className="flex-1">
