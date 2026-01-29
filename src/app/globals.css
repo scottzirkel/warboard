@@ -232,26 +232,6 @@ body {
 }
 
 /* ============================================
-   SEGMENTED CONTROL
-   ============================================ */
-
-.segmented-control {
-  @apply flex items-stretch bg-white/10 rounded-lg p-0.5;
-}
-
-.segmented-control-item {
-  @apply flex-1 flex flex-col items-center justify-center px-3 py-2 rounded-md text-sm font-medium text-white/60 transition-all cursor-pointer select-none text-center;
-}
-
-.segmented-control-item.active {
-  @apply bg-gray-500/85 text-white shadow-md;
-}
-
-.segmented-control-item:not(.active):hover {
-  @apply text-white/80;
-}
-
-/* ============================================
    iOS-STYLE BUTTONS
    ============================================ */
 
@@ -292,43 +272,6 @@ body {
   min-height: 36px;
   padding: 0 12px;
   font-size: 13px;
-}
-
-/* ============================================
-   iOS-STYLE STEPPER
-   ============================================ */
-
-.stepper {
-  display: inline-flex;
-  background: rgba(118, 118, 128, 0.24);
-  border-radius: 9px;
-  overflow: hidden;
-}
-
-.stepper-btn {
-  width: 44px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent-400);
-  font-size: 22px;
-  font-weight: 300;
-  transition: background 0.1s;
-}
-
-.stepper-btn:active {
-  background: rgba(118, 118, 128, 0.4);
-}
-
-.stepper-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.stepper-divider {
-  width: 0.5px;
-  background: rgba(84, 84, 88, 0.65);
 }
 
 /* ============================================
@@ -451,58 +394,6 @@ body {
 .weapon-table td.modified {
   color: var(--accent-400);
   font-weight: 700;
-}
-
-/* ============================================
-   PILL TOGGLE (iOS Switch)
-   ============================================ */
-
-.pill-toggle {
-  width: 51px;
-  height: 31px;
-  border-radius: 15.5px;
-  background: rgba(118, 118, 128, 0.32);
-  padding: 2px;
-  transition: background 0.2s;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.pill-toggle.active {
-  background: #30d158;
-}
-
-.pill-toggle-thumb {
-  width: 27px;
-  height: 27px;
-  border-radius: 13.5px;
-  background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.pill-toggle.active .pill-toggle-thumb {
-  transform: translateX(20px);
-}
-
-/* ============================================
-   WOUND INDICATORS
-   ============================================ */
-
-.wound-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background: rgba(118, 118, 128, 0.32);
-  transition: all 0.15s;
-}
-
-.wound-dot.filled {
-  background: #30d158;
-}
-
-.wound-dot.damaged {
-  background: #ff9f0a;
 }
 
 /* ============================================
@@ -635,19 +526,4 @@ select {
 .scroll-smooth {
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
-}
-
-/* ============================================
-   LEGACY COMPATIBILITY
-   ============================================ */
-
-.stat-modified {
-  color: var(--accent-400);
-  font-weight: bold;
-}
-
-.stat-highlight {
-  background: color-mix(in srgb, var(--accent-500) 15%, transparent);
-  border-radius: 4px;
-  padding: 0 4px;
 }

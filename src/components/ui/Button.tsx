@@ -21,32 +21,34 @@ export function Button({
 }: ButtonProps) {
   const isDisabled = disabled || isLoading;
 
-  // Base iOS button styles
-  const baseClass = 'btn-ios touch-highlight';
+  const base = `
+    inline-flex items-center justify-center gap-1.5
+    font-semibold transition-all
+    active:scale-[0.97] active:opacity-80
+    [-webkit-tap-highlight-color:transparent]
+  `;
 
-  // Variant styles using CSS classes from globals.css
-  const variantClass = {
-    primary: 'btn-ios-primary',
-    secondary: 'btn-ios-secondary',
-    tinted: 'btn-ios-tinted',
+  const variantStyles = {
+    primary: 'bg-gradient-to-b from-accent-500 to-accent-600 text-gray-900',
+    secondary: 'bg-[rgba(118,118,128,0.24)] text-white',
+    tinted: 'bg-[color-mix(in_srgb,var(--accent-500)_18%,transparent)] text-accent-400',
     ghost: 'bg-transparent hover:bg-white/5 text-white/60 hover:text-white/80',
     danger: 'bg-red-500/20 text-red-400 hover:bg-red-500/30',
   }[variant];
 
-  // Size styles
-  const sizeClass = {
-    sm: 'btn-ios-sm',
-    md: '',
-    lg: 'min-h-[50px] px-6 text-base',
-    icon: 'min-h-[36px] w-9 p-0',
+  const sizeStyles = {
+    sm: 'min-h-[36px] px-3 text-[13px] rounded-[9px]',
+    md: 'min-h-[44px] px-4 text-[15px] rounded-[10px]',
+    lg: 'min-h-[50px] px-6 text-base rounded-xl',
+    icon: 'min-h-[36px] w-9 p-0 rounded-[9px]',
   }[size];
 
   return (
     <button
       className={`
-        ${baseClass}
-        ${variantClass}
-        ${sizeClass}
+        ${base}
+        ${variantStyles}
+        ${sizeStyles}
         ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
         ${className}
       `}

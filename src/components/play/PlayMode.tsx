@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, ReactNode } from 'react';
-import { Button, Badge } from '@/components/ui';
+import { Button, Badge, Card, SegmentedControl } from '@/components/ui';
 import { useWakeLock } from '@/hooks';
 import type { ValidationError } from '@/types';
 import type { MobilePanel } from '@/stores/uiStore';
@@ -18,7 +18,7 @@ interface ValidationGateProps {
 function ValidationGate({ errors, onReturnToBuild }: ValidationGateProps) {
   return (
     <div className="h-full flex flex-col items-center justify-center p-8">
-      <div className="card-depth p-8 max-w-lg w-full border border-red-500/30">
+      <Card className="p-8 max-w-lg w-full border border-red-500/30">
         <div className="flex items-center gap-3 mb-4">
           <div className="text-red-400 text-2xl">!</div>
           <h2 className="text-xl font-bold text-gray-100">
@@ -44,7 +44,7 @@ function ValidationGate({ errors, onReturnToBuild }: ValidationGateProps) {
         <Button variant="primary" onClick={onReturnToBuild} className="w-full">
           Return to Build Mode
         </Button>
-      </div>
+      </Card>
     </div>
   );
 }
@@ -128,7 +128,7 @@ export function PlayMode({
       {/* Desktop: 3-column grid layout (hidden on mobile) */}
       <div className="hidden lg:grid lg:grid-cols-[1fr_1.25fr_1.75fr] gap-4 flex-1 min-h-0">
         {/* Left Panel - Army Overview (narrower) */}
-        <div className="card-depth p-4 flex flex-col min-h-0 overflow-hidden">
+        <div className="bg-[rgba(44,44,46,0.65)] rounded-2xl shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)] p-4 flex flex-col min-h-0 overflow-hidden">
           {leftPanel || (
             <div className="flex-1 flex items-center justify-center text-white/40">
               <p>No army overview available</p>
@@ -137,7 +137,7 @@ export function PlayMode({
         </div>
 
         {/* Middle Panel - Game State */}
-        <div className="card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
+        <div className="bg-[rgba(44,44,46,0.65)] rounded-2xl shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)] p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
           {middlePanel || (
             <div className="flex-1 flex items-center justify-center text-white/40">
               <p>No game state available</p>
@@ -146,7 +146,7 @@ export function PlayMode({
         </div>
 
         {/* Right Panel - Selected Unit Details (wider) */}
-        <div className="card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
+        <div className="bg-[rgba(44,44,46,0.65)] rounded-2xl shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)] p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
           {rightPanel || (
             <div className="flex-1 flex items-center justify-center text-white/40">
               <p>Select a unit from your army to view details</p>
@@ -160,7 +160,7 @@ export function PlayMode({
         {mobilePanel === 'roster' ? (
           <>
             {/* Game State Controls - only on Game tab */}
-            <div className="card-depth p-4 space-y-4">
+            <div className="bg-[rgba(44,44,46,0.65)] rounded-2xl shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)] p-4 space-y-4">
               {/* Round & Turn Row */}
               <div className="flex items-center justify-between">
                 {/* Round Stepper */}
@@ -322,7 +322,7 @@ export function PlayMode({
             </div>
 
             {/* Game Panel Content (stratagems, etc.) */}
-            <div className="card-depth p-4">
+            <div className="bg-[rgba(44,44,46,0.65)] rounded-2xl shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)] p-4">
               {middlePanel || (
                 <div className="flex items-center justify-center text-white/40 py-8">
                   <p>No game state available</p>
@@ -367,25 +367,26 @@ export function ModeToggle({
 }: ModeToggleProps) {
   const isDisabled = disabled || (mode === 'build' && !canPlay);
 
+  const options = [
+    { value: 'build' as const, label: 'Build' },
+    {
+      value: 'play' as const,
+      label: 'Play',
+      disabled: isDisabled,
+      title: !canPlay && mode === 'build' ? 'Fix validation errors before playing' : undefined,
+    },
+  ];
+
   return (
-    <div className="segmented-control w-52">
-      <div
-        onClick={() => mode === 'play' && onToggle()}
-        className={`segmented-control-item ${mode === 'build' ? 'active' : ''}`}
-      >
-        Build
-      </div>
-      <div
-        onClick={() => mode === 'build' && !isDisabled && onToggle()}
-        className={`
-          segmented-control-item
-          ${mode === 'play' ? 'active' : ''}
-          ${isDisabled ? 'opacity-40 cursor-not-allowed' : ''}
-        `}
-        title={!canPlay && mode === 'build' ? 'Fix validation errors before playing' : undefined}
-      >
-        Play
-      </div>
-    </div>
+    <SegmentedControl
+      options={options}
+      value={mode}
+      onChange={(newMode) => {
+        if (newMode !== mode) {
+          onToggle();
+        }
+      }}
+      className="w-52"
+    />
   );
 }

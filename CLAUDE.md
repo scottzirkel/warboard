@@ -43,11 +43,66 @@ The Next.js app should match the look, feel, and functionality of the original A
 ## Tech Stack
 
 - **Frontend**: Next.js 14+ (App Router) + React + TypeScript
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS (inline utilities, not CSS classes)
 - **State**: Zustand for state management
 - **Testing**: Vitest + React Testing Library
 - **Data**: JSON files in `/public/data/`
 - **Storage**: File-based JSON in `/data/lists/` via Next.js API routes
+
+## Styling Guidelines
+
+**Always prefer Tailwind utilities and React components over CSS classes.**
+
+### Priority Order
+1. **Use existing UI components** from `src/components/ui/` (Badge, Button, Card, SegmentedControl, etc.)
+2. **Use inline Tailwind classes** for one-off styling
+3. **Create a new UI component** if a pattern is used 3+ times
+4. **Only use CSS classes** for things Tailwind can't do (scrollbar styles, backdrop-filter, complex animations)
+
+### Available UI Components
+Import from `@/components/ui`:
+- `Badge` - Status indicators, tags, counts
+- `Button` - All button variants (primary, secondary, tinted, ghost, danger)
+- `Card` - Container with depth shadow styling
+- `SegmentedControl` - iOS-style tab/toggle selector
+- `StatCell` / `StatRow` - Unit stat display
+- `Stepper` - Increment/decrement controls
+- `Select` - Dropdown select
+- `Input` - Text input with label/error support
+- `Modal` / `ConfirmModal` - Dialog overlays
+- `Panel` / `PanelSection` - Layout containers
+- `Tooltip` / `TooltipBadge` - Hover information
+
+### Examples
+
+```tsx
+// GOOD: Use UI components
+import { Badge, Button, Card, SegmentedControl } from '@/components/ui';
+
+<Card className="p-4">
+  <Badge variant="accent">Character</Badge>
+  <Button variant="primary" onClick={save}>Save</Button>
+  <SegmentedControl
+    options={[{ value: 'build', label: 'Build' }, { value: 'play', label: 'Play' }]}
+    value={mode}
+    onChange={setMode}
+  />
+</Card>
+
+// GOOD: Inline Tailwind for one-off styling
+<div className="flex items-center gap-2 p-4 bg-white/10 rounded-lg">
+
+// BAD: Using CSS classes when components exist
+<span className="badge badge-accent">  // Use <Badge variant="accent"> instead
+<button className="btn-ios btn-ios-primary">  // Use <Button variant="primary"> instead
+<div className="card-depth">  // Use <Card> instead
+<div className="segmented-control">  // Use <SegmentedControl> instead
+```
+
+### Theming with CSS Variables
+Use Tailwind's accent color utilities which pull from CSS variables:
+- `text-accent-400`, `bg-accent-500`, `border-accent-400`
+- `bg-[color-mix(in_srgb,var(--accent-500)_18%,transparent)]` for tinted backgrounds
 
 ## Project Structure
 
@@ -403,31 +458,14 @@ This is the project mantra. This is a lightweight app. Avoid over-engineering:
 - Match the original Alpine.js app - don't reinvent what already works
 - Reference `/reference/alpine-original/` when unsure about design or behavior
 
-### Faction Themes (Tailwind 4)
-The app uses CSS custom properties for faction-specific accent colors. Themes are defined in the CSS and activated via `data-theme` attribute on the body:
+### Faction Themes
+The app uses CSS custom properties for faction-specific accent colors, activated via `data-theme` attribute on the body.
 
-```css
-/* Default: Custodes Gold */
-:root {
-  --accent-400: #e0c35c;
-  --accent-500: #d4a72c;
-  /* ... */
-}
+**Available themes:** `custodes` (default), `tyranids`, `spacemarines`, `necrons`, `orks`, `chaosmarines`, `aeldari`
 
-/* Tyranids: Leviathan Purple */
-[data-theme="tyranids"] {
-  --accent-400: #c084fc;
-  --accent-500: #a855f7;
-  /* ... */
-}
-```
-
-**Available themes:** `custodes` (default), `tyranids`, `space-marines`, `necrons`, `orks`, `chaos`, `aeldari`
-
-Use the theme CSS variables via utility classes:
+Theme colors are accessed via Tailwind utilities (see Styling Guidelines above):
 - `text-accent-400`, `bg-accent-500`, `border-accent-400`
-- `bg-accent-tint` (10% opacity), `bg-accent-tint-strong` (20% opacity)
-- `badge-accent`, `btn-ios-primary`, `progress-accent`
+- Use `color-mix()` for tinted backgrounds: `bg-[color-mix(in_srgb,var(--accent-500)_18%,transparent)]`
 
 ### Data-Driven
 - Unit stats and rules come from JSON files in `/public/data/`

@@ -1,5 +1,11 @@
 import { ReactNode } from 'react';
 
+const cardDepthStyles = `
+  bg-[rgba(44,44,46,0.65)]
+  rounded-2xl
+  shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)]
+`;
+
 interface CardProps {
   children: ReactNode;
   className?: string;
@@ -20,7 +26,7 @@ export function Card({
   return (
     <div
       className={`
-        ${depth ? 'card-depth' : 'bg-white/5 rounded-xl'}
+        ${depth ? cardDepthStyles : 'bg-white/5 rounded-xl'}
         ${selected ? 'ring-2 ring-accent-500' : ''}
         ${hoverable ? 'hover:bg-white/10 cursor-pointer transition-colors' : ''}
         ${onClick ? 'cursor-pointer' : ''}

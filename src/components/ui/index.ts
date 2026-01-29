@@ -4,6 +4,7 @@ export { Select, type SelectOption } from './Select';
 export { Stepper } from './Stepper';
 export { Input } from './Input';
 export { Card, CardHeader, CardBody, CardFooter } from './Card';
+export { SegmentedControl, type SegmentedControlOption } from './SegmentedControl';
 export { Panel, PanelSection } from './Panel';
 export { StatCell, StatRow } from './StatCell';
 export { ProgressBar, PointsProgress } from './ProgressBar';

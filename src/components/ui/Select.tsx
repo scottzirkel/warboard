@@ -9,19 +9,26 @@ export interface SelectOption {
 interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
   options: SelectOption[];
   placeholder?: string;
-  size?: 'sm' | 'md' | 'lg';  // Kept for compatibility, styling is consistent
+  size?: 'sm' | 'md' | 'lg';
 }
 
 export function Select({
   options,
   placeholder,
-  size: _size,  // Destructure but don't pass to native element
+  size: _size,
   className = '',
   ...props
 }: SelectProps) {
   return (
     <select
-      className={`select-dark w-full ${className}`}
+      className={`
+        w-full
+        bg-black/30 border border-white/10 rounded-[10px]
+        px-4 py-2.5 pr-10
+        text-white text-[15px]
+        focus:outline-none focus:border-white/30
+        ${className}
+      `}
       {...props}
     >
       {placeholder && (

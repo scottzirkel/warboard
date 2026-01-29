@@ -24,7 +24,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <input
             ref={ref}
             className={`
-              input-dark w-full
+              w-full
+              bg-black/30 border border-white/10 rounded-[10px]
+              px-4 py-2.5
+              text-white text-[15px]
+              placeholder:text-white/40
+              focus:outline-none focus:border-white/30
               ${icon ? 'pl-10' : ''}
               ${error ? 'border-red-500' : ''}
               ${className}

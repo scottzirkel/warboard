@@ -6,7 +6,7 @@ interface StepperProps {
   onChange: (value: number) => void;
   disabled?: boolean;
   showValue?: boolean;
-  size?: 'sm' | 'md';  // Kept for compatibility, styling is consistent
+  size?: 'sm' | 'md';
   className?: string;
 }
 
@@ -18,6 +18,7 @@ export function Stepper({
   onChange,
   disabled = false,
   showValue = true,
+  size: _size,
   className = '',
 }: StepperProps) {
   const canDecrement = value > min && !disabled;
@@ -35,24 +36,32 @@ export function Stepper({
     }
   };
 
+  const btnStyles = `
+    w-11 h-9 flex items-center justify-center
+    text-accent-400 text-[22px] font-light
+    transition-colors
+    active:bg-[rgba(118,118,128,0.4)]
+    disabled:opacity-30 disabled:cursor-not-allowed
+  `;
+
   return (
     <div className={`inline-flex items-center gap-2 ${className}`}>
-      <div className="stepper">
+      <div className="inline-flex bg-[rgba(118,118,128,0.24)] rounded-[9px] overflow-hidden">
         <button
           type="button"
           onClick={handleDecrement}
           disabled={!canDecrement}
-          className="stepper-btn"
+          className={btnStyles}
           aria-label="Decrease"
         >
           −
         </button>
-        <div className="stepper-divider" />
+        <div className="w-px bg-[rgba(84,84,88,0.65)]" />
         <button
           type="button"
           onClick={handleIncrement}
           disabled={!canIncrement}
-          className="stepper-btn"
+          className={btnStyles}
           aria-label="Increase"
         >
           +

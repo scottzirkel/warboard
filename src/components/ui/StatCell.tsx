@@ -15,11 +15,21 @@ export function StatCell({
 }: StatCellProps) {
   return (
     <div
-      className={`stat-cell ${className}`}
+      className={`
+        flex flex-col items-center p-2 rounded-lg bg-black/20
+        ${className}
+      `}
       title={tooltip}
     >
-      <div className="stat-label">{label}</div>
-      <div className={`stat-value ${modified ? 'modified' : ''}`}>
+      <div className="text-[10px] font-medium text-white/45 uppercase tracking-[0.5px]">
+        {label}
+      </div>
+      <div
+        className={`
+          text-lg font-semibold mt-0.5
+          ${modified ? 'text-accent-400' : 'text-white'}
+        `}
+      >
         {value}
       </div>
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Modal } from '@/components/ui';
+import { Modal, Badge, Button, Card, SegmentedControl } from '@/components/ui';
 import type { ArmyData, Detachment, Stratagem, MissionTwist } from '@/types';
 
 // ============================================================================
@@ -168,6 +168,18 @@ function sortStratagemsByPhase(stratagems: Stratagem[]): Stratagem[] {
   return [...stratagems].sort((a, b) => getPhaseOrder(a) - getPhaseOrder(b));
 }
 
+// Styles for inset group items
+const insetGroupItemStyles = `
+  py-3 px-4 min-h-[44px] flex items-center
+  border-b border-[rgba(84,84,88,0.65)] last:border-b-0
+`;
+
+// Styles for section headers
+const sectionHeaderStyles = `
+  text-[13px] font-semibold text-white/55 uppercase tracking-[0.5px]
+  py-3 px-4 pt-3 pb-2
+`;
+
 // ============================================================================
 // Main Component
 // ============================================================================
@@ -234,47 +246,46 @@ export function GameStatePanel({
     setSelectedStratagem(null);
   };
 
+  // Build Ka'tah options for segmented control
+  const katahOptions = [
+    { value: null as string | null, label: 'None' },
+    ...katahStances.map((stance) => ({
+      value: stance.id as string | null,
+      label: stance.name.replace(' Stance', ''),
+    })),
+  ];
+
   return (
     <div className={`flex flex-col h-full ${className}`}>
-      <h2 className="section-header-inline mb-4 shrink-0">Army Rules</h2>
+      <h2 className="text-[13px] font-semibold text-white/55 uppercase tracking-[0.5px] mb-4 shrink-0">
+        Army Rules
+      </h2>
 
       <div className="space-y-4 flex-1 overflow-y-auto scroll-smooth">
         {/* Martial Ka'tah (if stances available) */}
         {katahStances.length > 0 && (
-          <div className="card-depth overflow-hidden">
+          <Card className="overflow-hidden">
             <div className="p-4 pb-3">
               <div className="text-white/60 font-medium mb-3">Martial Ka&apos;tah</div>
-              <div className="segmented-control">
-                <div
-                  onClick={() => onKatahChange(null)}
-                  className={`segmented-control-item ${!selectedKatah ? 'active' : ''}`}
-                >
-                  None
-                </div>
-                {katahStances.map((stance) => (
-                  <div
-                    key={stance.id}
-                    onClick={() => onKatahChange(stance.id)}
-                    className={`segmented-control-item ${selectedKatah === stance.id ? 'active' : ''}`}
-                  >
-                    {stance.name.replace(' Stance', '')}
-                  </div>
-                ))}
-              </div>
+              <SegmentedControl
+                options={katahOptions}
+                value={selectedKatah}
+                onChange={onKatahChange}
+              />
             </div>
-          </div>
+          </Card>
         )}
 
         {/* Detachment Rules - Collapsible, default expanded */}
         {detachment?.rules && detachment.rules.length > 0 && (
-          <div className="card-depth overflow-hidden">
+          <Card className="overflow-hidden">
             <button
               onClick={() => setDetachmentRulesOpen(!detachmentRulesOpen)}
-              className="section-header w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors"
+              className={`${sectionHeaderStyles} w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors`}
             >
               <span>Detachment Rules</span>
               <div className="flex items-center gap-2">
-                <span className="badge">{detachment.rules.length}</span>
+                <Badge>{detachment.rules.length}</Badge>
                 <svg
                   className={`w-3 h-3 text-white/40 transition-transform duration-200 ${detachmentRulesOpen ? '' : '-rotate-90'}`}
                   fill="none"
@@ -293,6 +304,16 @@ export function GameStatePanel({
                   const currentChoice = activeRuleChoices[rule.id];
                   const currentChoiceName = rule.choices?.find(c => c.id === currentChoice)?.name;
 
+                  // Build rule options for segmented control
+                  const ruleOptions = [
+                    { value: null as string | null, label: 'None' },
+                    ...(rule.choices ?? []).map((choice) => ({
+                      value: choice.id as string | null,
+                      label: choice.name,
+                      title: choice.effect,
+                    })),
+                  ];
+
                   return (
                     <div
                       key={rule.id}
@@ -310,24 +331,11 @@ export function GameStatePanel({
                       {/* Show choices for selection-type rules */}
                       {rule.type === 'selection' && rule.choices && rule.choices.length > 0 && (
                         <>
-                          <div className="segmented-control">
-                            <div
-                              onClick={() => onSetRuleChoice(rule.id, null)}
-                              className={`segmented-control-item ${!currentChoice ? 'active' : ''}`}
-                            >
-                              None
-                            </div>
-                            {rule.choices.map((choice) => (
-                              <div
-                                key={choice.id}
-                                onClick={() => onSetRuleChoice(rule.id, choice.id)}
-                                className={`segmented-control-item ${currentChoice === choice.id ? 'active' : ''}`}
-                                title={choice.effect}
-                              >
-                                {choice.name}
-                              </div>
-                            ))}
-                          </div>
+                          <SegmentedControl
+                            options={ruleOptions}
+                            value={currentChoice ?? null}
+                            onChange={(value) => onSetRuleChoice(rule.id, value)}
+                          />
                           {isPending && currentChoice && (
                             <button
                               onClick={() => onConfirmRoundSelection(rule.id)}
@@ -343,18 +351,18 @@ export function GameStatePanel({
                 })}
               </div>
             </div>
-          </div>
+          </Card>
         )}
 
         {/* Stratagems - Collapsible, default expanded */}
-        <div className="card-depth overflow-hidden">
+        <Card className="overflow-hidden">
           <button
             onClick={() => setStratagemsSectionOpen(!stratagemsSectionOpen)}
-            className="section-header w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors"
+            className={`${sectionHeaderStyles} w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors`}
           >
             <span>Stratagems</span>
             <div className="flex items-center gap-2">
-              <span className="badge">{stratagems.length}</span>
+              <Badge>{stratagems.length}</Badge>
               <svg
                 className={`w-3 h-3 text-white/40 transition-transform duration-200 ${stratagemsSectionOpen ? '' : '-rotate-90'}`}
                 fill="none"
@@ -386,8 +394,9 @@ export function GameStatePanel({
                     <div
                       key={strat.id}
                       className={`
-                        inset-group-item cursor-pointer transition-colors touch-highlight
-                        ${activeStratagems.includes(strat.id) ? 'bg-accent-tint-strong' : 'hover:bg-white/5'}
+                        ${insetGroupItemStyles}
+                        cursor-pointer transition-colors [-webkit-tap-highlight-color:transparent]
+                        ${activeStratagems.includes(strat.id) ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-white/5'}
                         ${usageOpacityClass || phaseOpacityClass}
                       `}
                       onClick={() => setSelectedStratagem(strat)}
@@ -410,7 +419,7 @@ export function GameStatePanel({
                         {activeStratagems.includes(strat.id) && !isExhausted && (
                           <span className="text-xs text-accent-400 font-medium">Active</span>
                         )}
-                        <span className="badge badge-accent">{strat.cost} CP</span>
+                        <Badge variant="accent">{strat.cost} CP</Badge>
                       </div>
                     </div>
                   );
@@ -418,18 +427,18 @@ export function GameStatePanel({
               )}
             </div>
           </div>
-        </div>
+        </Card>
 
         {/* Mission Twists (Chapter Approved) - Collapsible, default collapsed */}
         {availableTwists.length > 0 && (
-          <div className="card-depth overflow-hidden">
+          <Card className="overflow-hidden">
             <button
               onClick={() => setTwistsSectionOpen(!twistsSectionOpen)}
-              className="section-header w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors"
+              className={`${sectionHeaderStyles} w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors`}
             >
               <span>Mission Twists</span>
               <div className="flex items-center gap-2">
-                <span className="badge">{availableTwists.length}</span>
+                <Badge>{availableTwists.length}</Badge>
                 <svg
                   className={`w-3 h-3 text-white/40 transition-transform duration-200 ${twistsSectionOpen ? '' : '-rotate-90'}`}
                   fill="none"
@@ -447,8 +456,9 @@ export function GameStatePanel({
                   <div
                     key={twist.id}
                     className={`
-                      inset-group-item cursor-pointer transition-colors touch-highlight
-                      ${activeTwists.includes(twist.id) ? 'bg-accent-tint-strong' : 'hover:bg-white/5'}
+                      ${insetGroupItemStyles}
+                      cursor-pointer transition-colors [-webkit-tap-highlight-color:transparent]
+                      ${activeTwists.includes(twist.id) ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-white/5'}
                     `}
                     onClick={() => onToggleTwist(twist.id)}
                   >
@@ -457,13 +467,13 @@ export function GameStatePanel({
                       <div className="text-xs text-white/40 mt-0.5 capitalize">{twist.affects}</div>
                     </div>
                     {twist.modifiers && twist.modifiers.length > 0 && (
-                      <span className="badge badge-accent">Modifier</span>
+                      <Badge variant="accent">Modifier</Badge>
                     )}
                   </div>
                 ))}
               </div>
             </div>
-          </div>
+          </Card>
         )}
       </div>
 
@@ -485,15 +495,15 @@ export function GameStatePanel({
             <div className="space-y-4">
               {/* Phase, Cost, and Usage */}
               <div className="flex items-center gap-3 flex-wrap">
-                <span className="badge">{selectedStratagem.phase}</span>
-                <span className="badge badge-accent">{selectedStratagem.cost} CP</span>
+                <Badge>{selectedStratagem.phase}</Badge>
+                <Badge variant="accent">{selectedStratagem.cost} CP</Badge>
                 {activeStratagems.includes(selectedStratagem.id) && (
-                  <span className="badge bg-green-600/20 text-green-400">Active</span>
+                  <Badge variant="success">Active</Badge>
                 )}
                 {modalMaxUses !== Infinity && (
-                  <span className={`badge ${modalIsExhausted ? 'bg-red-600/20 text-red-400' : 'bg-gray-600/20 text-gray-400'}`}>
+                  <Badge variant={modalIsExhausted ? 'error' : 'default'}>
                     {modalUsageCount}/{modalMaxUses} used
-                  </span>
+                  </Badge>
                 )}
               </div>
 
@@ -528,27 +538,27 @@ export function GameStatePanel({
 
               {/* Actions */}
               <div className="flex justify-end gap-3 pt-2">
-                <button
+                <Button
+                  variant="secondary"
                   onClick={() => setSelectedStratagem(null)}
-                  className="btn-ios btn-ios-secondary"
                 >
                   Cancel
-                </button>
+                </Button>
                 {activeStratagems.includes(selectedStratagem.id) ? (
-                  <button
+                  <Button
+                    variant="danger"
                     onClick={() => handleDeactivateStratagem(selectedStratagem)}
-                    className="btn-ios bg-red-600 hover:bg-red-700 text-white"
                   >
                     Deactivate
-                  </button>
+                  </Button>
                 ) : (
-                  <button
+                  <Button
+                    variant="primary"
                     onClick={() => handleUseStratagem(selectedStratagem)}
                     disabled={cannotUse}
-                    className="btn-ios btn-ios-primary disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Use Stratagem
-                  </button>
+                  </Button>
                 )}
               </div>
             </div>
