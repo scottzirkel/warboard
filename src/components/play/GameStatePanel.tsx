@@ -310,25 +310,23 @@ export function GameStatePanel({
                       {/* Show choices for selection-type rules */}
                       {rule.type === 'selection' && rule.choices && rule.choices.length > 0 && (
                         <>
-                          <div className="flex justify-center">
-                            <div className="segmented-control">
-                              <div
-                                onClick={() => onSetRuleChoice(rule.id, null)}
-                                className={`segmented-control-item ${!currentChoice ? 'active' : ''}`}
-                              >
-                                None
-                              </div>
-                              {rule.choices.map((choice) => (
-                                <div
-                                  key={choice.id}
-                                  onClick={() => onSetRuleChoice(rule.id, choice.id)}
-                                  className={`segmented-control-item ${currentChoice === choice.id ? 'active' : ''}`}
-                                  title={choice.effect}
-                                >
-                                  {choice.name}
-                                </div>
-                              ))}
+                          <div className="segmented-control">
+                            <div
+                              onClick={() => onSetRuleChoice(rule.id, null)}
+                              className={`segmented-control-item ${!currentChoice ? 'active' : ''}`}
+                            >
+                              None
                             </div>
+                            {rule.choices.map((choice) => (
+                              <div
+                                key={choice.id}
+                                onClick={() => onSetRuleChoice(rule.id, choice.id)}
+                                className={`segmented-control-item ${currentChoice === choice.id ? 'active' : ''}`}
+                                title={choice.effect}
+                              >
+                                {choice.name}
+                              </div>
+                            ))}
                           </div>
                           {isPending && currentChoice && (
                             <button
