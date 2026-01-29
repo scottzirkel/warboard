@@ -1,5 +1,5 @@
 import type { Weapon, RangedWeaponStats, MeleeWeaponStats, Stratagem, MissionTwist, KeywordDefinition, Enhancement, ArmyRuleStance } from '@/types';
-import { getModifiedWeaponStat } from '@/hooks/useWeaponModifiers';
+import { getModifiedWeaponStat, type ActiveRuleChoice } from '@/hooks/useWeaponModifiers';
 import { Tooltip } from './Tooltip';
 
 interface WeaponStatsTableProps {
@@ -9,6 +9,7 @@ interface WeaponStatsTableProps {
   weaponKeywordGlossary?: KeywordDefinition[];
   enhancement?: Enhancement | null;
   activeStance?: ArmyRuleStance | null;
+  activeRuleChoices?: ActiveRuleChoice[];
   className?: string;
 }
 
@@ -140,6 +141,7 @@ function RangedWeaponDisplay({
   weaponKeywordGlossary = [],
   enhancement = null,
   activeStance = null,
+  activeRuleChoices = [],
 }: {
   weapon: Weapon & { stats: RangedWeaponStats };
   activeStratagems?: Stratagem[];
@@ -147,13 +149,14 @@ function RangedWeaponDisplay({
   weaponKeywordGlossary?: KeywordDefinition[];
   enhancement?: Enhancement | null;
   activeStance?: ArmyRuleStance | null;
+  activeRuleChoices?: ActiveRuleChoice[];
 }) {
-  const range = getModifiedWeaponStat(weapon, 'range', activeStratagems, activeTwists, enhancement, activeStance);
-  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems, activeTwists, enhancement, activeStance);
-  const bs = getModifiedWeaponStat(weapon, 'bs', activeStratagems, activeTwists, enhancement, activeStance);
-  const s = getModifiedWeaponStat(weapon, 's', activeStratagems, activeTwists, enhancement, activeStance);
-  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems, activeTwists, enhancement, activeStance);
-  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems, activeTwists, enhancement, activeStance);
+  const range = getModifiedWeaponStat(weapon, 'range', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
+  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
+  const bs = getModifiedWeaponStat(weapon, 'bs', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
+  const s = getModifiedWeaponStat(weapon, 's', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
+  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
+  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
 
   return (
     <div className="text-sm">
@@ -207,6 +210,7 @@ function MeleeWeaponDisplay({
   weaponKeywordGlossary = [],
   enhancement = null,
   activeStance = null,
+  activeRuleChoices = [],
 }: {
   weapon: Weapon & { stats: MeleeWeaponStats };
   activeStratagems?: Stratagem[];
@@ -214,12 +218,13 @@ function MeleeWeaponDisplay({
   weaponKeywordGlossary?: KeywordDefinition[];
   enhancement?: Enhancement | null;
   activeStance?: ArmyRuleStance | null;
+  activeRuleChoices?: ActiveRuleChoice[];
 }) {
-  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems, activeTwists, enhancement, activeStance);
-  const ws = getModifiedWeaponStat(weapon, 'ws', activeStratagems, activeTwists, enhancement, activeStance);
-  const s = getModifiedWeaponStat(weapon, 's', activeStratagems, activeTwists, enhancement, activeStance);
-  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems, activeTwists, enhancement, activeStance);
-  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems, activeTwists, enhancement, activeStance);
+  const a = getModifiedWeaponStat(weapon, 'a', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
+  const ws = getModifiedWeaponStat(weapon, 'ws', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
+  const s = getModifiedWeaponStat(weapon, 's', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
+  const ap = getModifiedWeaponStat(weapon, 'ap', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
+  const d = getModifiedWeaponStat(weapon, 'd', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
 
   // Combine weapon abilities with stance ability if active
   const baseAbilities = weapon.abilities || [];
@@ -271,6 +276,7 @@ export function WeaponStatsTable({
   weaponKeywordGlossary = [],
   enhancement = null,
   activeStance = null,
+  activeRuleChoices = [],
   className = '',
 }: WeaponStatsTableProps) {
   return (
@@ -286,6 +292,7 @@ export function WeaponStatsTable({
               weaponKeywordGlossary={weaponKeywordGlossary}
               enhancement={enhancement}
               activeStance={activeStance}
+              activeRuleChoices={activeRuleChoices}
             />
           );
         }
@@ -299,6 +306,7 @@ export function WeaponStatsTable({
               weaponKeywordGlossary={weaponKeywordGlossary}
               enhancement={enhancement}
               activeStance={activeStance}
+              activeRuleChoices={activeRuleChoices}
             />
           );
         }

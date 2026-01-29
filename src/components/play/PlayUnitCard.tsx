@@ -96,21 +96,37 @@ export function PlayUnitCard({
         ${className}
       `}
     >
-      <div className="list-row">
-        <div className="flex-1 min-w-0">
-          {/* Combined Unit Name */}
-          <div className={`font-semibold truncate ${isDestroyed ? 'line-through text-white/50' : ''}`}>
+      <div className="p-3">
+        {/* Unit Name - Full Width */}
+        <div className="flex items-center gap-2">
+          <span className={`font-semibold truncate flex-1 ${isDestroyed ? 'line-through text-white/50' : ''}`}>
             {displayName}
-          </div>
+          </span>
+          {(isWarlord || isLeaderWarlord) && (
+            <span title={isLeaderWarlord ? "Attached leader is Warlord" : "Warlord"}>
+              <svg className="w-4 h-4 text-yellow-400 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+              </svg>
+            </span>
+          )}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 text-white/30 shrink-0"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
 
-          {/* Models and Enhancement */}
-          <div className="flex items-center gap-2 mt-1">
+        {/* Second Row: Models on left, Wounds on right */}
+        <div className="flex items-center justify-between mt-1">
+          <div className="flex items-center gap-2">
             {isDestroyed ? (
-              <span className="text-xs font-bold text-red-400 uppercase">Out</span>
+              <span className="text-xs font-bold text-red-400 uppercase">Destroyed</span>
             ) : (
-              <span
-                className={`text-xs ${isDamaged ? 'text-red-400' : 'text-white/50'}`}
-              >
+              <span className={`text-xs ${isDamaged ? 'text-red-400' : 'text-white/50'}`}>
                 {combinedModelsAlive}/{combinedTotalModels} models
               </span>
             )}
@@ -118,39 +134,10 @@ export function PlayUnitCard({
               <Badge variant="accent" size="sm">{enhancementName}</Badge>
             )}
           </div>
-
-          {/* Leader Indicator (matches Alpine: shows both combined name AND leader indicator) */}
-          {hasAttachedLeader && (
-            <div className="text-xs text-purple-400 mt-0.5">
-              + {attachedLeaderName}
-            </div>
-          )}
+          <span className="text-xs text-white/40">
+            {combinedCurrentWounds}/{combinedMaxWounds} W
+          </span>
         </div>
-
-        {/* Right Side: Warlord indicator and Wounds */}
-        <div className="text-right shrink-0">
-          {(isWarlord || isLeaderWarlord) && (
-            <div className="text-yellow-400 flex items-center justify-end gap-1" title={isLeaderWarlord ? "Attached leader is Warlord" : "Warlord"}>
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
-              </svg>
-            </div>
-          )}
-          <div className="text-xs text-white/40 mt-1">
-            W: {combinedCurrentWounds}/{combinedMaxWounds}
-          </div>
-        </div>
-
-        {/* Chevron */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-white/30 shrink-0"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
       </div>
 
       {/* Health Bar - spans full width at bottom */}

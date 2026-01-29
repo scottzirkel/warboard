@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { Weapon, Stratagem, Modifier, MissionTwist, Enhancement, ArmyRuleStance } from '@/types';
+import type { Weapon, Stratagem, Modifier, MissionTwist, Enhancement, ArmyRuleStance, DetachmentRuleChoice } from '@/types';
 
 export interface WeaponStatModifier {
   stat: string;
@@ -14,8 +14,14 @@ interface ModifierSource {
   modifiers?: Modifier[];
 }
 
+/** Active detachment rule choice with its parent rule info */
+export interface ActiveRuleChoice {
+  rule: { id: string; name: string };
+  choice: DetachmentRuleChoice;
+}
+
 /**
- * Collects modifiers from active sources (stratagems, twists, enhancements, stances) that apply to a specific weapon stat.
+ * Collects modifiers from active sources (stratagems, twists, enhancements, stances, rule choices) that apply to a specific weapon stat.
  */
 export function collectWeaponModifiers(
   weapon: Weapon,
@@ -23,7 +29,8 @@ export function collectWeaponModifiers(
   activeStratagems: Stratagem[],
   activeTwists: MissionTwist[] = [],
   enhancement: Enhancement | null = null,
-  activeStance: ArmyRuleStance | null = null
+  activeStance: ArmyRuleStance | null = null,
+  activeRuleChoices: ActiveRuleChoice[] = []
 ): WeaponStatModifier[] {
   const modifiers: WeaponStatModifier[] = [];
 
@@ -38,6 +45,13 @@ export function collectWeaponModifiers(
   // Add active stance if present
   if (activeStance) {
     sources.push(activeStance);
+  }
+
+  // Add active rule choices
+  for (const { choice } of activeRuleChoices) {
+    if (choice.modifiers && choice.modifiers.length > 0) {
+      sources.push(choice);
+    }
   }
 
   for (const source of sources) {
@@ -102,7 +116,8 @@ export function getModifiedWeaponStat(
   activeStratagems: Stratagem[],
   activeTwists: MissionTwist[] = [],
   enhancement: Enhancement | null = null,
-  activeStance: ArmyRuleStance | null = null
+  activeStance: ArmyRuleStance | null = null,
+  activeRuleChoices: ActiveRuleChoice[] = []
 ): { value: number | string; modified: boolean; sources: string[] } {
   const baseValue = weapon.stats[stat as keyof typeof weapon.stats];
 
@@ -110,7 +125,7 @@ export function getModifiedWeaponStat(
     return { value: '-', modified: false, sources: [] };
   }
 
-  const modifiers = collectWeaponModifiers(weapon, stat, activeStratagems, activeTwists, enhancement, activeStance);
+  const modifiers = collectWeaponModifiers(weapon, stat, activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
 
   if (modifiers.length === 0) {
     return { value: baseValue, modified: false, sources: [] };

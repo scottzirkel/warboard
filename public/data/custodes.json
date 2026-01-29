@@ -269,8 +269,7 @@
           },
           "abilities": [
             "Rapid Fire 2"
-          ],
-          "loadoutGroup": "wargear"
+          ]
         },
         {
           "id": "armoured-tracks-melee",
@@ -283,8 +282,41 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": [],
-          "loadoutGroup": "wargear"
+          "abilities": []
+        },
+        {
+          "id": "hunter-killer-missile",
+          "name": "Hunter-killer missile",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 1,
+            "bs": "3+",
+            "s": 14,
+            "ap": -3,
+            "d": "D6"
+          },
+          "abilities": ["One Shot"],
+          "loadoutGroup": "hunter-killer"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "hunter-killer",
+          "name": "Hunter-killer missile",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "hunter-killer",
+              "name": "Hunter-killer missile"
+            }
+          ]
         }
       ],
       "abilities": [
@@ -738,7 +770,9 @@
             "ap": 0,
             "d": 2
           },
-          "abilities": ["Rapid Fire 1"],
+          "abilities": [
+            "Rapid Fire 1"
+          ],
           "loadoutGroup": "boltgun"
         },
         {
@@ -753,7 +787,10 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Ignores Cover", "Torrent"],
+          "abilities": [
+            "Ignores Cover",
+            "Torrent"
+          ],
           "loadoutGroup": "flamer"
         },
         {
@@ -767,7 +804,10 @@
             "ap": -2,
             "d": 2
           },
-          "abilities": ["Anti-Psyker 5+", "Devastating Wounds"],
+          "abilities": [
+            "Anti-Psyker 5+",
+            "Devastating Wounds"
+          ],
           "loadoutGroup": "greatblade"
         },
         {
@@ -806,9 +846,19 @@
           "type": "choice",
           "pattern": "replacement",
           "choices": [
-            { "id": "boltgun", "name": "Boltgun + CCW", "default": true },
-            { "id": "flamer", "name": "Flamer + CCW" },
-            { "id": "greatblade", "name": "Executioner Greatblade" }
+            {
+              "id": "boltgun",
+              "name": "Boltgun + CCW",
+              "default": true
+            },
+            {
+              "id": "flamer",
+              "name": "Flamer + CCW"
+            },
+            {
+              "id": "greatblade",
+              "name": "Executioner Greatblade"
+            }
           ]
         }
       ],
@@ -817,7 +867,11 @@
           "id": "leader",
           "name": "Leader",
           "description": "This model can be attached to Prosecutors, Vigilators, or Witchseekers.",
-          "eligibleUnits": ["prosecutors", "vigilators", "witchseekers"]
+          "eligibleUnits": [
+            "prosecutors",
+            "vigilators",
+            "witchseekers"
+          ]
         },
         {
           "id": "seekers-instincts",
@@ -873,7 +927,9 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Rapid Fire 1"]
+          "abilities": [
+            "Rapid Fire 1"
+          ]
         },
         {
           "id": "close-combat-weapon",
@@ -929,7 +985,13 @@
           "id": "guardian-spear-melee",
           "name": "Guardian Spear",
           "type": "melee",
-          "stats": { "a": 7, "ws": "2+", "s": 7, "ap": -2, "d": 2 },
+          "stats": {
+            "a": 7,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
           "abilities": [],
           "loadoutGroup": "spear"
         },
@@ -937,15 +999,30 @@
           "id": "guardian-spear-ranged",
           "name": "Guardian Spear",
           "type": "ranged",
-          "stats": { "range": 24, "a": 2, "bs": "2+", "s": 4, "ap": -1, "d": 2 },
-          "abilities": ["Assault"],
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ],
           "loadoutGroup": "spear"
         },
         {
           "id": "castellan-axe-melee",
           "name": "Castellan Axe",
           "type": "melee",
-          "stats": { "a": 6, "ws": "2+", "s": 9, "ap": -1, "d": 3 },
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 9,
+            "ap": -1,
+            "d": 3
+          },
           "abilities": [],
           "loadoutGroup": "axe"
         },
@@ -953,33 +1030,80 @@
           "id": "castellan-axe-ranged",
           "name": "Castellan Axe",
           "type": "ranged",
-          "stats": { "range": 24, "a": 2, "bs": "2+", "s": 4, "ap": -1, "d": 2 },
-          "abilities": ["Assault"],
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ],
           "loadoutGroup": "axe"
         },
         {
           "id": "sentinel-blade-melee",
           "name": "Sentinel Blade",
           "type": "melee",
-          "stats": { "a": 7, "ws": "2+", "s": 6, "ap": -2, "d": 1 },
+          "stats": {
+            "a": 7,
+            "ws": "2+",
+            "s": 6,
+            "ap": -2,
+            "d": 1
+          },
           "abilities": [],
           "loadoutGroup": "blade",
-          "modifiers": [{ "stat": "w", "operation": "add", "value": 1, "scope": "model", "source": "Praesidium Shield" }]
+          "modifiers": [
+            {
+              "stat": "w",
+              "operation": "add",
+              "value": 1,
+              "scope": "model",
+              "source": "Praesidium Shield"
+            }
+          ]
         },
         {
           "id": "sentinel-blade-ranged",
           "name": "Sentinel Blade",
           "type": "ranged",
-          "stats": { "range": 12, "a": 2, "bs": "2+", "s": 4, "ap": -1, "d": 2 },
-          "abilities": ["Assault", "Pistol"],
+          "stats": {
+            "range": 12,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault",
+            "Pistol"
+          ],
           "loadoutGroup": "blade",
-          "modifiers": [{ "stat": "w", "operation": "add", "value": 1, "scope": "model", "source": "Praesidium Shield" }]
+          "modifiers": [
+            {
+              "stat": "w",
+              "operation": "add",
+              "value": 1,
+              "scope": "model",
+              "source": "Praesidium Shield"
+            }
+          ]
         },
         {
           "id": "pyrithite-spear-melee",
           "name": "Pyrithite Spear",
           "type": "melee",
-          "stats": { "a": 7, "ws": "2+", "s": 7, "ap": -2, "d": 2 },
+          "stats": {
+            "a": 7,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
           "abilities": [],
           "loadoutGroup": "pyrithite"
         },
@@ -987,8 +1111,17 @@
           "id": "pyrithite-spear-ranged",
           "name": "Pyrithite Spear",
           "type": "ranged",
-          "stats": { "range": 12, "a": 1, "bs": "2+", "s": 9, "ap": -4, "d": "D6" },
-          "abilities": ["Melta 2"],
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 9,
+            "ap": -4,
+            "d": "D6"
+          },
+          "abilities": [
+            "Melta 2"
+          ],
           "loadoutGroup": "pyrithite"
         }
       ],
@@ -999,10 +1132,24 @@
           "type": "choice",
           "pattern": "replacement",
           "choices": [
-            { "id": "spear", "name": "Guardian Spear", "default": true },
-            { "id": "blade", "name": "Sentinel Blade + Shield", "paired": true },
-            { "id": "axe", "name": "Castellan Axe" },
-            { "id": "pyrithite", "name": "Pyrithite Spear" }
+            {
+              "id": "spear",
+              "name": "Guardian Spear",
+              "default": true
+            },
+            {
+              "id": "blade",
+              "name": "Sentinel Blade + Shield",
+              "paired": true
+            },
+            {
+              "id": "axe",
+              "name": "Castellan Axe"
+            },
+            {
+              "id": "pyrithite",
+              "name": "Pyrithite Spear"
+            }
           ]
         }
       ],
@@ -1016,10 +1163,18 @@
           "id": "leader",
           "name": "Leader",
           "description": "This model can be attached to Custodian Guard or Custodian Wardens.",
-          "eligibleUnits": ["custodian-guard", "custodian-wardens"]
+          "eligibleUnits": [
+            "custodian-guard",
+            "custodian-wardens"
+          ]
         }
       ],
-      "keywords": ["Shield-Captain", "Infantry", "Character", "Imperium"],
+      "keywords": [
+        "Shield-Captain",
+        "Infantry",
+        "Character",
+        "Imperium"
+      ],
       "invuln": "4+"
     },
     {
@@ -1145,23 +1300,50 @@
           "id": "interceptor-lance-melee",
           "name": "Interceptor Lance",
           "type": "melee",
-          "stats": { "a": 6, "ws": "2+", "s": 7, "ap": -2, "d": 2 },
-          "abilities": ["Lance"]
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Lance"
+          ]
         },
         {
           "id": "vertus-hurricane-bolter-ranged",
           "name": "Vertus Hurricane Bolter",
           "type": "ranged",
-          "stats": { "range": 18, "a": 3, "bs": "2+", "s": 4, "ap": -1, "d": 2 },
-          "abilities": ["Rapid Fire 3", "Twin-linked"],
+          "stats": {
+            "range": 18,
+            "a": 3,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Rapid Fire 3",
+            "Twin-linked"
+          ],
           "loadoutGroup": "bolter"
         },
         {
           "id": "salvo-launcher-ranged",
           "name": "Salvo Launcher",
           "type": "ranged",
-          "stats": { "range": 24, "a": 1, "bs": "2+", "s": 10, "ap": -3, "d": "D6+1" },
-          "abilities": ["Twin-linked"],
+          "stats": {
+            "range": 24,
+            "a": 1,
+            "bs": "2+",
+            "s": 10,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
           "loadoutGroup": "salvo"
         }
       ],
@@ -1172,8 +1354,15 @@
           "type": "choice",
           "pattern": "replacement",
           "choices": [
-            { "id": "bolter", "name": "Hurricane Bolter", "default": true },
-            { "id": "salvo", "name": "Salvo Launcher" }
+            {
+              "id": "bolter",
+              "name": "Hurricane Bolter",
+              "default": true
+            },
+            {
+              "id": "salvo",
+              "name": "Salvo Launcher"
+            }
           ]
         }
       ],
@@ -1182,7 +1371,9 @@
           "id": "leader",
           "name": "Leader",
           "description": "This model can be attached to Vertus Praetors.",
-          "eligibleUnits": ["vertus-praetors"]
+          "eligibleUnits": [
+            "vertus-praetors"
+          ]
         },
         {
           "id": "sweeping-advance",
@@ -1190,7 +1381,13 @@
           "description": "Once per battle, at the end of the Fight phase, this unit can Fall Back or make a Normal move."
         }
       ],
-      "keywords": ["Shield-Captain", "Mounted", "Character", "Fly", "Imperium"],
+      "keywords": [
+        "Shield-Captain",
+        "Mounted",
+        "Character",
+        "Fly",
+        "Imperium"
+      ],
       "invuln": "4+"
     },
     {
@@ -1691,7 +1888,10 @@
             "ap": -2,
             "d": 2
           },
-          "abilities": ["Anti-Psyker 5+", "Devastating Wounds"]
+          "abilities": [
+            "Anti-Psyker 5+",
+            "Devastating Wounds"
+          ]
         }
       ],
       "abilities": [
@@ -1747,7 +1947,10 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Ignores Cover", "Torrent"]
+          "abilities": [
+            "Ignores Cover",
+            "Torrent"
+          ]
         },
         {
           "id": "close-combat-weapon",
@@ -3105,9 +3308,30 @@
         {
           "id": "martial-mastery",
           "name": "Martial Mastery",
-          "description": "At the start of each battle round, select one: unmodified hit rolls of 5+ score critical hits in melee, OR improve AP of melee weapons by 1. Applies to units with Martial Ka'tah.",
-          "type": "passive",
-          "modifiers": []
+          "description": "At the start of each battle round, select one option. Applies to units with Martial Ka'tah.",
+          "type": "selection",
+          "modifiers": [],
+          "choices": [
+            {
+              "id": "critical-hits",
+              "name": "Critical Hits 5+",
+              "effect": "Unmodified hit rolls of 5+ score critical hits in melee.",
+              "modifiers": []
+            },
+            {
+              "id": "improved-ap",
+              "name": "Improved AP",
+              "effect": "Improve AP of melee weapons by 1.",
+              "modifiers": [
+                {
+                  "stat": "ap",
+                  "operation": "subtract",
+                  "value": 1,
+                  "scope": "melee"
+                }
+              ]
+            }
+          ]
         }
       ],
       "stratagems": [

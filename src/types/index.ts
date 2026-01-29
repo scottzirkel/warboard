@@ -5,6 +5,8 @@
 export type ModifierOperation = 'add' | 'subtract' | 'multiply' | 'set';
 export type ModifierScope = 'model' | 'unit' | 'melee' | 'ranged' | 'weapon' | 'all';
 export type StatKey = 'm' | 't' | 'sv' | 'w' | 'ld' | 'oc' | 'a' | 's' | 'ap' | 'd' | 'bs' | 'ws' | 'range';
+export type ModifierDuration = 'permanent' | 'battle' | 'round' | 'phase';
+export type ModifierCondition = 'below_starting_strength' | 'below_half_strength' | 'none';
 
 export interface Modifier {
   stat: StatKey;
@@ -13,6 +15,7 @@ export interface Modifier {
   scope: ModifierScope;
   source?: string;
   condition?: string;
+  duration?: ModifierDuration;
 }
 
 // ============================================================================
@@ -133,6 +136,8 @@ export interface Enhancement {
 // Stratagems
 // ============================================================================
 
+export type StratagemUsageLimit = 'unlimited' | 'once_per_battle' | 'twice_per_battle' | 'once_per_phase';
+
 export interface Stratagem {
   id: string;
   name: string;
@@ -140,6 +145,7 @@ export interface Stratagem {
   phase: string;
   description: string;
   modifiers?: Modifier[];
+  usageLimit?: StratagemUsageLimit;
 }
 
 // ============================================================================
@@ -172,6 +178,7 @@ export interface DetachmentRuleChoice {
   id: string;
   name: string;
   effect: string;
+  modifiers?: Modifier[];
 }
 
 export interface DetachmentRule {
@@ -303,19 +310,34 @@ export interface CurrentList {
 // Game State (Play Mode)
 // ============================================================================
 
+export type GamePhase = 'command' | 'movement' | 'shooting' | 'charge' | 'fight';
+export type PlayerTurn = 'player' | 'opponent';
+
+export const GAME_PHASES: GamePhase[] = ['command', 'movement', 'shooting', 'charge', 'fight'];
+
 export interface GameState {
   battleRound: number;
+  currentPhase: GamePhase;
+  playerTurn: PlayerTurn;
   commandPoints: number;
+  primaryVP: number;
+  secondaryVP: number;
   activeStratagems: string[];
   /** Active mission twists (Chapter Approved) */
   activeTwists: string[];
+  /** Tracks stratagem usage count for the battle (stratagemId -> usage count) */
+  stratagemUsage: Record<string, number>;
   katah: string | null;
+  /** Tracks active detachment rule choices (ruleId -> choiceId) */
+  activeRuleChoices: Record<string, string>;
   collapsedLoadoutGroups: Record<number, Record<string, boolean>>;
   activatedLoadoutGroups: Record<number, Record<string, boolean>>;
   collapsedLeaders: Record<number, boolean>;
   activatedLeaders: Record<number, boolean>;
   /** Tracks casualties per weapon loadout group per unit (unitIndex -> groupId -> casualty count) */
   loadoutCasualties: Record<number, Record<string, number>>;
+  /** Tracks used once-per-battle abilities (unitIndex -> abilityId -> used) */
+  usedAbilities?: Record<number, Record<string, boolean>>;
 }
 
 // ============================================================================

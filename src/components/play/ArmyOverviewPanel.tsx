@@ -151,31 +151,6 @@ function getEnhancementName(
   return enhancement?.name;
 }
 
-/**
- * Calculate unit points including enhancement
- */
-function getUnitPoints(
-  listUnit: ListUnit,
-  unit: Unit,
-  armyData: ArmyData,
-  detachmentId: string
-): number {
-  // Base points for the model count
-  const basePoints = unit.points[String(listUnit.modelCount)] || 0;
-
-  // Enhancement points
-  let enhancementPoints = 0;
-  if (listUnit.enhancement) {
-    const detachment = armyData.detachments?.[detachmentId];
-    const enhancement = detachment?.enhancements?.find(
-      (e) => e.id === listUnit.enhancement
-    );
-    enhancementPoints = enhancement?.points || 0;
-  }
-
-  return basePoints + enhancementPoints;
-}
-
 // ============================================================================
 // Component Types
 // ============================================================================
@@ -186,9 +161,6 @@ interface ArmyOverviewPanelProps {
   selectedUnitIndex: number | null;
   detachmentId: string;
   onSelectUnit: (index: number) => void;
-  // Battle info props
-  listName?: string;
-  totalPoints?: number;
   className?: string;
 }
 
@@ -202,8 +174,6 @@ export function ArmyOverviewPanel({
   selectedUnitIndex,
   detachmentId,
   onSelectUnit,
-  listName,
-  totalPoints,
   className = '',
 }: ArmyOverviewPanelProps) {
   // Filter out units that are attached as leaders (they'll be shown with their host unit)
@@ -249,29 +219,10 @@ export function ArmyOverviewPanel({
     return 0;
   });
 
-  const detachment = armyData.detachments?.[detachmentId];
-
   return (
     <div className={`flex flex-col h-full ${className}`}>
       {/* Header */}
       <h2 className="section-header-inline mb-4 shrink-0">Your Army</h2>
-
-      {/* Battle Info Card */}
-      {(listName || detachment || totalPoints !== undefined) && (
-        <div className="card-depth p-4 mb-4 shrink-0">
-          {listName && (
-            <div className="text-lg font-semibold">{listName}</div>
-          )}
-          <div className="flex items-center gap-2 mt-1">
-            {detachment && (
-              <span className="badge badge-accent">{detachment.name}</span>
-            )}
-            {totalPoints !== undefined && (
-              <span className="text-accent-400 font-bold">{totalPoints} pts</span>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* Army Units List */}
       <div className="space-y-2 flex-1 overflow-y-auto scroll-smooth min-h-0">

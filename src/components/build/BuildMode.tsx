@@ -40,7 +40,7 @@ export function BuildMode({
   const pointsStatus = over > 10 ? 'error' : over > 0 ? 'warning' : 'ok';
 
   return (
-    <div className={`h-full flex flex-col gap-4 max-w-7xl mx-auto w-full px-4 py-4 ${className}`}>
+    <div className={`h-full flex flex-col gap-4 w-full px-4 py-4 ${className}`}>
       {/* Points Summary Bar */}
       <div className="card-depth p-4 shrink-0">
         <div className="flex items-center justify-between gap-4">

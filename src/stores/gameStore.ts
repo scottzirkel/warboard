@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { GameState } from '@/types';
+import type { GameState, GamePhase } from '@/types';
+import { GAME_PHASES } from '@/types';
 
 // ============================================================================
 // Default Game State
@@ -8,10 +9,16 @@ import type { GameState } from '@/types';
 
 const createDefaultGameState = (): GameState => ({
   battleRound: 1,
+  currentPhase: 'command',
+  playerTurn: 'player',
   commandPoints: 0,
+  primaryVP: 0,
+  secondaryVP: 0,
   activeStratagems: [],
   activeTwists: [],
+  stratagemUsage: {},
   katah: null,
+  activeRuleChoices: {},
   collapsedLoadoutGroups: {},
   activatedLoadoutGroups: {},
   collapsedLeaders: {},
@@ -33,9 +40,27 @@ interface GameStoreActions {
   nextRound: () => void;
   prevRound: () => void;
 
+  // Game Phase
+  setPhase: (phase: GamePhase) => void;
+  nextPhase: () => void;
+  prevPhase: () => void;
+
+  // Player Turn
+  setPlayerTurn: (turn: 'player' | 'opponent') => void;
+  togglePlayerTurn: () => void;
+
+  // Advance Game State (moves through phases, turns, and rounds)
+  advanceGameState: () => void;
+
   // Command Points
   setCommandPoints: (cp: number) => void;
   adjustCommandPoints: (delta: number) => void;
+
+  // Victory Points
+  setPrimaryVP: (vp: number) => void;
+  adjustPrimaryVP: (delta: number) => void;
+  setSecondaryVP: (vp: number) => void;
+  adjustSecondaryVP: (delta: number) => void;
 
   // Stratagems
   activateStratagem: (stratagemId: string) => void;
@@ -43,12 +68,21 @@ interface GameStoreActions {
   toggleStratagem: (stratagemId: string) => void;
   clearActiveStratagems: () => void;
 
+  // Stratagem Usage Tracking
+  incrementStratagemUsage: (stratagemId: string) => void;
+  getStratagemUsage: (stratagemId: string) => number;
+  resetStratagemUsage: () => void;
+
   // Mission Twists (Chapter Approved)
   toggleTwist: (twistId: string) => void;
   clearActiveTwists: () => void;
 
   // Martial Ka'tah (Custodes army rule)
   setKatah: (katah: string | null) => void;
+
+  // Detachment Rule Choices
+  setRuleChoice: (ruleId: string, choiceId: string | null) => void;
+  getRuleChoice: (ruleId: string) => string | null;
 
   // Loadout Group Collapse State
   isLoadoutGroupCollapsed: (unitIndex: number, groupId: string) => boolean;
@@ -79,6 +113,11 @@ interface GameStoreActions {
 
   // Activation State Reset
   resetActivationState: () => void;
+
+  // Used Abilities (once per battle)
+  isAbilityUsed: (unitIndex: number, abilityId: string) => boolean;
+  toggleAbilityUsed: (unitIndex: number, abilityId: string) => void;
+  setAbilityUsed: (unitIndex: number, abilityId: string, used: boolean) => void;
 
   // Full Reset
   resetGameState: () => void;
@@ -128,6 +167,131 @@ export const useGameStore = create<GameStore>()(
   },
 
   // -------------------------------------------------------------------------
+  // Game Phase Actions
+  // -------------------------------------------------------------------------
+
+  setPhase: (phase: GamePhase) => {
+    const previousPhase = get().gameState.currentPhase;
+
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        currentPhase: phase,
+      },
+    }));
+
+    // Clear phase-scoped stratagems when phase changes
+    if (phase !== previousPhase) {
+      get().clearActiveStratagems();
+    }
+  },
+
+  nextPhase: () => {
+    const { setPhase, setBattleRound, gameState } = get();
+    const currentIndex = GAME_PHASES.indexOf(gameState.currentPhase);
+    const nextIndex = currentIndex + 1;
+
+    if (nextIndex >= GAME_PHASES.length) {
+      // End of round - advance to next round and reset to command phase
+      setBattleRound(gameState.battleRound + 1);
+      setPhase('command');
+    } else {
+      setPhase(GAME_PHASES[nextIndex]);
+    }
+  },
+
+  prevPhase: () => {
+    const { setPhase, setBattleRound, gameState } = get();
+    const currentIndex = GAME_PHASES.indexOf(gameState.currentPhase);
+    const prevIndex = currentIndex - 1;
+
+    if (prevIndex < 0) {
+      // Beginning of round - go to previous round's fight phase
+      if (gameState.battleRound > 1) {
+        setBattleRound(gameState.battleRound - 1);
+        setPhase('fight');
+      }
+    } else {
+      setPhase(GAME_PHASES[prevIndex]);
+    }
+  },
+
+  // -------------------------------------------------------------------------
+  // Player Turn Actions
+  // -------------------------------------------------------------------------
+
+  setPlayerTurn: (turn: 'player' | 'opponent') => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        playerTurn: turn,
+      },
+    }));
+  },
+
+  togglePlayerTurn: () => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        playerTurn: state.gameState.playerTurn === 'player' ? 'opponent' : 'player',
+      },
+    }));
+  },
+
+  // -------------------------------------------------------------------------
+  // Advance Game State
+  // -------------------------------------------------------------------------
+
+  advanceGameState: () => {
+    const { gameState, resetActivationState, clearActiveStratagems } = get();
+    const currentPhaseIndex = GAME_PHASES.indexOf(gameState.currentPhase);
+    const isLastPhase = currentPhaseIndex >= GAME_PHASES.length - 1;
+
+    if (isLastPhase) {
+      // End of current player's turn
+      if (gameState.playerTurn === 'player') {
+        // Player's turn ends, opponent's turn begins
+        set(state => ({
+          gameState: {
+            ...state.gameState,
+            currentPhase: 'command',
+            playerTurn: 'opponent',
+            commandPoints: state.gameState.commandPoints + 1, // Both players gain CP at start of Command
+            activeStratagems: [], // Clear stratagems for new phase
+          },
+        }));
+      } else {
+        // Opponent's turn ends, new battle round begins
+        if (gameState.battleRound < 5) {
+          set(state => ({
+            gameState: {
+              ...state.gameState,
+              battleRound: state.gameState.battleRound + 1,
+              currentPhase: 'command',
+              playerTurn: 'player',
+              commandPoints: state.gameState.commandPoints + 1, // Both players gain CP at start of Command
+              activeStratagems: [], // Clear stratagems for new phase
+            },
+          }));
+          resetActivationState();
+        }
+        // If round 5, game is over - stay at fight phase
+      }
+    } else {
+      // Move to next phase
+      const nextPhase = GAME_PHASES[currentPhaseIndex + 1];
+      set(state => ({
+        gameState: {
+          ...state.gameState,
+          currentPhase: nextPhase,
+          activeStratagems: [], // Clear stratagems for new phase
+        },
+      }));
+    }
+    clearActiveStratagems();
+  },
+
+  // -------------------------------------------------------------------------
   // Command Points Actions
   // -------------------------------------------------------------------------
 
@@ -145,6 +309,46 @@ export const useGameStore = create<GameStore>()(
       gameState: {
         ...state.gameState,
         commandPoints: Math.max(0, state.gameState.commandPoints + delta),
+      },
+    }));
+  },
+
+  // -------------------------------------------------------------------------
+  // Victory Points Actions
+  // -------------------------------------------------------------------------
+
+  setPrimaryVP: (vp: number) => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        primaryVP: Math.max(0, vp),
+      },
+    }));
+  },
+
+  adjustPrimaryVP: (delta: number) => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        primaryVP: Math.max(0, state.gameState.primaryVP + delta),
+      },
+    }));
+  },
+
+  setSecondaryVP: (vp: number) => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        secondaryVP: Math.max(0, vp),
+      },
+    }));
+  },
+
+  adjustSecondaryVP: (delta: number) => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        secondaryVP: Math.max(0, state.gameState.secondaryVP + delta),
       },
     }));
   },
@@ -197,6 +401,35 @@ export const useGameStore = create<GameStore>()(
   },
 
   // -------------------------------------------------------------------------
+  // Stratagem Usage Tracking Actions
+  // -------------------------------------------------------------------------
+
+  incrementStratagemUsage: (stratagemId: string) => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        stratagemUsage: {
+          ...state.gameState.stratagemUsage,
+          [stratagemId]: (state.gameState.stratagemUsage[stratagemId] || 0) + 1,
+        },
+      },
+    }));
+  },
+
+  getStratagemUsage: (stratagemId: string): number => {
+    return get().gameState.stratagemUsage[stratagemId] || 0;
+  },
+
+  resetStratagemUsage: () => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        stratagemUsage: {},
+      },
+    }));
+  },
+
+  // -------------------------------------------------------------------------
   // Mission Twist Actions
   // -------------------------------------------------------------------------
 
@@ -235,6 +468,31 @@ export const useGameStore = create<GameStore>()(
         katah,
       },
     }));
+  },
+
+  // -------------------------------------------------------------------------
+  // Detachment Rule Choice Actions
+  // -------------------------------------------------------------------------
+
+  setRuleChoice: (ruleId: string, choiceId: string | null) => {
+    set(state => {
+      const newChoices = { ...(state.gameState.activeRuleChoices || {}) };
+      if (choiceId === null) {
+        delete newChoices[ruleId];
+      } else {
+        newChoices[ruleId] = choiceId;
+      }
+      return {
+        gameState: {
+          ...state.gameState,
+          activeRuleChoices: newChoices,
+        },
+      };
+    });
+  },
+
+  getRuleChoice: (ruleId: string): string | null => {
+    return get().gameState.activeRuleChoices?.[ruleId] || null;
   },
 
   // -------------------------------------------------------------------------
@@ -418,6 +676,35 @@ export const useGameStore = create<GameStore>()(
         ...state.gameState,
         activatedLoadoutGroups: {},
         activatedLeaders: {},
+      },
+    }));
+  },
+
+  // -------------------------------------------------------------------------
+  // Used Abilities Actions
+  // -------------------------------------------------------------------------
+
+  isAbilityUsed: (unitIndex: number, abilityId: string): boolean => {
+    const { gameState } = get();
+    return gameState.usedAbilities?.[unitIndex]?.[abilityId] ?? false;
+  },
+
+  toggleAbilityUsed: (unitIndex: number, abilityId: string) => {
+    const isUsed = get().isAbilityUsed(unitIndex, abilityId);
+    get().setAbilityUsed(unitIndex, abilityId, !isUsed);
+  },
+
+  setAbilityUsed: (unitIndex: number, abilityId: string, used: boolean) => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        usedAbilities: {
+          ...(state.gameState.usedAbilities || {}),
+          [unitIndex]: {
+            ...(state.gameState.usedAbilities?.[unitIndex] || {}),
+            [abilityId]: used,
+          },
+        },
       },
     }));
   },

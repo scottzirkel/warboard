@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import type { AppMode } from '@/types';
 
 // ============================================================================
@@ -112,7 +113,9 @@ const createDefaultUIState = (): UIStoreState => ({
 // Store Implementation
 // ============================================================================
 
-export const useUIStore = create<UIStore>((set, get) => ({
+export const useUIStore = create<UIStore>()(
+  persist(
+    (set, get) => ({
   // Initial State
   ...createDefaultUIState(),
 
@@ -236,4 +239,13 @@ export const useUIStore = create<UIStore>((set, get) => ({
   resetUI: () => {
     set(createDefaultUIState());
   },
-}));
+}),
+    {
+      name: 'army-tracker-ui',
+      partialize: (state) => ({
+        mode: state.mode,
+        selectedUnitIndex: state.selectedUnitIndex,
+      }),
+    }
+  )
+);

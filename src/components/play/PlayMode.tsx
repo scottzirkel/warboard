@@ -88,11 +88,11 @@ export function PlayMode({
     );
   }
 
-  // Simple 3-column grid layout matching Alpine.js reference
+  // 3-column grid layout with narrower left panel for more unit detail space
   return (
-    <div className="h-full grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
-      {/* Left Panel - Army Overview */}
-      <div className="lg:col-span-1 card-depth p-4 flex flex-col min-h-0 overflow-hidden">
+    <div className="h-full grid grid-cols-1 lg:grid-cols-[1fr_1.25fr_1.75fr] gap-4 p-4">
+      {/* Left Panel - Army Overview (narrower) */}
+      <div className="card-depth p-4 flex flex-col min-h-0 overflow-hidden">
         {leftPanel || (
           <div className="flex-1 flex items-center justify-center text-white/40">
             <p>No army overview available</p>
@@ -101,7 +101,7 @@ export function PlayMode({
       </div>
 
       {/* Middle Panel - Game State */}
-      <div className="lg:col-span-1 card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
+      <div className="card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
         {middlePanel || (
           <div className="flex-1 flex items-center justify-center text-white/40">
             <p>No game state available</p>
@@ -109,8 +109,8 @@ export function PlayMode({
         )}
       </div>
 
-      {/* Right Panel - Selected Unit Details */}
-      <div className="lg:col-span-1 card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
+      {/* Right Panel - Selected Unit Details (wider) */}
+      <div className="card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
         {rightPanel || (
           <div className="flex-1 flex items-center justify-center text-white/40">
             <p>Select a unit from your army to view details</p>

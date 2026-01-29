@@ -8,6 +8,8 @@ import type {
   Detachment,
   Enhancement,
   Weapon,
+  Stratagem,
+  GameState,
 } from '@/types';
 
 // ============================================================================
@@ -54,11 +56,43 @@ const createMockEnhancement = (overrides: Partial<Enhancement> = {}): Enhancemen
   ...overrides,
 });
 
-const createMockDetachment = (enhancements: Enhancement[] = []): Detachment => ({
+const createMockStratagem = (overrides: Partial<Stratagem> = {}): Stratagem => ({
+  id: 'test-stratagem',
+  name: 'Test Stratagem',
+  cost: 1,
+  phase: 'Fight',
+  description: 'Test description',
+  ...overrides,
+});
+
+const createMockDetachment = (
+  enhancements: Enhancement[] = [],
+  stratagems: Stratagem[] = []
+): Detachment => ({
   name: 'Test Detachment',
   rules: [],
-  stratagems: [],
+  stratagems,
   enhancements,
+});
+
+const createMockGameState = (overrides: Partial<GameState> = {}): GameState => ({
+  battleRound: 1,
+  currentPhase: 'command',
+  playerTurn: 'player',
+  commandPoints: 0,
+  primaryVP: 0,
+  secondaryVP: 0,
+  activeStratagems: [],
+  activeTwists: [],
+  stratagemUsage: {},
+  katah: null,
+  activeRuleChoices: {},
+  collapsedLoadoutGroups: {},
+  activatedLoadoutGroups: {},
+  collapsedLeaders: {},
+  activatedLeaders: {},
+  loadoutCasualties: {},
+  ...overrides,
 });
 
 const createMockArmyData = (
@@ -537,6 +571,119 @@ describe('useStatModifiers', () => {
       expect(woundStat.modifiers[0].name).toBe('Auric Mantle');
       expect(woundStat.modifiers[0].value).toBe(2);
       expect(woundStat.modifiers[0].operation).toBe('add');
+    });
+  });
+
+  describe('stratagem modifiers', () => {
+    it('collects modifiers from active stratagems', () => {
+      const stratagem = createMockStratagem({
+        id: 'avenge-the-fallen',
+        name: 'Avenge the Fallen',
+        modifiers: [
+          { stat: 'a', operation: 'add', value: 1, scope: 'melee' },
+        ],
+      });
+
+      const detachment = createMockDetachment([], [stratagem]);
+      const unit = createMockUnit();
+      const listUnit = createMockListUnit();
+      const armyData = createMockArmyData([unit], { 'test-detachment': detachment });
+      const gameState = createMockGameState({
+        activeStratagems: ['avenge-the-fallen'],
+      });
+
+      const { result } = renderHook(() =>
+        useStatModifiers(armyData, unit, listUnit, 0, [listUnit], 'test-detachment', gameState)
+      );
+
+      expect(result.current.modifiers).toHaveLength(1);
+      expect(result.current.modifiers[0].sourceName).toBe('Avenge the Fallen');
+      expect(result.current.modifiers[0].sourceType).toBe('stratagem');
+    });
+
+    it('does not collect modifiers from inactive stratagems', () => {
+      const stratagem = createMockStratagem({
+        id: 'avenge-the-fallen',
+        modifiers: [
+          { stat: 'a', operation: 'add', value: 1, scope: 'melee' },
+        ],
+      });
+
+      const detachment = createMockDetachment([], [stratagem]);
+      const unit = createMockUnit();
+      const listUnit = createMockListUnit();
+      const armyData = createMockArmyData([unit], { 'test-detachment': detachment });
+      const gameState = createMockGameState({
+        activeStratagems: [], // No active stratagems
+      });
+
+      const { result } = renderHook(() =>
+        useStatModifiers(armyData, unit, listUnit, 0, [listUnit], 'test-detachment', gameState)
+      );
+
+      expect(result.current.modifiers).toHaveLength(0);
+    });
+
+    it('evaluates conditions for stratagem modifiers', () => {
+      const stratagem = createMockStratagem({
+        id: 'conditional-stratagem',
+        name: 'Conditional Stratagem',
+        modifiers: [
+          { stat: 'a', operation: 'add', value: 1, scope: 'melee', condition: 'below_starting_strength' },
+        ],
+      });
+
+      const detachment = createMockDetachment([], [stratagem]);
+      const unit = createMockUnit({ stats: { m: 6, t: 6, sv: '2+', w: 3, ld: '6+', oc: 2 } });
+      const armyData = createMockArmyData([unit], { 'test-detachment': detachment });
+      const gameState = createMockGameState({
+        activeStratagems: ['conditional-stratagem'],
+      });
+
+      // Unit at full strength - condition not met
+      const fullStrengthListUnit = createMockListUnit({
+        modelCount: 5,
+        currentWounds: null, // Full health
+      });
+
+      const { result: fullResult } = renderHook(() =>
+        useStatModifiers(armyData, unit, fullStrengthListUnit, 0, [fullStrengthListUnit], 'test-detachment', gameState)
+      );
+
+      expect(fullResult.current.modifiers).toHaveLength(0); // Condition not met
+
+      // Unit below starting strength - condition met (lost wounds equivalent to 1 model)
+      const damagedListUnit = createMockListUnit({
+        modelCount: 5,
+        currentWounds: 12, // 5 models * 3 wounds = 15 total, 12 remaining = 1 model lost
+      });
+
+      const { result: damagedResult } = renderHook(() =>
+        useStatModifiers(armyData, unit, damagedListUnit, 0, [damagedListUnit], 'test-detachment', gameState)
+      );
+
+      expect(damagedResult.current.modifiers).toHaveLength(1); // Condition met
+    });
+
+    it('does not apply game state modifiers without gameState parameter', () => {
+      const stratagem = createMockStratagem({
+        id: 'avenge-the-fallen',
+        modifiers: [
+          { stat: 'a', operation: 'add', value: 1, scope: 'melee' },
+        ],
+      });
+
+      const detachment = createMockDetachment([], [stratagem]);
+      const unit = createMockUnit();
+      const listUnit = createMockListUnit();
+      const armyData = createMockArmyData([unit], { 'test-detachment': detachment });
+
+      // No gameState provided
+      const { result } = renderHook(() =>
+        useStatModifiers(armyData, unit, listUnit, 0, [listUnit], 'test-detachment')
+      );
+
+      expect(result.current.modifiers).toHaveLength(0);
     });
   });
 });

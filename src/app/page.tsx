@@ -75,10 +75,17 @@ export default function Home() {
   const {
     gameState,
     setBattleRound,
+    setPhase,
     setCommandPoints,
+    setPrimaryVP,
+    setSecondaryVP,
+    advanceGameState,
+    togglePlayerTurn,
     setKatah,
+    setRuleChoice,
     toggleStratagem,
     toggleTwist,
+    incrementStratagemUsage,
     isLoadoutGroupCollapsed,
     toggleLoadoutGroupCollapsed,
     isLoadoutGroupActivated,
@@ -89,6 +96,8 @@ export default function Home() {
     toggleLeaderActivated,
     incrementLoadoutCasualties,
     decrementLoadoutCasualties,
+    isAbilityUsed,
+    toggleAbilityUsed,
     resetGameState,
   } = useGameStore();
 
@@ -424,6 +433,11 @@ export default function Home() {
     setMode(newMode);
   }, [canPlay, setMode, showError]);
 
+  const handleModeToggle = useCallback(() => {
+    const newMode = mode === 'build' ? 'play' : 'build';
+    handleModeChange(newMode);
+  }, [mode, handleModeChange]);
+
   const handleToggleReferencePanel = useCallback(() => {
     setShowReferencePanel(prev => !prev);
   }, []);
@@ -631,8 +645,24 @@ export default function Home() {
         armies={availableArmies}
         onArmyChange={handleArmyChange}
         mode={mode}
-        onModeChange={handleModeChange}
+        onModeToggle={handleModeToggle}
         canPlay={canPlay}
+        listName={currentList.name}
+        detachmentName={armyData?.detachments[currentList.detachment]?.name}
+        battleRound={gameState.battleRound}
+        onBattleRoundChange={setBattleRound}
+        commandPoints={gameState.commandPoints}
+        onCommandPointsChange={setCommandPoints}
+        primaryVP={gameState.primaryVP}
+        onPrimaryVPChange={setPrimaryVP}
+        secondaryVP={gameState.secondaryVP}
+        onSecondaryVPChange={setSecondaryVP}
+        currentPhase={gameState.currentPhase}
+        playerTurn={gameState.playerTurn}
+        onPhaseChange={setPhase}
+        onAdvance={advanceGameState}
+        onToggleTurn={togglePlayerTurn}
+        onReset={resetGameState}
         showReferencePanel={showReferencePanel}
         onToggleReferencePanel={handleToggleReferencePanel}
       />
@@ -731,24 +761,24 @@ export default function Home() {
                   selectedUnitIndex={selectedUnitIndex}
                   detachmentId={currentList.detachment}
                   onSelectUnit={selectUnit}
-                  listName={currentList.name}
-                  totalPoints={totalPoints}
                 />
               )
             }
             middlePanel={
               <GameStatePanel
-                battleRound={gameState.battleRound}
-                onBattleRoundChange={setBattleRound}
-                commandPoints={gameState.commandPoints}
-                onCommandPointsChange={setCommandPoints}
                 selectedKatah={gameState.katah}
                 onKatahChange={setKatah}
+                commandPoints={gameState.commandPoints}
+                onCommandPointsChange={setCommandPoints}
                 activeStratagems={gameState.activeStratagems}
                 onToggleStratagem={toggleStratagem}
+                stratagemUsage={gameState.stratagemUsage ?? {}}
+                onIncrementStratagemUsage={incrementStratagemUsage}
                 activeTwists={gameState.activeTwists || []}
                 onToggleTwist={toggleTwist}
                 availableTwists={missionTwists}
+                activeRuleChoices={gameState.activeRuleChoices ?? {}}
+                onSetRuleChoice={setRuleChoice}
                 armyData={armyData}
                 detachmentId={currentList.detachment}
               />
@@ -808,6 +838,22 @@ export default function Home() {
                         return true;
                       })
                   }
+                  activeRuleChoiceData={
+                    (() => {
+                      const detachment = armyData?.detachments[currentList.detachment];
+                      if (!detachment?.rules) return [];
+                      const result: { rule: { id: string; name: string }; choice: NonNullable<typeof detachment.rules[0]['choices']>[0] }[] = [];
+                      for (const [ruleId, choiceId] of Object.entries(gameState.activeRuleChoices ?? {})) {
+                        const rule = detachment.rules.find(r => r.id === ruleId);
+                        if (!rule?.choices) continue;
+                        const choice = rule.choices.find(c => c.id === choiceId);
+                        if (choice) {
+                          result.push({ rule: { id: rule.id, name: rule.name }, choice });
+                        }
+                      }
+                      return result;
+                    })()
+                  }
                   onResetActivations={handleResetUnitActivations}
                   hasAnyActivations={hasAnyActivations}
                   loadoutCasualties={gameState.loadoutCasualties?.[selectedUnitIndex] || {}}
@@ -815,6 +861,8 @@ export default function Home() {
                   onDecrementCasualties={(groupId) => decrementLoadoutCasualties(selectedUnitIndex, groupId)}
                   unitKeywordGlossary={armyData?.keywordGlossary?.unit || []}
                   weaponKeywordGlossary={armyData?.keywordGlossary?.weapon || []}
+                  isAbilityUsed={(abilityId) => isAbilityUsed(selectedUnitIndex, abilityId)}
+                  onToggleAbilityUsed={(abilityId) => toggleAbilityUsed(selectedUnitIndex, abilityId)}
                 />
               ) : undefined
             }

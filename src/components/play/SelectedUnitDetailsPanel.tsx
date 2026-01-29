@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { PlayModeWeaponsDisplay } from './PlayModeWeaponsDisplay';
 import { Tooltip, TooltipBadge } from '../ui/Tooltip';
-import type { Unit, ListUnit, Enhancement, Weapon, Modifier, ModifierSource, LoadoutGroup, Stratagem, MissionTwist, KeywordDefinition, ArmyRuleStance, StatKey } from '@/types';
+import type { Unit, ListUnit, Enhancement, Weapon, Modifier, ModifierSource, LoadoutGroup, Stratagem, MissionTwist, KeywordDefinition, ArmyRuleStance, StatKey, DetachmentRuleChoice } from '@/types';
 
 interface SelectedUnitDetailsPanelProps {
   // Unit data
@@ -54,6 +54,7 @@ interface SelectedUnitDetailsPanelProps {
   stratagemNames?: Record<string, string>;
   activeStratagemData?: Stratagem[];
   activeTwistData?: MissionTwist[];
+  activeRuleChoiceData?: { rule: { id: string; name: string }; choice: DetachmentRuleChoice }[];
 
   // Reset activations
   onResetActivations?: () => void;
@@ -67,6 +68,10 @@ interface SelectedUnitDetailsPanelProps {
   // Keyword glossary for tooltips
   unitKeywordGlossary?: KeywordDefinition[];
   weaponKeywordGlossary?: KeywordDefinition[];
+
+  // Once-per-battle ability tracking
+  isAbilityUsed?: (abilityId: string) => boolean;
+  onToggleAbilityUsed?: (abilityId: string) => void;
 
   className?: string;
 }
@@ -317,6 +322,7 @@ export function SelectedUnitDetailsPanel({
   stratagemNames: _stratagemNames = {},
   activeStratagemData = [],
   activeTwistData = [],
+  activeRuleChoiceData = [],
 
   onResetActivations,
   hasAnyActivations = false,
@@ -327,6 +333,9 @@ export function SelectedUnitDetailsPanel({
 
   unitKeywordGlossary = [],
   weaponKeywordGlossary = [],
+
+  isAbilityUsed,
+  onToggleAbilityUsed,
 
   className = '',
 }: SelectedUnitDetailsPanelProps) {
@@ -342,6 +351,9 @@ export function SelectedUnitDetailsPanel({
   // Collapse state for Abilities (default open)
   // Note: Hooks must be called before any early returns
   const [abilitiesOpen, setAbilitiesOpen] = useState(true);
+
+  // Manual toggle for showing leader stats (null = auto based on wounds)
+  const [manualStatsView, setManualStatsView] = useState<'unit' | 'leader' | null>(null);
 
   // Empty state when no unit selected
   if (!unit || !listUnit || unitIndex === null) {
@@ -381,22 +393,20 @@ export function SelectedUnitDetailsPanel({
     (activeKatah ? 1 : 0) +
     (enhancement ? 1 : 0) +
     activeStratagemData.length +
-    activeTwistData.length;
+    activeTwistData.length +
+    activeRuleChoiceData.length;
 
   return (
     <div className={`flex flex-col h-full ${className}`}>
       {/* Unit Header */}
       <h2 className="text-xl font-semibold text-accent-300 mb-2">{combinedName}</h2>
 
-      {/* Badges (matching Alpine.js: unit enhancement + leader name + warlord) */}
+      {/* Badges (enhancement + warlord) */}
       <div className="flex flex-wrap gap-2 mb-4">
         {enhancement && (
           <TooltipBadge tooltip={enhancement.description} variant="accent">
             {enhancement.name}
           </TooltipBadge>
-        )}
-        {hasLeader && leaderUnit && (
-          <span className="badge badge-purple">+ {leaderUnit.name}</span>
         )}
         {/* Warlord indicator */}
         {(listUnit?.isWarlord || isLeaderWarlord) && (
@@ -411,48 +421,77 @@ export function SelectedUnitDetailsPanel({
 
       <div className="space-y-4 flex-1 overflow-y-auto scroll-smooth">
         {/* Stats Table with Modifiers */}
-        <div className="card-depth p-3">
-          <div className="grid grid-cols-6 gap-2 mb-2">
-            {['m', 't', 'sv', 'w', 'ld', 'oc'].map((stat) => {
-              const value = getModifiedStat(unit, stat, modifiers);
-              const modified = isStatModified(unit, stat, modifiers);
-              const sources = modifierSources[stat] || [];
+        {/* Show leader stats if manually selected or bodyguard is destroyed */}
+        {(() => {
+          const bodyguardDestroyed = unitWoundInfo.currentWounds <= 0;
+          const leaderAlive = leaderWoundInfo && leaderWoundInfo.currentWounds > 0;
+          const autoShowLeader = bodyguardDestroyed && hasLeader && leaderUnit && leaderAlive;
 
-              const tooltipContent = modified
-                ? sources.map(s => `${s.name}: ${s.operation === 'add' ? '+' : ''}${s.value}`).join('\n')
-                : null;
+          // Use manual selection if set, otherwise auto-detect
+          const showLeaderStats = manualStatsView === 'leader'
+            ? (hasLeader && leaderUnit)
+            : (manualStatsView === 'unit' ? false : autoShowLeader);
 
-              return (
-                <div key={stat} className="stat-cell">
-                  <span className="stat-label">{stat}</span>
-                  {modified && tooltipContent ? (
-                    <Tooltip content={tooltipContent}>
-                      <span className="stat-value modified">
-                        {stat === 'm' && typeof value === 'number' ? formatInches(value) : value}
-                      </span>
-                    </Tooltip>
-                  ) : (
-                    <span className="stat-value">
-                      {stat === 'm' && typeof value === 'number' ? formatInches(value) : value}
-                    </span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-          {unit.invuln && (
-            <div className="flex justify-center">
-              <span className="badge badge-accent">{unit.invuln} Invuln</span>
+          const displayUnit = showLeaderStats && leaderUnit ? leaderUnit : unit;
+          const displayModifiers = showLeaderStats ? [] : modifiers;
+
+          return (
+            <div className={`card-depth p-3 ${showLeaderStats ? 'border border-purple-500/30' : ''}`}>
+              {showLeaderStats && leaderUnit && (
+                <div className="text-xs text-purple-400 mb-2 text-center">Showing {leaderUnit.name} stats</div>
+              )}
+              <div className="grid grid-cols-6 gap-2">
+                {['m', 't', 'sv', 'w', 'ld', 'oc'].map((stat) => {
+                  const value = getModifiedStat(displayUnit, stat, displayModifiers);
+                  const modified = isStatModified(displayUnit, stat, displayModifiers);
+                  const sources = modifierSources[stat] || [];
+
+                  const tooltipContent = modified
+                    ? sources.map(s => `${s.name}: ${s.operation === 'add' ? '+' : ''}${s.value}`).join('\n')
+                    : null;
+
+                  return (
+                    <div key={stat} className="stat-cell relative">
+                      <span className="stat-label">{stat}</span>
+                      {modified && tooltipContent ? (
+                        <Tooltip content={tooltipContent}>
+                          <span className="stat-value modified">
+                            {stat === 'm' && typeof value === 'number' ? formatInches(value) : value}
+                          </span>
+                        </Tooltip>
+                      ) : (
+                        <span className="stat-value">
+                          {stat === 'm' && typeof value === 'number' ? formatInches(value) : value}
+                        </span>
+                      )}
+                      {/* Invuln in bottom-right of SV cell */}
+                      {stat === 'sv' && displayUnit.invuln && (
+                        <span className="absolute bottom-0.5 right-0.5 text-[11px] px-1 rounded bg-accent-500/30 text-accent-300">
+                          {displayUnit.invuln}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          )}
-        </div>
+          );
+        })()}
 
         {/* Damage Tracker - Compact */}
         <div className="card-depth p-3">
           {/* Unit Wounds Row */}
           <div className="flex items-center justify-between gap-2 bg-black/20 rounded-lg px-3 py-2">
             <div className="flex items-center gap-2 min-w-0">
-              <span className="text-xs text-white/50 truncate">{unit.name}</span>
+              <button
+                onClick={() => hasLeader && setManualStatsView(manualStatsView === 'unit' ? null : 'unit')}
+                className={`text-xs truncate transition-colors ${
+                  hasLeader ? 'hover:text-accent-400 cursor-pointer' : 'cursor-default'
+                } ${manualStatsView === 'unit' ? 'text-accent-400 underline' : 'text-white/50'}`}
+                title={hasLeader ? 'Click to show unit stats' : undefined}
+              >
+                {unit.name}
+              </button>
               {/* Wound Dots inline */}
               {unitWoundInfo.woundsPerModel > 1 && unitWoundInfo.modelsAlive > 0 && (
                 <div className="flex items-center gap-0.5">
@@ -491,7 +530,15 @@ export function SelectedUnitDetailsPanel({
           {hasLeader && leaderWoundInfo && leaderUnit && (
             <div className="flex items-center justify-between gap-2 bg-purple-500/10 border border-purple-500/30 rounded-lg px-3 py-2 mt-2">
               <div className="flex items-center gap-2 min-w-0">
-                <span className="text-xs text-purple-400 truncate">{leaderUnit.name}</span>
+                <button
+                  onClick={() => setManualStatsView(manualStatsView === 'leader' ? null : 'leader')}
+                  className={`text-xs truncate transition-colors hover:text-purple-300 cursor-pointer ${
+                    manualStatsView === 'leader' ? 'text-purple-300 underline' : 'text-purple-400'
+                  }`}
+                  title="Click to show leader stats"
+                >
+                  {leaderUnit.name}
+                </button>
                 {/* Leader Wound Dots inline */}
                 {leaderWoundInfo.woundsPerModel > 1 && leaderWoundInfo.modelsAlive > 0 && (
                   <div className="flex items-center gap-0.5">
@@ -557,6 +604,20 @@ export function SelectedUnitDetailsPanel({
                   </div>
                 </TooltipBadge>
               )}
+              {activeRuleChoiceData.map(({ rule, choice }) => (
+                <TooltipBadge
+                  key={`${rule.id}-${choice.id}`}
+                  tooltip={`${rule.name}: ${choice.name}\n\n${choice.effect}`}
+                  className="w-full justify-start"
+                >
+                  <div className="flex items-center justify-between w-full gap-2">
+                    <span className="text-blue-300">{choice.name}</span>
+                    {choice.modifiers && choice.modifiers.length > 0 && (
+                      <span className="text-white/70 text-xs">{formatModifiersSummary(choice.modifiers)}</span>
+                    )}
+                  </div>
+                </TooltipBadge>
+              ))}
               {activeStratagemData.map((strat) => (
                 <TooltipBadge
                   key={strat.id}
@@ -624,6 +685,7 @@ export function SelectedUnitDetailsPanel({
             weaponKeywordGlossary={weaponKeywordGlossary}
             enhancement={enhancement}
             activeStance={katahStance}
+            activeRuleChoices={activeRuleChoiceData}
             leaderEnhancement={leaderEnhancement}
             isLeaderWarlord={isLeaderWarlord}
             loadoutCasualties={loadoutCasualties}
@@ -633,7 +695,7 @@ export function SelectedUnitDetailsPanel({
         </div>
 
         {/* Abilities - Collapsible, default open */}
-        {unit.abilities && unit.abilities.length > 0 && (
+        {((unit.abilities && unit.abilities.length > 0) || (hasLeader && leaderUnit?.abilities && leaderUnit.abilities.length > 0)) && (
           <div className="card-depth overflow-hidden">
             <button
               onClick={() => setAbilitiesOpen(!abilitiesOpen)}
@@ -641,7 +703,9 @@ export function SelectedUnitDetailsPanel({
             >
               <span>Abilities</span>
               <div className="flex items-center gap-2">
-                <span className="badge">{unit.abilities.length}</span>
+                <span className="badge">
+                  {(unit.abilities?.length || 0) + (hasLeader && leaderUnit?.abilities ? leaderUnit.abilities.length : 0)}
+                </span>
                 <svg
                   className={`w-3 h-3 text-white/40 transition-transform duration-200 ${abilitiesOpen ? '' : '-rotate-90'}`}
                   fill="none"
@@ -655,12 +719,84 @@ export function SelectedUnitDetailsPanel({
             </button>
             <div className={`overflow-hidden transition-all duration-200 ${abilitiesOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
               <div className="px-4 pb-4 space-y-2">
-                {unit.abilities.map((ability) => (
-                  <div key={ability.id} className="bg-black/20 rounded-lg p-2">
-                    <div className="text-sm font-medium text-accent-300">{ability.name}</div>
-                    <div className="text-xs text-white/70 mt-0.5">{ability.description}</div>
-                  </div>
-                ))}
+                {/* Unit abilities - sorted so used ones are at the bottom */}
+                {[...(unit.abilities || [])]
+                  .sort((a, b) => {
+                    const aUsed = isAbilityUsed?.(a.id) ?? false;
+                    const bUsed = isAbilityUsed?.(b.id) ?? false;
+                    if (aUsed && !bUsed) return 1;
+                    if (!aUsed && bUsed) return -1;
+                    return 0;
+                  })
+                  .map((ability) => {
+                    const isOncePerBattle = /once per battle/i.test(ability.description);
+                    const isUsed = isAbilityUsed?.(ability.id) ?? false;
+
+                    return (
+                      <div
+                        key={ability.id}
+                        className={`bg-black/20 rounded-lg p-2 transition-opacity ${isUsed ? 'opacity-40' : ''}`}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="text-sm font-medium text-accent-300">{ability.name}</div>
+                          {isOncePerBattle && onToggleAbilityUsed && (
+                            <button
+                              onClick={() => onToggleAbilityUsed(ability.id)}
+                              className={`text-[10px] px-2 py-0.5 rounded transition-colors ${
+                                isUsed
+                                  ? 'bg-white/10 text-white/50'
+                                  : 'bg-accent-500/30 text-accent-300 hover:bg-accent-500/50'
+                              }`}
+                            >
+                              {isUsed ? 'Used' : 'Use'}
+                            </button>
+                          )}
+                        </div>
+                        <div className="text-xs text-white/70 mt-0.5">{ability.description}</div>
+                      </div>
+                    );
+                  })}
+                {/* Leader abilities - sorted so used ones are at the bottom */}
+                {hasLeader && leaderUnit?.abilities && [...leaderUnit.abilities]
+                  .sort((a, b) => {
+                    const aUsed = isAbilityUsed?.(`leader-${a.id}`) ?? false;
+                    const bUsed = isAbilityUsed?.(`leader-${b.id}`) ?? false;
+                    if (aUsed && !bUsed) return 1;
+                    if (!aUsed && bUsed) return -1;
+                    return 0;
+                  })
+                  .map((ability) => {
+                    const isOncePerBattle = /once per battle/i.test(ability.description);
+                    const abilityKey = `leader-${ability.id}`;
+                    const isUsed = isAbilityUsed?.(abilityKey) ?? false;
+
+                    return (
+                      <div
+                        key={abilityKey}
+                        className={`bg-purple-500/10 border border-purple-500/20 rounded-lg p-2 transition-opacity ${isUsed ? 'opacity-40' : ''}`}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium text-purple-300">{ability.name}</span>
+                            <span className="text-[10px] text-purple-400/70">({leaderUnit.name})</span>
+                          </div>
+                          {isOncePerBattle && onToggleAbilityUsed && (
+                            <button
+                              onClick={() => onToggleAbilityUsed(abilityKey)}
+                              className={`text-[10px] px-2 py-0.5 rounded transition-colors ${
+                                isUsed
+                                  ? 'bg-white/10 text-white/50'
+                                  : 'bg-purple-500/30 text-purple-300 hover:bg-purple-500/50'
+                              }`}
+                            >
+                              {isUsed ? 'Used' : 'Use'}
+                            </button>
+                          )}
+                        </div>
+                        <div className="text-xs text-white/70 mt-0.5">{ability.description}</div>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>

@@ -2,6 +2,7 @@
 
 import { LoadoutGroupAccordion, WeaponStatsTable } from '@/components/ui';
 import type { Weapon, LoadoutGroup, Stratagem, MissionTwist, KeywordDefinition, Enhancement, ArmyRuleStance } from '@/types';
+import type { ActiveRuleChoice } from '@/hooks/useWeaponModifiers';
 
 interface LoadoutGroupCardProps {
   group: LoadoutGroup;
@@ -14,6 +15,7 @@ interface LoadoutGroupCardProps {
   weaponKeywordGlossary?: KeywordDefinition[];
   enhancement?: Enhancement | null;
   activeStance?: ArmyRuleStance | null;
+  activeRuleChoices?: ActiveRuleChoice[];
   casualties?: number;
   onIncrementCasualties?: () => void;
   onDecrementCasualties?: () => void;
@@ -30,6 +32,7 @@ export function LoadoutGroupCard({
   weaponKeywordGlossary = [],
   enhancement = null,
   activeStance = null,
+  activeRuleChoices = [],
   casualties = 0,
   onIncrementCasualties,
   onDecrementCasualties,
@@ -62,6 +65,7 @@ export function LoadoutGroupCard({
               weaponKeywordGlossary={weaponKeywordGlossary}
               enhancement={enhancement}
               activeStance={activeStance}
+              activeRuleChoices={activeRuleChoices}
             />
           </div>
         )}
@@ -79,6 +83,7 @@ export function LoadoutGroupCard({
               weaponKeywordGlossary={weaponKeywordGlossary}
               enhancement={enhancement}
               activeStance={activeStance}
+              activeRuleChoices={activeRuleChoices}
             />
           </div>
         )}
@@ -105,6 +110,7 @@ interface PlayModeWeaponsDisplayProps {
   weaponKeywordGlossary?: KeywordDefinition[];
   enhancement?: Enhancement | null;
   activeStance?: ArmyRuleStance | null;
+  activeRuleChoices?: ActiveRuleChoice[];
   leaderEnhancement?: Enhancement | null;
   /** Whether the attached leader is the warlord (for applying warlord-only twists) */
   isLeaderWarlord?: boolean;
@@ -135,6 +141,7 @@ export function PlayModeWeaponsDisplay({
   weaponKeywordGlossary = [],
   enhancement = null,
   activeStance = null,
+  activeRuleChoices = [],
   leaderEnhancement = null,
   isLeaderWarlord = false,
   className = '',
@@ -168,6 +175,7 @@ export function PlayModeWeaponsDisplay({
           weaponKeywordGlossary={weaponKeywordGlossary}
           enhancement={enhancement}
           activeStance={activeStance}
+          activeRuleChoices={activeRuleChoices}
           casualties={loadoutCasualties[group.id] || 0}
           onIncrementCasualties={
             onIncrementCasualties
@@ -249,6 +257,7 @@ export function PlayModeWeaponsDisplay({
                     weaponKeywordGlossary={weaponKeywordGlossary}
                     enhancement={leaderEnhancement}
                     activeStance={activeStance}
+                    activeRuleChoices={activeRuleChoices}
                   />
                 </div>
               )}
@@ -266,6 +275,7 @@ export function PlayModeWeaponsDisplay({
                     weaponKeywordGlossary={weaponKeywordGlossary}
                     enhancement={leaderEnhancement}
                     activeStance={activeStance}
+                    activeRuleChoices={activeRuleChoices}
                   />
                 </div>
               )}

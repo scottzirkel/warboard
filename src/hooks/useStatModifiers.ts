@@ -10,15 +10,31 @@ import type {
   UnitStats,
   StatKey,
   ModifierSource,
+  GameState,
 } from '@/types';
+import {
+  evaluateCondition,
+  createUnitConditionState,
+  type UnitConditionState,
+} from '@/lib/conditionEvaluator';
 
 // ============================================================================
 // Types
 // ============================================================================
 
+export type ModifierSourceType =
+  | 'enhancement'
+  | 'weapon'
+  | 'leader'
+  | 'leaderEnhancement'
+  | 'stratagem'
+  | 'detachmentRule'
+  | 'katah'
+  | 'twist';
+
 export interface CollectedModifier extends Modifier {
   sourceName: string;
-  sourceType: 'enhancement' | 'weapon' | 'leader' | 'leaderEnhancement';
+  sourceType: ModifierSourceType;
 }
 
 export interface ModifiedStat {
@@ -275,6 +291,172 @@ function collectLeaderModifiers(
   return modifiers;
 }
 
+/**
+ * Collect modifiers from active stratagems.
+ */
+function collectStratagemModifiers(
+  armyData: ArmyData,
+  detachment: string,
+  activeStratagems: string[],
+  unitCondition: UnitConditionState
+): CollectedModifier[] {
+  if (!detachment || activeStratagems.length === 0) {
+    return [];
+  }
+
+  const detachmentData = armyData.detachments[detachment];
+
+  if (!detachmentData) {
+    return [];
+  }
+
+  const modifiers: CollectedModifier[] = [];
+
+  for (const stratagemId of activeStratagems) {
+    const stratagem = detachmentData.stratagems?.find(s => s.id === stratagemId);
+
+    if (!stratagem?.modifiers) {
+      continue;
+    }
+
+    for (const mod of stratagem.modifiers) {
+      // Check if condition is met
+      if (!evaluateCondition(mod.condition, unitCondition)) {
+        continue;
+      }
+
+      modifiers.push({
+        ...mod,
+        sourceName: stratagem.name,
+        sourceType: 'stratagem',
+      });
+    }
+  }
+
+  return modifiers;
+}
+
+/**
+ * Collect modifiers from detachment rules and active rule choices.
+ */
+function collectDetachmentRuleModifiers(
+  armyData: ArmyData,
+  detachment: string,
+  unitCondition: UnitConditionState,
+  activeRuleChoices: Record<string, string> = {}
+): CollectedModifier[] {
+  if (!detachment) {
+    return [];
+  }
+
+  const detachmentData = armyData.detachments[detachment];
+
+  if (!detachmentData?.rules) {
+    return [];
+  }
+
+  const modifiers: CollectedModifier[] = [];
+
+  for (const rule of detachmentData.rules) {
+    // Collect base rule modifiers
+    if (rule.modifiers && rule.modifiers.length > 0) {
+      for (const mod of rule.modifiers) {
+        // Check if condition is met
+        if (!evaluateCondition(mod.condition, unitCondition)) {
+          continue;
+        }
+
+        modifiers.push({
+          ...mod,
+          sourceName: rule.name,
+          sourceType: 'detachmentRule',
+        });
+      }
+    }
+
+    // Collect modifiers from active rule choices
+    if (rule.choices && rule.choices.length > 0) {
+      const activeChoiceId = activeRuleChoices[rule.id];
+      if (activeChoiceId) {
+        const activeChoice = rule.choices.find(c => c.id === activeChoiceId);
+        if (activeChoice?.modifiers) {
+          for (const mod of activeChoice.modifiers) {
+            // Check if condition is met
+            if (!evaluateCondition(mod.condition, unitCondition)) {
+              continue;
+            }
+
+            modifiers.push({
+              ...mod,
+              sourceName: `${rule.name}: ${activeChoice.name}`,
+              sourceType: 'detachmentRule',
+            });
+          }
+        }
+      }
+    }
+  }
+
+  return modifiers;
+}
+
+/**
+ * Collect modifiers from Martial Ka'tah stance (Custodes army rule).
+ */
+function collectKatahModifiers(
+  armyData: ArmyData,
+  katah: string | null,
+  unitCondition: UnitConditionState
+): CollectedModifier[] {
+  if (!katah) {
+    return [];
+  }
+
+  const martialKatah = armyData.armyRules?.['martial_katah'];
+
+  if (!martialKatah?.stances) {
+    return [];
+  }
+
+  const stance = martialKatah.stances.find(s => s.id === katah);
+
+  if (!stance?.modifiers) {
+    return [];
+  }
+
+  const modifiers: CollectedModifier[] = [];
+
+  for (const mod of stance.modifiers) {
+    // Check if condition is met
+    if (!evaluateCondition(mod.condition, unitCondition)) {
+      continue;
+    }
+
+    modifiers.push({
+      ...mod,
+      sourceName: `${martialKatah.name}: ${stance.name}`,
+      sourceType: 'katah',
+    });
+  }
+
+  return modifiers;
+}
+
+/**
+ * Collect modifiers from active mission twists.
+ */
+function collectTwistModifiers(
+  _armyData: ArmyData,
+  _activeTwists: string[],
+  _unitCondition: UnitConditionState,
+  _isWarlord: boolean
+): CollectedModifier[] {
+  // Mission twists are stored in a separate data file, not in faction data
+  // For now, return empty - twists would need to be loaded separately
+  // This is a placeholder for future implementation
+  return [];
+}
+
 // ============================================================================
 // Hook Implementation
 // ============================================================================
@@ -287,6 +469,10 @@ function collectLeaderModifiers(
  * - Unit's equipped weapons (with model/unit scope)
  * - Attached leader's enhancement (unit scope only)
  * - Attached leader's weapons (unit scope only)
+ * - Active stratagems (with condition evaluation)
+ * - Detachment rules (with condition evaluation)
+ * - Martial Ka'tah stance
+ * - Mission twists
  *
  * @param armyData - The loaded faction data
  * @param unit - The unit definition from army data
@@ -294,6 +480,7 @@ function collectLeaderModifiers(
  * @param unitIndex - Index of the unit in the list
  * @param units - All units in the list (for leader lookup)
  * @param detachment - The selected detachment
+ * @param gameState - Optional game state for stratagem/katah modifiers
  *
  * @example
  * ```tsx
@@ -303,7 +490,8 @@ function collectLeaderModifiers(
  *   listUnit,
  *   unitIndex,
  *   currentList.units,
- *   currentList.detachment
+ *   currentList.detachment,
+ *   gameState
  * );
  *
  * // Display modified wounds with tooltip
@@ -320,7 +508,8 @@ export function useStatModifiers(
   listUnit: ListUnit | undefined,
   unitIndex: number,
   units: ListUnit[],
-  detachment: string
+  detachment: string,
+  gameState?: GameState | null
 ): UseStatModifiersReturn {
   // Collect all modifiers
   const modifiers = useMemo((): CollectedModifier[] => {
@@ -330,6 +519,13 @@ export function useStatModifiers(
 
     const allModifiers: CollectedModifier[] = [];
     const weaponCounts = listUnit.weaponCounts || {};
+
+    // Create unit condition state for evaluating conditional modifiers
+    const unitCondition = createUnitConditionState(
+      listUnit.modelCount,
+      unit.stats.w,
+      listUnit.currentWounds
+    );
 
     // 1. Collect enhancement modifiers
     if (listUnit.enhancement) {
@@ -351,8 +547,46 @@ export function useStatModifiers(
     const leaderMods = collectLeaderModifiers(armyData, units, unitIndex, detachment);
     allModifiers.push(...leaderMods);
 
+    // 4. Collect game state modifiers (stratagems, rules, katah, twists)
+    if (gameState) {
+      // Stratagem modifiers
+      const stratagemMods = collectStratagemModifiers(
+        armyData,
+        detachment,
+        gameState.activeStratagems,
+        unitCondition
+      );
+      allModifiers.push(...stratagemMods);
+
+      // Detachment rule modifiers
+      const ruleMods = collectDetachmentRuleModifiers(
+        armyData,
+        detachment,
+        unitCondition,
+        gameState.activeRuleChoices || {}
+      );
+      allModifiers.push(...ruleMods);
+
+      // Katah modifiers (Custodes army rule)
+      const katahMods = collectKatahModifiers(
+        armyData,
+        gameState.katah,
+        unitCondition
+      );
+      allModifiers.push(...katahMods);
+
+      // Twist modifiers
+      const twistMods = collectTwistModifiers(
+        armyData,
+        gameState.activeTwists || [],
+        unitCondition,
+        listUnit.isWarlord || false
+      );
+      allModifiers.push(...twistMods);
+    }
+
     return allModifiers;
-  }, [armyData, unit, listUnit, unitIndex, units, detachment]);
+  }, [armyData, unit, listUnit, unitIndex, units, detachment, gameState]);
 
   // Get modifiers for a specific stat
   const getModifiersForStat = useMemo(() => {
