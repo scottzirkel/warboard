@@ -267,6 +267,7 @@ export interface ArmyData {
   catalogueId?: string; // BSData catalogue ID (e.g., "1f19-6509-d906-ca10")
   gameSystemId?: string; // BSData game system ID (e.g., "sys-352e-adc2-7639-d6a9")
   armyRules?: Record<string, ArmyRule>;
+  coreStratagems?: Stratagem[]; // Universal 10th edition stratagems
   units: Unit[];
   detachments: Record<string, Detachment>;
   allies?: Record<string, AllyFaction>;
