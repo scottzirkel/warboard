@@ -41,6 +41,9 @@ export interface ConfirmModalConfig {
 export type MobilePanel = 'list' | 'roster' | 'details';
 
 interface UIStoreState {
+  // Landing Page
+  hasEnteredApp: boolean;
+
   // App Mode
   mode: AppMode;
 
@@ -63,6 +66,9 @@ interface UIStoreState {
 }
 
 interface UIStoreActions {
+  // Landing Page
+  enterApp: () => void;
+
   // Mode Management
   setMode: (mode: AppMode) => void;
   toggleMode: () => void;
@@ -112,6 +118,7 @@ const generateToastId = (): string => {
 // ============================================================================
 
 const createDefaultUIState = (): UIStoreState => ({
+  hasEnteredApp: false,
   mode: 'build',
   selectedUnitIndex: null,
   mobilePanel: 'list',
@@ -131,6 +138,14 @@ export const useUIStore = create<UIStore>()(
     (set, get) => ({
   // Initial State
   ...createDefaultUIState(),
+
+  // -------------------------------------------------------------------------
+  // Landing Page Actions
+  // -------------------------------------------------------------------------
+
+  enterApp: () => {
+    set({ hasEnteredApp: true });
+  },
 
   // -------------------------------------------------------------------------
   // Mode Management Actions

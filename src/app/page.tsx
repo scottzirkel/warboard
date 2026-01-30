@@ -5,6 +5,7 @@ import { useArmyStore, availableArmies } from '@/stores/armyStore';
 import { useGameStore } from '@/stores/gameStore';
 import { useUIStore } from '@/stores/uiStore';
 import { Navigation } from '@/components/navigation';
+import { LandingPage } from '@/components/LandingPage';
 import { BuildMode } from '@/components/build/BuildMode';
 import { ArmyListPanel } from '@/components/build/ArmyListPanel';
 import { UnitRosterPanel } from '@/components/build/UnitRosterPanel';
@@ -103,12 +104,14 @@ export default function Home() {
   } = useGameStore();
 
   const {
+    hasEnteredApp,
     mode,
     selectedUnitIndex,
     mobilePanel,
     activeModal,
     confirmModalConfig,
     toasts,
+    enterApp,
     setMode,
     selectUnit,
     setMobilePanel,
@@ -287,12 +290,15 @@ export default function Home() {
   // Effects
   // -------------------------------------------------------------------------
 
-  // Load default army data on mount
+  // Load army data and saved lists after entering from landing page
+  // The landing page handles the initial army load, this handles subsequent mounts
   useEffect(() => {
-    loadArmyData(currentList.army);
+    if (hasEnteredApp && !armyData) {
+      loadArmyData(currentList.army);
+    }
     fetchLists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [hasEnteredApp]);
 
   // Load mission data (Chapter Approved twists)
   useEffect(() => {
@@ -453,6 +459,11 @@ export default function Home() {
     selectUnit(null);
     await loadArmyData(armyId);
   }, [resetList, resetGameState, selectUnit, loadArmyData]);
+
+  const handleLandingArmySelect = useCallback(async (armyId: string) => {
+    await loadArmyData(armyId);
+    enterApp();
+  }, [loadArmyData, enterApp]);
 
   const handleModeChange = useCallback((newMode: 'build' | 'play') => {
     if (newMode === 'play' && !canPlay) {
@@ -655,6 +666,16 @@ export default function Home() {
   // -------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------
+
+  // Landing page
+  if (!hasEnteredApp) {
+    return (
+      <LandingPage
+        onSelectArmy={handleLandingArmySelect}
+        isLoading={isArmyLoading}
+      />
+    );
+  }
 
   // Loading state
   if (isArmyLoading && !armyData) {
