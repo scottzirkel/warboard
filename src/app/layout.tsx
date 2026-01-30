@@ -7,7 +7,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'WarBoard',
+  title: 'Warboard',
   description: 'Warhammer 40k army list builder and game state tracker',
   robots: {
     index: false,
@@ -16,6 +16,11 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
+    title: 'Warboard',
+  },
+  icons: {
+    icon: '/icons/favicon.ico',
+    apple: '/icons/apple-touch-icon.png',
   },
 }
 

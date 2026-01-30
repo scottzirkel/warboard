@@ -28,6 +28,9 @@ export default tseslint.config(
       "*.config.js",
       "*.config.mjs",
       "*.config.ts",
+      "public/sw.js",
+      "public/sw.js.map",
+      "public/workbox-*.js",
     ],
   }
 );

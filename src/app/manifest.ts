@@ -1,0 +1,32 @@
+import type { MetadataRoute } from 'next'
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: 'Warboard',
+    short_name: 'Warboard',
+    description: 'Warhammer 40k army list builder and game state tracker',
+    start_url: '/',
+    display: 'standalone',
+    background_color: '#1a1a1a',
+    theme_color: '#1a1a1a',
+    orientation: 'portrait-primary',
+    icons: [
+      {
+        src: '/icons/icon-192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        src: '/icons/icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
+      {
+        src: '/icons/icon-maskable-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
+      },
+    ],
+  }
+}

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "postinstall": "prisma generate",
     "start": "next start",
     "lint": "eslint . --max-warnings=50",
@@ -26,6 +26,7 @@
     "@libsql/client": "^0.17.0",
     "@prisma/adapter-libsql": "^7.3.0",
     "@prisma/client": "^7.3.0",
+    "@serwist/next": "^9.5.3",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/archiver": "^7.0.0",
     "archiver": "^7.0.1",
@@ -34,6 +35,7 @@
     "prisma": "^7.3.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "serwist": "^9.5.3",
     "zustand": "^5.0.10"
   },
   "devDependencies": {
