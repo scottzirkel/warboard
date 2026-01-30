@@ -283,7 +283,15 @@ export const useArmyStore = create<ArmyStore>()(
 
   addUnit: (unitId: string, modelCount: number) => {
     const { armyData } = get();
-    const unit = armyData?.units.find(u => u.id === unitId);
+
+    // Check regular units first, then allies
+    let unit = armyData?.units.find(u => u.id === unitId);
+    if (!unit && armyData?.allies) {
+      for (const faction of Object.values(armyData.allies)) {
+        unit = faction.units?.find(u => u.id === unitId);
+        if (unit) break;
+      }
+    }
 
     if (!unit) {
       return;

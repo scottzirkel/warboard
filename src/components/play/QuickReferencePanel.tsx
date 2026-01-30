@@ -266,7 +266,8 @@ export function QuickReferencePanel({
 
   // Get current detachment data
   const detachment: Detachment | undefined = armyData.detachments[selectedDetachment];
-  const stratagems: Stratagem[] = detachment?.stratagems || [];
+  const detachmentStratagems: Stratagem[] = detachment?.stratagems || [];
+  const coreStratagems: Stratagem[] = armyData.coreStratagems || [];
   const enhancements = detachment?.enhancements || [];
 
   // Get weapon keywords from faction data (legacy format)
@@ -281,13 +282,8 @@ export function QuickReferencePanel({
   // Get wargear abilities (stat modifiers with sources)
   const wargearAbilities = getWargearAbilities(armyData);
 
-  // Group stratagems by phase for better organization
-  const stratagemsByPhase = stratagems.reduce<Record<string, Stratagem[]>>((acc, strat) => {
-    const phase = strat.phase || 'Any';
-    if (!acc[phase]) acc[phase] = [];
-    acc[phase].push(strat);
-    return acc;
-  }, {});
+  // Combine all stratagems into one list
+  const allStratagems = [...coreStratagems, ...detachmentStratagems];
 
   return (
     <Panel title="Quick Reference" className={className}>
@@ -313,27 +309,18 @@ export function QuickReferencePanel({
         )}
 
         {/* Stratagems Section */}
-        {stratagems.length > 0 && (
+        {allStratagems.length > 0 && (
           <CollapsibleSection
             id="stratagems"
-            title="Detachment Stratagems"
-            itemCount={stratagems.length}
+            title="Stratagems"
+            itemCount={allStratagems.length}
             isOpen={isOpen('stratagems')}
             onToggle={toggleSection}
             variant="blue"
           >
             <div className="space-y-2">
-              {Object.entries(stratagemsByPhase).map(([phase, phaseStratagems]) => (
-                <div key={phase}>
-                  <h5 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">
-                    {phase} Phase
-                  </h5>
-                  <div className="space-y-2">
-                    {phaseStratagems.map((stratagem) => (
-                      <StratagemCard key={stratagem.id} stratagem={stratagem} />
-                    ))}
-                  </div>
-                </div>
+              {allStratagems.map((stratagem) => (
+                <StratagemCard key={stratagem.id} stratagem={stratagem} />
               ))}
             </div>
           </CollapsibleSection>

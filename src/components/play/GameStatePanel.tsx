@@ -72,11 +72,18 @@ function getDetachment(armyData: ArmyData | null, detachmentId: string): Detachm
   return armyData.detachments[detachmentId] ?? null;
 }
 
-function getStratagems(detachment: Detachment | null): Stratagem[] {
+function getDetachmentStratagems(detachment: Detachment | null): Stratagem[] {
   if (!detachment?.stratagems) {
     return [];
   }
   return detachment.stratagems;
+}
+
+function getCoreStratagems(armyData: ArmyData | null): Stratagem[] {
+  if (!armyData?.coreStratagems) {
+    return [];
+  }
+  return armyData.coreStratagems;
 }
 
 /**
@@ -207,7 +214,10 @@ export function GameStatePanel({
 }: GameStatePanelProps) {
   const katahStances = getKatahStances(armyData);
   const detachment = getDetachment(armyData, detachmentId);
-  const stratagems = sortStratagemsByPhase(getStratagems(detachment));
+  const allStratagems = sortStratagemsByPhase([
+    ...getCoreStratagems(armyData),
+    ...getDetachmentStratagems(detachment),
+  ]);
 
   // Collapse state: Detachment Rules and Stratagems default expanded, Twists default collapsed
   const [detachmentRulesOpen, setDetachmentRulesOpen] = useState(true);
@@ -362,7 +372,7 @@ export function GameStatePanel({
           >
             <span>Stratagems</span>
             <div className="flex items-center gap-2">
-              <Badge>{stratagems.length}</Badge>
+              <Badge>{allStratagems.length}</Badge>
               <svg
                 className={`w-3 h-3 text-white/40 transition-transform duration-200 ${stratagemsSectionOpen ? '' : '-rotate-90'}`}
                 fill="none"
@@ -376,12 +386,12 @@ export function GameStatePanel({
           </button>
           <div className={`overflow-hidden transition-all duration-200 ${stratagemsSectionOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
             <div className="space-y-0">
-              {stratagems.length === 0 ? (
+              {allStratagems.length === 0 ? (
                 <div className="px-4 py-8 text-center text-white/40 text-sm">
                   No stratagems available
                 </div>
               ) : (
-                stratagems.map((strat) => {
+                allStratagems.map((strat) => {
                   const usageCount = (stratagemUsage ?? {})[strat.id] || 0;
                   const usageOpacityClass = getStratagemOpacity(strat, usageCount);
                   const maxUses = getMaxUses(strat);
