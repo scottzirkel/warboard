@@ -125,9 +125,21 @@ export function ArmyListPanel({
     });
   };
 
-  // Get unit by ID
+  // Get unit by ID (checks both regular units and allies)
   const getUnitById = (unitId: string): Unit | undefined => {
-    return armyData.units.find((u) => u.id === unitId);
+    // Check regular units first
+    const regularUnit = armyData.units.find((u) => u.id === unitId);
+    if (regularUnit) return regularUnit;
+
+    // Check allies
+    if (armyData.allies) {
+      for (const faction of Object.values(armyData.allies)) {
+        const allyUnit = faction.units?.find((u) => u.id === unitId);
+        if (allyUnit) return allyUnit;
+      }
+    }
+
+    return undefined;
   };
 
   // Game format configuration (matching Alpine.js)

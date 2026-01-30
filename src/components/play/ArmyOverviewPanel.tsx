@@ -20,10 +20,22 @@ function isUnitAttachedAsLeader(
 }
 
 /**
- * Get the unit data from armyData by unitId
+ * Get the unit data from armyData by unitId (checks both regular units and allies)
  */
 function getUnitById(unitId: string, armyData: ArmyData): Unit | undefined {
-  return armyData.units.find((u) => u.id === unitId);
+  // Check regular units first
+  const regularUnit = armyData.units.find((u) => u.id === unitId);
+  if (regularUnit) return regularUnit;
+
+  // Check allies
+  if (armyData.allies) {
+    for (const faction of Object.values(armyData.allies)) {
+      const allyUnit = faction.units?.find((u) => u.id === unitId);
+      if (allyUnit) return allyUnit;
+    }
+  }
+
+  return undefined;
 }
 
 /**

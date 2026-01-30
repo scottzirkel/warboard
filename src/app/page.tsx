@@ -141,8 +141,21 @@ export default function Home() {
       attachLeader(unitIndex, leaderIndex);
       const leaderListUnit = currentList.units[leaderIndex];
       const targetListUnit = currentList.units[unitIndex];
-      const leaderUnit = armyData?.units.find(u => u.id === leaderListUnit?.unitId);
-      const targetUnit = armyData?.units.find(u => u.id === targetListUnit?.unitId);
+      // Helper to find unit in both regular units and allies
+      const findUnit = (unitId: string | undefined) => {
+        if (!unitId || !armyData) return undefined;
+        const regular = armyData.units.find(u => u.id === unitId);
+        if (regular) return regular;
+        if (armyData.allies) {
+          for (const faction of Object.values(armyData.allies)) {
+            const ally = faction.units?.find(u => u.id === unitId);
+            if (ally) return ally;
+          }
+        }
+        return undefined;
+      };
+      const leaderUnit = findUnit(leaderListUnit?.unitId);
+      const targetUnit = findUnit(targetListUnit?.unitId);
       if (leaderUnit && targetUnit) {
         showSuccess(`${leaderUnit.name} attached to ${targetUnit.name}`);
       }
@@ -151,7 +164,20 @@ export default function Home() {
       const listUnit = currentList.units[unitIndex];
       const leaderIndex = listUnit?.attachedLeader?.unitIndex;
       const leaderListUnit = leaderIndex !== undefined ? currentList.units[leaderIndex] : undefined;
-      const leaderUnit = leaderListUnit ? armyData?.units.find(u => u.id === leaderListUnit.unitId) : undefined;
+      // Helper to find unit in both regular units and allies
+      const findUnit = (unitId: string | undefined) => {
+        if (!unitId || !armyData) return undefined;
+        const regular = armyData.units.find(u => u.id === unitId);
+        if (regular) return regular;
+        if (armyData.allies) {
+          for (const faction of Object.values(armyData.allies)) {
+            const ally = faction.units?.find(u => u.id === unitId);
+            if (ally) return ally;
+          }
+        }
+        return undefined;
+      };
+      const leaderUnit = leaderListUnit ? findUnit(leaderListUnit.unitId) : undefined;
       detachLeader(unitIndex);
       if (leaderUnit) {
         showSuccess(`${leaderUnit.name} detached`);
@@ -304,9 +330,9 @@ export default function Home() {
 
   // Get leader unit and listUnit from the available leader info
   const leaderUnit = useMemo((): Unit | undefined => {
-    if (!attachedLeaderInfo || !armyData) return undefined;
-    return armyData.units.find((u) => u.id === attachedLeaderInfo.unitId);
-  }, [attachedLeaderInfo, armyData]);
+    if (!attachedLeaderInfo) return undefined;
+    return findUnitById(attachedLeaderInfo.unitId);
+  }, [attachedLeaderInfo, findUnitById]);
 
   const leaderListUnit = useMemo(() => {
     if (!attachedLeaderInfo) return undefined;
