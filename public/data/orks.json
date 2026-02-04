@@ -1654,6 +1654,49 @@
         "Infantry",
         "Gretchin",
         "Grots"
+      ],
+      "modelTypes": [
+        {
+          "id": "gretchin",
+          "name": "Gretchin",
+          "stats": {
+            "m": 6,
+            "t": 2,
+            "sv": "7+",
+            "w": 1,
+            "ld": "8+",
+            "oc": 2
+          },
+          "count": {
+            "min": 10,
+            "max": 10
+          },
+          "isLeader": false,
+          "weaponIds": [
+            "close-combat-weapon-melee",
+            "grot-blasta-ranged"
+          ]
+        },
+        {
+          "id": "runtherd",
+          "name": "Runtherd",
+          "stats": {
+            "m": 6,
+            "t": 5,
+            "sv": "5+",
+            "w": 2,
+            "ld": "7+",
+            "oc": 1
+          },
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "isLeader": true,
+          "weaponIds": [
+            "grot-smacka-melee"
+          ]
+        }
       ]
     },
     {
@@ -3313,6 +3356,51 @@
         "Beast Snagga",
         "Grenades",
         "Squighog Boyz"
+      ],
+      "modelTypes": [
+        {
+          "id": "nob-on-smasha-squig",
+          "name": "Nob on Smasha Squig",
+          "stats": {
+            "m": 10,
+            "t": 7,
+            "sv": "4+",
+            "w": 4,
+            "ld": "7+",
+            "oc": 2
+          },
+          "count": {
+            "min": 1,
+            "max": 1
+          },
+          "isLeader": true,
+          "weaponIds": [
+            "squig-jaws-melee",
+            "big-choppa-melee"
+          ]
+        },
+        {
+          "id": "squighog-boy",
+          "name": "Squighog Boy",
+          "stats": {
+            "m": 10,
+            "t": 7,
+            "sv": "4+",
+            "w": 3,
+            "ld": "7+",
+            "oc": 2
+          },
+          "count": {
+            "min": 3,
+            "max": 3
+          },
+          "isLeader": false,
+          "weaponIds": [
+            "saddlegit-weapons-ranged",
+            "stikka-melee-melee",
+            "stikka-ranged-ranged"
+          ]
+        }
       ]
     },
     {

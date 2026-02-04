@@ -108,6 +108,26 @@ export interface UnitStats {
   oc: number;
 }
 
+/**
+ * Represents a distinct model type within a unit.
+ * Used for units like Gretchin (Gretchin + Runtherd) or Squighog Boyz (Squighog Boy + Nob).
+ * Each model type can have different stats, weapons, and be targeted separately (Precision).
+ */
+export interface ModelType {
+  id: string;
+  name: string;
+  stats: UnitStats;
+  invuln?: string | null;
+  /** How many of this model type in the unit configuration */
+  count?: { min: number; max: number };
+  /** Weapon IDs that belong to this model type */
+  weaponIds?: string[];
+  /** Model-specific keywords (e.g., "Character" for Nob) */
+  keywords?: string[];
+  /** If true, this model can be targeted by Precision attacks */
+  isLeader?: boolean;
+}
+
 export interface Unit {
   id: string;
   bsdataId?: string; // BSData entry ID for .rosz export
@@ -119,6 +139,8 @@ export interface Unit {
   loadoutOptions?: LoadoutOption[];
   abilities: Ability[];
   keywords: string[];
+  /** For units with multiple model types (e.g., Gretchin has Gretchin + Runtherd) */
+  modelTypes?: ModelType[];
 }
 
 // ============================================================================
@@ -296,6 +318,8 @@ export interface ListUnit {
   leaderCurrentWounds: number | null; // null = full health
   attachedLeader: AttachedLeader | null;
   isWarlord?: boolean; // true if this unit is designated as the army's Warlord
+  /** For multi-model-type units: wounds per model type (modelTypeId -> wounds, null = full) */
+  modelTypeWounds?: Record<string, number | null>;
 }
 
 // ============================================================================

@@ -115,6 +115,17 @@ interface LoadoutOption {
   choices: LoadoutChoice[];
 }
 
+interface ModelType {
+  id: string;
+  name: string;
+  stats: UnitStats;
+  invuln?: string | null;
+  count?: { min: number; max: number };
+  weaponIds?: string[];
+  keywords?: string[];
+  isLeader?: boolean;
+}
+
 interface ParsedUnit {
   id: string;
   bsdataId: string;
@@ -126,6 +137,7 @@ interface ParsedUnit {
   loadoutOptions?: LoadoutOption[];
   abilities: Ability[];
   keywords: string[];
+  modelTypes?: ModelType[];
 }
 
 export interface ParsedData {
@@ -450,9 +462,11 @@ class CatalogueParser {
   }
 
   // Extract weapons from a shared model entry
-  private extractWeaponsFromSharedModelEntry(targetId: string, weapons: Weapon[], loadoutGroup?: string): void {
+  private extractWeaponsFromSharedModelEntry(targetId: string, weapons: Weapon[], loadoutGroup?: string): string[] {
     const sharedEntry = this.sharedSelectionEntries.get(targetId);
-    if (!sharedEntry) return;
+    if (!sharedEntry) return [];
+
+    const weaponIds: string[] = [];
 
     // Get weapons from direct selection entries
     const weaponEntries = ensureArray((sharedEntry.selectionEntries as Record<string, unknown>)?.selectionEntry);
@@ -465,12 +479,14 @@ class CatalogueParser {
           if (weapon && !weapons.find(w => w.id === weapon.id)) {
             if (loadoutGroup) weapon.loadoutGroup = loadoutGroup;
             weapons.push(weapon);
+            weaponIds.push(weapon.id);
           }
         } else if (typeName === 'Ranged Weapons') {
           const weapon = parseWeaponProfile(profile, 'ranged');
           if (weapon && !weapons.find(w => w.id === weapon.id)) {
             if (loadoutGroup) weapon.loadoutGroup = loadoutGroup;
             weapons.push(weapon);
+            weaponIds.push(weapon.id);
           }
         }
       }
@@ -479,6 +495,56 @@ class CatalogueParser {
     // Also check entryLinks for weapons
     const entryLinks = ensureArray((sharedEntry.entryLinks as Record<string, unknown>)?.entryLink);
     this.extractWeaponsFromEntryLinks(entryLinks, weapons, loadoutGroup);
+
+    return weaponIds;
+  }
+
+  // Get full model type info from a shared model entry
+  private getModelTypeFromSharedEntry(targetId: string, link: Record<string, unknown>): ModelType | null {
+    const sharedEntry = this.sharedSelectionEntries.get(targetId);
+    if (!sharedEntry) return null;
+
+    const name = getAttr(link, 'name') || getAttr(sharedEntry, 'name');
+    const id = slugify(name);
+
+    // Get stats
+    const stats = this.getStatsFromSharedModelEntry(targetId);
+    if (!stats) return null;
+
+    // Get count constraints from the link
+    const constraints = ensureArray((link.constraints as Record<string, unknown>)?.constraint);
+    let minCount = 1;
+    let maxCount = 1;
+    for (const constraint of constraints) {
+      const type = getAttr(constraint, 'type');
+      const value = parseInt(getAttr(constraint, 'value'), 10);
+      if (type === 'min') minCount = value;
+      if (type === 'max') maxCount = value;
+    }
+
+    // Check if this is a leader-type model (Nob, Runtherd, etc.)
+    // Leaders typically have maxCount=1 or 2 and higher stats
+    const isLeader = maxCount <= 2 && (
+      name.toLowerCase().includes('nob') ||
+      name.toLowerCase().includes('runtherd') ||
+      name.toLowerCase().includes('sergeant') ||
+      name.toLowerCase().includes('champion')
+    );
+
+    // Get keywords from category links on shared entry
+    const categoryLinks = ensureArray((sharedEntry.categoryLinks as Record<string, unknown>)?.categoryLink);
+    const keywords = categoryLinks
+      .map((cl) => getAttr(cl, 'name'))
+      .filter((k) => k && !k.startsWith('Faction:'));
+
+    return {
+      id,
+      name,
+      stats,
+      count: { min: minCount, max: maxCount },
+      keywords: keywords.length > 0 ? keywords : undefined,
+      isLeader,
+    };
   }
 
   // Helper to extract weapons from entry links
@@ -753,6 +819,9 @@ class CatalogueParser {
       }
     };
 
+    // Collect model types for units with multiple model types (e.g., Gretchin, Squighog Boyz)
+    const collectedModelTypes: ModelType[] = [];
+
     for (const group of groups) {
       const groupEntries = ensureArray((group.selectionEntries as Record<string, unknown>)?.selectionEntry);
       const constraints = ensureArray((group.constraints as Record<string, unknown>)?.constraint);
@@ -774,8 +843,18 @@ class CatalogueParser {
                 stats = this.getStatsFromSharedModelEntry(targetId);
               }
 
-              // Extract weapons from the shared entry
-              this.extractWeaponsFromSharedModelEntry(targetId, weapons);
+              // Extract weapons and get weapon IDs for this model type
+              const weaponIds = this.extractWeaponsFromSharedModelEntry(targetId, weapons);
+
+              // Get full model type info
+              const modelType = this.getModelTypeFromSharedEntry(targetId, link);
+              if (modelType) {
+                modelType.weaponIds = weaponIds.length > 0 ? weaponIds : undefined;
+                // Only add if not already present
+                if (!collectedModelTypes.find(mt => mt.id === modelType.id)) {
+                  collectedModelTypes.push(modelType);
+                }
+              }
             }
           }
         }
@@ -1012,6 +1091,11 @@ class CatalogueParser {
 
     if (loadoutOptions.length > 0) {
       result.loadoutOptions = loadoutOptions;
+    }
+
+    // Add model types if there are multiple (e.g., Gretchin, Squighog Boyz)
+    if (collectedModelTypes.length > 1) {
+      result.modelTypes = collectedModelTypes;
     }
 
     return result;
