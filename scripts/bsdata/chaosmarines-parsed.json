@@ -1,9 +1,10 @@
 {
   "faction": "Chaos Space Marines",
-  "lastUpdated": "2026-02",
+  "factionId": "chaosmarines",
+  "source": "BSData",
   "catalogueId": "c8da-e875-58f7-f6d6",
   "catalogueRevision": "164",
-  "gameSystemId": "sys-352e-adc2-7639-d6a9",
+  "lastUpdated": "2026-02-04",
   "units": [
     {
       "id": "abaddon-the-despoiler",
@@ -82,11 +83,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ CHAOS TERMINATOR SQUAD\n■ CHOSEN",
-          "eligibleUnits": [
-            "chaos-terminator-squad",
-            "chosen"
-          ]
+          "description": "This model can be attached to the following units:\n■ CHAOS TERMINATOR SQUAD\n■ CHOSEN"
         },
         {
           "id": "invulnerable-save",
@@ -174,10 +171,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ RAPTORS",
-          "eligibleUnits": [
-            "raptors"
-          ]
+          "description": "This model can be attached to the following units:\n■ RAPTORS"
         },
         {
           "id": "head-taker",
@@ -275,11 +269,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ LEGIONARIES",
-          "eligibleUnits": [
-            "chosen",
-            "legionaries"
-          ]
+          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ LEGIONARIES"
         },
         {
           "id": "the-tyrant-of-badab",
@@ -571,13 +561,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ ACCURSED CULTISTS\n■ CHOSEN\n■ CULTIST MOB\n■ LEGIONARIES",
-          "eligibleUnits": [
-            "accursed-cultists",
-            "chosen",
-            "cultist-mob",
-            "legionaries"
-          ]
+          "description": "This model can be attached to the following units:\n■ ACCURSED CULTISTS\n■ CHOSEN\n■ CULTIST MOB\n■ LEGIONARIES"
         },
         {
           "id": "surgeon-acolyte",
@@ -820,12 +804,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ LEGIONARIES\n■ POSSESSED",
-          "eligibleUnits": [
-            "chosen",
-            "legionaries",
-            "possessed"
-          ]
+          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ LEGIONARIES\n■ POSSESSED"
         },
         {
           "id": "daemonkin-psychic",
@@ -970,11 +949,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ LEGIONARIES",
-          "eligibleUnits": [
-            "chosen",
-            "legionaries"
-          ]
+          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ LEGIONARIES"
         },
         {
           "id": "chance-for-glory",
@@ -1112,10 +1087,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ CHAOS TERMINATOR SQUAD",
-          "eligibleUnits": [
-            "chaos-terminator-squad"
-          ]
+          "description": "This model can be attached to the following units:\n■ CHAOS TERMINATOR SQUAD"
         },
         {
           "id": "formidably-resilient",
@@ -1152,11 +1124,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ LEGIONARIES",
-          "eligibleUnits": [
-            "chosen",
-            "legionaries"
-          ]
+          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ LEGIONARIES"
         },
         {
           "id": "prescience-psychic",
@@ -1240,10 +1208,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ CHAOS TERMINATOR SQUAD",
-          "eligibleUnits": [
-            "chaos-terminator-squad"
-          ]
+          "description": "This model can be attached to the following units:\n■ CHAOS TERMINATOR SQUAD"
         },
         {
           "id": "warptime-psychic",
@@ -1547,12 +1512,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ HAVOCS\n■ LEGIONARIES",
-          "eligibleUnits": [
-            "chosen",
-            "havocs",
-            "legionaries"
-          ]
+          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ HAVOCS\n■ LEGIONARIES"
         }
       ],
       "keywords": [
@@ -1597,11 +1557,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ LEGIONARIES\n\nYou can attach this model to one of the above units even if one other CHARACTER model has already been attached to it (a unit cannot have two EXALTED CHAMPIONS attached to it). If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "chosen",
-            "legionaries"
-          ]
+          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ LEGIONARIES\n\nYou can attach this model to one of the above units even if one other CHARACTER model has already been attached to it (a unit cannot have two EXALTED CHAMPIONS attached to it). If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         },
         {
           "id": "dark-champion",
@@ -1657,13 +1613,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ ACCURSED CULTISTS\n■ CHOSEN\n■ CULTIST MOB\n■ LEGIONARIES",
-          "eligibleUnits": [
-            "accursed-cultists",
-            "chosen",
-            "cultist-mob",
-            "legionaries"
-          ]
+          "description": "This model can be attached to the following units:\n■ ACCURSED CULTISTS\n■ CHOSEN\n■ CULTIST MOB\n■ LEGIONARIES"
         },
         {
           "id": "dark-zealotry",
@@ -1815,11 +1765,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ ACCURSED CULTISTS\n■ CULTIST MOB",
-          "eligibleUnits": [
-            "accursed-cultists",
-            "cultist-mob"
-          ]
+          "description": "This model can be attached to the following units:\n■ ACCURSED CULTISTS\n■ CULTIST MOB"
         },
         {
           "id": "faithful-flock",
@@ -2372,11 +2318,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ LEGIONARIES\n\nYou can attach this model to one of the above units even if one other CHARACTER model has already been attached to it (a unit cannot have two MASTERS OF EXECUTIONS attached to it). If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "chosen",
-            "legionaries"
-          ]
+          "description": "This model can be attached to the following units:\n■ CHOSEN\n■ LEGIONARIES\n\nYou can attach this model to one of the above units even if one other CHARACTER model has already been attached to it (a unit cannot have two MASTERS OF EXECUTIONS attached to it). If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         },
         {
           "id": "warp-sighted-butcher",
@@ -3564,10 +3506,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This unit can be attached to the following unit:\n■ TRAITOR GUARDSMAN SQUAD",
-          "eligibleUnits": [
-            "traitor-guardsman-squad"
-          ]
+          "description": "This unit can be attached to the following unit:\n■ TRAITOR GUARDSMAN SQUAD"
         },
         {
           "id": "brutal-example",
@@ -5409,10 +5348,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following unit:\n■ PLAGUE MARINES",
-          "eligibleUnits": [
-            "plague-marines"
-          ]
+          "description": "This model can be attached to the following unit:\n■ PLAGUE MARINES"
         },
         {
           "id": "gift-of-poxes-psychic",
@@ -5619,12 +5555,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following unit:\n■ CHOSEN\n■ LEGIONARIES\n■ PLAGUE MARINES",
-          "eligibleUnits": [
-            "chosen",
-            "legionaries",
-            "plague-marines"
-          ]
+          "description": "This model can be attached to the following unit:\n■ CHOSEN\n■ LEGIONARIES\n■ PLAGUE MARINES"
         },
         {
           "id": "revolting-regeneration",
@@ -5809,12 +5740,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following unit:\n■ CHOSEN\n■ LEGIONARIES\n■ RUBRIC MARINES",
-          "eligibleUnits": [
-            "chosen",
-            "legionaries",
-            "rubric-marines"
-          ]
+          "description": "This model can be attached to the following unit:\n■ CHOSEN\n■ LEGIONARIES\n■ RUBRIC MARINES"
         },
         {
           "id": "lord-of-fate",
@@ -6017,11 +5943,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following unit:\n■ CHAOS BIKERS\n■ KHORNE BERSERKERS",
-          "eligibleUnits": [
-            "chaos-bikers",
-            "khorne-berserkers"
-          ]
+          "description": "This model can be attached to the following unit:\n■ CHAOS BIKERS\n■ KHORNE BERSERKERS"
         },
         {
           "id": "bloody-stampede",
@@ -6223,10 +6145,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following unit:\n■ CHAOS BIKERS",
-          "eligibleUnits": [
-            "chaos-bikers"
-          ]
+          "description": "This model can be attached to the following unit:\n■ CHAOS BIKERS"
         },
         {
           "id": "cut-off-their-escape",
@@ -6739,11 +6658,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ TRAITOR GUARDSMEN SQUAD\n■ RENEGADE HEAVY WEAPONS SQUAD",
-          "eligibleUnits": [
-            "traitor-guardsmen-squad",
-            "renegade-heavy-weapons-squad"
-          ]
+          "description": "This model can be attached to the following units:\n■ TRAITOR GUARDSMEN SQUAD\n■ RENEGADE HEAVY WEAPONS SQUAD"
         },
         {
           "id": "invulnerable-save",
@@ -7107,12 +7022,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ ACCURSED CULTISTS\n■ CULTIST MOB\n■ NEGAVOLT CULTISTS",
-          "eligibleUnits": [
-            "accursed-cultists",
-            "cultist-mob",
-            "negavolt-cultists"
-          ]
+          "description": "This model can be attached to the following units:\n■ ACCURSED CULTISTS\n■ CULTIST MOB\n■ NEGAVOLT CULTISTS"
         },
         {
           "id": "cursed-wardings-psychic",
@@ -7610,10 +7520,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following unit:\n■ CHAOS BIKERS",
-          "eligibleUnits": [
-            "chaos-bikers"
-          ]
+          "description": "This model can be attached to the following unit:\n■ CHAOS BIKERS"
         },
         {
           "id": "swift-assault",
@@ -7870,10 +7777,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ RAPTORS",
-          "eligibleUnits": [
-            "raptors"
-          ]
+          "description": "This model can be attached to the following units:\n■ RAPTORS"
         },
         {
           "id": "cruel-hunter",
@@ -7954,11 +7858,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ ACCURSED CULTISTS\n■ CULTIST MOB",
-          "eligibleUnits": [
-            "accursed-cultists",
-            "cultist-mob"
-          ]
+          "description": "This model can be attached to the following units:\n■ ACCURSED CULTISTS\n■ CULTIST MOB"
         }
       ],
       "keywords": [
@@ -8499,532 +8399,6 @@
           ]
         }
       ]
-    }
-  ],
-  "detachments": {
-    "slaves_to_darkness": {
-      "name": "Slaves to Darkness",
-      "rules": [
-        {
-          "id": "eye-of-the-gods",
-          "name": "Eye of the Gods",
-          "description": "When you add a unit to your army, if that unit is not an EPIC HERO and does not already have one of the following keywords, you must select one: KHORNE, TZEENTCH, NURGLE, SLAANESH, or CHAOS UNDIVIDED. Each time a unit with one of these keywords gains a weapon ability as the result of a Dark Pact and does not fail the resulting Leadership test, that unit gains an additional bonus based on its Mark of Chaos.",
-          "type": "passive",
-          "marks": [
-            {
-              "id": "khorne",
-              "name": "Khorne",
-              "description": "Each time a model in this unit makes a melee attack, an unmodified Hit roll of 5+ scores a Critical Hit."
-            },
-            {
-              "id": "tzeentch",
-              "name": "Tzeentch",
-              "description": "Each time a model in this unit makes a ranged attack, an unmodified Hit roll of 5+ scores a Critical Hit."
-            },
-            {
-              "id": "nurgle",
-              "name": "Nurgle",
-              "description": "Each time a model in this unit makes an attack, an unmodified Wound roll of 5+ scores a Critical Wound."
-            },
-            {
-              "id": "slaanesh",
-              "name": "Slaanesh",
-              "description": "Each time a model in this unit makes a melee attack, if that model made a Charge move this turn, an unmodified Hit roll of 5+ scores a Critical Hit."
-            },
-            {
-              "id": "chaos-undivided",
-              "name": "Chaos Undivided",
-              "description": "Each time a model in this unit makes an attack, you can re-roll a Hit roll of 1 and you can re-roll a Wound roll of 1."
-            }
-          ],
-          "modifiers": []
-        }
-      ],
-      "stratagems": [
-        {
-          "id": "profane-zeal",
-          "name": "Profane Zeal",
-          "cost": 1,
-          "phase": "Shooting/Fight",
-          "description": "Select one HERETIC ASTARTES unit from your army that has not been selected to shoot or fight this phase. Until the end of the phase, each time a model in your unit makes an attack, you can re-roll a Hit roll of 1 and you can re-roll a Wound roll of 1. If your unit has the CHAOS UNDIVIDED keyword, you can re-roll the Hit roll and you can re-roll the Wound roll instead.",
-          "modifiers": []
-        },
-        {
-          "id": "dark-obscuration",
-          "name": "Dark Obscuration",
-          "cost": 1,
-          "phase": "Opponent's Shooting",
-          "description": "Select one HERETIC ASTARTES unit from your army that was selected as the target of one or more of the attacking unit's attacks. Until the end of the phase, your unit has the Stealth ability. If your unit has the NURGLE keyword, until the end of the phase, it can only be selected as the target of a ranged attack if the attacking model is within 12\".",
-          "modifiers": []
-        },
-        {
-          "id": "infernal-rites",
-          "name": "Infernal Rites",
-          "cost": 2,
-          "phase": "Opponent's Shooting/Fight",
-          "description": "Select one HERETIC ASTARTES unit from your army that was selected as the target of one or more of that enemy unit's attacks. Until the end of the phase, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1.",
-          "modifiers": []
-        },
-        {
-          "id": "skinshift",
-          "name": "Skinshift",
-          "cost": 1,
-          "phase": "Command",
-          "description": "Select one HERETIC ASTARTES unit from your army. One model in your unit regains up to 3 lost wounds. If your unit has the TZEENTCH keyword and is below its Starting Strength, one destroyed model (excluding CHARACTER models) is returned to your unit with its full wounds remaining.",
-          "modifiers": []
-        },
-        {
-          "id": "eternal-hate",
-          "name": "Eternal Hate",
-          "cost": 1,
-          "phase": "Fight",
-          "description": "Select one HERETIC ASTARTES unit from your army that was selected as the target of one or more of the attacking unit's attacks. Until the end of the phase, each time a model in your unit is destroyed, if that model has not fought this phase, roll one D6: on a 4+, do not remove it from play. The destroyed model can fight after the attacking model's unit has finished making its attacks, and is then removed from play. If your unit has the KHORNE keyword, add 1 to that roll.",
-          "modifiers": []
-        },
-        {
-          "id": "unnatural-swiftness",
-          "name": "Unnatural Swiftness",
-          "cost": 1,
-          "phase": "Movement",
-          "description": "Use this Stratagem after a HERETIC ASTARTES unit from your army Falls Back. Until the end of the turn, your unit is eligible to shoot and declare a charge. If your unit has the SLAANESH keyword, until the end of the turn, your unit is also eligible to shoot and declare a charge in a turn in which it Advanced.",
-          "modifiers": []
-        }
-      ],
-      "enhancements": [
-        {
-          "id": "liber-hereticus",
-          "name": "Liber Hereticus",
-          "points": 30,
-          "description": "HERETIC ASTARTES CHAOS UNDIVIDED model only. Each time the bearer's unit makes a Dark Pact, if it does not fail the Leadership test, until the end of the phase, weapons equipped by models in that unit have both the [LETHAL HITS] and [SUSTAINED HITS 1] abilities instead of just one.",
-          "modifiers": []
-        },
-        {
-          "id": "talisman-of-burning-blood",
-          "name": "Talisman of Burning Blood",
-          "points": 20,
-          "description": "HERETIC ASTARTES KHORNE model only. Add 1 to the Attacks and Strength characteristics of the bearer's melee weapons. Each time the bearer's unit makes a Dark Pact, until the end of the phase, add D3 to the Attacks and Strength characteristics of the bearer's melee weapons instead.",
-          "modifiers": [
-            {
-              "stat": "a",
-              "operation": "add",
-              "value": 1,
-              "scope": "melee"
-            },
-            {
-              "stat": "s",
-              "operation": "add",
-              "value": 1,
-              "scope": "melee"
-            }
-          ]
-        },
-        {
-          "id": "eye-of-tzeentch",
-          "name": "Eye of Tzeentch",
-          "points": 20,
-          "description": "HERETIC ASTARTES TZEENTCH model only. Each time the bearer's unit makes a Dark Pact, if it does not fail the resulting Leadership test, you gain 1CP.",
-          "modifiers": []
-        },
-        {
-          "id": "orbs-of-unlife",
-          "name": "Orbs of Unlife",
-          "points": 20,
-          "description": "HERETIC ASTARTES NURGLE model only. At the end of the Fight phase, roll one D6 for each enemy unit within 6\" of the bearer: on a 4+, that enemy unit suffers D3 mortal wounds. If the bearer's unit made a Dark Pact this phase, add 1 to each of those rolls.",
-          "modifiers": []
-        }
-      ]
-    },
-    "veterans_of_the_long_war": {
-      "name": "Veterans of the Long War",
-      "rules": [
-        {
-          "id": "focus-of-hatred",
-          "name": "Focus of Hatred",
-          "description": "At the start of your Command phase, select one enemy unit. Until the start of your next Command phase, each time a friendly non-DAMNED HERETIC ASTARTES unit makes an attack that targets that enemy unit, you can re-roll the Hit roll.",
-          "type": "passive",
-          "modifiers": []
-        }
-      ],
-      "stratagems": [
-        {
-          "id": "contemptuous-disregard",
-          "name": "Contemptuous Disregard",
-          "cost": 1,
-          "phase": "Opponent's Shooting/Fight",
-          "description": "When a HERETIC ASTARTES unit from your army is selected as the target of an attack, until the end of the phase, each time an attack targets that unit, worsen the Armor Penetration characteristic of that attack by 1.",
-          "modifiers": []
-        },
-        {
-          "id": "millennia-of-experience",
-          "name": "Millennia of Experience",
-          "cost": 1,
-          "phase": "Opponent's Movement",
-          "description": "When an enemy unit ends a move within 9\" of one of your HERETIC ASTARTES units, your unit can make a Normal move of up to 6\".",
-          "modifiers": []
-        },
-        {
-          "id": "bringers-of-despair",
-          "name": "Bringers of Despair",
-          "cost": 1,
-          "phase": "Fight",
-          "description": "Select one non-DAMNED HERETIC ASTARTES unit from your army. Until the end of the phase, that unit has the Fights First ability, but only when targeting your Focus of Hatred.",
-          "modifiers": []
-        },
-        {
-          "id": "black-crusade",
-          "name": "Black Crusade",
-          "cost": 1,
-          "phase": "Movement",
-          "description": "Select one HERETIC ASTARTES unit from your army. Until the end of the turn, that unit can shoot in a turn in which it Advanced or Fell Back. In addition, bolt weapons equipped by models in that unit have the [DEVASTATING WOUNDS] ability this turn.",
-          "modifiers": []
-        },
-        {
-          "id": "let-the-galaxy-burn",
-          "name": "Let the Galaxy Burn",
-          "cost": 1,
-          "phase": "Shooting",
-          "description": "Select one HERETIC ASTARTES unit from your army. Until the end of the phase, ranged attacks made by that unit ignore the benefits of cover. In addition, flamer weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability.",
-          "modifiers": []
-        },
-        {
-          "id": "endless-ire",
-          "name": "Endless Ire",
-          "cost": 1,
-          "phase": "Fight",
-          "description": "Select one HERETIC ASTARTES unit from your army that destroyed an enemy unit this phase. That unit can consolidate up to 6\" instead of 3\".",
-          "modifiers": []
-        }
-      ],
-      "enhancements": [
-        {
-          "id": "mark-of-legend",
-          "name": "Mark of Legend",
-          "points": 15,
-          "description": "HERETIC ASTARTES model only. Once per turn, you can re-roll one Hit roll, one Wound roll, or one saving throw made for the bearer.",
-          "modifiers": []
-        },
-        {
-          "id": "eye-of-abaddon",
-          "name": "Eye of Abaddon",
-          "points": 25,
-          "description": "HERETIC ASTARTES model only. Each time the bearer's unit destroys an enemy unit that is your Focus of Hatred, you gain 1CP.",
-          "modifiers": []
-        },
-        {
-          "id": "warmasters-gift",
-          "name": "Warmaster's Gift",
-          "points": 20,
-          "description": "HERETIC ASTARTES model only. Each time the bearer makes an attack, an unmodified Wound roll of 5+ scores a Critical Wound.",
-          "modifiers": []
-        },
-        {
-          "id": "eager-for-vengeance",
-          "name": "Eager for Vengeance",
-          "points": 30,
-          "description": "HERETIC ASTARTES model only. The bearer's unit can Fall Back, shoot, and charge in the same turn. In addition, each time the bearer's unit targets your Focus of Hatred, add 1 to the Hit roll and add 1 to Charge rolls made for that unit.",
-          "modifiers": []
-        }
-      ]
-    }
-  },
-  "armyRules": {
-    "dark_pacts": {
-      "name": "Dark Pacts",
-      "description": "Each time a HERETIC ASTARTES unit from your army is selected to shoot or fight, it can make a Dark Pact. If it does, it must first take a Leadership test; if that test is failed, that unit suffers D3 mortal wounds. Then, select one of the following abilities for weapons equipped by models in that unit to gain until the end of the phase: [LETHAL HITS] or [SUSTAINED HITS 1].",
-      "type": "active",
-      "keywords": [
-        "HERETIC ASTARTES"
-      ],
-      "choices": [
-        {
-          "id": "lethal-hits",
-          "name": "Lethal Hits",
-          "description": "Critical hits (unmodified hit rolls of 6) automatically wound the target."
-        },
-        {
-          "id": "sustained-hits-1",
-          "name": "Sustained Hits 1",
-          "description": "Critical hits (unmodified hit rolls of 6) generate 1 additional hit."
-        }
-      ]
-    }
-  },
-  "allies": [],
-  "keywordGlossary": {
-    "weapon": [
-      {
-        "name": "Anti-X #+",
-        "description": "Improve wound roll against targets with keyword X, wounding on #+."
-      },
-      {
-        "name": "Assault",
-        "description": "Can be shot after Advancing."
-      },
-      {
-        "name": "Blast",
-        "description": "+1 Attack per 5 models in target unit."
-      },
-      {
-        "name": "Devastating Wounds",
-        "description": "Critical wounds inflict mortal wounds equal to Damage, no saves allowed."
-      },
-      {
-        "name": "Extra Attacks",
-        "description": "Attacks with this weapon are made in addition to other weapons."
-      },
-      {
-        "name": "Hazardous",
-        "description": "After resolving attacks, roll D6. On 1, bearer suffers 3 mortal wounds (Characters) or is destroyed (other models)."
-      },
-      {
-        "name": "Heavy",
-        "description": "+1 to Hit if unit Remained Stationary."
-      },
-      {
-        "name": "Ignores Cover",
-        "description": "Target does not benefit from cover."
-      },
-      {
-        "name": "Indirect Fire",
-        "description": "Can target units not visible. -1 to Hit, +1 to target's Save if not visible."
-      },
-      {
-        "name": "Lance",
-        "description": "+1 to Wound if unit charged this turn."
-      },
-      {
-        "name": "Lethal Hits",
-        "description": "Critical hits automatically wound (no wound roll needed)."
-      },
-      {
-        "name": "Melta X",
-        "description": "+X Damage against targets within half range."
-      },
-      {
-        "name": "One Shot",
-        "description": "Can only be used once per battle."
-      },
-      {
-        "name": "Pistol",
-        "description": "Can be shot in Engagement Range, but only at units in Engagement Range."
-      },
-      {
-        "name": "Precision",
-        "description": "On critical wounds, attacker can allocate wound to a Character or Attached model."
-      },
-      {
-        "name": "Psychic",
-        "description": "Weapon has the Psychic keyword for ability interactions."
-      },
-      {
-        "name": "Rapid Fire X",
-        "description": "+X Attacks when targeting units within half range."
-      },
-      {
-        "name": "Sustained Hits X",
-        "description": "Critical hits score X additional hits."
-      },
-      {
-        "name": "Torrent",
-        "description": "Automatically hits (no hit roll needed)."
-      },
-      {
-        "name": "Twin-linked",
-        "description": "Re-roll wound rolls."
-      }
-    ],
-    "faction": [
-      {
-        "name": "Dark Pacts",
-        "description": "When a HERETIC ASTARTES unit shoots or fights, it can take a Leadership test to gain either [LETHAL HITS] or [SUSTAINED HITS 1] on all its weapons until the end of the phase. On a failed test, the unit suffers D3 mortal wounds."
-      },
-      {
-        "name": "Heretic Astartes",
-        "description": "The faction keyword for all Chaos Space Marine units. Represents the corrupted Adeptus Astartes who have turned from the Emperor's light."
-      },
-      {
-        "name": "Chaos",
-        "description": "Units aligned with the Ruinous Powers. This keyword interacts with many abilities and stratagems across Chaos factions."
-      },
-      {
-        "name": "Daemon",
-        "description": "Units that are partially or fully composed of daemonic entities. Daemons often have invulnerable saves and special abilities."
-      },
-      {
-        "name": "Damned",
-        "description": "Mortal followers of Chaos who have sworn themselves to the Dark Gods. Includes Cultists and other non-Astartes servants."
-      }
-    ],
-    "unit": [
-      {
-        "name": "Battleline",
-        "description": "Core troop units. May have special rules in certain detachments."
-      },
-      {
-        "name": "Character",
-        "description": "Can lead units, receive Enhancements, and is targeted by Precision."
-      },
-      {
-        "name": "Monster",
-        "description": "Large creatures with powerful stats. Often have high Toughness, many Wounds, and Deadly Demise."
-      },
-      {
-        "name": "Psyker",
-        "description": "Can use Psychic abilities. Chaos Psykers channel the power of the Warp through dark rituals."
-      },
-      {
-        "name": "Leader",
-        "description": "Can be attached to Bodyguard units. Abilities affect the combined unit."
-      },
-      {
-        "name": "Feel No Pain X+",
-        "description": "Roll D6 when losing a wound. On X+, wound is ignored."
-      },
-      {
-        "name": "Deadly Demise X",
-        "description": "When destroyed, roll D6. On a 6, each unit within 6\" suffers X mortal wounds."
-      },
-      {
-        "name": "Scouts X\"",
-        "description": "Make a Normal move of up to X\" before first turn begins."
-      },
-      {
-        "name": "Deep Strike",
-        "description": "During deployment, can be set up in Reserves. Can arrive anywhere on the battlefield more than 9\" from enemy models."
-      },
-      {
-        "name": "Epic Hero",
-        "description": "Unique named character. Limited to 1 per army."
-      },
-      {
-        "name": "Terminator",
-        "description": "Elite infantry in Terminator armor. Typically have 2+ Save, 4+ Invulnerable, and Deep Strike."
-      }
-    ]
-  },
-  "weaponKeywords": {
-    "Devastating Wounds": "Critical wounds (unmodified wound roll of 6) inflict mortal wounds equal to the Damage characteristic, and the attack sequence ends.",
-    "Lethal Hits": "Critical hits (unmodified hit roll of 6) automatically wound the target.",
-    "Sustained Hits": "Critical hits generate additional hits (number specified after the ability name).",
-    "Twin-linked": "Re-roll wound rolls.",
-    "Assault": "Can shoot after Advancing (at -1 to hit).",
-    "Pistol": "Can shoot in Engagement Range, but only at units within Engagement Range.",
-    "Blast": "+1 attack per 5 models in target unit (minimum 3 attacks vs 6+ models).",
-    "Rapid Fire": "Double the Attacks characteristic when targeting within half range.",
-    "Heavy": "+1 to hit if the bearer's unit Remained Stationary this turn.",
-    "Torrent": "Automatically hits the target.",
-    "Anti-": "Improves wound roll against targets with the specified keyword (e.g., Anti-Vehicle 4+ wounds on 4+ vs Vehicles).",
-    "Hazardous": "After resolving attacks, roll one D6. On a 1, bearer suffers 3 mortal wounds.",
-    "Psychic": "This is a Psychic Attack. Some abilities and rules specifically interact with Psychic attacks.",
-    "Precision": "On critical wounds, attacker can allocate wound to a Character or Attached model.",
-    "Extra Attacks": "These attacks are made in addition to the bearer's normal attacks, using the weapon's profile.",
-    "Ignores Cover": "The target does not receive the benefit of cover against attacks with this ability.",
-    "Indirect Fire": "Can target units not visible to the bearer, but subtract 1 from Hit rolls when doing so.",
-    "Melta": "When targeting within half range, add X to the Damage characteristic (Melta 2 = +2 Damage)."
-  },
-  "coreStratagems": [
-    {
-      "id": "command-re-roll",
-      "name": "Command Re-roll",
-      "cost": 1,
-      "phase": "Any",
-      "when": "In any phase, just after you have made a Hit roll, a Wound roll, a Damage roll, a saving throw, an Advance roll, a Charge roll, a Desperate Escape test, a Hazardous test, or just after you have rolled the dice to determine the number of attacks made with a weapon.",
-      "target": "An attack, model or unit from your army.",
-      "effect": "You re-roll that roll, test or saving throw.",
-      "description": "WHEN: In any phase, just after you have made a Hit roll, a Wound roll, a Damage roll, a saving throw, an Advance roll, a Charge roll, a Desperate Escape test, a Hazardous test, or just after you have rolled the dice to determine the number of attacks made with a weapon. TARGET: An attack, model or unit from your army. EFFECT: You re-roll that roll, test or saving throw."
-    },
-    {
-      "id": "counter-offensive",
-      "name": "Counter-offensive",
-      "cost": 2,
-      "phase": "Fight",
-      "when": "Fight phase, just after an enemy unit has fought.",
-      "target": "One unit from your army that is within Engagement Range of one or more enemy units and that has not already been selected to fight this phase.",
-      "effect": "Your unit fights next.",
-      "description": "WHEN: Fight phase, just after an enemy unit has fought. TARGET: One unit from your army that is within Engagement Range of one or more enemy units and that has not already been selected to fight this phase. EFFECT: Your unit fights next."
-    },
-    {
-      "id": "epic-challenge",
-      "name": "Epic Challenge",
-      "cost": 1,
-      "phase": "Fight",
-      "when": "Fight phase, when a CHARACTER unit from your army that is within Engagement Range of one or more Attached units is selected to fight.",
-      "target": "One CHARACTER model in your unit.",
-      "effect": "Until the end of the phase, all melee attacks made by that model have the [PRECISION] ability.",
-      "description": "WHEN: Fight phase, when a CHARACTER unit from your army that is within Engagement Range of one or more Attached units is selected to fight. TARGET: One CHARACTER model in your unit. EFFECT: Until the end of the phase, all melee attacks made by that model have the [PRECISION] ability."
-    },
-    {
-      "id": "fire-overwatch",
-      "name": "Fire Overwatch",
-      "cost": 1,
-      "phase": "Opponent's Turn",
-      "when": "Your opponent's Movement or Charge phase, just after an enemy unit is set up or when an enemy unit starts or ends a Normal, Advance, Fall Back or Charge move.",
-      "target": "One unit from your army that is within 24\" of that enemy unit and that would be eligible to shoot if it were your Shooting phase.",
-      "effect": "Your unit can shoot that enemy unit as if it were your Shooting phase.",
-      "restrictions": "An unmodified Hit roll of 6 is required to score a hit. You can only use this Stratagem once per turn.",
-      "description": "WHEN: Your opponent's Movement or Charge phase, just after an enemy unit is set up or when an enemy unit starts or ends a Normal, Advance, Fall Back or Charge move. TARGET: One unit from your army that is within 24\" of that enemy unit and that would be eligible to shoot if it were your Shooting phase. EFFECT: Your unit can shoot that enemy unit as if it were your Shooting phase. RESTRICTIONS: An unmodified Hit roll of 6 is required to score a hit. You can only use this Stratagem once per turn."
-    },
-    {
-      "id": "go-to-ground",
-      "name": "Go to Ground",
-      "cost": 1,
-      "phase": "Opponent's Shooting",
-      "when": "Your opponent's Shooting phase, just after an enemy unit has selected its targets.",
-      "target": "One INFANTRY unit from your army that was selected as the target of one or more of the attacking unit's attacks.",
-      "effect": "Until the end of the phase, all models in your unit have a 6+ invulnerable save and have the Benefit of Cover.",
-      "description": "WHEN: Your opponent's Shooting phase, just after an enemy unit has selected its targets. TARGET: One INFANTRY unit from your army that was selected as the target of one or more of the attacking unit's attacks. EFFECT: Until the end of the phase, all models in your unit have a 6+ invulnerable save and have the Benefit of Cover."
-    },
-    {
-      "id": "grenade",
-      "name": "Grenade",
-      "cost": 1,
-      "phase": "Shooting",
-      "when": "Your Shooting phase.",
-      "target": "One GRENADES unit from your army that is not within Engagement Range of any enemy units and has not been selected to shoot this phase.",
-      "effect": "Select one enemy unit that is not within Engagement Range of any units from your army and is within 8\" of and visible to your GRENADES unit. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound.",
-      "description": "WHEN: Your Shooting phase. TARGET: One GRENADES unit from your army that is not within Engagement Range of any enemy units and has not been selected to shoot this phase. EFFECT: Select one enemy unit that is not within Engagement Range of any units from your army and is within 8\" of and visible to your GRENADES unit. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound."
-    },
-    {
-      "id": "heroic-intervention",
-      "name": "Heroic Intervention",
-      "cost": 2,
-      "phase": "Opponent's Charge",
-      "when": "Your opponent's Charge phase, just after an enemy unit ends a Charge move.",
-      "target": "One unit from your army that is within 6\" of that enemy unit and would be eligible to declare a charge against that enemy unit if it were your Charge phase.",
-      "effect": "Your unit now declares a charge that targets only that enemy unit, and you resolve that charge as if it were your Charge phase.",
-      "restrictions": "You can only select a VEHICLE unit if it is a WALKER. Your unit does not receive any Charge bonus this turn.",
-      "description": "WHEN: Your opponent's Charge phase, just after an enemy unit ends a Charge move. TARGET: One unit from your army that is within 6\" of that enemy unit and would be eligible to declare a charge against that enemy unit if it were your Charge phase. EFFECT: Your unit now declares a charge that targets only that enemy unit, and you resolve that charge as if it were your Charge phase. RESTRICTIONS: You can only select a VEHICLE unit if it is a WALKER. Your unit does not receive any Charge bonus this turn."
-    },
-    {
-      "id": "insane-bravery",
-      "name": "Insane Bravery",
-      "cost": 1,
-      "phase": "Command",
-      "when": "Battle-shock step of your Command phase, just after you have failed a Battle-shock test taken for a unit from your army.",
-      "target": "The unit from your army that Battle-shock test was just taken for (even though your Battle-shocked units cannot normally be affected by your Stratagems).",
-      "effect": "Your unit is treated as having passed that test instead, and is not Battle-shocked as a result.",
-      "description": "WHEN: Battle-shock step of your Command phase, just after you have failed a Battle-shock test taken for a unit from your army. TARGET: The unit from your army that Battle-shock test was just taken for (even though your Battle-shocked units cannot normally be affected by your Stratagems). EFFECT: Your unit is treated as having passed that test instead, and is not Battle-shocked as a result."
-    },
-    {
-      "id": "rapid-ingress",
-      "name": "Rapid Ingress",
-      "cost": 1,
-      "phase": "Opponent's Movement",
-      "when": "End of your opponent's Movement phase.",
-      "target": "One unit from your army that is in Reserves.",
-      "effect": "Your unit can arrive on the battlefield as if it were the Reinforcements step of your Movement phase.",
-      "restrictions": "You cannot use this Stratagem to enable a unit to arrive during a battle round it would not normally be able to do so in.",
-      "description": "WHEN: End of your opponent's Movement phase. TARGET: One unit from your army that is in Reserves. EFFECT: Your unit can arrive on the battlefield as if it were the Reinforcements step of your Movement phase. RESTRICTIONS: You cannot use this Stratagem to enable a unit to arrive during a battle round it would not normally be able to do so in."
-    },
-    {
-      "id": "tank-shock",
-      "name": "Tank Shock",
-      "cost": 1,
-      "phase": "Charge",
-      "when": "Your Charge phase.",
-      "target": "One VEHICLE unit from your army.",
-      "effect": "After your unit ends a Charge move, select one enemy unit within Engagement Range of it, then select one melee weapon your unit is equipped with. Roll a number of D6 equal to that weapon's Strength characteristic. If that Strength characteristic is greater than that enemy unit's Toughness characteristic, roll two additional D6. For each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds).",
-      "description": "WHEN: Your Charge phase. TARGET: One VEHICLE unit from your army. EFFECT: After your unit ends a Charge move, select one enemy unit within Engagement Range of it, then select one melee weapon your unit is equipped with. Roll a number of D6 equal to that weapon's Strength characteristic. If that Strength characteristic is greater than that enemy unit's Toughness characteristic, roll two additional D6. For each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds)."
     }
   ]
 }

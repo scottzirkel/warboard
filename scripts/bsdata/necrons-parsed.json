@@ -1,9 +1,10 @@
 {
   "faction": "Necrons",
-  "lastUpdated": "2026-02",
+  "factionId": "necrons",
+  "source": "BSData",
   "catalogueId": "b654-a18a-ea1-3bf2",
   "catalogueRevision": "93",
-  "gameSystemId": "sys-352e-adc2-7639-d6a9",
+  "lastUpdated": "2026-02-04",
   "units": [
     {
       "id": "orikan-the-diviner",
@@ -56,11 +57,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ NECRON WARRIORS\nYou can attach this model to one of the above units even if one ROYAL WARDEN or NOBLE model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "immortals",
-            "necron-warriors"
-          ]
+          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ NECRON WARRIORS\nYou can attach this model to one of the above units even if one ROYAL WARDEN or NOBLE model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         }
       ],
       "keywords": [
@@ -144,12 +141,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ LYCHGUARD\n■ NECRON WARRIORS",
-          "eligibleUnits": [
-            "immortals",
-            "lychguard",
-            "necron-warriors"
-          ]
+          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ LYCHGUARD\n■ NECRON WARRIORS"
         },
         {
           "id": "grand-strategist",
@@ -206,10 +198,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ IMMORTALS",
-          "eligibleUnits": [
-            "immortals"
-          ]
+          "description": "This model can be attached to the following units:\n■ IMMORTALS"
         },
         {
           "id": "invulnerable-save",
@@ -272,12 +261,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ LYCHGUARD\n■ NECRON WARRIORS\nYou can attach this model to one of the above units even if NEMESOR ZAHNDREKH has already been attached to it. If it is, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "immortals",
-            "lychguard",
-            "necron-warriors"
-          ]
+          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ LYCHGUARD\n■ NECRON WARRIORS\nYou can attach this model to one of the above units even if NEMESOR ZAHNDREKH has already been attached to it. If it is, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         },
         {
           "id": "ghostwalk-mantle",
@@ -434,12 +418,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ LYCHGUARD\n■ NECRON WARRIORS",
-          "eligibleUnits": [
-            "immortals",
-            "lychguard",
-            "necron-warriors"
-          ]
+          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ LYCHGUARD\n■ NECRON WARRIORS"
         },
         {
           "id": "invulnerable-save",
@@ -501,12 +480,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ LYCHGUARD\n■ NECRON WARRIORS",
-          "eligibleUnits": [
-            "immortals",
-            "lychguard",
-            "necron-warriors"
-          ]
+          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ LYCHGUARD\n■ NECRON WARRIORS"
         },
         {
           "id": "invulnerable-save",
@@ -585,11 +559,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ NECRON WARRIORS",
-          "eligibleUnits": [
-            "immortals",
-            "necron-warriors"
-          ]
+          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ NECRON WARRIORS"
         },
         {
           "id": "adaptive-strategy",
@@ -674,10 +644,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ SKORPEKH DESTROYERS",
-          "eligibleUnits": [
-            "skorpekh-destroyers"
-          ]
+          "description": "This model can be attached to the following units:\n■ SKORPEKH DESTROYERS"
         },
         {
           "id": "united-in-destruction",
@@ -768,11 +735,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ LOKHUST DESTROYERS\n■ LOKHUST HEAVY DESTROYERS",
-          "eligibleUnits": [
-            "lokhust-destroyers",
-            "lokhust-heavy-destroyers"
-          ]
+          "description": "This model can be attached to the following units:\n■ LOKHUST DESTROYERS\n■ LOKHUST HEAVY DESTROYERS"
         },
         {
           "id": "invulnerable-save",
@@ -1114,12 +1077,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ CANOPTEK WRAITHS\n■ IMMORTALS\n■ NECRON WARRIORS\nYou can attach this model to one of the above units even if one ROYAL WARDEN or NOBLE model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "canoptek-wraiths",
-            "immortals",
-            "necron-warriors"
-          ]
+          "description": "This model can be attached to the following units:\n■ CANOPTEK WRAITHS\n■ IMMORTALS\n■ NECRON WARRIORS\nYou can attach this model to one of the above units even if one ROYAL WARDEN or NOBLE model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         },
         {
           "id": "rites-of-reanimation",
@@ -1190,11 +1148,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ NECRON WARRIORS\nYou can attach this model to one of the above units even if one ROYAL WARDEN or NOBLE model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "immortals",
-            "necron-warriors"
-          ]
+          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ NECRON WARRIORS\nYou can attach this model to one of the above units even if one ROYAL WARDEN or NOBLE model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         },
         {
           "id": "nightmare-shroud-aura",
@@ -1266,11 +1220,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ NECRON WARRIORS\nYou can attach this model to one of the above units even if one ROYAL WARDEN or NOBLE model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "immortals",
-            "necron-warriors"
-          ]
+          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ NECRON WARRIORS\nYou can attach this model to one of the above units even if one ROYAL WARDEN or NOBLE model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         },
         {
           "id": "timesplinter-mantle",
@@ -1345,11 +1295,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ NECRON WARRIORS\nYou can attach this model to one of the above units even if one ROYAL WARDEN or NOBLE model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "immortals",
-            "necron-warriors"
-          ]
+          "description": "This model can be attached to the following units:\n■ IMMORTALS\n■ NECRON WARRIORS\nYou can attach this model to one of the above units even if one ROYAL WARDEN or NOBLE model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         },
         {
           "id": "harbinger-of-destruction",
@@ -4597,13 +4543,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units: ^^**Canoptek Macrocytes, Immortals, Necron Warriors^^**. \n\n\n*You can attach this model to one of the above units even if one ^^**Royal Warden^^** or ^^**Noble^^** model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.*",
-          "eligibleUnits": [
-            "it-if-you-do",
-            "and-that-bodyguard-unit-is-destroyed",
-            "the-leader-units-attached-to-it-become-separate-units",
-            "with-their-original-starting-strengths"
-          ]
+          "description": "This model can be attached to the following units: ^^**Canoptek Macrocytes, Immortals, Necron Warriors^^**. \n\n\n*You can attach this model to one of the above units even if one ^^**Royal Warden^^** or ^^**Noble^^** model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.*"
         }
       ],
       "keywords": [
@@ -4705,634 +4645,6 @@
         "Destroyer Cult",
         "Nekrosor Ammentar"
       ]
-    }
-  ],
-  "detachments": {
-    "awakened-dynasty": {
-      "name": "Awakened Dynasty",
-      "rule": {
-        "name": "Command Protocols",
-        "description": "While a NECRONS CHARACTER model is leading a unit from your army, each time a model in that unit makes an attack, add 1 to the Hit roll."
-      },
-      "enhancements": [
-        {
-          "id": "veil-of-darkness",
-          "name": "Veil of Darkness",
-          "points": 20,
-          "description": "Once per battle, at the end of your opponent's turn, if the bearer's unit is not within Engagement Range of enemy units, remove it from the battlefield. Set it up in the Reinforcements step of your next Movement phase anywhere more than 9\" from all enemies."
-        },
-        {
-          "id": "hypermaterial-ablator",
-          "name": "Hypermaterial Ablator",
-          "points": 15,
-          "description": "While the bearer is leading a unit, models in that unit have the Stealth ability. While not within 12\" of enemies, models in the bearer's unit have the Benefit of Cover."
-        },
-        {
-          "id": "phasal-subjugator",
-          "name": "Phasal Subjugator",
-          "points": 25,
-          "description": "While a friendly NECRONS unit that does not contain a CHARACTER is within 6\" of the bearer, each time a model in that unit makes an attack, add 1 to the Hit roll."
-        },
-        {
-          "id": "enaegic-dermal-bond",
-          "name": "Enaegic Dermal Bond",
-          "points": 10,
-          "description": "Each time an attack is allocated to the bearer, subtract 1 from the Damage characteristic of that attack."
-        }
-      ],
-      "stratagems": [
-        {
-          "id": "protocol-eternal-revenant",
-          "name": "Protocol of the Eternal Revenant",
-          "cost": 1,
-          "type": "Epic Deed",
-          "when": "Any phase, just after a NECRONS INFANTRY CHARACTER is destroyed.",
-          "effect": "At the end of the phase, set that model back up as close as possible to where it was destroyed, not within Engagement Range of enemies, with half its starting wounds."
-        },
-        {
-          "id": "protocol-undying-legions",
-          "name": "Protocol of the Undying Legions",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Opponent's Shooting or Fight phase, after an enemy unit resolves attacks.",
-          "effect": "One NECRONS unit that had models destroyed reanimates D3 wounds (D3+1 if CHARACTER-led)."
-        },
-        {
-          "id": "protocol-vengeful-stars",
-          "name": "Protocol of the Vengeful Stars",
-          "cost": 2,
-          "type": "Strategic Ploy",
-          "when": "Opponent's Shooting phase, after an enemy unit resolves attacks.",
-          "effect": "One NECRONS unit that was targeted can shoot back at the attacking unit. If CHARACTER-led, gains [IGNORES COVER]."
-        },
-        {
-          "id": "protocol-hungry-void",
-          "name": "Protocol of the Hungry Void",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Fight phase.",
-          "effect": "One NECRONS unit gains +1 Strength on melee weapons. If CHARACTER-led, also +1 AP."
-        },
-        {
-          "id": "protocol-conquering-tyrant",
-          "name": "Protocol of the Conquering Tyrant",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Your Shooting phase.",
-          "effect": "One NECRONS unit re-rolls Hit rolls of 1 at half range. If CHARACTER-led, full re-rolls."
-        },
-        {
-          "id": "protocol-sudden-storm",
-          "name": "Protocol of the Sudden Storm",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Your Movement phase.",
-          "effect": "One NECRONS unit's ranged weapons gain [ASSAULT]. If CHARACTER-led, re-roll Advance rolls."
-        }
-      ]
-    },
-    "annihilation-legion": {
-      "name": "Annihilation Legion",
-      "rule": {
-        "name": "Annihilation Protocols",
-        "description": "DESTROYER CULT and FLAYED ONES units can re-roll Charge rolls. When targeting a Below Half-strength unit, add 1 to Charge rolls."
-      },
-      "enhancements": [
-        {
-          "id": "eternal-madness",
-          "name": "Eternal Madness",
-          "points": 25,
-          "description": "When a model in the bearer's unit is destroyed, roll one D6: on a 4+, that model can fight before being removed."
-        },
-        {
-          "id": "ingrained-superiority",
-          "name": "Ingrained Superiority",
-          "points": 10,
-          "description": "Each time the bearer makes an attack, a Critical Wound improves the AP of that attack by 1."
-        },
-        {
-          "id": "soulless-reaper",
-          "name": "Soulless Reaper",
-          "points": 20,
-          "description": "DESTROYER CULT only. Enemy units within Engagement Range of the bearer's unit cannot Fall Back unless they roll a 3+ on a D6."
-        },
-        {
-          "id": "eldritch-nightmare",
-          "name": "Eldritch Nightmare",
-          "points": 15,
-          "description": "DESTROYER CULT only. At the start of each phase, enemy units within Engagement Range of the bearer's unit must take a Battle-shock test."
-        }
-      ],
-      "stratagems": [
-        {
-          "id": "masks-of-death",
-          "name": "Masks of Death",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Opponent's Shooting or Fight phase.",
-          "effect": "One DESTROYER CULT or FLAYED ONES unit gains -1 to Hit rolls for attacks targeting it."
-        },
-        {
-          "id": "the-spoor-of-frailty",
-          "name": "The Spoor of Frailty",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Your Shooting or Fight phase.",
-          "effect": "One DESTROYER CULT or FLAYED ONES unit gains +1 to Hit vs Below Starting Strength units, and +1 to Wound vs Below Half-strength units."
-        },
-        {
-          "id": "murderous-reanimation",
-          "name": "Murderous Reanimation",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Fight phase, after your unit destroys an enemy unit.",
-          "effect": "Your DESTROYER CULT or FLAYED ONES unit's Reanimation Protocols activate."
-        },
-        {
-          "id": "pitiless-hunters",
-          "name": "Pitiless Hunters",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Fight phase.",
-          "effect": "One DESTROYER CULT or FLAYED ONES unit can Pile In and Consolidate up to 6\" instead of 3\"."
-        },
-        {
-          "id": "blood-fuelled-cruelty",
-          "name": "Blood-fuelled Cruelty",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Opponent's Movement phase, after an enemy unit Falls Back.",
-          "effect": "Roll one D6 for each model in your DESTROYER CULT or FLAYED ONES unit that was in Engagement Range: on a 4+, the enemy unit suffers 1 mortal wound."
-        },
-        {
-          "id": "insanitys-ire",
-          "name": "Insanity's Ire",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Opponent's Shooting phase, after your unit is targeted.",
-          "effect": "One DESTROYER CULT or FLAYED ONES unit that lost models can make a Normal move toward the attacking unit."
-        }
-      ]
-    },
-    "canoptek-court": {
-      "name": "Canoptek Court",
-      "rule": {
-        "name": "Power Matrix",
-        "description": "CRYPTEK and CANOPTEK units re-roll Hit rolls of 1. If entirely within your Power Matrix (your deployment zone, or No Man's Land/enemy deployment zone if you control half+ objectives there), they can re-roll all Hit rolls instead."
-      },
-      "enhancements": [
-        {
-          "id": "dimensional-sanctum",
-          "name": "Dimensional Sanctum",
-          "points": 20,
-          "description": "CRYPTEK only. The bearer's unit gains the Infiltrators ability."
-        },
-        {
-          "id": "hyperphasic-fulcrum",
-          "name": "Hyperphasic Fulcrum",
-          "points": 15,
-          "description": "CRYPTEK only. While the bearer's unit is entirely within your Power Matrix, re-roll Wound rolls of 1."
-        },
-        {
-          "id": "autodivinator",
-          "name": "Autodivinator",
-          "points": 15,
-          "description": "CRYPTEK only. Each time your opponent gains a CP from an ability, roll one D6: on a 2+, you also gain 1CP."
-        },
-        {
-          "id": "metalodermal-tesla-weave",
-          "name": "Metalodermal Tesla Weave",
-          "points": 10,
-          "description": "CRYPTEK only. Once per phase, when the bearer's unit is charged, roll one D6: on a 2-5, the charging unit suffers D3 mortal wounds; on a 6, it suffers 3 mortal wounds."
-        }
-      ],
-      "stratagems": [
-        {
-          "id": "curse-of-the-cryptek",
-          "name": "Curse of the Cryptek",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Any phase, after an enemy unit destroys a CRYPTEK model.",
-          "effect": "For the rest of the battle, CANOPTEK units gain +1 to Hit and +1 to Wound against that enemy unit."
-        },
-        {
-          "id": "cynosure-of-eradication",
-          "name": "Cynosure of Eradication",
-          "cost": 2,
-          "type": "Battle Tactic",
-          "when": "Your Shooting or Fight phase.",
-          "effect": "One CRYPTEK or CANOPTEK unit entirely within your Power Matrix gains [DEVASTATING WOUNDS] on its weapons until end of phase."
-        },
-        {
-          "id": "solar-pulse",
-          "name": "Solar Pulse",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Your Shooting phase.",
-          "effect": "One CRYPTEK unit's attacks gain [IGNORES COVER] against units within range of an objective marker."
-        },
-        {
-          "id": "reactive-subroutines",
-          "name": "Reactive Subroutines",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Opponent's Movement phase, after an enemy unit finishes a move.",
-          "effect": "One CANOPTEK unit within 9\" can make a Normal move of up to 6\"."
-        },
-        {
-          "id": "countertemporal-shift",
-          "name": "Countertemporal Shift",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Opponent's Shooting phase, after an enemy unit selects targets.",
-          "effect": "One targeted CANOPTEK unit can only be selected as a ranged target by models within 12\" until end of phase."
-        },
-        {
-          "id": "suboptimal-facade",
-          "name": "Suboptimal Facade",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Opponent's Charge phase, after an enemy unit charges.",
-          "effect": "One CANOPTEK unit entirely within your Power Matrix that was charged has its Reanimation Protocols activate."
-        }
-      ]
-    },
-    "obeisance-phalanx": {
-      "name": "Obeisance Phalanx",
-      "rule": {
-        "name": "Worthy Foes",
-        "description": "In your Command phase, select one enemy unit. Until your next Command phase, each time a NOBLE, LYCHGUARD, or TRIARCH unit makes an attack targeting that unit, add 1 to the Wound roll."
-      },
-      "enhancements": [
-        {
-          "id": "honourable-combatant",
-          "name": "Honourable Combatant",
-          "points": 10,
-          "description": "NOBLE only. Each time the bearer destroys an enemy CHARACTER model, your opponent loses 1CP."
-        },
-        {
-          "id": "unflinching-will",
-          "name": "Unflinching Will",
-          "points": 20,
-          "description": "NOBLE only. The bearer's melee weapons gain [PRECISION] and [ANTI-INFANTRY 5+]."
-        },
-        {
-          "id": "warrior-noble",
-          "name": "Warrior Noble",
-          "points": 15,
-          "description": "NOBLE only. Each time a melee attack targets the bearer, subtract 1 from the Hit roll."
-        },
-        {
-          "id": "eternal-conqueror",
-          "name": "Eternal Conqueror",
-          "points": 25,
-          "description": "NOBLE only. Each time the bearer makes an attack against a unit within range of an objective marker, you can re-roll the Hit roll."
-        }
-      ],
-      "stratagems": [
-        {
-          "id": "your-time-is-nigh",
-          "name": "Your Time is Nigh",
-          "cost": 1,
-          "type": "Epic Deed",
-          "when": "Any phase, after your opponent's WARLORD is destroyed.",
-          "effect": "For the rest of the battle, each time an enemy unit takes a Battle-shock or Leadership test, subtract 1 from the result."
-        },
-        {
-          "id": "enslaved-artifice",
-          "name": "Enslaved Artifice",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Your Shooting or Fight phase.",
-          "effect": "One NECRONS unit (not TITANIC) gains unmodified Hit rolls of 5+ score Critical Hits until end of phase."
-        },
-        {
-          "id": "nanoassembly-protocols",
-          "name": "Nanoassembly Protocols",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Opponent's Shooting or Fight phase, after your VEHICLE is targeted.",
-          "effect": "Subtract 1 from the Damage characteristic of attacks targeting that VEHICLE."
-        },
-        {
-          "id": "sentinels-of-eternity",
-          "name": "Sentinels of Eternity",
-          "cost": 1,
-          "type": "Epic Deed",
-          "when": "Fight phase, after a LYCHGUARD or TRIARCH PRAETORIANS model is destroyed.",
-          "effect": "Roll one D6: on a 4+, that model can fight before being removed."
-        },
-        {
-          "id": "suffer-no-rival",
-          "name": "Suffer No Rival",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Fight phase.",
-          "effect": "One LYCHGUARD or TRIARCH unit's melee weapons gain [PRECISION]."
-        },
-        {
-          "id": "territorial-obsession",
-          "name": "Territorial Obsession",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Your Command phase.",
-          "effect": "One LYCHGUARD or TRIARCH PRAETORIANS unit gains +1 OC. One VEHICLE unit within 6\" of an objective gains +3 OC."
-        }
-      ]
-    },
-    "hypercrypt-legion": {
-      "name": "Hypercrypt Legion",
-      "rule": {
-        "name": "Hyperphasing",
-        "description": "At the end of your opponent's turn, you can select up to 2 NECRONS units (3 in Strike Force, 4 in Onslaught) that are not within Engagement Range of enemy units and place them into Strategic Reserves."
-      },
-      "enhancements": [
-        {
-          "id": "dimensional-overseer",
-          "name": "Dimensional Overseer",
-          "points": 10,
-          "description": "Increase the number of units you can Hyperphase by 1."
-        },
-        {
-          "id": "arisen-tyrant",
-          "name": "Arisen Tyrant",
-          "points": 25,
-          "description": "The bearer's unit re-rolls Hit rolls of 1. If the unit was set up this turn, re-roll all Hit rolls instead."
-        },
-        {
-          "id": "hyperspatial-transfer-node",
-          "name": "Hyperspatial Transfer Node",
-          "points": 15,
-          "description": "Each time the bearer's unit Advances, add 6\" to the Move characteristic instead of rolling."
-        },
-        {
-          "id": "osteoclave-fulcrum",
-          "name": "Osteoclave Fulcrum",
-          "points": 20,
-          "description": "The bearer's unit gains the Deep Strike ability."
-        }
-      ],
-      "stratagems": [
-        {
-          "id": "hyperphasic-recall",
-          "name": "Hyperphasic Recall",
-          "cost": 2,
-          "type": "Strategic Ploy",
-          "when": "Any phase, after a NECRONS INFANTRY unit is destroyed.",
-          "effect": "At the end of the phase, if there is a MONOLITH on the battlefield, set up that unit wholly within 6\" of the MONOLITH and more than 9\" from enemies."
-        },
-        {
-          "id": "quantum-deflection",
-          "name": "Quantum Deflection",
-          "cost": 1,
-          "type": "Wargear",
-          "when": "Opponent's Shooting phase, after your VEHICLE is targeted.",
-          "effect": "That VEHICLE has a 4+ invulnerable save until end of phase."
-        },
-        {
-          "id": "reanimation-crypts",
-          "name": "Reanimation Crypts",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Your Command phase.",
-          "effect": "For each NECRONS unit in Reserves, that unit's Reanimation Protocols activate."
-        },
-        {
-          "id": "cosmic-precision",
-          "name": "Cosmic Precision",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Your Movement phase, when a NECRONS INFANTRY unit arrives from Deep Strike or Hyperphasing.",
-          "effect": "That unit can be set up anywhere more than 3\" from enemies but cannot charge this turn."
-        },
-        {
-          "id": "dimensional-corridor",
-          "name": "Dimensional Corridor",
-          "cost": 2,
-          "type": "Strategic Ploy",
-          "when": "Your Movement phase, after a unit is set up by a MONOLITH's Eternity Gate.",
-          "effect": "That unit is eligible to declare a charge this turn."
-        },
-        {
-          "id": "entropic-damping",
-          "name": "Entropic Damping",
-          "cost": 1,
-          "type": "Wargear",
-          "when": "Opponent's Shooting phase, after your TITANIC model is targeted.",
-          "effect": "Attacking weapons gain [HAZARDOUS] until end of phase."
-        }
-      ]
-    },
-    "starshatter-arsenal": {
-      "name": "Starshatter Arsenal",
-      "rule": {
-        "name": "Relentless Onslaught",
-        "description": "Each time a NECRONS model targets a unit within range of an objective marker, add 1 to the Hit roll. VEHICLE and MOUNTED models (not TITANIC) have ranged weapons with [ASSAULT]."
-      },
-      "enhancements": [
-        {
-          "id": "dread-majesty",
-          "name": "Dread Majesty",
-          "points": 30,
-          "description": "OVERLORD or CATACOMB COMMAND BARGE only. While friendly non-TITANIC NECRONS units are within 6\" of the bearer, they can re-roll Hit and Wound rolls of 1."
-        },
-        {
-          "id": "miniaturised-nebuloscope",
-          "name": "Miniaturised Nebuloscope",
-          "points": 15,
-          "description": "The bearer's ranged weapons gain [IGNORES COVER]."
-        },
-        {
-          "id": "demanding-leader",
-          "name": "Demanding Leader",
-          "points": 10,
-          "description": "One VEHICLE or MOUNTED unit within 6\" of the bearer can shoot after Falling Back."
-        },
-        {
-          "id": "chrono-impedance-fields",
-          "name": "Chrono-Impedance Fields",
-          "points": 25,
-          "description": "While the bearer is leading a VEHICLE or MOUNTED unit, each time an attack is allocated to a model in that unit, subtract 1 from the Damage characteristic."
-        }
-      ],
-      "stratagems": [
-        {
-          "id": "merciless-reclamation",
-          "name": "Merciless Reclamation",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Your Shooting or Fight phase.",
-          "effect": "One NECRONS unit targeting a unit within range of an objective marker gains +1 to Wound."
-        },
-        {
-          "id": "unyielding-forms",
-          "name": "Unyielding Forms",
-          "cost": 1,
-          "type": "Battle Tactic",
-          "when": "Opponent's Shooting or Fight phase, after your VEHICLE or MOUNTED unit is targeted.",
-          "effect": "If the weapon's Strength exceeds the unit's Toughness, subtract 1 from the Wound roll."
-        },
-        {
-          "id": "chronoshift",
-          "name": "Chronoshift",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Your Movement phase.",
-          "effect": "One VEHICLE or MOUNTED unit adds 6\" to its Move characteristic when Advancing instead of rolling."
-        },
-        {
-          "id": "dimensional-tunnel",
-          "name": "Dimensional Tunnel",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Your Movement phase.",
-          "effect": "One VEHICLE or MOUNTED unit can move horizontally through models and terrain features."
-        },
-        {
-          "id": "endless-servitude",
-          "name": "Endless Servitude",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Your Command phase.",
-          "effect": "One NECRONS unit within range of an objective marker you control has its Reanimation Protocols activate."
-        },
-        {
-          "id": "reactive-reposition",
-          "name": "Reactive Reposition",
-          "cost": 1,
-          "type": "Strategic Ploy",
-          "when": "Opponent's Shooting phase, after your unit is shot.",
-          "effect": "That unit can make a D6\" Normal move (6\" if VEHICLE or MOUNTED)."
-        }
-      ]
-    }
-  },
-  "armyRule": {
-    "name": "Reanimation Protocols",
-    "description": "At the end of your Command phase, each unit from your army with this ability that is on the battlefield activates its Reanimation Protocols and reanimates D3 wounds. Each time such a unit reanimates a wound, if that unit contains one or more models that have lost one or more wounds, one of those models regains one lost wound. Once all such models have their full wounds restored, if that unit's Reanimation Protocols are still reanimating wounds, and that unit contains one or more destroyed models, one of those destroyed models is returned to the unit with one wound remaining."
-  },
-  "weaponAbilities": {
-    "Anti-X Y+": "Improve wound roll to Y+ against targets with keyword X.",
-    "Assault": "Can shoot after Advancing, with -1 to Hit.",
-    "Blast": "Add 1 to Attacks per 5 models in target unit (min 3 attacks vs 6+ models).",
-    "Devastating Wounds": "Critical Wounds inflict mortal wounds equal to Damage instead of normal damage.",
-    "Extra Attacks": "Attacks with this weapon are made in addition to other melee weapons.",
-    "Heavy": "Add 1 to Hit rolls if the unit Remained Stationary.",
-    "Ignores Cover": "Target cannot have the Benefit of Cover.",
-    "Indirect Fire": "Can target units not visible. -1 to Hit, +1 to target's Save if not visible.",
-    "Lethal Hits": "Critical Hits automatically wound.",
-    "Melta X": "Add X to Damage at half range.",
-    "One Shot": "Can only be used once per battle.",
-    "Pistol": "Can shoot in Engagement Range, targeting units in Engagement Range.",
-    "Precision": "On Critical Wounds, allocate attack to a CHARACTER in the target unit.",
-    "Rapid Fire X": "Add X to Attacks at half range.",
-    "Sustained Hits X": "Critical Hits generate X additional hits.",
-    "Torrent": "Automatically hits (no hit roll).",
-    "Twin-linked": "Re-roll Wound rolls."
-  },
-  "coreStratagems": [
-    {
-      "id": "command-re-roll",
-      "name": "Command Re-roll",
-      "cost": 1,
-      "phase": "Any",
-      "when": "In any phase, just after you have made a Hit roll, a Wound roll, a Damage roll, a saving throw, an Advance roll, a Charge roll, a Desperate Escape test, a Hazardous test, or just after you have rolled the dice to determine the number of attacks made with a weapon.",
-      "target": "An attack, model or unit from your army.",
-      "effect": "You re-roll that roll, test or saving throw.",
-      "description": "WHEN: In any phase, just after you have made a Hit roll, a Wound roll, a Damage roll, a saving throw, an Advance roll, a Charge roll, a Desperate Escape test, a Hazardous test, or just after you have rolled the dice to determine the number of attacks made with a weapon. TARGET: An attack, model or unit from your army. EFFECT: You re-roll that roll, test or saving throw."
-    },
-    {
-      "id": "counter-offensive",
-      "name": "Counter-offensive",
-      "cost": 2,
-      "phase": "Fight",
-      "when": "Fight phase, just after an enemy unit has fought.",
-      "target": "One unit from your army that is within Engagement Range of one or more enemy units and that has not already been selected to fight this phase.",
-      "effect": "Your unit fights next.",
-      "description": "WHEN: Fight phase, just after an enemy unit has fought. TARGET: One unit from your army that is within Engagement Range of one or more enemy units and that has not already been selected to fight this phase. EFFECT: Your unit fights next."
-    },
-    {
-      "id": "epic-challenge",
-      "name": "Epic Challenge",
-      "cost": 1,
-      "phase": "Fight",
-      "when": "Fight phase, when a CHARACTER unit from your army that is within Engagement Range of one or more Attached units is selected to fight.",
-      "target": "One CHARACTER model in your unit.",
-      "effect": "Until the end of the phase, all melee attacks made by that model have the [PRECISION] ability.",
-      "description": "WHEN: Fight phase, when a CHARACTER unit from your army that is within Engagement Range of one or more Attached units is selected to fight. TARGET: One CHARACTER model in your unit. EFFECT: Until the end of the phase, all melee attacks made by that model have the [PRECISION] ability."
-    },
-    {
-      "id": "fire-overwatch",
-      "name": "Fire Overwatch",
-      "cost": 1,
-      "phase": "Opponent's Turn",
-      "when": "Your opponent's Movement or Charge phase, just after an enemy unit is set up or when an enemy unit starts or ends a Normal, Advance, Fall Back or Charge move.",
-      "target": "One unit from your army that is within 24\" of that enemy unit and that would be eligible to shoot if it were your Shooting phase.",
-      "effect": "Your unit can shoot that enemy unit as if it were your Shooting phase.",
-      "restrictions": "An unmodified Hit roll of 6 is required to score a hit. You can only use this Stratagem once per turn.",
-      "description": "WHEN: Your opponent's Movement or Charge phase, just after an enemy unit is set up or when an enemy unit starts or ends a Normal, Advance, Fall Back or Charge move. TARGET: One unit from your army that is within 24\" of that enemy unit and that would be eligible to shoot if it were your Shooting phase. EFFECT: Your unit can shoot that enemy unit as if it were your Shooting phase. RESTRICTIONS: An unmodified Hit roll of 6 is required to score a hit. You can only use this Stratagem once per turn."
-    },
-    {
-      "id": "go-to-ground",
-      "name": "Go to Ground",
-      "cost": 1,
-      "phase": "Opponent's Shooting",
-      "when": "Your opponent's Shooting phase, just after an enemy unit has selected its targets.",
-      "target": "One INFANTRY unit from your army that was selected as the target of one or more of the attacking unit's attacks.",
-      "effect": "Until the end of the phase, all models in your unit have a 6+ invulnerable save and have the Benefit of Cover.",
-      "description": "WHEN: Your opponent's Shooting phase, just after an enemy unit has selected its targets. TARGET: One INFANTRY unit from your army that was selected as the target of one or more of the attacking unit's attacks. EFFECT: Until the end of the phase, all models in your unit have a 6+ invulnerable save and have the Benefit of Cover."
-    },
-    {
-      "id": "grenade",
-      "name": "Grenade",
-      "cost": 1,
-      "phase": "Shooting",
-      "when": "Your Shooting phase.",
-      "target": "One GRENADES unit from your army that is not within Engagement Range of any enemy units and has not been selected to shoot this phase.",
-      "effect": "Select one enemy unit that is not within Engagement Range of any units from your army and is within 8\" of and visible to your GRENADES unit. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound.",
-      "description": "WHEN: Your Shooting phase. TARGET: One GRENADES unit from your army that is not within Engagement Range of any enemy units and has not been selected to shoot this phase. EFFECT: Select one enemy unit that is not within Engagement Range of any units from your army and is within 8\" of and visible to your GRENADES unit. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound."
-    },
-    {
-      "id": "heroic-intervention",
-      "name": "Heroic Intervention",
-      "cost": 2,
-      "phase": "Opponent's Charge",
-      "when": "Your opponent's Charge phase, just after an enemy unit ends a Charge move.",
-      "target": "One unit from your army that is within 6\" of that enemy unit and would be eligible to declare a charge against that enemy unit if it were your Charge phase.",
-      "effect": "Your unit now declares a charge that targets only that enemy unit, and you resolve that charge as if it were your Charge phase.",
-      "restrictions": "You can only select a VEHICLE unit if it is a WALKER. Your unit does not receive any Charge bonus this turn.",
-      "description": "WHEN: Your opponent's Charge phase, just after an enemy unit ends a Charge move. TARGET: One unit from your army that is within 6\" of that enemy unit and would be eligible to declare a charge against that enemy unit if it were your Charge phase. EFFECT: Your unit now declares a charge that targets only that enemy unit, and you resolve that charge as if it were your Charge phase. RESTRICTIONS: You can only select a VEHICLE unit if it is a WALKER. Your unit does not receive any Charge bonus this turn."
-    },
-    {
-      "id": "insane-bravery",
-      "name": "Insane Bravery",
-      "cost": 1,
-      "phase": "Command",
-      "when": "Battle-shock step of your Command phase, just after you have failed a Battle-shock test taken for a unit from your army.",
-      "target": "The unit from your army that Battle-shock test was just taken for (even though your Battle-shocked units cannot normally be affected by your Stratagems).",
-      "effect": "Your unit is treated as having passed that test instead, and is not Battle-shocked as a result.",
-      "description": "WHEN: Battle-shock step of your Command phase, just after you have failed a Battle-shock test taken for a unit from your army. TARGET: The unit from your army that Battle-shock test was just taken for (even though your Battle-shocked units cannot normally be affected by your Stratagems). EFFECT: Your unit is treated as having passed that test instead, and is not Battle-shocked as a result."
-    },
-    {
-      "id": "rapid-ingress",
-      "name": "Rapid Ingress",
-      "cost": 1,
-      "phase": "Opponent's Movement",
-      "when": "End of your opponent's Movement phase.",
-      "target": "One unit from your army that is in Reserves.",
-      "effect": "Your unit can arrive on the battlefield as if it were the Reinforcements step of your Movement phase.",
-      "restrictions": "You cannot use this Stratagem to enable a unit to arrive during a battle round it would not normally be able to do so in.",
-      "description": "WHEN: End of your opponent's Movement phase. TARGET: One unit from your army that is in Reserves. EFFECT: Your unit can arrive on the battlefield as if it were the Reinforcements step of your Movement phase. RESTRICTIONS: You cannot use this Stratagem to enable a unit to arrive during a battle round it would not normally be able to do so in."
-    },
-    {
-      "id": "tank-shock",
-      "name": "Tank Shock",
-      "cost": 1,
-      "phase": "Charge",
-      "when": "Your Charge phase.",
-      "target": "One VEHICLE unit from your army.",
-      "effect": "After your unit ends a Charge move, select one enemy unit within Engagement Range of it, then select one melee weapon your unit is equipped with. Roll a number of D6 equal to that weapon's Strength characteristic. If that Strength characteristic is greater than that enemy unit's Toughness characteristic, roll two additional D6. For each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds).",
-      "description": "WHEN: Your Charge phase. TARGET: One VEHICLE unit from your army. EFFECT: After your unit ends a Charge move, select one enemy unit within Engagement Range of it, then select one melee weapon your unit is equipped with. Roll a number of D6 equal to that weapon's Strength characteristic. If that Strength characteristic is greater than that enemy unit's Toughness characteristic, roll two additional D6. For each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds)."
     }
   ]
 }

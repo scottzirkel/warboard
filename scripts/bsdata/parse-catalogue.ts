@@ -2,13 +2,19 @@
  * BSData Catalogue Parser
  *
  * Parses BSData .cat XML files and transforms them into our app's JSON format.
- * Run with: npx tsx scripts/bsdata/parse-catalogue.ts
+ * Run with: npx tsx scripts/bsdata/parse-catalogue.ts [faction-id]
+ *
+ * Examples:
+ *   npx tsx scripts/bsdata/parse-catalogue.ts custodes
+ *   npx tsx scripts/bsdata/parse-catalogue.ts tyranids
+ *   npx tsx scripts/bsdata/parse-catalogue.ts --all
  */
 
 import { XMLParser } from 'fast-xml-parser';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { BSDATA_PATH, FACTIONS, getFaction, getAllFactionIds, type FactionConfig } from './factions.js';
 
 // Get script directory for relative paths
 const __filename = fileURLToPath(import.meta.url);
@@ -17,7 +23,7 @@ const __dirname = dirname(__filename);
 // BSData XML attribute prefix (fast-xml-parser convention)
 const ATTR_PREFIX = '@_';
 
-// Type IDs from BSData schema (found in the catalogue)
+// Type IDs from BSData schema (these are consistent across all 40k catalogues)
 const TYPE_IDS = {
   // Unit characteristics
   MOVEMENT: 'e703-ecb6-5ce7-aec1',
@@ -122,6 +128,16 @@ interface ParsedUnit {
   keywords: string[];
 }
 
+export interface ParsedData {
+  faction: string;
+  factionId: string;
+  source: string;
+  catalogueId: string;
+  catalogueRevision: string;
+  lastUpdated: string;
+  units: ParsedUnit[];
+}
+
 // Helper to ensure array with proper typing
 function ensureArray(item: unknown): Record<string, unknown>[] {
   if (!item) return [];
@@ -187,7 +203,13 @@ function parseCharacteristic(chars: Record<string, unknown>[], typeId: string): 
   const char = chars.find((c) => getAttr(c, 'typeId') === typeId);
 
   if (!char) return undefined;
-  return (char['#text'] as string) || getAttr(char, 'name');
+
+  // Value can be in #text, or as a direct value, or as the name attribute
+  const textVal = char['#text'];
+  if (textVal !== undefined && textVal !== null) {
+    return String(textVal);
+  }
+  return getAttr(char, 'name') || undefined;
 }
 
 // Parse unit stats from profile characteristics
@@ -203,13 +225,19 @@ function parseUnitStats(characteristics: Record<string, unknown>[]): UnitStats |
     return null;
   }
 
+  // Handle movement - can be number, string with ", or string like "6" or "-"
+  const mStr = String(m).replace('"', '').replace('-', '0');
+  const tStr = String(t);
+  const wStr = String(w);
+  const ocStr = String(oc).replace('-', '0');
+
   return {
-    m: parseInt(m.replace('"', ''), 10),
-    t: parseInt(t, 10),
-    sv: sv,
-    w: parseInt(w, 10),
-    ld: ld,
-    oc: parseInt(oc, 10),
+    m: parseInt(mStr, 10) || 0,
+    t: parseInt(tStr, 10),
+    sv: String(sv),
+    w: parseInt(wStr, 10),
+    ld: String(ld),
+    oc: parseInt(ocStr, 10) || 0,
   };
 }
 
@@ -217,7 +245,6 @@ function parseUnitStats(characteristics: Record<string, unknown>[]): UnitStats |
 function parseWeaponProfile(profile: Record<string, unknown>, type: 'melee' | 'ranged'): Weapon | null {
   const name = getAttr(profile, 'name');
   const id = slugify(name) + (type === 'ranged' ? '-ranged' : '-melee');
-  // bsdataId available if needed for .rosz export: getAttr(profile, 'id')
 
   const characteristics = ensureArray(
     (profile.characteristics as Record<string, unknown>)?.characteristic
@@ -319,6 +346,9 @@ class CatalogueParser {
   private units: ParsedUnit[] = [];
   private sharedProfiles: Map<string, Record<string, unknown>> = new Map();
   private sharedSelectionEntries: Map<string, Record<string, unknown>> = new Map();
+  public catalogueId: string;
+  public catalogueRevision: string;
+  public catalogueName: string;
 
   constructor(xmlContent: string) {
     const parser = new XMLParser({
@@ -329,6 +359,9 @@ class CatalogueParser {
     });
 
     this.catalogue = parser.parse(xmlContent).catalogue;
+    this.catalogueId = getAttr(this.catalogue, 'id');
+    this.catalogueRevision = getAttr(this.catalogue, 'revision');
+    this.catalogueName = getAttr(this.catalogue, 'name');
 
     // Build shared profiles lookup
     const profiles = ensureArray(
@@ -353,13 +386,12 @@ class CatalogueParser {
     }
   }
 
-  // Helper to get modifier source name from infoLinks (e.g., "Praesidium Shield")
+  // Helper to get modifier source name from infoLinks
   private getModifierSourceFromInfoLinks(entry: Record<string, unknown>): string | undefined {
     const infoLinks = ensureArray((entry.infoLinks as Record<string, unknown>)?.infoLink);
     for (const link of infoLinks) {
       const linkName = getAttr(link, 'name');
       const linkType = getAttr(link, 'type');
-      // Look for ability profiles that describe stat modifications
       if (linkType === 'profile' && linkName && linkName !== 'Assault' && linkName !== 'Pistol') {
         return linkName;
       }
@@ -367,7 +399,7 @@ class CatalogueParser {
     return undefined;
   }
 
-  // Helper to extract weapons from entry links (for units like Aquilon that reference shared weapons)
+  // Helper to extract weapons from entry links
   private extractWeaponsFromEntryLinks(entryLinks: Record<string, unknown>[], weapons: Weapon[], loadoutGroup?: string): void {
     for (const link of entryLinks) {
       const targetId = getAttr(link, 'targetId');
@@ -377,7 +409,6 @@ class CatalogueParser {
       const entryType = getAttr(linkedEntry, 'type');
       if (entryType !== 'upgrade') continue;
 
-      // Check for modifiers on this entry (e.g., Praesidium Shield +1W)
       const entryName = getAttr(linkedEntry, 'name');
       const modifierSource = this.getModifierSourceFromInfoLinks(linkedEntry) || entryName;
       const entryModifiers = extractModifiers(linkedEntry, modifierSource);
@@ -427,7 +458,6 @@ class CatalogueParser {
       const entryId = getAttr(entry as Record<string, unknown>, 'id');
 
       // Only process entries that are linked (exposed in the catalogue)
-      // Both "unit" type and "model" type can be full units (Characters are often type="model")
       if ((entryType === 'unit' || entryType === 'model') && linkedIds.has(entryId)) {
         const unit = this.parseUnit(entry as Record<string, unknown>, entryType);
         if (unit) {
@@ -444,7 +474,7 @@ class CatalogueParser {
     const bsdataId = getAttr(entry, 'id');
     const id = slugify(name);
 
-    console.log(`Parsing unit: ${name}`);
+    console.log(`  Parsing unit: ${name}`);
 
     // Get category links for keywords
     const categoryLinks = ensureArray(
@@ -452,7 +482,7 @@ class CatalogueParser {
     );
     const keywords = parseKeywords(categoryLinks);
 
-    // Get profiles at unit level (abilities AND potentially unit stats)
+    // Get profiles at unit level
     const unitProfiles = ensureArray(
       (entry.profiles as Record<string, unknown>)?.profile
     );
@@ -468,7 +498,6 @@ class CatalogueParser {
         const ability = parseAbility(profile as Record<string, unknown>);
         if (ability) abilities.push(ability);
       } else if (typeName === 'Unit' && !stats) {
-        // Some units have stats at unit level (e.g., Allarus)
         const characteristics = ensureArray(
           ((profile as Record<string, unknown>).characteristics as Record<string, unknown>)?.characteristic
         );
@@ -481,7 +510,7 @@ class CatalogueParser {
       (entry.selectionEntryGroups as Record<string, unknown>)?.selectionEntryGroup
     );
 
-    // Also check for direct selectionEntries (some units like Sagittarum use this)
+    // Also check for direct selectionEntries
     const directEntries = ensureArray(
       (entry.selectionEntries as Record<string, unknown>)?.selectionEntry
     );
@@ -501,10 +530,7 @@ class CatalogueParser {
     }
     const modelVariants: ModelVariant[] = [];
 
-    // Extract loadout group from model variant name
-    // e.g., "Custodian Guard (Guardian Spear)" -> "guardian-spear"
     const extractLoadoutGroup = (variantName: string, unitName: string): string => {
-      // Remove unit name prefix and extract what's in parentheses
       const match = variantName.match(/\(([^)]+)\)/);
       if (match) {
         return slugify(match[1]);
@@ -512,7 +538,6 @@ class CatalogueParser {
       return slugify(variantName.replace(unitName, '').trim() || 'default');
     };
 
-    // Helper to process model entries
     const processModelEntries = (entries: Record<string, unknown>[], constraints: Record<string, unknown>[], defaultEntryId?: string) => {
       let minModels = 1;
       let maxModels = 1;
@@ -524,7 +549,6 @@ class CatalogueParser {
         if (type === 'max') maxModels = value;
       }
 
-      // Process model entries to get stats
       for (const modelEntry of entries) {
         const entryType = getAttr(modelEntry, 'type');
         if (entryType !== 'model') continue;
@@ -534,7 +558,6 @@ class CatalogueParser {
         const loadoutGroup = extractLoadoutGroup(modelName, name);
         const isDefault = modelEntryId === defaultEntryId;
 
-        // Get max constraint for this specific model variant
         const modelConstraints = ensureArray((modelEntry.constraints as Record<string, unknown>)?.constraint);
         let variantMaxModels: number | undefined;
         for (const constraint of modelConstraints) {
@@ -547,7 +570,6 @@ class CatalogueParser {
 
         const modelProfiles = ensureArray((modelEntry.profiles as Record<string, unknown>)?.profile);
 
-        // Parse unit stats from Unit profile
         for (const profile of modelProfiles) {
           const typeName = getAttr(profile, 'typeName');
 
@@ -557,21 +579,17 @@ class CatalogueParser {
           }
         }
 
-        // Collect weapon names for this variant
         const variantWeaponNames: string[] = [];
-
-        // Check for model-level modifiers (e.g., Praesidium Shield on the model entry)
         const modelModifierSource = this.getModifierSourceFromInfoLinks(modelEntry);
         const modelModifiers: WeaponModifier[] = [];
+
         if (modelModifierSource) {
-          // Check if it's Praesidium Shield or similar equipment that adds wounds
           const modelInfoLinks = ensureArray((modelEntry.infoLinks as Record<string, unknown>)?.infoLink);
           for (const link of modelInfoLinks) {
             const linkName = getAttr(link, 'name');
             const targetId = getAttr(link, 'targetId');
             const profile = this.sharedProfiles.get(targetId);
             if (profile && linkName === 'Praesidium Shield') {
-              // Praesidium Shield grants +1W
               modelModifiers.push({
                 stat: 'w',
                 operation: 'add',
@@ -583,18 +601,14 @@ class CatalogueParser {
           }
         }
 
-        // Parse weapons from nested selection entries
         const weaponEntries = ensureArray((modelEntry.selectionEntries as Record<string, unknown>)?.selectionEntry);
 
         for (const weaponEntry of weaponEntries) {
           const weaponName = getAttr(weaponEntry, 'name');
           if (weaponName) variantWeaponNames.push(weaponName);
 
-          // Check for entry-level modifiers (e.g., weapon entry has modifiers)
           const weaponModifierSource = this.getModifierSourceFromInfoLinks(weaponEntry) || weaponName;
           const weaponModifiers = extractModifiers(weaponEntry, weaponModifierSource);
-
-          // Combine with model-level modifiers
           const allModifiers = [...modelModifiers, ...weaponModifiers];
 
           const weaponProfiles = ensureArray((weaponEntry.profiles as Record<string, unknown>)?.profile);
@@ -624,11 +638,9 @@ class CatalogueParser {
           }
         }
 
-        // Also check entryLinks for weapons (e.g., Aquilon Custodians)
         const modelEntryLinks = ensureArray((modelEntry.entryLinks as Record<string, unknown>)?.entryLink);
         if (modelEntryLinks.length > 0) {
           this.extractWeaponsFromEntryLinks(modelEntryLinks, weapons, loadoutGroup);
-          // Add weapon names for loadout tracking
           for (const link of modelEntryLinks) {
             const linkName = getAttr(link, 'name');
             if (linkName && !variantWeaponNames.includes(linkName)) {
@@ -637,7 +649,6 @@ class CatalogueParser {
           }
         }
 
-        // Track this variant
         modelVariants.push({
           name: modelName,
           loadoutGroup,
@@ -647,7 +658,6 @@ class CatalogueParser {
         });
       }
 
-      // Set base points for min models
       if (minModels > 0) {
         points[minModels.toString()] = 0;
       }
@@ -656,25 +666,20 @@ class CatalogueParser {
       }
     };
 
-    // Process groups
     for (const group of groups) {
       const groupEntries = ensureArray((group.selectionEntries as Record<string, unknown>)?.selectionEntry);
       const constraints = ensureArray((group.constraints as Record<string, unknown>)?.constraint);
       const defaultEntryId = getAttr(group, 'defaultSelectionEntryId');
       processModelEntries(groupEntries, constraints, defaultEntryId || undefined);
 
-      // For Characters (type="model"), weapons are often in groups as upgrade entries
       if (entryType === 'model') {
-        // Extract loadout group from group name for Character weapons
         const groupName = getAttr(group, 'name');
         const charLoadoutGroup = slugify(groupName || 'default');
 
-        // Helper to extract weapons from upgrade entries
         const extractWeaponsFromUpgrades = (entries: Record<string, unknown>[], loadoutGroup: string) => {
           for (const entry of entries) {
             const entryType = getAttr(entry, 'type');
             if (entryType === 'upgrade') {
-              // Check for modifiers on this entry (e.g., Praesidium Shield +1W)
               const entryName = getAttr(entry, 'name');
               const modifierSource = this.getModifierSourceFromInfoLinks(entry) || entryName;
               const entryModifiers = extractModifiers(entry, modifierSource);
@@ -704,10 +709,8 @@ class CatalogueParser {
           }
         };
 
-        // Process direct entries in this group
         extractWeaponsFromUpgrades(groupEntries, charLoadoutGroup);
 
-        // Also check nested selectionEntryGroups (e.g., Shield-Captain in Terminator Armour)
         const nestedGroups = ensureArray((group.selectionEntryGroups as Record<string, unknown>)?.selectionEntryGroup);
         for (const nestedGroup of nestedGroups) {
           const nestedGroupName = getAttr(nestedGroup, 'name');
@@ -718,13 +721,10 @@ class CatalogueParser {
       }
     }
 
-    // Process direct entries (for units like Sagittarum)
     if (directEntries.length > 0) {
       processModelEntries(directEntries, [], undefined);
     }
 
-    // For Characters (type="model"), also check direct selectionEntries for weapons
-    // (e.g., Aleya has weapon "Somnus" directly in selectionEntries)
     if (entryType === 'model' && directEntries.length > 0) {
       for (const directEntry of directEntries) {
         const directEntryType = getAttr(directEntry, 'type');
@@ -750,14 +750,10 @@ class CatalogueParser {
       }
     }
 
-    // Generate loadoutOptions from collected model variants
     if (modelVariants.length > 1) {
-      // Group variants by their loadout pattern
-      // If variants have maxModels=1, it's likely an "optional" addition like Vexilla
       const mainVariants = modelVariants.filter(v => !v.maxModels);
       const optionalVariants = modelVariants.filter(v => v.maxModels === 1);
 
-      // Create main weapon choice if there are multiple main variants
       if (mainVariants.length > 1) {
         const mainOption: LoadoutOption = {
           id: 'main-weapon',
@@ -773,7 +769,6 @@ class CatalogueParser {
         loadoutOptions.push(mainOption);
       }
 
-      // Create optional choices for limited variants (like Vexilla)
       for (const optVariant of optionalVariants) {
         const optOption: LoadoutOption = {
           id: optVariant.loadoutGroup,
@@ -789,12 +784,10 @@ class CatalogueParser {
       }
     }
 
-    // For Characters (model type), set default single-model points
     if (entryType === 'model' && Object.keys(points).length === 0) {
       points['1'] = 0;
     }
 
-    // Get costs at unit level
     const costs = ensureArray(
       (entry.costs as Record<string, unknown>)?.cost
     );
@@ -803,7 +796,6 @@ class CatalogueParser {
       const typeId = getAttr(cost as Record<string, unknown>, 'typeId');
       if (typeId === TYPE_IDS.POINTS) {
         const value = parseInt(getAttr(cost as Record<string, unknown>, 'value'), 10);
-        // Set as base points for minimum model count
         const minCount = Object.keys(points)[0];
         if (minCount) {
           points[minCount] = value;
@@ -811,7 +803,6 @@ class CatalogueParser {
       }
     }
 
-    // Helper to process point modifiers
     const processPointModifiers = (modifierList: Record<string, unknown>[]) => {
       for (const modifier of modifierList) {
         const field = getAttr(modifier as Record<string, unknown>, 'field');
@@ -820,7 +811,6 @@ class CatalogueParser {
         if (field === TYPE_IDS.POINTS) {
           const modPoints = parseInt(value, 10);
 
-          // Check conditions for model count
           const conditions = ensureArray(
             ((modifier as Record<string, unknown>).conditions as Record<string, unknown>)?.condition
           );
@@ -837,13 +827,11 @@ class CatalogueParser {
       }
     };
 
-    // Check modifiers for conditional points (e.g., 5 models)
     const modifiers = ensureArray(
       (entry.modifiers as Record<string, unknown>)?.modifier
     );
     processPointModifiers(modifiers);
 
-    // Also check modifierGroups (some units like Vertus Praetors use this structure)
     const modifierGroups = ensureArray(
       (entry.modifierGroups as Record<string, unknown>)?.modifierGroup
     );
@@ -854,11 +842,8 @@ class CatalogueParser {
       processPointModifiers(groupModifiers);
     }
 
-    // Remove any 0-point entries that weren't set by modifiers
-    // (These occur when we initialize max model count but no modifier exists for it)
     for (const count of Object.keys(points)) {
       if (points[count] === 0) {
-        // Check if this is the min model count (which should have base cost from costs)
         const minCount = Math.min(...Object.keys(points).map(Number));
         if (parseInt(count, 10) !== minCount) {
           delete points[count];
@@ -867,11 +852,10 @@ class CatalogueParser {
     }
 
     if (!stats) {
-      console.log(`  - No stats found, skipping`);
+      console.log(`    - No stats found, skipping`);
       return null;
     }
 
-    // Extract invuln from infoLinks
     const infoLinks = ensureArray(
       (entry.infoLinks as Record<string, unknown>)?.infoLink
     );
@@ -883,7 +867,6 @@ class CatalogueParser {
         const targetId = getAttr(link as Record<string, unknown>, 'targetId');
         const profile = this.sharedProfiles.get(targetId);
         if (profile) {
-          // Extract invuln value from description (e.g., "4+ invulnerable save")
           const chars = ensureArray(
             (profile.characteristics as Record<string, unknown>)?.characteristic
           );
@@ -893,7 +876,6 @@ class CatalogueParser {
 
           if (descChar) {
             const desc = (descChar['#text'] as string) || '';
-            // Match patterns like "4+" or "5+"
             const match = desc.match(/(\d)\+\s*invulnerable/i);
             if (match) {
               invuln = `${match[1]}+`;
@@ -927,42 +909,68 @@ class CatalogueParser {
   }
 }
 
-// Main execution
-async function main() {
-  const cataloguePath = join(__dirname, 'custodes.cat');
-  const outputPath = join(__dirname, 'custodes-parsed.json');
+// Parse a single faction
+export function parseFaction(faction: FactionConfig): ParsedData | null {
+  const cataloguePath = join(BSDATA_PATH, faction.catalogueFile);
 
-  console.log('Reading catalogue...');
+  if (!existsSync(cataloguePath)) {
+    console.error(`  Catalogue file not found: ${cataloguePath}`);
+    return null;
+  }
+
+  console.log(`  Reading: ${faction.catalogueFile}`);
   const xmlContent = readFileSync(cataloguePath, 'utf-8');
 
-  console.log('Parsing...');
   const parser = new CatalogueParser(xmlContent);
   const units = parser.parse();
 
-  console.log(`\nParsed ${units.length} units`);
+  console.log(`  Parsed ${units.length} units (revision ${parser.catalogueRevision})`);
 
-  // Create output structure matching our format
-  const output = {
-    faction: 'Adeptus Custodes',
+  return {
+    faction: faction.name,
+    factionId: faction.id,
     source: 'BSData',
-    catalogueId: '1f19-6509-d906-ca10',
+    catalogueId: parser.catalogueId,
+    catalogueRevision: parser.catalogueRevision,
     lastUpdated: new Date().toISOString().split('T')[0],
     units,
   };
+}
 
-  // Write output
-  writeFileSync(outputPath, JSON.stringify(output, null, 2));
-  console.log(`\nOutput written to: ${outputPath}`);
+// Main execution
+async function main() {
+  const args = process.argv.slice(2);
 
-  // Print summary
-  console.log('\n=== Summary ===');
-  for (const unit of units) {
-    console.log(`${unit.name}:`);
-    console.log(`  - Points: ${JSON.stringify(unit.points)}`);
-    console.log(`  - Stats: M${unit.stats.m} T${unit.stats.t} SV${unit.stats.sv} W${unit.stats.w}`);
-    console.log(`  - Weapons: ${unit.weapons.length}`);
-    console.log(`  - Abilities: ${unit.abilities.length}`);
+  if (args.length === 0) {
+    console.log('Usage: npx tsx scripts/bsdata/parse-catalogue.ts [faction-id|--all]');
+    console.log('\nAvailable factions:');
+    for (const f of FACTIONS) {
+      console.log(`  ${f.id.padEnd(15)} - ${f.name}`);
+    }
+    process.exit(1);
   }
+
+  const factionIds = args[0] === '--all' ? getAllFactionIds() : args;
+  const outputDir = __dirname;
+
+  for (const factionId of factionIds) {
+    const faction = getFaction(factionId);
+    if (!faction) {
+      console.error(`Unknown faction: ${factionId}`);
+      continue;
+    }
+
+    console.log(`\n=== Parsing ${faction.name} ===`);
+    const parsed = parseFaction(faction);
+
+    if (parsed) {
+      const outputPath = join(outputDir, `${faction.id}-parsed.json`);
+      writeFileSync(outputPath, JSON.stringify(parsed, null, 2));
+      console.log(`  Output: ${outputPath}`);
+    }
+  }
+
+  console.log('\nDone!');
 }
 
 main().catch(console.error);

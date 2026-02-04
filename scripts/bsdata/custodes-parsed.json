@@ -1,8 +1,10 @@
 {
   "faction": "Adeptus Custodes",
+  "factionId": "custodes",
   "source": "BSData",
   "catalogueId": "1f19-6509-d906-ca10",
-  "lastUpdated": "2026-01-25",
+  "catalogueRevision": "85",
+  "lastUpdated": "2026-02-04",
   "units": [
     {
       "id": "aleya",
@@ -259,7 +261,7 @@
             "a": 2,
             "bs": "3+",
             "s": 4,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [
@@ -275,7 +277,7 @@
             "a": 3,
             "ws": "4+",
             "s": 6,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [],
@@ -789,7 +791,7 @@
             "a": 1,
             "bs": "3+",
             "s": 4,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [
@@ -805,7 +807,7 @@
             "a": 2,
             "ws": "3+",
             "s": 3,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [],
@@ -1409,7 +1411,7 @@
             "a": 2,
             "bs": "2+",
             "s": 4,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [
@@ -1506,7 +1508,7 @@
             "a": 6,
             "ws": "4+",
             "s": 8,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [],
@@ -1536,7 +1538,7 @@
             "a": 2,
             "bs": "2+",
             "s": 4,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [
@@ -1785,7 +1787,7 @@
             "a": 2,
             "ws": "3+",
             "s": 3,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [],
@@ -1800,7 +1802,7 @@
             "a": "D6",
             "bs": "N/A",
             "s": 4,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [
@@ -2634,7 +2636,7 @@
             "a": 3,
             "ws": "4+",
             "s": 6,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [],
@@ -2698,7 +2700,7 @@
             "a": 4,
             "ws": "4+",
             "s": 6,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [],
@@ -2801,7 +2803,7 @@
             "a": 5,
             "ws": "2+",
             "s": 7,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [],
@@ -2816,7 +2818,7 @@
             "a": "D6+3",
             "bs": "2+",
             "s": 5,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [
@@ -2907,7 +2909,7 @@
             "a": 6,
             "ws": "4+",
             "s": 8,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [],
@@ -2983,7 +2985,7 @@
         "sv": "2+",
         "w": 22,
         "ld": "6+",
-        "oc": null
+        "oc": 0
       },
       "weapons": [
         {
@@ -3009,7 +3011,7 @@
             "a": 9,
             "ws": "4+",
             "s": 9,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [],
@@ -3084,8 +3086,8 @@
         "t": 12,
         "sv": "2+",
         "w": 22,
-        "ld": 6,
-        "oc": null
+        "ld": "6",
+        "oc": 0
       },
       "weapons": [
         {
@@ -3126,7 +3128,7 @@
             "a": 9,
             "ws": "4+",
             "s": 9,
-            "ap": null,
+            "ap": 0,
             "d": 1
           },
           "abilities": [],

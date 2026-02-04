@@ -1,7 +1,8 @@
 {
   "faction": "Adeptus Custodes",
-  "lastUpdated": "2026-01",
+  "lastUpdated": "2026-02",
   "catalogueId": "1f19-6509-d906-ca10",
+  "catalogueRevision": "85",
   "gameSystemId": "sys-352e-adc2-7639-d6a9",
   "units": [
     {
@@ -76,7 +77,7 @@
       "points": {
         "2": 110,
         "3": 165,
-        "5": 275,
+        "4": 275,
         "6": 330
       },
       "stats": {
@@ -269,7 +270,8 @@
           },
           "abilities": [
             "Rapid Fire 2"
-          ]
+          ],
+          "loadoutGroup": "wargear"
         },
         {
           "id": "armoured-tracks-melee",
@@ -282,41 +284,8 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": []
-        },
-        {
-          "id": "hunter-killer-missile",
-          "name": "Hunter-killer missile",
-          "type": "ranged",
-          "stats": {
-            "range": 48,
-            "a": 1,
-            "bs": "3+",
-            "s": 14,
-            "ap": -3,
-            "d": "D6"
-          },
-          "abilities": ["One Shot"],
-          "loadoutGroup": "hunter-killer"
-        }
-      ],
-      "loadoutOptions": [
-        {
-          "id": "hunter-killer",
-          "name": "Hunter-killer missile",
-          "type": "optional",
-          "pattern": "addition",
-          "choices": [
-            {
-              "id": "none",
-              "name": "None",
-              "default": true
-            },
-            {
-              "id": "hunter-killer",
-              "name": "Hunter-killer missile"
-            }
-          ]
+          "abilities": [],
+          "loadoutGroup": "wargear"
         }
       ],
       "abilities": [
@@ -354,7 +323,7 @@
       "weapons": [
         {
           "id": "vaultswords-behemor-melee",
-          "name": "Vaultswords - Behemor",
+          "name": "➤ Vaultswords - Behemor",
           "type": "melee",
           "stats": {
             "a": 6,
@@ -365,11 +334,12 @@
           },
           "abilities": [
             "Precision"
-          ]
+          ],
+          "loadoutGroup": "wargear"
         },
         {
           "id": "vaultswords-hurricanis-melee",
-          "name": "Vaultswords - Hurricanis",
+          "name": "➤ Vaultswords - Hurricanis",
           "type": "melee",
           "stats": {
             "a": 9,
@@ -380,11 +350,12 @@
           },
           "abilities": [
             "Sustained Hits 1"
-          ]
+          ],
+          "loadoutGroup": "wargear"
         },
         {
           "id": "vaultswords-victus-melee",
-          "name": "Vaultswords - Victus",
+          "name": "➤ Vaultswords - Victus",
           "type": "melee",
           "stats": {
             "a": 5,
@@ -395,7 +366,8 @@
           },
           "abilities": [
             "Devastating Wounds"
-          ]
+          ],
+          "loadoutGroup": "wargear"
         }
       ],
       "abilities": [
@@ -600,8 +572,7 @@
             {
               "id": "vexilla-praesidium-shield-misericordia",
               "name": "Vexilla + Misericordia",
-              "maxModels": 1,
-              "excludesFromOption": "main-weapon"
+              "maxModels": 1
             }
           ]
         }
@@ -612,8 +583,7 @@
       "bsdataId": "9610-b148-8433-93b8",
       "name": "Custodian Wardens",
       "points": {
-        "4": 210,
-        "5": 260
+        "4": 210
       },
       "stats": {
         "m": 6,
@@ -760,42 +730,7 @@
       },
       "weapons": [
         {
-          "id": "master-crafted-boltgun",
-          "name": "Master-crafted Boltgun",
-          "type": "ranged",
-          "stats": {
-            "range": 24,
-            "a": 1,
-            "bs": "2+",
-            "s": 4,
-            "ap": 0,
-            "d": 2
-          },
-          "abilities": [
-            "Rapid Fire 1"
-          ],
-          "loadoutGroup": "boltgun"
-        },
-        {
-          "id": "witchseeker-flamer",
-          "name": "Witchseeker Flamer",
-          "type": "ranged",
-          "stats": {
-            "range": 12,
-            "a": "D6",
-            "bs": "N/A",
-            "s": 4,
-            "ap": 0,
-            "d": 1
-          },
-          "abilities": [
-            "Ignores Cover",
-            "Torrent"
-          ],
-          "loadoutGroup": "flamer"
-        },
-        {
-          "id": "executioner-greatblade",
+          "id": "executioner-greatblade-melee",
           "name": "Executioner Greatblade",
           "type": "melee",
           "stats": {
@@ -809,65 +744,14 @@
             "Anti-Psyker 5+",
             "Devastating Wounds"
           ],
-          "loadoutGroup": "greatblade"
-        },
-        {
-          "id": "close-combat-weapon-boltgun",
-          "name": "Close Combat Weapon",
-          "type": "melee",
-          "stats": {
-            "a": 3,
-            "ws": "2+",
-            "s": 3,
-            "ap": 0,
-            "d": 1
-          },
-          "abilities": [],
-          "loadoutGroup": "boltgun"
-        },
-        {
-          "id": "close-combat-weapon-flamer",
-          "name": "Close Combat Weapon",
-          "type": "melee",
-          "stats": {
-            "a": 3,
-            "ws": "2+",
-            "s": 3,
-            "ap": 0,
-            "d": 1
-          },
-          "abilities": [],
-          "loadoutGroup": "flamer"
-        }
-      ],
-      "loadoutOptions": [
-        {
-          "id": "loadout",
-          "name": "Loadout",
-          "type": "choice",
-          "pattern": "replacement",
-          "choices": [
-            {
-              "id": "boltgun",
-              "name": "Boltgun + CCW",
-              "default": true
-            },
-            {
-              "id": "flamer",
-              "name": "Flamer + CCW"
-            },
-            {
-              "id": "greatblade",
-              "name": "Executioner Greatblade"
-            }
-          ]
+          "loadoutGroup": "wargear"
         }
       ],
       "abilities": [
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to Prosecutors, Vigilators, or Witchseekers.",
+          "description": "This model can be attached to the following units:\n■ Prosecutors\n■ Vigilators\n■ Witchseekers",
           "eligibleUnits": [
             "prosecutors",
             "vigilators",
@@ -875,14 +759,14 @@
           ]
         },
         {
-          "id": "seekers-instincts",
+          "id": "seeker-s-instincts",
           "name": "Seeker's Instincts",
-          "description": "Add 2\" to Move and +2 to Advance/Charge rolls for the led unit."
+          "description": "While this model is leading a unit, add 2\" to the Move characteristic of models in that unit and add 2 to Advance and Charge rolls made for that unit."
         },
         {
           "id": "corner-the-quarry",
           "name": "Corner the Quarry",
-          "description": "Enemy non-Monster/Vehicle units falling back must take Desperate Escape tests."
+          "description": "Each time an enemy unit (excluding MONSTERS and VEHICLES) that is within Engagement Range of this model’s unit Falls Back, all models in that enemy unit must take a Desperate Escape test. When doing so, if that enemy unit is Battle-shocked, subtract 1 from each of those tests."
         }
       ],
       "keywords": [
@@ -899,13 +783,8 @@
       "bsdataId": "3ec3-a4df-fdbf-5507",
       "name": "Prosecutors",
       "points": {
-        "4": 40,
-        "5": 50,
-        "6": 75,
-        "7": 75,
-        "8": 75,
-        "9": 75,
-        "10": 85
+        "1": 40,
+        "5": 50
       },
       "stats": {
         "m": 6,
@@ -917,7 +796,7 @@
       },
       "weapons": [
         {
-          "id": "boltgun",
+          "id": "boltgun-ranged",
           "name": "Boltgun",
           "type": "ranged",
           "stats": {
@@ -930,11 +809,12 @@
           },
           "abilities": [
             "Rapid Fire 1"
-          ]
+          ],
+          "loadoutGroup": "prosecutor"
         },
         {
-          "id": "close-combat-weapon",
-          "name": "Close Combat Weapon",
+          "id": "close-combat-weapon-melee",
+          "name": "Close combat weapon",
           "type": "melee",
           "stats": {
             "a": 2,
@@ -943,27 +823,42 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": []
+          "abilities": [],
+          "loadoutGroup": "prosecutor"
         }
       ],
       "abilities": [
         {
-          "id": "daughters-of-the-abyss",
-          "name": "Daughters of the Abyss",
-          "description": "Feel No Pain 3+ against Psychic Attacks and mortal wounds."
-        },
-        {
           "id": "purity-of-execution",
           "name": "Purity of Execution",
-          "description": "Ranged attacks targeting PSYKER units gain Precision and Devastating Wounds."
+          "description": "Each time a model in this unit makes a ranged attack that targets a Psyker unit, that attack has the [PRECISION] and [DEVASTATING WOUNDS] abilities."
         }
       ],
       "keywords": [
         "Prosecutors",
-        "Infantry",
-        "Battleline",
         "Imperium",
+        "Infantry",
         "Anathema Psykana"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "prosecutor-sister-superior",
+          "name": "Boltgun",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "prosecutor-sister-superior",
+              "name": "Boltgun + Close combat weapon",
+              "maxModels": 1
+            }
+          ]
+        }
       ]
     },
     {
@@ -994,7 +889,7 @@
             "d": 2
           },
           "abilities": [],
-          "loadoutGroup": "spear"
+          "loadoutGroup": "wargear"
         },
         {
           "id": "guardian-spear-ranged",
@@ -1011,11 +906,11 @@
           "abilities": [
             "Assault"
           ],
-          "loadoutGroup": "spear"
+          "loadoutGroup": "wargear"
         },
         {
           "id": "castellan-axe-melee",
-          "name": "Castellan Axe",
+          "name": "Castellan axe",
           "type": "melee",
           "stats": {
             "a": 6,
@@ -1025,11 +920,11 @@
             "d": 3
           },
           "abilities": [],
-          "loadoutGroup": "axe"
+          "loadoutGroup": "wargear"
         },
         {
           "id": "castellan-axe-ranged",
-          "name": "Castellan Axe",
+          "name": "Castellan axe",
           "type": "ranged",
           "stats": {
             "range": 24,
@@ -1042,7 +937,7 @@
           "abilities": [
             "Assault"
           ],
-          "loadoutGroup": "axe"
+          "loadoutGroup": "wargear"
         },
         {
           "id": "sentinel-blade-melee",
@@ -1056,7 +951,7 @@
             "d": 1
           },
           "abilities": [],
-          "loadoutGroup": "blade",
+          "loadoutGroup": "wargear",
           "modifiers": [
             {
               "stat": "w",
@@ -1083,7 +978,7 @@
             "Assault",
             "Pistol"
           ],
-          "loadoutGroup": "blade",
+          "loadoutGroup": "wargear",
           "modifiers": [
             {
               "stat": "w",
@@ -1095,7 +990,7 @@
           ]
         },
         {
-          "id": "pyrithite-spear-shield-melee",
+          "id": "pyrithite-spear-melee",
           "name": "Pyrithite Spear",
           "type": "melee",
           "stats": {
@@ -1106,7 +1001,7 @@
             "d": 2
           },
           "abilities": [],
-          "loadoutGroup": "pyrithite-shield",
+          "loadoutGroup": "wargear",
           "modifiers": [
             {
               "stat": "w",
@@ -1118,7 +1013,7 @@
           ]
         },
         {
-          "id": "pyrithite-spear-shield-ranged",
+          "id": "pyrithite-spear-ranged",
           "name": "Pyrithite Spear",
           "type": "ranged",
           "stats": {
@@ -1132,7 +1027,7 @@
           "abilities": [
             "Melta 2"
           ],
-          "loadoutGroup": "pyrithite-shield",
+          "loadoutGroup": "wargear",
           "modifiers": [
             {
               "stat": "w",
@@ -1144,45 +1039,16 @@
           ]
         }
       ],
-      "loadoutOptions": [
-        {
-          "id": "main-weapon",
-          "name": "Weapon",
-          "type": "choice",
-          "pattern": "replacement",
-          "choices": [
-            {
-              "id": "spear",
-              "name": "Guardian Spear",
-              "default": true
-            },
-            {
-              "id": "blade",
-              "name": "Sentinel Blade + Shield",
-              "paired": true
-            },
-            {
-              "id": "axe",
-              "name": "Castellan Axe"
-            },
-            {
-              "id": "pyrithite-shield",
-              "name": "Pyrithite Spear + Shield",
-              "paired": true
-            }
-          ]
-        }
-      ],
       "abilities": [
         {
           "id": "master-of-the-stances",
           "name": "Master of the Stances",
-          "description": "Once per battle, both Ka'tah Stances are active for this unit instead of only one."
+          "description": "Once per battle, when this model's unit is selected to fight, it can use this ability. If it does, until that fight is resolved, both Ka'tah Stances are active for that unit, instead of only one."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to Custodian Guard or Custodian Wardens.",
+          "description": "This model can be attached to the following units:\n■ Custodian Guard\n■ Custodian Wardens",
           "eligibleUnits": [
             "custodian-guard",
             "custodian-wardens"
@@ -1191,9 +1057,9 @@
       ],
       "keywords": [
         "Shield-Captain",
-        "Infantry",
+        "Imperium",
         "Character",
-        "Imperium"
+        "Infantry"
       ],
       "invuln": "4+"
     },
@@ -1318,7 +1184,7 @@
       "weapons": [
         {
           "id": "interceptor-lance-melee",
-          "name": "Interceptor Lance",
+          "name": "Interceptor lance",
           "type": "melee",
           "stats": {
             "a": 6,
@@ -1329,11 +1195,12 @@
           },
           "abilities": [
             "Lance"
-          ]
+          ],
+          "loadoutGroup": "wargear"
         },
         {
           "id": "vertus-hurricane-bolter-ranged",
-          "name": "Vertus Hurricane Bolter",
+          "name": "Vertus hurricane bolter",
           "type": "ranged",
           "stats": {
             "range": 18,
@@ -1347,11 +1214,11 @@
             "Rapid Fire 3",
             "Twin-linked"
           ],
-          "loadoutGroup": "bolter"
+          "loadoutGroup": "equipped-with"
         },
         {
           "id": "salvo-launcher-ranged",
-          "name": "Salvo Launcher",
+          "name": "Salvo launcher",
           "type": "ranged",
           "stats": {
             "range": 24,
@@ -1364,33 +1231,14 @@
           "abilities": [
             "Twin-linked"
           ],
-          "loadoutGroup": "salvo"
-        }
-      ],
-      "loadoutOptions": [
-        {
-          "id": "ranged-weapon",
-          "name": "Ranged Weapon",
-          "type": "choice",
-          "pattern": "replacement",
-          "choices": [
-            {
-              "id": "bolter",
-              "name": "Hurricane Bolter",
-              "default": true
-            },
-            {
-              "id": "salvo",
-              "name": "Salvo Launcher"
-            }
-          ]
+          "loadoutGroup": "equipped-with"
         }
       ],
       "abilities": [
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to Vertus Praetors.",
+          "description": "This model can be attached to the following units:\n■ Vertus Praetors",
           "eligibleUnits": [
             "vertus-praetors"
           ]
@@ -1398,15 +1246,16 @@
         {
           "id": "sweeping-advance",
           "name": "Sweeping Advance",
-          "description": "Once per battle, at the end of the Fight phase, this unit can Fall Back or make a Normal move."
+          "description": "Once per battle, at the end of the Fight phase, if this model's unit fought this phase, if it is within Engagement Range of one or more enemy units, it can make a Fall Back move or, if it is not within Engagement Range of one or more enemy units, it can make a Normal move."
         }
       ],
       "keywords": [
-        "Shield-Captain",
+        "Dawneagle Jetbike",
+        "Imperium",
         "Mounted",
         "Character",
         "Fly",
-        "Imperium"
+        "Shield-Captain"
       ],
       "invuln": "4+"
     },
@@ -1880,13 +1729,8 @@
       "bsdataId": "dd2d-568a-9c56-1b6e",
       "name": "Vigilators",
       "points": {
-        "4": 45,
-        "5": 55,
-        "6": 90,
-        "7": 90,
-        "8": 90,
-        "9": 90,
-        "10": 100
+        "1": 45,
+        "5": 55
       },
       "stats": {
         "m": 6,
@@ -1898,8 +1742,8 @@
       },
       "weapons": [
         {
-          "id": "executioner-greatblade",
-          "name": "Executioner Greatblade",
+          "id": "executioner-greatblade-melee",
+          "name": "Executioner greatblade",
           "type": "melee",
           "stats": {
             "a": 2,
@@ -1911,26 +1755,42 @@
           "abilities": [
             "Anti-Psyker 5+",
             "Devastating Wounds"
-          ]
+          ],
+          "loadoutGroup": "vigilator"
         }
       ],
       "abilities": [
         {
-          "id": "daughters-of-the-abyss",
-          "name": "Daughters of the Abyss",
-          "description": "Feel No Pain 3+ against Psychic Attacks and mortal wounds."
-        },
-        {
           "id": "deft-parry",
           "name": "Deft Parry",
-          "description": "Melee attacks targeting this unit suffer -1 to Hit."
+          "description": "Each time a melee attack targets this unit, subtract 1 from the Hit roll."
         }
       ],
       "keywords": [
         "Vigilators",
+        "Anathema Psykana",
         "Infantry",
-        "Imperium",
-        "Anathema Psykana"
+        "Imperium"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "vigilator-sister-superior",
+          "name": "Executioner greatblade",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "vigilator-sister-superior",
+              "name": "Executioner greatblade",
+              "maxModels": 1
+            }
+          ]
+        }
       ]
     },
     {
@@ -1938,13 +1798,8 @@
       "bsdataId": "503b-f7be-eeeb-9e31",
       "name": "Witchseekers",
       "points": {
-        "4": 45,
-        "5": 55,
-        "6": 90,
-        "7": 90,
-        "8": 90,
-        "9": 90,
-        "10": 100
+        "1": 45,
+        "5": 55
       },
       "stats": {
         "m": 6,
@@ -1956,8 +1811,22 @@
       },
       "weapons": [
         {
-          "id": "witchseeker-flamer",
-          "name": "Witchseeker Flamer",
+          "id": "close-combat-weapon-melee",
+          "name": "Close combat weapon",
+          "type": "melee",
+          "stats": {
+            "a": 2,
+            "ws": "3+",
+            "s": 3,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "witchseeker"
+        },
+        {
+          "id": "witchseeker-flamer-ranged",
+          "name": "Witchseeker flamer",
           "type": "ranged",
           "stats": {
             "range": 12,
@@ -1970,44 +1839,42 @@
           "abilities": [
             "Ignores Cover",
             "Torrent"
-          ]
-        },
-        {
-          "id": "close-combat-weapon",
-          "name": "Close Combat Weapon",
-          "type": "melee",
-          "stats": {
-            "a": 2,
-            "ws": "3+",
-            "s": 3,
-            "ap": 0,
-            "d": 1
-          },
-          "abilities": []
+          ],
+          "loadoutGroup": "witchseeker"
         }
       ],
       "abilities": [
         {
-          "id": "scouts",
-          "name": "Scouts 6\"",
-          "description": "This unit can make a Normal move of up to 6\" before the first turn begins."
-        },
-        {
-          "id": "daughters-of-the-abyss",
-          "name": "Daughters of the Abyss",
-          "description": "Feel No Pain 3+ against Psychic Attacks and mortal wounds."
-        },
-        {
           "id": "sanctified-flames",
           "name": "Sanctified Flames",
-          "description": "After shooting, one enemy unit hit must take a Battle-shock test."
+          "description": "In your Shooting phase, after this unit has shot, select one enemy unit that was hit by one or more of those attacks. That unit must take a Battle-shock test."
         }
       ],
       "keywords": [
         "Witchseekers",
+        "Anathema Psykana",
         "Infantry",
-        "Imperium",
-        "Anathema Psykana"
+        "Imperium"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "witchseeker-sister-superior",
+          "name": "Close combat weapon",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "witchseeker-sister-superior",
+              "name": "Close combat weapon + Witchseeker flamer",
+              "maxModels": 1
+            }
+          ]
+        }
       ]
     },
     {
@@ -3149,7 +3016,7 @@
         "sv": "2+",
         "w": 22,
         "ld": "6+",
-        "oc": null
+        "oc": 0
       },
       "weapons": [
         {
@@ -3250,8 +3117,8 @@
         "t": 12,
         "sv": "2+",
         "w": 22,
-        "ld": 6,
-        "oc": null
+        "ld": "6",
+        "oc": 0
       },
       "weapons": [
         {
@@ -4062,111 +3929,6 @@
       ]
     }
   },
-  "coreStratagems": [
-    {
-      "id": "command-re-roll",
-      "name": "Command Re-roll",
-      "cost": 1,
-      "phase": "Any",
-      "when": "In any phase, just after you have made a Hit roll, a Wound roll, a Damage roll, a saving throw, an Advance roll, a Charge roll, a Desperate Escape test, a Hazardous test, or just after you have rolled the dice to determine the number of attacks made with a weapon.",
-      "target": "An attack, model or unit from your army.",
-      "effect": "You re-roll that roll, test or saving throw.",
-      "description": "WHEN: In any phase, just after you have made a Hit roll, a Wound roll, a Damage roll, a saving throw, an Advance roll, a Charge roll, a Desperate Escape test, a Hazardous test, or just after you have rolled the dice to determine the number of attacks made with a weapon. TARGET: An attack, model or unit from your army. EFFECT: You re-roll that roll, test or saving throw."
-    },
-    {
-      "id": "counter-offensive",
-      "name": "Counter-offensive",
-      "cost": 2,
-      "phase": "Fight",
-      "when": "Fight phase, just after an enemy unit has fought.",
-      "target": "One unit from your army that is within Engagement Range of one or more enemy units and that has not already been selected to fight this phase.",
-      "effect": "Your unit fights next.",
-      "description": "WHEN: Fight phase, just after an enemy unit has fought. TARGET: One unit from your army that is within Engagement Range of one or more enemy units and that has not already been selected to fight this phase. EFFECT: Your unit fights next."
-    },
-    {
-      "id": "epic-challenge",
-      "name": "Epic Challenge",
-      "cost": 1,
-      "phase": "Fight",
-      "when": "Fight phase, when a CHARACTER unit from your army that is within Engagement Range of one or more Attached units is selected to fight.",
-      "target": "One CHARACTER model in your unit.",
-      "effect": "Until the end of the phase, all melee attacks made by that model have the [PRECISION] ability.",
-      "description": "WHEN: Fight phase, when a CHARACTER unit from your army that is within Engagement Range of one or more Attached units is selected to fight. TARGET: One CHARACTER model in your unit. EFFECT: Until the end of the phase, all melee attacks made by that model have the [PRECISION] ability."
-    },
-    {
-      "id": "fire-overwatch",
-      "name": "Fire Overwatch",
-      "cost": 1,
-      "phase": "Opponent's Turn",
-      "when": "Your opponent's Movement or Charge phase, just after an enemy unit is set up or when an enemy unit starts or ends a Normal, Advance, Fall Back or Charge move.",
-      "target": "One unit from your army that is within 24\" of that enemy unit and that would be eligible to shoot if it were your Shooting phase.",
-      "effect": "Your unit can shoot that enemy unit as if it were your Shooting phase.",
-      "restrictions": "An unmodified Hit roll of 6 is required to score a hit. You can only use this Stratagem once per turn.",
-      "description": "WHEN: Your opponent's Movement or Charge phase, just after an enemy unit is set up or when an enemy unit starts or ends a Normal, Advance, Fall Back or Charge move. TARGET: One unit from your army that is within 24\" of that enemy unit and that would be eligible to shoot if it were your Shooting phase. EFFECT: Your unit can shoot that enemy unit as if it were your Shooting phase. RESTRICTIONS: An unmodified Hit roll of 6 is required to score a hit. You can only use this Stratagem once per turn."
-    },
-    {
-      "id": "go-to-ground",
-      "name": "Go to Ground",
-      "cost": 1,
-      "phase": "Opponent's Shooting",
-      "when": "Your opponent's Shooting phase, just after an enemy unit has selected its targets.",
-      "target": "One INFANTRY unit from your army that was selected as the target of one or more of the attacking unit's attacks.",
-      "effect": "Until the end of the phase, all models in your unit have a 6+ invulnerable save and have the Benefit of Cover.",
-      "description": "WHEN: Your opponent's Shooting phase, just after an enemy unit has selected its targets. TARGET: One INFANTRY unit from your army that was selected as the target of one or more of the attacking unit's attacks. EFFECT: Until the end of the phase, all models in your unit have a 6+ invulnerable save and have the Benefit of Cover."
-    },
-    {
-      "id": "grenade",
-      "name": "Grenade",
-      "cost": 1,
-      "phase": "Shooting",
-      "when": "Your Shooting phase.",
-      "target": "One GRENADES unit from your army that is not within Engagement Range of any enemy units and has not been selected to shoot this phase.",
-      "effect": "Select one enemy unit that is not within Engagement Range of any units from your army and is within 8\" of and visible to your GRENADES unit. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound.",
-      "description": "WHEN: Your Shooting phase. TARGET: One GRENADES unit from your army that is not within Engagement Range of any enemy units and has not been selected to shoot this phase. EFFECT: Select one enemy unit that is not within Engagement Range of any units from your army and is within 8\" of and visible to your GRENADES unit. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound."
-    },
-    {
-      "id": "heroic-intervention",
-      "name": "Heroic Intervention",
-      "cost": 2,
-      "phase": "Opponent's Charge",
-      "when": "Your opponent's Charge phase, just after an enemy unit ends a Charge move.",
-      "target": "One unit from your army that is within 6\" of that enemy unit and would be eligible to declare a charge against that enemy unit if it were your Charge phase.",
-      "effect": "Your unit now declares a charge that targets only that enemy unit, and you resolve that charge as if it were your Charge phase.",
-      "restrictions": "You can only select a VEHICLE unit if it is a WALKER. Your unit does not receive any Charge bonus this turn.",
-      "description": "WHEN: Your opponent's Charge phase, just after an enemy unit ends a Charge move. TARGET: One unit from your army that is within 6\" of that enemy unit and would be eligible to declare a charge against that enemy unit if it were your Charge phase. EFFECT: Your unit now declares a charge that targets only that enemy unit, and you resolve that charge as if it were your Charge phase. RESTRICTIONS: You can only select a VEHICLE unit if it is a WALKER. Your unit does not receive any Charge bonus this turn."
-    },
-    {
-      "id": "insane-bravery",
-      "name": "Insane Bravery",
-      "cost": 1,
-      "phase": "Command",
-      "when": "Battle-shock step of your Command phase, just after you have failed a Battle-shock test taken for a unit from your army.",
-      "target": "The unit from your army that Battle-shock test was just taken for (even though your Battle-shocked units cannot normally be affected by your Stratagems).",
-      "effect": "Your unit is treated as having passed that test instead, and is not Battle-shocked as a result.",
-      "description": "WHEN: Battle-shock step of your Command phase, just after you have failed a Battle-shock test taken for a unit from your army. TARGET: The unit from your army that Battle-shock test was just taken for (even though your Battle-shocked units cannot normally be affected by your Stratagems). EFFECT: Your unit is treated as having passed that test instead, and is not Battle-shocked as a result."
-    },
-    {
-      "id": "rapid-ingress",
-      "name": "Rapid Ingress",
-      "cost": 1,
-      "phase": "Opponent's Movement",
-      "when": "End of your opponent's Movement phase.",
-      "target": "One unit from your army that is in Reserves.",
-      "effect": "Your unit can arrive on the battlefield as if it were the Reinforcements step of your Movement phase.",
-      "restrictions": "You cannot use this Stratagem to enable a unit to arrive during a battle round it would not normally be able to do so in.",
-      "description": "WHEN: End of your opponent's Movement phase. TARGET: One unit from your army that is in Reserves. EFFECT: Your unit can arrive on the battlefield as if it were the Reinforcements step of your Movement phase. RESTRICTIONS: You cannot use this Stratagem to enable a unit to arrive during a battle round it would not normally be able to do so in."
-    },
-    {
-      "id": "tank-shock",
-      "name": "Tank Shock",
-      "cost": 1,
-      "phase": "Charge",
-      "when": "Your Charge phase.",
-      "target": "One VEHICLE unit from your army.",
-      "effect": "After your unit ends a Charge move, select one enemy unit within Engagement Range of it, then select one melee weapon your unit is equipped with. Roll a number of D6 equal to that weapon's Strength characteristic. If that Strength characteristic is greater than that enemy unit's Toughness characteristic, roll two additional D6. For each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds).",
-      "description": "WHEN: Your Charge phase. TARGET: One VEHICLE unit from your army. EFFECT: After your unit ends a Charge move, select one enemy unit within Engagement Range of it, then select one melee weapon your unit is equipped with. Roll a number of D6 equal to that weapon's Strength characteristic. If that Strength characteristic is greater than that enemy unit's Toughness characteristic, roll two additional D6. For each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds)."
-    }
-  ],
   "armyRules": {
     "martial_katah": {
       "name": "Martial Ka'tah",

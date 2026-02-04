@@ -17,8 +17,9 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "bsdata:parse": "npx tsx scripts/bsdata/parse-catalogue.ts",
-    "bsdata:generate": "npx tsx scripts/bsdata/generate-custodes.ts",
-    "bsdata:build": "npm run bsdata:parse && npm run bsdata:generate"
+    "bsdata:generate": "npx tsx scripts/bsdata/generate-faction.ts",
+    "bsdata:sync": "npm run bsdata:parse -- --all && npm run bsdata:generate -- --all",
+    "bsdata:sync:faction": "npm run bsdata:parse -- $1 && npm run bsdata:generate -- $1"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",

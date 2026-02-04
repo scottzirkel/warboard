@@ -1,9 +1,10 @@
 {
   "faction": "Space Marines",
-  "lastUpdated": "2026-02",
+  "factionId": "spacemarines",
+  "source": "BSData",
   "catalogueId": "e0af-67df-9d63-8fb7",
   "catalogueRevision": "185",
-  "gameSystemId": "sys-352e-adc2-7639-d6a9",
+  "lastUpdated": "2026-02-04",
   "units": [
     {
       "id": "captain-in-gravis-armour",
@@ -30,12 +31,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Aggressor Squad\n■ Eradicator Squad\n■ Heavy Intercessor Squad",
-          "eligibleUnits": [
-            "aggressor-squad",
-            "eradicator-squad",
-            "heavy-intercessor-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Aggressor Squad\n■ Eradicator Squad\n■ Heavy Intercessor Squad"
         }
       ],
       "keywords": [
@@ -104,14 +100,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Eliminator Squad\n■ Incursor Squad\n■ Infiltrator Squad\n■ Reiver Squad\n■ Scout Squad",
-          "eligibleUnits": [
-            "eliminator-squad",
-            "incursor-squad",
-            "infiltrator-squad",
-            "reiver-squad",
-            "scout-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Eliminator Squad\n■ Incursor Squad\n■ Infiltrator Squad\n■ Reiver Squad\n■ Scout Squad"
         }
       ],
       "keywords": [
@@ -158,12 +147,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Relic Terminator Squad\n■ Terminator Assault Squad\n■ Terminator Squad",
-          "eligibleUnits": [
-            "relic-terminator-squad",
-            "terminator-assault-squad",
-            "terminator-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Relic Terminator Squad\n■ Terminator Assault Squad\n■ Terminator Squad"
         },
         {
           "id": "unstoppable-valour",
@@ -204,11 +188,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessors with Jump Packs\n■ Vanguard Veteran Squad with Jump Packs",
-          "eligibleUnits": [
-            "assault-intercessors-with-jump-packs",
-            "vanguard-veteran-squad-with-jump-packs"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessors with Jump Packs\n■ Vanguard Veteran Squad with Jump Packs"
         }
       ],
       "keywords": [
@@ -6015,11 +5995,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
-          "eligibleUnits": [
-            "bike-squad",
-            "outrider-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad"
         }
       ],
       "keywords": [
@@ -6050,17 +6026,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Company Heroes\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad\n\nYou can attach this model to a unit it can lead even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "assault-intercessor-squad",
-            "bladeguard-veteran-squad",
-            "company-heroes",
-            "hellblaster-squad",
-            "infernus-squad",
-            "intercessor-squad",
-            "sternguard-veteran-squad",
-            "tactical-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Company Heroes\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad\n\nYou can attach this model to a unit it can lead even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         }
       ],
       "keywords": [
@@ -6132,10 +6098,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following unit:\n\n■ Reiver Squad\n\nYou can attach this model a unit it can lead even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "reiver-squad"
-          ]
+          "description": "This model can be attached to the following unit:\n\n■ Reiver Squad\n\nYou can attach this model a unit it can lead even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         }
       ],
       "keywords": [
@@ -6206,12 +6169,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Incursor Squad\n■ Infiltrator Squad\n■ Reiver Squad\n\nYou can attach this model to a unit it can lead units even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "incursor-squad",
-            "infiltrator-squad",
-            "reiver-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Incursor Squad\n■ Infiltrator Squad\n■ Reiver Squad\n\nYou can attach this model to a unit it can lead units even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         }
       ],
       "keywords": [
@@ -6248,17 +6206,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Desolation Squad\n■ Devastator Squad\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad",
-          "eligibleUnits": [
-            "assault-intercessor-squad",
-            "desolation-squad",
-            "devastator-squad",
-            "hellblaster-squad",
-            "infernus-squad",
-            "intercessor-squad",
-            "sternguard-veteran-squad",
-            "tactical-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Desolation Squad\n■ Devastator Squad\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad"
         }
       ],
       "keywords": [
@@ -6296,13 +6244,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Eliminator Squad\n■ Incursor Squad\n■ Infiltrator Squad\n■ Reiver Squad",
-          "eligibleUnits": [
-            "eliminator-squad",
-            "incursor-squad",
-            "infiltrator-squad",
-            "reiver-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Eliminator Squad\n■ Incursor Squad\n■ Infiltrator Squad\n■ Reiver Squad"
         }
       ],
       "keywords": [
@@ -6340,12 +6282,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Relic Terminator Squad\n■ Terminator Assault Squad\n■ Terminator Squad",
-          "eligibleUnits": [
-            "relic-terminator-squad",
-            "terminator-assault-squad",
-            "terminator-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Relic Terminator Squad\n■ Terminator Assault Squad\n■ Terminator Squad"
         }
       ],
       "keywords": [
@@ -6382,11 +6319,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Squad with Jump Packs\n■ Vanguard Veteran Squad with Jump Packs",
-          "eligibleUnits": [
-            "assault-squad-with-jump-packs",
-            "vanguard-veteran-squad-with-jump-packs"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Squad with Jump Packs\n■ Vanguard Veteran Squad with Jump Packs"
         }
       ],
       "keywords": [
@@ -6420,16 +6353,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad",
-          "eligibleUnits": [
-            "assault-intercessor-squad",
-            "bladeguard-veteran-squad",
-            "hellblaster-squad",
-            "infernus-squad",
-            "intercessor-squad",
-            "sternguard-veteran-squad",
-            "tactical-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad"
         }
       ],
       "keywords": [
@@ -6466,11 +6390,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Terminator Assault Squad\n■ Terminator Squad",
-          "eligibleUnits": [
-            "terminator-assault-squad",
-            "terminator-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Terminator Assault Squad\n■ Terminator Squad"
         }
       ],
       "keywords": [
@@ -6506,11 +6426,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
-          "eligibleUnits": [
-            "bike-squad",
-            "outrider-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad"
         }
       ],
       "keywords": [
@@ -6546,11 +6462,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessors with Jump Packs\n■ Vanguard Veteran Squad with Jump Packs",
-          "eligibleUnits": [
-            "assault-intercessors-with-jump-packs",
-            "vanguard-veteran-squad-with-jump-packs"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessors with Jump Packs\n■ Vanguard Veteran Squad with Jump Packs"
         }
       ],
       "keywords": [
@@ -6613,14 +6525,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Desolation Squad\n■ Devastator Squad\n■ Intercessor Squad\n■ Tactical Squad",
-          "eligibleUnits": [
-            "assault-intercessor-squad",
-            "desolation-squad",
-            "devastator-squad",
-            "intercessor-squad",
-            "tactical-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Desolation Squad\n■ Devastator Squad\n■ Intercessor Squad\n■ Tactical Squad"
         }
       ],
       "keywords": [
@@ -6827,14 +6732,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad",
-          "eligibleUnits": [
-            "assault-intercessor-squad",
-            "bladeguard-veteran-squad",
-            "infernus-squad",
-            "intercessor-squad",
-            "sternguard-veteran-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad"
         }
       ],
       "keywords": [
@@ -6894,17 +6792,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Desolation Squad\n■ Devastator Squad\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad\n\nYou can attach this model to one of the above units even if one Captain, Chapter Master or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "assault-intercessor-squad",
-            "desolation-squad",
-            "devastator-squad",
-            "hellblaster-squad",
-            "infernus-squad",
-            "intercessor-squad",
-            "sternguard-veteran-squad",
-            "tactical-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Desolation Squad\n■ Devastator Squad\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad\n\nYou can attach this model to one of the above units even if one Captain, Chapter Master or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         }
       ],
       "keywords": [
@@ -6946,12 +6834,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Aggressor Squad\n■ Eradicator Squad\n■ Heavy Intercessor Squad\n\nYou can attach this model to one of the above units even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "aggressor-squad",
-            "eradicator-squad",
-            "heavy-intercessor-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Aggressor Squad\n■ Eradicator Squad\n■ Heavy Intercessor Squad\n\nYou can attach this model to one of the above units even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         }
       ],
       "keywords": [
@@ -6988,17 +6871,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Devastator Squad\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Desolation Squad\n■ Tactical Squad\n\nYou can attach this model to one of the above units even if one Captain, Chapter Master or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "assault-intercessor-squad",
-            "devastator-squad",
-            "hellblaster-squad",
-            "infernus-squad",
-            "intercessor-squad",
-            "sternguard-veteran-squad",
-            "desolation-squad",
-            "tactical-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Devastator Squad\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Desolation Squad\n■ Tactical Squad\n\nYou can attach this model to one of the above units even if one Captain, Chapter Master or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         }
       ],
       "keywords": [
@@ -7035,10 +6908,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following unit:\n\n■ Bladeguard Veteran Squad\n\nYou can attach this model to the above unit even if one Captain, Chapter Master or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "bladeguard-veteran-squad"
-          ]
+          "description": "This model can be attached to the following unit:\n\n■ Bladeguard Veteran Squad\n\nYou can attach this model to the above unit even if one Captain, Chapter Master or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         }
       ],
       "keywords": [
@@ -7076,11 +6946,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Terminator Squad\n■ Terminator Assault Squad\n\nYou can attach this model to one of the above units even if one Captain, Chapter Master or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "terminator-squad",
-            "terminator-assault-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Terminator Squad\n■ Terminator Assault Squad\n\nYou can attach this model to one of the above units even if one Captain, Chapter Master or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         }
       ],
       "keywords": [
@@ -7285,15 +7151,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad",
-          "eligibleUnits": [
-            "assault-intercessor-squad",
-            "bladeguard-veteran-squad",
-            "infernus-squad",
-            "intercessor-squad",
-            "sternguard-veteran-squad",
-            "tactical-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad"
         }
       ],
       "keywords": [
@@ -7324,17 +7182,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad*\n■ Hellblaster Squad*\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Company Heroes\n■ Tactical Squad\n\n* This model cannot be attached to a Bladeguard Veteran Squad unless it is equipped with a relic shield, and cannot be attached to a Hellblaster Squad unless it is equipped with a plasma pistol.",
-          "eligibleUnits": [
-            "assault-intercessor-squad",
-            "bladeguard-veteran-squad",
-            "hellblaster-squad",
-            "infernus-squad",
-            "intercessor-squad",
-            "sternguard-veteran-squad",
-            "company-heroes",
-            "tactical-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad*\n■ Hellblaster Squad*\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Company Heroes\n■ Tactical Squad\n\n* This model cannot be attached to a Bladeguard Veteran Squad unless it is equipped with a relic shield, and cannot be attached to a Hellblaster Squad unless it is equipped with a plasma pistol."
         }
       ],
       "keywords": [
@@ -8270,14 +8118,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Squad\n■ Command Squad\n■ Tactical Squad\n■ Vanguard Veteran Squad\n■ Devastator Squad\n\nYou can attach this model to one of the above units even if one Character model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
-          "eligibleUnits": [
-            "assault-squad",
-            "command-squad",
-            "tactical-squad",
-            "vanguard-veteran-squad",
-            "devastator-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Squad\n■ Command Squad\n■ Tactical Squad\n■ Vanguard Veteran Squad\n■ Devastator Squad\n\nYou can attach this model to one of the above units even if one Character model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
         }
       ],
       "keywords": [
@@ -8508,11 +8349,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
-          "eligibleUnits": [
-            "bike-squad",
-            "outrider-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad"
         }
       ],
       "keywords": [
@@ -8543,11 +8380,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
-          "eligibleUnits": [
-            "bike-squad",
-            "outrider-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad"
         },
         {
           "id": "unbreakable-duty",
@@ -8583,11 +8416,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
-          "eligibleUnits": [
-            "bike-squad",
-            "outrider-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad"
         },
         {
           "id": "gene-seed-recovery",
@@ -8685,11 +8514,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
-          "eligibleUnits": [
-            "bike-squad",
-            "outrider-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad"
         },
         {
           "id": "techmarine",
@@ -8730,11 +8555,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
-          "eligibleUnits": [
-            "bike-squad",
-            "outrider-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad"
         },
         {
           "id": "mental-fortress",
@@ -9277,17 +9098,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Company Heroes\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad",
-          "eligibleUnits": [
-            "assault-intercessor-squad",
-            "bladeguard-veteran-squad",
-            "company-heroes",
-            "hellblaster-squad",
-            "infernus-squad",
-            "intercessor-squad",
-            "sternguard-veteran-squad",
-            "tactical-squad"
-          ]
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Company Heroes\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad"
         },
         {
           "id": "master-of-rites",
@@ -9311,660 +9122,5 @@
         "Ferren Areios"
       ]
     }
-  ],
-  "detachments": {
-    "gladius_task_force": {
-      "name": "Gladius Task Force",
-      "rules": [
-        {
-          "id": "combat-doctrines",
-          "name": "Combat Doctrines",
-          "description": "At the start of your Command phase, select one Combat Doctrine to be active until your next Command phase. Each can only be selected once per battle. Devastator: Eligible to shoot after Advancing. Tactical: Eligible to shoot and charge after Falling Back. Assault: Eligible to charge after Advancing.",
-          "type": "passive",
-          "modifiers": []
-        }
-      ],
-      "stratagems": [
-        {
-          "id": "only-in-death",
-          "name": "Only In Death Does Duty End",
-          "cost": 2,
-          "phase": "Fight",
-          "description": "When a model in your unit is destroyed, if it hasn't fought, it can fight before being removed.",
-          "modifiers": []
-        },
-        {
-          "id": "armour-of-contempt",
-          "name": "Armour of Contempt",
-          "cost": 1,
-          "phase": "Shooting/Fight",
-          "description": "Until end of phase, worsen AP of attacks targeting your unit by 1.",
-          "modifiers": []
-        },
-        {
-          "id": "honour-the-chapter",
-          "name": "Honour the Chapter",
-          "cost": 1,
-          "phase": "Fight",
-          "description": "Melee weapons gain [Lance]. While Assault Doctrine is active, also improve AP by 1.",
-          "modifiers": []
-        },
-        {
-          "id": "storm-of-fire",
-          "name": "Storm of Fire",
-          "cost": 1,
-          "phase": "Shooting",
-          "description": "Ranged weapons gain [Ignores Cover]. While Devastator Doctrine is active, also improve AP by 1.",
-          "modifiers": []
-        },
-        {
-          "id": "adaptive-strategy",
-          "name": "Adaptive Strategy",
-          "cost": 1,
-          "phase": "Any",
-          "description": "Select one unit. Until end of phase, a Combat Doctrine of your choice is active for that unit.",
-          "modifiers": []
-        },
-        {
-          "id": "squad-tactics",
-          "name": "Squad Tactics",
-          "cost": 1,
-          "phase": "Movement",
-          "description": "After enemy ends a move within 9\", your Infantry/Mounted unit can move up to D6\".",
-          "modifiers": []
-        }
-      ],
-      "enhancements": [
-        {
-          "id": "artificer-armour",
-          "name": "Artificer Armour",
-          "points": 10,
-          "description": "The bearer has a 2+ Save and Feel No Pain 5+.",
-          "modifiers": [
-            {
-              "stat": "sv",
-              "operation": "set",
-              "value": "2+",
-              "scope": "model"
-            }
-          ]
-        },
-        {
-          "id": "the-honour-vehement",
-          "name": "The Honour Vehement",
-          "points": 15,
-          "description": "+1 Attack and +1 Strength to melee weapons. +2 each while Assault Doctrine is active.",
-          "modifiers": [
-            {
-              "stat": "a",
-              "operation": "add",
-              "value": 1,
-              "scope": "melee"
-            },
-            {
-              "stat": "s",
-              "operation": "add",
-              "value": 1,
-              "scope": "melee"
-            }
-          ]
-        },
-        {
-          "id": "adept-of-the-codex",
-          "name": "Adept of the Codex",
-          "points": 20,
-          "description": "At the start of Command phase, you can activate Tactical Doctrine for bearer's unit only.",
-          "modifiers": []
-        },
-        {
-          "id": "fire-discipline",
-          "name": "Fire Discipline",
-          "points": 25,
-          "description": "While leading a unit, ranged weapons have [Sustained Hits 1].",
-          "modifiers": []
-        }
-      ]
-    },
-    "vanguard_spearhead": {
-      "name": "Vanguard Spearhead",
-      "rules": [
-        {
-          "id": "shadow-masters",
-          "name": "Shadow Masters",
-          "description": "Your Phobos units have the Stealth ability and benefit from cover even in the open while more than 12\" from enemy units.",
-          "type": "passive",
-          "modifiers": []
-        }
-      ],
-      "stratagems": [
-        {
-          "id": "guerrilla-tactics",
-          "name": "Guerrilla Tactics",
-          "cost": 1,
-          "phase": "Movement",
-          "description": "Phobos Infantry not in Engagement Range can be placed in Strategic Reserves.",
-          "modifiers": []
-        },
-        {
-          "id": "a-deadly-prize",
-          "name": "A Deadly Prize",
-          "cost": 1,
-          "phase": "Movement",
-          "description": "Phobos unit leaves objective. Next enemy that controls it takes D3 mortal wounds.",
-          "modifiers": []
-        },
-        {
-          "id": "multi-spectrum-array",
-          "name": "Multi-spectrum Array",
-          "cost": 1,
-          "phase": "Shooting",
-          "description": "Phobos unit gains [Ignores Cover] and [Sustained Hits 1] this phase.",
-          "modifiers": []
-        },
-        {
-          "id": "path-of-shadows",
-          "name": "Path of Shadows",
-          "cost": 1,
-          "phase": "Movement",
-          "description": "After Advancing, Phobos Infantry can make a Normal Move of 6\".",
-          "modifiers": []
-        },
-        {
-          "id": "strike-from-the-shadows",
-          "name": "Strike from the Shadows",
-          "cost": 1,
-          "phase": "Fight",
-          "description": "If unit charged from wholly within terrain, weapons gain [Lethal Hits].",
-          "modifiers": []
-        },
-        {
-          "id": "the-void-lies-in-wait",
-          "name": "The Void Lies in Wait",
-          "cost": 2,
-          "phase": "Any",
-          "description": "Select enemy within 12\" of 3 Phobos units. It must take a Battle-shock test at -2.",
-          "modifiers": []
-        }
-      ],
-      "enhancements": [
-        {
-          "id": "the-vox-espiritum",
-          "name": "The Vox Espiritum",
-          "points": 25,
-          "description": "Extend range of Scouts and Infiltrator auras by 3\". Adjacent Phobos units get +1 to Hit on turn they arrive from Reserves.",
-          "eligibleKeywords": [
-            "Phobos"
-          ],
-          "modifiers": []
-        },
-        {
-          "id": "execute-and-fade",
-          "name": "Execute and Fade",
-          "points": 15,
-          "description": "Once per turn, after bearer's unit destroys an enemy, it can make a Normal Move of 6\".",
-          "eligibleKeywords": [
-            "Phobos"
-          ],
-          "modifiers": []
-        },
-        {
-          "id": "shadow-war-veteran",
-          "name": "Shadow War Veteran",
-          "points": 30,
-          "description": "Once per battle, at end of Fight phase, bearer's unit and one enemy unit within 6\" take D6 mortal wounds. Bearer's unit can then move D6\" away.",
-          "eligibleKeywords": [
-            "Phobos"
-          ],
-          "modifiers": []
-        },
-        {
-          "id": "lord-of-deceit",
-          "name": "Lord of Deceit",
-          "points": 20,
-          "description": "After both sides deploy, redeploy up to 3 Phobos units or place them in Strategic Reserves.",
-          "eligibleKeywords": [
-            "Phobos"
-          ],
-          "modifiers": []
-        }
-      ]
-    },
-    "firestorm_assault_force": {
-      "name": "Firestorm Assault Force",
-      "rules": [
-        {
-          "id": "close-range-eradication",
-          "name": "Close-range Eradication",
-          "description": "In your Shooting phase, after a unit shoots, select one enemy unit hit. That enemy unit must take a Battle-shock test. Vehicles/Monsters take the test at -1.",
-          "type": "passive",
-          "modifiers": []
-        }
-      ],
-      "stratagems": [
-        {
-          "id": "immolation-protocols",
-          "name": "Immolation Protocols",
-          "cost": 1,
-          "phase": "Shooting",
-          "description": "Torrent weapons gain [Lethal Hits]. If target is Battle-shocked, gain [Devastating Wounds] instead.",
-          "modifiers": []
-        },
-        {
-          "id": "burning-vengeance",
-          "name": "Burning Vengeance",
-          "cost": 1,
-          "phase": "Fight",
-          "description": "When your unit is destroyed, it can shoot as if it were your Shooting phase.",
-          "modifiers": []
-        },
-        {
-          "id": "superhuman-accuracy",
-          "name": "Superhuman Accuracy",
-          "cost": 1,
-          "phase": "Shooting",
-          "description": "Ranged weapons gain +1 to Hit. If unit didn't move, +1 to Wound instead.",
-          "modifiers": []
-        },
-        {
-          "id": "aggressive-advance",
-          "name": "Aggressive Advance",
-          "cost": 1,
-          "phase": "Movement",
-          "description": "Unit Advances 6\" instead of D6\". Can still shoot this turn.",
-          "modifiers": []
-        },
-        {
-          "id": "purge-the-foe",
-          "name": "Purge the Foe",
-          "cost": 1,
-          "phase": "Shooting",
-          "description": "Ranged weapons gain [Sustained Hits 1]. Against Battle-shocked, [Sustained Hits 2] instead.",
-          "modifiers": []
-        },
-        {
-          "id": "thermal-detonation",
-          "name": "Thermal Detonation",
-          "cost": 1,
-          "phase": "Shooting",
-          "description": "Melta weapons gain [Devastating Wounds] this phase.",
-          "modifiers": []
-        }
-      ],
-      "enhancements": [
-        {
-          "id": "adamantine-mantle",
-          "name": "Adamantine Mantle",
-          "points": 20,
-          "description": "+1 Toughness. Each time bearer is destroyed, roll D6 - on 2+, set up at end of phase with 3 wounds.",
-          "modifiers": [
-            {
-              "stat": "t",
-              "operation": "add",
-              "value": 1,
-              "scope": "model"
-            }
-          ]
-        },
-        {
-          "id": "forged-in-battle",
-          "name": "Forged in Battle",
-          "points": 15,
-          "description": "While leading, Torrent weapons in unit gain [Twin-linked].",
-          "modifiers": []
-        },
-        {
-          "id": "war-tempered-artifice",
-          "name": "War-tempered Artifice",
-          "points": 25,
-          "description": "Melta weapons gain +2 Damage against Vehicles/Monsters. Other ranged gain +1 Damage vs same.",
-          "modifiers": []
-        },
-        {
-          "id": "vulkan-mantle",
-          "name": "Vulkan's Mantle",
-          "points": 10,
-          "description": "While leading, at start of Command phase, one model in unit regains up to D3 wounds.",
-          "modifiers": []
-        }
-      ]
-    },
-    "first_company_task_force": {
-      "name": "1st Company Task Force",
-      "rules": [
-        {
-          "id": "extremis-level-threat",
-          "name": "Extremis-level Threat",
-          "description": "At the start of battle, select one unit in enemy army. Each time a model makes an attack against that unit, add 1 to the Hit roll and add 1 to the Wound roll.",
-          "type": "passive",
-          "modifiers": []
-        }
-      ],
-      "stratagems": [
-        {
-          "id": "veteran-instincts",
-          "name": "Veteran Instincts",
-          "cost": 1,
-          "phase": "Any",
-          "description": "Terminator or Veteran unit can use the Fire Overwatch or Heroic Intervention Stratagem for 0CP this phase.",
-          "modifiers": []
-        },
-        {
-          "id": "duty-and-honour",
-          "name": "Duty and Honour",
-          "cost": 1,
-          "phase": "Command",
-          "description": "Terminator/Veteran unit within range of objective auto-passes Battle-shock test and has +1 OC until next Command phase.",
-          "modifiers": []
-        },
-        {
-          "id": "unmatched-skill",
-          "name": "Unmatched Skill",
-          "cost": 1,
-          "phase": "Shooting/Fight",
-          "description": "When attacking Extremis target, Critical Hits score 2 additional hits instead of 1.",
-          "modifiers": []
-        },
-        {
-          "id": "inevitable-vengeance",
-          "name": "Inevitable Vengeance",
-          "cost": 1,
-          "phase": "Fight",
-          "description": "When Terminator/Veteran fights Extremis target, re-roll Damage rolls.",
-          "modifiers": []
-        },
-        {
-          "id": "martial-excellence",
-          "name": "Martial Excellence",
-          "cost": 1,
-          "phase": "Fight",
-          "description": "Terminator/Veteran unit's melee weapons gain [Sustained Hits 1] and [Lethal Hits].",
-          "modifiers": []
-        },
-        {
-          "id": "heroes-of-the-chapter",
-          "name": "Heroes of the Chapter",
-          "cost": 1,
-          "phase": "Fight",
-          "description": "When Character or Terminator destroyed, it can fight before removal if it hasn't fought this phase.",
-          "modifiers": []
-        }
-      ],
-      "enhancements": [
-        {
-          "id": "iron-resolve",
-          "name": "Iron Resolve",
-          "points": 25,
-          "description": "Bearer gains Feel No Pain 4+.",
-          "eligibleKeywords": [
-            "Terminator"
-          ],
-          "modifiers": []
-        },
-        {
-          "id": "champion-of-the-imperium",
-          "name": "Champion of the Imperium",
-          "points": 15,
-          "description": "+3 Attacks. When bearer destroys an enemy Character/Monster/Vehicle in melee, gain 1CP.",
-          "eligibleKeywords": [
-            "Terminator"
-          ],
-          "modifiers": [
-            {
-              "stat": "a",
-              "operation": "add",
-              "value": 3,
-              "scope": "melee"
-            }
-          ]
-        },
-        {
-          "id": "master-of-the-watch",
-          "name": "Master of the Watch",
-          "points": 20,
-          "description": "Friendly Terminator/Veteran units within 6\" have OC +1.",
-          "eligibleKeywords": [
-            "Terminator"
-          ],
-          "modifiers": []
-        },
-        {
-          "id": "strategic-veteran",
-          "name": "Strategic Veteran",
-          "points": 30,
-          "description": "Each time you target bearer's unit with Stratagem, roll D6 - on 4+ gain 1CP.",
-          "eligibleKeywords": [
-            "Terminator"
-          ],
-          "modifiers": []
-        }
-      ]
-    }
-  },
-  "armyRules": {
-    "oath_of_moment": {
-      "name": "Oath of Moment",
-      "description": "At the start of your Command phase, select one enemy unit to be the target of your Oath of Moment. Until the start of your next Command phase, each time a model from your army with this ability makes an attack that targets that unit, you can re-roll the Hit roll and you can re-roll the Wound roll.",
-      "phase": "Command",
-      "targetType": "enemy_unit"
-    }
-  },
-  "keywordGlossary": {
-    "weapon": [
-      {
-        "name": "Assault",
-        "description": "Can shoot after Advancing at -1 to hit."
-      },
-      {
-        "name": "Heavy",
-        "description": "+1 to hit if bearer Remained Stationary."
-      },
-      {
-        "name": "Rapid Fire X",
-        "description": "Double attacks when targeting within half range."
-      },
-      {
-        "name": "Pistol",
-        "description": "Can shoot in Engagement Range at units in Engagement Range."
-      },
-      {
-        "name": "Blast",
-        "description": "+1 attack per 5 models in target unit."
-      },
-      {
-        "name": "Twin-linked",
-        "description": "Re-roll wound rolls."
-      },
-      {
-        "name": "Torrent",
-        "description": "Automatically hits the target."
-      },
-      {
-        "name": "Hazardous",
-        "description": "After shooting, roll D6 per hazardous weapon. On 1, bearer takes 3 mortal wounds."
-      },
-      {
-        "name": "Devastating Wounds",
-        "description": "Critical wounds inflict mortal wounds instead of normal damage."
-      },
-      {
-        "name": "Lethal Hits",
-        "description": "Critical hits automatically wound."
-      },
-      {
-        "name": "Sustained Hits X",
-        "description": "Critical hits generate X additional hits."
-      },
-      {
-        "name": "Precision",
-        "description": "Can target attached Characters."
-      },
-      {
-        "name": "Ignores Cover",
-        "description": "Target does not benefit from cover."
-      },
-      {
-        "name": "Melta X",
-        "description": "Add X to Damage when targeting within half range."
-      },
-      {
-        "name": "Lance",
-        "description": "+1 to wound on charge turn."
-      },
-      {
-        "name": "Anti-X Y+",
-        "description": "Critical wound on Y+ against targets with keyword X."
-      },
-      {
-        "name": "Psychic",
-        "description": "This is a Psychic Attack."
-      }
-    ],
-    "unit": [
-      {
-        "name": "Deep Strike",
-        "description": "Can deploy from Reserves more than 9\" from enemies."
-      },
-      {
-        "name": "Scouts X\"",
-        "description": "Can make a Normal move of X\" before first turn."
-      },
-      {
-        "name": "Infiltrators",
-        "description": "Can deploy anywhere more than 9\" from enemies and their deployment zone."
-      },
-      {
-        "name": "Stealth",
-        "description": "Ranged attacks targeting have -1 to hit."
-      },
-      {
-        "name": "Lone Operative",
-        "description": "Cannot be targeted unless within 12\" unless it's the closest target."
-      },
-      {
-        "name": "Feel No Pain X+",
-        "description": "Each time model loses a wound, roll D6 - on X+, wound is ignored."
-      },
-      {
-        "name": "Deadly Demise X",
-        "description": "When destroyed, roll D6 - on 6, nearby units take X mortal wounds."
-      },
-      {
-        "name": "Leader",
-        "description": "Character can be attached to specified units."
-      }
-    ]
-  },
-  "coreStratagems": [
-    {
-      "id": "command-re-roll",
-      "name": "Command Re-roll",
-      "cost": 1,
-      "phase": "Any",
-      "when": "In any phase, just after you have made a Hit roll, a Wound roll, a Damage roll, a saving throw, an Advance roll, a Charge roll, a Desperate Escape test, a Hazardous test, or just after you have rolled the dice to determine the number of attacks made with a weapon.",
-      "target": "An attack, model or unit from your army.",
-      "effect": "You re-roll that roll, test or saving throw.",
-      "description": "WHEN: In any phase, just after you have made a Hit roll, a Wound roll, a Damage roll, a saving throw, an Advance roll, a Charge roll, a Desperate Escape test, a Hazardous test, or just after you have rolled the dice to determine the number of attacks made with a weapon. TARGET: An attack, model or unit from your army. EFFECT: You re-roll that roll, test or saving throw."
-    },
-    {
-      "id": "counter-offensive",
-      "name": "Counter-offensive",
-      "cost": 2,
-      "phase": "Fight",
-      "when": "Fight phase, just after an enemy unit has fought.",
-      "target": "One unit from your army that is within Engagement Range of one or more enemy units and that has not already been selected to fight this phase.",
-      "effect": "Your unit fights next.",
-      "description": "WHEN: Fight phase, just after an enemy unit has fought. TARGET: One unit from your army that is within Engagement Range of one or more enemy units and that has not already been selected to fight this phase. EFFECT: Your unit fights next."
-    },
-    {
-      "id": "epic-challenge",
-      "name": "Epic Challenge",
-      "cost": 1,
-      "phase": "Fight",
-      "when": "Fight phase, when a CHARACTER unit from your army that is within Engagement Range of one or more Attached units is selected to fight.",
-      "target": "One CHARACTER model in your unit.",
-      "effect": "Until the end of the phase, all melee attacks made by that model have the [PRECISION] ability.",
-      "description": "WHEN: Fight phase, when a CHARACTER unit from your army that is within Engagement Range of one or more Attached units is selected to fight. TARGET: One CHARACTER model in your unit. EFFECT: Until the end of the phase, all melee attacks made by that model have the [PRECISION] ability."
-    },
-    {
-      "id": "fire-overwatch",
-      "name": "Fire Overwatch",
-      "cost": 1,
-      "phase": "Opponent's Turn",
-      "when": "Your opponent's Movement or Charge phase, just after an enemy unit is set up or when an enemy unit starts or ends a Normal, Advance, Fall Back or Charge move.",
-      "target": "One unit from your army that is within 24\" of that enemy unit and that would be eligible to shoot if it were your Shooting phase.",
-      "effect": "Your unit can shoot that enemy unit as if it were your Shooting phase.",
-      "restrictions": "An unmodified Hit roll of 6 is required to score a hit. You can only use this Stratagem once per turn.",
-      "description": "WHEN: Your opponent's Movement or Charge phase, just after an enemy unit is set up or when an enemy unit starts or ends a Normal, Advance, Fall Back or Charge move. TARGET: One unit from your army that is within 24\" of that enemy unit and that would be eligible to shoot if it were your Shooting phase. EFFECT: Your unit can shoot that enemy unit as if it were your Shooting phase. RESTRICTIONS: An unmodified Hit roll of 6 is required to score a hit. You can only use this Stratagem once per turn."
-    },
-    {
-      "id": "go-to-ground",
-      "name": "Go to Ground",
-      "cost": 1,
-      "phase": "Opponent's Shooting",
-      "when": "Your opponent's Shooting phase, just after an enemy unit has selected its targets.",
-      "target": "One INFANTRY unit from your army that was selected as the target of one or more of the attacking unit's attacks.",
-      "effect": "Until the end of the phase, all models in your unit have a 6+ invulnerable save and have the Benefit of Cover.",
-      "description": "WHEN: Your opponent's Shooting phase, just after an enemy unit has selected its targets. TARGET: One INFANTRY unit from your army that was selected as the target of one or more of the attacking unit's attacks. EFFECT: Until the end of the phase, all models in your unit have a 6+ invulnerable save and have the Benefit of Cover."
-    },
-    {
-      "id": "grenade",
-      "name": "Grenade",
-      "cost": 1,
-      "phase": "Shooting",
-      "when": "Your Shooting phase.",
-      "target": "One GRENADES unit from your army that is not within Engagement Range of any enemy units and has not been selected to shoot this phase.",
-      "effect": "Select one enemy unit that is not within Engagement Range of any units from your army and is within 8\" of and visible to your GRENADES unit. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound.",
-      "description": "WHEN: Your Shooting phase. TARGET: One GRENADES unit from your army that is not within Engagement Range of any enemy units and has not been selected to shoot this phase. EFFECT: Select one enemy unit that is not within Engagement Range of any units from your army and is within 8\" of and visible to your GRENADES unit. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound."
-    },
-    {
-      "id": "heroic-intervention",
-      "name": "Heroic Intervention",
-      "cost": 2,
-      "phase": "Opponent's Charge",
-      "when": "Your opponent's Charge phase, just after an enemy unit ends a Charge move.",
-      "target": "One unit from your army that is within 6\" of that enemy unit and would be eligible to declare a charge against that enemy unit if it were your Charge phase.",
-      "effect": "Your unit now declares a charge that targets only that enemy unit, and you resolve that charge as if it were your Charge phase.",
-      "restrictions": "You can only select a VEHICLE unit if it is a WALKER. Your unit does not receive any Charge bonus this turn.",
-      "description": "WHEN: Your opponent's Charge phase, just after an enemy unit ends a Charge move. TARGET: One unit from your army that is within 6\" of that enemy unit and would be eligible to declare a charge against that enemy unit if it were your Charge phase. EFFECT: Your unit now declares a charge that targets only that enemy unit, and you resolve that charge as if it were your Charge phase. RESTRICTIONS: You can only select a VEHICLE unit if it is a WALKER. Your unit does not receive any Charge bonus this turn."
-    },
-    {
-      "id": "insane-bravery",
-      "name": "Insane Bravery",
-      "cost": 1,
-      "phase": "Command",
-      "when": "Battle-shock step of your Command phase, just after you have failed a Battle-shock test taken for a unit from your army.",
-      "target": "The unit from your army that Battle-shock test was just taken for (even though your Battle-shocked units cannot normally be affected by your Stratagems).",
-      "effect": "Your unit is treated as having passed that test instead, and is not Battle-shocked as a result.",
-      "description": "WHEN: Battle-shock step of your Command phase, just after you have failed a Battle-shock test taken for a unit from your army. TARGET: The unit from your army that Battle-shock test was just taken for (even though your Battle-shocked units cannot normally be affected by your Stratagems). EFFECT: Your unit is treated as having passed that test instead, and is not Battle-shocked as a result."
-    },
-    {
-      "id": "rapid-ingress",
-      "name": "Rapid Ingress",
-      "cost": 1,
-      "phase": "Opponent's Movement",
-      "when": "End of your opponent's Movement phase.",
-      "target": "One unit from your army that is in Reserves.",
-      "effect": "Your unit can arrive on the battlefield as if it were the Reinforcements step of your Movement phase.",
-      "restrictions": "You cannot use this Stratagem to enable a unit to arrive during a battle round it would not normally be able to do so in.",
-      "description": "WHEN: End of your opponent's Movement phase. TARGET: One unit from your army that is in Reserves. EFFECT: Your unit can arrive on the battlefield as if it were the Reinforcements step of your Movement phase. RESTRICTIONS: You cannot use this Stratagem to enable a unit to arrive during a battle round it would not normally be able to do so in."
-    },
-    {
-      "id": "tank-shock",
-      "name": "Tank Shock",
-      "cost": 1,
-      "phase": "Charge",
-      "when": "Your Charge phase.",
-      "target": "One VEHICLE unit from your army.",
-      "effect": "After your unit ends a Charge move, select one enemy unit within Engagement Range of it, then select one melee weapon your unit is equipped with. Roll a number of D6 equal to that weapon's Strength characteristic. If that Strength characteristic is greater than that enemy unit's Toughness characteristic, roll two additional D6. For each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds).",
-      "description": "WHEN: Your Charge phase. TARGET: One VEHICLE unit from your army. EFFECT: After your unit ends a Charge move, select one enemy unit within Engagement Range of it, then select one melee weapon your unit is equipped with. Roll a number of D6 equal to that weapon's Strength characteristic. If that Strength characteristic is greater than that enemy unit's Toughness characteristic, roll two additional D6. For each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds)."
-    }
-  ],
-  "chapter": {
-    "name": "Ultramarines",
-    "ability": {
-      "id": "codex-discipline",
-      "name": "Codex Discipline",
-      "description": "At the start of your Command phase, if you have Battle-shock tokens on any of your ULTRAMARINES units, you can remove one of those Battle-shock tokens."
-    }
-  }
+  ]
 }
