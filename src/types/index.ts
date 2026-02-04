@@ -83,6 +83,8 @@ export interface LoadoutChoice {
   default?: boolean;
   maxModels?: number;
   paired?: boolean;
+  /** When this choice is selected, exclude those models from another loadout option's requirements */
+  excludesFromOption?: string;
 }
 
 export interface LoadoutOption {

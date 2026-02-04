@@ -121,6 +121,28 @@ export function calculateDefaultWeaponCounts(
 }
 
 /**
+ * Calculate how many models are excluded from a specific option
+ * by choices in other options that have excludesFromOption set
+ */
+function countExcludedModels(
+  unit: Unit,
+  optionId: string,
+  weaponCounts: Record<string, number>
+): number {
+  let excludedCount = 0;
+
+  for (const otherOption of unit.loadoutOptions || []) {
+    for (const choice of otherOption.choices) {
+      if (choice.excludesFromOption === optionId) {
+        excludedCount += weaponCounts[choice.id] || 0;
+      }
+    }
+  }
+
+  return excludedCount;
+}
+
+/**
  * Validate weapon counts against constraints
  */
 export function validateWeaponCounts(
@@ -146,16 +168,20 @@ export function validateWeaponCounts(
       }
     }
 
-    // For replacement patterns, total should equal modelCount if any models use this option
+    // For replacement patterns, total should equal modelCount minus excluded models
     if (option.pattern === 'replacement') {
       const totalAssigned = option.choices.reduce(
         (sum, choice) => sum + (weaponCounts[choice.id] || 0),
         0
       );
 
-      if (totalAssigned > 0 && totalAssigned !== modelCount) {
+      // Calculate how many models are excluded from this option (e.g., Vexilla bearers)
+      const excludedModels = countExcludedModels(unit, option.id, weaponCounts);
+      const expectedModels = modelCount - excludedModels;
+
+      if (totalAssigned > 0 && totalAssigned !== expectedModels) {
         errors.push(
-          `${unit.name}: ${option.name} has ${totalAssigned} models assigned, but unit has ${modelCount} models`
+          `${unit.name}: ${option.name} has ${totalAssigned} models assigned, but ${expectedModels} models need weapons`
         );
       }
     }

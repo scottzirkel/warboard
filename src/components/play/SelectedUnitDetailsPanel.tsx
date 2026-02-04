@@ -76,6 +76,21 @@ interface SelectedUnitDetailsPanelProps {
   className?: string;
 }
 
+// Helper to calculate enhancement wound modifier
+function getEnhancementWoundModifier(modifiers: Modifier[]): number {
+  let woundMod = 0;
+  for (const mod of modifiers) {
+    if (mod.stat === 'w' && (mod.scope === 'model' || mod.scope === 'unit')) {
+      if (mod.operation === 'add') {
+        woundMod += mod.value;
+      } else if (mod.operation === 'subtract') {
+        woundMod -= mod.value;
+      }
+    }
+  }
+  return woundMod;
+}
+
 // Helper to calculate wounds info accounting for mixed loadouts
 function calculateWoundInfo(
   listUnit: ListUnit | null | undefined,
@@ -95,6 +110,9 @@ function calculateWoundInfo(
   const baseWoundsPerModel = unit.stats.w;
   const weaponCounts = listUnit.weaponCounts || {};
   const totalModels = listUnit.modelCount;
+
+  // Get enhancement wound modifier (applies to all models)
+  const enhancementWoundMod = getEnhancementWoundModifier(modifiers);
 
   // Find wound modifiers from each equipped loadout
   const woundModsByLoadout = new Map<string, number>();
@@ -126,46 +144,34 @@ function calculateWoundInfo(
     }
   }
 
-  // Calculate total wounds accounting for mixed loadouts
+  // Calculate total wounds accounting for mixed loadouts AND enhancement modifiers
   let maxWounds = 0;
   let modelsWithModifiers = 0;
 
+  // Base wounds per model with enhancement modifier
+  const baseWithEnhancement = baseWoundsPerModel + enhancementWoundMod;
+
   if (woundModsByLoadout.size === 0) {
-    // No loadouts with wound modifiers - apply enhancement/other modifiers uniformly
-    let woundsPerModel = baseWoundsPerModel;
-    const woundModifiers = modifiers.filter(
-      (m) => m.stat === 'w' && (m.scope === 'model' || m.scope === 'unit')
-    );
-    for (const mod of woundModifiers) {
-      switch (mod.operation) {
-        case 'add':
-          woundsPerModel += mod.value;
-          break;
-        case 'subtract':
-          woundsPerModel -= mod.value;
-          break;
-        case 'set':
-          woundsPerModel = mod.value;
-          break;
-      }
-    }
-    maxWounds = woundsPerModel * totalModels;
+    // No loadouts with wound modifiers - use base + enhancement
+    maxWounds = baseWithEnhancement * totalModels;
   } else {
-    // Calculate wounds per loadout group
+    // Calculate wounds per loadout group (weapon modifier + enhancement modifier)
     for (const [loadoutGroup, woundMod] of woundModsByLoadout) {
       const modelsWithLoadout = weaponCounts[loadoutGroup] || 0;
-      const woundsForThisLoadout = baseWoundsPerModel + woundMod;
+      // Add both weapon modifier AND enhancement modifier
+      const woundsForThisLoadout = baseWoundsPerModel + woundMod + enhancementWoundMod;
       maxWounds += modelsWithLoadout * woundsForThisLoadout;
       modelsWithModifiers += modelsWithLoadout;
     }
 
-    // Remaining models have base wounds
+    // Remaining models have base + enhancement wounds
     const modelsWithBaseWounds = totalModels - modelsWithModifiers;
-    maxWounds += modelsWithBaseWounds * baseWoundsPerModel;
+    maxWounds += modelsWithBaseWounds * baseWithEnhancement;
   }
 
-  const avgWoundsPerModel = totalModels > 0 ? maxWounds / totalModels : baseWoundsPerModel;
-  const currentWounds = listUnit.currentWounds !== null ? listUnit.currentWounds : maxWounds;
+  const avgWoundsPerModel = totalModels > 0 ? maxWounds / totalModels : baseWithEnhancement;
+  const storedWounds = listUnit.currentWounds !== null ? listUnit.currentWounds : maxWounds;
+  const currentWounds = Math.min(storedWounds, maxWounds);
   const modelsAlive = currentWounds > 0 ? Math.ceil(currentWounds / avgWoundsPerModel) : 0;
 
   return {
@@ -370,11 +376,12 @@ export function SelectedUnitDetailsPanel({
   const unitWoundInfo = calculateWoundInfo(listUnit, unit, modifiers);
 
   // Calculate leader wound info if applicable
+  // Pass leader's enhancement modifiers for accurate wound calculation
   const leaderWoundInfo = hasLeader && leaderUnit && leaderListUnit
     ? calculateWoundInfo(
         { ...leaderListUnit, currentWounds: listUnit.leaderCurrentWounds },
         leaderUnit,
-        []
+        leaderEnhancement?.modifiers || []
       )
     : null;
 
@@ -433,7 +440,37 @@ export function SelectedUnitDetailsPanel({
             : (manualStatsView === 'unit' ? false : autoShowLeader);
 
           const displayUnit = showLeaderStats && leaderUnit ? leaderUnit : unit;
-          const displayModifiers = showLeaderStats ? [] : modifiers;
+
+          // Build leader modifiers including both enhancement AND weapon modifiers
+          let displayModifiers = modifiers;
+          if (showLeaderStats && leaderUnit && leaderListUnit) {
+            const leaderMods: Modifier[] = [];
+
+            // Add enhancement modifiers
+            if (leaderEnhancement?.modifiers) {
+              leaderMods.push(...leaderEnhancement.modifiers);
+            }
+
+            // Add weapon modifiers (e.g., Praesidium Shield +1W)
+            const weaponCounts = leaderListUnit.weaponCounts || {};
+            const processedGroups = new Set<string>();
+            for (const weapon of leaderUnit.weapons) {
+              if (!weapon.modifiers || weapon.modifiers.length === 0) continue;
+              if (!weapon.loadoutGroup) continue;
+              if (processedGroups.has(weapon.loadoutGroup)) continue;
+
+              const count = weaponCounts[weapon.loadoutGroup] || 0;
+              if (count === 0) continue;
+
+              processedGroups.add(weapon.loadoutGroup);
+              leaderMods.push(...weapon.modifiers.map(m => ({
+                ...m,
+                source: m.source || weapon.name,
+              })));
+            }
+
+            displayModifiers = leaderMods;
+          }
 
           return (
             <div className={`card-depth p-2 lg:p-3 ${showLeaderStats ? 'border border-purple-500/30' : ''}`}>
@@ -444,25 +481,48 @@ export function SelectedUnitDetailsPanel({
                 {['m', 't', 'sv', 'w', 'ld', 'oc'].map((stat) => {
                   const value = getModifiedStat(displayUnit, stat, displayModifiers);
                   const modified = isStatModified(displayUnit, stat, displayModifiers);
-                  const sources = modifierSources[stat] || [];
 
-                  const tooltipContent = modified
-                    ? sources.map(s => `${s.name}: ${s.operation === 'add' ? '+' : ''}${s.value}`).join('\n')
-                    : null;
+                  // Build tooltip content from either unit's modifierSources or leader's displayModifiers
+                  let tooltipContent: string | null = null;
+                  if (modified) {
+                    if (showLeaderStats) {
+                      // Build tooltip from leader's modifiers (both enhancement and weapon)
+                      const leaderStatMods = displayModifiers.filter(
+                        m => m.stat === stat && (m.scope === 'model' || m.scope === 'unit')
+                      );
+                      if (leaderStatMods.length > 0) {
+                        tooltipContent = leaderStatMods.map(m => {
+                          // Use source if available (from weapon), otherwise use enhancement name
+                          const sourceName = m.source || leaderEnhancement?.name || 'Unknown';
+                          return `${sourceName}: ${m.operation === 'add' ? '+' : ''}${m.value}`;
+                        }).join('\n');
+                      }
+                    } else {
+                      // Use unit's modifier sources
+                      const sources = modifierSources[stat] || [];
+                      if (sources.length > 0) {
+                        tooltipContent = sources.map(s =>
+                          `${s.name}: ${s.operation === 'add' ? '+' : ''}${s.value}`
+                        ).join('\n');
+                      }
+                    }
+                  }
+
+                  const displayValue = stat === 'm' && typeof value === 'number' ? formatInches(value) : value;
 
                   return (
                     <div key={stat} className="stat-cell relative">
                       <span className="stat-label">{stat}</span>
-                      {modified && tooltipContent ? (
-                        <Tooltip content={tooltipContent}>
-                          <span className="stat-value modified">
-                            {stat === 'm' && typeof value === 'number' ? formatInches(value) : value}
-                          </span>
-                        </Tooltip>
+                      {modified ? (
+                        tooltipContent ? (
+                          <Tooltip content={tooltipContent}>
+                            <span className="stat-value modified">{displayValue}</span>
+                          </Tooltip>
+                        ) : (
+                          <span className="stat-value modified">{displayValue}</span>
+                        )
                       ) : (
-                        <span className="stat-value">
-                          {stat === 'm' && typeof value === 'number' ? formatInches(value) : value}
-                        </span>
+                        <span className="stat-value">{displayValue}</span>
                       )}
                       {/* Invuln in bottom-right of SV cell */}
                       {stat === 'sv' && displayUnit.invuln && (

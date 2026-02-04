@@ -158,7 +158,7 @@ describe('validateWeaponCounts', () => {
 
     expect(errors).toHaveLength(1);
     expect(errors[0]).toContain('4 models assigned');
-    expect(errors[0]).toContain('unit has 5 models');
+    expect(errors[0]).toContain('5 models need weapons');
   });
 
   it('returns empty array for unit without loadout options', () => {
@@ -167,6 +167,28 @@ describe('validateWeaponCounts', () => {
 
     const errors = validateWeaponCounts(unit, listUnit);
 
+    expect(errors).toEqual([]);
+  });
+
+  it('excludes models with excluding choice from replacement validation', () => {
+    // Create a Vexilla option that excludes from main-weapon
+    const vexillaOption: LoadoutOption = {
+      id: 'vexilla',
+      name: 'Vexilla',
+      type: 'optional',
+      pattern: 'addition',
+      choices: [
+        { id: 'vexilla-misericordia', name: 'Vexilla + Misericordia', maxModels: 1, excludesFromOption: 'main-weapon' },
+      ],
+    };
+
+    const unit = createMockUnit([createReplacementOption(), vexillaOption]);
+    // 5 models: 4 with spears, 1 with vexilla (excluded from main-weapon)
+    const listUnit = createMockListUnit(5, { spears: 4, 'vexilla-misericordia': 1 });
+
+    const errors = validateWeaponCounts(unit, listUnit);
+
+    // Should pass validation because 4 models need weapons and 4 have spears
     expect(errors).toEqual([]);
   });
 });

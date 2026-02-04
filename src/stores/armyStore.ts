@@ -579,13 +579,18 @@ export const useArmyStore = create<ArmyStore>()(
     newCount = Math.max(0, newCount);
     newCount = Math.min(newCount, listUnit.modelCount);
 
-    // Check maxModels constraint
+    // Find the choice being modified and check constraints
+    let excludesFromOption: string | undefined;
     if (unit.loadoutOptions) {
       for (const option of unit.loadoutOptions) {
         const choice = option.choices.find(c => c.id === choiceId);
 
-        if (choice?.maxModels !== undefined) {
-          newCount = Math.min(newCount, choice.maxModels);
+        if (choice) {
+          if (choice.maxModels !== undefined) {
+            newCount = Math.min(newCount, choice.maxModels);
+          }
+          excludesFromOption = choice.excludesFromOption;
+          break;
         }
       }
     }
@@ -598,11 +603,29 @@ export const useArmyStore = create<ArmyStore>()(
         return state;
       }
 
+      const currentCount = currentUnit.weaponCounts?.[choiceId] || 0;
+      const delta = newCount - currentCount;
+
       // Build new weapon counts
       let newWeaponCounts = {
         ...currentUnit.weaponCounts,
         [choiceId]: newCount,
       };
+
+      // If this choice excludes models from another option (e.g., Vexilla excludes from main-weapon),
+      // automatically reduce the default choice in that option
+      if (excludesFromOption && delta !== 0 && unit.loadoutOptions) {
+        const targetOption = unit.loadoutOptions.find(o => o.id === excludesFromOption);
+        if (targetOption) {
+          // Find the default choice or the one with the highest count
+          const defaultChoice = targetOption.choices.find(c => c.default);
+          if (defaultChoice) {
+            const currentDefaultCount = newWeaponCounts[defaultChoice.id] || 0;
+            const adjustedDefaultCount = Math.max(0, currentDefaultCount - delta);
+            newWeaponCounts[defaultChoice.id] = adjustedDefaultCount;
+          }
+        }
+      }
 
       // For single-model units, enforce mutual exclusivity
       // When selecting one weapon, zero out all others
