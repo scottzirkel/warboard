@@ -144,13 +144,13 @@ function extractUnits(selections: NRSelection[]): ParsedUnit[] {
       }
     }
 
-    // Handle standalone characters (type="model" but at top level)
+    // Handle standalone models (characters, vehicles, monsters at top level)
     if (selection.type === 'model') {
-      const isCharacter = selection.categories?.some(
-        (c) => c.name === 'Character'
+      const isSingleModelUnit = selection.categories?.some(
+        (c) => c.name === 'Character' || c.name === 'Vehicle' || c.name === 'Monster'
       );
 
-      if (isCharacter) {
+      if (isSingleModelUnit) {
         const unit = parseCharacter(selection);
 
         if (unit) {

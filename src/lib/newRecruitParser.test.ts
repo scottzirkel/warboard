@@ -340,3 +340,77 @@ describe('convertToCurrentList', () => {
     expect(result.list.pointsLimit).toBe(500);
   });
 });
+
+describe('parseNewRecruitJSON - vehicles', () => {
+  it('extracts vehicles (type=model with Vehicle category)', () => {
+    const jsonWithVehicle = {
+      roster: {
+        name: 'Test List with Vehicle',
+        costs: [{ name: 'pts', value: 170 }],
+        forces: [
+          {
+            selections: [
+              {
+                name: 'Venerable Contemptor Dreadnought',
+                type: 'model' as const,
+                number: 1,
+                costs: [{ name: 'pts', value: 170 }],
+                categories: [
+                  { name: 'Vehicle', entryId: 'vehicle', primary: true },
+                  { name: 'Walker', entryId: 'walker', primary: false },
+                ],
+                selections: [
+                  {
+                    name: 'Contemptor combat weapon',
+                    type: 'upgrade' as const,
+                    number: 1,
+                    categories: [
+                      { name: 'Melee Weapon', entryId: 'melee', primary: false },
+                    ],
+                  },
+                ],
+              },
+            ],
+            categories: [],
+          },
+        ],
+      },
+    };
+
+    const result = parseNewRecruitJSON(jsonWithVehicle);
+    expect(result.units.length).toBe(1);
+    expect(result.units[0].name).toBe('Venerable Contemptor Dreadnought');
+    expect(result.units[0].modelCount).toBe(1);
+    expect(result.units[0].points).toBe(170);
+  });
+
+  it('extracts monsters (type=model with Monster category)', () => {
+    const jsonWithMonster = {
+      roster: {
+        name: 'Test List with Monster',
+        costs: [{ name: 'pts', value: 200 }],
+        forces: [
+          {
+            selections: [
+              {
+                name: 'Big Scary Monster',
+                type: 'model' as const,
+                number: 1,
+                costs: [{ name: 'pts', value: 200 }],
+                categories: [
+                  { name: 'Monster', entryId: 'monster', primary: true },
+                ],
+                selections: [],
+              },
+            ],
+            categories: [],
+          },
+        ],
+      },
+    };
+
+    const result = parseNewRecruitJSON(jsonWithMonster);
+    expect(result.units.length).toBe(1);
+    expect(result.units[0].name).toBe('Big Scary Monster');
+  });
+});
