@@ -909,7 +909,51 @@
         "ld": "7+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "cuttin-flames-melee",
+          "name": "Cuttin’ flames",
+          "type": "melee",
+          "stats": {
+            "a": 2,
+            "ws": "4+",
+            "s": 4,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": []
+        },
+        {
+          "id": "burna-ranged",
+          "name": "Burna",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": "D6",
+            "bs": "N/A",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Ignores Cover",
+            "Torrent"
+          ]
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close combat weapon",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": []
+        }
+      ],
       "abilities": [
         {
           "id": "pyromaniaks",
@@ -1521,6 +1565,99 @@
       ]
     },
     {
+      "id": "gretchin",
+      "bsdataId": "de8f-24f9-c543-92b7",
+      "name": "Gretchin",
+      "points": {
+        "1": 40
+      },
+      "stats": {
+        "m": 6,
+        "t": 2,
+        "sv": "7+",
+        "w": 1,
+        "ld": "8+",
+        "oc": 2
+      },
+      "weapons": [
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close combat weapon",
+          "type": "melee",
+          "stats": {
+            "a": 1,
+            "ws": "5+",
+            "s": 2,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": []
+        },
+        {
+          "id": "grot-blasta-ranged",
+          "name": "Grot blasta",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "4+",
+            "s": 3,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ]
+        },
+        {
+          "id": "grot-smacka-melee",
+          "name": "Grot-smacka",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "3+",
+            "s": 5,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": []
+        },
+        {
+          "id": "slugga-ranged",
+          "name": "Slugga",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "5+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "runtherd",
+          "name": "Runtherd",
+          "description": "Each time an attack targets this unit, if it contains one or more Gretchin models, until that attack is resolved, Runtherd models in this unit have a Toughness characteristic of 2."
+        },
+        {
+          "id": "thievin-scavengers",
+          "name": "Thievin’ Scavengers",
+          "description": "At the start of your Movement phase, roll one D6 for each objective marker you control that has one or more units from your army with this ability within range of it (excluding Battle-shocked units). If one or more of those rolls is a 4+, you gain 1CP."
+        }
+      ],
+      "keywords": [
+        "Infantry",
+        "Gretchin",
+        "Grots"
+      ]
+    },
+    {
       "id": "hunta-rig",
       "bsdataId": "70de-d621-8465-f7b8",
       "name": "Hunta Rig",
@@ -2057,7 +2194,38 @@
         "ld": "7+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close combat weapon",
+          "type": "melee",
+          "stats": {
+            "a": 2,
+            "ws": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": []
+        },
+        {
+          "id": "deffgun-ranged",
+          "name": "Deffgun",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 2,
+            "bs": "6+",
+            "s": 8,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Heavy",
+            "Rapid Fire 1"
+          ]
+        }
+      ],
       "abilities": [
         {
           "id": "dat-s-our-loot",
@@ -3017,6 +3185,135 @@
         "Vehicle",
         "Shokkjump Dragsta",
         "Speed Freeks"
+      ]
+    },
+    {
+      "id": "squighog-boyz",
+      "bsdataId": "6a83-8e1f-63ef-50c3",
+      "name": "Squighog Boyz",
+      "points": {
+        "1": 150
+      },
+      "stats": {
+        "m": 10,
+        "t": 7,
+        "sv": "4+",
+        "w": 4,
+        "ld": "7+",
+        "oc": 2
+      },
+      "weapons": [
+        {
+          "id": "squig-jaws-melee",
+          "name": "Squig jaws",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "4+",
+            "s": 6,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Extra Attacks"
+          ]
+        },
+        {
+          "id": "big-choppa-melee",
+          "name": "Big choppa",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "3+",
+            "s": 6,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Anti-Monster 4+",
+            "Anti-Vehicle 4+"
+          ]
+        },
+        {
+          "id": "slugga-ranged",
+          "name": "Slugga",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "5+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ]
+        },
+        {
+          "id": "saddlegit-weapons-ranged",
+          "name": "Saddlegit weapons",
+          "type": "ranged",
+          "stats": {
+            "range": 9,
+            "a": 1,
+            "bs": "4+",
+            "s": 3,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Assault"
+          ]
+        },
+        {
+          "id": "stikka-melee-melee",
+          "name": "Stikka (melee)",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "3+",
+            "s": 5,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Anti-Monster 4+",
+            "Anti-Vehicle 4+",
+            "Lance"
+          ]
+        },
+        {
+          "id": "stikka-ranged-ranged",
+          "name": "Stikka (ranged)",
+          "type": "ranged",
+          "stats": {
+            "range": 9,
+            "a": 1,
+            "bs": "5+",
+            "s": 5,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault",
+            "Anti-Monster 4+",
+            "Anti-Vehicle 4+"
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "wild-ride",
+          "name": "Wild Ride",
+          "description": "You can ignore any or all modifiers to this unit’s Move characteristic and to Advance and Charge rolls made for this unit."
+        }
+      ],
+      "keywords": [
+        "Mounted",
+        "Beast Snagga",
+        "Grenades",
+        "Squighog Boyz"
       ]
     },
     {
@@ -3982,6 +4279,70 @@
         "Fortification",
         "Vehicle",
         "Mekboy Workshop"
+      ]
+    },
+    {
+      "id": "grot-tanks-legends",
+      "bsdataId": "6cc1-586e-5d7c-9a34",
+      "name": "Grot Tanks [Legends]",
+      "points": {
+        "1": 155
+      },
+      "stats": {
+        "m": 10,
+        "t": 6,
+        "sv": "3+",
+        "w": 5,
+        "ld": "8+",
+        "oc": 2
+      },
+      "weapons": [],
+      "abilities": [
+        {
+          "id": "scatter",
+          "name": "Scatter!",
+          "description": "Once per turn, when an enemy unit ends a Normal, Advance or Fall Back move within 9\" of this unit, if this unit is not within Engagement Range of one or more enemy units, it can make a Normal move of up to 6\"."
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Grot Tanks",
+        "Grots"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "grot-tank-w-grot-tank-shoota",
+              "name": "Totemic Presence upgrade",
+              "default": true
+            },
+            {
+              "id": "grot-tank-w-grotzooka",
+              "name": "Totemic Presence upgrade"
+            },
+            {
+              "id": "grot-tank-w-kustom-mega-blasta",
+              "name": "Totemic Presence upgrade"
+            },
+            {
+              "id": "grot-tank-w-rokkit-launcha",
+              "name": "Totemic Presence upgrade"
+            },
+            {
+              "id": "grot-tank-w-skorcha",
+              "name": "Totemic Presence upgrade"
+            },
+            {
+              "id": "grot-tank-w-additional-weapon",
+              "name": "Totemic Presence upgrade"
+            }
+          ]
+        }
       ]
     },
     {

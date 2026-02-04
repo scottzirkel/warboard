@@ -418,6 +418,133 @@
       ]
     },
     {
+      "id": "termagants",
+      "bsdataId": "359c-db2c-681a-8d62",
+      "name": "Termagants",
+      "points": {
+        "10": 60
+      },
+      "stats": {
+        "m": 6,
+        "t": 3,
+        "sv": "5+",
+        "w": 1,
+        "ld": "8+",
+        "oc": 2
+      },
+      "weapons": [
+        {
+          "id": "chitinous-claws-and-teeth-melee",
+          "name": "Chitinous claws and teeth",
+          "type": "melee",
+          "stats": {
+            "a": 1,
+            "ws": "4+",
+            "s": 3,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "default"
+        },
+        {
+          "id": "shardlauncher-ranged",
+          "name": "Shardlauncher",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": "D3",
+            "bs": "4+",
+            "s": 5,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Blast",
+            "Heavy"
+          ],
+          "loadoutGroup": "termagant-w-shardlauncher"
+        },
+        {
+          "id": "spike-rifle-ranged",
+          "name": "Spike rifle",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 1,
+            "bs": "4+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Heavy"
+          ],
+          "loadoutGroup": "termagant-w-spike-rifle"
+        },
+        {
+          "id": "strangleweb-ranged",
+          "name": "Strangleweb",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": "D6",
+            "bs": "N/A",
+            "s": 2,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Assault",
+            "Devastating Wounds",
+            "Torrent"
+          ],
+          "loadoutGroup": "termagant-w-strangleweb"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "skulking-horrors",
+          "name": "Skulking Horrors",
+          "description": "Once per turn, when an enemy unit ends a Normal, Advance or Fall Back move within 9\" of this unit, if this unit is not within Engagement Range of one or more enemy units, it can make a Normal move of up to D6\"."
+        }
+      ],
+      "keywords": [
+        "Battleline",
+        "Infantry",
+        "Great Devourer",
+        "Endless Multitude",
+        "Termagants"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "default",
+              "name": "Chitinous claws and teeth",
+              "default": true
+            },
+            {
+              "id": "termagant-w-shardlauncher",
+              "name": "Shardlauncher + Chitinous claws and teeth"
+            },
+            {
+              "id": "termagant-w-spike-rifle",
+              "name": "Spike rifle + Chitinous claws and teeth"
+            },
+            {
+              "id": "termagant-w-strangleweb",
+              "name": "Strangleweb + Chitinous claws and teeth"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "hormagaunts",
       "bsdataId": "f15b-9f9c-9bf0-8160",
       "name": "Hormagaunts",

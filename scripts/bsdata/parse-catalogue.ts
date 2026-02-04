@@ -399,6 +399,88 @@ class CatalogueParser {
     return undefined;
   }
 
+  // Get unit stats from an infoLink reference to sharedProfiles
+  // Used by units like Termagants where model entries reference shared profiles
+  private getStatsFromInfoLink(entry: Record<string, unknown>): UnitStats | null {
+    const infoLinks = ensureArray((entry.infoLinks as Record<string, unknown>)?.infoLink);
+    for (const link of infoLinks) {
+      const linkType = getAttr(link, 'type');
+      if (linkType === 'profile') {
+        const targetId = getAttr(link, 'targetId');
+        const profile = this.sharedProfiles.get(targetId);
+        if (profile) {
+          const typeName = getAttr(profile, 'typeName');
+          if (typeName === 'Unit') {
+            const characteristics = ensureArray(
+              (profile.characteristics as Record<string, unknown>)?.characteristic
+            );
+            const stats = parseUnitStats(characteristics);
+            if (stats) return stats;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  // Get unit stats from a shared selection entry (model type)
+  // Used by units like Gretchin where the unit links to shared model entries
+  private getStatsFromSharedModelEntry(targetId: string): UnitStats | null {
+    const sharedEntry = this.sharedSelectionEntries.get(targetId);
+    if (!sharedEntry) return null;
+
+    // Check profiles directly on the shared entry
+    const profiles = ensureArray((sharedEntry.profiles as Record<string, unknown>)?.profile);
+    for (const profile of profiles) {
+      const typeName = getAttr(profile, 'typeName');
+      if (typeName === 'Unit') {
+        const characteristics = ensureArray(
+          (profile.characteristics as Record<string, unknown>)?.characteristic
+        );
+        const stats = parseUnitStats(characteristics);
+        if (stats) return stats;
+      }
+    }
+
+    // Also check infoLinks on the shared entry (Termagants pattern)
+    const statsFromInfoLink = this.getStatsFromInfoLink(sharedEntry);
+    if (statsFromInfoLink) return statsFromInfoLink;
+
+    return null;
+  }
+
+  // Extract weapons from a shared model entry
+  private extractWeaponsFromSharedModelEntry(targetId: string, weapons: Weapon[], loadoutGroup?: string): void {
+    const sharedEntry = this.sharedSelectionEntries.get(targetId);
+    if (!sharedEntry) return;
+
+    // Get weapons from direct selection entries
+    const weaponEntries = ensureArray((sharedEntry.selectionEntries as Record<string, unknown>)?.selectionEntry);
+    for (const weaponEntry of weaponEntries) {
+      const weaponProfiles = ensureArray((weaponEntry.profiles as Record<string, unknown>)?.profile);
+      for (const profile of weaponProfiles) {
+        const typeName = getAttr(profile, 'typeName');
+        if (typeName === 'Melee Weapons') {
+          const weapon = parseWeaponProfile(profile, 'melee');
+          if (weapon && !weapons.find(w => w.id === weapon.id)) {
+            if (loadoutGroup) weapon.loadoutGroup = loadoutGroup;
+            weapons.push(weapon);
+          }
+        } else if (typeName === 'Ranged Weapons') {
+          const weapon = parseWeaponProfile(profile, 'ranged');
+          if (weapon && !weapons.find(w => w.id === weapon.id)) {
+            if (loadoutGroup) weapon.loadoutGroup = loadoutGroup;
+            weapons.push(weapon);
+          }
+        }
+      }
+    }
+
+    // Also check entryLinks for weapons
+    const entryLinks = ensureArray((sharedEntry.entryLinks as Record<string, unknown>)?.entryLink);
+    this.extractWeaponsFromEntryLinks(entryLinks, weapons, loadoutGroup);
+  }
+
   // Helper to extract weapons from entry links
   private extractWeaponsFromEntryLinks(entryLinks: Record<string, unknown>[], weapons: Weapon[], loadoutGroup?: string): void {
     for (const link of entryLinks) {
@@ -579,6 +661,11 @@ class CatalogueParser {
           }
         }
 
+        // If no stats found in direct profiles, check infoLinks (Termagants pattern)
+        if (!stats) {
+          stats = this.getStatsFromInfoLink(modelEntry);
+        }
+
         const variantWeaponNames: string[] = [];
         const modelModifierSource = this.getModifierSourceFromInfoLinks(modelEntry);
         const modelModifiers: WeaponModifier[] = [];
@@ -671,6 +758,28 @@ class CatalogueParser {
       const constraints = ensureArray((group.constraints as Record<string, unknown>)?.constraint);
       const defaultEntryId = getAttr(group, 'defaultSelectionEntryId');
       processModelEntries(groupEntries, constraints, defaultEntryId || undefined);
+
+      // Handle units like Gretchin where groups have upgrade entries with entryLinks to shared model entries
+      for (const groupEntry of groupEntries) {
+        const groupEntryType = getAttr(groupEntry, 'type');
+        if (groupEntryType === 'upgrade') {
+          const entryLinks = ensureArray((groupEntry.entryLinks as Record<string, unknown>)?.entryLink);
+          for (const link of entryLinks) {
+            const targetId = getAttr(link, 'targetId');
+            const linkType = getAttr(link, 'type');
+
+            if (linkType === 'selectionEntry' && targetId) {
+              // Try to get stats from the linked shared entry
+              if (!stats) {
+                stats = this.getStatsFromSharedModelEntry(targetId);
+              }
+
+              // Extract weapons from the shared entry
+              this.extractWeaponsFromSharedModelEntry(targetId, weapons);
+            }
+          }
+        }
+      }
 
       if (entryType === 'model') {
         const groupName = getAttr(group, 'name');
