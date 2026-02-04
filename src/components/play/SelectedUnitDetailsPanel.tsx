@@ -361,6 +361,9 @@ export function SelectedUnitDetailsPanel({
   // Manual toggle for showing leader stats (null = auto based on wounds)
   const [manualStatsView, setManualStatsView] = useState<'unit' | 'leader' | null>(null);
 
+  // Selected model type for units with multiple model types (e.g., Gretchin, Squighog Boyz)
+  const [selectedModelType, setSelectedModelType] = useState<string | null>(null);
+
   // Empty state when no unit selected
   if (!unit || !listUnit || unitIndex === null) {
     return (
@@ -439,7 +442,20 @@ export function SelectedUnitDetailsPanel({
             ? (hasLeader && leaderUnit)
             : (manualStatsView === 'unit' ? false : autoShowLeader);
 
-          const displayUnit = showLeaderStats && leaderUnit ? leaderUnit : unit;
+          // Check if showing a specific model type (e.g., Runtherd in Gretchin unit)
+          const activeModelType = selectedModelType && unit.modelTypes
+            ? unit.modelTypes.find(mt => mt.id === selectedModelType)
+            : null;
+
+          // Create a virtual unit with model type stats if one is selected
+          let displayUnit: Unit = showLeaderStats && leaderUnit ? leaderUnit : unit;
+          if (!showLeaderStats && activeModelType) {
+            displayUnit = {
+              ...unit,
+              stats: activeModelType.stats,
+              invuln: activeModelType.invuln !== undefined ? activeModelType.invuln : unit.invuln,
+            };
+          }
 
           // Build leader modifiers including both enhancement AND weapon modifiers
           let displayModifiers = modifiers;
@@ -472,10 +488,21 @@ export function SelectedUnitDetailsPanel({
             displayModifiers = leaderMods;
           }
 
+          // Determine what kind of stats we're showing
+          const showingModelType = !showLeaderStats && activeModelType;
+          const borderClass = showLeaderStats
+            ? 'border border-purple-500/30'
+            : showingModelType
+              ? 'border border-amber-500/30'
+              : '';
+
           return (
-            <div className={`card-depth p-2 lg:p-3 ${showLeaderStats ? 'border border-purple-500/30' : ''}`}>
+            <div className={`card-depth p-2 lg:p-3 ${borderClass}`}>
               {showLeaderStats && leaderUnit && (
                 <div className="text-xs text-purple-400 mb-2 text-center">Showing {leaderUnit.name} stats</div>
+              )}
+              {showingModelType && (
+                <div className="text-xs text-amber-400 mb-2 text-center">Showing {activeModelType.name} stats</div>
               )}
               <div className="grid grid-cols-6 gap-2">
                 {['m', 't', 'sv', 'w', 'ld', 'oc'].map((stat) => {
@@ -635,6 +662,32 @@ export function SelectedUnitDetailsPanel({
                   <span className="text-green-400 font-bold text-sm">+</span>
                 </button>
               </div>
+            </div>
+          )}
+
+          {/* Model Types Row - For units with multiple model types (e.g., Gretchin, Squighog Boyz) */}
+          {unit.modelTypes && unit.modelTypes.length > 1 && (
+            <div className="flex flex-wrap items-center gap-2 mt-2 px-1">
+              <span className="text-[10px] text-white/40 uppercase tracking-wider">Model Stats:</span>
+              {unit.modelTypes.map((modelType) => (
+                <button
+                  key={modelType.id}
+                  onClick={() => setSelectedModelType(
+                    selectedModelType === modelType.id ? null : modelType.id
+                  )}
+                  className={`text-xs px-2 py-1 rounded-md transition-colors ${
+                    selectedModelType === modelType.id
+                      ? 'bg-amber-500/30 text-amber-300 border border-amber-500/50'
+                      : 'bg-white/10 text-white/60 hover:text-white/80 hover:bg-white/15'
+                  } ${modelType.isLeader ? 'border-l-2 border-l-amber-500/50' : ''}`}
+                  title={modelType.isLeader ? `${modelType.name} (Precision target)` : modelType.name}
+                >
+                  {modelType.name}
+                  {modelType.stats.w !== unit.stats.w && (
+                    <span className="ml-1 text-[10px] text-white/40">W{modelType.stats.w}</span>
+                  )}
+                </button>
+              ))}
             </div>
           )}
         </div>
