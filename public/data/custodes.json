@@ -600,7 +600,8 @@
             {
               "id": "vexilla-praesidium-shield-misericordia",
               "name": "Vexilla + Misericordia",
-              "maxModels": 1
+              "maxModels": 1,
+              "excludesFromOption": "main-weapon"
             }
           ]
         }
@@ -3896,52 +3897,58 @@
       ],
       "enhancements": [
         {
+          "id": "honoured-fallen-aura",
+          "name": "Honoured Fallen (Aura)",
+          "points": 15,
+          "description": "ADEPTUS CUSTODES VEHICLE model only. While a friendly ADEPTUS CUSTODES INFANTRY or ADEPTUS CUSTODES MOUNTED unit is within 6\" of the bearer, each time a model in that unit makes an attack, re-roll a Hit roll of 1.",
+          "eligibleKeywords": [
+            "Vehicle"
+          ],
+          "modifiers": []
+        },
+        {
+          "id": "augury-uplink",
+          "name": "Augury Uplink",
+          "points": 35,
+          "description": "ADEPTUS CUSTODES model only. The bearer has the Feel No Pain 5+ ability.",
+          "modifiers": []
+        },
+        {
           "id": "adamantine-talisman",
           "name": "Adamantine Talisman",
           "points": 25,
-          "description": "Vehicle only. Gains Feel No Pain 4+.",
-          "eligibleKeywords": [
-            "Vehicle"
-          ],
-          "modifiers": []
-        },
-        {
-          "id": "armor-of-eternal-fortune",
-          "name": "Armor of Eternal Fortune",
-          "points": 20,
-          "description": "Vehicle only. -1 to Damage characteristic of attacks.",
-          "eligibleKeywords": [
-            "Vehicle"
-          ],
-          "modifiers": []
-        },
-        {
-          "id": "venerable-destroyer",
-          "name": "Venerable Destroyer",
-          "points": 30,
-          "description": "Vehicle only. +1 to Wound rolls; improve AP by 1.",
-          "eligibleKeywords": [
-            "Vehicle"
-          ],
-          "modifiers": []
-        },
-        {
-          "id": "warlords-steed",
-          "name": "Warlord's Steed",
-          "points": 15,
-          "description": "Vehicle only. +1 Objective Control at Starting Strength.",
-          "eligibleKeywords": [
-            "Vehicle"
-          ],
+          "description": "Adeptus Custodes model only. Improve the Attacks, Strength and Damage characteristics of melee weapons equipped by the bearer by 1.",
           "modifiers": [
             {
-              "stat": "oc",
+              "stat": "a",
               "operation": "add",
               "value": 1,
-              "scope": "vehicle",
-              "condition": "starting strength"
+              "scope": "melee"
+            },
+            {
+              "stat": "s",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee"
+            },
+            {
+              "stat": "d",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee"
             }
           ]
+        },
+        {
+          "id": "veteran-of-the-kataphraktoi",
+          "name": "Veteran of the Kataphraktoi",
+          "points": 10,
+          "description": "ADEPTUS CUSTODES INFANTRY or ADEPTUS CUSTODES MOUNTED model only. In your Command phase, select one ADEPTUS CUSTODES VEHICLE or ADEPTUS CUSTODES MOUNTED unit within 6\" of the bearer. Until the start of your next Command phase, that unit is eligible to shoot in a turn in which it Fell Back.",
+          "eligibleKeywords": [
+            "Infantry",
+            "Mounted"
+          ],
+          "modifiers": []
         }
       ]
     },
@@ -3951,17 +3958,9 @@
         {
           "id": "against-all-odds",
           "name": "Against All Odds",
-          "description": "Units below half-strength gain +1 Attack. Units below quarter-strength gain additional +1 Attack.",
-          "type": "passive",
-          "modifiers": [
-            {
-              "stat": "a",
-              "operation": "add",
-              "value": 1,
-              "scope": "all",
-              "condition": "below half strength"
-            }
-          ]
+          "description": "Each time an ADEPTUS CUSTODES unit from your army (excluding Vehicles) makes an attack, if there are no other friendly units within 6\" of that unit, add 1 to the Hit roll and add 1 to the Wound roll.",
+          "type": "conditional",
+          "modifiers": []
         }
       ],
       "stratagems": [
@@ -4008,32 +4007,57 @@
       ],
       "enhancements": [
         {
-          "id": "unstoppable-fury",
-          "name": "Unstoppable Fury",
-          "points": 20,
-          "description": "Melee weapons gain Lethal Hits.",
-          "modifiers": []
-        },
-        {
-          "id": "unbreakable-will",
-          "name": "Unbreakable Will",
-          "points": 15,
-          "description": "Model gains Feel No Pain 5+ and cannot be reduced below 1 wound per attack.",
-          "modifiers": []
-        },
-        {
-          "id": "last-stand",
-          "name": "Last Stand",
+          "id": "superior-creation",
+          "name": "Superior Creation",
           "points": 25,
-          "description": "Once per battle, after casualties: auto-pass Battle-shock and heal 1 model.",
+          "description": "Adeptus Custodes Infantry model only. The first time the bearer is destroyed, roll one D6 at the end of the phase. On a 2+, set the bearer back up on the battlefield, as close as possible to where it was destroyed and not within Engagement Range of one or more enemy units, with its full wounds remaining.",
+          "eligibleKeywords": [
+            "Infantry"
+          ],
           "modifiers": []
         },
         {
-          "id": "valiant-heart",
-          "name": "Valiant Heart",
-          "points": 10,
-          "description": "Model's unit: -1 to Hit in melee against it.",
+          "id": "praesidius",
+          "name": "Praesidius",
+          "points": 25,
+          "description": "The bearer has the Lone Operative and Stealth abilities.",
           "modifiers": []
+        },
+        {
+          "id": "fierce-conqueror",
+          "name": "Fierce Conqueror",
+          "points": 15,
+          "description": "At the start of the Fight phase, until the end of the phase, add 2 to the Attacks characteristic of melee weapons equipped by the bearer for every 5 enemy models within 6\" of the bearer (rounding down).",
+          "modifiers": []
+        },
+        {
+          "id": "admonimortis",
+          "name": "Admonimortis",
+          "points": 10,
+          "description": "Shield-Captain model only. Improve the Strength characteristic of melee weapons equipped by the bearer by 3, and improve the Armour Penetration and Damage characteristics of those weapons by 1.",
+          "eligibleKeywords": [
+            "Shield-Captain"
+          ],
+          "modifiers": [
+            {
+              "stat": "s",
+              "operation": "add",
+              "value": 3,
+              "scope": "melee"
+            },
+            {
+              "stat": "ap",
+              "operation": "subtract",
+              "value": 1,
+              "scope": "melee"
+            },
+            {
+              "stat": "d",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee"
+            }
+          ]
         }
       ]
     }
