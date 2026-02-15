@@ -45,7 +45,7 @@ export function UserMenu({ className = '' }: UserMenuProps) {
   }
 
   return (
-    <div className={`relative ${className}`} ref={menuRef}>
+    <div className={`relative z-[60] ${className}`} ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center rounded-full transition-opacity hover:opacity-80"
@@ -57,7 +57,7 @@ export function UserMenu({ className = '' }: UserMenuProps) {
             alt={session.user.name || 'User avatar'}
             width={28}
             height={28}
-            className="rounded-full border border-white/20"
+            className="rounded-full bg-white border-2 border-white"
           />
         ) : (
           <div className="h-7 w-7 rounded-full bg-white/10 flex items-center justify-center text-xs font-medium text-white/70">
