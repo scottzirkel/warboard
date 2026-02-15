@@ -467,13 +467,22 @@ export default function Home() {
     // Get weapons without loadoutGroup (always equipped)
     const alwaysEquipped = leaderUnit.weapons.filter((w) => !w.loadoutGroup);
 
-    // Get weapons from selected loadout groups
+    // Get weapons from loadout groups, using same fallback logic as the main unit:
+    // if weaponCounts has no entry for a group AND there's a matching loadout choice,
+    // the user chose not to equip it. Otherwise, include the weapons.
     const selectedWeapons: Weapon[] = [];
-    for (const [groupId, count] of Object.entries(weaponCounts)) {
-      if (count > 0) {
-        const groupWeapons = leaderUnit.weapons.filter((w) => w.loadoutGroup === groupId);
-        selectedWeapons.push(...groupWeapons);
-      }
+    const loadoutGroupIds = [...new Set(leaderUnit.weapons.filter((w) => w.loadoutGroup).map((w) => w.loadoutGroup!))];
+
+    for (const groupId of loadoutGroupIds) {
+      const count = weaponCounts[groupId] || 0;
+      const choice = leaderUnit.loadoutOptions
+        ?.flatMap((opt) => opt.choices)
+        .find((c) => c.id === groupId);
+
+      if (count === 0 && choice) continue;
+
+      const groupWeapons = leaderUnit.weapons.filter((w) => w.loadoutGroup === groupId);
+      selectedWeapons.push(...groupWeapons);
     }
 
     return [...alwaysEquipped, ...selectedWeapons];
