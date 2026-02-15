@@ -7,6 +7,11 @@ import type { CurrentList } from '@/types';
 // Mock Setup
 // ============================================================================
 
+// Mock next-auth/react to return unauthenticated (guest mode) by default
+vi.mock('next-auth/react', () => ({
+  useSession: () => ({ data: null, status: 'unauthenticated' }),
+}));
+
 const STORAGE_KEY = 'army-tracker-saved-lists';
 
 // Mock localStorage

@@ -16,6 +16,7 @@ export { ImportModal } from './ImportModal';
 export { ExportModal } from './ExportModal';
 export { LoadModal } from './LoadModal';
 export { SaveModal } from './SaveModal';
+export { MigrateListsModal } from './MigrateListsModal';
 export { ToastNotification, ToastContainer } from './ToastNotification';
 export { Tooltip, TooltipBadge } from './Tooltip';
 export { DropdownMenu } from './DropdownMenu';

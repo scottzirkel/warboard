@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { AppMode, GamePhase, PlayerTurn } from '@/types';
 import { GAME_PHASES } from '@/types';
 import type { MobilePanel } from '@/stores/uiStore';
+import { UserMenu } from '@/components/auth';
 
 // ============================================================================
 // Mode Toggle Button Component
@@ -565,6 +566,8 @@ export function Navigation({
                 onClick={onToggleReferencePanel}
               />
             )}
+
+            <UserMenu />
           </div>
         </div>
       </div>

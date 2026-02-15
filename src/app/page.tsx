@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useSession } from 'next-auth/react';
 import { useArmyStore, availableArmies } from '@/stores/armyStore';
 import { useGameStore } from '@/stores/gameStore';
 import { useUIStore } from '@/stores/uiStore';
@@ -21,6 +22,7 @@ import {
   LoadModal,
   SaveModal,
   ConfirmModal,
+  MigrateListsModal,
 } from '@/components/ui';
 import {
   useLeaderAttachment,
@@ -28,6 +30,7 @@ import {
   useListValidation,
   useWoundTracking,
   useSavedLists,
+  getLocalStorageLists,
 } from '@/hooks';
 import type { CurrentList, Unit, GameFormat, LoadoutGroup, Weapon, ModifierSource, ModifierOperation, MissionTwist } from '@/types';
 
@@ -45,6 +48,14 @@ export default function Home() {
   const [isExporting, setIsExporting] = useState(false);
   const [exportCode, setExportCode] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
+
+  // -------------------------------------------------------------------------
+  // Auth & Migration State
+  // -------------------------------------------------------------------------
+  const { status: authStatus } = useSession();
+  const prevAuthStatus = useRef(authStatus);
+  const [showMigrateModal, setShowMigrateModal] = useState(false);
+  const [localListsForMigration, setLocalListsForMigration] = useState<ReturnType<typeof getLocalStorageLists>>([]);
 
   // -------------------------------------------------------------------------
   // Store State
@@ -313,6 +324,20 @@ export default function Home() {
     };
     loadMissionData();
   }, []);
+
+  // Detect sign-in and check for localStorage lists to migrate
+  useEffect(() => {
+    if (prevAuthStatus.current !== 'authenticated' && authStatus === 'authenticated') {
+      const localLists = getLocalStorageLists();
+
+      if (localLists.length > 0) {
+        setLocalListsForMigration(localLists);
+        setShowMigrateModal(true);
+      }
+    }
+
+    prevAuthStatus.current = authStatus;
+  }, [authStatus]);
 
   // -------------------------------------------------------------------------
   // Computed Values
@@ -1130,6 +1155,16 @@ export default function Home() {
             confirmModalConfig.onConfirm();
             closeModal();
           }}
+        />
+      )}
+
+      {/* Migration Modal */}
+      {showMigrateModal && (
+        <MigrateListsModal
+          isOpen={true}
+          onClose={() => setShowMigrateModal(false)}
+          localLists={localListsForMigration}
+          onMigrationComplete={fetchLists}
         />
       )}
 

@@ -432,7 +432,8 @@ export interface ModifierSource {
 // ============================================================================
 
 export interface SavedListInfo {
-  filename: string;
+  id?: string;        // Database ID (when signed in)
+  filename: string;   // localStorage key (for guests) or derived name
   name: string;
 }
 
