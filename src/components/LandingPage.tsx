@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { availableArmies, type AvailableArmy } from '@/stores/armyStore';
+import { UserMenu } from '@/components/auth';
 
 interface LandingPageProps {
   onSelectArmy: (armyId: string) => void;
@@ -68,7 +69,12 @@ function FactionCard({ army, onClick }: { army: AvailableArmy; onClick: () => vo
 
 export function LandingPage({ onSelectArmy, isLoading = false }: LandingPageProps) {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-900 to-black">
+    <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-900 to-black relative">
+      {/* Sign in / user menu in top-right corner */}
+      <div className="absolute top-4 right-4">
+        <UserMenu />
+      </div>
+
       <div className="max-w-md w-full space-y-8 text-center">
         {/* Logo */}
         <div className="flex justify-center">

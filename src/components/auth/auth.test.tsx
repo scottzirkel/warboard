@@ -100,7 +100,7 @@ describe('UserMenu', () => {
     expect(screen.getByRole('button')).toHaveTextContent('Sign in with Google');
   });
 
-  it('shows user info and sign out when authenticated', () => {
+  it('shows avatar button when authenticated, reveals dropdown on click', () => {
     mockedUseSession.mockReturnValue({
       data: {
         user: {
@@ -116,9 +116,18 @@ describe('UserMenu', () => {
     });
 
     render(<UserMenu />);
-    expect(screen.getByText('Test User')).toBeInTheDocument();
+    const avatarButton = screen.getByTitle('Test User');
+    expect(avatarButton).toBeInTheDocument();
     expect(screen.getByAltText('Test User')).toHaveAttribute('src', 'https://example.com/avatar.jpg');
-    expect(screen.getByRole('button', { name: 'Sign out' })).toBeInTheDocument();
+
+    // Dropdown not visible yet
+    expect(screen.queryByText('Sign out')).not.toBeInTheDocument();
+
+    // Click avatar to open dropdown
+    fireEvent.click(avatarButton);
+    expect(screen.getByText('Test User')).toBeInTheDocument();
+    expect(screen.getByText('test@example.com')).toBeInTheDocument();
+    expect(screen.getByText('Sign out')).toBeInTheDocument();
   });
 
   it('shows user initial when no image is provided', () => {
@@ -138,6 +147,9 @@ describe('UserMenu', () => {
 
     render(<UserMenu />);
     expect(screen.getByText('J')).toBeInTheDocument();
+
+    // Open dropdown to see name
+    fireEvent.click(screen.getByTitle('John Doe'));
     expect(screen.getByText('John Doe')).toBeInTheDocument();
   });
 
@@ -157,6 +169,8 @@ describe('UserMenu', () => {
     });
 
     render(<UserMenu />);
+    // Open dropdown to see email
+    fireEvent.click(screen.getByTitle('test@example.com'));
     expect(screen.getByText('test@example.com')).toBeInTheDocument();
   });
 
