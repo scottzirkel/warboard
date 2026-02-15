@@ -404,17 +404,22 @@ export default function Home() {
 
     for (const groupId of loadoutGroupIds) {
       const count = weaponCounts[groupId] || 0;
-      if (count === 0) continue;
-
-      const groupWeapons = selectedUnit.weapons.filter((w) => w.loadoutGroup === groupId);
       const choice = selectedUnit.loadoutOptions
         ?.flatMap((opt) => opt.choices)
         .find((c) => c.id === groupId);
 
+      // If count is 0 and there IS a matching loadout choice, the user chose
+      // not to equip these weapons — skip them. If there's NO matching choice,
+      // these weapons are always equipped (e.g. units without loadoutOptions).
+      if (count === 0 && choice) continue;
+
+      const effectiveCount = count || selectedListUnit.modelCount;
+      const groupWeapons = selectedUnit.weapons.filter((w) => w.loadoutGroup === groupId);
+
       groups.push({
         id: groupId,
         name: choice?.name || groupId,
-        modelCount: count,
+        modelCount: effectiveCount,
         isPaired: choice?.paired || false,
         weapons: groupWeapons,
         rangedWeapons: groupWeapons.filter((w) => w.type === 'ranged'),
