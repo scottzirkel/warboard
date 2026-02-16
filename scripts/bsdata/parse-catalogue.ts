@@ -352,6 +352,44 @@ function parseKeywords(categoryLinks: Record<string, unknown>[]): string[] {
     );
 }
 
+// Parse an XML string into a catalogue object
+function parseXml(xmlContent: string): Record<string, unknown> {
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    attributeNamePrefix: ATTR_PREFIX,
+    textNodeName: '#text',
+    parseAttributeValue: false,
+  });
+  return parser.parse(xmlContent).catalogue;
+}
+
+// Load a parent catalogue referenced via catalogueLink
+function loadParentCatalogue(catalogueLinks: Record<string, unknown>[]): Record<string, unknown> | null {
+  for (const link of catalogueLinks) {
+    const importRoot = getAttr(link, 'importRootEntries');
+    if (importRoot !== 'true') continue;
+
+    const linkName = getAttr(link, 'name');
+    // Try to find the catalogue file by name
+    const possibleFiles = [
+      `${linkName}.cat`,
+      `Imperium - ${linkName}.cat`,
+    ];
+
+    for (const filename of possibleFiles) {
+      const filePath = join(BSDATA_PATH, filename);
+      if (existsSync(filePath)) {
+        console.log(`  Loading parent catalogue: ${filename}`);
+        const xmlContent = readFileSync(filePath, 'utf-8');
+        return parseXml(xmlContent);
+      }
+    }
+
+    console.warn(`  Warning: Parent catalogue "${linkName}" not found`);
+  }
+  return null;
+}
+
 // Main parser class
 class CatalogueParser {
   private catalogue: Record<string, unknown>;
@@ -363,19 +401,23 @@ class CatalogueParser {
   public catalogueName: string;
 
   constructor(xmlContent: string) {
-    const parser = new XMLParser({
-      ignoreAttributes: false,
-      attributeNamePrefix: ATTR_PREFIX,
-      textNodeName: '#text',
-      parseAttributeValue: false,
-    });
-
-    this.catalogue = parser.parse(xmlContent).catalogue;
+    this.catalogue = parseXml(xmlContent);
     this.catalogueId = getAttr(this.catalogue, 'id');
     this.catalogueRevision = getAttr(this.catalogue, 'revision');
     this.catalogueName = getAttr(this.catalogue, 'name');
 
-    // Build shared profiles lookup
+    // Check for parent catalogue links and load them first
+    const catalogueLinks = ensureArray(
+      (this.catalogue.catalogueLinks as Record<string, unknown>)?.catalogueLink
+    );
+    if (catalogueLinks.length > 0) {
+      const parentCatalogue = loadParentCatalogue(catalogueLinks);
+      if (parentCatalogue) {
+        this.mergeParentData(parentCatalogue);
+      }
+    }
+
+    // Build shared profiles lookup (child overrides parent)
     const profiles = ensureArray(
       (this.catalogue.sharedProfiles as Record<string, unknown>)?.profile
     );
@@ -386,7 +428,7 @@ class CatalogueParser {
       }
     }
 
-    // Build shared selection entries lookup (for weapons referenced via entryLinks)
+    // Build shared selection entries lookup (child overrides parent)
     const sharedEntries = ensureArray(
       (this.catalogue.sharedSelectionEntries as Record<string, unknown>)?.selectionEntry
     );
@@ -396,6 +438,31 @@ class CatalogueParser {
         this.sharedSelectionEntries.set(id, entry as Record<string, unknown>);
       }
     }
+  }
+
+  // Merge shared profiles and selection entries from a parent catalogue
+  private mergeParentData(parent: Record<string, unknown>): void {
+    const parentProfiles = ensureArray(
+      (parent.sharedProfiles as Record<string, unknown>)?.profile
+    );
+    for (const profile of parentProfiles) {
+      const id = getAttr(profile as Record<string, unknown>, 'id');
+      if (id) {
+        this.sharedProfiles.set(id, profile as Record<string, unknown>);
+      }
+    }
+
+    const parentEntries = ensureArray(
+      (parent.sharedSelectionEntries as Record<string, unknown>)?.selectionEntry
+    );
+    for (const entry of parentEntries) {
+      const id = getAttr(entry as Record<string, unknown>, 'id');
+      if (id) {
+        this.sharedSelectionEntries.set(id, entry as Record<string, unknown>);
+      }
+    }
+
+    console.log(`  Merged ${parentProfiles.length} profiles and ${parentEntries.length} entries from parent`);
   }
 
   // Helper to get modifier source name from infoLinks
@@ -585,10 +652,17 @@ class CatalogueParser {
   }
 
   parse(): ParsedUnit[] {
-    // Get shared selection entries (this is where unit definitions live)
+    // Get shared selection entries from the catalogue itself
     const sharedEntries = ensureArray(
       (this.catalogue.sharedSelectionEntries as Record<string, unknown>)?.selectionEntry
     );
+
+    // Build a map of local shared entries by ID
+    const localEntryMap = new Map<string, Record<string, unknown>>();
+    for (const entry of sharedEntries) {
+      const id = getAttr(entry as Record<string, unknown>, 'id');
+      if (id) localEntryMap.set(id, entry as Record<string, unknown>);
+    }
 
     // Get entry links (to find which entries are actually exposed)
     const entryLinks = ensureArray(
@@ -600,14 +674,14 @@ class CatalogueParser {
       entryLinks.map((link: Record<string, unknown>) => getAttr(link, 'targetId'))
     );
 
-    // Process each unit-type selection entry
-    for (const entry of sharedEntries) {
-      const entryType = getAttr(entry as Record<string, unknown>, 'type');
-      const entryId = getAttr(entry as Record<string, unknown>, 'id');
+    // Process each linked entry - check local entries first, then parent (merged) entries
+    for (const targetId of linkedIds) {
+      const entry = localEntryMap.get(targetId) || this.sharedSelectionEntries.get(targetId);
+      if (!entry) continue;
 
-      // Only process entries that are linked (exposed in the catalogue)
-      if ((entryType === 'unit' || entryType === 'model') && linkedIds.has(entryId)) {
-        const unit = this.parseUnit(entry as Record<string, unknown>, entryType);
+      const entryType = getAttr(entry, 'type');
+      if (entryType === 'unit' || entryType === 'model') {
+        const unit = this.parseUnit(entry, entryType);
         if (unit) {
           this.units.push(unit);
         }

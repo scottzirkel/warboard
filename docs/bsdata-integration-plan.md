@@ -484,6 +484,18 @@ This simpler format may be sufficient for Yellowscribe matching while avoiding t
 
 **Yellowscribe Integration**: Now uses `/makeArmyAndReturnCode` with .rosz data instead of the JSON API. This sends proper BSData IDs for accurate unit matching in TTS.
 
+### Session 5 (2026-02-15) - Multi-Faction & Cross-Catalogue ✅
+
+| Task | Status |
+|------|--------|
+| Data validation script (`validate-faction.ts`) | ✅ Complete |
+| Cross-catalogue reference resolution (SM successors) | ✅ Complete |
+| T'au Empire (62 units + 4 detachments) | ✅ Complete |
+| Black Templars (20 units + 3 detachments) | ✅ Complete |
+| Faction addition guide (`docs/adding-a-faction.md`) | ✅ Complete |
+
+**Total factions:** 8 (Custodes, Tyranids, Necrons, Space Marines, Orks, Chaos Space Marines, T'au Empire, Black Templars)
+
 ### Remaining (Optional) ⏳
 
 | Task | Priority | Notes |
@@ -491,6 +503,8 @@ This simpler format may be sufficient for Yellowscribe matching while avoiding t
 | Preserve weapon BSData IDs in parser | Low | Only needed for full weapon selection trees |
 | Test with BattleScribe/New Recruit | Medium | Manual validation recommended |
 | ~~Test with Yellowscribe .rosz import~~ | ~~Low~~ | ✅ **Done** - Yellowscribe now uses .rosz |
+| Fix pre-existing validation errors | Medium | 166 loadoutGroup mismatches across 6 original factions |
+| Integrate `validate:data` into CI pipeline | Low | Blocked by pre-existing errors |
 
 ### Commands
 

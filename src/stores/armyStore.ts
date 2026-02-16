@@ -20,11 +20,13 @@ export interface AvailableArmy {
 }
 
 export const availableArmies: AvailableArmy[] = [
+  { id: 'blacktemplars', name: 'Black Templars', file: 'blacktemplars.json' },
   { id: 'custodes', name: 'Adeptus Custodes', file: 'custodes.json' },
   { id: 'chaosmarines', name: 'Chaos Space Marines', file: 'chaosmarines.json' },
   { id: 'necrons', name: 'Necrons', file: 'necrons.json' },
   { id: 'orks', name: 'Orks', file: 'orks.json' },
   { id: 'spacemarines', name: 'Ultramarines', file: 'spacemarines.json' },
+  { id: 'tau', name: "T'au Empire", file: 'tau.json' },
   { id: 'tyranids', name: 'Tyranids', file: 'tyranids.json' },
 ];
 

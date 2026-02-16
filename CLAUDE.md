@@ -461,7 +461,7 @@ This is the project mantra. This is a lightweight app. Avoid over-engineering:
 ### Faction Themes
 The app uses CSS custom properties for faction-specific accent colors, activated via `data-theme` attribute on the body.
 
-**Available themes:** `custodes` (default), `tyranids`, `spacemarines`, `necrons`, `orks`, `chaosmarines`, `aeldari`
+**Available themes:** `custodes` (default), `tyranids`, `spacemarines`, `necrons`, `orks`, `chaosmarines`, `tau`, `blacktemplars`, `aeldari`
 
 Theme colors are accessed via Tailwind utilities (see Styling Guidelines above):
 - `text-accent-400`, `bg-accent-500`, `border-accent-400`
@@ -494,6 +494,22 @@ Custom hooks in `src/hooks/` provide additional state logic:
 4. Test list save/load functionality
 5. Test Colosseum validation if relevant
 6. Run `npm run validate` before committing
+
+### Adding a New Faction
+See `docs/adding-a-faction.md` for the full guide. Summary:
+1. Register in `scripts/bsdata/factions.ts`
+2. Parse: `npm run bsdata:parse -- factionid`
+3. Generate: `npm run bsdata:generate -- factionid`
+4. Validate: `npx tsx scripts/bsdata/validate-faction.ts factionid`
+5. Hand-craft detachments from Wahapedia
+6. Add to `armyStore.ts`, `globals.css`, `LandingPage.tsx`
+
+### Data Validation
+Validate faction JSON for loadoutGroup/choice ID mismatches and other issues:
+```bash
+npm run validate:data           # All factions
+npx tsx scripts/bsdata/validate-faction.ts custodes  # Single faction
+```
 
 ### Adding Units
 Edit `public/data/custodes.json` (or the appropriate faction file):

@@ -41,6 +41,16 @@ const factionColors: Record<string, { bg: string; border: string; text: string }
     border: 'border-red-600/30 hover:border-red-500/60',
     text: 'text-red-400',
   },
+  tau: {
+    bg: 'from-amber-900/30 to-amber-950/40',
+    border: 'border-amber-600/30 hover:border-amber-500/60',
+    text: 'text-amber-400',
+  },
+  blacktemplars: {
+    bg: 'from-rose-900/30 to-rose-950/40',
+    border: 'border-rose-600/30 hover:border-rose-500/60',
+    text: 'text-rose-400',
+  },
 };
 
 function FactionCard({ army, onClick }: { army: AvailableArmy; onClick: () => void }) {

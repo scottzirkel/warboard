@@ -128,6 +128,36 @@
   --accent-glow: rgba(239, 68, 68, 0.4);
 }
 
+/* T'au Empire - Ochre */
+[data-theme="tau"] {
+  --accent-50: #fffbeb;
+  --accent-100: #fef3c7;
+  --accent-200: #fde68a;
+  --accent-300: #fcd34d;
+  --accent-400: #fbbf24;
+  --accent-500: #f59e0b;
+  --accent-600: #d97706;
+  --accent-700: #b45309;
+  --accent-800: #92400e;
+  --accent-900: #78350f;
+  --accent-glow: rgba(245, 158, 11, 0.4);
+}
+
+/* Black Templars - Templar Red/Black */
+[data-theme="blacktemplars"] {
+  --accent-50: #fff1f2;
+  --accent-100: #ffe4e6;
+  --accent-200: #fecdd3;
+  --accent-300: #fda4af;
+  --accent-400: #fb7185;
+  --accent-500: #f43f5e;
+  --accent-600: #e11d48;
+  --accent-700: #be123c;
+  --accent-800: #9f1239;
+  --accent-900: #881337;
+  --accent-glow: rgba(244, 63, 94, 0.4);
+}
+
 /* Aeldari - Craftworld Teal */
 [data-theme="aeldari"] {
   --accent-50: #f0fdfa;

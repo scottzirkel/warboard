@@ -4,68 +4,8 @@
   "source": "BSData",
   "catalogueId": "1f19-6509-d906-ca10",
   "catalogueRevision": "85",
-  "lastUpdated": "2026-02-04",
+  "lastUpdated": "2026-02-16",
   "units": [
-    {
-      "id": "aleya",
-      "bsdataId": "9e42-7207-9c30-6122",
-      "name": "Aleya",
-      "points": {
-        "1": 65
-      },
-      "stats": {
-        "m": 6,
-        "t": 3,
-        "sv": "3+",
-        "w": 4,
-        "ld": "6+",
-        "oc": 1
-      },
-      "weapons": [
-        {
-          "id": "somnus-melee",
-          "name": "Somnus",
-          "type": "melee",
-          "stats": {
-            "a": 4,
-            "ws": "2+",
-            "s": 6,
-            "ap": -3,
-            "d": 3
-          },
-          "abilities": [
-            "Anti-Psyker 5+",
-            "Devastating Wounds"
-          ]
-        }
-      ],
-      "abilities": [
-        {
-          "id": "tactical-perception",
-          "name": "Tactical Perception",
-          "description": "While this model is leading a unit, models in that unit have the Fights First ability."
-        },
-        {
-          "id": "tenacious-spirit",
-          "name": "Tenacious Spirit",
-          "description": "While this model is leading a unit, each time a model in that unit makes an attack, add 1 to the Hit roll if that unit is below its Starting Strength, and add 1 to the Wound roll as well if that unit is Below Half-strength."
-        },
-        {
-          "id": "leader",
-          "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ Prosecutors\n■ Vigilators\n■ Witchseekers"
-        }
-      ],
-      "keywords": [
-        "Aleya",
-        "Epic Hero",
-        "Character",
-        "Infantry",
-        "Imperium",
-        "Anathema Psykana"
-      ],
-      "invuln": "5+"
-    },
     {
       "id": "allarus-custodians",
       "bsdataId": "c8a6-a4c5-703e-b717",
@@ -235,161 +175,6 @@
           ]
         }
       ]
-    },
-    {
-      "id": "anathema-psykana-rhino",
-      "bsdataId": "d7cb-7d30-715b-50d2",
-      "name": "Anathema Psykana Rhino",
-      "points": {
-        "1": 75
-      },
-      "stats": {
-        "m": 12,
-        "t": 9,
-        "sv": "3+",
-        "w": 10,
-        "ld": "6+",
-        "oc": 2
-      },
-      "weapons": [
-        {
-          "id": "storm-bolter-ranged",
-          "name": "Storm Bolter",
-          "type": "ranged",
-          "stats": {
-            "range": 24,
-            "a": 2,
-            "bs": "3+",
-            "s": 4,
-            "ap": 0,
-            "d": 1
-          },
-          "abilities": [
-            "Rapid Fire 2"
-          ],
-          "loadoutGroup": "wargear"
-        },
-        {
-          "id": "armoured-tracks-melee",
-          "name": "Armoured tracks",
-          "type": "melee",
-          "stats": {
-            "a": 3,
-            "ws": "4+",
-            "s": 6,
-            "ap": 0,
-            "d": 1
-          },
-          "abilities": [],
-          "loadoutGroup": "wargear"
-        }
-      ],
-      "abilities": [
-        {
-          "id": "self-repair",
-          "name": "Self Repair",
-          "description": "At the start of your Command phase, this model regains 1 lost wound."
-        }
-      ],
-      "keywords": [
-        "Rhino",
-        "Anathema Psykana",
-        "Vehicle",
-        "Dedicated Transport",
-        "Transport",
-        "Smoke",
-        "Imperium"
-      ]
-    },
-    {
-      "id": "blade-champion",
-      "bsdataId": "48b7-e713-d5b1-f11c",
-      "name": "Blade Champion",
-      "points": {
-        "1": 120
-      },
-      "stats": {
-        "m": 6,
-        "t": 6,
-        "sv": "2+",
-        "w": 6,
-        "ld": "6+",
-        "oc": 2
-      },
-      "weapons": [
-        {
-          "id": "vaultswords-behemor-melee",
-          "name": "➤ Vaultswords - Behemor",
-          "type": "melee",
-          "stats": {
-            "a": 6,
-            "ws": "2+",
-            "s": 7,
-            "ap": -2,
-            "d": 2
-          },
-          "abilities": [
-            "Precision"
-          ],
-          "loadoutGroup": "wargear"
-        },
-        {
-          "id": "vaultswords-hurricanis-melee",
-          "name": "➤ Vaultswords - Hurricanis",
-          "type": "melee",
-          "stats": {
-            "a": 9,
-            "ws": "2+",
-            "s": 5,
-            "ap": -1,
-            "d": 1
-          },
-          "abilities": [
-            "Sustained Hits 1"
-          ],
-          "loadoutGroup": "wargear"
-        },
-        {
-          "id": "vaultswords-victus-melee",
-          "name": "➤ Vaultswords - Victus",
-          "type": "melee",
-          "stats": {
-            "a": 5,
-            "ws": "2+",
-            "s": 6,
-            "ap": -3,
-            "d": 3
-          },
-          "abilities": [
-            "Devastating Wounds"
-          ],
-          "loadoutGroup": "wargear"
-        }
-      ],
-      "abilities": [
-        {
-          "id": "leader",
-          "name": "Leader",
-          "description": "This model can be attached to the following units:\n■ Custodian Guard\n■ Custodian Wardens"
-        },
-        {
-          "id": "martial-inspiration",
-          "name": "Martial Inspiration",
-          "description": "Once per battle, in your Charge phase, this model's unit is eligible to declare a charge in a turn in which it Advanced."
-        },
-        {
-          "id": "swift-onslaught",
-          "name": "Swift Onslaught",
-          "description": "While this model is leading a unit, you can re-roll Charge rolls made for that unit."
-        }
-      ],
-      "keywords": [
-        "Blade Champion",
-        "Infantry",
-        "Character",
-        "Imperium"
-      ],
-      "invuln": "4+"
     },
     {
       "id": "custodian-guard",
@@ -569,6 +354,221 @@
           ]
         }
       ]
+    },
+    {
+      "id": "aleya",
+      "bsdataId": "9e42-7207-9c30-6122",
+      "name": "Aleya",
+      "points": {
+        "1": 65
+      },
+      "stats": {
+        "m": 6,
+        "t": 3,
+        "sv": "3+",
+        "w": 4,
+        "ld": "6+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "somnus-melee",
+          "name": "Somnus",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "2+",
+            "s": 6,
+            "ap": -3,
+            "d": 3
+          },
+          "abilities": [
+            "Anti-Psyker 5+",
+            "Devastating Wounds"
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "tactical-perception",
+          "name": "Tactical Perception",
+          "description": "While this model is leading a unit, models in that unit have the Fights First ability."
+        },
+        {
+          "id": "tenacious-spirit",
+          "name": "Tenacious Spirit",
+          "description": "While this model is leading a unit, each time a model in that unit makes an attack, add 1 to the Hit roll if that unit is below its Starting Strength, and add 1 to the Wound roll as well if that unit is Below Half-strength."
+        },
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n■ Prosecutors\n■ Vigilators\n■ Witchseekers"
+        }
+      ],
+      "keywords": [
+        "Aleya",
+        "Epic Hero",
+        "Character",
+        "Infantry",
+        "Imperium",
+        "Anathema Psykana"
+      ],
+      "invuln": "5+"
+    },
+    {
+      "id": "anathema-psykana-rhino",
+      "bsdataId": "d7cb-7d30-715b-50d2",
+      "name": "Anathema Psykana Rhino",
+      "points": {
+        "1": 75
+      },
+      "stats": {
+        "m": 12,
+        "t": 9,
+        "sv": "3+",
+        "w": 10,
+        "ld": "6+",
+        "oc": 2
+      },
+      "weapons": [
+        {
+          "id": "storm-bolter-ranged",
+          "name": "Storm Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "armoured-tracks-melee",
+          "name": "Armoured tracks",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "4+",
+            "s": 6,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "self-repair",
+          "name": "Self Repair",
+          "description": "At the start of your Command phase, this model regains 1 lost wound."
+        }
+      ],
+      "keywords": [
+        "Rhino",
+        "Anathema Psykana",
+        "Vehicle",
+        "Dedicated Transport",
+        "Transport",
+        "Smoke",
+        "Imperium"
+      ]
+    },
+    {
+      "id": "blade-champion",
+      "bsdataId": "48b7-e713-d5b1-f11c",
+      "name": "Blade Champion",
+      "points": {
+        "1": 120
+      },
+      "stats": {
+        "m": 6,
+        "t": 6,
+        "sv": "2+",
+        "w": 6,
+        "ld": "6+",
+        "oc": 2
+      },
+      "weapons": [
+        {
+          "id": "vaultswords-behemor-melee",
+          "name": "➤ Vaultswords - Behemor",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Precision"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "vaultswords-hurricanis-melee",
+          "name": "➤ Vaultswords - Hurricanis",
+          "type": "melee",
+          "stats": {
+            "a": 9,
+            "ws": "2+",
+            "s": 5,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Sustained Hits 1"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "vaultswords-victus-melee",
+          "name": "➤ Vaultswords - Victus",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 6,
+            "ap": -3,
+            "d": 3
+          },
+          "abilities": [
+            "Devastating Wounds"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n■ Custodian Guard\n■ Custodian Wardens"
+        },
+        {
+          "id": "martial-inspiration",
+          "name": "Martial Inspiration",
+          "description": "Once per battle, in your Charge phase, this model's unit is eligible to declare a charge in a turn in which it Advanced."
+        },
+        {
+          "id": "swift-onslaught",
+          "name": "Swift Onslaught",
+          "description": "While this model is leading a unit, you can re-roll Charge rolls made for that unit."
+        }
+      ],
+      "keywords": [
+        "Blade Champion",
+        "Infantry",
+        "Character",
+        "Imperium"
+      ],
+      "invuln": "4+"
     },
     {
       "id": "custodian-wardens",
@@ -770,13 +770,8 @@
       "bsdataId": "3ec3-a4df-fdbf-5507",
       "name": "Prosecutors",
       "points": {
-        "4": 40,
-        "5": 50,
-        "6": 75,
-        "7": 75,
-        "8": 75,
-        "9": 75,
-        "10": 85
+        "1": 40,
+        "5": 50
       },
       "stats": {
         "m": 6,
@@ -1703,13 +1698,8 @@
       "bsdataId": "dd2d-568a-9c56-1b6e",
       "name": "Vigilators",
       "points": {
-        "4": 45,
-        "5": 55,
-        "6": 90,
-        "7": 90,
-        "8": 90,
-        "9": 90,
-        "10": 100
+        "1": 45,
+        "5": 55
       },
       "stats": {
         "m": 6,
@@ -1777,13 +1767,8 @@
       "bsdataId": "503b-f7be-eeeb-9e31",
       "name": "Witchseekers",
       "points": {
-        "4": 45,
-        "5": 55,
-        "6": 90,
-        "7": 90,
-        "8": 90,
-        "9": 90,
-        "10": 100
+        "1": 45,
+        "5": 55
       },
       "stats": {
         "m": 6,
@@ -2988,6 +2973,88 @@
       "invuln": "5+"
     },
     {
+      "id": "ares-gunship",
+      "bsdataId": "9335-74d9-ad68-3ff7",
+      "name": "Ares Gunship",
+      "points": {
+        "1": 580
+      },
+      "stats": {
+        "m": 20,
+        "t": 12,
+        "sv": "2+",
+        "w": 22,
+        "ld": "6",
+        "oc": 0
+      },
+      "weapons": [
+        {
+          "id": "arachnus-heavy-blaze-cannon-ranged",
+          "name": "Arachnus heavy blaze cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 4,
+            "bs": "2+",
+            "s": 12,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "arachnus-magna-blaze-cannon-ranged",
+          "name": "Arachnus magna-blaze cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 3,
+            "bs": "2+",
+            "s": 18,
+            "ap": -4,
+            "d": "D6+6"
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "armoured-hull-melee",
+          "name": "Armoured hull",
+          "type": "melee",
+          "stats": {
+            "a": 9,
+            "ws": "4+",
+            "s": 9,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "infernus-firebomb",
+          "name": "Infernus Firebomb",
+          "description": "Each time this model ends a Normal move, you can select one enemy unit it moved over during that move. Until the end of the turn, models in that unit cannot have the Benefit of Cover. In addition, roll one D6 for eah model in that unit: for each 6, that unit suffers 1 mortal wound."
+        },
+        {
+          "id": "damaged-1-7-wounds-remaining",
+          "name": "Damaged: 1-7 wounds remaining",
+          "description": "While this model has 1-7 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Aircraft",
+        "Fly",
+        "Imperium",
+        "Ares Gunship"
+      ],
+      "invuln": "5+"
+    },
+    {
       "id": "orion-assault-dropship",
       "bsdataId": "9c1a-7efd-ed36-440e",
       "name": "Orion Assault Dropship",
@@ -3086,88 +3153,6 @@
         "Fly",
         "Imperium",
         "Orion Assault Dropship"
-      ],
-      "invuln": "5+"
-    },
-    {
-      "id": "ares-gunship",
-      "bsdataId": "9335-74d9-ad68-3ff7",
-      "name": "Ares Gunship",
-      "points": {
-        "1": 580
-      },
-      "stats": {
-        "m": 20,
-        "t": 12,
-        "sv": "2+",
-        "w": 22,
-        "ld": "6",
-        "oc": 0
-      },
-      "weapons": [
-        {
-          "id": "arachnus-heavy-blaze-cannon-ranged",
-          "name": "Arachnus heavy blaze cannon",
-          "type": "ranged",
-          "stats": {
-            "range": 36,
-            "a": 4,
-            "bs": "2+",
-            "s": 12,
-            "ap": -3,
-            "d": "D6+1"
-          },
-          "abilities": [],
-          "loadoutGroup": "wargear"
-        },
-        {
-          "id": "arachnus-magna-blaze-cannon-ranged",
-          "name": "Arachnus magna-blaze cannon",
-          "type": "ranged",
-          "stats": {
-            "range": 48,
-            "a": 3,
-            "bs": "2+",
-            "s": 18,
-            "ap": -4,
-            "d": "D6+6"
-          },
-          "abilities": [],
-          "loadoutGroup": "wargear"
-        },
-        {
-          "id": "armoured-hull-melee",
-          "name": "Armoured hull",
-          "type": "melee",
-          "stats": {
-            "a": 9,
-            "ws": "4+",
-            "s": 9,
-            "ap": 0,
-            "d": 1
-          },
-          "abilities": [],
-          "loadoutGroup": "wargear"
-        }
-      ],
-      "abilities": [
-        {
-          "id": "infernus-firebomb",
-          "name": "Infernus Firebomb",
-          "description": "Each time this model ends a Normal move, you can select one enemy unit it moved over during that move. Until the end of the turn, models in that unit cannot have the Benefit of Cover. In addition, roll one D6 for eah model in that unit: for each 6, that unit suffers 1 mortal wound."
-        },
-        {
-          "id": "damaged-1-7-wounds-remaining",
-          "name": "Damaged: 1-7 wounds remaining",
-          "description": "While this model has 1-7 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
-        }
-      ],
-      "keywords": [
-        "Vehicle",
-        "Aircraft",
-        "Fly",
-        "Imperium",
-        "Ares Gunship"
       ],
       "invuln": "5+"
     }

@@ -1,0 +1,1691 @@
+{
+  "faction": "Black Templars",
+  "factionId": "blacktemplars",
+  "source": "BSData",
+  "catalogueId": "36d3-36bc-68dd-40ac",
+  "catalogueRevision": "57",
+  "lastUpdated": "2026-02-16",
+  "units": [
+    {
+      "id": "chaplain-grimaldus",
+      "bsdataId": "8165-e372-4fd6-3274",
+      "name": "Chaplain Grimaldus",
+      "points": {
+        "1": 110
+      },
+      "stats": {
+        "m": 6,
+        "t": 4,
+        "sv": "3",
+        "w": 4,
+        "ld": "5+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "artificer-crozius-melee",
+          "name": "Artificer Crozius",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 6,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "default"
+        },
+        {
+          "id": "plasma-pistol-supercharge-ranged",
+          "name": "➤ Plasma Pistol - Supercharge",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Hazardous",
+            "Pistol"
+          ],
+          "loadoutGroup": "default"
+        },
+        {
+          "id": "plasma-pistol-standard-ranged",
+          "name": "➤ Plasma Pistol - Standard",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "default"
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 1,
+            "ws": "4+",
+            "s": 3,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "cenobyte-servitor"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "litanies-of-the-devout",
+          "name": "Litanies of the Devout",
+          "description": "While this unit is leading a unit and contains a Chaplain Grimaldus model, each time a model in that unit makes a melee attack, you can re-roll the Hit roll."
+        },
+        {
+          "id": "temple-relics",
+          "name": "Temple Relics",
+          "description": "In your Command phase, if this unit contains one or more Cenobyte Servitor models, select one Temple Relics ability (see left). Until the start of your next Command phase, this unit’s Chaplain Grimaldus model has that ability.\n\n\nBanner of the Emperor Victorious: Add 1 to Advance and Charge rolls for this unit\n\n\nColumn of the Major Alter: Add 1 to the Toughness characteristic of models in this unit\n\n\nWater from the Stoup of Elucidation: Improve the Armour Penetration characteristic of melee weapons equipped by models in this unit by 1."
+        },
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This unit can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Crusader Squad\n■ Sword Brethren"
+        }
+      ],
+      "keywords": [
+        "Infantry",
+        "Imperium",
+        "Tacticus"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "default",
+          "name": "Artificer Crozius",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "default",
+              "name": "Artificer Crozius + Plasma Pistol",
+              "maxModels": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "high-marshal-helbrecht",
+      "bsdataId": "da8a-de9f-1fe7-2513",
+      "name": "High Marshal Helbrecht",
+      "points": {
+        "1": 120
+      },
+      "stats": {
+        "m": 6,
+        "t": 4,
+        "sv": "2+",
+        "w": 6,
+        "ld": "6+",
+        "oc": 3
+      },
+      "weapons": [
+        {
+          "id": "sword-of-the-high-marshals-sweep-melee",
+          "name": "➤ Sword of the High Marshals - Sweep",
+          "type": "melee",
+          "stats": {
+            "a": 12,
+            "ws": "2+",
+            "s": 6,
+            "ap": -3,
+            "d": 1
+          },
+          "abilities": []
+        },
+        {
+          "id": "sword-of-the-high-marshals-strike-melee",
+          "name": "➤ Sword of the High Marshals - Strike",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 8,
+            "ap": -3,
+            "d": 3
+          },
+          "abilities": []
+        },
+        {
+          "id": "ferocity-ranged",
+          "name": "Ferocity",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 5,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Anti-infantry 4+",
+            "Devastating Wounds"
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "crusade-of-wrath",
+          "name": "Crusade of Wrath",
+          "description": "While this model is leading a unit, add 1 to the Attacks and Strength characteristic of melee weapons equipped by models in that unit."
+        },
+        {
+          "id": "high-marshal",
+          "name": "High Marshal",
+          "description": "At the start of the Fight phase, select one enemy unit within Engagement Range of this model’s unit and roll one D6, adding 1 to the result for every five models in this model's unit: on a 2-3, that enemy unit suffers D3 mortal wounds; on a 4-5, that enemy unit suffers 3 mortal wounds; on a 6, that enemy unit suffers D3+3 mortal wounds."
+        },
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Intercessor Squad\n■ Crusader Squad\n■ Sword Brethren"
+        }
+      ],
+      "keywords": [
+        "Epic Hero",
+        "Character",
+        "Grenades",
+        "Imperium",
+        "Tacticus",
+        "High Marshal Helbrecht",
+        "Infantry",
+        "Chapter Master"
+      ]
+    },
+    {
+      "id": "crusader-squad",
+      "bsdataId": "8bbe-e7fc-44b7-ed94",
+      "name": "Crusader Squad",
+      "points": {
+        "10": 150,
+        "11": 310
+      },
+      "stats": {
+        "m": 6,
+        "t": 4,
+        "sv": "3+",
+        "w": 2,
+        "ld": "6+",
+        "oc": 2
+      },
+      "weapons": [
+        {
+          "id": "master-crafted-power-weapon-melee",
+          "name": "Master-crafted Power Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Lethal Hits"
+          ],
+          "loadoutGroup": "sword-brother"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "righteous-zeal",
+          "name": "Righteous Zeal",
+          "description": "In your opponent's Shooting phase, each time an enemy unit has shot, if any models from this unit were destroyed as a result of those attacks, this unit can make a Righteous Zeal move. To do so, roll one D6 and add 2 to the result: models in this unit move a number of inches up to this result, but this unit must end that move as close as possible to the closest enemy unit (excluding ^^**Aircraft^^**). When doing so, those models can be moved within Engagement Range of that enemy unit. This unit cannot make a Righteous Zeal move while it is Battle-shocked or within Engagement Range of one or more enemy units, and can only make one Righteous Zeal move per phase."
+        }
+      ],
+      "keywords": [
+        "Infantry",
+        "Battleline",
+        "Grenades",
+        "Imperium",
+        "Tacticus",
+        "Crusader Squad"
+      ]
+    },
+    {
+      "id": "sword-brethren-squad",
+      "bsdataId": "206c-6b4d-4aaa-7e79",
+      "name": "Sword Brethren Squad",
+      "points": {
+        "4": 105,
+        "10": 260
+      },
+      "stats": {
+        "m": 6,
+        "t": 4,
+        "sv": "3+",
+        "w": 3,
+        "ld": "6+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "twin-lightning-claws-melee",
+          "name": "Twin Lightning Claws",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "sword-brother-w-twin-lightning-claws"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "exploit-their-cowardice",
+          "name": "Exploit Their Cowardice",
+          "description": "Each time an enemy unit within Engagement Range of this unit is selected to Fall Back, after it ends that Fall Back move, if this unit is not within Engagement Range of one or more enemy units, this unit can make a Normal move."
+        }
+      ],
+      "keywords": [
+        "Infantry",
+        "Grenades",
+        "Imperium",
+        "Tacticus",
+        "Primaris Sword Brethren"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "sword-brother",
+              "name": "Sword Brother"
+            },
+            {
+              "id": "sword-brother-w-twin-lightning-claws",
+              "name": "Twin Lightning Claws"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emperor-s-champion",
+      "bsdataId": "ca2f-f408-c1bd-b87f",
+      "name": "Emperor's Champion",
+      "points": {
+        "1": 100
+      },
+      "stats": {
+        "m": 8,
+        "t": 4,
+        "sv": "2+",
+        "w": 5,
+        "ld": "6+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "black-sword-strike-melee",
+          "name": "➤ Black Sword - Strike",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 8,
+            "ap": -3,
+            "d": 3
+          },
+          "abilities": [
+            "Anti-Character 5+",
+            "Precision"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "black-sword-sweep-melee",
+          "name": "➤ Black Sword - Sweep",
+          "type": "melee",
+          "stats": {
+            "a": 10,
+            "ws": "2+",
+            "s": 6,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "armour-of-faith",
+          "name": "Armour of Faith",
+          "description": "Once per phase, when an attack is allocated to this model and the saving throw is failed, you can change the Damage characteristic of that attack to 0."
+        },
+        {
+          "id": "sigismund-s-heir",
+          "name": "Sigismund's Heir",
+          "description": "Each time this model's unit declares a charge, if one or more targets of that charge have the CHARACTER keyword, add 2 to the Charge roll. Once per battle, when this model's unit is selected to fight, if that unit is within Engagement Range of one or more enemy CHARACTER units, this model can use this ability. If it does, until the end of the phase, melee weapons equipped by this model have the [DEVASTATING WOUNDS] ability."
+        },
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Intercessor Squad\n■ Crusader Squad\n■ Sword Brethren\n■ Sternguard Veteran Squad"
+        },
+        {
+          "id": "chosen-of-the-emperor",
+          "name": "Chosen of the Emperor",
+          "description": "You cannot include more than one **^^Emperor's Champion^^** model in your army."
+        }
+      ],
+      "keywords": [
+        "Character",
+        "Infantry",
+        "Grenades",
+        "Imperium",
+        "Tacticus",
+        "Emperor's Champion"
+      ]
+    },
+    {
+      "id": "gladiator-lancer",
+      "bsdataId": "7dec-dc3d-c40a-8ce",
+      "name": "Gladiator Lancer",
+      "points": {
+        "1": 160
+      },
+      "stats": {
+        "m": 10,
+        "t": 10,
+        "sv": "3+",
+        "w": 12,
+        "ld": "6+",
+        "oc": 3
+      },
+      "weapons": [
+        {
+          "id": "lancer-laser-destroyer-ranged",
+          "name": "Lancer Laser Destroyer",
+          "type": "ranged",
+          "stats": {
+            "range": 72,
+            "a": 2,
+            "bs": "3+",
+            "s": 14,
+            "ap": -4,
+            "d": "D6+3"
+          },
+          "abilities": [
+            "Heavy"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "aquilon-optics",
+          "name": "Aquilon Optics",
+          "description": "Each time this model is selected to shoot, you can re-roll one Hit roll, you can re-roll one Wound roll and you can re-roll one Damage roll when resolving its attacks"
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Imperium",
+        "Smoke",
+        "Gladiator Lancer"
+      ]
+    },
+    {
+      "id": "gladiator-reaper",
+      "bsdataId": "bfb6-4320-74cf-bbda",
+      "name": "Gladiator Reaper",
+      "points": {
+        "1": 160
+      },
+      "stats": {
+        "m": 10,
+        "t": 10,
+        "sv": "3+",
+        "w": 12,
+        "ld": "6+",
+        "oc": 3
+      },
+      "weapons": [
+        {
+          "id": "tempest-bolter-ranged",
+          "name": "Tempest Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 4,
+            "bs": "3+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 4"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "twin-heavy-onslaught-gatling-cannon-ranged",
+          "name": "Twin Heavy Onslaught Gatling Cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 12,
+            "bs": "3+",
+            "s": 6,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Devastating Wounds",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "rotating-death",
+          "name": "Rotating Death",
+          "description": "This model’s twin heavy onslaught gatling cannon has the [SUSTAINED HITS 2] ability when targeting Infantry units."
+        }
+      ],
+      "keywords": [
+        "Smoke",
+        "Imperium",
+        "Vehicle",
+        "Gladiator Reaper"
+      ]
+    },
+    {
+      "id": "gladiator-valiant",
+      "bsdataId": "5704-ffe4-4a53-8789",
+      "name": "Gladiator Valiant",
+      "points": {
+        "1": 150
+      },
+      "stats": {
+        "m": 10,
+        "t": 10,
+        "sv": "3+",
+        "w": 12,
+        "ld": "6+",
+        "oc": 3
+      },
+      "weapons": [
+        {
+          "id": "twin-las-talon-ranged",
+          "name": "Twin Las-talon",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 2,
+            "bs": "3+",
+            "s": 10,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "ferocious-assault",
+          "name": "Ferocious Assault",
+          "description": "Each time this model makes an attack with its twin las-talon that targets the closest eligible Monster or Vehicle unit, add 1 to the Hit roll"
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Smoke",
+        "Imperium",
+        "Gladiator Valiant"
+      ]
+    },
+    {
+      "id": "impulsor",
+      "bsdataId": "fa27-4bc1-72c9-894f",
+      "name": "Impulsor",
+      "points": {
+        "1": 85
+      },
+      "stats": {
+        "m": 12,
+        "t": 9,
+        "sv": "3+",
+        "w": 11,
+        "ld": "6+",
+        "oc": 2
+      },
+      "weapons": [
+        {
+          "id": "ironhail-skytalon-array-ranged",
+          "name": "Ironhail Skytalon Array",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 8,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Anti-Fly 4+",
+            "Sustained Hits 1"
+          ],
+          "loadoutGroup": "option"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "transport",
+          "name": "Transport",
+          "description": "This model has a transport capacity of 7 TACTICUS or PHOBOS INFANTRY models. It cannot transport JUMP PACK models."
+        },
+        {
+          "id": "assault-vehicle",
+          "name": "Assault Vehicle",
+          "description": "Units can disembark from this Transport after it has Advanced. Units that do so count as having made a Normal move, and cannot declare a charge that turn."
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Transport",
+        "Dedicated Transport",
+        "Imperium",
+        "Impulsor"
+      ]
+    },
+    {
+      "id": "repulsor",
+      "bsdataId": "c3e8-3cde-8b39-4b19",
+      "name": "Repulsor",
+      "points": {
+        "1": 180
+      },
+      "stats": {
+        "m": 10,
+        "t": 12,
+        "sv": "3+",
+        "w": 16,
+        "ld": "6+",
+        "oc": 5
+      },
+      "weapons": [
+        {
+          "id": "las-talon-ranged",
+          "name": "Las-talon",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 2,
+            "bs": "3+",
+            "s": 10,
+            "ap": -3,
+            "d": "D6"
+          },
+          "abilities": [],
+          "loadoutGroup": "turret-weapon"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "transport",
+          "name": "Transport",
+          "description": "This model has a transport capacity of 14 ADEPTUS ASTARTES INFANTRY models. Each JUMP PACK, GRAVIS or TERMINATOR model takes up the space of 2 models and each CENTURION model takes up the space of 3 models."
+        },
+        {
+          "id": "stabilised-disembarkation",
+          "name": "Stabilised Disembarkation",
+          "description": "In your opponent's Shooting phase, each time and enemy unit is selected to shoot, after that unit has shot, if any of those attacks targeted this TRANSPORT, it can use this ability. If it does, any units embarked within it can disembark. When doing so, models in those units can be set up wholly within 6\" of this TRANSPORT and not within Engagement Range of one or more enemy units."
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Imperium",
+        "Smoke",
+        "Repulsor",
+        "Transport"
+      ]
+    },
+    {
+      "id": "repulsor-executioner",
+      "bsdataId": "a344-192f-aae2-16e5",
+      "name": "Repulsor Executioner",
+      "points": {
+        "1": 235
+      },
+      "stats": {
+        "m": 10,
+        "t": 12,
+        "sv": "3+",
+        "w": 16,
+        "ld": "6+",
+        "oc": 5
+      },
+      "weapons": [
+        {
+          "id": "repulsor-executioner-defensive-array-ranged",
+          "name": "Repulsor Executioner Defensive Array",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 10,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "heavy-laser-destroyer-ranged",
+          "name": "Heavy Laser Destroyer",
+          "type": "ranged",
+          "stats": {
+            "range": 72,
+            "a": 2,
+            "bs": "3+",
+            "s": 16,
+            "ap": -4,
+            "d": "D6+4"
+          },
+          "abilities": [
+            "Heavy"
+          ],
+          "loadoutGroup": "turret-weapon"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "transport",
+          "name": "Transport",
+          "description": "This model has a transport capacity of 7 Adeptus Astartes Infantry models. Each Jump Pack, Wulfen, Gravis or Terminator model takes up the space of 2 models and each Centurion model takes up the space of 3 models."
+        },
+        {
+          "id": "interception-strike",
+          "name": "Interception Strike",
+          "description": "Each time this model makes a ranged attack that targets a unit that is within 12\" of one or more ADEPTUS ASTARTES units from your army, you can re-roll the Hit roll."
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Smoke",
+        "Imperium",
+        "Transport",
+        "Repulsor Executioner"
+      ]
+    },
+    {
+      "id": "marshal",
+      "bsdataId": "68dd-5f49-4f17-cd84",
+      "name": "Marshal",
+      "points": {
+        "1": 80
+      },
+      "stats": {
+        "m": 6,
+        "t": 4,
+        "sv": "3+",
+        "w": 5,
+        "ld": "6+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "master-crafted-power-weapon-melee",
+          "name": "Master-crafted Power Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 7,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Lethal Hits"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "plasma-pistol-standard-ranged",
+          "name": "➤ Plasma Pistol - Standard",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-weapon"
+        },
+        {
+          "id": "plasma-pistol-supercharge-ranged",
+          "name": "➤ Plasma Pistol - Supercharge",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Hazardous",
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-weapon"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Crusader Squad\n■ Sword Brethren\n■ Sternguard Veteran Squad"
+        },
+        {
+          "id": "inspirational-exemplar",
+          "name": "Inspirational Exemplar",
+          "description": "While this model is leading a unit, each time a model in that unit makes a melee attack, an unmodified Hit roll of 5+ scores a Critical Hit."
+        },
+        {
+          "id": "pious-fervour",
+          "name": "Pious Fervour",
+          "description": "Each time this model's unit is selected to fight, until the end of the phase, add 1 to the Attacks characteristic of this model's Master-Crafted Power Weapon for each enemy unit within 6\" of this model (to a maximum of +3)"
+        }
+      ],
+      "keywords": [
+        "Character",
+        "Infantry",
+        "Grenades",
+        "Imperium",
+        "Tacticus",
+        "Marshal",
+        "Captain"
+      ]
+    },
+    {
+      "id": "castellan",
+      "bsdataId": "f151-e676-d3b8-200c",
+      "name": "Castellan",
+      "points": {
+        "1": 70
+      },
+      "stats": {
+        "m": 6,
+        "t": 4,
+        "sv": "3+",
+        "w": 4,
+        "ld": "6+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "astartes-chainsword-melee",
+          "name": "Astartes Chainsword",
+          "type": "melee",
+          "stats": {
+            "a": 7,
+            "ws": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Sustained Hits 1"
+          ],
+          "loadoutGroup": "melee-weapon"
+        },
+        {
+          "id": "master-crafted-power-weapon-melee",
+          "name": "Master-crafted Power Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Lethal Hits"
+          ],
+          "loadoutGroup": "melee-weapon"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Crusader Squad\n■ Sword Brethren\n■ Sternguard Veteran Squad\n\nYou can attach this model to one of the above units even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
+        },
+        {
+          "id": "vehement-aggression",
+          "name": "Vehement Aggression",
+          "description": "While this model is leading a unit, each time that unit is selected to fight, take a Leadership test for that unit: if passed, until the end of the phase, each time a model in that unit makes an attack, you can re-roll the Hit roll; if failed, until the end of the phase, each time a model in that unit makes an attack, re-roll a Hit roll of 1"
+        },
+        {
+          "id": "prioritised-eradication",
+          "name": "Prioritised Eradication",
+          "description": "Each time a model in this model's unit makes a melee attack that destroys one or more enemy units, roll one D6: on a 4+, you gain 1 CP"
+        }
+      ],
+      "keywords": [
+        "Character",
+        "Infantry",
+        "Grenades",
+        "Imperium",
+        "Tacticus",
+        "Lieutenant",
+        "Castellan"
+      ]
+    },
+    {
+      "id": "crusader-squad-legends",
+      "bsdataId": "2da2-ad08-6057-5a1c",
+      "name": "Crusader Squad [Legends]",
+      "points": {
+        "1": 85,
+        "6": 150
+      },
+      "stats": {
+        "m": 6,
+        "t": 4,
+        "sv": "4+",
+        "w": 2,
+        "ld": "6+",
+        "oc": 2
+      },
+      "weapons": [
+        {
+          "id": "combat-knife-melee",
+          "name": "Combat Knife",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "3+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "neophyte-w-combat-knife"
+        },
+        {
+          "id": "bolt-pistol-ranged",
+          "name": "Bolt pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "neophyte-w-combat-knife"
+        },
+        {
+          "id": "astartes-shotgun-ranged",
+          "name": "Astartes Shotgun",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Assault"
+          ],
+          "loadoutGroup": "neophyte-w-astartes-shotgun"
+        },
+        {
+          "id": "boltgun-ranged",
+          "name": "Boltgun",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "neophyte-w-boltgun"
+        },
+        {
+          "id": "astartes-chainsword-melee",
+          "name": "Astartes Chainsword",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "3+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "initiate-w-astartes-chainsword"
+        },
+        {
+          "id": "twin-lightning-claws-melee",
+          "name": "Twin Lightning Claws",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "3+",
+            "s": 4,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "sword-brother"
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close combat weapon",
+          "type": "melee",
+          "stats": {
+            "a": 2,
+            "ws": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "sword-brother"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "righteous-zeal",
+          "name": "Righteous Zeal",
+          "description": "You can re-roll Advance and Charge rolls made for this unit."
+        }
+      ],
+      "keywords": [
+        "Infantry",
+        "Battleline",
+        "Grenades",
+        "Imperium",
+        "Crusader Squad"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "neophyte-w-combat-knife",
+              "name": "Combat Knife + Bolt pistol"
+            },
+            {
+              "id": "neophyte-w-astartes-shotgun",
+              "name": "Astartes Shotgun + Bolt pistol"
+            },
+            {
+              "id": "neophyte-w-boltgun",
+              "name": "Bolt pistol + Boltgun",
+              "default": true
+            },
+            {
+              "id": "initiate-w-astartes-chainsword",
+              "name": "Bolt pistol + Astartes Chainsword"
+            },
+            {
+              "id": "initiate-w-boltgun",
+              "name": "Bolt pistol + Boltgun",
+              "default": true
+            }
+          ]
+        },
+        {
+          "id": "initiate-w-heavy",
+          "name": "Bolt pistol",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "initiate-w-heavy",
+              "name": "Bolt pistol",
+              "maxModels": 1
+            }
+          ]
+        },
+        {
+          "id": "initiate-w-special",
+          "name": "Bolt pistol",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "initiate-w-special",
+              "name": "Bolt pistol",
+              "maxModels": 1
+            }
+          ]
+        },
+        {
+          "id": "sword-brother",
+          "name": "Twin Lightning Claws",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "sword-brother",
+              "name": "Twin Lightning Claws + Close combat weapon",
+              "maxModels": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "execrator",
+      "bsdataId": "ea3d-f2b8-cce7-0762",
+      "name": "Execrator",
+      "points": {
+        "1": 60
+      },
+      "stats": {
+        "m": 6,
+        "t": 4,
+        "sv": "3+",
+        "w": 4,
+        "ld": "5+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "master-crafted-power-weapon-melee",
+          "name": "Master-crafted Power Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Extra Attacks",
+            "Lethal Hits"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n\n■ Crusader Squad\n■ Sword Brethren"
+        },
+        {
+          "id": "remorseless-persecution",
+          "name": "Remorseless Persecution",
+          "description": "While this model is leading a unit, that unit is eligible to declare a charge in a turn in which it Advanced"
+        },
+        {
+          "id": "condemnatory-annihilation",
+          "name": "Condemnatory Annihilation",
+          "description": "Each time this model's unit has fought, if one or more enemy units were destroyed as a result of those attacks, each enemy unit within 6\" of this model must take a Battle-shock test"
+        }
+      ],
+      "keywords": [
+        "Infantry",
+        "Character",
+        "Chaplain",
+        "Grenades",
+        "Imperium",
+        "Tacticus",
+        "Execrator"
+      ]
+    },
+    {
+      "id": "crusade-ancient",
+      "bsdataId": "dca2-b12f-d1a9-5822",
+      "name": "Crusade Ancient",
+      "points": {
+        "1": 55
+      },
+      "stats": {
+        "m": 6,
+        "t": 4,
+        "sv": "3+",
+        "w": 4,
+        "ld": "6+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "master-crafted-power-weapon-melee",
+          "name": "Master-crafted Power Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Lethal Hits"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "vengeful-exhortation",
+          "name": "Vengeful Exhortation",
+          "description": "While this model is leading a unit, each time a model in that unit is destroyed by a melee attack, if it has not fought this phase, roll one D6: on a 4+, do not remove it from play, the destroyed model can fight after the attacking unit has finished making its attacks, and is then removed from play."
+        },
+        {
+          "id": "martial-honour",
+          "name": "Martial Honour",
+          "description": "The first time a model in this model's unit makes a melee attack that destroys one or more enemy units, until the end of the battle, while this model's unit is not Battle-shocked, add 5 to this model's Objective Control characteristic."
+        },
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n\n\n■ Crusader Squad\n■ Sword Brethren Squad\n\n\nYou can attach this model to one of the above units even if one Captain, Chapter Master, Execrator or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths."
+        }
+      ],
+      "keywords": [
+        "Character",
+        "Infantry",
+        "Grenades",
+        "Ancient",
+        "Tacticus",
+        "Imperium",
+        "Crusade Ancient"
+      ]
+    },
+    {
+      "id": "terminator-squad",
+      "bsdataId": "80ad-6e62-65e3-e667",
+      "name": "Terminator Squad",
+      "points": {
+        "5": 175,
+        "6": 330
+      },
+      "stats": {
+        "m": 5,
+        "t": 5,
+        "sv": "2+",
+        "w": 3,
+        "ld": "6+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "storm-bolter-ranged",
+          "name": "Storm Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "terminator-sergeant"
+        },
+        {
+          "id": "power-fist-melee",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "3+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "terminator-w-power-fist"
+        },
+        {
+          "id": "chainfist-melee",
+          "name": "Chainfist",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "4+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Anti-Vehicle 3+"
+          ],
+          "loadoutGroup": "terminator-w-chain-fist"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "teleport-homer",
+          "name": "Teleport Homer",
+          "description": "At the start of the battle, you can set up one Teleport Homer token for this unit anywhere on the battlefield that is not in your opponent’s deployment zone. If you do, once per battle, you can target this unit with the Rapid Ingress Stratagem for 0CP, but when resolving that Stratagem, you must set this unit up within 3\" horizontally of that token and not within 9\" horizontally of any enemy models. That token is then removed."
+        },
+        {
+          "id": "judgement-of-the-weak",
+          "name": "Judgement of the Weak",
+          "description": "Each time an enemy unit (excluding MONSTERS and VEHICLES) within engagement range of this unit Falls Back, all models in that enemy unit must take a Desperate Escape test. When doing so, if that enemy unit is Battle-shocked, subtract 1 from each of those tests."
+        }
+      ],
+      "keywords": [
+        "Infantry",
+        "Imperium",
+        "Terminator",
+        "Terminator Squad"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "terminator-w-power-fist",
+              "name": "Power Fist + Storm Bolter"
+            },
+            {
+              "id": "terminator-w-chain-fist",
+              "name": "Storm Bolter + Chainfist"
+            }
+          ]
+        },
+        {
+          "id": "terminator-sergeant",
+          "name": "Storm Bolter",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "terminator-sergeant",
+              "name": "Storm Bolter + Terminator Honours upgrade",
+              "maxModels": 1
+            }
+          ]
+        },
+        {
+          "id": "terminator-w-heavy-weapon",
+          "name": "terminator-w-heavy-weapon",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "terminator-w-heavy-weapon",
+              "name": "",
+              "maxModels": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "land-raider-crusader",
+      "bsdataId": "8525-2de1-14fd-c1f5",
+      "name": "Land Raider Crusader",
+      "points": {
+        "1": 220
+      },
+      "stats": {
+        "m": 12,
+        "t": 12,
+        "sv": "2+",
+        "w": 16,
+        "ld": "6+",
+        "oc": 5
+      },
+      "weapons": [],
+      "abilities": [
+        {
+          "id": "transport",
+          "name": "Transport",
+          "description": "This model has a transport capacity of 16 Adeptus Astartes Infantry models. Each Jump Pack, Wulfen, Gravis or Terminator model takes up the space of 2 models and each Centurion model takes up the space of 3 models."
+        },
+        {
+          "id": "assault-ramp",
+          "name": "Assault Ramp",
+          "description": "Each time a unit disembarks from this model after it has made a Normal move, that unit is still eligible to declare a charge this turn."
+        },
+        {
+          "id": "legacy-of-jerulas",
+          "name": "Legacy of Jerulas",
+          "description": "In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks. Until the end of the turn, each time a friendly model that disembarked from this TRANSPORT this turn makes an attack that targets that enemy unit, re-roll a Hit roll of 1 and a re-roll a Wound roll of 1"
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Land Raider Crusader",
+        "Smoke",
+        "Imperium",
+        "Transport",
+        "Grenades",
+        "Land Raider"
+      ]
+    },
+    {
+      "id": "sternguard-veteran-squad",
+      "bsdataId": "a499-86fa-4d0c-b06d",
+      "name": "Sternguard Veteran Squad",
+      "points": {
+        "5": 85,
+        "6": 170
+      },
+      "stats": {
+        "m": 6,
+        "t": 4,
+        "sv": "3+",
+        "w": 2,
+        "ld": "6+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "sternguard-bolt-pistol-ranged",
+          "name": "Sternguard Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Devastating Wounds",
+            "Pistol"
+          ],
+          "loadoutGroup": "sternguard-veteran-w-bolt-rifle"
+        },
+        {
+          "id": "sternguard-bolt-rifle-ranged",
+          "name": "Sternguard Bolt Rifle",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Assault",
+            "Devastating Wounds",
+            "Heavy",
+            "Rapid Fire 1"
+          ],
+          "loadoutGroup": "sternguard-veteran-w-bolt-rifle"
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close combat weapon",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "sternguard-veteran-w-bolt-rifle"
+        },
+        {
+          "id": "combi-weapon-ranged",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 1,
+            "bs": "4+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Anti-Infantry 4+",
+            "Devastating Wounds",
+            "Rapid Fire 1"
+          ],
+          "loadoutGroup": "sternguard-veteran-w-combi-weapon"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "vitruous-onslaught",
+          "name": "Vitruous Onslaught",
+          "description": "Each time a model in this unit makes an attack that targets the closest eligible target, you can re-roll a Wound roll of 1."
+        }
+      ],
+      "keywords": [
+        "Infantry",
+        "Grenades",
+        "Imperium",
+        "Tacticus",
+        "Sternguard Veteran Squad"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "sternguard-veteran-w-bolt-rifle",
+              "name": "Sternguard Bolt Pistol + Sternguard Bolt Rifle + Close combat weapon"
+            },
+            {
+              "id": "sternguard-veteran-w-combi-weapon",
+              "name": "Sternguard Bolt Pistol + Combi-weapon + Close combat weapon"
+            }
+          ]
+        },
+        {
+          "id": "sternguard-veteran-sergeant",
+          "name": "Sternguard Bolt Pistol",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "sternguard-veteran-sergeant",
+              "name": "Sternguard Bolt Pistol + Terminator Honours upgrade + Close combat weapon",
+              "maxModels": 1
+            }
+          ]
+        },
+        {
+          "id": "sternguard-veteran-w-special-weapon",
+          "name": "Sternguard Bolt Pistol",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "sternguard-veteran-w-special-weapon",
+              "name": "Sternguard Bolt Pistol + Close combat weapon",
+              "maxModels": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emperor-s-champion-anointed",
+      "bsdataId": "85b9-b304-a55c-30ef",
+      "name": "Emperor's Champion (Anointed)",
+      "points": {
+        "1": 100
+      },
+      "stats": {
+        "m": 8,
+        "t": 4,
+        "sv": "2+",
+        "w": 5,
+        "ld": "6+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "black-sword-strike-melee",
+          "name": "➤ Black Sword - Strike",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 8,
+            "ap": -3,
+            "d": 3
+          },
+          "abilities": [
+            "Anti-Character 5+",
+            "Precision"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "black-sword-sweep-melee",
+          "name": "➤ Black Sword - Sweep",
+          "type": "melee",
+          "stats": {
+            "a": 10,
+            "ws": "2+",
+            "s": 6,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "armour-of-faith",
+          "name": "Armour of Faith",
+          "description": "Once per phase, when an attack is allocated to this model and the saving throw is failed, you can change the Damage characteristic of that attack to 0."
+        },
+        {
+          "id": "sigismund-s-heir",
+          "name": "Sigismund's Heir",
+          "description": "Each time this model's unit declares a charge, if one or more targets of that charge have the CHARACTER keyword, add 2 to the Charge roll. Once per battle, when this model's unit is selected to fight, if that unit is within Engagement Range of one or more enemy CHARACTER units, this model can use this ability. If it does, until the end of the phase, melee weapons equipped by this model have the [DEVASTATING WOUNDS] ability."
+        },
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Intercessor Squad\n■ Crusader Squad\n■ Sword Brethren\n■ Sternguard Veteran Squad"
+        },
+        {
+          "id": "chosen-of-the-emperor",
+          "name": "Chosen of the Emperor",
+          "description": "You cannot include more than one **^^Emperor's Champion^^** model in your army."
+        }
+      ],
+      "keywords": [
+        "Character",
+        "Infantry",
+        "Grenades",
+        "Imperium",
+        "Tacticus",
+        "Emperor's Champion"
+      ]
+    }
+  ]
+}
