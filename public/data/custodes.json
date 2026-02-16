@@ -894,7 +894,7 @@
             "d": 2
           },
           "abilities": [],
-          "loadoutGroup": "wargear"
+          "loadoutGroup": "guardian-spear"
         },
         {
           "id": "guardian-spear-ranged",
@@ -911,7 +911,7 @@
           "abilities": [
             "Assault"
           ],
-          "loadoutGroup": "wargear"
+          "loadoutGroup": "guardian-spear"
         },
         {
           "id": "castellan-axe-melee",
@@ -925,7 +925,7 @@
             "d": 3
           },
           "abilities": [],
-          "loadoutGroup": "wargear"
+          "loadoutGroup": "castellan-axe"
         },
         {
           "id": "castellan-axe-ranged",
@@ -942,7 +942,7 @@
           "abilities": [
             "Assault"
           ],
-          "loadoutGroup": "wargear"
+          "loadoutGroup": "castellan-axe"
         },
         {
           "id": "sentinel-blade-melee",
@@ -956,7 +956,7 @@
             "d": 1
           },
           "abilities": [],
-          "loadoutGroup": "wargear",
+          "loadoutGroup": "sentinel-blade",
           "modifiers": [
             {
               "stat": "w",
@@ -983,7 +983,7 @@
             "Assault",
             "Pistol"
           ],
-          "loadoutGroup": "wargear",
+          "loadoutGroup": "sentinel-blade",
           "modifiers": [
             {
               "stat": "w",
@@ -1006,7 +1006,7 @@
             "d": 2
           },
           "abilities": [],
-          "loadoutGroup": "wargear",
+          "loadoutGroup": "pyrithite-spear",
           "modifiers": [
             {
               "stat": "w",
@@ -1032,7 +1032,7 @@
           "abilities": [
             "Melta 2"
           ],
-          "loadoutGroup": "wargear",
+          "loadoutGroup": "pyrithite-spear",
           "modifiers": [
             {
               "stat": "w",
@@ -1066,7 +1066,36 @@
         "Character",
         "Infantry"
       ],
-      "invuln": "4+"
+      "invuln": "4+",
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "guardian-spear",
+              "name": "Guardian Spear",
+              "default": true
+            },
+            {
+              "id": "castellan-axe",
+              "name": "Castellan Axe"
+            },
+            {
+              "id": "sentinel-blade",
+              "name": "Sentinel Blade + Praesidium Shield",
+              "paired": true
+            },
+            {
+              "id": "pyrithite-spear",
+              "name": "Pyrithite Spear + Praesidium Shield",
+              "paired": true
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "shield-captain-in-allarus-terminator-armour",
