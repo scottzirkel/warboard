@@ -153,9 +153,9 @@ interface SimpleWoundBarProps {
 export function SimpleWoundBar({ current, max, className = '' }: SimpleWoundBarProps) {
   const percentage = max > 0 ? (current / max) * 100 : 0;
   const colorClass =
-    percentage > 50
+    percentage >= 100
       ? 'bg-green-500'
-      : percentage > 25
+      : percentage >= 50
         ? 'bg-yellow-500'
         : 'bg-red-500';
 
