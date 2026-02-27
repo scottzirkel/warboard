@@ -42,7 +42,7 @@ export function BuildMode({
   const pointsStatus = over > 10 ? 'error' : over > 0 ? 'warning' : 'ok';
 
   return (
-    <div className={`lg:h-full flex flex-col gap-4 w-full px-4 py-4 ${className}`}>
+    <div className={`h-full flex flex-col gap-4 w-full px-4 py-4 ${className}`}>
       {/* Spacer for fixed header on mobile */}
       <div className="h-[116px] lg:hidden shrink-0" />
 
@@ -121,8 +121,8 @@ export function BuildMode({
       </div>
 
       {/* Mobile: Single panel view */}
-      <div className="flex lg:hidden flex-col">
-        <div className="card-depth p-4">
+      <div className="flex lg:hidden flex-col flex-1 min-h-0">
+        <div className="card-depth p-4 flex flex-col flex-1 min-h-0">
           {mobilePanel === 'roster' ? rosterPanel : leftPanel}
         </div>
       </div>

@@ -486,7 +486,7 @@ export function Navigation({
                       : 'text-white/60'
                   }`}
                 >
-                  {mode === 'build' ? 'List' : 'Army'}
+                  {mode === 'build' ? 'Roster' : 'Army'}
                 </button>
                 <button
                   onClick={() => onMobilePanelChange('roster')}
@@ -496,7 +496,7 @@ export function Navigation({
                       : 'text-white/60'
                   }`}
                 >
-                  {mode === 'build' ? 'Add' : 'Game'}
+                  {mode === 'build' ? 'Units' : 'Game'}
                 </button>
                 {mode === 'play' && (
                   <button

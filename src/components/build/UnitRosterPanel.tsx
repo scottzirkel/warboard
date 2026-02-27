@@ -162,8 +162,8 @@ export function UnitRosterPanel({
   className = '',
 }: UnitRosterPanelProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  // Groups collapsed by default for a cleaner view
-  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
+  // All groups open by default so cards are visible immediately
+  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set(groupPriority));
 
   // Filter units by search query
   const filteredUnits = useMemo(() => {
