@@ -76,13 +76,12 @@ export function PlayUnitCard({
     ? Math.max(0, Math.min(100, (combinedCurrentWounds / combinedMaxWounds) * 100))
     : 100;
 
-  // Health bar color based on percentage
+  // Health bar color: green=100%, yellow=50-99%, red=<50%
   const getHealthBarColor = () => {
     if (isDestroyed) return 'bg-gray-600';
-    if (healthPercent <= 25) return 'bg-red-500';
-    if (healthPercent <= 50) return 'bg-orange-500';
-    if (healthPercent <= 75) return 'bg-yellow-500';
-    return 'bg-green-500';
+    if (healthPercent >= 100) return 'bg-green-500';
+    if (healthPercent >= 50) return 'bg-yellow-500';
+    return 'bg-red-500';
   };
 
   // Combined unit name
@@ -102,13 +101,14 @@ export function PlayUnitCard({
       onClick={onSelect}
       className={`
         bg-white/5 border rounded-xl overflow-hidden cursor-pointer shadow-sm shadow-black/20
+        md:flex md:flex-col
         ${isSelected ? 'border-accent-500 ring-1 ring-accent-500' : 'border-white/10'}
         ${isDestroyed ? 'opacity-40' : 'hover:bg-white/10'}
         transition-colors
         ${className}
       `}
     >
-      <div className="px-3 pt-2 pb-1.5">
+      <div className="px-3 pt-2 pb-1.5 md:flex-1">
         {/* Unit Name Row */}
         <div className="flex items-center gap-2 mb-1.5">
           <span className={`text-sm font-semibold truncate flex-1 ${isDestroyed ? 'line-through text-white/50' : ''}`}>
@@ -137,14 +137,18 @@ export function PlayUnitCard({
           {([
             { label: 'M', value: formatM(unit.stats.m), modified: false },
             { label: 'T', value: unit.stats.t, modified: false },
-            { label: 'SV', value: unit.invuln ? `${unit.stats.sv}/${unit.invuln}+` : unit.stats.sv, modified: false },
+            { label: 'SV', value: unit.stats.sv, modified: false },
             { label: 'W', value: effectiveW, modified: wIsModified },
             { label: 'LD', value: unit.stats.ld, modified: false },
             { label: 'OC', value: unit.stats.oc, modified: false },
           ] as const).map(({ label, value, modified }) => (
             <div key={label} className="flex flex-col items-center justify-center rounded-md bg-black/20 py-1.5">
               <span className="text-[10px] font-medium text-white/40 uppercase leading-none">{label}</span>
-              <span className={`text-base font-bold leading-tight ${modified ? 'text-accent-300' : 'text-white'}`}>{value}</span>
+              <span className={`text-base font-bold leading-tight ${modified ? 'text-accent-300' : 'text-white'}`}>
+                {label === 'SV' && unit.invuln
+                  ? <>{value}/<span className="inline-block translate-y-0.5 text-sm">{unit.invuln.replace('+', '⧺')}</span></>
+                  : value}
+              </span>
             </div>
           ))}
         </div>

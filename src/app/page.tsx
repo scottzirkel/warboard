@@ -536,12 +536,13 @@ export default function Home() {
       showError('Fix validation errors before entering Play Mode');
       return;
     }
+    selectUnit(null);
     setMode(newMode);
     const hasTwistSelected = (gameState.activeTwists?.length ?? 0) > 0;
     if (newMode === 'play' && missionTwists.length > 0 && !hasTwistSelected) {
       setShowTwistModal(true);
     }
-  }, [canPlay, setMode, showError, missionTwists.length, gameState.activeTwists]);
+  }, [canPlay, selectUnit, setMode, showError, missionTwists.length, gameState.activeTwists]);
 
   const handleModeToggle = useCallback(() => {
     const newMode = mode === 'build' ? 'play' : 'build';

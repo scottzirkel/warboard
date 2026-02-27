@@ -134,7 +134,7 @@ export function PlayMode({
   return (
     <div className="md:h-full flex flex-col gap-2 md:gap-4 pb-4 md:p-4">
       {/* Desktop/Tablet: 2-column grid layout (hidden on phone) */}
-      <div className="hidden md:grid md:grid-cols-[1fr_1.25fr] gap-4 flex-1 min-h-0">
+      <div className="hidden md:grid md:grid-cols-[minmax(280px,1fr)_2fr] gap-4 flex-1 min-h-0">
         {/* Left Panel - Game State */}
         <div className="bg-[rgba(44,44,46,0.65)] rounded-2xl shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)] p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
           {middlePanel || (
