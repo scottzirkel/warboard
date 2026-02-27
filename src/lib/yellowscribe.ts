@@ -7,6 +7,7 @@ import type {
   RangedWeaponStats,
   MeleeWeaponStats,
 } from '@/types';
+import { findUnitById } from '@/lib/armyDataUtils';
 
 // ============================================================================
 // Yellowscribe Types
@@ -202,7 +203,7 @@ export function transformToYellowscribe(
   const units: YellowscribeUnit[] = [];
 
   for (const listUnit of list.units) {
-    const unitDef = armyData.units.find((u) => u.id === listUnit.unitId);
+    const unitDef = findUnitById(armyData, listUnit.unitId);
 
     if (!unitDef) continue;
 

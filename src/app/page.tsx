@@ -36,6 +36,7 @@ import {
 } from '@/hooks';
 import type { CurrentList, Unit, LoadoutGroup, Weapon, ModifierSource, ModifierOperation, MissionTwist } from '@/types';
 import type { GameFormat } from '@/types';
+import { findUnitById } from '@/lib/armyDataUtils';
 
 // ============================================================================
 // Main App Component
@@ -167,21 +168,8 @@ export default function Home() {
       attachLeader(unitIndex, leaderIndex);
       const leaderListUnit = currentList.units[leaderIndex];
       const targetListUnit = currentList.units[unitIndex];
-      // Helper to find unit in both regular units and allies
-      const findUnit = (unitId: string | undefined) => {
-        if (!unitId || !armyData) return undefined;
-        const regular = armyData.units.find(u => u.id === unitId);
-        if (regular) return regular;
-        if (armyData.allies) {
-          for (const faction of Object.values(armyData.allies)) {
-            const ally = faction.units?.find(u => u.id === unitId);
-            if (ally) return ally;
-          }
-        }
-        return undefined;
-      };
-      const leaderUnit = findUnit(leaderListUnit?.unitId);
-      const targetUnit = findUnit(targetListUnit?.unitId);
+      const leaderUnit = armyData ? findUnitById(armyData, leaderListUnit?.unitId ?? '') : undefined;
+      const targetUnit = armyData ? findUnitById(armyData, targetListUnit?.unitId ?? '') : undefined;
       if (leaderUnit && targetUnit) {
         showSuccess(`${leaderUnit.name} attached to ${targetUnit.name}`);
       }
@@ -190,20 +178,7 @@ export default function Home() {
       const listUnit = currentList.units[unitIndex];
       const leaderIndex = listUnit?.attachedLeader?.unitIndex;
       const leaderListUnit = leaderIndex !== undefined ? currentList.units[leaderIndex] : undefined;
-      // Helper to find unit in both regular units and allies
-      const findUnit = (unitId: string | undefined) => {
-        if (!unitId || !armyData) return undefined;
-        const regular = armyData.units.find(u => u.id === unitId);
-        if (regular) return regular;
-        if (armyData.allies) {
-          for (const faction of Object.values(armyData.allies)) {
-            const ally = faction.units?.find(u => u.id === unitId);
-            if (ally) return ally;
-          }
-        }
-        return undefined;
-      };
-      const leaderUnit = leaderListUnit ? findUnit(leaderListUnit.unitId) : undefined;
+      const leaderUnit = leaderListUnit && armyData ? findUnitById(armyData, leaderListUnit.unitId) : undefined;
       detachLeader(unitIndex);
       if (leaderUnit) {
         showSuccess(`${leaderUnit.name} detached`);
@@ -241,23 +216,10 @@ export default function Home() {
     return [...regularUnits, ...allyUnits];
   }, [armyData]);
 
-  // Helper to find unit by ID (checks both regular units and allies)
-  const findUnitById = useCallback((unitId: string): Unit | undefined => {
+  const findUnit = useCallback((unitId: string): Unit | undefined => {
     if (!armyData) return undefined;
 
-    // Check regular units first
-    const regularUnit = armyData.units.find((u) => u.id === unitId);
-    if (regularUnit) return regularUnit;
-
-    // Check allies
-    if (armyData.allies) {
-      for (const faction of Object.values(armyData.allies)) {
-        const allyUnit = faction.units?.find((u) => u.id === unitId);
-        if (allyUnit) return allyUnit;
-      }
-    }
-
-    return undefined;
+    return findUnitById(armyData, unitId);
   }, [armyData]);
 
   // -------------------------------------------------------------------------
@@ -267,8 +229,8 @@ export default function Home() {
     if (selectedUnitIndex === null || !armyData) return undefined;
     const listUnit = currentList.units[selectedUnitIndex];
     if (!listUnit) return undefined;
-    return findUnitById(listUnit.unitId);
-  }, [selectedUnitIndex, armyData, currentList.units, findUnitById]);
+    return findUnit(listUnit.unitId);
+  }, [selectedUnitIndex, armyData, currentList.units, findUnit]);
 
   const selectedListUnit = useMemo(() => {
     if (selectedUnitIndex === null) return undefined;
@@ -373,8 +335,8 @@ export default function Home() {
   // Get leader unit and listUnit from the available leader info
   const leaderUnit = useMemo((): Unit | undefined => {
     if (!attachedLeaderInfo) return undefined;
-    return findUnitById(attachedLeaderInfo.unitId);
-  }, [attachedLeaderInfo, findUnitById]);
+    return findUnit(attachedLeaderInfo.unitId);
+  }, [attachedLeaderInfo, findUnit]);
 
   const leaderListUnit = useMemo(() => {
     if (!attachedLeaderInfo) return undefined;
@@ -611,7 +573,7 @@ export default function Home() {
 
   const handleRemoveUnit = useCallback((index: number) => {
     const listUnit = currentList.units[index];
-    const unit = armyData?.units.find((u) => u.id === listUnit?.unitId);
+    const unit = listUnit?.unitId ? findUnit(listUnit.unitId) : undefined;
     removeUnit(index);
     if (selectedUnitIndex === index) {
       selectUnit(null);
@@ -619,7 +581,7 @@ export default function Home() {
       selectUnit(selectedUnitIndex - 1);
     }
     showSuccess(`Removed ${unit?.name || 'unit'} from your army`);
-  }, [currentList.units, armyData, removeUnit, selectedUnitIndex, selectUnit, showSuccess]);
+  }, [currentList.units, removeUnit, selectedUnitIndex, selectUnit, showSuccess, findUnit]);
 
   const handleOpenSaveModal = useCallback(() => {
     openModal('save');
@@ -876,7 +838,11 @@ export default function Home() {
             onNameChange={setListName}
             detachments={
               armyData
-                ? Object.entries(armyData.detachments).map(([id, d]) => ({ id, name: d.name }))
+                ? Object.entries(armyData.detachments).map(([id, d]) => ({
+                    id,
+                    name: d.name,
+                    ruleDescription: d.rules[0]?.description,
+                  }))
                 : []
             }
             selectedDetachment={currentList.detachment}

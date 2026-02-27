@@ -2,6 +2,7 @@
 
 import { ReactNode, useState } from 'react';
 import { Modal } from '@/components/ui';
+import { AccordionItem } from '@/components/ui/AccordionGroup';
 import { GAME_FORMATS } from '@/types';
 import type { ValidationError, GameFormat } from '@/types';
 import type { MobilePanel } from '@/stores/uiStore';
@@ -15,7 +16,7 @@ interface BuildModeProps {
   pointsLimit: number;
   onNameChange?: (name: string) => void;
   // Interactive cost bar controls
-  detachments: { id: string; name: string }[];
+  detachments: { id: string; name: string; ruleDescription?: string }[];
   selectedDetachment: string;
   onDetachmentChange: (id: string) => void;
   selectedFormat: GameFormat;
@@ -55,6 +56,7 @@ export function BuildMode({
   const pointsStatus = over > 10 ? 'error' : over > 0 ? 'warning' : 'ok';
 
   const [activePicker, setActivePicker] = useState<PickerType>(null);
+  const [expandedDetachment, setExpandedDetachment] = useState<string | null>(null);
   const [customPointsInput, setCustomPointsInput] = useState(String(pointsLimit));
 
   const detachmentName = detachments.find(d => d.id === selectedDetachment)?.name ?? selectedDetachment;
@@ -190,17 +192,35 @@ export function BuildMode({
         {activePicker === 'detachment' && (
           <div className="space-y-2">
             {detachments.map(d => (
-              <button
+              <AccordionItem
                 key={d.id}
-                onClick={() => { onDetachmentChange(d.id); setActivePicker(null); }}
-                className={`w-full p-3 rounded-xl text-sm font-medium text-left transition-all ${
-                  selectedDetachment === d.id
-                    ? 'bg-accent-500/20 text-accent-400 border border-accent-500/50'
-                    : 'bg-white/5 text-white/60 border border-white/10 hover:border-white/20'
-                }`}
+                id={d.id}
+                title={d.name}
+                isOpen={expandedDetachment === d.id}
+                onToggle={(id) => setExpandedDetachment(prev => prev === id ? null : id)}
+                variant={selectedDetachment === d.id ? 'activated' : 'default'}
               >
-                {d.name}
-              </button>
+                {d.ruleDescription && (
+                  <div className="mb-3">
+                    <span className="text-xs font-medium text-accent-400 uppercase tracking-wide">Army Rule</span>
+                    <p className="text-sm text-gray-300 mt-1 whitespace-pre-line">
+                      {d.ruleDescription}
+                    </p>
+                  </div>
+                )}
+                <button
+                  type="button"
+                  onClick={() => { onDetachmentChange(d.id); setActivePicker(null); }}
+                  className={`
+                    w-full py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer
+                    ${selectedDetachment === d.id
+                      ? 'bg-green-600/30 text-green-400'
+                      : 'bg-accent-500/20 text-accent-400 hover:bg-accent-500/30'}
+                  `}
+                >
+                  {selectedDetachment === d.id ? 'Selected' : 'Select'}
+                </button>
+              </AccordionItem>
             ))}
           </div>
         )}

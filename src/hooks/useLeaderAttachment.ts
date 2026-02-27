@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useCallback } from 'react';
+import { findUnitById } from '@/lib/armyDataUtils';
 import type { ArmyData, ListUnit, AvailableLeader, Unit, Ability, ValidationError } from '@/types';
 
 // ============================================================================
@@ -96,7 +97,9 @@ export function useLeaderAttachment(
    * Get the unit definition from army data by ID.
    */
   const getUnitById = useCallback((unitId: string): Unit | undefined => {
-    return armyData?.units.find(u => u.id === unitId);
+    if (!armyData) return undefined;
+
+    return findUnitById(armyData, unitId);
   }, [armyData]);
 
   /**

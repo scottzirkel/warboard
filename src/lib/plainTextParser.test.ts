@@ -611,3 +611,122 @@ describe('importPlainText', () => {
     ).not.toThrow(); // Actually this will parse "Just some random text" as a unit name
   });
 });
+
+// ============================================================================
+// Regression: em dash "—" must not match any enhancement
+// ============================================================================
+
+describe('enhancement matching regression', () => {
+  const armyWithEnhancements: ArmyData = {
+    faction: 'Test',
+    lastUpdated: '2026-01',
+    units: [
+      {
+        id: 'custodian-guard',
+        name: 'Custodian Guard',
+        points: { '4': 150, '5': 190 },
+        stats: { m: 6, t: 6, sv: '2+', w: 3, ld: '6+', oc: 2 },
+        invuln: '4+',
+        weapons: [],
+        abilities: [],
+        keywords: ['Infantry', 'Battleline'],
+      },
+      {
+        id: 'blade-champion',
+        name: 'Blade Champion',
+        points: { '1': 120 },
+        stats: { m: 6, t: 6, sv: '2+', w: 6, ld: '6+', oc: 2 },
+        invuln: '4+',
+        weapons: [],
+        abilities: [],
+        keywords: ['Infantry', 'Character'],
+      },
+    ],
+    detachments: {
+      'lions-of-the-emperor': {
+        name: 'Lions of the Emperor',
+        rules: [],
+        stratagems: [],
+        enhancements: [
+          {
+            id: 'superior-creation',
+            name: 'Superior Creation',
+            points: 25,
+            description: 'Test enhancement.',
+          },
+          {
+            id: 'fierce-conqueror',
+            name: 'Fierce Conqueror',
+            points: 15,
+            description: 'Test enhancement.',
+          },
+        ],
+      },
+    },
+  };
+
+  it('does not assign enhancement when table column has em dash', () => {
+    const text = `**Detachment:** Lions of the Emperor
+| Unit | Config | Enhancement | Points |
+|------|--------|-------------|--------|
+| Custodian Guard x4 | Guardian Spears | — | 150 |
+| Blade Champion | Vaultswords | Superior Creation | 145 |`;
+
+    const result = importPlainText(text, armyWithEnhancements, 'test');
+
+    // Guard should have NO enhancement
+    const guard = result.list.units.find(u => u.unitId === 'custodian-guard');
+    expect(guard).toBeDefined();
+    expect(guard!.enhancement).toBe('');
+
+    // Blade Champion should have the correct enhancement
+    const champion = result.list.units.find(u => u.unitId === 'blade-champion');
+    expect(champion).toBeDefined();
+    expect(champion!.enhancement).toBe('superior-creation');
+  });
+
+  it('does not assign enhancement when table column has en dash', () => {
+    const text = `**Detachment:** Lions of the Emperor
+| Unit | Config | Enhancement | Points |
+|------|--------|-------------|--------|
+| Custodian Guard x5 | Guardian Spears | – | 190 |`;
+
+    const result = importPlainText(text, armyWithEnhancements, 'test');
+    const guard = result.list.units.find(u => u.unitId === 'custodian-guard');
+
+    expect(guard!.enhancement).toBe('');
+  });
+
+  it('does not assign enhancement when table column has hyphen', () => {
+    const text = `**Detachment:** Lions of the Emperor
+| Unit | Config | Enhancement | Points |
+|------|--------|-------------|--------|
+| Custodian Guard x4 | Guardian Spears | - | 150 |`;
+
+    const result = importPlainText(text, armyWithEnhancements, 'test');
+    const guard = result.list.units.find(u => u.unitId === 'custodian-guard');
+
+    expect(guard!.enhancement).toBe('');
+  });
+
+  it('calculates correct total points without phantom enhancements', () => {
+    const text = `**Detachment:** Lions of the Emperor
+| Unit | Config | Enhancement | Points |
+|------|--------|-------------|--------|
+| Custodian Guard x4 | Guardian Spears | — | 150 |
+| Custodian Guard x5 | Guardian Spears | — | 190 |
+| Blade Champion | Vaultswords | Superior Creation | 145 |`;
+
+    const result = importPlainText(text, armyWithEnhancements, 'test');
+
+    // No unit should have enhancement except Blade Champion
+    const guards = result.list.units.filter(u => u.unitId === 'custodian-guard');
+
+    for (const guard of guards) {
+      expect(guard.enhancement).toBe('');
+    }
+
+    const champion = result.list.units.find(u => u.unitId === 'blade-champion');
+    expect(champion!.enhancement).toBe('superior-creation');
+  });
+});

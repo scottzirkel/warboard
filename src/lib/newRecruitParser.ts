@@ -1,4 +1,5 @@
 import type { CurrentList, ListUnit, ArmyData } from '@/types';
+import { findUnitById } from '@/lib/armyDataUtils';
 
 // ============================================================================
 // New Recruit / BattleScribe JSON Types
@@ -385,7 +386,7 @@ function mapLoadout(
   loadout: string[],
   modelCount: number
 ): Record<string, number> {
-  const unit = armyData.units.find((u) => u.id === unitId);
+  const unit = findUnitById(armyData, unitId);
 
   if (!unit || !unit.loadoutOptions) return {};
 

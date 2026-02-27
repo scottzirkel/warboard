@@ -1,5 +1,6 @@
 import type { CurrentList, ListUnit, ArmyData } from '@/types';
 import { normalizeUnitName, normalizeEnhancementName, normalizeLoadoutName } from './newRecruitParser';
+import { findUnitById } from '@/lib/armyDataUtils';
 
 // ============================================================================
 // Types
@@ -166,9 +167,9 @@ function parseConfigColumn(config: string): { warlord: boolean; enhancement?: st
   // Remove leading/trailing commas and clean up
   remaining = remaining.replace(/^[,\s]+|[,\s]+$/g, '').trim();
 
-  // Skip "Default" as it means no special config
-  if (/^default$/i.test(remaining)) {
-    return { warlord };
+  // Skip "Default" or placeholder dashes — explicitly clear any prior enhancement
+  if (/^default$/i.test(remaining) || /^[—–-]+$/.test(remaining)) {
+    return { warlord, enhancement: '' };
   }
 
   // Check if this looks like an enhancement (typically capitalized words)
@@ -245,8 +246,8 @@ function parseTableFormat(lines: string[]): ParsedTextUnit[] {
 
       warlord = warlord || configResult.warlord;
 
-      if (configResult.enhancement) {
-        enhancement = configResult.enhancement;
+      if (configResult.enhancement !== undefined) {
+        enhancement = configResult.enhancement || undefined;
       }
     }
 
@@ -657,16 +658,22 @@ function findEnhancement(
 
   // Fuzzy match - handle spelling variations like "Halls"/"Hall" or "Armories"/"Armouries"
   const normalizedWords = normalized.split('-').filter(w => w.length > 2);
+
+  if (normalizedWords.length === 0) {
+    return '';
+  }
+
   const fuzzyMatch = detachment.enhancements.find((e) => {
     const enhNorm = normalizeEnhancementName(e.name);
     const enhWords = enhNorm.split('-').filter(w => w.length > 2);
 
-    // Check if most significant words match
+    // Check if most significant words match (must have at least 1)
     const matchingWords = normalizedWords.filter(w =>
       enhWords.some(ew => ew.includes(w) || w.includes(ew))
     );
 
-    return matchingWords.length >= Math.min(normalizedWords.length, enhWords.length) - 1;
+    return matchingWords.length > 0 &&
+      matchingWords.length >= Math.min(normalizedWords.length, enhWords.length) - 1;
   });
 
   return fuzzyMatch?.id || '';
@@ -703,7 +710,7 @@ function mapLoadout(
   loadout: string[] | undefined,
   modelCount: number
 ): Record<string, number> {
-  const unit = armyData.units.find((u) => u.id === unitId);
+  const unit = findUnitById(armyData, unitId);
 
   if (!unit || !unit.loadoutOptions) {
     return {};
@@ -809,7 +816,7 @@ export function convertTextToCurrentList(
     }
 
     // Find unit definition to validate model count
-    const unitDef = armyData.units.find((u) => u.id === unitId);
+    const unitDef = findUnitById(armyData, unitId);
     let modelCount = parsedUnit.modelCount;
 
     if (unitDef) {

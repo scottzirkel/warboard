@@ -8,6 +8,7 @@ import type {
   RangedWeaponStats,
   MeleeWeaponStats,
 } from '@/types';
+import { findUnitById } from '@/lib/armyDataUtils';
 
 // ============================================================================
 // Constants
@@ -73,7 +74,7 @@ function calculateTotalPoints(list: CurrentList, armyData: ArmyData): number {
   let total = 0;
 
   for (const listUnit of list.units) {
-    const unitDef = armyData.units.find((u) => u.id === listUnit.unitId);
+    const unitDef = findUnitById(armyData, listUnit.unitId);
     if (unitDef) {
       total += calculateUnitPoints(unitDef, listUnit);
 
@@ -312,7 +313,7 @@ export function generateRosterXml(
   // Generate unit selections
   const selections = list.units
     .map((listUnit) => {
-      const unit = armyData.units.find((u) => u.id === listUnit.unitId);
+      const unit = findUnitById(armyData, listUnit.unitId);
       if (!unit) return '';
       return generateUnitSelection(unit, listUnit, armyData, list.detachment);
     })

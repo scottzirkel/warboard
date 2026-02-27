@@ -114,8 +114,8 @@ export function ListUnitCard({
             </h4>
           </div>
           <div className="flex items-center gap-1 shrink-0">
-            {/* Warlord Toggle (Characters only, not Epic Heroes) */}
-            {isCharacter && onToggleWarlord && !unit.keywords?.includes('Epic Hero') && (
+            {/* Warlord Toggle (all Characters including Epic Heroes) */}
+            {isCharacter && onToggleWarlord && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();

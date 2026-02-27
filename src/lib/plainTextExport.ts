@@ -1,4 +1,5 @@
 import type { CurrentList, ArmyData, Unit, ListUnit } from '@/types';
+import { findUnitById } from '@/lib/armyDataUtils';
 
 // ============================================================================
 // Plain Text Export
@@ -8,7 +9,7 @@ import type { CurrentList, ArmyData, Unit, ListUnit } from '@/types';
  * Get the unit definition from army data.
  */
 function getUnitDef(armyData: ArmyData, unitId: string): Unit | undefined {
-  return armyData.units.find((u) => u.id === unitId);
+  return findUnitById(armyData, unitId);
 }
 
 /**

@@ -2,6 +2,7 @@
 
 import { PlayUnitCard } from './PlayUnitCard';
 import type { Unit, ListUnit, ArmyData } from '@/types';
+import { findUnitById } from '@/lib/armyDataUtils';
 
 // ============================================================================
 // Helper Functions
@@ -20,22 +21,10 @@ function isUnitAttachedAsLeader(
 }
 
 /**
- * Get the unit data from armyData by unitId (checks both regular units and allies)
+ * Wrapper matching local call signature (unitId, armyData) to shared utility.
  */
 function getUnitById(unitId: string, armyData: ArmyData): Unit | undefined {
-  // Check regular units first
-  const regularUnit = armyData.units.find((u) => u.id === unitId);
-  if (regularUnit) return regularUnit;
-
-  // Check allies
-  if (armyData.allies) {
-    for (const faction of Object.values(armyData.allies)) {
-      const allyUnit = faction.units?.find((u) => u.id === unitId);
-      if (allyUnit) return allyUnit;
-    }
-  }
-
-  return undefined;
+  return findUnitById(armyData, unitId);
 }
 
 import type { Modifier } from '@/types';

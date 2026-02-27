@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useCallback } from 'react';
+import { findUnitById } from '@/lib/armyDataUtils';
 import type {
   ArmyData,
   ListUnit,
@@ -295,7 +296,7 @@ export function useWoundTracking(
       return null;
     }
 
-    const leaderUnit = armyData.units.find(u => u.id === leaderListUnit.unitId);
+    const leaderUnit = findUnitById(armyData, leaderListUnit.unitId);
 
     if (!leaderUnit) {
       return null;

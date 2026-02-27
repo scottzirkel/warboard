@@ -1339,6 +1339,11 @@
           ]
         },
         {
+          "id": "supreme-commander",
+          "name": "Supreme Commander",
+          "description": "If this model is in your army, it must be your Warlord."
+        },
+        {
           "id": "captain-general",
           "name": "Captain-General",
           "description": "While this model is leading a unit, each time a model in that unit makes an attack, you can ignore any or all modifiers to that attack's Ballistic Skill or Weapon Skill characteristics and/or all modifiers to the Hit roll."

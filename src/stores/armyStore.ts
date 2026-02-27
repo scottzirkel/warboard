@@ -8,6 +8,7 @@ import type {
   Unit,
 } from '@/types';
 import { GAME_FORMATS } from '@/types';
+import { findUnitById } from '@/lib/armyDataUtils';
 
 // ============================================================================
 // Available Armies Configuration
@@ -61,26 +62,38 @@ const createDefaultListUnit = (unitId: string, modelCount: number): ListUnit => 
 
 const WARLORD_FORMATS: GameFormat[] = ['colosseum', 'strike-force'];
 
+/** Check if a unit has the Supreme Commander ability (must be Warlord). */
+function isSupremeCommander(unit: Unit): boolean {
+  return unit.abilities?.some(a => a.id === 'supreme-commander') ?? false;
+}
+
 /**
- * Auto-select warlord if there's exactly one valid candidate.
+ * Auto-select warlord if there's exactly one valid candidate or a Supreme Commander.
+ * Supreme Commander units always become Warlord, overriding any existing selection.
  * Returns updated units array, or the same array if no change needed.
  */
 function autoSelectWarlord(units: ListUnit[], format: GameFormat, armyData: ArmyData | null): ListUnit[] {
   if (!armyData || !WARLORD_FORMATS.includes(format)) return units;
 
+  // Supreme Commander always becomes Warlord
+  for (let i = 0; i < units.length; i++) {
+    const unit = findUnitById(armyData, units[i].unitId);
+    if (unit && isSupremeCommander(unit) && !units[i].isWarlord) {
+      return units.map((u, idx) => ({ ...u, isWarlord: idx === i }));
+    }
+  }
+
   const alreadyHasWarlord = units.some(u => u.isWarlord);
   if (alreadyHasWarlord) return units;
 
+  // All Characters (including Epic Heroes) are valid Warlord candidates
   const candidates: number[] = [];
 
   for (let i = 0; i < units.length; i++) {
-    const unit = armyData.units.find(u => u.id === units[i].unitId);
+    const unit = findUnitById(armyData, units[i].unitId);
     if (!unit) continue;
 
-    const isChar = unit.keywords.includes('Character');
-    const isEpic = unit.keywords.includes('Epic Hero');
-
-    if (isChar && !isEpic) {
+    if (unit.keywords.includes('Character')) {
       candidates.push(i);
     }
   }
@@ -272,14 +285,7 @@ export const useArmyStore = create<ArmyStore>()(
       let weaponCounts = unit.weaponCounts || {};
 
       if (armyData) {
-        // Check regular units first, then allies
-        let unitDef = armyData.units.find(u => u.id === unit.unitId);
-        if (!unitDef && armyData.allies) {
-          for (const faction of Object.values(armyData.allies)) {
-            unitDef = faction.units?.find(u => u.id === unit.unitId);
-            if (unitDef) break;
-          }
-        }
+        const unitDef = findUnitById(armyData, unit.unitId);
 
         if (unitDef?.loadoutOptions) {
           // Collect valid choice IDs from current data
@@ -343,14 +349,7 @@ export const useArmyStore = create<ArmyStore>()(
   addUnit: (unitId: string, modelCount: number) => {
     const { armyData } = get();
 
-    // Check regular units first, then allies
-    let unit = armyData?.units.find(u => u.id === unitId);
-    if (!unit && armyData?.allies) {
-      for (const faction of Object.values(armyData.allies)) {
-        unit = faction.units?.find(u => u.id === unitId);
-        if (unit) break;
-      }
-    }
+    const unit = armyData ? findUnitById(armyData, unitId) : undefined;
 
     if (!unit) {
       return;
@@ -452,7 +451,7 @@ export const useArmyStore = create<ArmyStore>()(
       return;
     }
 
-    const unit = armyData.units.find(u => u.id === listUnit.unitId);
+    const unit = findUnitById(armyData, listUnit.unitId);
 
     if (!unit) {
       return;
@@ -565,7 +564,7 @@ export const useArmyStore = create<ArmyStore>()(
       return;
     }
 
-    const unit = armyData.units.find(u => u.id === listUnit.unitId);
+    const unit = findUnitById(armyData, listUnit.unitId);
 
     if (!unit) {
       return;
@@ -634,7 +633,7 @@ export const useArmyStore = create<ArmyStore>()(
       return;
     }
 
-    const unit = armyData.units.find(u => u.id === listUnit.unitId);
+    const unit = findUnitById(armyData, listUnit.unitId);
 
     if (!unit) {
       return;
@@ -777,6 +776,26 @@ export const useArmyStore = create<ArmyStore>()(
 
   setWarlord: (index: number) => {
     set(state => {
+      const { armyData } = state;
+
+      // Don't allow toggling off a Supreme Commander
+      const targetUnit = armyData ? findUnitById(armyData, state.currentList.units[index].unitId) : null;
+      if (targetUnit && isSupremeCommander(targetUnit) && state.currentList.units[index].isWarlord) {
+        return state;
+      }
+
+      // Don't allow setting a different unit as Warlord when a Supreme Commander is present
+      if (armyData) {
+        const supremeIdx = state.currentList.units.findIndex(u => {
+          const unit = findUnitById(armyData, u.unitId);
+          return unit && isSupremeCommander(unit);
+        });
+
+        if (supremeIdx !== -1 && supremeIdx !== index) {
+          return state;
+        }
+      }
+
       const units = state.currentList.units.map((unit, i) => ({
         ...unit,
         isWarlord: i === index ? !unit.isWarlord : false,
@@ -855,7 +874,9 @@ export const useArmyStore = create<ArmyStore>()(
   getUnitById: (unitId: string): Unit | undefined => {
     const { armyData } = get();
 
-    return armyData?.units.find(u => u.id === unitId);
+    if (!armyData) return undefined;
+
+    return findUnitById(armyData, unitId);
   },
 
   getTotalPoints: (): number => {
@@ -868,7 +889,7 @@ export const useArmyStore = create<ArmyStore>()(
     let total = 0;
 
     for (const listUnit of currentList.units) {
-      const unit = armyData.units.find(u => u.id === listUnit.unitId);
+      const unit = findUnitById(armyData, listUnit.unitId);
 
       if (!unit) {
         continue;

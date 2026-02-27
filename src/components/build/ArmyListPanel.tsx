@@ -7,6 +7,7 @@ import type {
   Unit,
   AvailableLeader,
 } from '@/types';
+import { findUnitById } from '@/lib/armyDataUtils';
 
 interface ArmyListPanelProps {
   armyData: ArmyData;
@@ -81,21 +82,8 @@ export function ArmyListPanel({
     });
   };
 
-  // Get unit by ID (checks both regular units and allies)
   const getUnitById = (unitId: string): Unit | undefined => {
-    // Check regular units first
-    const regularUnit = armyData.units.find((u) => u.id === unitId);
-    if (regularUnit) return regularUnit;
-
-    // Check allies
-    if (armyData.allies) {
-      for (const faction of Object.values(armyData.allies)) {
-        const allyUnit = faction.units?.find((u) => u.id === unitId);
-        if (allyUnit) return allyUnit;
-      }
-    }
-
-    return undefined;
+    return findUnitById(armyData, unitId);
   };
 
   return (

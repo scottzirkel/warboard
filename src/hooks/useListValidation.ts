@@ -2,6 +2,7 @@
 
 import { useMemo, useCallback } from 'react';
 import type { ArmyData, CurrentList, ListUnit, Unit, ValidationError } from '@/types';
+import { findUnitById } from '@/lib/armyDataUtils';
 
 // ============================================================================
 // Types
@@ -134,7 +135,9 @@ export function useListValidation(
    * Get the unit definition from army data by ID.
    */
   const getUnitById = useCallback((unitId: string): Unit | undefined => {
-    return armyData?.units.find(u => u.id === unitId);
+    if (!armyData) return undefined;
+
+    return findUnitById(armyData, unitId);
   }, [armyData]);
 
   /**
@@ -200,7 +203,8 @@ export function useListValidation(
    * Validate that a Warlord is designated.
    *
    * Required for Colosseum and Strike Force formats.
-   * A valid Warlord is a Character that is not an Epic Hero.
+   * Any Character (including Epic Heroes) can be Warlord.
+   * Colosseum format separately bans Epic Heroes entirely.
    */
   const validateWarlord = useCallback((): ValidationError[] => {
     const requiresWarlord = currentList.format === 'colosseum' || currentList.format === 'strike-force';
@@ -213,7 +217,7 @@ export function useListValidation(
       if (!lu.isWarlord) return false;
 
       const unit = getUnitById(lu.unitId);
-      return unit && isCharacter(unit) && !isEpicHero(unit);
+      return unit && isCharacter(unit);
     });
 
     if (!hasDesignatedWarlord) {
