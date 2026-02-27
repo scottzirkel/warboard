@@ -56,6 +56,43 @@ const createDefaultListUnit = (unitId: string, modelCount: number): ListUnit => 
 });
 
 // ============================================================================
+// Warlord Auto-Selection Helper
+// ============================================================================
+
+const WARLORD_FORMATS: GameFormat[] = ['colosseum', 'strike-force'];
+
+/**
+ * Auto-select warlord if there's exactly one valid candidate.
+ * Returns updated units array, or the same array if no change needed.
+ */
+function autoSelectWarlord(units: ListUnit[], format: GameFormat, armyData: ArmyData | null): ListUnit[] {
+  if (!armyData || !WARLORD_FORMATS.includes(format)) return units;
+
+  const alreadyHasWarlord = units.some(u => u.isWarlord);
+  if (alreadyHasWarlord) return units;
+
+  const candidates: number[] = [];
+
+  for (let i = 0; i < units.length; i++) {
+    const unit = armyData.units.find(u => u.id === units[i].unitId);
+    if (!unit) continue;
+
+    const isChar = unit.keywords.includes('Character');
+    const isEpic = unit.keywords.includes('Epic Hero');
+
+    if (isChar && !isEpic) {
+      candidates.push(i);
+    }
+  }
+
+  if (candidates.length === 1) {
+    return units.map((u, i) => i === candidates[0] ? { ...u, isWarlord: true } : u);
+  }
+
+  return units;
+}
+
+// ============================================================================
 // Store Interface
 // ============================================================================
 
@@ -330,12 +367,20 @@ export const useArmyStore = create<ArmyStore>()(
       weaponCounts,
     };
 
-    set(state => ({
-      currentList: {
-        ...state.currentList,
-        units: [...state.currentList.units, newUnit],
-      },
-    }));
+    set(state => {
+      const units = autoSelectWarlord(
+        [...state.currentList.units, newUnit],
+        state.currentList.format,
+        state.armyData,
+      );
+
+      return {
+        currentList: {
+          ...state.currentList,
+          units,
+        },
+      };
+    });
   },
 
   removeUnit: (index: number) => {
@@ -374,7 +419,7 @@ export const useArmyStore = create<ArmyStore>()(
       return {
         currentList: {
           ...state.currentList,
-          units: updatedUnits,
+          units: autoSelectWarlord(updatedUnits, state.currentList.format, state.armyData),
         },
       };
     });

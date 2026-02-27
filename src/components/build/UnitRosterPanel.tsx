@@ -45,11 +45,11 @@ interface SimpleAccordionProps {
 
 function SimpleAccordion({ title, count, isOpen, onToggle, children }: SimpleAccordionProps) {
   return (
-    <div className="mb-2">
+    <div className="mb-3">
       <button
         type="button"
         onClick={onToggle}
-        className="w-full flex justify-between items-center px-4 py-3 hover:bg-white/5 transition-colors text-left touch-highlight"
+        className="w-full flex justify-between items-center py-2 hover:bg-white/5 transition-colors text-left touch-highlight"
       >
         <span className="font-semibold text-accent-300">{title}</span>
         <div className="flex items-center gap-2">
@@ -66,7 +66,7 @@ function SimpleAccordion({ title, count, isOpen, onToggle, children }: SimpleAcc
       </button>
 
       <div
-        className={`overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-[4000px] opacity-100 mt-1' : 'max-h-0 opacity-0'}`}
+        className={`overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-[4000px] opacity-100' : 'max-h-0 opacity-0'}`}
       >
         {children}
       </div>
@@ -235,7 +235,7 @@ export function UnitRosterPanel({
   return (
     <div className={`flex flex-col h-full ${className}`}>
       {/* Search Input */}
-      <div className="mb-4 shrink-0 flex items-center gap-2">
+      <div className="mb-3 shrink-0 flex items-center gap-2">
         <input
           type="text"
           value={searchQuery}
@@ -278,7 +278,7 @@ export function UnitRosterPanel({
 
       {/* Unit Card Grid */}
       {!isLoading && filteredUnits.length > 0 && (
-        <div className="flex-1 overflow-y-auto -mx-4 px-4 scroll-smooth">
+        <div className="flex-1 overflow-y-auto -mx-2 px-2 lg:-mx-4 lg:px-4 scroll-smooth">
           {sortedGroups.map((group) => (
             <SimpleAccordion
               key={group}
@@ -287,7 +287,7 @@ export function UnitRosterPanel({
               isOpen={openGroups.has(group)}
               onToggle={() => toggleGroup(group)}
             >
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 px-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 border-l-2 border-accent-500/20 pl-2">
                 {groupedUnits[group].map((unit) => (
                   <UnitCard
                     key={unit.id}

@@ -107,7 +107,7 @@ export function ArmyListPanel({
       </div>
 
       {/* Units List */}
-      <div className="flex-1 overflow-y-auto -mx-4 px-4 scroll-smooth">
+      <div className="flex-1 overflow-y-auto -mx-2 px-2 lg:-mx-4 lg:px-4 scroll-smooth">
         {currentList.units.length === 0 ? (
           <div className="text-center py-8 text-white/40 text-sm">
             <p className="text-lg mb-1">No units added yet</p>

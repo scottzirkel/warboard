@@ -19,6 +19,7 @@ export interface UseListValidationReturn {
 
   // Individual validators
   validatePoints: () => ValidationError[];
+  validateWarlord: () => ValidationError[];
   validateColosseumFormat: () => ValidationError[];
   validateArmyRules: () => ValidationError[];
   validateLeaderAttachments: () => ValidationError[];
@@ -195,6 +196,36 @@ export function useListValidation(
   }, [totalPoints, currentList.pointsLimit]);
 
   /**
+   * Validate that a Warlord is designated.
+   *
+   * Required for Colosseum and Strike Force formats.
+   * A valid Warlord is a Character that is not an Epic Hero.
+   */
+  const validateWarlord = useCallback((): ValidationError[] => {
+    const requiresWarlord = currentList.format === 'colosseum' || currentList.format === 'strike-force';
+
+    if (!requiresWarlord || !armyData || currentList.units.length === 0) {
+      return [];
+    }
+
+    const hasDesignatedWarlord = currentList.units.some(lu => {
+      if (!lu.isWarlord) return false;
+
+      const unit = getUnitById(lu.unitId);
+      return unit && isCharacter(unit) && !isEpicHero(unit);
+    });
+
+    if (!hasDesignatedWarlord) {
+      return [{
+        type: 'format',
+        message: 'You must designate a Warlord (tap the crown icon on a Character)',
+      }];
+    }
+
+    return [];
+  }, [armyData, currentList.format, currentList.units, getUnitById]);
+
+  /**
    * Validate Colosseum format rules.
    *
    * Rules:
@@ -214,7 +245,6 @@ export function useListValidation(
 
     const errors: ValidationError[] = [];
 
-    let hasWarlord = false;
     let infantryNonCharacterCount = 0;
 
     for (const listUnit of currentList.units) {
@@ -242,23 +272,10 @@ export function useListValidation(
         });
       }
 
-      // Track Warlord eligibility (Rule 1)
-      if (isCharacter(unit) && !isEpicHero(unit)) {
-        hasWarlord = true;
-      }
-
       // Count Infantry non-Characters (Rule 3)
       if (isInfantry(unit) && !isCharacter(unit)) {
         infantryNonCharacterCount++;
       }
-    }
-
-    // Check Warlord requirement (Rule 1)
-    if (!hasWarlord && currentList.units.length > 0) {
-      errors.push({
-        type: 'format',
-        message: 'Colosseum format requires at least one Character (non-Epic Hero) as Warlord',
-      });
     }
 
     // Check Infantry requirement (Rule 3)
@@ -554,19 +571,20 @@ export function useListValidation(
    */
   const validateList = useCallback((): ListValidationResult => {
     const pointsErrors = validatePoints();
+    const warlordErrors = validateWarlord();
     const formatErrors = validateColosseumFormat();
     const armyRulesErrors = validateArmyRules();
     const leaderErrors = validateLeaderAttachments();
     const maxModelsErrors = validateMaxModels();
 
-    const allErrors = [...pointsErrors, ...formatErrors, ...armyRulesErrors, ...leaderErrors, ...maxModelsErrors];
+    const allErrors = [...pointsErrors, ...warlordErrors, ...formatErrors, ...armyRulesErrors, ...leaderErrors, ...maxModelsErrors];
 
     return {
       isValid: allErrors.length === 0,
       errors: allErrors,
       warnings: [],
     };
-  }, [validatePoints, validateColosseumFormat, validateArmyRules, validateLeaderAttachments, validateMaxModels]);
+  }, [validatePoints, validateWarlord, validateColosseumFormat, validateArmyRules, validateLeaderAttachments, validateMaxModels]);
 
   /**
    * Quick check if the list is valid.
@@ -591,6 +609,7 @@ export function useListValidation(
   return {
     validateList,
     validatePoints,
+    validateWarlord,
     validateColosseumFormat,
     validateArmyRules,
     validateLeaderAttachments,

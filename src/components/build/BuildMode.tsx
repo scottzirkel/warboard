@@ -83,13 +83,13 @@ export function BuildMode({
   };
 
   return (
-    <div className={`h-full flex flex-col gap-2 lg:gap-4 w-full px-4 py-4 ${className}`}>
+    <div className={`h-full flex flex-col gap-2 lg:gap-4 w-full pb-4 lg:px-4 lg:py-4 ${className}`}>
       {/* Spacer for fixed points bar on mobile */}
-      <div className="h-[140px] lg:hidden shrink-0" />
+      <div className="h-[130px] lg:hidden shrink-0" />
 
       {/* Points Summary Bar - fixed on mobile, static on desktop */}
-      <div className="fixed lg:static top-14 left-0 right-0 z-40 px-4 lg:px-0 pb-2 lg:pb-0 bg-[#1c1c1e] lg:bg-transparent lg:shrink-0">
-        <div className="card-depth p-4">
+      <div className="fixed lg:static top-14 left-0 right-0 z-40 px-2 lg:px-0 pb-2 lg:pb-0 bg-[#1c1c1e] lg:bg-transparent lg:shrink-0">
+        <div className="card-depth p-4" style={{ background: '#2c2c2e' }}>
           {/* Row 1: List name + points */}
           <div className="flex items-start justify-between gap-4">
             <input
@@ -147,7 +147,7 @@ export function BuildMode({
 
       {/* List Validation Errors (if any) */}
       {validationErrors.length > 0 && (
-        <div className="card-depth p-4 border border-red-500/50 shrink-0">
+        <div className="card-depth p-4 border border-red-500/50 shrink-0 mx-2 lg:mx-0">
           <div className="flex items-start gap-3">
             <div className="text-red-400 text-lg">!</div>
             <div className="flex-1">
@@ -175,11 +175,9 @@ export function BuildMode({
         </div>
       </div>
 
-      {/* Mobile: Single panel view */}
-      <div className="flex lg:hidden flex-col flex-1 min-h-0">
-        <div className="card-depth p-4 flex flex-col flex-1 min-h-0">
-          {mobilePanel === 'roster' ? rosterPanel : leftPanel}
-        </div>
+      {/* Mobile: Single panel view - px-2 matches nav and fixed bar */}
+      <div className="flex lg:hidden flex-col flex-1 min-h-0 px-2">
+        {mobilePanel === 'roster' ? rosterPanel : leftPanel}
       </div>
 
       {/* Picker Modal */}

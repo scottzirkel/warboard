@@ -538,14 +538,13 @@ describe('armyStore', () => {
       useArmyStore.getState().addUnit('custodian-guard', 4); // index 1
     });
 
-    it('sets a unit as warlord', () => {
-      useArmyStore.getState().setWarlord(0);
-
+    it('auto-selects warlord when only one Character exists', () => {
+      // shield-captain is the only non-Epic-Hero Character, so auto-selected
       expect(useArmyStore.getState().currentList.units[0].isWarlord).toBe(true);
     });
 
     it('clears warlord from other units when setting a new one', () => {
-      useArmyStore.getState().setWarlord(0);
+      // shield-captain auto-selected, now switch to custodian-guard
       useArmyStore.getState().setWarlord(1);
 
       expect(useArmyStore.getState().currentList.units[0].isWarlord).toBe(false);
@@ -553,7 +552,7 @@ describe('armyStore', () => {
     });
 
     it('toggles warlord off', () => {
-      useArmyStore.getState().setWarlord(0);
+      // shield-captain auto-selected, toggle it off
       useArmyStore.getState().setWarlord(0);
 
       expect(useArmyStore.getState().currentList.units[0].isWarlord).toBe(false);

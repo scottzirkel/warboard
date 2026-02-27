@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { useArmyStore, availableArmies } from '@/stores/armyStore';
 import { useGameStore } from '@/stores/gameStore';
-import { useUIStore } from '@/stores/uiStore';
+import { useUIStore, type MobilePanel } from '@/stores/uiStore';
 import { Navigation } from '@/components/navigation';
 import { LandingPage } from '@/components/LandingPage';
 import { BuildMode } from '@/components/build/BuildMode';
@@ -137,6 +137,11 @@ export default function Home() {
     showError,
     dismissToast,
   } = useUIStore();
+
+  // On mobile, show the roster by default when the army list is empty
+  const effectiveMobilePanel = (mode === 'build' && mobilePanel === 'list' && currentList.units.length === 0)
+    ? 'roster' as MobilePanel
+    : mobilePanel;
 
   // -------------------------------------------------------------------------
   // Saved Lists Hook
@@ -809,7 +814,7 @@ export default function Home() {
         mode={mode}
         onModeToggle={handleModeToggle}
         canPlay={canPlay}
-        mobilePanel={mobilePanel}
+        mobilePanel={effectiveMobilePanel}
         onMobilePanelChange={setMobilePanel}
         battleRound={gameState.battleRound}
         onBattleRoundChange={setBattleRound}
@@ -859,7 +864,7 @@ export default function Home() {
             onFormatChange={(format: GameFormat) => setFormat(format)}
             onPointsLimitChange={setPointsLimit}
             validationErrors={listValidation.validateList().errors}
-            mobilePanel={mobilePanel}
+            mobilePanel={effectiveMobilePanel}
             leftPanel={
               armyData && (
                 <ArmyListPanel
@@ -915,7 +920,7 @@ export default function Home() {
             onModeToggle={() => handleModeChange('build')}
             canPlay={canPlay}
             validationErrors={listValidation.validateList().errors}
-            mobilePanel={mobilePanel}
+            mobilePanel={effectiveMobilePanel}
             leftPanel={
               armyData && (
                 <ArmyOverviewPanel

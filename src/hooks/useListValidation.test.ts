@@ -283,13 +283,13 @@ describe('useListValidation', () => {
       const list = createList([
         createListUnit('infantry-unit', 5),
         createListUnit('another-infantry', 5),
-        // No Character
+        // No Character — warlord validation is now in validateWarlord
       ], 'colosseum');
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
-      const errors = result.current.validateColosseumFormat();
-      expect(errors.some(e => e.message.includes('Warlord') || e.message.includes('Character'))).toBe(true);
+      const errors = result.current.validateWarlord();
+      expect(errors.some(e => e.message.includes('Warlord'))).toBe(true);
     });
 
     it('returns error when not enough Infantry non-Characters', () => {
@@ -590,9 +590,12 @@ describe('useListValidation', () => {
 
   describe('validateList', () => {
     it('returns isValid true for valid list', () => {
+      const charUnit = createListUnit('character-unit', 1);
+      charUnit.isWarlord = true;
+
       const list = createList([
         createListUnit('infantry-unit', 5),
-        createListUnit('character-unit', 1),
+        charUnit,
       ], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
@@ -625,8 +628,12 @@ describe('useListValidation', () => {
 
   describe('isListValid', () => {
     it('returns true for valid list', () => {
+      const charUnit = createListUnit('character-unit', 1);
+      charUnit.isWarlord = true;
+
       const list = createList([
         createListUnit('infantry-unit', 5),
+        charUnit,
       ], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
@@ -657,8 +664,12 @@ describe('useListValidation', () => {
     });
 
     it('returns true for valid non-empty list', () => {
+      const charUnit = createListUnit('character-unit', 1);
+      charUnit.isWarlord = true;
+
       const list = createList([
         createListUnit('infantry-unit', 5),
+        charUnit,
       ], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
