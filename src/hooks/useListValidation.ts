@@ -30,6 +30,7 @@ export interface UseListValidationReturn {
   canEnterPlayMode: boolean;
   totalPoints: number;
   pointsRemaining: number;
+  unitIndicesWithErrors: Set<number>;
 }
 
 // ============================================================================
@@ -247,7 +248,8 @@ export function useListValidation(
 
     let infantryNonCharacterCount = 0;
 
-    for (const listUnit of currentList.units) {
+    for (let i = 0; i < currentList.units.length; i++) {
+      const listUnit = currentList.units[i];
       const unit = getUnitById(listUnit.unitId);
 
       if (!unit) {
@@ -259,6 +261,7 @@ export function useListValidation(
         errors.push({
           type: 'format',
           message: `${unit.name} is an Epic Hero and not allowed in Colosseum format`,
+          unitIndex: i,
         });
       }
 
@@ -269,6 +272,7 @@ export function useListValidation(
         errors.push({
           type: 'format',
           message: `${unit.name} has T${toughness} which exceeds the T10 limit for Colosseum format`,
+          unitIndex: i,
         });
       }
 
@@ -287,9 +291,10 @@ export function useListValidation(
     }
 
     // Check for duplicate datasheets (Rule 5) - Battleline units are exempt
-    const datasheetCounts = new Map<string, number>();
+    const datasheetCounts = new Map<string, { count: number; indices: number[] }>();
 
-    for (const listUnit of currentList.units) {
+    for (let i = 0; i < currentList.units.length; i++) {
+      const listUnit = currentList.units[i];
       const unit = getUnitById(listUnit.unitId);
 
       if (!unit) {
@@ -301,17 +306,23 @@ export function useListValidation(
         continue;
       }
 
-      const count = (datasheetCounts.get(listUnit.unitId) || 0) + 1;
-      datasheetCounts.set(listUnit.unitId, count);
+      const entry = datasheetCounts.get(listUnit.unitId) || { count: 0, indices: [] };
+      entry.count++;
+      entry.indices.push(i);
+      datasheetCounts.set(listUnit.unitId, entry);
     }
 
-    for (const [unitId, count] of datasheetCounts.entries()) {
+    for (const [unitId, { count, indices }] of datasheetCounts.entries()) {
       if (count > 1) {
         const unit = getUnitById(unitId);
-        errors.push({
-          type: 'format',
-          message: `${unit?.name || unitId} appears ${count} times — Colosseum format allows no duplicate datasheets (except Battleline)`,
-        });
+
+        for (const idx of indices) {
+          errors.push({
+            type: 'format',
+            message: `${unit?.name || unitId} appears ${count} times — Colosseum format allows no duplicate datasheets (except Battleline)`,
+            unitIndex: idx,
+          });
+        }
       }
     }
 
@@ -334,14 +345,17 @@ export function useListValidation(
     const errors: ValidationError[] = [];
 
     // Rule 1: Datasheet limits (3 per datasheet, 6 for Battleline/Dedicated Transport)
-    const datasheetCounts = new Map<string, number>();
+    const datasheetCounts = new Map<string, { count: number; indices: number[] }>();
 
-    for (const listUnit of currentList.units) {
-      const count = (datasheetCounts.get(listUnit.unitId) || 0) + 1;
-      datasheetCounts.set(listUnit.unitId, count);
+    for (let i = 0; i < currentList.units.length; i++) {
+      const listUnit = currentList.units[i];
+      const entry = datasheetCounts.get(listUnit.unitId) || { count: 0, indices: [] };
+      entry.count++;
+      entry.indices.push(i);
+      datasheetCounts.set(listUnit.unitId, entry);
     }
 
-    for (const [unitId, count] of datasheetCounts.entries()) {
+    for (const [unitId, { count, indices }] of datasheetCounts.entries()) {
       const unit = getUnitById(unitId);
 
       if (!unit) {
@@ -351,34 +365,44 @@ export function useListValidation(
       const limit = hasElevatedDatasheetLimit(unit) ? 6 : 3;
 
       if (count > limit) {
-        errors.push({
-          type: 'format',
-          message: `${unit.name} appears ${count} times (max ${limit})`,
-        });
+        for (const idx of indices) {
+          errors.push({
+            type: 'format',
+            message: `${unit.name} appears ${count} times (max ${limit})`,
+            unitIndex: idx,
+          });
+        }
       }
     }
 
     // Rule 2: Only 1 of each Epic Hero
-    const epicHeroCounts = new Map<string, number>();
+    const epicHeroCounts = new Map<string, { count: number; indices: number[] }>();
 
-    for (const listUnit of currentList.units) {
+    for (let i = 0; i < currentList.units.length; i++) {
+      const listUnit = currentList.units[i];
       const unit = getUnitById(listUnit.unitId);
 
       if (!unit || !isEpicHero(unit)) {
         continue;
       }
 
-      const count = (epicHeroCounts.get(listUnit.unitId) || 0) + 1;
-      epicHeroCounts.set(listUnit.unitId, count);
+      const entry = epicHeroCounts.get(listUnit.unitId) || { count: 0, indices: [] };
+      entry.count++;
+      entry.indices.push(i);
+      epicHeroCounts.set(listUnit.unitId, entry);
     }
 
-    for (const [unitId, count] of epicHeroCounts.entries()) {
+    for (const [unitId, { count, indices }] of epicHeroCounts.entries()) {
       if (count > 1) {
         const unit = getUnitById(unitId);
-        errors.push({
-          type: 'format',
-          message: `${unit?.name || unitId} is an Epic Hero and can only be included once (found ${count})`,
-        });
+
+        for (const idx of indices) {
+          errors.push({
+            type: 'format',
+            message: `${unit?.name || unitId} is an Epic Hero and can only be included once (found ${count})`,
+            unitIndex: idx,
+          });
+        }
       }
     }
 
@@ -532,7 +556,8 @@ export function useListValidation(
 
     const errors: ValidationError[] = [];
 
-    for (const listUnit of currentList.units) {
+    for (let i = 0; i < currentList.units.length; i++) {
+      const listUnit = currentList.units[i];
       const unit = getUnitById(listUnit.unitId);
 
       if (!unit || !unit.loadoutOptions) {
@@ -557,6 +582,7 @@ export function useListValidation(
             errors.push({
               type: 'loadout',
               message: `${unit.name}: ${choice.name} limited to ${choice.maxModels} model(s), but ${count} assigned`,
+              unitIndex: i,
             });
           }
         }
@@ -606,6 +632,22 @@ export function useListValidation(
     return isListValid;
   }, [isListValid, currentList.units.length]);
 
+  /**
+   * Get the set of unit indices that have validation errors.
+   */
+  const unitIndicesWithErrors = useMemo((): Set<number> => {
+    const { errors } = validateList();
+    const indices = new Set<number>();
+
+    for (const error of errors) {
+      if (error.unitIndex !== undefined) {
+        indices.add(error.unitIndex);
+      }
+    }
+
+    return indices;
+  }, [validateList]);
+
   return {
     validateList,
     validatePoints,
@@ -618,5 +660,6 @@ export function useListValidation(
     canEnterPlayMode,
     totalPoints,
     pointsRemaining,
+    unitIndicesWithErrors,
   };
 }

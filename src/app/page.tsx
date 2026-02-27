@@ -870,7 +870,6 @@ export default function Home() {
                 <ArmyListPanel
                   armyData={armyData}
                   currentList={currentList}
-                  selectedUnitIndex={selectedUnitIndex}
                   onSelectUnit={handleSelectListUnit}
                   onRemoveUnit={handleRemoveUnit}
                   onModelCountChange={updateUnitModelCount}
@@ -884,6 +883,7 @@ export default function Home() {
                   onAttachLeader={leaderAttachment.attachLeader}
                   onDetachLeader={leaderAttachment.detachLeader}
                   onSetWarlord={setWarlord}
+                  unitIndicesWithErrors={listValidation.unitIndicesWithErrors}
                 />
               )
             }

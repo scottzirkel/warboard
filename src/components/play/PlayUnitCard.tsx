@@ -90,7 +90,7 @@ export function PlayUnitCard({
       onClick={onSelect}
       className={`
         card-depth overflow-hidden cursor-pointer
-        ${isSelected ? 'ring-2 ring-accent-500' : ''}
+        ${isSelected ? 'ring-2 ring-accent-500' : 'ring-1 ring-inset ring-accent-500/25'}
         ${isDestroyed ? 'opacity-40' : 'hover:bg-white/10'}
         transition-colors
         ${className}

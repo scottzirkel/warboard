@@ -11,7 +11,6 @@ import type {
 interface ArmyListPanelProps {
   armyData: ArmyData;
   currentList: CurrentList;
-  selectedUnitIndex: number | null;
   // Unit actions
   onSelectUnit: (index: number) => void;
   onRemoveUnit: (index: number) => void;
@@ -26,13 +25,13 @@ interface ArmyListPanelProps {
   onAttachLeader: (unitIndex: number, leaderIndex: number) => void;
   onDetachLeader: (unitIndex: number) => void;
   onSetWarlord: (unitIndex: number) => void;
+  unitIndicesWithErrors?: Set<number>;
   className?: string;
 }
 
 export function ArmyListPanel({
   armyData,
   currentList,
-  selectedUnitIndex,
   onSelectUnit,
   onRemoveUnit,
   onModelCountChange,
@@ -46,6 +45,7 @@ export function ArmyListPanel({
   onAttachLeader,
   onDetachLeader,
   onSetWarlord,
+  unitIndicesWithErrors = new Set(),
   className = '',
 }: ArmyListPanelProps) {
   const detachment = armyData.detachments[currentList.detachment];
@@ -128,7 +128,6 @@ export function ArmyListPanel({
                   unit={unit}
                   listUnit={listUnit}
                   index={index}
-                  isSelected={selectedUnitIndex === index}
                   onSelect={() => onSelectUnit(index)}
                   onRemove={() => onRemoveUnit(index)}
                   onModelCountChange={(count) => onModelCountChange(index, count)}
@@ -148,6 +147,7 @@ export function ArmyListPanel({
                   onAttachLeader={(leaderIndex) => onAttachLeader(index, leaderIndex)}
                   onDetachLeader={() => onDetachLeader(index)}
                   onToggleWarlord={() => onSetWarlord(index)}
+                  hasError={unitIndicesWithErrors.has(index)}
                 />
               );
             })}

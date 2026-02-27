@@ -1025,6 +1025,11 @@
       ],
       "abilities": [
         {
+          "id": "strategic-mastery",
+          "name": "Strategic Mastery",
+          "description": "Once per battle round, you can select one model from your army with this ability. That model's unit can be targeted with a Stratagem. If it does, reduce the CP cost of that use of that Stratagem by 1CP."
+        },
+        {
           "id": "master-of-the-stances",
           "name": "Master of the Stances",
           "description": "Once per battle, when this model's unit is selected to fight, it can use this ability. If it does, until that fight is resolved, both Ka'tah Stances are active for that unit, instead of only one."

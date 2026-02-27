@@ -401,6 +401,7 @@ export interface UIState {
 export interface ValidationError {
   type: 'points' | 'format' | 'leader' | 'maxModels' | 'loadout';
   message: string;
+  unitIndex?: number;
 }
 
 // ============================================================================

@@ -9,7 +9,6 @@ interface ListUnitCardProps {
   unit: Unit;
   listUnit: ListUnit;
   index: number;
-  isSelected: boolean;
   onSelect: () => void;
   onRemove: () => void;
   onModelCountChange: (count: number) => void;
@@ -25,6 +24,7 @@ interface ListUnitCardProps {
   onAttachLeader: (leaderIndex: number) => void;
   onDetachLeader: () => void;
   onToggleWarlord?: () => void;
+  hasError?: boolean;
   className?: string;
 }
 
@@ -32,7 +32,6 @@ export function ListUnitCard({
   unit,
   listUnit,
   index: _index,
-  isSelected,
   onSelect,
   onRemove,
   onModelCountChange,
@@ -48,6 +47,7 @@ export function ListUnitCard({
   onAttachLeader,
   onDetachLeader,
   onToggleWarlord,
+  hasError = false,
   className = '',
 }: ListUnitCardProps) {
   // Get available model counts from unit.points
@@ -97,13 +97,13 @@ export function ListUnitCard({
   };
 
   const weaponCountError = getWeaponCountError();
+  const showError = hasError || !!weaponCountError;
 
   return (
     <Card
-      selected={isSelected}
       hoverable
       onClick={onSelect}
-      className={className}
+      className={`ring-1 ring-inset ${showError ? 'ring-amber-500/60' : 'ring-accent-500/25'} ${className}`}
     >
       <div className="space-y-2">
         {/* Header Row: Name + Warlord Toggle + Remove Button */}

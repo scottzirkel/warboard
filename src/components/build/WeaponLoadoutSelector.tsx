@@ -16,10 +16,9 @@ interface ChoiceRowProps {
   count: number;
   maxCount: number;
   onChange: (count: number) => void;
-  isReplacement: boolean;
 }
 
-function ChoiceRow({ choice, count, maxCount, onChange, isReplacement }: ChoiceRowProps) {
+function ChoiceRow({ choice, count, maxCount, onChange }: ChoiceRowProps) {
   const effectiveMax = choice.maxModels !== undefined
     ? Math.min(choice.maxModels, maxCount)
     : maxCount;
@@ -28,20 +27,10 @@ function ChoiceRow({ choice, count, maxCount, onChange, isReplacement }: ChoiceR
 
   return (
     <div
-      className={`flex items-center justify-between bg-black/20 rounded-lg px-3 py-2 ${
-        !isReplacement ? 'border-l-2 border-green-500' : ''
-      }`}
+      className="flex items-center justify-between bg-black/20 rounded-lg px-3 py-2"
     >
       <div className="flex items-center gap-2 min-w-0">
         <span className="text-sm text-gray-300 truncate">{choice.name}</span>
-        {choice.paired && (
-          <span
-            className="text-blue-400 text-xs"
-            title="Paired loadout (equipped together)"
-          >
-            ⬡
-          </span>
-        )}
         {hasMaxLimit && (
           <span
             className="text-white/40 text-xs"
@@ -69,8 +58,6 @@ export function WeaponLoadoutSelector({
   onCountChange,
   className = '',
 }: WeaponLoadoutSelectorProps) {
-  const isReplacement = option.pattern === 'replacement';
-
   return (
     <div className={`space-y-1 ${className}`}>
       {/* Choices - filter out "none" as it's implied when no other choice is selected */}
@@ -84,7 +71,6 @@ export function WeaponLoadoutSelector({
               count={weaponCounts[choice.id] || 0}
               maxCount={modelCount}
               onChange={(count) => onCountChange(choice.id, count)}
-              isReplacement={isReplacement}
             />
           ))}
       </div>
