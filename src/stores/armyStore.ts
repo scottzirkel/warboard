@@ -7,6 +7,7 @@ import type {
   GameFormat,
   Unit,
 } from '@/types';
+import { GAME_FORMATS } from '@/types';
 
 // ============================================================================
 // Available Armies Configuration
@@ -37,8 +38,8 @@ export const availableArmies: AvailableArmy[] = [
 const createDefaultList = (): CurrentList => ({
   name: '',
   army: 'custodes',
-  pointsLimit: 500,
-  format: 'standard',
+  pointsLimit: 2000,
+  format: 'strike-force',
   detachment: '',
   units: [],
 });
@@ -189,18 +190,12 @@ export const useArmyStore = create<ArmyStore>()(
   },
 
   setFormat: (format: GameFormat) => {
-    // Game format configuration (matching Alpine.js)
-    const gameFormats: Record<GameFormat, { pointsOptions: number[] }> = {
-      standard: { pointsOptions: [500, 1000, 2000] },
-      colosseum: { pointsOptions: [500] },
-    };
+    const formatConfig = GAME_FORMATS.find(f => f.id === format);
 
     set(state => {
-      const options = gameFormats[format]?.pointsOptions || [500, 1000, 2000];
-      // Auto-adjust points limit if current limit not in new format's options
-      const newPointsLimit = options.includes(state.currentList.pointsLimit)
-        ? state.currentList.pointsLimit
-        : options[0];
+      // For non-custom formats, set the fixed points value
+      // For custom, keep the current points limit
+      const newPointsLimit = formatConfig?.points ?? state.currentList.pointsLimit;
 
       return {
         currentList: {

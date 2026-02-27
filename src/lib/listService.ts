@@ -4,7 +4,16 @@
 // All operations are scoped to the authenticated user.
 
 import { prisma } from '@/lib/db';
-import type { CurrentList, DbList } from '@/types';
+import type { CurrentList, DbList, GameFormat } from '@/types';
+
+/** Map old 'standard' format to 'strike-force' for backwards compatibility. */
+function migrateFormat(format: unknown): GameFormat {
+  if (format === 'standard') return 'strike-force';
+  if (format === 'colosseum' || format === 'incursion' || format === 'strike-force' || format === 'onslaught' || format === 'custom') {
+    return format;
+  }
+  return 'strike-force';
+}
 
 // ============================================================================
 // Types
@@ -192,7 +201,7 @@ export async function importList(
     name: listData.name as string || name,
     army: armyId,
     pointsLimit: listData.pointsLimit as number || 2000,
-    format: (listData.format || listData.gameFormat || 'standard') as CurrentList['format'],
+    format: migrateFormat(listData.format || listData.gameFormat || 'strike-force'),
     detachment: listData.detachment as string || '',
     units: (listData.units || []) as CurrentList['units'],
   };

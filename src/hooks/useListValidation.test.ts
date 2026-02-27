@@ -85,6 +85,16 @@ const mockArmyData: ArmyData = {
       ],
       keywords: ['Infantry', 'Character'],
     },
+    {
+      id: 'transport',
+      name: 'Transport Vehicle',
+      points: { '1': 80 },
+      stats: { m: 12, t: 7, sv: '3+', w: 10, ld: '6+', oc: 1 },
+      invuln: null,
+      weapons: [],
+      abilities: [],
+      keywords: ['Vehicle', 'Dedicated Transport'],
+    },
   ],
   detachments: {
     'test-detachment': {
@@ -94,6 +104,8 @@ const mockArmyData: ArmyData = {
       enhancements: [
         { id: 'enhancement-1', name: 'Enhancement 1', points: 20, description: 'Test enhancement' },
         { id: 'enhancement-2', name: 'Enhancement 2', points: 30, description: 'Test enhancement 2' },
+        { id: 'enhancement-3', name: 'Enhancement 3', points: 25, description: 'Test enhancement 3' },
+        { id: 'enhancement-4', name: 'Enhancement 4', points: 15, description: 'Test enhancement 4' },
       ],
     },
   },
@@ -117,7 +129,7 @@ const createListUnit = (
 
 const createList = (
   units: ListUnit[],
-  format: 'standard' | 'colosseum' = 'standard',
+  format: 'colosseum' | 'incursion' | 'strike-force' | 'onslaught' | 'custom' = 'strike-force',
   pointsLimit: number = 500,
   detachment: string = 'test-detachment'
 ): CurrentList => ({
@@ -171,7 +183,7 @@ describe('useListValidation', () => {
     it('calculates remaining points correctly', () => {
       const list = createList([
         createListUnit('infantry-unit', 5), // 100 points
-      ], 'standard', 500);
+      ], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
@@ -183,7 +195,7 @@ describe('useListValidation', () => {
         createListUnit('heavy-armor', 1), // 200 points
         createListUnit('heavy-armor', 1), // 200 points
         createListUnit('heavy-armor', 1), // 200 points - total 600
-      ], 'standard', 500);
+      ], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
@@ -195,7 +207,7 @@ describe('useListValidation', () => {
     it('returns empty array when under points limit', () => {
       const list = createList([
         createListUnit('infantry-unit', 5), // 100 points
-      ], 'standard', 500);
+      ], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
@@ -205,7 +217,7 @@ describe('useListValidation', () => {
     it('returns empty array when exactly at points limit', () => {
       const list = createList([
         createListUnit('infantry-unit', 5), // 100 points
-      ], 'standard', 100);
+      ], 'strike-force', 100);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
@@ -217,7 +229,7 @@ describe('useListValidation', () => {
         createListUnit('heavy-armor', 1), // 200 points
         createListUnit('heavy-armor', 1), // 200 points
         createListUnit('heavy-armor', 1), // 200 points - total 600
-      ], 'standard', 500);
+      ], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
@@ -232,7 +244,7 @@ describe('useListValidation', () => {
     it('returns empty array for standard format', () => {
       const list = createList([
         createListUnit('epic-hero', 1), // Would be invalid in colosseum
-      ], 'standard');
+      ], 'strike-force');
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
@@ -304,6 +316,34 @@ describe('useListValidation', () => {
       expect(result.current.validateColosseumFormat()).toHaveLength(0);
     });
 
+    it('returns error for duplicate non-Battleline datasheets in colosseum', () => {
+      const list = createList([
+        createListUnit('infantry-unit', 5),    // Battleline - exempt
+        createListUnit('another-infantry', 5), // Non-Battleline Infantry
+        createListUnit('another-infantry', 5), // Duplicate!
+        createListUnit('character-unit', 1),
+      ], 'colosseum');
+
+      const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+      const errors = result.current.validateColosseumFormat();
+      expect(errors.some(e => e.message.includes('duplicate') || e.message.includes('appears'))).toBe(true);
+    });
+
+    it('allows duplicate Battleline datasheets in colosseum', () => {
+      const list = createList([
+        createListUnit('infantry-unit', 5),  // Battleline
+        createListUnit('infantry-unit', 5),  // Battleline duplicate - OK
+        createListUnit('character-unit', 1),
+      ], 'colosseum');
+
+      const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+      const errors = result.current.validateColosseumFormat();
+      // Should not have duplicate datasheet errors (Battleline exempt)
+      expect(errors.some(e => e.message.includes('duplicate') || e.message.includes('appears'))).toBe(false);
+    });
+
     it('does not count Characters as Infantry for Infantry requirement', () => {
       // Character with Infantry keyword should not count toward Infantry requirement
       const list = createList([
@@ -317,6 +357,159 @@ describe('useListValidation', () => {
       const errors = result.current.validateColosseumFormat();
       // Should still fail because we only have 1 Infantry non-Character
       expect(errors.some(e => e.message.includes('Infantry') && e.message.includes('1'))).toBe(true);
+    });
+  });
+
+  describe('validateArmyRules', () => {
+    it('returns empty array for valid army', () => {
+      const list = createList([
+        createListUnit('infantry-unit', 5),
+        createListUnit('character-unit', 1),
+      ]);
+
+      const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+      expect(result.current.validateArmyRules()).toHaveLength(0);
+    });
+
+    describe('datasheet limits', () => {
+      it('allows up to 3 of the same non-Battleline datasheet', () => {
+        const list = createList([
+          createListUnit('another-infantry', 5),
+          createListUnit('another-infantry', 5),
+          createListUnit('another-infantry', 5),
+        ]);
+
+        const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+        expect(result.current.validateArmyRules()).toHaveLength(0);
+      });
+
+      it('returns error for 4+ of the same non-Battleline datasheet', () => {
+        const list = createList([
+          createListUnit('another-infantry', 5),
+          createListUnit('another-infantry', 5),
+          createListUnit('another-infantry', 5),
+          createListUnit('another-infantry', 5),
+        ]);
+
+        const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+        const errors = result.current.validateArmyRules();
+        expect(errors.some(e => e.message.includes('Another Infantry') && e.message.includes('4'))).toBe(true);
+      });
+
+      it('allows up to 6 Battleline datasheets', () => {
+        const list = createList([
+          createListUnit('infantry-unit', 5),
+          createListUnit('infantry-unit', 5),
+          createListUnit('infantry-unit', 5),
+          createListUnit('infantry-unit', 5),
+          createListUnit('infantry-unit', 5),
+          createListUnit('infantry-unit', 5),
+        ]);
+
+        const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+        expect(result.current.validateArmyRules()).toHaveLength(0);
+      });
+
+      it('returns error for 7+ Battleline datasheets', () => {
+        const list = createList([
+          createListUnit('infantry-unit', 5),
+          createListUnit('infantry-unit', 5),
+          createListUnit('infantry-unit', 5),
+          createListUnit('infantry-unit', 5),
+          createListUnit('infantry-unit', 5),
+          createListUnit('infantry-unit', 5),
+          createListUnit('infantry-unit', 5),
+        ]);
+
+        const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+        const errors = result.current.validateArmyRules();
+        expect(errors.some(e => e.message.includes('Infantry Unit') && e.message.includes('7'))).toBe(true);
+      });
+
+      it('allows up to 6 Dedicated Transport datasheets', () => {
+        const list = createList([
+          createListUnit('transport', 1),
+          createListUnit('transport', 1),
+          createListUnit('transport', 1),
+          createListUnit('transport', 1),
+          createListUnit('transport', 1),
+          createListUnit('transport', 1),
+        ]);
+
+        const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+        expect(result.current.validateArmyRules()).toHaveLength(0);
+      });
+    });
+
+    describe('Epic Hero uniqueness', () => {
+      it('allows 1 of each Epic Hero', () => {
+        const list = createList([
+          createListUnit('epic-hero', 1),
+        ]);
+
+        const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+        expect(result.current.validateArmyRules()).toHaveLength(0);
+      });
+
+      it('returns error for duplicate Epic Heroes', () => {
+        const list = createList([
+          createListUnit('epic-hero', 1),
+          createListUnit('epic-hero', 1),
+        ]);
+
+        const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+        const errors = result.current.validateArmyRules();
+        expect(errors.some(e => e.message.includes('Epic Hero') && e.message.includes('once'))).toBe(true);
+      });
+    });
+
+    describe('enhancement limits', () => {
+      it('allows up to 3 different enhancements', () => {
+        const list = createList([
+          createListUnit('character-unit', 1, 'enhancement-1'),
+          createListUnit('another-character', 1, 'enhancement-2'),
+          createListUnit('character-unit', 1, 'enhancement-3'),
+        ]);
+
+        const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+        const errors = result.current.validateArmyRules();
+        expect(errors.some(e => e.message.includes('enhancement'))).toBe(false);
+      });
+
+      it('returns error for more than 3 enhancements', () => {
+        const list = createList([
+          createListUnit('character-unit', 1, 'enhancement-1'),
+          createListUnit('another-character', 1, 'enhancement-2'),
+          createListUnit('character-unit', 1, 'enhancement-3'),
+          createListUnit('another-character', 1, 'enhancement-4'),
+        ]);
+
+        const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+        const errors = result.current.validateArmyRules();
+        expect(errors.some(e => e.message.includes('4 enhancements') && e.message.includes('max 3'))).toBe(true);
+      });
+
+      it('returns error for duplicate enhancements', () => {
+        const list = createList([
+          createListUnit('character-unit', 1, 'enhancement-1'),
+          createListUnit('another-character', 1, 'enhancement-1'),
+        ]);
+
+        const { result } = renderHook(() => useListValidation(mockArmyData, list));
+
+        const errors = result.current.validateArmyRules();
+        expect(errors.some(e => e.message.includes('Enhancement 1') && e.message.includes('unique'))).toBe(true);
+      });
     });
   });
 
@@ -400,7 +593,7 @@ describe('useListValidation', () => {
       const list = createList([
         createListUnit('infantry-unit', 5),
         createListUnit('character-unit', 1),
-      ], 'standard', 500);
+      ], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
@@ -434,7 +627,7 @@ describe('useListValidation', () => {
     it('returns true for valid list', () => {
       const list = createList([
         createListUnit('infantry-unit', 5),
-      ], 'standard', 500);
+      ], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
@@ -446,7 +639,7 @@ describe('useListValidation', () => {
         createListUnit('heavy-armor', 1),
         createListUnit('heavy-armor', 1),
         createListUnit('heavy-armor', 1), // 600 points, over limit
-      ], 'standard', 500);
+      ], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
@@ -456,7 +649,7 @@ describe('useListValidation', () => {
 
   describe('canEnterPlayMode', () => {
     it('returns false for empty list', () => {
-      const list = createList([], 'standard', 500);
+      const list = createList([], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
@@ -466,7 +659,7 @@ describe('useListValidation', () => {
     it('returns true for valid non-empty list', () => {
       const list = createList([
         createListUnit('infantry-unit', 5),
-      ], 'standard', 500);
+      ], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
@@ -478,7 +671,7 @@ describe('useListValidation', () => {
         createListUnit('heavy-armor', 1),
         createListUnit('heavy-armor', 1),
         createListUnit('heavy-armor', 1), // 600 points
-      ], 'standard', 500);
+      ], 'strike-force', 500);
 
       const { result } = renderHook(() => useListValidation(mockArmyData, list));
 
@@ -526,7 +719,7 @@ describe('useListValidation', () => {
     it('handles missing detachment gracefully', () => {
       const list = createList(
         [createListUnit('character-unit', 1, 'enhancement-1')],
-        'standard',
+        'strike-force',
         500,
         'non-existent-detachment'
       );

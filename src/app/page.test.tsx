@@ -199,7 +199,7 @@ describe('E2E Integration Tests', () => {
         name: '',
         army: 'custodes',
         pointsLimit: 500,
-        format: 'standard',
+        format: 'strike-force',
         detachment: '',
         units: [],
       },
@@ -443,7 +443,7 @@ describe('E2E Integration Tests', () => {
         name: 'Saved List',
         army: 'custodes',
         pointsLimit: 500,
-        format: 'standard' as const,
+        format: 'strike-force' as const,
         detachment: 'shield-host',
         units: [
           {

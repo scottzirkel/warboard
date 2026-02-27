@@ -20,6 +20,7 @@ export interface UseListValidationReturn {
   // Individual validators
   validatePoints: () => ValidationError[];
   validateColosseumFormat: () => ValidationError[];
+  validateArmyRules: () => ValidationError[];
   validateLeaderAttachments: () => ValidationError[];
   validateMaxModels: () => ValidationError[];
 
@@ -54,6 +55,14 @@ function isCharacter(unit: Unit): boolean {
  */
 function isInfantry(unit: Unit): boolean {
   return unit.keywords.includes('Infantry');
+}
+
+/**
+ * Check if a unit has elevated datasheet limits (Battleline or Dedicated Transport).
+ * These units allow up to 6 per datasheet instead of the standard 3.
+ */
+function hasElevatedDatasheetLimit(unit: Unit): boolean {
+  return unit.keywords.includes('Battleline') || unit.keywords.includes('Dedicated Transport');
 }
 
 /**
@@ -260,8 +269,136 @@ export function useListValidation(
       });
     }
 
+    // Check for duplicate datasheets (Rule 5) - Battleline units are exempt
+    const datasheetCounts = new Map<string, number>();
+
+    for (const listUnit of currentList.units) {
+      const unit = getUnitById(listUnit.unitId);
+
+      if (!unit) {
+        continue;
+      }
+
+      // Battleline units are exempt from the duplicate restriction
+      if (unit.keywords.includes('Battleline')) {
+        continue;
+      }
+
+      const count = (datasheetCounts.get(listUnit.unitId) || 0) + 1;
+      datasheetCounts.set(listUnit.unitId, count);
+    }
+
+    for (const [unitId, count] of datasheetCounts.entries()) {
+      if (count > 1) {
+        const unit = getUnitById(unitId);
+        errors.push({
+          type: 'format',
+          message: `${unit?.name || unitId} appears ${count} times — Colosseum format allows no duplicate datasheets (except Battleline)`,
+        });
+      }
+    }
+
     return errors;
   }, [armyData, currentList.format, currentList.units, getUnitById]);
+
+  /**
+   * Validate 10th edition army construction rules.
+   *
+   * Rules:
+   * 1. Max 3 of each datasheet (6 for Battleline / Dedicated Transport)
+   * 2. Only 1 of each Epic Hero
+   * 3. Max 3 enhancements per army, all must be different
+   */
+  const validateArmyRules = useCallback((): ValidationError[] => {
+    if (!armyData) {
+      return [];
+    }
+
+    const errors: ValidationError[] = [];
+
+    // Rule 1: Datasheet limits (3 per datasheet, 6 for Battleline/Dedicated Transport)
+    const datasheetCounts = new Map<string, number>();
+
+    for (const listUnit of currentList.units) {
+      const count = (datasheetCounts.get(listUnit.unitId) || 0) + 1;
+      datasheetCounts.set(listUnit.unitId, count);
+    }
+
+    for (const [unitId, count] of datasheetCounts.entries()) {
+      const unit = getUnitById(unitId);
+
+      if (!unit) {
+        continue;
+      }
+
+      const limit = hasElevatedDatasheetLimit(unit) ? 6 : 3;
+
+      if (count > limit) {
+        errors.push({
+          type: 'format',
+          message: `${unit.name} appears ${count} times (max ${limit})`,
+        });
+      }
+    }
+
+    // Rule 2: Only 1 of each Epic Hero
+    const epicHeroCounts = new Map<string, number>();
+
+    for (const listUnit of currentList.units) {
+      const unit = getUnitById(listUnit.unitId);
+
+      if (!unit || !isEpicHero(unit)) {
+        continue;
+      }
+
+      const count = (epicHeroCounts.get(listUnit.unitId) || 0) + 1;
+      epicHeroCounts.set(listUnit.unitId, count);
+    }
+
+    for (const [unitId, count] of epicHeroCounts.entries()) {
+      if (count > 1) {
+        const unit = getUnitById(unitId);
+        errors.push({
+          type: 'format',
+          message: `${unit?.name || unitId} is an Epic Hero and can only be included once (found ${count})`,
+        });
+      }
+    }
+
+    // Rule 3: Max 3 enhancements, all different
+    const enhancements: string[] = [];
+
+    for (const listUnit of currentList.units) {
+      if (listUnit.enhancement) {
+        enhancements.push(listUnit.enhancement);
+      }
+    }
+
+    if (enhancements.length > 3) {
+      errors.push({
+        type: 'format',
+        message: `Army has ${enhancements.length} enhancements (max 3)`,
+      });
+    }
+
+    const enhancementCounts = new Map<string, number>();
+
+    for (const enhId of enhancements) {
+      enhancementCounts.set(enhId, (enhancementCounts.get(enhId) || 0) + 1);
+    }
+
+    for (const [enhId, count] of enhancementCounts.entries()) {
+      if (count > 1) {
+        const enhName = detachmentEnhancements.find(e => e.id === enhId)?.name || enhId;
+        errors.push({
+          type: 'format',
+          message: `Enhancement "${enhName}" is used ${count} times (each enhancement must be unique)`,
+        });
+      }
+    }
+
+    return errors;
+  }, [armyData, currentList.units, getUnitById, detachmentEnhancements]);
 
   /**
    * Validate leader attachments.
@@ -418,17 +555,18 @@ export function useListValidation(
   const validateList = useCallback((): ListValidationResult => {
     const pointsErrors = validatePoints();
     const formatErrors = validateColosseumFormat();
+    const armyRulesErrors = validateArmyRules();
     const leaderErrors = validateLeaderAttachments();
     const maxModelsErrors = validateMaxModels();
 
-    const allErrors = [...pointsErrors, ...formatErrors, ...leaderErrors, ...maxModelsErrors];
+    const allErrors = [...pointsErrors, ...formatErrors, ...armyRulesErrors, ...leaderErrors, ...maxModelsErrors];
 
     return {
       isValid: allErrors.length === 0,
       errors: allErrors,
-      warnings: [], // Can be used for non-blocking issues in the future
+      warnings: [],
     };
-  }, [validatePoints, validateColosseumFormat, validateLeaderAttachments, validateMaxModels]);
+  }, [validatePoints, validateColosseumFormat, validateArmyRules, validateLeaderAttachments, validateMaxModels]);
 
   /**
    * Quick check if the list is valid.
@@ -454,6 +592,7 @@ export function useListValidation(
     validateList,
     validatePoints,
     validateColosseumFormat,
+    validateArmyRules,
     validateLeaderAttachments,
     validateMaxModels,
     isListValid,

@@ -326,7 +326,15 @@ export interface ListUnit {
 // Current List (Full Army List)
 // ============================================================================
 
-export type GameFormat = 'standard' | 'colosseum';
+export type GameFormat = 'colosseum' | 'incursion' | 'strike-force' | 'onslaught' | 'custom';
+
+export const GAME_FORMATS: { id: GameFormat; name: string; points: number | null }[] = [
+  { id: 'colosseum', name: 'Colosseum', points: 500 },
+  { id: 'incursion', name: 'Incursion', points: 1000 },
+  { id: 'strike-force', name: 'Strike Force', points: 2000 },
+  { id: 'onslaught', name: 'Onslaught', points: 3000 },
+  { id: 'custom', name: 'Custom', points: null },
+];
 
 export interface CurrentList {
   name: string;

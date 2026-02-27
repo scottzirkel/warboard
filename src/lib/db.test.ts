@@ -67,7 +67,7 @@ describe('Database Schema Types', () => {
         name: 'Test List',
         army: 'custodes',
         pointsLimit: 500,
-        format: 'standard',
+        format: 'strike-force',
         detachment: 'shield_host',
         units: [],
       };
@@ -85,7 +85,7 @@ describe('Database Schema Types', () => {
       const parsedData = JSON.parse(list.data) as CurrentList;
       expect(parsedData.name).toBe('Test List');
       expect(parsedData.army).toBe('custodes');
-      expect(parsedData.format).toBe('standard');
+      expect(parsedData.format).toBe('strike-force');
     });
   });
 
@@ -176,7 +176,7 @@ describe('Database Schema Types', () => {
           name: 'Updated List',
           army: 'tyranids',
           pointsLimit: 1000,
-          format: 'standard',
+          format: 'strike-force',
           detachment: 'invasion_fleet',
           units: [],
         },

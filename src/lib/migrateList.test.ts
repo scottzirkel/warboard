@@ -36,7 +36,7 @@ describe('migrateList', () => {
         name: 'Test',
         army: 'custodes',
         detachment: 'shield_host',
-        format: 'standard',
+        format: 'strike-force',
         pointsLimit: 500,
         units: [{ unitId: 'test', modelCount: 1, wargear: [] }],
       };
@@ -48,7 +48,7 @@ describe('migrateList', () => {
         name: 'Test',
         army: 'custodes',
         detachment: 'shield_host',
-        format: 'standard',
+        format: 'strike-force',
         pointsLimit: 500,
         units: [
           {
@@ -71,7 +71,7 @@ describe('migrateList', () => {
       expect(() => migrateList(undefined)).toThrow('Invalid list data');
     });
 
-    it('migrates gameFormat to format', () => {
+    it('migrates gameFormat colosseum to format colosseum', () => {
       const oldList = {
         name: 'Test',
         detachment: 'shield_host',
@@ -84,6 +84,35 @@ describe('migrateList', () => {
 
       expect(result.format).toBe('colosseum');
       expect(result).not.toHaveProperty('gameFormat');
+    });
+
+    it('migrates old standard format to strike-force', () => {
+      const oldList = {
+        name: 'Test',
+        army: 'custodes',
+        detachment: 'shield_host',
+        format: 'standard',
+        pointsLimit: 2000,
+        units: [],
+      };
+
+      const result = migrateList(oldList);
+
+      expect(result.format).toBe('strike-force');
+    });
+
+    it('migrates old gameFormat standard to strike-force', () => {
+      const oldList = {
+        name: 'Test',
+        detachment: 'shield_host',
+        gameFormat: 'standard',
+        pointsLimit: 500,
+        units: [],
+      };
+
+      const result = migrateList(oldList);
+
+      expect(result.format).toBe('strike-force');
     });
 
     it('detects custodes army from detachment', () => {
@@ -220,7 +249,7 @@ describe('migrateList', () => {
       expect(result.name).toBe('First save');
       expect(result.army).toBe('custodes');
       expect(result.detachment).toBe('shield_host');
-      expect(result.format).toBe('standard');
+      expect(result.format).toBe('strike-force');
       expect(result.pointsLimit).toBe(2000);
       expect(result.units).toHaveLength(1);
       expect(result.units[0].unitId).toBe('shield-captain');

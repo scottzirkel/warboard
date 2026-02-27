@@ -107,7 +107,7 @@ describe('API /api/lists', () => {
         name: 'My Test List',
         army: 'custodes',
         pointsLimit: 2000,
-        format: 'standard',
+        format: 'strike-force',
         detachment: 'shield_host',
         units: [],
       };
@@ -188,7 +188,7 @@ describe('API /api/lists', () => {
         name: 'Test List',
         army: 'custodes',
         pointsLimit: 2000,
-        format: 'standard',
+        format: 'strike-force',
         detachment: 'shield_host',
         units: [],
       };

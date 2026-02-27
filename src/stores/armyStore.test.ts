@@ -171,7 +171,7 @@ describe('armyStore', () => {
         name: '',
         army: 'custodes',
         pointsLimit: 500,
-        format: 'standard',
+        format: 'strike-force',
         detachment: '',
         units: [],
       },
@@ -197,20 +197,28 @@ describe('armyStore', () => {
       expect(useArmyStore.getState().currentList.pointsLimit).toBe(2000);
     });
 
-    it('sets format and adjusts points limit for colosseum', () => {
+    it('sets format and auto-sets points limit for colosseum', () => {
       useArmyStore.getState().setPointsLimit(2000);
       useArmyStore.getState().setFormat('colosseum');
 
       expect(useArmyStore.getState().currentList.format).toBe('colosseum');
-      // Colosseum only supports 500 points
       expect(useArmyStore.getState().currentList.pointsLimit).toBe(500);
     });
 
-    it('preserves points limit when switching to format that supports it', () => {
-      useArmyStore.getState().setPointsLimit(500);
-      useArmyStore.getState().setFormat('standard');
+    it('sets format and auto-sets points limit for fixed-points formats', () => {
+      useArmyStore.getState().setFormat('incursion');
+      expect(useArmyStore.getState().currentList.pointsLimit).toBe(1000);
 
-      expect(useArmyStore.getState().currentList.pointsLimit).toBe(500);
+      useArmyStore.getState().setFormat('onslaught');
+      expect(useArmyStore.getState().currentList.pointsLimit).toBe(3000);
+    });
+
+    it('preserves points limit when switching to custom', () => {
+      useArmyStore.getState().setPointsLimit(1500);
+      useArmyStore.getState().setFormat('custom');
+
+      expect(useArmyStore.getState().currentList.format).toBe('custom');
+      expect(useArmyStore.getState().currentList.pointsLimit).toBe(1500);
     });
 
     it('sets detachment', () => {
@@ -240,7 +248,7 @@ describe('armyStore', () => {
         name: 'Saved Army',
         army: 'custodes',
         pointsLimit: 500,
-        format: 'standard',
+        format: 'strike-force',
         detachment: 'shield-host',
         units: [
           createListUnit('custodian-guard', 5),
@@ -263,7 +271,7 @@ describe('armyStore', () => {
         name: 'Old List',
         army: 'custodes',
         pointsLimit: 500,
-        format: 'standard',
+        format: 'strike-force',
         detachment: 'shield-host',
         units: [createListUnit('custodian-guard', 4)],
       };

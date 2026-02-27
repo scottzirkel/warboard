@@ -109,7 +109,7 @@ export function ImportModal({
         army: typeof data.army === 'string' ? data.army : armyId,
         pointsLimit:
           typeof data.pointsLimit === 'number' ? data.pointsLimit : 500,
-        format: data.format === 'colosseum' ? 'colosseum' : 'standard',
+        format: data.format === 'colosseum' ? 'colosseum' : 'strike-force',
         detachment:
           typeof data.detachment === 'string' ? data.detachment : '',
         units: data.units.map((unit: unknown) => {

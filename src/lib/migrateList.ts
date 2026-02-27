@@ -21,7 +21,7 @@ interface OldList {
   army?: string;
   detachment: string;
   gameFormat?: string;
-  format?: GameFormat;
+  format?: string; // May include old 'standard' value
   pointsLimit: number;
   units: OldListUnit[];
   activeKatah?: string;
@@ -166,11 +166,12 @@ export function migrateList(data: unknown): CurrentList {
   const oldList = data as OldList;
 
   // Determine the format (gameFormat in old, format in new)
-  let format: GameFormat = 'standard';
+  // Migrate old 'standard' format to 'strike-force' (2000 pts was most common)
+  let format: GameFormat = 'strike-force';
   if (oldList.format) {
-    format = oldList.format;
+    format = oldList.format === 'standard' ? 'strike-force' : oldList.format as GameFormat;
   } else if (oldList.gameFormat) {
-    format = oldList.gameFormat === 'colosseum' ? 'colosseum' : 'standard';
+    format = oldList.gameFormat === 'colosseum' ? 'colosseum' : 'strike-force';
   }
 
   // Determine army

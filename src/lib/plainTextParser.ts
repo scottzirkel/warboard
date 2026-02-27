@@ -869,7 +869,7 @@ export function convertTextToCurrentList(
       name: parsed.name || 'Imported List',
       army: armyId,
       pointsLimit,
-      format: 'standard',
+      format: 'strike-force',
       detachment: detachmentId,
       units,
     },

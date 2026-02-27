@@ -78,7 +78,7 @@ const mockList: CurrentList = {
   name: 'Test Army',
   army: 'custodes',
   pointsLimit: 500,
-  format: 'standard',
+  format: 'strike-force',
   detachment: 'shield-host',
   units: [
     {

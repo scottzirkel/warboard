@@ -33,7 +33,8 @@ import {
   useSavedLists,
   getLocalStorageLists,
 } from '@/hooks';
-import type { CurrentList, Unit, GameFormat, LoadoutGroup, Weapon, ModifierSource, ModifierOperation, MissionTwist } from '@/types';
+import type { CurrentList, Unit, LoadoutGroup, Weapon, ModifierSource, ModifierOperation, MissionTwist } from '@/types';
+import type { GameFormat } from '@/types';
 
 // ============================================================================
 // Main App Component
@@ -855,10 +856,7 @@ export default function Home() {
             selectedDetachment={currentList.detachment}
             onDetachmentChange={setDetachment}
             selectedFormat={currentList.format}
-            onFormatChange={(format) => setFormat(format)}
-            pointsOptions={
-              currentList.format === 'colosseum' ? [500] : [500, 1000, 2000]
-            }
+            onFormatChange={(format: GameFormat) => setFormat(format)}
             onPointsLimitChange={setPointsLimit}
             validationErrors={listValidation.validateList().errors}
             mobilePanel={mobilePanel}

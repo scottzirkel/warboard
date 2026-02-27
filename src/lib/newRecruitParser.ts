@@ -524,7 +524,7 @@ export function convertToCurrentList(
       name: parsed.name || 'Imported List',
       army: armyId,
       pointsLimit: Math.ceil(parsed.totalPoints / 500) * 500, // Round up to nearest 500
-      format: 'standard',
+      format: 'strike-force',
       detachment: detachmentId || '',
       units,
     },

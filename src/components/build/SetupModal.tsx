@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Modal } from '@/components/ui';
+import { GAME_FORMATS } from '@/types';
 import type { GameFormat } from '@/types';
 
 interface SetupModalProps {
@@ -11,27 +12,22 @@ interface SetupModalProps {
   defaultDetachment: string;
 }
 
-const gameFormats: { id: GameFormat; name: string; pointsOptions: number[] }[] = [
-  { id: 'standard', name: 'Standard', pointsOptions: [500, 1000, 2000] },
-  { id: 'colosseum', name: 'Colosseum', pointsOptions: [500] },
-];
-
 export function SetupModal({
   isOpen,
   onConfirm,
   detachments,
   defaultDetachment,
 }: SetupModalProps) {
-  const [format, setFormat] = useState<GameFormat>('standard');
-  const [pointsLimit, setPointsLimit] = useState(500);
+  const [format, setFormat] = useState<GameFormat>('strike-force');
+  const [customPoints, setCustomPoints] = useState('2000');
   const [detachment, setDetachment] = useState(defaultDetachment);
 
   const handleFormatChange = (newFormat: GameFormat) => {
     setFormat(newFormat);
-    // Reset points if current selection isn't valid for new format
-    const formatConfig = gameFormats.find(f => f.id === newFormat);
-    if (formatConfig && !formatConfig.pointsOptions.includes(pointsLimit)) {
-      setPointsLimit(formatConfig.pointsOptions[0]);
+    // Initialize custom points input to the format's default
+    const formatConfig = GAME_FORMATS.find(f => f.id === newFormat);
+    if (formatConfig?.points) {
+      setCustomPoints(String(formatConfig.points));
     }
   };
 
@@ -40,7 +36,9 @@ export function SetupModal({
     ? detachment
     : defaultDetachment;
 
-  const currentFormatConfig = gameFormats.find(f => f.id === format)!;
+  // Resolve the points limit based on the selected format
+  const formatConfig = GAME_FORMATS.find(f => f.id === format);
+  const pointsLimit = formatConfig?.points ?? (parseInt(customPoints, 10) || 2000);
 
   return (
     <Modal
@@ -55,42 +53,40 @@ export function SetupModal({
       <div className="space-y-5">
         {/* Format */}
         <div>
-          <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">Game Type</label>
-          <div className="grid grid-cols-2 gap-2">
-            {gameFormats.map(f => (
+          <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">Game Format</label>
+          <div className="space-y-2">
+            {GAME_FORMATS.map(f => (
               <button
                 key={f.id}
                 onClick={() => handleFormatChange(f.id)}
-                className={`p-3 rounded-xl text-sm font-medium transition-all ${
+                className={`w-full p-3 rounded-xl text-sm font-medium text-left transition-all flex justify-between items-center ${
                   format === f.id
                     ? 'bg-accent-500/20 text-accent-400 border border-accent-500/50'
                     : 'bg-white/5 text-white/60 border border-white/10 hover:border-white/20'
                 }`}
               >
-                {f.name}
+                <span>{f.name}</span>
+                {f.points !== null && (
+                  <span className="text-white/40 text-xs">{f.points} pts</span>
+                )}
               </button>
             ))}
           </div>
-        </div>
 
-        {/* Points Limit */}
-        <div>
-          <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">Points</label>
-          <div className="grid grid-cols-3 gap-2">
-            {currentFormatConfig.pointsOptions.map(pts => (
-              <button
-                key={pts}
-                onClick={() => setPointsLimit(pts)}
-                className={`p-3 rounded-xl text-sm font-medium transition-all ${
-                  pointsLimit === pts
-                    ? 'bg-accent-500/20 text-accent-400 border border-accent-500/50'
-                    : 'bg-white/5 text-white/60 border border-white/10 hover:border-white/20'
-                }`}
-              >
-                {pts} pts
-              </button>
-            ))}
-          </div>
+          {/* Custom points input */}
+          {format === 'custom' && (
+            <div className="mt-3">
+              <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">Points Limit</label>
+              <input
+                type="number"
+                min="1"
+                value={customPoints}
+                onChange={(e) => setCustomPoints(e.target.value)}
+                className="w-full p-3 rounded-xl text-sm font-medium bg-white/5 text-white border border-white/10 focus:border-accent-500/50 focus:outline-none"
+                placeholder="Enter points limit"
+              />
+            </div>
+          )}
         </div>
 
         {/* Detachment */}

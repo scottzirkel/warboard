@@ -70,7 +70,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       name: body.name,
       army: body.army || 'custodes',
       pointsLimit: body.pointsLimit || 2000,
-      format: body.format || body.gameFormat || 'standard',
+      format: (body.format === 'standard' ? 'strike-force' : body.format) || body.gameFormat || 'strike-force',
       detachment: body.detachment || '',
       units: body.units || [],
     };

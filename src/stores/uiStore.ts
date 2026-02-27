@@ -284,6 +284,7 @@ export const useUIStore = create<UIStore>()(
     {
       name: 'army-tracker-ui',
       partialize: (state) => ({
+        hasEnteredApp: state.hasEnteredApp,
         mode: state.mode,
         selectedUnitIndex: state.selectedUnitIndex,
         mobilePanel: state.mobilePanel,
