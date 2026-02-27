@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import type { ValidationError } from '@/types';
+import type { ValidationError, GameFormat } from '@/types';
 import type { MobilePanel } from '@/stores/uiStore';
 
 interface BuildModeProps {
@@ -9,9 +9,15 @@ interface BuildModeProps {
   listName: string;
   currentPoints: number;
   pointsLimit: number;
-  detachmentName?: string;
-  formatName?: string;
   onNameChange?: (name: string) => void;
+  // Interactive cost bar controls
+  detachments: { id: string; name: string }[];
+  selectedDetachment: string;
+  onDetachmentChange: (id: string) => void;
+  selectedFormat: GameFormat;
+  onFormatChange: (format: GameFormat) => void;
+  pointsOptions: number[];
+  onPointsLimitChange: (limit: number) => void;
   // Validation
   validationErrors: ValidationError[];
   // Panels
@@ -26,9 +32,14 @@ export function BuildMode({
   listName,
   currentPoints,
   pointsLimit,
-  detachmentName,
-  formatName,
   onNameChange,
+  detachments,
+  selectedDetachment,
+  onDetachmentChange,
+  selectedFormat,
+  onFormatChange,
+  pointsOptions,
+  onPointsLimitChange,
   validationErrors,
   leftPanel,
   rosterPanel,
@@ -43,11 +54,11 @@ export function BuildMode({
 
   return (
     <div className={`h-full flex flex-col gap-4 w-full px-4 py-4 ${className}`}>
-      {/* Spacer for fixed header on mobile */}
-      <div className="h-[116px] lg:hidden shrink-0" />
+      {/* Spacer for fixed points bar on mobile */}
+      <div className="h-[120px] lg:hidden shrink-0" />
 
       {/* Points Summary Bar - fixed on mobile, static on desktop */}
-      <div className="fixed lg:static top-14 left-0 right-0 z-40 px-4 lg:px-0 pb-2 lg:pb-0 bg-gradient-to-b from-[#1c1c1e] via-[#1c1c1e] to-transparent lg:bg-none lg:shrink-0">
+      <div className="fixed lg:static top-14 left-0 right-0 z-40 px-4 lg:px-0 pb-2 lg:pb-0 bg-[#1c1c1e] lg:bg-transparent lg:shrink-0">
         <div className="card-depth p-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex-1 min-w-0">
@@ -59,8 +70,33 @@ export function BuildMode({
                 className="w-full bg-transparent border-none text-white font-medium text-lg focus:outline-none placeholder:text-white/40"
               />
               <div className="flex items-center gap-2 mt-1">
-                <span className="badge badge-accent">{detachmentName || 'No Detachment'}</span>
-                <span className="badge badge-purple">{formatName || 'Standard'}</span>
+                <div className="relative inline-flex items-center">
+                  <select
+                    value={selectedDetachment}
+                    onChange={(e) => onDetachmentChange(e.target.value)}
+                    className="badge badge-accent appearance-none cursor-pointer pr-6 focus:outline-none"
+                  >
+                    {detachments.map(d => (
+                      <option key={d.id} value={d.id} className="bg-gray-900 text-white">{d.name}</option>
+                    ))}
+                  </select>
+                  <svg className="absolute right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none opacity-60" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="relative inline-flex items-center">
+                  <select
+                    value={selectedFormat}
+                    onChange={(e) => onFormatChange(e.target.value as GameFormat)}
+                    className="badge badge-purple appearance-none cursor-pointer pr-6 focus:outline-none"
+                  >
+                    <option value="standard" className="bg-gray-900 text-white">Standard</option>
+                    <option value="colosseum" className="bg-gray-900 text-white">Colosseum</option>
+                  </select>
+                  <svg className="absolute right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none opacity-60" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </div>
               </div>
             </div>
             <div className="text-right shrink-0">
@@ -73,7 +109,20 @@ export function BuildMode({
               >
                 {currentPoints}
               </div>
-              <div className="text-sm text-white/50">of {pointsLimit} pts</div>
+              <div className="text-sm text-white/50 flex items-center justify-end gap-1">
+                of
+                <select
+                  value={pointsLimit}
+                  onChange={(e) => onPointsLimitChange(Number(e.target.value))}
+                  className="bg-transparent text-white/50 appearance-none cursor-pointer font-semibold focus:outline-none text-center"
+                  style={{ width: `${String(pointsLimit).length + 1}ch` }}
+                >
+                  {pointsOptions.map(pts => (
+                    <option key={pts} value={pts} className="bg-gray-900 text-white">{pts}</option>
+                  ))}
+                </select>
+                pts
+              </div>
             </div>
           </div>
           {/* Progress bar */}

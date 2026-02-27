@@ -44,7 +44,7 @@ export function UnitDetailModal({ unit, isOpen, onClose, onAddUnit }: UnitDetail
       isOpen={isOpen}
       onClose={onClose}
       title={unit.name}
-      size="lg"
+      size="xl"
     >
       <div className="space-y-4 max-h-[70vh] overflow-y-auto">
         {/* Points & Character Badge */}

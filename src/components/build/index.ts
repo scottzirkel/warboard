@@ -16,6 +16,7 @@ export type { UnitTypeGroup } from './UnitAccordion';
 export { RosterUnitRow } from './RosterUnitRow';
 export { UnitDetailsPanel } from './UnitDetailsPanel';
 export { UnitDetailModal } from './UnitDetailModal';
+export { SetupModal } from './SetupModal';
 export { StatsTable } from './StatsTable';
 export { WeaponsDisplay } from './WeaponsDisplay';
 export { AbilitiesDisplay } from './AbilitiesDisplay';

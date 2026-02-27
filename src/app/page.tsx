@@ -11,6 +11,7 @@ import { BuildMode } from '@/components/build/BuildMode';
 import { ArmyListPanel } from '@/components/build/ArmyListPanel';
 import { UnitRosterPanel } from '@/components/build/UnitRosterPanel';
 import { UnitDetailModal } from '@/components/build/UnitDetailModal';
+import { SetupModal } from '@/components/build/SetupModal';
 import { PlayMode } from '@/components/play/PlayMode';
 import { ArmyOverviewPanel } from '@/components/play/ArmyOverviewPanel';
 import { GameStatePanel } from '@/components/play/GameStatePanel';
@@ -44,6 +45,7 @@ export default function Home() {
   // -------------------------------------------------------------------------
   const [showReferencePanel, setShowReferencePanel] = useState(false);
   const [detailModalUnit, setDetailModalUnit] = useState<Unit | null>(null);
+  const [showSetupModal, setShowSetupModal] = useState(false);
   const [missionTwists, setMissionTwists] = useState<MissionTwist[]>([]);
   const [isExporting, setIsExporting] = useState(false);
   const [exportCode, setExportCode] = useState<string | null>(null);
@@ -124,6 +126,7 @@ export default function Home() {
     confirmModalConfig,
     toasts,
     enterApp,
+    exitApp,
     setMode,
     selectUnit,
     setMobilePanel,
@@ -541,17 +544,24 @@ export default function Home() {
   // Handlers
   // -------------------------------------------------------------------------
 
-  const handleArmyChange = useCallback(async (armyId: string) => {
-    resetList();
-    resetGameState();
-    selectUnit(null);
-    await loadArmyData(armyId);
-  }, [resetList, resetGameState, selectUnit, loadArmyData]);
-
   const handleLandingArmySelect = useCallback(async (armyId: string) => {
     await loadArmyData(armyId);
+    setShowSetupModal(true);
+  }, [loadArmyData]);
+
+  const handleSetupConfirm = useCallback((format: GameFormat, pointsLimit: number, detachment: string) => {
+    setFormat(format);
+    setPointsLimit(pointsLimit);
+    setDetachment(detachment);
+    setShowSetupModal(false);
     enterApp();
-  }, [loadArmyData, enterApp]);
+  }, [setFormat, setPointsLimit, setDetachment, enterApp]);
+
+  const handleStartOver = useCallback(() => {
+    resetList();
+    resetGameState();
+    exitApp();
+  }, [resetList, resetGameState, exitApp]);
 
   const handleModeChange = useCallback((newMode: 'build' | 'play') => {
     if (newMode === 'play' && !canPlay) {
@@ -762,10 +772,20 @@ export default function Home() {
   // Landing page
   if (!hasEnteredApp) {
     return (
-      <LandingPage
-        onSelectArmy={handleLandingArmySelect}
-        isLoading={isArmyLoading}
-      />
+      <>
+        <LandingPage
+          onSelectArmy={handleLandingArmySelect}
+          isLoading={isArmyLoading}
+        />
+        {armyData && (
+          <SetupModal
+            isOpen={showSetupModal}
+            onConfirm={handleSetupConfirm}
+            detachments={Object.entries(armyData.detachments).map(([id, d]) => ({ id, name: d.name }))}
+            defaultDetachment={Object.keys(armyData.detachments)[0] || ''}
+          />
+        )}
+      </>
     );
   }
 
@@ -806,7 +826,18 @@ export default function Home() {
         onReset={handleResetGame}
         showReferencePanel={showReferencePanel}
         onToggleReferencePanel={handleToggleReferencePanel}
+        onSave={handleOpenSaveModal}
+        onLoad={() => openModal('load')}
+        onImport={() => openModal('import')}
+        onExport={handleExport}
+        onClear={resetList}
+        onStartOver={handleStartOver}
+        canExport={currentList.units.length > 0}
+        canClear={currentList.units.length > 0}
       />
+
+      {/* Spacer for fixed nav on mobile */}
+      <div className="h-14 lg:hidden shrink-0" />
 
       {/* Main Content */}
       <main className="flex-1 lg:overflow-hidden">
@@ -815,9 +846,20 @@ export default function Home() {
             listName={currentList.name}
             currentPoints={totalPoints}
             pointsLimit={currentList.pointsLimit}
-            detachmentName={armyData?.detachments[currentList.detachment]?.name}
-            formatName={currentList.format === 'colosseum' ? 'Colosseum' : 'Standard'}
             onNameChange={setListName}
+            detachments={
+              armyData
+                ? Object.entries(armyData.detachments).map(([id, d]) => ({ id, name: d.name }))
+                : []
+            }
+            selectedDetachment={currentList.detachment}
+            onDetachmentChange={setDetachment}
+            selectedFormat={currentList.format}
+            onFormatChange={(format) => setFormat(format)}
+            pointsOptions={
+              currentList.format === 'colosseum' ? [500] : [500, 1000, 2000]
+            }
+            onPointsLimitChange={setPointsLimit}
             validationErrors={listValidation.validateList().errors}
             mobilePanel={mobilePanel}
             leftPanel={
@@ -826,25 +868,11 @@ export default function Home() {
                   armyData={armyData}
                   currentList={currentList}
                   selectedUnitIndex={selectedUnitIndex}
-                  armies={availableArmies}
-                  selectedArmyId={currentList.army}
-                  onArmyChange={handleArmyChange}
                   onSelectUnit={handleSelectListUnit}
                   onRemoveUnit={handleRemoveUnit}
                   onModelCountChange={updateUnitModelCount}
                   onEnhancementChange={setUnitEnhancement}
                   onWeaponCountChange={(index, choiceId, count) => setWeaponCount(index, choiceId, count)}
-                  onFormatChange={(format: GameFormat) => setFormat(format)}
-                  onPointsLimitChange={setPointsLimit}
-                  onDetachmentChange={setDetachment}
-                  onImport={() => openModal('import')}
-                  onExport={handleExport}
-                  onLoad={() => openModal('load')}
-                  onSave={handleOpenSaveModal}
-                  onClear={resetList}
-                  canSave={true}
-                  canExport={currentList.units.length > 0}
-                  isExporting={isExporting}
                   getAvailableLeaders={leaderAttachment.getAvailableLeaders}
                   isUnitAttachedAsLeader={leaderAttachment.isUnitAttachedAsLeader}
                   getAttachedToUnitName={(index) => leaderAttachment.getAttachedToUnit(index)?.name}

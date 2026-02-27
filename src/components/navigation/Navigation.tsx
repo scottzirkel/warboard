@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { AppMode, GamePhase, PlayerTurn } from '@/types';
 import { GAME_PHASES } from '@/types';
 import type { MobilePanel } from '@/stores/uiStore';
-import { UserMenu } from '@/components/auth';
+import { NavMenu } from './NavMenu';
 
 // ============================================================================
 // Mode Toggle Button Component
@@ -427,6 +427,16 @@ interface NavigationProps {
   showReferencePanel?: boolean;
   onToggleReferencePanel?: () => void;
 
+  // Nav menu actions
+  onSave?: () => void;
+  onLoad?: () => void;
+  onImport?: () => void;
+  onExport?: () => void;
+  onClear?: () => void;
+  onStartOver?: () => void;
+  canExport?: boolean;
+  canClear?: boolean;
+
   // Loading state
   isLoading?: boolean;
 }
@@ -453,6 +463,14 @@ export function Navigation({
   onReset,
   showReferencePanel = false,
   onToggleReferencePanel,
+  onSave,
+  onLoad,
+  onImport,
+  onExport,
+  onClear,
+  onStartOver,
+  canExport = false,
+  canClear = false,
   isLoading = false,
 }: NavigationProps) {
   const showGameState = mode === 'play' &&
@@ -466,7 +484,7 @@ export function Navigation({
     onReset;
 
   return (
-    <nav className="nav-blur sticky top-0 z-50 shrink-0 overflow-x-clip overflow-y-visible">
+    <nav className="nav-blur fixed lg:sticky top-0 left-0 right-0 z-50 shrink-0 overflow-x-clip overflow-y-visible">
       <div className="px-2 lg:px-4">
         <div className="h-14 flex items-center justify-between gap-2 lg:gap-4">
           {/* Left: Mode Toggle + Mobile Panel Switcher */}
@@ -569,7 +587,18 @@ export function Navigation({
               />
             )}
 
-            <UserMenu />
+            {onSave && onLoad && onImport && onExport && onClear && onStartOver && (
+              <NavMenu
+                onSave={onSave}
+                onLoad={onLoad}
+                onImport={onImport}
+                onExport={onExport}
+                onClear={onClear}
+                onStartOver={onStartOver}
+                canExport={canExport}
+                canClear={canClear}
+              />
+            )}
           </div>
         </div>
       </div>

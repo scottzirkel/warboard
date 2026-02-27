@@ -227,7 +227,7 @@ body {
 
 /* Navigation bar blur */
 .nav-blur {
-  background: rgba(28, 28, 30, 0.72);
+  background: #1c1c1e;
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
 }

@@ -68,6 +68,7 @@ interface UIStoreState {
 interface UIStoreActions {
   // Landing Page
   enterApp: () => void;
+  exitApp: () => void;
 
   // Mode Management
   setMode: (mode: AppMode) => void;
@@ -145,6 +146,10 @@ export const useUIStore = create<UIStore>()(
 
   enterApp: () => {
     set({ hasEnteredApp: true });
+  },
+
+  exitApp: () => {
+    set({ hasEnteredApp: false, mode: 'build', selectedUnitIndex: null, mobilePanel: 'list' });
   },
 
   // -------------------------------------------------------------------------

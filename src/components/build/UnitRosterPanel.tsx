@@ -103,7 +103,7 @@ function UnitCard({ unit, pointsDisplay, onAdd, onOpenDetail }: UnitCardProps) {
   return (
     <div
       onClick={onOpenDetail}
-      className="bg-white/5 hover:bg-white/10 rounded-lg p-3 cursor-pointer transition-colors relative group"
+      className="bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-3 cursor-pointer transition-colors relative group shadow-sm shadow-black/20"
     >
       {/* Quick Add Button */}
       <button
@@ -112,7 +112,7 @@ function UnitCard({ unit, pointsDisplay, onAdd, onOpenDetail }: UnitCardProps) {
           e.stopPropagation();
           onAdd();
         }}
-        className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-accent-500/80 hover:bg-accent-500 text-white text-sm font-bold transition-colors opacity-70 group-hover:opacity-100"
+        className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-accent-500/80 hover:bg-accent-500 text-white text-sm font-bold transition-colors"
         title={`Add ${unit.name}`}
       >
         +
@@ -234,21 +234,16 @@ export function UnitRosterPanel({
 
   return (
     <div className={`flex flex-col h-full ${className}`}>
-      {/* Header */}
-      <div className="flex items-start justify-between gap-3 mb-3 shrink-0">
-        <h3 className="text-sm font-semibold text-white/55 uppercase tracking-wide">Unit Roster</h3>
-        <span className="text-xs text-white/40 shrink-0">{filteredUnits.length} units</span>
-      </div>
-
       {/* Search Input */}
-      <div className="mb-4 shrink-0">
+      <div className="mb-4 shrink-0 flex items-center gap-2">
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search units..."
-          className="input-dark w-full"
+          className="input-dark flex-1"
         />
+        <span className="text-xs text-white/40 shrink-0">{filteredUnits.length} units</span>
       </div>
 
       {/* Loading State */}
@@ -292,7 +287,7 @@ export function UnitRosterPanel({
               isOpen={openGroups.has(group)}
               onToggle={() => toggleGroup(group)}
             >
-              <div className="grid grid-cols-2 gap-2 px-1">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 px-1">
                 {groupedUnits[group].map((unit) => (
                   <UnitCard
                     key={unit.id}
