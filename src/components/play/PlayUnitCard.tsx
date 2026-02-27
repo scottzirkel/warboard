@@ -96,10 +96,10 @@ export function PlayUnitCard({
         ${className}
       `}
     >
-      <div className="p-3">
+      <div className="px-3 py-2">
         {/* Unit Name - Full Width */}
         <div className="flex items-center gap-2">
-          <span className={`font-semibold truncate flex-1 ${isDestroyed ? 'line-through text-white/50' : ''}`}>
+          <span className={`text-sm font-semibold truncate flex-1 ${isDestroyed ? 'line-through text-white/50' : ''}`}>
             {displayName}
           </span>
           {(isWarlord || isLeaderWarlord) && (

@@ -72,6 +72,8 @@ interface PlayModeProps {
   onToggleTurn?: () => void;
   onAdvance?: () => void;
   onReset?: () => void;
+  activeTwistName?: string | null;
+  onChangeTwist?: () => void;
   leftPanel?: ReactNode;
   middlePanel?: ReactNode;
   rightPanel?: ReactNode;
@@ -103,6 +105,8 @@ export function PlayMode({
   onToggleTurn,
   onAdvance,
   onReset,
+  activeTwistName,
+  onChangeTwist,
 }: PlayModeProps) {
   // Reset confirmation state for mobile
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -124,7 +128,7 @@ export function PlayMode({
   const phaseDisplay = currentPhase.charAt(0).toUpperCase() + currentPhase.slice(1);
 
   return (
-    <div className="lg:h-full flex flex-col gap-4 p-4">
+    <div className="lg:h-full flex flex-col gap-2 lg:gap-4 pb-4 lg:p-4">
       {/* Desktop: 3-column grid layout (hidden on mobile) */}
       <div className="hidden lg:grid lg:grid-cols-[1fr_1.25fr_1.75fr] gap-4 flex-1 min-h-0">
         {/* Left Panel - Army Overview (narrower) */}
@@ -155,12 +159,12 @@ export function PlayMode({
         </div>
       </div>
 
-      {/* Mobile: Single panel view */}
-      <div className="flex lg:hidden flex-col gap-4">
+      {/* Mobile: Single panel view - px-2 matches nav and build mode */}
+      <div className="flex lg:hidden flex-col gap-2 px-2">
         {mobilePanel === 'roster' ? (
           <>
             {/* Game State Controls - only on Game tab */}
-            <div className="bg-[rgba(44,44,46,0.65)] rounded-2xl shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)] p-4 space-y-4">
+            <div className="card-depth p-4 space-y-4">
               {/* Round & Turn Row */}
               <div className="flex items-center justify-between">
                 {/* Round Stepper */}
@@ -273,56 +277,74 @@ export function PlayMode({
                 </div>
               </div>
 
-              {/* Reset Game Button */}
-              {onReset && (
-                <div className="pt-2 border-t border-white/10">
-                  {showResetConfirm ? (
-                    <div className="flex items-center justify-center gap-3">
-                      <span className="text-white/60 text-sm">Reset game?</span>
+              {/* Twist & Reset Row */}
+              <div className="pt-2 border-t border-white/10 flex items-center gap-2">
+                {/* Mission Twist Button */}
+                {onChangeTwist && (
+                  <button
+                    onClick={onChangeTwist}
+                    className="flex-1 py-2 rounded-lg bg-white/5 text-white/50 font-medium flex items-center justify-center gap-2"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span className="truncate">
+                      {activeTwistName ?? 'No Twist'}
+                    </span>
+                  </button>
+                )}
+
+                {/* Reset Game Button */}
+                {onReset && (
+                  <>
+                    {showResetConfirm ? (
+                      <div className="flex-1 flex items-center justify-center gap-3">
+                        <span className="text-white/60 text-sm">Reset?</span>
+                        <button
+                          onClick={() => {
+                            onReset();
+                            setShowResetConfirm(false);
+                          }}
+                          className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold"
+                        >
+                          Yes
+                        </button>
+                        <button
+                          onClick={() => setShowResetConfirm(false)}
+                          className="px-4 py-2 rounded-lg bg-white/10 text-white font-semibold"
+                        >
+                          No
+                        </button>
+                      </div>
+                    ) : (
                       <button
-                        onClick={() => {
-                          onReset();
-                          setShowResetConfirm(false);
-                        }}
-                        className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold"
+                        onClick={() => setShowResetConfirm(true)}
+                        className={`${onChangeTwist ? '' : 'flex-1'} py-2 px-4 rounded-lg bg-white/5 text-white/50 font-medium flex items-center justify-center gap-2`}
                       >
-                        Yes, Reset
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                          />
+                        </svg>
+                        {!onChangeTwist && 'Reset Game'}
                       </button>
-                      <button
-                        onClick={() => setShowResetConfirm(false)}
-                        className="px-4 py-2 rounded-lg bg-white/10 text-white font-semibold"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => setShowResetConfirm(true)}
-                      className="w-full py-2 rounded-lg bg-white/5 text-white/50 font-medium flex items-center justify-center gap-2"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                        />
-                      </svg>
-                      Reset Game
-                    </button>
-                  )}
-                </div>
-              )}
+                    )}
+                  </>
+                )}
+              </div>
             </div>
 
             {/* Game Panel Content (stratagems, etc.) */}
-            <div className="bg-[rgba(44,44,46,0.65)] rounded-2xl shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)] p-4">
+            <div className="card-depth p-4">
               {middlePanel || (
                 <div className="flex items-center justify-center text-white/40 py-8">
                   <p>No game state available</p>

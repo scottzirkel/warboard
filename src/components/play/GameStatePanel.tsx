@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Modal, Badge, Button, Card, SegmentedControl } from '@/components/ui';
-import type { ArmyData, Detachment, Stratagem, MissionTwist } from '@/types';
+import type { ArmyData, Detachment, Stratagem } from '@/types';
 
 // ============================================================================
 // Types
@@ -35,10 +35,9 @@ interface GameStatePanelProps {
   stratagemUsage: Record<string, number>;
   onIncrementStratagemUsage: (stratagemId: string) => void;
 
-  // Twists state (Chapter Approved)
-  activeTwists: string[];
-  onToggleTwist: (twistId: string) => void;
-  availableTwists: MissionTwist[];
+  // Active twist display
+  activeTwistName: string | null;
+  onChangeTwist: () => void;
 
   // Detachment rule choices
   activeRuleChoices: Record<string, string>;
@@ -202,9 +201,8 @@ export function GameStatePanel({
   onToggleStratagem,
   stratagemUsage,
   onIncrementStratagemUsage,
-  activeTwists,
-  onToggleTwist,
-  availableTwists,
+  activeTwistName,
+  onChangeTwist,
   activeRuleChoices,
   onSetRuleChoice,
   armyData,
@@ -219,10 +217,9 @@ export function GameStatePanel({
     ...getDetachmentStratagems(detachment),
   ]);
 
-  // Collapse state: Detachment Rules and Stratagems default expanded, Twists default collapsed
+  // Collapse state: Detachment Rules and Stratagems default expanded
   const [detachmentRulesOpen, setDetachmentRulesOpen] = useState(true);
   const [stratagemsSectionOpen, setStratagemsSectionOpen] = useState(true);
-  const [twistsSectionOpen, setTwistsSectionOpen] = useState(false);
 
   // Selected stratagem for detail modal
   const [selectedStratagem, setSelectedStratagem] = useState<Stratagem | null>(null);
@@ -271,12 +268,12 @@ export function GameStatePanel({
         Army Rules
       </h2>
 
-      <div className="space-y-4 flex-1 overflow-y-auto scroll-smooth">
+      <div className="space-y-3 flex-1 overflow-y-auto scroll-smooth">
         {/* Martial Ka'tah (if stances available) */}
         {katahStances.length > 0 && (
           <Card className="overflow-hidden">
-            <div className="p-4 pb-3">
-              <div className="text-white/60 font-medium mb-3">Martial Ka&apos;tah</div>
+            <div className="p-3 pb-2">
+              <div className="text-white/60 font-medium mb-2">Martial Ka&apos;tah</div>
               <SegmentedControl
                 options={katahOptions}
                 value={selectedKatah}
@@ -308,7 +305,7 @@ export function GameStatePanel({
               </div>
             </button>
             <div className={`overflow-hidden transition-all duration-200 ${detachmentRulesOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
-              <div className="px-4 pb-4 space-y-3">
+              <div className="px-3 pb-3 space-y-3">
                 {detachment.rules.map((rule) => {
                   const isPending = rule.resetsEachRound && (pendingConfirmations[rule.id] ?? false);
                   const currentChoice = activeRuleChoices[rule.id];
@@ -439,52 +436,23 @@ export function GameStatePanel({
           </div>
         </Card>
 
-        {/* Mission Twists (Chapter Approved) - Collapsible, default collapsed */}
-        {availableTwists.length > 0 && (
-          <Card className="overflow-hidden">
-            <button
-              onClick={() => setTwistsSectionOpen(!twistsSectionOpen)}
-              className={`${sectionHeaderStyles} w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors`}
-            >
-              <span>Mission Twists</span>
-              <div className="flex items-center gap-2">
-                <Badge>{availableTwists.length}</Badge>
-                <svg
-                  className={`w-3 h-3 text-white/40 transition-transform duration-200 ${twistsSectionOpen ? '' : '-rotate-90'}`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </button>
-            <div className={`overflow-hidden transition-all duration-200 ${twistsSectionOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
-              <div className="space-y-0">
-                {availableTwists.map((twist) => (
-                  <div
-                    key={twist.id}
-                    className={`
-                      ${insetGroupItemStyles}
-                      cursor-pointer transition-colors [-webkit-tap-highlight-color:transparent]
-                      ${activeTwists.includes(twist.id) ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-white/5'}
-                    `}
-                    onClick={() => onToggleTwist(twist.id)}
-                  >
-                    <div className="flex-1">
-                      <div className="font-medium text-sm">{twist.name}</div>
-                      <div className="text-xs text-white/40 mt-0.5 capitalize">{twist.affects}</div>
-                    </div>
-                    {twist.modifiers && twist.modifiers.length > 0 && (
-                      <Badge variant="accent">Modifier</Badge>
-                    )}
-                  </div>
-                ))}
+        {/* Mission Twist Indicator */}
+        <Card className="overflow-hidden">
+          <button
+            onClick={onChangeTwist}
+            className={`${insetGroupItemStyles} w-full cursor-pointer hover:bg-white/5 transition-colors [-webkit-tap-highlight-color:transparent]`}
+          >
+            <div className="flex-1">
+              <div className="text-xs text-white/40 uppercase tracking-wide">Mission Twist</div>
+              <div className="font-medium text-sm mt-0.5">
+                {activeTwistName ?? 'None'}
               </div>
             </div>
-          </Card>
-        )}
+            <svg className="w-4 h-4 text-white/30 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </Card>
       </div>
 
       {/* Stratagem Detail Modal */}

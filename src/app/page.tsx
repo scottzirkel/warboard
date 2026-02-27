@@ -16,6 +16,7 @@ import { PlayMode } from '@/components/play/PlayMode';
 import { ArmyOverviewPanel } from '@/components/play/ArmyOverviewPanel';
 import { GameStatePanel } from '@/components/play/GameStatePanel';
 import { SelectedUnitDetailsPanel } from '@/components/play/SelectedUnitDetailsPanel';
+import { TwistSelectionModal } from '@/components/play/TwistSelectionModal';
 import {
   ToastContainer,
   ImportModal,
@@ -48,6 +49,7 @@ export default function Home() {
   const [detailModalUnit, setDetailModalUnit] = useState<Unit | null>(null);
   const [showSetupModal, setShowSetupModal] = useState(false);
   const [missionTwists, setMissionTwists] = useState<MissionTwist[]>([]);
+  const [showTwistModal, setShowTwistModal] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [exportCode, setExportCode] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
@@ -101,6 +103,7 @@ export default function Home() {
     confirmRoundSelection,
     toggleStratagem,
     toggleTwist,
+    clearActiveTwists,
     incrementStratagemUsage,
     isLoadoutGroupCollapsed,
     toggleLoadoutGroupCollapsed,
@@ -572,7 +575,10 @@ export default function Home() {
       return;
     }
     setMode(newMode);
-  }, [canPlay, setMode, showError]);
+    if (newMode === 'play' && missionTwists.length > 0) {
+      setShowTwistModal(true);
+    }
+  }, [canPlay, setMode, showError, missionTwists.length]);
 
   const handleModeToggle = useCallback(() => {
     const newMode = mode === 'build' ? 'play' : 'build';
@@ -734,7 +740,24 @@ export default function Home() {
   const handleResetGame = useCallback(() => {
     resetGameState();
     resetAllWounds();
-  }, [resetGameState, resetAllWounds]);
+    if (missionTwists.length > 0) {
+      setShowTwistModal(true);
+    }
+  }, [resetGameState, resetAllWounds, missionTwists.length]);
+
+  const handleTwistSelect = useCallback((twistId: string | null) => {
+    if (twistId) {
+      // Ensure this twist is the active one (toggleTwist already handles single-twist logic)
+      const currentActive = gameState.activeTwists?.[0] || null;
+      if (currentActive !== twistId) {
+        if (currentActive) clearActiveTwists();
+        toggleTwist(twistId);
+      }
+    } else {
+      clearActiveTwists();
+    }
+    setShowTwistModal(false);
+  }, [gameState.activeTwists, clearActiveTwists, toggleTwist]);
 
   // Reset all activations for the selected unit
   const handleResetUnitActivations = useCallback(() => {
@@ -914,6 +937,8 @@ export default function Home() {
             onToggleTurn={togglePlayerTurn}
             onAdvance={advanceGameState}
             onReset={handleResetGame}
+            activeTwistName={missionTwists.find(t => t.id === gameState.activeTwists?.[0])?.name ?? null}
+            onChangeTwist={() => setShowTwistModal(true)}
             onModeToggle={() => handleModeChange('build')}
             canPlay={canPlay}
             validationErrors={listValidation.validateList().errors}
@@ -946,9 +971,8 @@ export default function Home() {
                 onToggleStratagem={toggleStratagem}
                 stratagemUsage={gameState.stratagemUsage ?? {}}
                 onIncrementStratagemUsage={incrementStratagemUsage}
-                activeTwists={gameState.activeTwists || []}
-                onToggleTwist={toggleTwist}
-                availableTwists={missionTwists}
+                activeTwistName={missionTwists.find(t => t.id === gameState.activeTwists?.[0])?.name ?? null}
+                onChangeTwist={() => setShowTwistModal(true)}
                 activeRuleChoices={gameState.activeRuleChoices ?? {}}
                 onSetRuleChoice={setRuleChoice}
                 armyData={armyData}
@@ -1258,6 +1282,15 @@ export default function Home() {
           onMigrationComplete={fetchLists}
         />
       )}
+
+      {/* Twist Selection Modal (Play Mode entry / Reset) */}
+      <TwistSelectionModal
+        isOpen={showTwistModal}
+        onClose={() => setShowTwistModal(false)}
+        twists={missionTwists}
+        activeTwistId={gameState.activeTwists?.[0] || null}
+        onSelect={handleTwistSelect}
+      />
 
       {/* Toast Notifications */}
       <ToastContainer

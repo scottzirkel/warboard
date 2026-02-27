@@ -412,7 +412,7 @@ export function SelectedUnitDetailsPanel({
       <h2 className="text-xl font-semibold text-accent-300 mb-2">{combinedName}</h2>
 
       {/* Badges (enhancement + warlord) */}
-      <div className="flex flex-wrap gap-2 mb-4">
+      <div className="flex flex-wrap gap-2 mb-3">
         {enhancement && (
           <TooltipBadge tooltip={enhancement.description} variant="accent">
             {enhancement.name}
@@ -429,7 +429,7 @@ export function SelectedUnitDetailsPanel({
         )}
       </div>
 
-      <div className="space-y-4 flex-1 overflow-y-auto scroll-smooth">
+      <div className="space-y-3 flex-1 overflow-y-auto scroll-smooth">
         {/* Stats Table with Modifiers */}
         {/* Show leader stats if manually selected or bodyguard is destroyed */}
         {(() => {
@@ -831,7 +831,7 @@ export function SelectedUnitDetailsPanel({
               </div>
             </button>
             <div className={`overflow-hidden transition-all duration-200 ${abilitiesOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
-              <div className="px-4 pb-4 space-y-2">
+              <div className="px-3 pb-3 space-y-2">
                 {/* Unit abilities - sorted so used ones are at the bottom */}
                 {[...(unit.abilities || [])]
                   .sort((a, b) => {
