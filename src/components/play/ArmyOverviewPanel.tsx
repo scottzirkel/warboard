@@ -257,6 +257,8 @@ interface ArmyOverviewPanelProps {
   selectedUnitIndex: number | null;
   detachmentId: string;
   onSelectUnit: (index: number) => void;
+  onUnitWoundChange?: (unitIndex: number, wounds: number | null) => void;
+  onLeaderWoundChange?: (unitIndex: number, wounds: number | null) => void;
   className?: string;
 }
 
@@ -270,6 +272,8 @@ export function ArmyOverviewPanel({
   selectedUnitIndex,
   detachmentId,
   onSelectUnit,
+  onUnitWoundChange,
+  onLeaderWoundChange,
   className = '',
 }: ArmyOverviewPanelProps) {
   // Filter out units that are attached as leaders (they'll be shown with their host unit)
@@ -325,7 +329,7 @@ export function ArmyOverviewPanel({
       <h2 className="section-header-inline mb-4 shrink-0">Your Army</h2>
 
       {/* Army Units List */}
-      <div className="space-y-2 flex-1 overflow-y-auto scroll-smooth min-h-0">
+      <div className="space-y-3 flex-1 overflow-y-auto scroll-smooth min-h-0">
         {sortedUnits.length === 0 ? (
           <div className="text-center text-white/40 py-12">
             <p className="text-lg mb-1">No units in your army</p>
@@ -396,6 +400,8 @@ export function ArmyOverviewPanel({
                 leaderMaxWounds={leaderWounds.maxWounds}
                 leaderModelsAlive={leaderWounds.modelsAlive}
                 leaderTotalModels={leaderWounds.totalModels}
+                onUnitWoundChange={onUnitWoundChange ? (wounds) => onUnitWoundChange(index, wounds) : undefined}
+                onLeaderWoundChange={onLeaderWoundChange ? (wounds) => onLeaderWoundChange(index, wounds) : undefined}
                 enhancementName={enhancementName}
                 isWarlord={isWarlord}
                 isLeaderWarlord={isLeaderWarlord}

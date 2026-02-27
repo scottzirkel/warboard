@@ -575,10 +575,11 @@ export default function Home() {
       return;
     }
     setMode(newMode);
-    if (newMode === 'play' && missionTwists.length > 0) {
+    const hasTwistSelected = (gameState.activeTwists?.length ?? 0) > 0;
+    if (newMode === 'play' && missionTwists.length > 0 && !hasTwistSelected) {
       setShowTwistModal(true);
     }
-  }, [canPlay, setMode, showError, missionTwists.length]);
+  }, [canPlay, setMode, showError, missionTwists.length, gameState.activeTwists]);
 
   const handleModeToggle = useCallback(() => {
     const newMode = mode === 'build' ? 'play' : 'build';
@@ -957,6 +958,8 @@ export default function Home() {
                   selectedUnitIndex={selectedUnitIndex}
                   detachmentId={currentList.detachment}
                   onSelectUnit={(index) => selectUnit(index)}
+                  onUnitWoundChange={setUnitWounds}
+                  onLeaderWoundChange={setLeaderWounds}
                 />
               )
             }

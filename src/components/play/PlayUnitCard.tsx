@@ -22,6 +22,9 @@ interface PlayUnitCardProps {
   leaderMaxWounds?: number;
   leaderModelsAlive?: number;
   leaderTotalModels?: number;
+  // Wound adjustment callbacks
+  onUnitWoundChange?: (wounds: number | null) => void;
+  onLeaderWoundChange?: (wounds: number | null) => void;
   // Enhancement info
   enhancementName?: string;
   // Warlord indicator
@@ -47,6 +50,8 @@ export function PlayUnitCard({
   leaderMaxWounds = 0,
   leaderModelsAlive = 0,
   leaderTotalModels = 0,
+  onUnitWoundChange,
+  onLeaderWoundChange,
   enhancementName,
   isWarlord = false,
   isLeaderWarlord = false,
@@ -85,6 +90,10 @@ export function PlayUnitCard({
     ? `${unit.name} + ${attachedLeaderName}`
     : unit.name;
 
+  // Effective wounds per model (accounts for weapon modifiers like Praesidium Shield)
+  const effectiveW = totalModels > 0 ? Math.round(maxWounds / totalModels) : unit.stats.w;
+  const wIsModified = effectiveW !== unit.stats.w;
+
   // Format movement with inches
   const formatM = (val: number) => `${val}"`;
 
@@ -92,8 +101,8 @@ export function PlayUnitCard({
     <div
       onClick={onSelect}
       className={`
-        card-depth overflow-hidden cursor-pointer
-        ${isSelected ? 'ring-2 ring-accent-500' : 'ring-1 ring-inset ring-accent-500/25'}
+        bg-white/5 border rounded-xl overflow-hidden cursor-pointer shadow-sm shadow-black/20
+        ${isSelected ? 'border-accent-500 ring-1 ring-accent-500' : 'border-white/10'}
         ${isDestroyed ? 'opacity-40' : 'hover:bg-white/10'}
         transition-colors
         ${className}
@@ -124,53 +133,97 @@ export function PlayUnitCard({
         </div>
 
         {/* Mini Stat Row */}
-        <div className="grid grid-cols-6 gap-1 mb-1.5">
+        <div className="grid grid-cols-6 gap-1.5 mb-1.5">
           {([
-            { label: 'M', value: formatM(unit.stats.m) },
-            { label: 'T', value: unit.stats.t },
-            { label: 'SV', value: unit.stats.sv },
-            { label: 'W', value: unit.stats.w },
-            { label: 'LD', value: unit.stats.ld },
-            { label: 'OC', value: unit.stats.oc },
-          ] as const).map(({ label, value }) => (
-            <div key={label} className="relative flex flex-col items-center rounded bg-black/20 py-0.5">
-              <span className="text-[8px] font-medium text-white/40 uppercase leading-none">{label}</span>
-              <span className="text-xs font-semibold text-white leading-tight">{value}</span>
-              {label === 'SV' && unit.invuln && (
-                <span className="absolute -bottom-0.5 -right-0.5 text-[7px] px-0.5 rounded bg-accent-500/30 text-accent-300 leading-tight">
-                  {unit.invuln}
-                </span>
-              )}
+            { label: 'M', value: formatM(unit.stats.m), modified: false },
+            { label: 'T', value: unit.stats.t, modified: false },
+            { label: 'SV', value: unit.invuln ? `${unit.stats.sv}/${unit.invuln}+` : unit.stats.sv, modified: false },
+            { label: 'W', value: effectiveW, modified: wIsModified },
+            { label: 'LD', value: unit.stats.ld, modified: false },
+            { label: 'OC', value: unit.stats.oc, modified: false },
+          ] as const).map(({ label, value, modified }) => (
+            <div key={label} className="flex flex-col items-center justify-center rounded-md bg-black/20 py-1.5">
+              <span className="text-[10px] font-medium text-white/40 uppercase leading-none">{label}</span>
+              <span className={`text-base font-bold leading-tight ${modified ? 'text-accent-300' : 'text-white'}`}>{value}</span>
             </div>
           ))}
         </div>
 
-        {/* Info Row: Models + Enhancement | Wounds */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            {isDestroyed ? (
-              <span className="text-[11px] font-bold text-red-400 uppercase">Destroyed</span>
-            ) : (
-              <span className={`text-[11px] ${isDamaged ? 'text-red-400' : 'text-white/50'}`}>
-                {combinedModelsAlive}/{combinedTotalModels} models
-              </span>
-            )}
-            {enhancementName && (
-              <Badge variant="accent" size="sm">{enhancementName}</Badge>
-            )}
-          </div>
-          <span className="text-[11px] text-white/40">
-            {combinedCurrentWounds}/{combinedMaxWounds} W
-          </span>
+        {/* Info Row: Models + Enhancement */}
+        <div className="flex items-center gap-1.5">
+          {isDestroyed ? (
+            <span className="text-[11px] font-bold text-red-400 uppercase">Destroyed</span>
+          ) : (
+            <span className={`text-[11px] ${isDamaged ? 'text-red-400' : 'text-white/50'}`}>
+              {combinedModelsAlive}/{combinedTotalModels} models
+            </span>
+          )}
+          {enhancementName && (
+            <Badge variant="accent" size="sm">{enhancementName}</Badge>
+          )}
         </div>
       </div>
 
-      {/* Health Bar */}
-      <div className="h-1 bg-gray-700/50">
-        <div
-          className={`h-full transition-all duration-300 ${getHealthBarColor()}`}
-          style={{ width: `${healthPercent}%` }}
-        />
+      {/* Wound Tracker Bar */}
+      <div className="relative">
+        {/* Inline wound controls */}
+        {(onUnitWoundChange || onLeaderWoundChange) && !isDestroyed && (
+          <div
+            className="flex items-center justify-between px-1.5 bg-black/30 touch-manipulation"
+            onClick={(e) => e.stopPropagation()}
+            onTouchEnd={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                if (currentWounds > 0 && onUnitWoundChange) {
+                  onUnitWoundChange(currentWounds - 1);
+                } else if (hasAttachedLeader && leaderCurrentWounds > 0 && onLeaderWoundChange) {
+                  onLeaderWoundChange(leaderCurrentWounds - 1);
+                }
+              }}
+              onTouchEnd={(e) => e.stopPropagation()}
+              disabled={combinedCurrentWounds <= 0}
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center disabled:opacity-30 transition-colors touch-manipulation select-none"
+            >
+              <span className="w-7 h-7 rounded-md bg-red-500/20 active:bg-red-500/50 flex items-center justify-center">
+                <span className="text-red-400 font-bold text-sm leading-none">−</span>
+              </span>
+            </button>
+
+            <span className="text-[11px] text-white/60 font-medium tabular-nums select-none">
+              {combinedCurrentWounds}/{combinedMaxWounds} W
+            </span>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                if (hasAttachedLeader && leaderCurrentWounds < leaderMaxWounds && onLeaderWoundChange) {
+                  const newWounds = leaderCurrentWounds + 1;
+                  onLeaderWoundChange(newWounds >= leaderMaxWounds ? null : newWounds);
+                } else if (currentWounds < maxWounds && onUnitWoundChange) {
+                  const newWounds = currentWounds + 1;
+                  onUnitWoundChange(newWounds >= maxWounds ? null : newWounds);
+                }
+              }}
+              onTouchEnd={(e) => e.stopPropagation()}
+              disabled={combinedCurrentWounds >= combinedMaxWounds}
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center disabled:opacity-30 transition-colors touch-manipulation select-none"
+            >
+              <span className="w-7 h-7 rounded-md bg-green-500/20 active:bg-green-500/50 flex items-center justify-center">
+                <span className="text-green-400 font-bold text-sm leading-none">+</span>
+              </span>
+            </button>
+          </div>
+        )}
+
+        {/* Health bar at the very bottom */}
+        <div className="h-1 bg-gray-700/50">
+          <div
+            className={`h-full transition-all duration-300 ${getHealthBarColor()}`}
+            style={{ width: `${healthPercent}%` }}
+          />
+        </div>
       </div>
     </div>
   );

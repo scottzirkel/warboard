@@ -271,29 +271,48 @@ export const useArmyStore = create<ArmyStore>()(
     const migratedUnits = list.units.map(unit => {
       let weaponCounts = unit.weaponCounts || {};
 
-      // If weaponCounts is empty and we have armyData, initialize with defaults
-      if (Object.keys(weaponCounts).length === 0 && armyData) {
-        const unitDef = armyData.units.find(u => u.id === unit.unitId);
+      if (armyData) {
+        // Check regular units first, then allies
+        let unitDef = armyData.units.find(u => u.id === unit.unitId);
+        if (!unitDef && armyData.allies) {
+          for (const faction of Object.values(armyData.allies)) {
+            unitDef = faction.units?.find(u => u.id === unit.unitId);
+            if (unitDef) break;
+          }
+        }
 
         if (unitDef?.loadoutOptions) {
-          weaponCounts = {};
-
-          // Initialize all choices to 0
+          // Collect valid choice IDs from current data
+          const validChoiceIds = new Set<string>();
           for (const option of unitDef.loadoutOptions) {
             for (const choice of option.choices) {
               if (choice.id !== 'none') {
-                weaponCounts[choice.id] = 0;
+                validChoiceIds.add(choice.id);
               }
             }
           }
 
-          // Set default for 'choice' type options
-          for (const option of unitDef.loadoutOptions) {
-            if (option.type === 'choice') {
-              const defaultChoice = option.choices.find(c => c.default) || option.choices[0];
+          // Check if saved weaponCounts has stale keys that don't match current data
+          const savedKeys = Object.keys(weaponCounts);
+          const hasStaleKeys = savedKeys.length === 0 ||
+            savedKeys.some(key => !validChoiceIds.has(key));
 
-              if (defaultChoice && defaultChoice.id !== 'none') {
-                weaponCounts[defaultChoice.id] = unit.modelCount;
+          if (hasStaleKeys) {
+            weaponCounts = {};
+
+            // Initialize all choices to 0
+            for (const choiceId of validChoiceIds) {
+              weaponCounts[choiceId] = 0;
+            }
+
+            // Set default for 'choice' type options
+            for (const option of unitDef.loadoutOptions) {
+              if (option.type === 'choice') {
+                const defaultChoice = option.choices.find(c => c.default) || option.choices[0];
+
+                if (defaultChoice && defaultChoice.id !== 'none') {
+                  weaponCounts[defaultChoice.id] = unit.modelCount;
+                }
               }
             }
           }
