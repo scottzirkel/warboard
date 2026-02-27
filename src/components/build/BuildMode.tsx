@@ -16,8 +16,7 @@ interface BuildModeProps {
   validationErrors: ValidationError[];
   // Panels
   leftPanel: ReactNode;
-  middlePanel: ReactNode;
-  rightPanel: ReactNode;
+  rosterPanel: ReactNode;
   // Mobile panel state
   mobilePanel?: MobilePanel;
   className?: string;
@@ -32,8 +31,7 @@ export function BuildMode({
   onNameChange,
   validationErrors,
   leftPanel,
-  middlePanel,
-  rightPanel,
+  rosterPanel,
   mobilePanel = 'list',
   className = '',
 }: BuildModeProps) {
@@ -109,30 +107,23 @@ export function BuildMode({
         </div>
       )}
 
-      {/* Desktop: Three-column grid layout (hidden on mobile) */}
-      <div className="hidden lg:grid lg:grid-cols-3 gap-4 flex-1 min-h-0">
+      {/* Desktop: Two-column grid layout (hidden on mobile) */}
+      <div className="hidden lg:grid lg:grid-cols-[1fr_2fr] gap-4 flex-1 min-h-0">
         {/* Left Panel - Army List */}
         <div className="card-depth p-4 flex flex-col min-h-0 overflow-hidden">
           {leftPanel}
         </div>
 
-        {/* Middle Panel - Unit Roster */}
+        {/* Right Panel - Unit Roster (card grid) */}
         <div className="card-depth p-4 flex flex-col min-h-0 overflow-hidden">
-          {middlePanel}
-        </div>
-
-        {/* Right Panel - Unit Details */}
-        <div className="card-depth p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
-          {rightPanel}
+          {rosterPanel}
         </div>
       </div>
 
       {/* Mobile: Single panel view */}
       <div className="flex lg:hidden flex-col">
         <div className="card-depth p-4">
-          {mobilePanel === 'roster' ? middlePanel :
-           mobilePanel === 'details' ? rightPanel :
-           leftPanel}
+          {mobilePanel === 'roster' ? rosterPanel : leftPanel}
         </div>
       </div>
     </div>

@@ -5,9 +5,8 @@ import type { Unit } from '@/types';
 
 interface UnitRosterPanelProps {
   units: (Unit & { isAlly?: boolean; allyFaction?: string })[];
-  onSelectUnit: (unit: Unit) => void;
   onAddUnit: (unit: Unit) => void;
-  selectedUnitId?: string;
+  onOpenDetail: (unit: Unit) => void;
   isLoading?: boolean;
   className?: string;
 }
@@ -67,7 +66,7 @@ function SimpleAccordion({ title, count, isOpen, onToggle, children }: SimpleAcc
       </button>
 
       <div
-        className={`overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-[2000px] opacity-100 mt-1' : 'max-h-0 opacity-0'}`}
+        className={`overflow-hidden transition-all duration-200 ${isOpen ? 'max-h-[4000px] opacity-100 mt-1' : 'max-h-0 opacity-0'}`}
       >
         {children}
       </div>
@@ -75,11 +74,90 @@ function SimpleAccordion({ title, count, isOpen, onToggle, children }: SimpleAcc
   );
 }
 
+// Get key role badges for a unit (1-2 most important keywords)
+function getRoleBadges(unit: Unit): string[] {
+  const badges: string[] = [];
+  const keywords = unit.keywords || [];
+
+  if (keywords.includes('Character')) badges.push('Character');
+  if (keywords.includes('Battleline')) badges.push('Battleline');
+  if (keywords.includes('Epic Hero')) badges.push('Epic Hero');
+  if (keywords.includes('Vehicle')) badges.push('Vehicle');
+  if (keywords.includes('Monster')) badges.push('Monster');
+  if (keywords.includes('Fly')) badges.push('Fly');
+
+  return badges.slice(0, 2);
+}
+
+// Unit card component
+interface UnitCardProps {
+  unit: ExtendedUnit;
+  pointsDisplay: string;
+  onAdd: () => void;
+  onOpenDetail: () => void;
+}
+
+function UnitCard({ unit, pointsDisplay, onAdd, onOpenDetail }: UnitCardProps) {
+  const badges = getRoleBadges(unit);
+
+  return (
+    <div
+      onClick={onOpenDetail}
+      className="bg-white/5 hover:bg-white/10 rounded-lg p-3 cursor-pointer transition-colors relative group"
+    >
+      {/* Quick Add Button */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onAdd();
+        }}
+        className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-accent-500/80 hover:bg-accent-500 text-white text-sm font-bold transition-colors opacity-70 group-hover:opacity-100"
+        title={`Add ${unit.name}`}
+      >
+        +
+      </button>
+
+      {/* Unit Name */}
+      <div className="font-medium text-sm text-white pr-8 leading-tight">{unit.name}</div>
+
+      {/* Points */}
+      <div className="text-xs text-accent-400 mt-1">{pointsDisplay}</div>
+
+      {/* Key Stats Row */}
+      <div className="flex items-center gap-2 mt-2 text-[11px] text-white/60">
+        <span>M{unit.stats.m}&quot;</span>
+        <span>T{unit.stats.t}</span>
+        <span>SV{unit.stats.sv}</span>
+        <span>W{unit.stats.w}</span>
+        {unit.invuln && (
+          <span className="text-accent-400">{unit.invuln} inv</span>
+        )}
+      </div>
+
+      {/* Role Badges */}
+      {badges.length > 0 && (
+        <div className="flex flex-wrap gap-1 mt-2">
+          {badges.map((badge) => (
+            <span key={badge} className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-white/50">
+              {badge}
+            </span>
+          ))}
+          {unit.isAlly && unit.allyFaction && (
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300">
+              {unit.allyFaction}
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function UnitRosterPanel({
   units,
-  onSelectUnit,
-  onAddUnit: _onAddUnit,
-  selectedUnitId,
+  onAddUnit,
+  onOpenDetail,
   isLoading = false,
   className = '',
 }: UnitRosterPanelProps) {
@@ -203,7 +281,7 @@ export function UnitRosterPanel({
         </div>
       )}
 
-      {/* Unit List */}
+      {/* Unit Card Grid */}
       {!isLoading && filteredUnits.length > 0 && (
         <div className="flex-1 overflow-y-auto -mx-4 px-4 scroll-smooth">
           {sortedGroups.map((group) => (
@@ -214,21 +292,15 @@ export function UnitRosterPanel({
               isOpen={openGroups.has(group)}
               onToggle={() => toggleGroup(group)}
             >
-              <div className="space-y-1">
+              <div className="grid grid-cols-2 gap-2 px-1">
                 {groupedUnits[group].map((unit) => (
-                  <div
+                  <UnitCard
                     key={unit.id}
-                    onClick={() => onSelectUnit(unit)}
-                    className={`
-                      list-row touch-highlight cursor-pointer rounded-lg w-full
-                      ${unit.id === selectedUnitId ? 'bg-accent-tint-strong' : ''}
-                    `}
-                  >
-                    <div className="flex items-center justify-between py-2 px-3 w-full">
-                      <span className="text-sm text-white">{unit.name}</span>
-                      <span className="text-xs text-white/50">{getPointsDisplay(unit)}</span>
-                    </div>
-                  </div>
+                    unit={unit}
+                    pointsDisplay={getPointsDisplay(unit)}
+                    onAdd={() => onAddUnit(unit)}
+                    onOpenDetail={() => onOpenDetail(unit)}
+                  />
                 ))}
               </div>
             </SimpleAccordion>

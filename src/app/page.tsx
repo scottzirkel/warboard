@@ -10,7 +10,7 @@ import { LandingPage } from '@/components/LandingPage';
 import { BuildMode } from '@/components/build/BuildMode';
 import { ArmyListPanel } from '@/components/build/ArmyListPanel';
 import { UnitRosterPanel } from '@/components/build/UnitRosterPanel';
-import { UnitDetailsPanel } from '@/components/build/UnitDetailsPanel';
+import { UnitDetailModal } from '@/components/build/UnitDetailModal';
 import { PlayMode } from '@/components/play/PlayMode';
 import { ArmyOverviewPanel } from '@/components/play/ArmyOverviewPanel';
 import { GameStatePanel } from '@/components/play/GameStatePanel';
@@ -43,7 +43,7 @@ export default function Home() {
   // Local State
   // -------------------------------------------------------------------------
   const [showReferencePanel, setShowReferencePanel] = useState(false);
-  const [previewedUnit, setPreviewedUnit] = useState<Unit | null>(null);
+  const [detailModalUnit, setDetailModalUnit] = useState<Unit | null>(null);
   const [missionTwists, setMissionTwists] = useState<MissionTwist[]>([]);
   const [isExporting, setIsExporting] = useState(false);
   const [exportCode, setExportCode] = useState<string | null>(null);
@@ -574,20 +574,19 @@ export default function Home() {
     const modelCounts = Object.keys(unit.points).map(Number);
     const defaultModelCount = modelCounts[0];
     addUnit(unit.id, defaultModelCount);
-    setPreviewedUnit(null); // Clear preview after adding
     showSuccess(`Added ${unit.name} to your army`);
   }, [addUnit, showSuccess]);
 
-  const handlePreviewUnit = useCallback((unit: Unit) => {
-    setPreviewedUnit(unit);
-    selectUnit(null); // Clear list selection when previewing from roster
-    setMobilePanel('details'); // Auto-switch to details panel on mobile
-  }, [selectUnit, setMobilePanel]);
+  const handleOpenDetailModal = useCallback((unit: Unit) => {
+    setDetailModalUnit(unit);
+  }, []);
+
+  const handleCloseDetailModal = useCallback(() => {
+    setDetailModalUnit(null);
+  }, []);
 
   const handleSelectListUnit = useCallback((index: number | null) => {
     selectUnit(index);
-    setPreviewedUnit(null); // Clear preview when selecting from list
-    // Don't auto-switch panels - user stays on list panel to edit the unit
   }, [selectUnit]);
 
   const handleRemoveUnit = useCallback((index: number) => {
@@ -857,34 +856,13 @@ export default function Home() {
                 />
               )
             }
-            middlePanel={
+            rosterPanel={
               armyData && (
                 <UnitRosterPanel
                   units={allUnits}
-                  onSelectUnit={handlePreviewUnit}
                   onAddUnit={handleAddUnit}
-                  selectedUnitId={previewedUnit?.id}
+                  onOpenDetail={handleOpenDetailModal}
                   isLoading={isArmyLoading}
-                />
-              )
-            }
-            rightPanel={
-              previewedUnit ? (
-                <UnitDetailsPanel
-                  unit={previewedUnit}
-                  listUnit={null}
-                  unitIndex={0}
-                  enhancement={null}
-                  onAddUnit={() => handleAddUnit(previewedUnit)}
-                />
-              ) : (
-                <UnitDetailsPanel
-                  unit={selectedUnit || null}
-                  listUnit={selectedListUnit || null}
-                  unitIndex={selectedUnitIndex}
-                  enhancement={selectedEnhancement}
-                  modifiers={statModifiers.modifiers}
-                  modifierSources={buildModifierSources(statModifiers)}
                 />
               )
             }
@@ -1173,6 +1151,14 @@ export default function Home() {
           </div>
         </>
       )}
+
+      {/* Unit Detail Modal (Build Mode) */}
+      <UnitDetailModal
+        unit={detailModalUnit}
+        isOpen={detailModalUnit !== null}
+        onClose={handleCloseDetailModal}
+        onAddUnit={handleAddUnit}
+      />
 
       {/* Modals */}
       {activeModal === 'import' && (

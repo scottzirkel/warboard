@@ -108,17 +108,10 @@ export function ListUnitCard({
       <div className="space-y-2">
         {/* Header Row: Name + Warlord Toggle + Remove Button */}
         <div className="flex items-start justify-between gap-2 px-3 pt-3">
-          <div className="min-w-0 flex-1 flex items-center gap-2">
+          <div className="min-w-0 flex-1">
             <h4 className="text-sm font-medium text-gray-200 truncate">
               {unit.name}
             </h4>
-            {listUnit.isWarlord && (
-              <span className="text-accent-400" title="Warlord">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
-                </svg>
-              </span>
-            )}
           </div>
           <div className="flex items-center gap-1 shrink-0">
             {/* Warlord Toggle (Characters only, not Epic Heroes) */}

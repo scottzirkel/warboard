@@ -498,16 +498,18 @@ export function Navigation({
                 >
                   {mode === 'build' ? 'Add' : 'Game'}
                 </button>
-                <button
-                  onClick={() => onMobilePanelChange('details')}
-                  className={`px-3 py-1.5 text-sm font-medium transition-colors ${
-                    mobilePanel === 'details'
-                      ? 'bg-accent-500 text-white'
-                      : 'text-white/60'
-                  }`}
-                >
-                  {mode === 'build' ? 'Info' : 'Unit'}
-                </button>
+                {mode === 'play' && (
+                  <button
+                    onClick={() => onMobilePanelChange('details')}
+                    className={`px-3 py-1.5 text-sm font-medium transition-colors ${
+                      mobilePanel === 'details'
+                        ? 'bg-accent-500 text-white'
+                        : 'text-white/60'
+                    }`}
+                  >
+                    Unit
+                  </button>
+                )}
               </div>
             )}
           </div>

@@ -15,6 +15,7 @@ export { UnitAccordion, getUnitTypeGroup, sortGroupsByPriority } from './UnitAcc
 export type { UnitTypeGroup } from './UnitAccordion';
 export { RosterUnitRow } from './RosterUnitRow';
 export { UnitDetailsPanel } from './UnitDetailsPanel';
+export { UnitDetailModal } from './UnitDetailModal';
 export { StatsTable } from './StatsTable';
 export { WeaponsDisplay } from './WeaponsDisplay';
 export { AbilitiesDisplay } from './AbilitiesDisplay';
