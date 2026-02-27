@@ -479,7 +479,7 @@ export function Navigation({
               canPlay={canPlay}
             />
             {onMobilePanelChange && (
-              <div className="flex lg:hidden items-center bg-white/10 rounded-lg overflow-hidden">
+              <div className="flex md:hidden items-center bg-white/10 rounded-lg overflow-hidden">
                 {mode === 'play' ? (
                   <>
                     <button
@@ -501,16 +501,6 @@ export function Navigation({
                       }`}
                     >
                       Army
-                    </button>
-                    <button
-                      onClick={() => onMobilePanelChange('details')}
-                      className={`px-3 py-1.5 text-sm font-medium transition-colors ${
-                        mobilePanel === 'details'
-                          ? 'bg-accent-500 text-white'
-                          : 'text-white/60'
-                      }`}
-                    >
-                      Unit
                     </button>
                   </>
                 ) : (
@@ -543,7 +533,7 @@ export function Navigation({
 
           {/* Center: Game State (Play mode only, hidden on mobile) */}
           {showGameState && (
-            <div className="hidden lg:flex flex-1 justify-center">
+            <div className="hidden md:flex flex-1 justify-center">
               <GameStateBar
                 battleRound={battleRound}
                 onBattleRoundChange={onBattleRoundChange}

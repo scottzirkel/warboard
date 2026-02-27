@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, ReactNode } from 'react';
-import { Button, Badge, Card, SegmentedControl } from '@/components/ui';
+import { Button, Badge, Card, Modal, SegmentedControl } from '@/components/ui';
 import { useWakeLock } from '@/hooks';
 import type { ValidationError } from '@/types';
 import type { MobilePanel } from '@/stores/uiStore';
@@ -77,6 +77,8 @@ interface PlayModeProps {
   leftPanel?: ReactNode;
   middlePanel?: ReactNode;
   rightPanel?: ReactNode;
+  selectedUnitName?: string;
+  onDeselectUnit?: () => void;
   onModeToggle?: () => void;
   canPlay?: boolean;
   validationErrors?: ValidationError[];
@@ -107,6 +109,8 @@ export function PlayMode({
   onReset,
   activeTwistName,
   onChangeTwist,
+  selectedUnitName,
+  onDeselectUnit,
 }: PlayModeProps) {
   // Reset confirmation state for mobile
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -128,19 +132,10 @@ export function PlayMode({
   const phaseDisplay = currentPhase.charAt(0).toUpperCase() + currentPhase.slice(1);
 
   return (
-    <div className="lg:h-full flex flex-col gap-2 lg:gap-4 pb-4 lg:p-4">
-      {/* Desktop: 3-column grid layout (hidden on mobile) */}
-      <div className="hidden lg:grid lg:grid-cols-[1fr_1.25fr_1.75fr] gap-4 flex-1 min-h-0">
-        {/* Left Panel - Army Overview (narrower) */}
-        <div className="bg-[rgba(44,44,46,0.65)] rounded-2xl shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)] p-4 flex flex-col min-h-0 overflow-hidden">
-          {leftPanel || (
-            <div className="flex-1 flex items-center justify-center text-white/40">
-              <p>No army overview available</p>
-            </div>
-          )}
-        </div>
-
-        {/* Middle Panel - Game State */}
+    <div className="md:h-full flex flex-col gap-2 md:gap-4 pb-4 md:p-4">
+      {/* Desktop/Tablet: 2-column grid layout (hidden on phone) */}
+      <div className="hidden md:grid md:grid-cols-[1fr_1.25fr] gap-4 flex-1 min-h-0">
+        {/* Left Panel - Game State */}
         <div className="bg-[rgba(44,44,46,0.65)] rounded-2xl shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)] p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
           {middlePanel || (
             <div className="flex-1 flex items-center justify-center text-white/40">
@@ -149,18 +144,28 @@ export function PlayMode({
           )}
         </div>
 
-        {/* Right Panel - Selected Unit Details (wider) */}
-        <div className="bg-[rgba(44,44,46,0.65)] rounded-2xl shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)] p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
-          {rightPanel || (
+        {/* Right Panel - Army Overview */}
+        <div className="bg-[rgba(44,44,46,0.65)] rounded-2xl shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)] p-4 flex flex-col min-h-0 overflow-hidden">
+          {leftPanel || (
             <div className="flex-1 flex items-center justify-center text-white/40">
-              <p>Select a unit from your army to view details</p>
+              <p>No army overview available</p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Mobile: Single panel view - px-2 matches nav and build mode */}
-      <div className="flex lg:hidden flex-col gap-2 px-2">
+      {/* Unit Detail Modal */}
+      <Modal
+        isOpen={!!rightPanel}
+        onClose={onDeselectUnit || (() => {})}
+        title={selectedUnitName || 'Unit Details'}
+        size="2xl"
+      >
+        {rightPanel}
+      </Modal>
+
+      {/* Phone: Single panel view - px-2 matches nav and build mode */}
+      <div className="flex md:hidden flex-col gap-2 px-2">
         {mobilePanel === 'roster' ? (
           <>
             {/* Game State Controls - only on Game tab */}
@@ -352,12 +357,6 @@ export function PlayMode({
               )}
             </div>
           </>
-        ) : mobilePanel === 'details' ? (
-          rightPanel || (
-            <div className="flex items-center justify-center text-white/40 py-8">
-              <p>Select a unit from your army to view details</p>
-            </div>
-          )
         ) : (
           leftPanel || (
             <div className="flex items-center justify-center text-white/40 py-8">

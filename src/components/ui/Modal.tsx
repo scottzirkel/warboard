@@ -11,7 +11,7 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: ReactNode;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   showCloseButton?: boolean;
   closeOnBackdrop?: boolean;
   closeOnEscape?: boolean;
@@ -26,6 +26,7 @@ const sizeStyles: Record<string, string> = {
   md: 'max-w-md',
   lg: 'max-w-lg',
   xl: 'max-w-2xl',
+  '2xl': 'max-w-4xl',
 };
 
 // ============================================================================
@@ -125,7 +126,7 @@ export function Modal({
         </div>
 
         {/* Body */}
-        <div className="p-5">{children}</div>
+        <div className="p-5 overflow-y-auto max-h-[calc(100vh-10rem)]">{children}</div>
       </div>
     </div>
   );

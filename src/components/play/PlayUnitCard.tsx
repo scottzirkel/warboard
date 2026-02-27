@@ -80,10 +80,13 @@ export function PlayUnitCard({
     return 'bg-green-500';
   };
 
-  // Combined unit name (matches Alpine's getCombinedUnitName)
+  // Combined unit name
   const displayName = hasAttachedLeader
     ? `${unit.name} + ${attachedLeaderName}`
     : unit.name;
+
+  // Format movement with inches
+  const formatM = (val: number) => `${val}"`;
 
   return (
     <div
@@ -96,9 +99,9 @@ export function PlayUnitCard({
         ${className}
       `}
     >
-      <div className="px-3 py-2">
-        {/* Unit Name - Full Width */}
-        <div className="flex items-center gap-2">
+      <div className="px-3 pt-2 pb-1.5">
+        {/* Unit Name Row */}
+        <div className="flex items-center gap-2 mb-1.5">
           <span className={`text-sm font-semibold truncate flex-1 ${isDestroyed ? 'line-through text-white/50' : ''}`}>
             {displayName}
           </span>
@@ -120,13 +123,35 @@ export function PlayUnitCard({
           </svg>
         </div>
 
-        {/* Second Row: Models on left, Wounds on right */}
-        <div className="flex items-center justify-between mt-1">
-          <div className="flex items-center gap-2">
+        {/* Mini Stat Row */}
+        <div className="grid grid-cols-6 gap-1 mb-1.5">
+          {([
+            { label: 'M', value: formatM(unit.stats.m) },
+            { label: 'T', value: unit.stats.t },
+            { label: 'SV', value: unit.stats.sv },
+            { label: 'W', value: unit.stats.w },
+            { label: 'LD', value: unit.stats.ld },
+            { label: 'OC', value: unit.stats.oc },
+          ] as const).map(({ label, value }) => (
+            <div key={label} className="relative flex flex-col items-center rounded bg-black/20 py-0.5">
+              <span className="text-[8px] font-medium text-white/40 uppercase leading-none">{label}</span>
+              <span className="text-xs font-semibold text-white leading-tight">{value}</span>
+              {label === 'SV' && unit.invuln && (
+                <span className="absolute -bottom-0.5 -right-0.5 text-[7px] px-0.5 rounded bg-accent-500/30 text-accent-300 leading-tight">
+                  {unit.invuln}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Info Row: Models + Enhancement | Wounds */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1.5">
             {isDestroyed ? (
-              <span className="text-xs font-bold text-red-400 uppercase">Destroyed</span>
+              <span className="text-[11px] font-bold text-red-400 uppercase">Destroyed</span>
             ) : (
-              <span className={`text-xs ${isDamaged ? 'text-red-400' : 'text-white/50'}`}>
+              <span className={`text-[11px] ${isDamaged ? 'text-red-400' : 'text-white/50'}`}>
                 {combinedModelsAlive}/{combinedTotalModels} models
               </span>
             )}
@@ -134,13 +159,13 @@ export function PlayUnitCard({
               <Badge variant="accent" size="sm">{enhancementName}</Badge>
             )}
           </div>
-          <span className="text-xs text-white/40">
+          <span className="text-[11px] text-white/40">
             {combinedCurrentWounds}/{combinedMaxWounds} W
           </span>
         </div>
       </div>
 
-      {/* Health Bar - spans full width at bottom */}
+      {/* Health Bar */}
       <div className="h-1 bg-gray-700/50">
         <div
           className={`h-full transition-all duration-300 ${getHealthBarColor()}`}

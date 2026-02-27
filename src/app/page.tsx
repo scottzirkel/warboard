@@ -828,7 +828,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen lg:h-screen overflow-x-hidden">
+    <div className="flex flex-col min-h-screen md:h-screen overflow-x-hidden">
       {/* Navigation */}
       <Navigation
         mode={mode}
@@ -863,10 +863,10 @@ export default function Home() {
       />
 
       {/* Spacer for fixed nav on mobile */}
-      <div className="h-14 lg:hidden shrink-0" />
+      <div className="h-14 md:hidden shrink-0" />
 
       {/* Main Content */}
-      <main className="flex-1 lg:overflow-hidden">
+      <main className="flex-1 md:overflow-hidden">
         {mode === 'build' ? (
           <BuildMode
             listName={currentList.name}
@@ -939,6 +939,12 @@ export default function Home() {
             onReset={handleResetGame}
             activeTwistName={missionTwists.find(t => t.id === gameState.activeTwists?.[0])?.name ?? null}
             onChangeTwist={() => setShowTwistModal(true)}
+            selectedUnitName={selectedUnit ? (
+              attachedLeaderInfo
+                ? `${selectedUnit.name} + ${leaderUnit?.name || ''}`
+                : selectedUnit.name
+            ) : undefined}
+            onDeselectUnit={() => selectUnit(null)}
             onModeToggle={() => handleModeChange('build')}
             canPlay={canPlay}
             validationErrors={listValidation.validateList().errors}
@@ -950,12 +956,7 @@ export default function Home() {
                   units={currentList.units}
                   selectedUnitIndex={selectedUnitIndex}
                   detachmentId={currentList.detachment}
-                  onSelectUnit={(index) => {
-                    selectUnit(index);
-                    if (index !== null) {
-                      setMobilePanel('details'); // Auto-switch to unit details on mobile
-                    }
-                  }}
+                  onSelectUnit={(index) => selectUnit(index)}
                 />
               )
             }
