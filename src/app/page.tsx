@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { useArmyStore, availableArmies } from '@/stores/armyStore';
 import { useGameStore } from '@/stores/gameStore';
@@ -56,7 +56,6 @@ export default function Home() {
   // Auth & Migration State
   // -------------------------------------------------------------------------
   const { status: authStatus } = useSession();
-  const prevAuthStatus = useRef(authStatus);
   const [showMigrateModal, setShowMigrateModal] = useState(false);
   const [localListsForMigration, setLocalListsForMigration] = useState<ReturnType<typeof getLocalStorageLists>>([]);
 
@@ -336,9 +335,9 @@ export default function Home() {
     loadMissionData();
   }, []);
 
-  // Detect sign-in and check for localStorage lists to migrate
+  // Check for localStorage lists to migrate when authenticated
   useEffect(() => {
-    if (prevAuthStatus.current !== 'authenticated' && authStatus === 'authenticated') {
+    if (authStatus === 'authenticated') {
       const localLists = getLocalStorageLists();
 
       if (localLists.length > 0) {
@@ -346,8 +345,6 @@ export default function Home() {
         setShowMigrateModal(true);
       }
     }
-
-    prevAuthStatus.current = authStatus;
   }, [authStatus]);
 
   // -------------------------------------------------------------------------
