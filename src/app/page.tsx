@@ -79,6 +79,7 @@ export default function Home() {
     setWarlord,
     setUnitWounds,
     setLeaderWounds,
+    resetAllWounds,
     resetList,
     loadList,
     getTotalPoints,
@@ -272,7 +273,8 @@ export default function Home() {
     selectedListUnit,
     selectedUnitIndex ?? -1,
     currentList.units,
-    currentList.detachment
+    currentList.detachment,
+    mode === 'play' ? gameState : null
   );
 
   // -------------------------------------------------------------------------
@@ -402,29 +404,58 @@ export default function Home() {
     // Get weapons by loadout group
     const loadoutGroupIds = [...new Set(selectedUnit.weapons.filter((w) => w.loadoutGroup).map((w) => w.loadoutGroup!))];
 
-    for (const groupId of loadoutGroupIds) {
-      const count = weaponCounts[groupId] || 0;
-      const choice = selectedUnit.loadoutOptions
-        ?.flatMap((opt) => opt.choices)
-        .find((c) => c.id === groupId);
+    // Check if weaponCounts has any valid entries matching actual loadout choice IDs
+    const allChoiceIds = new Set(
+      selectedUnit.loadoutOptions?.flatMap((opt) => opt.choices.map((c) => c.id)) || []
+    );
+    const hasValidCounts = Object.entries(weaponCounts).some(
+      ([key, count]) => count > 0 && allChoiceIds.has(key)
+    );
 
-      // If count is 0 and there IS a matching loadout choice, the user chose
-      // not to equip these weapons — skip them. If there's NO matching choice,
-      // these weapons are always equipped (e.g. units without loadoutOptions).
-      if (count === 0 && choice) continue;
+    if (!hasValidCounts && selectedUnit.loadoutOptions) {
+      // No valid weapon selections — fall back to default choices
+      for (const option of selectedUnit.loadoutOptions) {
+        if (option.type === 'choice') {
+          const defaultChoice = option.choices.find((c) => c.default) || option.choices[0];
+          if (defaultChoice) {
+            const groupWeapons = selectedUnit.weapons.filter((w) => w.loadoutGroup === defaultChoice.id);
+            groups.push({
+              id: defaultChoice.id,
+              name: defaultChoice.name || defaultChoice.id,
+              modelCount: selectedListUnit.modelCount,
+              isPaired: defaultChoice.paired || false,
+              weapons: groupWeapons,
+              rangedWeapons: groupWeapons.filter((w) => w.type === 'ranged'),
+              meleeWeapons: groupWeapons.filter((w) => w.type === 'melee'),
+            });
+          }
+        }
+      }
+    } else {
+      for (const groupId of loadoutGroupIds) {
+        const count = weaponCounts[groupId] || 0;
+        const choice = selectedUnit.loadoutOptions
+          ?.flatMap((opt) => opt.choices)
+          .find((c) => c.id === groupId);
 
-      const effectiveCount = count || selectedListUnit.modelCount;
-      const groupWeapons = selectedUnit.weapons.filter((w) => w.loadoutGroup === groupId);
+        // If count is 0 and there IS a matching loadout choice, the user chose
+        // not to equip these weapons — skip them. If there's NO matching choice,
+        // these weapons are always equipped (e.g. units without loadoutOptions).
+        if (count === 0 && choice) continue;
 
-      groups.push({
-        id: groupId,
-        name: choice?.name || groupId,
-        modelCount: effectiveCount,
-        isPaired: choice?.paired || false,
-        weapons: groupWeapons,
-        rangedWeapons: groupWeapons.filter((w) => w.type === 'ranged'),
-        meleeWeapons: groupWeapons.filter((w) => w.type === 'melee'),
-      });
+        const effectiveCount = count || selectedListUnit.modelCount;
+        const groupWeapons = selectedUnit.weapons.filter((w) => w.loadoutGroup === groupId);
+
+        groups.push({
+          id: groupId,
+          name: choice?.name || groupId,
+          modelCount: effectiveCount,
+          isPaired: choice?.paired || false,
+          weapons: groupWeapons,
+          rangedWeapons: groupWeapons.filter((w) => w.type === 'ranged'),
+          meleeWeapons: groupWeapons.filter((w) => w.type === 'melee'),
+        });
+      }
     }
 
     // Sort groups: ranged weapons first, then melee-only
@@ -441,14 +472,13 @@ export default function Home() {
   }, [selectedUnit, selectedListUnit]);
 
   // Build collapsed/activated state maps for Play Mode
-  // Note: We depend on gameState directly so the memo re-computes when state changes
   const collapsedGroups = useMemo(() => {
     const map: Record<string, boolean> = {};
     for (const group of loadoutGroups) {
       map[group.id] = selectedUnitIndex !== null && isLoadoutGroupCollapsed(selectedUnitIndex, group.id);
     }
     return map;
-  }, [loadoutGroups, selectedUnitIndex, isLoadoutGroupCollapsed, gameState.collapsedLoadoutGroups]);
+  }, [loadoutGroups, selectedUnitIndex, isLoadoutGroupCollapsed]);
 
   const activatedGroups = useMemo(() => {
     const map: Record<string, boolean> = {};
@@ -456,7 +486,7 @@ export default function Home() {
       map[group.id] = selectedUnitIndex !== null && isLoadoutGroupActivated(selectedUnitIndex, group.id);
     }
     return map;
-  }, [loadoutGroups, selectedUnitIndex, isLoadoutGroupActivated, gameState.activatedLoadoutGroups]);
+  }, [loadoutGroups, selectedUnitIndex, isLoadoutGroupActivated]);
 
   // Get leader weapons for Play Mode (filtered by leader's loadout selection)
   const leaderWeapons = useMemo((): Weapon[] | undefined => {
@@ -467,22 +497,41 @@ export default function Home() {
     // Get weapons without loadoutGroup (always equipped)
     const alwaysEquipped = leaderUnit.weapons.filter((w) => !w.loadoutGroup);
 
-    // Get weapons from loadout groups, using same fallback logic as the main unit:
-    // if weaponCounts has no entry for a group AND there's a matching loadout choice,
-    // the user chose not to equip it. Otherwise, include the weapons.
+    // Check if weaponCounts has any valid entries matching actual loadout choice IDs
+    const allChoiceIds = new Set(
+      leaderUnit.loadoutOptions?.flatMap((opt) => opt.choices.map((c) => c.id)) || []
+    );
+    const hasValidCounts = Object.entries(weaponCounts).some(
+      ([key, count]) => count > 0 && allChoiceIds.has(key)
+    );
+
+    // Get weapons from loadout groups
     const selectedWeapons: Weapon[] = [];
     const loadoutGroupIds = [...new Set(leaderUnit.weapons.filter((w) => w.loadoutGroup).map((w) => w.loadoutGroup!))];
 
-    for (const groupId of loadoutGroupIds) {
-      const count = weaponCounts[groupId] || 0;
-      const choice = leaderUnit.loadoutOptions
-        ?.flatMap((opt) => opt.choices)
-        .find((c) => c.id === groupId);
+    if (!hasValidCounts && leaderUnit.loadoutOptions) {
+      // No valid weapon selections — fall back to default choices
+      for (const option of leaderUnit.loadoutOptions) {
+        if (option.type === 'choice') {
+          const defaultChoice = option.choices.find((c) => c.default) || option.choices[0];
+          if (defaultChoice) {
+            const groupWeapons = leaderUnit.weapons.filter((w) => w.loadoutGroup === defaultChoice.id);
+            selectedWeapons.push(...groupWeapons);
+          }
+        }
+      }
+    } else {
+      for (const groupId of loadoutGroupIds) {
+        const count = weaponCounts[groupId] || 0;
+        const choice = leaderUnit.loadoutOptions
+          ?.flatMap((opt) => opt.choices)
+          .find((c) => c.id === groupId);
 
-      if (count === 0 && choice) continue;
+        if (count === 0 && choice) continue;
 
-      const groupWeapons = leaderUnit.weapons.filter((w) => w.loadoutGroup === groupId);
-      selectedWeapons.push(...groupWeapons);
+        const groupWeapons = leaderUnit.weapons.filter((w) => w.loadoutGroup === groupId);
+        selectedWeapons.push(...groupWeapons);
+      }
     }
 
     return [...alwaysEquipped, ...selectedWeapons];
@@ -597,10 +646,10 @@ export default function Home() {
   }, [currentList.army, loadArmyData, loadList, closeModal, showSuccess, showError]);
 
 
-  const handleImport = useCallback((data: CurrentList) => {
+  const handleImport = useCallback(async (data: CurrentList) => {
     // Set army data if needed
     if (data.army && data.army !== currentList.army) {
-      loadArmyData(data.army);
+      await loadArmyData(data.army);
     }
     loadList(data);
     closeModal();
@@ -669,6 +718,11 @@ export default function Home() {
     ));
     setLeaderWounds(selectedUnitIndex, newWounds);
   }, [selectedUnitIndex, woundTracking.leaderWounds, setLeaderWounds]);
+
+  const handleResetGame = useCallback(() => {
+    resetGameState();
+    resetAllWounds();
+  }, [resetGameState, resetAllWounds]);
 
   // Reset all activations for the selected unit
   const handleResetUnitActivations = useCallback(() => {
@@ -750,7 +804,7 @@ export default function Home() {
         onPhaseChange={setPhase}
         onAdvance={advanceGameState}
         onToggleTurn={togglePlayerTurn}
-        onReset={resetGameState}
+        onReset={handleResetGame}
         showReferencePanel={showReferencePanel}
         onToggleReferencePanel={handleToggleReferencePanel}
       />
@@ -853,7 +907,7 @@ export default function Home() {
             onSecondaryVPChange={setSecondaryVP}
             onToggleTurn={togglePlayerTurn}
             onAdvance={advanceGameState}
-            onReset={resetGameState}
+            onReset={handleResetGame}
             onModeToggle={() => handleModeChange('build')}
             canPlay={canPlay}
             validationErrors={listValidation.validateList().errors}
@@ -928,12 +982,18 @@ export default function Home() {
                   katahStance={armyData?.armyRules?.martial_katah?.stances?.find(s => s.id === gameState.katah)}
                   activeStratagems={gameState.activeStratagems}
                   stratagemNames={Object.fromEntries(
-                    armyData?.detachments[currentList.detachment]?.stratagems?.map(s => [s.id, s.name]) || []
+                    [
+                      ...(armyData?.detachments[currentList.detachment]?.stratagems || []),
+                      ...(armyData?.coreStratagems || []),
+                    ].map(s => [s.id, s.name])
                   )}
                   activeStratagemData={
-                    armyData?.detachments[currentList.detachment]?.stratagems?.filter(
+                    [
+                      ...(armyData?.detachments[currentList.detachment]?.stratagems || []),
+                      ...(armyData?.coreStratagems || []),
+                    ].filter(
                       s => gameState.activeStratagems.includes(s.id)
-                    ) || []
+                    )
                   }
                   activeTwistData={
                     missionTwists
@@ -1021,14 +1081,17 @@ export default function Home() {
 
           {/* Panel Content */}
           <div className="flex-1 overflow-y-auto p-4 space-y-6 scroll-smooth">
-            {/* Detachment Stratagems */}
-            {armyData.detachments[currentList.detachment]?.stratagems && (
+            {/* Stratagems (Detachment + Core) */}
+            {(armyData.detachments[currentList.detachment]?.stratagems || armyData.coreStratagems) && (
               <div>
                 <h4 className="text-xs font-semibold text-purple-400 uppercase tracking-wide mb-3">
-                  {armyData.detachments[currentList.detachment]?.name} Stratagems
+                  Stratagems
                 </h4>
                 <div className="space-y-2">
-                  {armyData.detachments[currentList.detachment]?.stratagems?.map((strat) => (
+                  {[
+                    ...(armyData.detachments[currentList.detachment]?.stratagems || []),
+                    ...(armyData.coreStratagems || []),
+                  ].map((strat) => (
                     <div key={strat.id} className="bg-black/20 rounded-lg p-3">
                       <div className="flex justify-between items-start">
                         <span className="font-medium text-sm text-accent-300">{strat.name}</span>

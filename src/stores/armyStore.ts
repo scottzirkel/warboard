@@ -149,15 +149,21 @@ export const useArmyStore = create<ArmyStore>()(
       const detachmentKeys = Object.keys(data.detachments || {});
       const defaultDetachment = detachmentKeys[0] || '';
 
-      set(state => ({
-        armyData: data,
-        isLoading: false,
-        currentList: {
-          ...state.currentList,
-          army: armyId,
-          detachment: state.currentList.detachment || defaultDetachment,
-        },
-      }));
+      set(state => {
+        // Only keep the current detachment if it exists in the new army's data
+        const currentDetachment = state.currentList.detachment;
+        const detachmentValid = currentDetachment && detachmentKeys.includes(currentDetachment);
+
+        return {
+          armyData: data,
+          isLoading: false,
+          currentList: {
+            ...state.currentList,
+            army: armyId,
+            detachment: detachmentValid ? currentDetachment : defaultDetachment,
+          },
+        };
+      });
     } catch (error) {
       set({
         isLoading: false,

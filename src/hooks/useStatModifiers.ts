@@ -300,20 +300,21 @@ function collectStratagemModifiers(
   activeStratagems: string[],
   unitCondition: UnitConditionState
 ): CollectedModifier[] {
-  if (!detachment || activeStratagems.length === 0) {
+  if (activeStratagems.length === 0) {
     return [];
   }
 
+  // Combine detachment stratagems with core (evergreen) stratagems
   const detachmentData = armyData.detachments[detachment];
-
-  if (!detachmentData) {
-    return [];
-  }
+  const allStratagems = [
+    ...(detachmentData?.stratagems || []),
+    ...(armyData.coreStratagems || []),
+  ];
 
   const modifiers: CollectedModifier[] = [];
 
   for (const stratagemId of activeStratagems) {
-    const stratagem = detachmentData.stratagems?.find(s => s.id === stratagemId);
+    const stratagem = allStratagems.find(s => s.id === stratagemId);
 
     if (!stratagem?.modifiers) {
       continue;

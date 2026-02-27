@@ -103,10 +103,7 @@ export function ListUnitCard({
       selected={isSelected}
       hoverable
       onClick={onSelect}
-      className={`
-        ${isAttachedAsLeader ? 'opacity-60' : ''}
-        ${className}
-      `}
+      className={className}
     >
       <div className="space-y-2">
         {/* Header Row: Name + Warlord Toggle + Remove Button */}

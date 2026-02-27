@@ -27,7 +27,7 @@ export function Card({
     <div
       className={`
         ${depth ? cardDepthStyles : 'bg-white/5 rounded-xl'}
-        ${selected ? 'ring-2 ring-accent-500' : ''}
+        ${selected ? 'ring-2 ring-inset ring-accent-500' : ''}
         ${hoverable ? 'hover:bg-white/10 cursor-pointer transition-colors' : ''}
         ${onClick ? 'cursor-pointer' : ''}
         ${className}
