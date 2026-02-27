@@ -173,6 +173,97 @@ export interface Stratagem {
 }
 
 // ============================================================================
+// Secondary Missions (Chapter Approved)
+// ============================================================================
+
+export interface ScoringCondition {
+  condition: string;
+  vp: string;
+  fixedVp?: string;
+  tacticalVp?: string;
+  cumulative?: boolean;
+  maxVp?: string;
+}
+
+export interface ScoringBlock {
+  round: string;
+  when: string;
+  conditions: ScoringCondition[];
+}
+
+export interface MissionAction {
+  name: string;
+  starts: string;
+  units: string;
+  completes: string;
+  ifCompleted: string;
+}
+
+export interface SecondaryMission {
+  id: string;
+  name: string;
+  flavor: string;
+  whenDrawn?: string;
+  action?: MissionAction;
+  scoringBlocks: ScoringBlock[];
+  fixedOnly?: boolean;
+  tacticalOnly?: boolean;
+  noFixedTournament?: boolean;
+}
+
+// ============================================================================
+// Challenger Cards (Chapter Approved)
+// ============================================================================
+
+export interface ChallengerStratagem {
+  name: string;
+  cost: number;
+  phase: string;
+  when: string;
+  effect: string;
+}
+
+export interface ChallengerMission {
+  scoringBlocks?: ScoringBlock[];
+  action?: MissionAction;
+}
+
+export interface ChallengerCard {
+  id: string;
+  name: string;
+  stratagem: ChallengerStratagem;
+  mission: ChallengerMission;
+}
+
+// ============================================================================
+// Mission Data (Full Chapter Approved JSON)
+// ============================================================================
+
+export interface MissionDeployment {
+  id: string;
+  name: string;
+}
+
+export interface PrimaryMission {
+  id: string;
+  name: string;
+  flavor?: string;
+  setup?: string;
+  action?: MissionAction;
+  scoringBlocks?: ScoringBlock[];
+}
+
+export interface MissionData {
+  name: string;
+  version: string;
+  twists: MissionTwist[];
+  deployments: MissionDeployment[];
+  primaryMissions: PrimaryMission[];
+  secondaryMissions: SecondaryMission[];
+  challengerCards: ChallengerCard[];
+}
+
+// ============================================================================
 // Mission Twists (Chapter Approved)
 // ============================================================================
 
