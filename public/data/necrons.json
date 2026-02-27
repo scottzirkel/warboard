@@ -4710,10 +4710,13 @@
   "detachments": {
     "awakened-dynasty": {
       "name": "Awakened Dynasty",
-      "rule": {
-        "name": "Command Protocols",
-        "description": "While a NECRONS CHARACTER model is leading a unit from your army, each time a model in that unit makes an attack, add 1 to the Hit roll."
-      },
+      "rules": [
+        {
+          "id": "command-protocols",
+          "name": "Command Protocols",
+          "description": "While a NECRONS CHARACTER model is leading a unit from your army, each time a model in that unit makes an attack, add 1 to the Hit roll."
+        }
+      ],
       "enhancements": [
         {
           "id": "veil-of-darkness",
@@ -4793,10 +4796,13 @@
     },
     "annihilation-legion": {
       "name": "Annihilation Legion",
-      "rule": {
-        "name": "Annihilation Protocols",
-        "description": "DESTROYER CULT and FLAYED ONES units can re-roll Charge rolls. When targeting a Below Half-strength unit, add 1 to Charge rolls."
-      },
+      "rules": [
+        {
+          "id": "annihilation-protocols",
+          "name": "Annihilation Protocols",
+          "description": "DESTROYER CULT and FLAYED ONES units can re-roll Charge rolls. When targeting a Below Half-strength unit, add 1 to Charge rolls."
+        }
+      ],
       "enhancements": [
         {
           "id": "eternal-madness",
@@ -4876,10 +4882,13 @@
     },
     "canoptek-court": {
       "name": "Canoptek Court",
-      "rule": {
-        "name": "Power Matrix",
-        "description": "CRYPTEK and CANOPTEK units re-roll Hit rolls of 1. If entirely within your Power Matrix (your deployment zone, or No Man's Land/enemy deployment zone if you control half+ objectives there), they can re-roll all Hit rolls instead."
-      },
+      "rules": [
+        {
+          "id": "power-matrix",
+          "name": "Power Matrix",
+          "description": "CRYPTEK and CANOPTEK units re-roll Hit rolls of 1. If entirely within your Power Matrix (your deployment zone, or No Man's Land/enemy deployment zone if you control half+ objectives there), they can re-roll all Hit rolls instead."
+        }
+      ],
       "enhancements": [
         {
           "id": "dimensional-sanctum",
@@ -4959,10 +4968,13 @@
     },
     "obeisance-phalanx": {
       "name": "Obeisance Phalanx",
-      "rule": {
-        "name": "Worthy Foes",
-        "description": "In your Command phase, select one enemy unit. Until your next Command phase, each time a NOBLE, LYCHGUARD, or TRIARCH unit makes an attack targeting that unit, add 1 to the Wound roll."
-      },
+      "rules": [
+        {
+          "id": "worthy-foes",
+          "name": "Worthy Foes",
+          "description": "In your Command phase, select one enemy unit. Until your next Command phase, each time a NOBLE, LYCHGUARD, or TRIARCH unit makes an attack targeting that unit, add 1 to the Wound roll."
+        }
+      ],
       "enhancements": [
         {
           "id": "honourable-combatant",
@@ -5042,10 +5054,13 @@
     },
     "hypercrypt-legion": {
       "name": "Hypercrypt Legion",
-      "rule": {
-        "name": "Hyperphasing",
-        "description": "At the end of your opponent's turn, you can select up to 2 NECRONS units (3 in Strike Force, 4 in Onslaught) that are not within Engagement Range of enemy units and place them into Strategic Reserves."
-      },
+      "rules": [
+        {
+          "id": "hyperphasing",
+          "name": "Hyperphasing",
+          "description": "At the end of your opponent's turn, you can select up to 2 NECRONS units (3 in Strike Force, 4 in Onslaught) that are not within Engagement Range of enemy units and place them into Strategic Reserves."
+        }
+      ],
       "enhancements": [
         {
           "id": "dimensional-overseer",
@@ -5125,10 +5140,13 @@
     },
     "starshatter-arsenal": {
       "name": "Starshatter Arsenal",
-      "rule": {
-        "name": "Relentless Onslaught",
-        "description": "Each time a NECRONS model targets a unit within range of an objective marker, add 1 to the Hit roll. VEHICLE and MOUNTED models (not TITANIC) have ranged weapons with [ASSAULT]."
-      },
+      "rules": [
+        {
+          "id": "relentless-onslaught",
+          "name": "Relentless Onslaught",
+          "description": "Each time a NECRONS model targets a unit within range of an objective marker, add 1 to the Hit roll. VEHICLE and MOUNTED models (not TITANIC) have ranged weapons with [ASSAULT]."
+        }
+      ],
       "enhancements": [
         {
           "id": "dread-majesty",
@@ -5207,11 +5225,13 @@
       ]
     }
   },
-  "armyRule": {
-    "name": "Reanimation Protocols",
-    "description": "At the end of your Command phase, each unit from your army with this ability that is on the battlefield activates its Reanimation Protocols and reanimates D3 wounds. Each time such a unit reanimates a wound, if that unit contains one or more models that have lost one or more wounds, one of those models regains one lost wound. Once all such models have their full wounds restored, if that unit's Reanimation Protocols are still reanimating wounds, and that unit contains one or more destroyed models, one of those destroyed models is returned to the unit with one wound remaining."
+  "armyRules": {
+    "reanimation_protocols": {
+      "name": "Reanimation Protocols",
+      "description": "At the end of your Command phase, each unit from your army with this ability that is on the battlefield activates its Reanimation Protocols and reanimates D3 wounds. Each time such a unit reanimates a wound, if that unit contains one or more models that have lost one or more wounds, one of those models regains one lost wound. Once all such models have their full wounds restored, if that unit's Reanimation Protocols are still reanimating wounds, and that unit contains one or more destroyed models, one of those destroyed models is returned to the unit with one wound remaining."
+    }
   },
-  "weaponAbilities": {
+  "weaponKeywords": {
     "Anti-X Y+": "Improve wound roll to Y+ against targets with keyword X.",
     "Assault": "Can shoot after Advancing, with -1 to Hit.",
     "Blast": "Add 1 to Attacks per 5 models in target unit (min 3 attacks vs 6+ models).",
@@ -5229,6 +5249,140 @@
     "Sustained Hits X": "Critical Hits generate X additional hits.",
     "Torrent": "Automatically hits (no hit roll).",
     "Twin-linked": "Re-roll Wound rolls."
+  },
+  "keywordGlossary": {
+    "weapon": [
+      {
+        "name": "Anti-X #+",
+        "description": "Improve AP by 1 and wound on #+ against targets with keyword X."
+      },
+      {
+        "name": "Assault",
+        "description": "Can be shot after Advancing."
+      },
+      {
+        "name": "Blast",
+        "description": "+1 Attack per 5 models in target unit."
+      },
+      {
+        "name": "Devastating Wounds",
+        "description": "Critical wounds inflict mortal wounds equal to Damage, no saves allowed."
+      },
+      {
+        "name": "Extra Attacks",
+        "description": "Attacks with this weapon are made in addition to other weapons."
+      },
+      {
+        "name": "Hazardous",
+        "description": "After resolving attacks, roll D6. On 1, bearer suffers 3 mortal wounds (Characters) or is destroyed (other models)."
+      },
+      {
+        "name": "Heavy",
+        "description": "+1 to Hit if unit Remained Stationary."
+      },
+      {
+        "name": "Ignores Cover",
+        "description": "Target does not benefit from cover."
+      },
+      {
+        "name": "Indirect Fire",
+        "description": "Can target units not visible. -1 to Hit, +1 to target's Save if not visible."
+      },
+      {
+        "name": "Lance",
+        "description": "+1 to Wound if unit charged this turn."
+      },
+      {
+        "name": "Lethal Hits",
+        "description": "Critical hits automatically wound (no wound roll needed)."
+      },
+      {
+        "name": "Melta X",
+        "description": "+X Damage against targets within half range."
+      },
+      {
+        "name": "One Shot",
+        "description": "Can only be used once per battle."
+      },
+      {
+        "name": "Pistol",
+        "description": "Can be shot in Engagement Range, but only at units in Engagement Range."
+      },
+      {
+        "name": "Precision",
+        "description": "On critical wounds, attacker can allocate wound to a Character or Attached model."
+      },
+      {
+        "name": "Rapid Fire X",
+        "description": "+X Attacks when targeting units within half range."
+      },
+      {
+        "name": "Sustained Hits X",
+        "description": "Critical hits score X additional hits."
+      },
+      {
+        "name": "Torrent",
+        "description": "Automatically hits (no hit roll needed)."
+      },
+      {
+        "name": "Twin-linked",
+        "description": "Re-roll wound rolls."
+      }
+    ],
+    "unit": [
+      {
+        "name": "Battleline",
+        "description": "Core troop units. May have special rules in certain detachments."
+      },
+      {
+        "name": "Character",
+        "description": "Can lead units, receive Enhancements, and is targeted by Precision."
+      },
+      {
+        "name": "Deadly Demise X",
+        "description": "When destroyed, roll D6. On 6, each unit within 6\" suffers X mortal wounds."
+      },
+      {
+        "name": "Deep Strike",
+        "description": "Can be set up in Reserves and arrive 9\"+ from enemies in Reinforcements step."
+      },
+      {
+        "name": "Epic Hero",
+        "description": "Unique named character. Limited to 1 per army."
+      },
+      {
+        "name": "Feel No Pain X+",
+        "description": "Roll D6 when losing a wound. On X+, wound is ignored."
+      },
+      {
+        "name": "Fights First",
+        "description": "In Fight phase, fights before units without this ability."
+      },
+      {
+        "name": "Fly",
+        "description": "Can move over models/terrain. Can move within Engagement Range freely."
+      },
+      {
+        "name": "Infiltrators",
+        "description": "Can deploy anywhere 9\"+ from enemy deployment zone and enemies."
+      },
+      {
+        "name": "Leader",
+        "description": "Can be attached to Bodyguard units. Abilities affect the combined unit."
+      },
+      {
+        "name": "Lone Operative",
+        "description": "Cannot be targeted unless within 12\" of attacking model."
+      },
+      {
+        "name": "Scouts X\"",
+        "description": "Make a Normal move of up to X\" before first turn begins."
+      },
+      {
+        "name": "Stealth",
+        "description": "Ranged attacks targeting this unit suffer -1 to Hit."
+      }
+    ]
   },
   "coreStratagems": [
     {
