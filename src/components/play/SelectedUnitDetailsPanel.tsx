@@ -76,10 +76,11 @@ interface SelectedUnitDetailsPanelProps {
   className?: string;
 }
 
-// Helper to calculate enhancement wound modifier
-function getEnhancementWoundModifier(modifiers: Modifier[]): number {
+// Helper to calculate enhancement wound modifier from enhancement data only
+function getEnhancementWoundModifier(enhancement: Enhancement | null | undefined): number {
+  if (!enhancement?.modifiers) return 0;
   let woundMod = 0;
-  for (const mod of modifiers) {
+  for (const mod of enhancement.modifiers) {
     if (mod.stat === 'w' && (mod.scope === 'model' || mod.scope === 'unit')) {
       if (mod.operation === 'add') {
         woundMod += mod.value;
@@ -95,12 +96,13 @@ function getEnhancementWoundModifier(modifiers: Modifier[]): number {
 function calculateWoundInfo(
   listUnit: ListUnit | null | undefined,
   unit: Unit | null | undefined,
-  modifiers: Modifier[] = []
+  enhancement: Enhancement | null | undefined
 ) {
   if (!listUnit || !unit) {
     return {
       currentWounds: 0,
       maxWounds: 0,
+      currentMaxWounds: 0,
       woundsPerModel: 0,
       modelsAlive: 0,
       totalModels: 0,
@@ -111,8 +113,8 @@ function calculateWoundInfo(
   const weaponCounts = listUnit.weaponCounts || {};
   const totalModels = listUnit.modelCount;
 
-  // Get enhancement wound modifier (applies to all models)
-  const enhancementWoundMod = getEnhancementWoundModifier(modifiers);
+  // Get enhancement wound modifier (from enhancement only, not weapon modifiers)
+  const enhancementWoundMod = getEnhancementWoundModifier(enhancement);
 
   // Find wound modifiers from each equipped loadout
   const woundModsByLoadout = new Map<string, number>();
@@ -174,9 +176,13 @@ function calculateWoundInfo(
   const currentWounds = Math.min(storedWounds, maxWounds);
   const modelsAlive = currentWounds > 0 ? Math.ceil(currentWounds / avgWoundsPerModel) : 0;
 
+  // currentMaxWounds = max wounds for alive models (the effective ceiling)
+  const currentMaxWounds = modelsAlive * avgWoundsPerModel;
+
   return {
     currentWounds,
     maxWounds,
+    currentMaxWounds,
     woundsPerModel: avgWoundsPerModel,
     modelsAlive,
     totalModels,
@@ -376,7 +382,7 @@ export function SelectedUnitDetailsPanel({
   }
 
   // Calculate unit wound info
-  const unitWoundInfo = calculateWoundInfo(listUnit, unit, modifiers);
+  const unitWoundInfo = calculateWoundInfo(listUnit, unit, enhancement);
 
   // Calculate leader wound info if applicable
   // Pass leader's enhancement modifiers for accurate wound calculation
@@ -384,7 +390,7 @@ export function SelectedUnitDetailsPanel({
     ? calculateWoundInfo(
         { ...leaderListUnit, currentWounds: listUnit.leaderCurrentWounds },
         leaderUnit,
-        leaderEnhancement?.modifiers || []
+        leaderEnhancement
       )
     : null;
 
@@ -408,9 +414,6 @@ export function SelectedUnitDetailsPanel({
 
   return (
     <div className={`flex flex-col h-full ${className}`}>
-      {/* Unit Header */}
-      <h2 className="text-xl font-semibold text-accent-300 mb-2">{combinedName}</h2>
-
       {/* Badges (enhancement + warlord) */}
       <div className="flex flex-wrap gap-2 mb-3">
         {enhancement && (
@@ -601,7 +604,7 @@ export function SelectedUnitDetailsPanel({
               </button>
               <div className="text-center min-w-[50px]">
                 <span className="text-base font-bold">{unitWoundInfo.currentWounds}</span>
-                <span className="text-white/40 text-xs"> / {unitWoundInfo.maxWounds}</span>
+                <span className="text-white/40 text-xs"> / {unitWoundInfo.currentMaxWounds}</span>
               </div>
               <button
                 onClick={() => onUnitWoundAdjust?.(1)}
