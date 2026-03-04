@@ -301,16 +301,27 @@ export default function Home() {
   }, []);
 
   // Check for localStorage lists to migrate when authenticated
+  const refreshLocalListsForMigration = useCallback((options?: { autoOpen?: boolean }) => {
+    const localLists = getLocalStorageLists();
+    setLocalListsForMigration(localLists);
+
+    if (localLists.length === 0) {
+      setShowMigrateModal(false);
+    } else if (options?.autoOpen) {
+      setShowMigrateModal(true);
+    }
+  }, []);
+
   useEffect(() => {
     if (authStatus === 'authenticated') {
-      const localLists = getLocalStorageLists();
-
-      if (localLists.length > 0) {
-        setLocalListsForMigration(localLists);
-        setShowMigrateModal(true);
-      }
+      refreshLocalListsForMigration({ autoOpen: true });
     }
-  }, [authStatus]);
+  }, [authStatus, refreshLocalListsForMigration]);
+
+  const handleMigrationComplete = useCallback(() => {
+    refreshLocalListsForMigration();
+    fetchLists();
+  }, [refreshLocalListsForMigration, fetchLists]);
 
   // -------------------------------------------------------------------------
   // Computed Values
@@ -1250,7 +1261,7 @@ export default function Home() {
           isOpen={true}
           onClose={() => setShowMigrateModal(false)}
           localLists={localListsForMigration}
-          onMigrationComplete={fetchLists}
+          onMigrationComplete={handleMigrationComplete}
         />
       )}
 

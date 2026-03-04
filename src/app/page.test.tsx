@@ -14,6 +14,7 @@ import { renderHook, act } from '@testing-library/react';
 import { useArmyStore, availableArmies } from '@/stores/armyStore';
 import { useGameStore } from '@/stores/gameStore';
 import { useUIStore } from '@/stores/uiStore';
+import { useListValidation } from '@/hooks';
 
 // Mock fetch for API calls
 const mockFetch = vi.fn();
@@ -466,6 +467,65 @@ describe('E2E Integration Tests', () => {
       expect(result.current.currentList.name).toBe('Saved List');
       expect(result.current.currentList.units).toHaveLength(1);
       expect(result.current.currentList.units[0].modelCount).toBe(5);
+    });
+
+    it('auto-selects a warlord for legacy lists so play mode is available', () => {
+      useArmyStore.setState({
+        armyData: mockCustodesData,
+        currentList: {
+          name: '',
+          army: 'custodes',
+          pointsLimit: 500,
+          format: 'strike-force',
+          detachment: 'shield-host',
+          units: [],
+        },
+        isLoading: false,
+        error: null,
+      });
+
+      const legacyList = {
+        name: 'Legacy List',
+        army: 'custodes',
+        pointsLimit: 500,
+        format: 'strike-force' as const,
+        detachment: 'shield-host',
+        units: [
+          {
+            unitId: 'custodian-guard',
+            modelCount: 5,
+            enhancement: '',
+            loadout: {},
+            weaponCounts: {},
+            currentWounds: null,
+            leaderCurrentWounds: null,
+            attachedLeader: null,
+          },
+          {
+            unitId: 'shield-captain',
+            modelCount: 1,
+            enhancement: '',
+            loadout: {},
+            weaponCounts: {},
+            currentWounds: null,
+            leaderCurrentWounds: null,
+            attachedLeader: null,
+          },
+        ],
+      };
+
+      const { result } = renderHook(() => {
+        const armyStore = useArmyStore();
+        const listValidation = useListValidation(armyStore.armyData, armyStore.currentList);
+        return { armyStore, listValidation };
+      });
+
+      act(() => {
+        result.current.armyStore.loadList(legacyList);
+      });
+
+      expect(result.current.armyStore.currentList.units.some(unit => unit.isWarlord)).toBe(true);
+      expect(result.current.listValidation.canEnterPlayMode).toBe(true);
     });
   });
 

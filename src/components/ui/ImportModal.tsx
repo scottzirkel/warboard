@@ -4,7 +4,8 @@ import { useState, useCallback } from 'react';
 import { Modal } from './Modal';
 import { importNewRecruitJSON } from '@/lib/newRecruitParser';
 import { importPlainText } from '@/lib/plainTextParser';
-import type { CurrentList, ArmyData } from '@/types';
+import type { CurrentList, ArmyData, GameFormat } from '@/types';
+import { GAME_FORMATS } from '@/types';
 
 // ============================================================================
 // Props
@@ -72,6 +73,55 @@ function detectFormat(input: string): ImportFormat {
   return 'unknown';
 }
 
+const VALID_GAME_FORMATS = new Set<GameFormat>(GAME_FORMATS.map((format) => format.id));
+
+function normalizeGameFormat(format: unknown): GameFormat {
+  if (typeof format === 'string' && VALID_GAME_FORMATS.has(format as GameFormat)) {
+    return format as GameFormat;
+  }
+
+  return 'strike-force';
+}
+
+export function parseNativeFormat(
+  data: Record<string, unknown>,
+  fallbackArmyId: string
+): CurrentList {
+  if (!Array.isArray(data.units)) {
+    throw new Error('Invalid list format: missing units array.');
+  }
+
+  const rawFormat =
+    (typeof data['format'] === 'string' ? data['format'] : undefined) ??
+    (typeof data['gameFormat'] === 'string' ? data['gameFormat'] : undefined);
+
+  const format = normalizeGameFormat(rawFormat);
+  const defaultPoints = GAME_FORMATS.find((entry) => entry.id === format)?.points ?? 2000;
+
+  const pointsLimit =
+    typeof data['pointsLimit'] === 'number'
+      ? (data['pointsLimit'] as number)
+      : defaultPoints ?? 2000;
+
+  return {
+    name: typeof data['name'] === 'string' ? (data['name'] as string) : 'Imported List',
+    army: typeof data['army'] === 'string' ? (data['army'] as string) : fallbackArmyId,
+    pointsLimit,
+    format,
+    detachment: typeof data['detachment'] === 'string' ? (data['detachment'] as string) : '',
+    units: (data.units as Record<string, unknown>[]).map((unit) => ({
+      unitId: typeof unit['unitId'] === 'string' ? (unit['unitId'] as string) : '',
+      modelCount: typeof unit['modelCount'] === 'number' ? (unit['modelCount'] as number) : 1,
+      enhancement: typeof unit['enhancement'] === 'string' ? (unit['enhancement'] as string) : '',
+      loadout: unit['loadout'] as Record<string, string> | undefined,
+      weaponCounts: unit['weaponCounts'] as Record<string, number> | undefined,
+      currentWounds: null,
+      leaderCurrentWounds: null,
+      attachedLeader: null,
+    })),
+  };
+}
+
 // ============================================================================
 // Import Modal
 // ============================================================================
@@ -96,41 +146,6 @@ export function ImportModal({
     setIsProcessing(false);
     onClose();
   }, [onClose]);
-
-  // Parse native format (existing Yellowscribe/Army Tracker format)
-  const parseNativeFormat = useCallback(
-    (data: Record<string, unknown>): CurrentList => {
-      if (!Array.isArray(data.units)) {
-        throw new Error('Invalid list format: missing units array.');
-      }
-
-      return {
-        name: typeof data.name === 'string' ? data.name : 'Imported List',
-        army: typeof data.army === 'string' ? data.army : armyId,
-        pointsLimit:
-          typeof data.pointsLimit === 'number' ? data.pointsLimit : 500,
-        format: data.format === 'colosseum' ? 'colosseum' : 'strike-force',
-        detachment:
-          typeof data.detachment === 'string' ? data.detachment : '',
-        units: data.units.map((unit: unknown) => {
-          const u = unit as Record<string, unknown>;
-
-          return {
-            unitId: typeof u.unitId === 'string' ? u.unitId : '',
-            modelCount: typeof u.modelCount === 'number' ? u.modelCount : 1,
-            enhancement:
-              typeof u.enhancement === 'string' ? u.enhancement : '',
-            loadout: u.loadout as Record<string, string> | undefined,
-            weaponCounts: u.weaponCounts as Record<string, number> | undefined,
-            currentWounds: null,
-            leaderCurrentWounds: null,
-            attachedLeader: null,
-          };
-        }),
-      };
-    },
-    [armyId]
-  );
 
   // Parse and validate imported JSON
   const handleImport = useCallback(() => {
@@ -181,7 +196,7 @@ export function ImportModal({
         // Native Army Tracker format
         const data = JSON.parse(trimmed) as Record<string, unknown>;
 
-        importedList = parseNativeFormat(data);
+        importedList = parseNativeFormat(data, armyId);
       } else if (format === 'plaintext') {
         // Plain text format (from AI chatbots, etc.)
         if (!armyData) {
@@ -224,7 +239,7 @@ export function ImportModal({
     } finally {
       setIsProcessing(false);
     }
-  }, [jsonInput, onImport, handleClose, armyData, armyId, parseNativeFormat]);
+  }, [jsonInput, onImport, handleClose, armyData, armyId]);
 
   // Handle file upload
   const handleFileUpload = useCallback(

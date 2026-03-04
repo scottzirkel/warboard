@@ -63,12 +63,24 @@ function setStoredLists(data: SavedListsData): void {
   }
 }
 
-function generateFilename(name: string): string {
-  return name
+export function generateFilename(name: string, existingFilenames: Iterable<string> = []): string {
+  const baseSlug = name
     .toLowerCase()
+    .trim()
     .replace(/\s+/g, '-')
     .replace(/[^a-z0-9-]/g, '')
-    .concat('.json');
+    || 'army-list';
+
+  const existing = new Set(existingFilenames);
+  let candidate = `${baseSlug}.json`;
+  let counter = 2;
+
+  while (existing.has(candidate)) {
+    candidate = `${baseSlug}-${counter}.json`;
+    counter++;
+  }
+
+  return candidate;
 }
 
 // ============================================================================
@@ -194,7 +206,9 @@ export function useSavedLists(): UseSavedListsReturn {
   // -------------------------------------------------------------------------
 
   const saveList = useCallback(async (list: CurrentList): Promise<boolean> => {
-    if (!list.name) {
+    const trimmedName = list.name.trim();
+
+    if (!trimmedName) {
       setError('List name is required');
       return false;
     }
@@ -220,9 +234,10 @@ export function useSavedLists(): UseSavedListsReturn {
       }
 
       // Guest mode: localStorage
-      const filename = generateFilename(list.name);
       const data = getStoredLists();
+      const filename = generateFilename(trimmedName, Object.keys(data.lists));
       data.lists[filename] = list;
+
       setStoredLists(data);
       await fetchLists();
 
@@ -295,16 +310,14 @@ export function useSavedLists(): UseSavedListsReturn {
 // Utility Functions
 // ============================================================================
 
-export { generateFilename };
-
 /**
  * Extract display name from a filename.
  */
 export function filenameToDisplayName(filename: string): string {
-  return filename
-    .replace(/\.json$/, '')
-    .replace(/-/g, ' ')
-    .replace(/\b\w/g, c => c.toUpperCase());
+  const base = filename.replace(/\.json$/, '');
+  const display = base.replace(/-/g, ' ');
+
+  return display.replace(/\b\w/g, c => c.toUpperCase());
 }
 
 /**

@@ -334,10 +334,14 @@ export const useArmyStore = create<ArmyStore>()(
       };
     });
 
+    const unitsWithWarlord = armyData
+      ? autoSelectWarlord(migratedUnits, list.format, armyData)
+      : migratedUnits;
+
     set({
       currentList: {
         ...list,
-        units: migratedUnits,
+        units: unitsWithWarlord,
       },
     });
   },

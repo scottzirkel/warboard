@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Modal } from './Modal';
 import { Button } from './Button';
 import type { SavedListInfo } from '@/types';
@@ -33,6 +33,17 @@ export function MigrateListsModal({
   const [isMigrating, setIsMigrating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [migratedCount, setMigratedCount] = useState(0);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Sync local checkbox state with prop updates
+    setSelectedFilenames(new Set(localLists.map(l => l.filename)));
+
+    if (isOpen && !isMigrating && localLists.length === 0) {
+      setError(null);
+      setMigratedCount(0);
+      onClose();
+    }
+  }, [localLists, isMigrating, isOpen, onClose]);
 
   const toggleSelection = useCallback((filename: string) => {
     setSelectedFilenames(prev => {

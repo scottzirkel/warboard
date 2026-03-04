@@ -17,22 +17,38 @@ const STORAGE_KEY = 'army-tracker-saved-lists';
 // Mock localStorage
 const localStorageMock = (() => {
   let store: Record<string, string> = {};
-  return {
-    getItem: vi.fn((key: string) => store[key] || null),
-    setItem: vi.fn((key: string, value: string) => {
-      store[key] = value;
-    }),
-    removeItem: vi.fn((key: string) => {
-      delete store[key];
-    }),
-    clear: vi.fn(() => {
-      store = {};
-    }),
+
+  const getItemImpl = (key: string) => store[key] || null;
+  const setItemImpl = (key: string, value: string) => {
+    store[key] = value;
+  };
+  const removeItemImpl = (key: string) => {
+    delete store[key];
+  };
+  const clearImpl = () => {
+    store = {};
+  };
+  const keyImpl = (index: number) => Object.keys(store)[index] || null;
+
+  const mock = {
+    getItem: vi.fn(getItemImpl),
+    setItem: vi.fn(setItemImpl),
+    removeItem: vi.fn(removeItemImpl),
+    clear: vi.fn(clearImpl),
+    key: vi.fn(keyImpl),
     get length() {
       return Object.keys(store).length;
     },
-    key: vi.fn((index: number) => Object.keys(store)[index] || null),
+    resetMocks: () => {
+      mock.getItem.mockImplementation(getItemImpl);
+      mock.setItem.mockImplementation(setItemImpl);
+      mock.removeItem.mockImplementation(removeItemImpl);
+      mock.clear.mockImplementation(clearImpl);
+      mock.key.mockImplementation(keyImpl);
+    },
   };
+
+  return mock;
 })();
 
 Object.defineProperty(window, 'localStorage', {
@@ -69,11 +85,13 @@ const mockList2: CurrentList = {
 describe('useSavedLists', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    localStorageMock.resetMocks();
     localStorageMock.clear();
   });
 
   afterEach(() => {
     vi.clearAllMocks();
+    localStorageMock.resetMocks();
     localStorageMock.clear();
   });
 
@@ -215,24 +233,24 @@ describe('useSavedLists', () => {
       expect(localStorageMock.setItem).toHaveBeenCalled();
     });
 
-    it('updates existing list when saving with same name', async () => {
-      localStorageMock.getItem.mockReturnValue(JSON.stringify({
-        lists: { 'test-army.json': mockList },
-      }));
-
+    it('saves multiple lists with same name without overwriting', async () => {
       const { result } = renderHook(() => useSavedLists());
 
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
       });
 
-      const updatedList = { ...mockList, pointsLimit: 1500 };
-
       await act(async () => {
-        await result.current.saveList(updatedList);
+        await result.current.saveList(mockList);
       });
 
-      expect(localStorageMock.setItem).toHaveBeenCalled();
+      await act(async () => {
+        await result.current.saveList({ ...mockList, units: [{ unitId: 'custodian-guard', modelCount: 5, enhancement: '', loadout: {}, weaponCounts: {}, currentWounds: null, leaderCurrentWounds: null, attachedLeader: null }] });
+      });
+
+      const lastCall = localStorageMock.setItem.mock.calls[localStorageMock.setItem.mock.calls.length - 1];
+      const storedData = JSON.parse(lastCall[1]);
+      expect(Object.keys(storedData.lists)).toHaveLength(2);
     });
 
     it('returns false when name is empty', async () => {
@@ -409,6 +427,14 @@ describe('generateFilename', () => {
 
   it('adds .json extension', () => {
     expect(generateFilename('test')).toBe('test.json');
+  });
+
+  it('appends a numeric suffix when filename already exists', () => {
+    expect(generateFilename('My List', ['my-list.json'])).toBe('my-list-2.json');
+  });
+
+  it('falls back to default slug when name is empty after sanitizing', () => {
+    expect(generateFilename('!!!', [])).toBe('army-list.json');
   });
 });
 

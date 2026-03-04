@@ -110,6 +110,23 @@ const mockArmyData: ArmyData = {
       abilities: [],
       keywords: ['Infantry', 'Terminator', 'Imperium', 'Adeptus Custodes'],
     },
+    {
+      id: 'emperor-custodian',
+      name: 'Emperor Custodian',
+      points: { '1': 200 },
+      stats: { m: 6, t: 7, sv: '2+', w: 8, ld: '5+', oc: 3 },
+      invuln: '4+',
+      weapons: [],
+      loadoutOptions: [],
+      abilities: [
+        {
+          id: 'supreme-commander',
+          name: 'Supreme Commander',
+          description: 'Must be Warlord.',
+        },
+      ],
+      keywords: ['Infantry', 'Character', 'Imperium', 'Adeptus Custodes'],
+    },
   ],
   detachments: {
     'shield-host': {
@@ -262,6 +279,53 @@ describe('armyStore', () => {
 
       expect(currentList.name).toBe('Saved Army');
       expect(currentList.units).toHaveLength(2);
+    });
+
+    it('auto-selects a warlord when loading a list with a single character', () => {
+      useArmyStore.setState({ armyData: mockArmyData });
+
+      const savedList: CurrentList = {
+        name: 'Legacy Army',
+        army: 'custodes',
+        pointsLimit: 500,
+        format: 'strike-force',
+        detachment: 'shield-host',
+        units: [
+          createListUnit('custodian-guard', 5),
+          createListUnit('shield-captain', 1),
+        ],
+      };
+
+      useArmyStore.getState().loadList(savedList);
+
+      const captain = useArmyStore.getState().currentList.units.find(u => u.unitId === 'shield-captain');
+      expect(captain?.isWarlord).toBe(true);
+    });
+
+    it('forces a supreme commander to be the warlord when loading a list', () => {
+      useArmyStore.setState({ armyData: mockArmyData });
+
+      const savedList: CurrentList = {
+        name: 'Supreme Army',
+        army: 'custodes',
+        pointsLimit: 500,
+        format: 'strike-force',
+        detachment: 'shield-host',
+        units: [
+          createListUnit('custodian-guard', 5),
+          createListUnit('shield-captain', 1),
+          createListUnit('emperor-custodian', 1),
+        ],
+      };
+
+      useArmyStore.getState().loadList(savedList);
+
+      const units = useArmyStore.getState().currentList.units;
+      const emperor = units.find(u => u.unitId === 'emperor-custodian');
+      const captain = units.find(u => u.unitId === 'shield-captain');
+
+      expect(emperor?.isWarlord).toBe(true);
+      expect(captain?.isWarlord).toBeFalsy();
     });
 
     it('initializes weapon defaults when loading a list with empty weaponCounts', () => {
