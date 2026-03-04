@@ -38,8 +38,21 @@ Thumbs.db
 prisma/dev.db
 prisma/dev.db-journal
 
+# BSData parsed intermediates (regenerate with npm run bsdata:parse)
+scripts/bsdata/*-parsed.json
+
 # PWA - generated service worker
 public/sw.js
 public/sw.js.map
 public/swe-worker-*.js
 public/workbox-*.js
+
+# Faction data (sourced from @scottzirkel/40k-data)
+public/data/custodes.json
+public/data/tyranids.json
+public/data/necrons.json
+public/data/spacemarines.json
+public/data/orks.json
+public/data/chaosmarines.json
+public/data/tau.json
+public/data/blacktemplars.json

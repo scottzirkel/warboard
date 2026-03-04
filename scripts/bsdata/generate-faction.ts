@@ -84,6 +84,7 @@ interface ParsedUnit {
   }>;
   abilities: ParsedAbility[];
   keywords: string[];
+  modelCountOptions?: number[];
 }
 
 function slugify(name: string): string {
@@ -154,18 +155,22 @@ function transformUnit(parsed: ParsedUnit): ParsedUnit {
     return ability;
   });
 
+  // Generate modelCountOptions from points keys
+  const modelCountOptions = Object.keys(parsed.points).map(Number).sort((a, b) => a - b);
+
   return {
     ...parsed,
+    modelCountOptions,
     weapons,
     abilities,
   };
 }
 
 // Generate faction JSON
-function generateFaction(faction: FactionConfig): boolean {
+function generateFaction(faction: FactionConfig, outputDir?: string): boolean {
   const parsedPath = join(__dirname, `${faction.id}-parsed.json`);
   const existingPath = join(PUBLIC_DATA_PATH, faction.outputFile);
-  const outputPath = existingPath;
+  const outputPath = outputDir ? join(outputDir, faction.outputFile) : existingPath;
 
   // Check for parsed data
   if (!existsSync(parsedPath)) {
@@ -240,8 +245,19 @@ function generateFaction(faction: FactionConfig): boolean {
 async function main() {
   const args = process.argv.slice(2);
 
-  if (args.length === 0) {
-    console.log('Usage: npx tsx scripts/bsdata/generate-faction.ts [faction-id|--all]');
+  // Parse --output flag
+  let outputDir: string | undefined;
+  const filteredArgs: string[] = [];
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--output' && i + 1 < args.length) {
+      outputDir = args[++i];
+    } else {
+      filteredArgs.push(args[i]);
+    }
+  }
+
+  if (filteredArgs.length === 0) {
+    console.log('Usage: npx tsx scripts/bsdata/generate-faction.ts [faction-id|--all] [--output <dir>]');
     console.log('\nAvailable factions:');
     for (const f of FACTIONS) {
       console.log(`  ${f.id.padEnd(15)} - ${f.name}`);
@@ -249,7 +265,11 @@ async function main() {
     process.exit(1);
   }
 
-  const factionIds = args[0] === '--all' ? getAllFactionIds() : args;
+  if (outputDir) {
+    console.log(`Output directory: ${outputDir}`);
+  }
+
+  const factionIds = filteredArgs[0] === '--all' ? getAllFactionIds() : filteredArgs;
   let successCount = 0;
   let failCount = 0;
 
@@ -262,7 +282,7 @@ async function main() {
     }
 
     console.log(`\n=== Generating ${faction.name} ===`);
-    if (generateFaction(faction)) {
+    if (generateFaction(faction, outputDir)) {
       successCount++;
     } else {
       failCount++;
