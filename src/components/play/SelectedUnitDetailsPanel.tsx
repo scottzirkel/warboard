@@ -572,25 +572,39 @@ export function SelectedUnitDetailsPanel({
         <div className="card-depth p-2 lg:p-3">
           {/* Unit Wounds Row */}
           <div className="flex items-center justify-between gap-2 bg-black/20 rounded-lg px-3 py-2">
-            <div className="flex items-center gap-2 min-w-0">
+            <div className="flex flex-col gap-1.5 min-w-0">
               <button
                 onClick={() => hasLeader && setManualStatsView(manualStatsView === 'unit' ? null : 'unit')}
-                className={`text-xs truncate transition-colors ${
+                className={`text-xs truncate transition-colors text-left ${
                   hasLeader ? 'hover:text-accent-400 cursor-pointer' : 'cursor-default'
                 } ${manualStatsView === 'unit' ? 'text-accent-400 underline' : 'text-white/50'}`}
                 title={hasLeader ? 'Click to show unit stats' : undefined}
               >
                 {unit.name}
               </button>
-              {/* Wound Dots inline */}
-              {unitWoundInfo.woundsPerModel > 1 && unitWoundInfo.modelsAlive > 0 && (
-                <div className="flex items-center gap-0.5">
-                  {Array.from({ length: unitWoundInfo.woundsPerModel }).map((_, i) => (
-                    <div
-                      key={i}
-                      className={`w-2 h-2 rounded-full ${i < currentModelWounds ? 'bg-accent-400' : 'bg-white/20'}`}
-                    />
-                  ))}
+              {/* Wound Dots - grouped by model */}
+              {unitWoundInfo.woundsPerModel > 1 && unitWoundInfo.totalModels > 0 && (
+                <div className="flex items-center gap-2 flex-wrap">
+                  {Array.from({ length: unitWoundInfo.totalModels }).map((_, modelIdx) => {
+                    const wpm = unitWoundInfo.woundsPerModel;
+                    const fullyAlive = Math.floor(unitWoundInfo.currentWounds / wpm);
+                    const partialWounds = unitWoundInfo.currentWounds % wpm;
+                    const filledWounds = modelIdx < fullyAlive
+                      ? wpm
+                      : modelIdx === fullyAlive
+                        ? partialWounds
+                        : 0;
+                    return (
+                      <div key={modelIdx} className="flex items-center gap-0.5">
+                        {Array.from({ length: wpm }).map((_, dotIdx) => (
+                          <div
+                            key={dotIdx}
+                            className={`w-2 h-2 rounded-full ${dotIdx < filledWounds ? 'bg-accent-400' : 'bg-white/20'}`}
+                          />
+                        ))}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -619,29 +633,39 @@ export function SelectedUnitDetailsPanel({
           {/* Leader Wounds Row */}
           {hasLeader && leaderWoundInfo && leaderUnit && (
             <div className="flex items-center justify-between gap-2 bg-purple-500/10 border border-purple-500/30 rounded-lg px-3 py-2 mt-2">
-              <div className="flex items-center gap-2 min-w-0">
+              <div className="flex flex-col gap-1.5 min-w-0">
                 <button
                   onClick={() => setManualStatsView(manualStatsView === 'leader' ? null : 'leader')}
-                  className={`text-xs truncate transition-colors hover:text-purple-300 cursor-pointer ${
+                  className={`text-xs truncate transition-colors text-left hover:text-purple-300 cursor-pointer ${
                     manualStatsView === 'leader' ? 'text-purple-300 underline' : 'text-purple-400'
                   }`}
                   title="Click to show leader stats"
                 >
                   {leaderUnit.name}
                 </button>
-                {/* Leader Wound Dots inline */}
-                {leaderWoundInfo.woundsPerModel > 1 && leaderWoundInfo.modelsAlive > 0 && (
-                  <div className="flex items-center gap-0.5">
-                    {Array.from({ length: leaderWoundInfo.woundsPerModel }).map((_, i) => (
-                      <div
-                        key={i}
-                        className={`w-2 h-2 rounded-full ${
-                          i < (leaderWoundInfo.currentWounds % leaderWoundInfo.woundsPerModel || leaderWoundInfo.woundsPerModel)
-                            ? 'bg-purple-500'
-                            : 'bg-white/20'
-                        }`}
-                      />
-                    ))}
+                {/* Leader Wound Dots - grouped by model */}
+                {leaderWoundInfo.woundsPerModel > 1 && leaderWoundInfo.totalModels > 0 && (
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {Array.from({ length: leaderWoundInfo.totalModels }).map((_, modelIdx) => {
+                      const wpm = leaderWoundInfo.woundsPerModel;
+                      const fullyAlive = Math.floor(leaderWoundInfo.currentWounds / wpm);
+                      const partialWounds = leaderWoundInfo.currentWounds % wpm;
+                      const filledWounds = modelIdx < fullyAlive
+                        ? wpm
+                        : modelIdx === fullyAlive
+                          ? partialWounds
+                          : 0;
+                      return (
+                        <div key={modelIdx} className="flex items-center gap-0.5">
+                          {Array.from({ length: wpm }).map((_, dotIdx) => (
+                            <div
+                              key={dotIdx}
+                              className={`w-2 h-2 rounded-full ${dotIdx < filledWounds ? 'bg-purple-500' : 'bg-white/20'}`}
+                            />
+                          ))}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>
