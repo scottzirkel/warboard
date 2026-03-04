@@ -15,6 +15,7 @@ import { useArmyStore, availableArmies } from '@/stores/armyStore';
 import { useGameStore } from '@/stores/gameStore';
 import { useUIStore } from '@/stores/uiStore';
 import { useListValidation } from '@/hooks';
+import type { ArmyData } from '@/types';
 
 // Mock fetch for API calls
 const mockFetch = vi.fn();
@@ -24,7 +25,7 @@ global.fetch = mockFetch;
 // Test Data
 // ============================================================================
 
-const mockCustodesData = {
+const mockCustodesData: ArmyData = {
   faction: 'Adeptus Custodes',
   lastUpdated: '2026-01',
   armyRules: {
@@ -109,14 +110,12 @@ const mockCustodesData = {
   detachments: {
     'shield-host': {
       name: 'Shield Host',
-      description: 'Balanced detachment',
-      rules: 'Test rules',
+      rules: [{ id: 'test-rule', name: 'Test Rule', description: 'Test rules' }],
       stratagems: [
         {
           id: 'aegis-of-emperor',
           name: 'Aegis of the Emperor',
           cost: 1,
-          timing: 'When targeted',
           description: '+1 to saves',
           phase: 'shooting',
         },

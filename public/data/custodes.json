@@ -404,8 +404,8 @@
       "bsdataId": "91b3-2e1c-e642-d213",
       "name": "Custodian Guard",
       "points": {
-        "4": 150,
-        "5": 190
+        "4": 160,
+        "5": 200
       },
       "stats": {
         "m": 6,
@@ -4023,7 +4023,7 @@
           "id": "inquisitor-draxus",
           "name": "Inquisitor Draxus",
           "points": {
-            "1": 95
+            "1": 110
           },
           "stats": {
             "m": 6,
@@ -4037,7 +4037,7 @@
           "weapons": [
             {
               "id": "dirgesinger-anti-infantry",
-              "name": "Dirgesinger (anti-infantry)",
+              "name": "Dirgesinger",
               "type": "ranged",
               "stats": {
                 "range": 18,
@@ -4048,13 +4048,14 @@
                 "d": 2
               },
               "abilities": [
+                "Anti-Infantry 4+",
                 "Assault",
                 "Devastating Wounds"
               ]
             },
             {
               "id": "dirgesinger-psychic",
-              "name": "Dirgesinger (psychic)",
+              "name": "Dirgesinger",
               "type": "ranged",
               "stats": {
                 "range": 18,
@@ -4087,7 +4088,8 @@
             {
               "id": "leader",
               "name": "Leader",
-              "description": "Can lead Inquisitorial Agents, Imperial Navy Breachers, Exaction Squad, Subductor Squad, Vigilant Squad, or any IMPERIUM BATTLELINE INFANTRY."
+              "description": "Can lead Inquisitorial Agents, Imperial Navy Breachers, Exaction Squad, Subductor Squad, Vigilant Squad, or any IMPERIUM BATTLELINE INFANTRY.",
+              "eligibleUnits": ["custodian-guard", "prosecutors"]
             },
             {
               "id": "authority-of-the-inquisition",
