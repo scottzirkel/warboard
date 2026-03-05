@@ -142,6 +142,16 @@ export function exportToPlainText(list: CurrentList, armyData: ArmyData): string
 
     lines.push(unitLine);
 
+    // Leader attachment as sub-item
+    if (listUnit.attachedLeader != null) {
+      const leaderUnit = list.units[listUnit.attachedLeader.unitIndex];
+      const leaderDef = leaderUnit ? getUnitDef(armyData, leaderUnit.unitId) : undefined;
+
+      if (leaderDef) {
+        lines.push(`  - Leader: ${leaderDef.name}`);
+      }
+    }
+
     // Enhancement as sub-item
     if (enhancementInfo) {
       lines.push(`  - Enhancement: ${enhancementInfo.name} (${enhancementInfo.points}pts)`);
@@ -178,11 +188,20 @@ export function exportToJson(list: CurrentList, armyData: ArmyData): string {
         listUnit.enhancement
       );
 
+      let leaderName: string | null = null;
+
+      if (listUnit.attachedLeader != null) {
+        const leaderUnit = list.units[listUnit.attachedLeader.unitIndex];
+        const leaderDef = leaderUnit ? getUnitDef(armyData, leaderUnit.unitId) : undefined;
+        leaderName = leaderDef?.name || null;
+      }
+
       return {
         name: unitDef?.name || listUnit.unitId,
         modelCount: listUnit.modelCount,
         points: unitDef ? getUnitPoints(unitDef, listUnit) : 0,
         enhancement: enhancementInfo?.name || null,
+        leader: leaderName,
         weaponCounts: listUnit.weaponCounts,
       };
     }),
