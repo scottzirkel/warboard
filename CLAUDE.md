@@ -282,7 +282,7 @@ Choose a stance each round that grants army-wide bonuses:
 {
   id: "custodian-guard",
   name: "Custodian Guard",
-  points: { "4": 150, "5": 190 },  // Model count -> points
+  points: { "4": 160, "5": 200 },  // Model count -> points
   stats: { m: 6, t: 6, sv: "2+", w: 3, ld: "6+", oc: 2 },
   invuln: "4+",
   weapons: [...],
