@@ -2,8 +2,9 @@
 
 import { useState, useCallback } from 'react';
 import { Modal } from './Modal';
-import { importNewRecruitJSON } from '@/lib/newRecruitParser';
+import { importNewRecruitJSON, normalizeUnitName, normalizeEnhancementName } from '@/lib/newRecruitParser';
 import { importPlainText } from '@/lib/plainTextParser';
+import { findUnitById } from '@/lib/armyDataUtils';
 import type { CurrentList, ArmyData, GameFormat } from '@/types';
 import { GAME_FORMATS } from '@/types';
 
@@ -83,9 +84,100 @@ function normalizeGameFormat(format: unknown): GameFormat {
   return 'strike-force';
 }
 
+function resolveUnitId(
+  unit: Record<string, unknown>,
+  armyData: ArmyData | null
+): string {
+  // If unitId is provided and valid, use it directly
+  if (typeof unit['unitId'] === 'string' && unit['unitId']) {
+    return unit['unitId'] as string;
+  }
+
+  // Fall back to resolving from name
+  const name = typeof unit['name'] === 'string' ? (unit['name'] as string) : '';
+
+  if (!name || !armyData) {
+    return '';
+  }
+
+  const normalized = normalizeUnitName(name);
+
+  // Direct ID match
+  const directMatch = findUnitById(armyData, normalized);
+
+  if (directMatch) {
+    return directMatch.id;
+  }
+
+  // Fuzzy match by comparing normalized names
+  const fuzzyMatch = armyData.units.find(
+    (u) => normalizeUnitName(u.name) === normalized
+  );
+
+  if (fuzzyMatch) {
+    return fuzzyMatch.id;
+  }
+
+  // Check allies
+  if (armyData.allies) {
+    for (const ally of Object.values(armyData.allies)) {
+      for (const allyUnit of ally.units || []) {
+        if (allyUnit.id === normalized || normalizeUnitName(allyUnit.name) === normalized) {
+          return allyUnit.id;
+        }
+      }
+    }
+  }
+
+  return '';
+}
+
+function resolveDetachmentId(
+  name: string | undefined,
+  armyData: ArmyData | null
+): string {
+  if (!name || !armyData) {
+    return '';
+  }
+
+  const normalized = normalizeUnitName(name);
+
+  for (const [id, detachment] of Object.entries(armyData.detachments)) {
+    if (id === normalized || normalizeUnitName(detachment.name) === normalized) {
+      return id;
+    }
+  }
+
+  return '';
+}
+
+function resolveEnhancementId(
+  name: string | undefined,
+  detachmentId: string,
+  armyData: ArmyData | null
+): string {
+  if (!name || !armyData) {
+    return '';
+  }
+
+  const detachment = armyData.detachments[detachmentId];
+
+  if (!detachment) {
+    return '';
+  }
+
+  const normalized = normalizeEnhancementName(name);
+  const enhancement = detachment.enhancements.find(
+    (e) => e.id === normalized || normalizeEnhancementName(e.name) === normalized
+  );
+
+  return enhancement?.id || '';
+}
+
 export function parseNativeFormat(
   data: Record<string, unknown>,
-  fallbackArmyId: string
+  fallbackArmyId: string,
+  armyData: ArmyData | null = null
 ): CurrentList {
   if (!Array.isArray(data.units)) {
     throw new Error('Invalid list format: missing units array.');
@@ -103,22 +195,35 @@ export function parseNativeFormat(
       ? (data['pointsLimit'] as number)
       : defaultPoints ?? 2000;
 
+  const rawDetachment = typeof data['detachment'] === 'string' ? (data['detachment'] as string) : '';
+  const detachmentId = rawDetachment
+    ? (armyData ? resolveDetachmentId(rawDetachment, armyData) : rawDetachment)
+    : '';
+
   return {
     name: typeof data['name'] === 'string' ? (data['name'] as string) : 'Imported List',
     army: typeof data['army'] === 'string' ? (data['army'] as string) : fallbackArmyId,
     pointsLimit,
     format,
-    detachment: typeof data['detachment'] === 'string' ? (data['detachment'] as string) : '',
-    units: (data.units as Record<string, unknown>[]).map((unit) => ({
-      unitId: typeof unit['unitId'] === 'string' ? (unit['unitId'] as string) : '',
-      modelCount: typeof unit['modelCount'] === 'number' ? (unit['modelCount'] as number) : 1,
-      enhancement: typeof unit['enhancement'] === 'string' ? (unit['enhancement'] as string) : '',
-      loadout: unit['loadout'] as Record<string, string> | undefined,
-      weaponCounts: unit['weaponCounts'] as Record<string, number> | undefined,
-      currentWounds: null,
-      leaderCurrentWounds: null,
-      attachedLeader: null,
-    })),
+    detachment: detachmentId,
+    units: (data.units as Record<string, unknown>[]).map((unit) => {
+      const unitId = resolveUnitId(unit, armyData);
+      const rawEnhancement = typeof unit['enhancement'] === 'string' ? (unit['enhancement'] as string) : '';
+      const enhancementId = rawEnhancement
+        ? (armyData ? resolveEnhancementId(rawEnhancement, detachmentId, armyData) : rawEnhancement)
+        : '';
+
+      return {
+        unitId,
+        modelCount: typeof unit['modelCount'] === 'number' ? (unit['modelCount'] as number) : 1,
+        enhancement: enhancementId,
+        loadout: unit['loadout'] as Record<string, string> | undefined,
+        weaponCounts: unit['weaponCounts'] as Record<string, number> | undefined,
+        currentWounds: null,
+        leaderCurrentWounds: null,
+        attachedLeader: null,
+      };
+    }),
   };
 }
 
@@ -196,7 +301,7 @@ export function ImportModal({
         // Native Army Tracker format
         const data = JSON.parse(trimmed) as Record<string, unknown>;
 
-        importedList = parseNativeFormat(data, armyId);
+        importedList = parseNativeFormat(data, armyId, armyData);
       } else if (format === 'plaintext') {
         // Plain text format (from AI chatbots, etc.)
         if (!armyData) {

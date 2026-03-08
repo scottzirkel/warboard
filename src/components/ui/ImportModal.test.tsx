@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { parseNativeFormat } from './ImportModal';
+import type { ArmyData } from '@/types';
 
 const baseUnit = {
   unitId: 'custodian-guard',
@@ -7,6 +8,43 @@ const baseUnit = {
   enhancement: '',
   loadout: {},
   weaponCounts: {},
+};
+
+const mockArmyData: ArmyData = {
+  faction: 'Adeptus Custodes',
+  lastUpdated: '2024-01',
+  units: [
+    {
+      id: 'shield-captain',
+      name: 'Shield-Captain',
+      points: { '1': 140 },
+      stats: { m: 6, t: 6, sv: '2+', w: 6, ld: '6+', oc: 2 },
+      invuln: '4+',
+      weapons: [],
+      abilities: [],
+      keywords: ['Character', 'Infantry'],
+    },
+    {
+      id: 'custodian-guard',
+      name: 'Custodian Guard',
+      points: { '4': 160, '5': 200 },
+      stats: { m: 6, t: 6, sv: '2+', w: 3, ld: '6+', oc: 2 },
+      invuln: '4+',
+      weapons: [],
+      abilities: [],
+      keywords: ['Infantry', 'Battleline'],
+    },
+  ],
+  detachments: {
+    'shield-host': {
+      name: 'Shield Host',
+      rules: [{ id: 'test', name: 'Test', description: 'Test' }],
+      enhancements: [
+        { id: 'auric-mantle', name: 'Auric Mantle', points: 15, description: 'Test' },
+      ],
+      stratagems: [],
+    },
+  },
 };
 
 describe('parseNativeFormat', () => {
@@ -41,5 +79,41 @@ describe('parseNativeFormat', () => {
 
     expect(list.format).toBe('strike-force');
     expect(list.pointsLimit).toBe(2000);
+  });
+
+  it('resolves unit names to IDs when armyData is provided', () => {
+    const list = parseNativeFormat(
+      {
+        name: 'Test List',
+        format: 'incursion',
+        pointsLimit: 1000,
+        detachment: 'Shield Host',
+        units: [
+          { name: 'Shield-Captain', modelCount: 1, enhancement: 'Auric Mantle' },
+          { name: 'Custodian Guard', modelCount: 4 },
+        ],
+      },
+      'custodes',
+      mockArmyData
+    );
+
+    expect(list.units[0].unitId).toBe('shield-captain');
+    expect(list.units[0].enhancement).toBe('auric-mantle');
+    expect(list.units[1].unitId).toBe('custodian-guard');
+    expect(list.detachment).toBe('shield-host');
+  });
+
+  it('resolves detachment names to IDs', () => {
+    const list = parseNativeFormat(
+      {
+        name: 'Test',
+        detachment: 'Shield Host',
+        units: [baseUnit],
+      },
+      'custodes',
+      mockArmyData
+    );
+
+    expect(list.detachment).toBe('shield-host');
   });
 });

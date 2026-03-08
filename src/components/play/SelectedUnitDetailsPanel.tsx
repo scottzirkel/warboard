@@ -394,16 +394,6 @@ export function SelectedUnitDetailsPanel({
       )
     : null;
 
-  // Build combined unit name
-  const combinedName = hasLeader && leaderUnit
-    ? `${unit.name} + ${leaderUnit.name}`
-    : unit.name;
-
-  // Current model wounds for wound dots display
-  const currentModelWounds = unitWoundInfo.woundsPerModel > 1 && unitWoundInfo.modelsAlive > 0
-    ? unitWoundInfo.currentWounds % unitWoundInfo.woundsPerModel || unitWoundInfo.woundsPerModel
-    : 0;
-
   // Count active modifiers for summary
   const activeModifierCount =
     (activeKatah ? 1 : 0) +
