@@ -116,4 +116,44 @@ describe('parseNativeFormat', () => {
 
     expect(list.detachment).toBe('shield-host');
   });
+
+  it('resolves leader attachments from character to bodyguard unit', () => {
+    const list = parseNativeFormat(
+      {
+        name: 'Leader Test',
+        format: 'incursion',
+        pointsLimit: 1000,
+        detachment: 'Shield Host',
+        units: [
+          { name: 'Shield-Captain', modelCount: 1, leader: 'Custodian Guard' },
+          { name: 'Custodian Guard', modelCount: 4 },
+        ],
+      },
+      'custodes',
+      mockArmyData
+    );
+
+    // Leader (index 0) should be attached to bodyguard (index 1)
+    expect(list.units[0].attachedLeader).toBeNull();
+    expect(list.units[1].attachedLeader).toEqual({ unitIndex: 0 });
+  });
+
+  it('supports attachedTo as alternative to leader field', () => {
+    const list = parseNativeFormat(
+      {
+        name: 'AttachedTo Test',
+        format: 'incursion',
+        pointsLimit: 1000,
+        detachment: 'Shield Host',
+        units: [
+          { name: 'Shield-Captain', modelCount: 1, attachedTo: 'Custodian Guard' },
+          { name: 'Custodian Guard', modelCount: 4 },
+        ],
+      },
+      'custodes',
+      mockArmyData
+    );
+
+    expect(list.units[1].attachedLeader).toEqual({ unitIndex: 0 });
+  });
 });

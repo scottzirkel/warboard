@@ -200,30 +200,66 @@ export function parseNativeFormat(
     ? (armyData ? resolveDetachmentId(rawDetachment, armyData) : rawDetachment)
     : '';
 
+  const rawUnits = data.units as Record<string, unknown>[];
+
+  // First pass: build units with resolved IDs
+  const units = rawUnits.map((unit) => {
+    const unitId = resolveUnitId(unit, armyData);
+    const rawEnhancement = typeof unit['enhancement'] === 'string' ? (unit['enhancement'] as string) : '';
+    const enhancementId = rawEnhancement
+      ? (armyData ? resolveEnhancementId(rawEnhancement, detachmentId, armyData) : rawEnhancement)
+      : '';
+
+    return {
+      unitId,
+      modelCount: typeof unit['modelCount'] === 'number' ? (unit['modelCount'] as number) : 1,
+      enhancement: enhancementId,
+      loadout: unit['loadout'] as Record<string, string> | undefined,
+      weaponCounts: unit['weaponCounts'] as Record<string, number> | undefined,
+      currentWounds: null,
+      leaderCurrentWounds: null,
+      attachedLeader: null as { unitIndex: number } | null,
+    };
+  });
+
+  // Second pass: resolve leader attachments
+  // The "leader" field on a character means "this character leads that unit",
+  // so we set attachedLeader on the bodyguard unit pointing to the character's index.
+  rawUnits.forEach((rawUnit, leaderIndex) => {
+    const leaderTarget =
+      (typeof rawUnit['leader'] === 'string' ? rawUnit['leader'] : null) ??
+      (typeof rawUnit['attachedTo'] === 'string' ? rawUnit['attachedTo'] : null);
+
+    if (!leaderTarget) {
+      return;
+    }
+
+    const targetId = armyData
+      ? resolveUnitId({ name: leaderTarget }, armyData)
+      : normalizeUnitName(leaderTarget);
+
+    if (!targetId) {
+      return;
+    }
+
+    // Find the bodyguard unit in the list
+    const bodyguardIndex = units.findIndex((u) => u.unitId === targetId);
+
+    if (bodyguardIndex !== -1) {
+      units[bodyguardIndex] = {
+        ...units[bodyguardIndex],
+        attachedLeader: { unitIndex: leaderIndex },
+      };
+    }
+  });
+
   return {
     name: typeof data['name'] === 'string' ? (data['name'] as string) : 'Imported List',
     army: typeof data['army'] === 'string' ? (data['army'] as string) : fallbackArmyId,
     pointsLimit,
     format,
     detachment: detachmentId,
-    units: (data.units as Record<string, unknown>[]).map((unit) => {
-      const unitId = resolveUnitId(unit, armyData);
-      const rawEnhancement = typeof unit['enhancement'] === 'string' ? (unit['enhancement'] as string) : '';
-      const enhancementId = rawEnhancement
-        ? (armyData ? resolveEnhancementId(rawEnhancement, detachmentId, armyData) : rawEnhancement)
-        : '';
-
-      return {
-        unitId,
-        modelCount: typeof unit['modelCount'] === 'number' ? (unit['modelCount'] as number) : 1,
-        enhancement: enhancementId,
-        loadout: unit['loadout'] as Record<string, string> | undefined,
-        weaponCounts: unit['weaponCounts'] as Record<string, number> | undefined,
-        currentWounds: null,
-        leaderCurrentWounds: null,
-        attachedLeader: null,
-      };
-    }),
+    units,
   };
 }
 
