@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { PlayModeWeaponsDisplay } from './PlayModeWeaponsDisplay';
 import { Tooltip, TooltipBadge } from '../ui/Tooltip';
-import type { Unit, ListUnit, Enhancement, Weapon, Modifier, ModifierSource, LoadoutGroup, Stratagem, MissionTwist, KeywordDefinition, ArmyRuleStance, StatKey, DetachmentRuleChoice } from '@/types';
+import { abilityMatchesPhase } from '@/lib/phaseReminders';
+import type { Unit, ListUnit, Enhancement, Weapon, Modifier, ModifierSource, LoadoutGroup, Stratagem, MissionTwist, KeywordDefinition, ArmyRuleStance, StatKey, DetachmentRuleChoice, GamePhase } from '@/types';
 
 interface SelectedUnitDetailsPanelProps {
   // Unit data
@@ -72,6 +73,9 @@ interface SelectedUnitDetailsPanelProps {
   // Once-per-battle ability tracking
   isAbilityUsed?: (abilityId: string) => boolean;
   onToggleAbilityUsed?: (abilityId: string) => void;
+
+  // Current game phase for ability highlighting
+  currentPhase?: GamePhase;
 
   className?: string;
 }
@@ -348,6 +352,8 @@ export function SelectedUnitDetailsPanel({
 
   isAbilityUsed,
   onToggleAbilityUsed,
+
+  currentPhase,
 
   className = '',
 }: SelectedUnitDetailsPanelProps) {
@@ -849,6 +855,23 @@ export function SelectedUnitDetailsPanel({
             </button>
             <div className={`overflow-hidden transition-all duration-200 ${abilitiesOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
               <div className="px-3 pb-3 space-y-2">
+                {/* Ka'tah Banner - Fight phase only */}
+                {currentPhase === 'fight' && katahName !== undefined && (
+                  <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-2 flex items-center gap-2">
+                    <svg className="w-4 h-4 text-amber-400 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2L1 21h22L12 2zm0 4l7.53 13H4.47L12 6z" />
+                    </svg>
+                    <div>
+                      <div className="text-xs font-medium text-amber-300">
+                        {activeKatah ? katahName : 'No Ka\'tah stance selected'}
+                      </div>
+                      {katahDescription && (
+                        <div className="text-[10px] text-white/60 mt-0.5">{katahDescription}</div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 {/* Unit abilities - sorted so used ones are at the bottom */}
                 {[...(unit.abilities || [])]
                   .sort((a, b) => {
@@ -861,11 +884,12 @@ export function SelectedUnitDetailsPanel({
                   .map((ability) => {
                     const isOncePerBattle = /once per battle/i.test(ability.description);
                     const isUsed = isAbilityUsed?.(ability.id) ?? false;
+                    const isPhaseRelevant = currentPhase && ability.id !== 'leader' && abilityMatchesPhase(ability.description, currentPhase);
 
                     return (
                       <div
                         key={ability.id}
-                        className={`bg-black/20 rounded-lg p-2 transition-opacity ${isUsed ? 'opacity-40' : ''}`}
+                        className={`bg-black/20 rounded-lg p-2 transition-opacity ${isUsed ? 'opacity-40' : ''} ${isPhaseRelevant ? 'border-l-2 border-l-accent-400 bg-accent-500/5' : ''}`}
                       >
                         <div className="flex items-center justify-between gap-2">
                           <div className="text-sm font-medium text-accent-300">{ability.name}</div>
@@ -899,11 +923,12 @@ export function SelectedUnitDetailsPanel({
                     const isOncePerBattle = /once per battle/i.test(ability.description);
                     const abilityKey = `leader-${ability.id}`;
                     const isUsed = isAbilityUsed?.(abilityKey) ?? false;
+                    const isPhaseRelevant = currentPhase && ability.id !== 'leader' && abilityMatchesPhase(ability.description, currentPhase);
 
                     return (
                       <div
                         key={abilityKey}
-                        className={`bg-purple-500/10 border border-purple-500/20 rounded-lg p-2 transition-opacity ${isUsed ? 'opacity-40' : ''}`}
+                        className={`bg-purple-500/10 border border-purple-500/20 rounded-lg p-2 transition-opacity ${isUsed ? 'opacity-40' : ''} ${isPhaseRelevant ? 'border-l-2 border-l-accent-400 bg-accent-500/5' : ''}`}
                       >
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex items-center gap-2">

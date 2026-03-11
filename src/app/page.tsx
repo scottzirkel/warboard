@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { useArmyStore, availableArmies } from '@/stores/armyStore';
 import { useGameStore } from '@/stores/gameStore';
@@ -17,6 +17,8 @@ import { ArmyOverviewPanel } from '@/components/play/ArmyOverviewPanel';
 import { GameStatePanel } from '@/components/play/GameStatePanel';
 import { SelectedUnitDetailsPanel } from '@/components/play/SelectedUnitDetailsPanel';
 import { TwistSelectionModal } from '@/components/play/TwistSelectionModal';
+import { PhaseTransitionModal } from '@/components/play/PhaseTransitionModal';
+import { getPhaseReminders, type PhaseReminder } from '@/lib/phaseReminders';
 import {
   ToastContainer,
   ImportModal,
@@ -54,6 +56,9 @@ export default function Home() {
   const [isExporting, setIsExporting] = useState(false);
   const [exportCode, setExportCode] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
+  const [showPhaseModal, setShowPhaseModal] = useState(false);
+  const [phaseReminders, setPhaseReminders] = useState<PhaseReminder[]>([]);
+  const prevPhaseRef = useRef<{ phase: string; round: number } | null>(null);
 
   // -------------------------------------------------------------------------
   // Auth & Migration State
@@ -322,6 +327,32 @@ export default function Home() {
     refreshLocalListsForMigration();
     fetchLists();
   }, [refreshLocalListsForMigration, fetchLists]);
+
+  // Detect phase/round changes and show phase transition modal
+  useEffect(() => {
+    if (mode !== 'play') return;
+
+    const current = { phase: gameState.currentPhase, round: gameState.battleRound };
+    const prev = prevPhaseRef.current;
+    prevPhaseRef.current = current;
+
+    if (!prev) return;
+    if (prev.phase === current.phase && prev.round === current.round) return;
+
+    const reminders = getPhaseReminders(
+      gameState.currentPhase,
+      gameState.battleRound,
+      armyData,
+      currentList.units,
+      currentList.detachment,
+      gameState,
+    );
+
+    if (reminders.length > 0) {
+      setPhaseReminders(reminders);
+      setShowPhaseModal(true);
+    }
+  }, [mode, gameState.currentPhase, gameState.battleRound, armyData, currentList.units, currentList.detachment, gameState]);
 
   // -------------------------------------------------------------------------
   // Computed Values
@@ -1048,6 +1079,7 @@ export default function Home() {
                   weaponKeywordGlossary={armyData?.keywordGlossary?.weapon || []}
                   isAbilityUsed={(abilityId) => isAbilityUsed(selectedUnitIndex, abilityId)}
                   onToggleAbilityUsed={(abilityId) => toggleAbilityUsed(selectedUnitIndex, abilityId)}
+                  currentPhase={gameState.currentPhase}
                 />
               ) : undefined
             }
@@ -1272,6 +1304,14 @@ export default function Home() {
         twists={missionTwists}
         activeTwistId={gameState.activeTwists?.[0] || null}
         onSelect={handleTwistSelect}
+      />
+
+      {/* Phase Transition Reminders Modal */}
+      <PhaseTransitionModal
+        isOpen={showPhaseModal}
+        onClose={() => setShowPhaseModal(false)}
+        phase={gameState.currentPhase}
+        reminders={phaseReminders}
       />
 
       {/* Toast Notifications */}
