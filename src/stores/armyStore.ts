@@ -197,6 +197,25 @@ export const useArmyStore = create<ArmyStore>()(
 
       const data: ArmyData = await response.json();
 
+      // Merge parent faction units and detachments (e.g., Space Marines into Dark Angels)
+      if (data.parentFaction) {
+        const parentArmy = availableArmies.find(a => a.id === data.parentFaction);
+        if (parentArmy) {
+          const parentResponse = await fetch(`/data/${parentArmy.file}`);
+          if (parentResponse.ok) {
+            const parentData: ArmyData = await parentResponse.json();
+
+            // Child units IDs take precedence — only add parent units not already in child
+            const childUnitIds = new Set(data.units.map(u => u.id));
+            const parentUnits = parentData.units.filter(u => !childUnitIds.has(u.id));
+            data.units = [...data.units, ...parentUnits];
+
+            // Merge detachments — child detachments take precedence
+            data.detachments = { ...parentData.detachments, ...data.detachments };
+          }
+        }
+      }
+
       // Set default detachment if available
       const detachmentKeys = Object.keys(data.detachments || {});
       const defaultDetachment = detachmentKeys[0] || '';

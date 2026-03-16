@@ -30,7 +30,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Aggressor Squad\n■ Eradicator Squad\n■ Heavy Intercessor Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Aggressor Squad\n\u25a0 Eradicator Squad\n\u25a0 Heavy Intercessor Squad",
           "eligibleUnits": [
             "aggressor-squad",
             "eradicator-squad",
@@ -104,7 +104,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Eliminator Squad\n■ Incursor Squad\n■ Infiltrator Squad\n■ Reiver Squad\n■ Scout Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Eliminator Squad\n\u25a0 Incursor Squad\n\u25a0 Infiltrator Squad\n\u25a0 Reiver Squad\n\u25a0 Scout Squad",
           "eligibleUnits": [
             "eliminator-squad",
             "incursor-squad",
@@ -158,7 +158,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Relic Terminator Squad\n■ Terminator Assault Squad\n■ Terminator Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Relic Terminator Squad\n\u25a0 Terminator Assault Squad\n\u25a0 Terminator Squad",
           "eligibleUnits": [
             "relic-terminator-squad",
             "terminator-assault-squad",
@@ -168,7 +168,7 @@
         {
           "id": "unstoppable-valour",
           "name": "Unstoppable Valour",
-          "description": "You can re-roll Charge rolls made for this model’s unit."
+          "description": "You can re-roll Charge rolls made for\u00a0this model\u2019s unit."
         }
       ],
       "keywords": [
@@ -199,12 +199,12 @@
         {
           "id": "angel-s-wrath",
           "name": "Angel's Wrath",
-          "description": "While this model is leading a unit, each time that unit ends a Charge move, until the end of the turn, add 1 to the Strength characteristic of melee  weapons equipped by models in that unit."
+          "description": "While this model is leading a unit, each time\u00a0that unit ends a Charge move, until the end of the turn, add 1\u00a0to the Strength characteristic of melee\u00a0 weapons equipped by\u00a0models in that unit."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessors with Jump Packs\n■ Vanguard Veteran Squad with Jump Packs",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessors with Jump Packs\n\u25a0 Vanguard Veteran Squad with Jump Packs",
           "eligibleUnits": [
             "assault-intercessors-with-jump-packs",
             "vanguard-veteran-squad-with-jump-packs"
@@ -290,7 +290,7 @@
         },
         {
           "id": "astartes-grenade-launcher-krak-ranged",
-          "name": "➤ Astartes grenade launcher - krak",
+          "name": "\u27a4 Astartes grenade launcher - krak",
           "type": "ranged",
           "stats": {
             "range": 24,
@@ -305,7 +305,7 @@
         },
         {
           "id": "astartes-grenade-launcher-frag-ranged",
-          "name": "➤ Astartes grenade launcher - frag",
+          "name": "\u27a4 Astartes grenade launcher - frag",
           "type": "ranged",
           "stats": {
             "range": 24,
@@ -325,12 +325,12 @@
         {
           "id": "objective-secured",
           "name": "Objective Secured",
-          "description": "If you control an objective marker at the end of your Command phase and this unit is within range of that objective marker, that objective marker remains under your control, even if you have no models within range of it, until your opponent controls it at the start or end of any turn."
+          "description": "If you control an objective marker at the end of your Command phase and this unit is within range of\u00a0that objective marker, that objective marker remains under your control, even if you have no models within range of it, until your opponent controls it at the start or end of any turn."
         },
         {
           "id": "target-elimination",
           "name": "Target Elimination",
-          "description": "Each time this unit is selected to shoot, it can use this ability. If it does, until the end of the phase, add 2 to the Attacks characteristic of bolt rifles equipped by models in this unit and you can only select one enemy unit as the target of all of this unit's attacks"
+          "description": "Each time this unit is selected to\u00a0shoot, it can use this ability. If it does, until the end of\u00a0the phase, add 2 to the Attacks characteristic of bolt\u00a0rifles equipped by models in this unit and you can\u00a0only select one enemy unit as the target of all of this\u00a0unit's attacks"
         }
       ],
       "keywords": [
@@ -655,7 +655,7 @@
         {
           "id": "unyielding-in-the-face-of-the-foe",
           "name": "Unyielding in the Face of the Foe",
-          "description": "While this unit is within range of an objective marker you control, each time an attack with a Damage characteristic of 1 is allocated to a model in \nthis unit, add 1 to any armour saving throw made against that attack."
+          "description": "While this unit is within range of an objective marker you control, each time an attack with a Damage characteristic of 1 is allocated to a model in\u00a0\nthis unit, add 1 to any armour saving throw made against that attack."
         }
       ],
       "keywords": [
@@ -1179,7 +1179,7 @@
         {
           "id": "guerrilla-tactics",
           "name": "Guerrilla Tactics",
-          "description": "At the end of your opponent’s turn, if this unit is more than 6\" away from all enemy models, you can remove this unit from the battlefield and place it into\nStrategic Reserves."
+          "description": "At the end of your opponent\u2019s turn, if this unit is more than 6\" away from all enemy models, you can remove this unit from the battlefield and place it into\nStrategic Reserves."
         }
       ],
       "keywords": [
@@ -1335,7 +1335,7 @@
         },
         {
           "id": "missile-launcher-frag-ranged",
-          "name": "➤ Missile Launcher - Frag",
+          "name": "\u27a4 Missile Launcher - Frag",
           "type": "ranged",
           "stats": {
             "range": 48,
@@ -1353,7 +1353,7 @@
         },
         {
           "id": "missile-launcher-krak-ranged",
-          "name": "➤ Missile Launcher - Krak",
+          "name": "\u27a4 Missile Launcher - Krak",
           "type": "ranged",
           "stats": {
             "range": 48,
@@ -1475,7 +1475,7 @@
         {
           "id": "bladeguard",
           "name": "Bladeguard",
-          "description": "At the start of the Fight phase, you can select one of the following abilities to apply to models in this unit until the end of the phase:\n\n■ Swords of the Imperium: Each time a model in this unit makes a melee attack, re-roll a Hit roll of 1.\n■ Shields of the Imperium: Each time an invulnerable saving throw is made for a model in this unit, re-roll a saving throw of 1."
+          "description": "At the start of the Fight phase, you can select one of the following abilities to apply to models in this unit until the end of the phase:\n\n\u25a0 Swords of the Imperium: Each time a model in this unit makes a melee attack, re-roll a Hit roll of 1.\n\u25a0 Shields of the Imperium: Each time an invulnerable saving throw is made for a model in this unit, re-roll a saving throw of 1."
         }
       ],
       "keywords": [
@@ -1542,7 +1542,7 @@
         {
           "id": "vanguard-assault",
           "name": "Vanguard Assault",
-          "description": "Each time this unit ends a Charge move, until the end of the turn, melee weapons equipped by models in this unit have the [LETHAL HITS] ability."
+          "description": "Each time this unit ends a Charge move,\u00a0until the end of the turn, melee weapons equipped by models\u00a0in this unit have the [LETHAL HITS] ability."
         }
       ],
       "keywords": [
@@ -1611,7 +1611,7 @@
         {
           "id": "vanguard-assault",
           "name": "Vanguard Assault",
-          "description": "Each time this unit ends a Charge move, until the end of the turn, melee weapons equipped by models in this unit have the [LETHAL HITS] ability."
+          "description": "Each time this unit ends a Charge move,\u00a0until the end of the turn, melee weapons equipped by models\u00a0in this unit have the [LETHAL HITS] ability."
         }
       ],
       "keywords": [
@@ -1845,7 +1845,7 @@
         {
           "id": "terror-troops",
           "name": "Terror Troops",
-          "description": "While an enemy unit (excluding Monsters and Vehicles) is within 3\" of one or more units with this ability, subtract 1 from the Objective Control characteristic of models in that enemy unit."
+          "description": "While an enemy unit (excluding\u00a0Monsters and Vehicles) is within 3\" of one or more\u00a0units with this ability, subtract 1 from the Objective\u00a0Control characteristic of models in that enemy unit."
         }
       ],
       "keywords": [
@@ -1999,7 +1999,7 @@
         {
           "id": "teleport-homer",
           "name": "Teleport Homer",
-          "description": "At the start of the battle, you can set up one Teleport Homer token for this unit anywhere on the battlefield that is not in your opponent’s deployment zone. If you do, once per battle, you can target this unit with the Rapid Ingress Stratagem for 0CP, but when resolving that Stratagem, you must set this unit up within 3\" horizontally of that token and not within 9\" horizontally of any enemy models. That token is then removed."
+          "description": "At the start of the battle, you can set up one Teleport Homer token for this unit anywhere on the battlefield that is not in your opponent\u2019s deployment zone. If you do, once per battle, you can target this unit with the Rapid Ingress Stratagem for 0CP, but when resolving that Stratagem, you must set this unit up within 3\" horizontally of that token and not within 9\" horizontally of any enemy models. That token is then removed."
         },
         {
           "id": "terminatus-assault",
@@ -2120,7 +2120,7 @@
         {
           "id": "teleport-homer",
           "name": "Teleport Homer",
-          "description": "At the start of the battle, you can set up one Teleport Homer token for this unit anywhere on the battlefield that is not in your opponent’s deployment zone. If you do, once per battle, you can target this unit with the Rapid Ingress Stratagem for 0CP, but when resolving that Stratagem, you must set this unit up within 3\" horizontally of that token and not within 9\" horizontally of any enemy models. That token is then removed."
+          "description": "At the start of the battle, you can set up one Teleport Homer token for this unit anywhere on the battlefield that is not in your opponent\u2019s deployment zone. If you do, once per battle, you can target this unit with the Rapid Ingress Stratagem for 0CP, but when resolving that Stratagem, you must set this unit up within 3\" horizontally of that token and not within 9\" horizontally of any enemy models. That token is then removed."
         },
         {
           "id": "fury-of-the-first",
@@ -2289,7 +2289,7 @@
         {
           "id": "fury-of-the-first",
           "name": "Fury of the First",
-          "description": "Each time a model in this unit makes an attack, you can ignore any or all modifiers to that attack’s Ballistic Skill or Weapon Skill characteristic and/or to the Hit roll. In addition, each time a model in this unit makes an attack that targets the enemy unit you selected for the Oath of Moment ability this turn, add 1 to the Hit roll"
+          "description": "Each time a model in this unit makes an\u00a0attack, you can ignore any or all modifiers to that attack\u2019s Ballistic Skill or Weapon Skill characteristic and/or to the Hit roll. In addition, each time a model in this unit makes an attack that targets the enemy unit you selected for the Oath of Moment ability this turn, add 1 to the Hit roll"
         }
       ],
       "keywords": [
@@ -2566,7 +2566,7 @@
         {
           "id": "combat-support",
           "name": "Combat Support",
-          "description": "Once per turn, in your opponent’s Shooting phase, when a friendly Adeptus Astartes Phobos Infantry unit within 6\" of this model is selected as the target of an attack, this model can use this ability. If it does, after that enemy model’s unit has finished making its attacks, this model can shoot as if it were your Shooting phase, but when resolving those attacks it can only target that enemy unit (and only if it is an eligible target)."
+          "description": "Once per turn, in your opponent\u2019s Shooting\u00a0phase, when a friendly Adeptus Astartes Phobos Infantry\u00a0unit within 6\" of this model is selected as the target of an attack, this model can use this ability. If it does, after that enemy model\u2019s unit has finished making its attacks, this model can shoot as if it were your Shooting phase, but when resolving those attacks it can only target that enemy unit (and only if it is an eligible target)."
         }
       ],
       "keywords": [
@@ -2711,7 +2711,7 @@
         {
           "id": "duty-eternal",
           "name": "Duty Eternal",
-          "description": "Each time an attack is allocated to this model, subtract 1 from the Damage characteristic of that attack"
+          "description": "Each time an attack is allocated to this model,\u00a0subtract 1 from the Damage characteristic of that attack"
         }
       ],
       "keywords": [
@@ -2769,7 +2769,7 @@
         },
         {
           "id": "ballistus-missile-launcher-frag-ranged",
-          "name": "➤ Ballistus Missile Launcher - Frag",
+          "name": "\u27a4 Ballistus Missile Launcher - Frag",
           "type": "ranged",
           "stats": {
             "range": 48,
@@ -2786,7 +2786,7 @@
         },
         {
           "id": "ballistus-missile-launcher-krak-ranged",
-          "name": "➤ Ballistus Missile Launcher - Krak",
+          "name": "\u27a4 Ballistus Missile Launcher - Krak",
           "type": "ranged",
           "stats": {
             "range": 48,
@@ -2804,7 +2804,7 @@
         {
           "id": "ballistus-strike",
           "name": "Ballistus Strike",
-          "description": "Each time this model makes a ranged attack that targets a unit that is not Below Half-strength, you can re-roll the Hit roll."
+          "description": "Each time this model makes a ranged attack\u00a0that targets a unit that is not Below Half-strength, you can\u00a0re-roll the Hit roll."
         }
       ],
       "keywords": [
@@ -2833,7 +2833,7 @@
       "weapons": [
         {
           "id": "brutalis-talons-strike-melee",
-          "name": "➤ Brutalis Talons - Strike",
+          "name": "\u27a4 Brutalis Talons - Strike",
           "type": "melee",
           "stats": {
             "a": 6,
@@ -2849,7 +2849,7 @@
         },
         {
           "id": "brutalis-talons-sweep-melee",
-          "name": "➤ Brutalis Talons - Sweep",
+          "name": "\u27a4 Brutalis Talons - Sweep",
           "type": "melee",
           "stats": {
             "a": 10,
@@ -2948,7 +2948,7 @@
         {
           "id": "chainsword-doctrines",
           "name": "Chainsword Doctrines",
-          "description": "Each time this unit is selected to fight, select one of the following abilities to apply to all Astartes chainswords equipped by models in this unit until the end of the phase: \n\n■ [SUSTAINED HITS 1]\n■ [LETHAL HITS]\n■ [LANCE]"
+          "description": "Each time this unit is selected to fight, select one of the following abilities to apply to all Astartes chainswords equipped by models in this unit until the end of the phase:\u00a0\n\n\u25a0 [SUSTAINED HITS 1]\n\u25a0 [LETHAL HITS]\n\u25a0 [LANCE]"
         }
       ],
       "keywords": [
@@ -3168,7 +3168,7 @@
         {
           "id": "outrider-escort",
           "name": "Outrider Escort",
-          "description": "Once per turn, in your opponent's Shooting phase, when another friendly ^^Adeptus Astartes Mounted^^ unit within 6\" of this model is selected as the target of an attack, one model from your army with this ability can use it. If it does, after that enemy unit has finished making its attacks, that model can shoot as if it were your Shooting phase , but when resolving those attacks it can only target that enemy unit [and only if it is an eligible target)."
+          "description": "Once per turn, in your opponent's Shooting\u00a0phase, when another friendly ^^Adeptus Astartes Mounted^^\u00a0unit within 6\" of this model is selected as the target of an\u00a0attack, one model from your army with this ability can use\u00a0it. If it does, after that enemy unit has finished making its\u00a0attacks, that model can shoot as if it were your Shooting\u00a0phase , but when resolving those attacks it can only target that\u00a0enemy unit [and only if it is an eligible target)."
         }
       ],
       "keywords": [
@@ -3248,7 +3248,7 @@
         {
           "id": "thunderous-impact",
           "name": "Thunderous Impact",
-          "description": "Each time a model in this unit makes a melee attack, if this unit made a Charge move this turn, improve the Strength and Damage characteristics of that attack by 1"
+          "description": "Each time a model in this unit\u00a0makes a melee attack, if this unit made a Charge\u00a0move this turn, improve the Strength and Damage\u00a0characteristics of that attack by 1"
         }
       ],
       "keywords": [
@@ -3347,7 +3347,7 @@
         {
           "id": "outrider-escort",
           "name": "Outrider Escort",
-          "description": "Once per turn, in your opponent’s Shooting phase, when a friendly ^^Adeptus Astartes Mounted^^ unit within 6\" of this model is selected as the target of an attack, this model can use this ability. If it does, after that enemy unit has finished making its attacks, this model can shoot as if it were your Shooting phase, but when resolving those attacks it can only target that enemy unit (and only if it is an eligible target)."
+          "description": "Once per turn, in your opponent\u2019s Shooting phase, when a friendly ^^Adeptus Astartes Mounted^^ unit within 6\" of this model is selected as the target of an attack, this model can use this ability. If it does, after that enemy unit has finished making its attacks, this model can shoot\u00a0as if it were your Shooting phase, but when resolving those attacks it can only target that enemy unit (and only if it is an eligible target)."
         }
       ],
       "keywords": [
@@ -3529,7 +3529,7 @@
       "weapons": [
         {
           "id": "astartes-grenade-launcher-krak-ranged",
-          "name": "➤ Astartes grenade launcher - krak",
+          "name": "\u27a4 Astartes grenade launcher - krak",
           "type": "ranged",
           "stats": {
             "range": 24,
@@ -3544,7 +3544,7 @@
         },
         {
           "id": "astartes-grenade-launcher-frag-ranged",
-          "name": "➤ Astartes grenade launcher - frag",
+          "name": "\u27a4 Astartes grenade launcher - frag",
           "type": "ranged",
           "stats": {
             "range": 24,
@@ -3595,7 +3595,7 @@
         {
           "id": "outflank",
           "name": "Outflank",
-          "description": "When this unit arrives from Strategic Reserves, it can be set up within your opponent’s deployment zone (all other restrictions still apply)."
+          "description": "When this unit arrives from Strategic Reserves, it can be set up within your opponent\u2019s deployment zone (all other restrictions still apply)."
         }
       ],
       "keywords": [
@@ -4050,7 +4050,7 @@
         {
           "id": "strafing-enfilade",
           "name": "Strafing Enfilade",
-          "description": "Each time this model ends a Normal move, you can select one enemy unit (excluding Monster and Vehicle units) that it moved over during that move, then roll six D6: for each 4+, that enemy unit suffers 1 mortal wound"
+          "description": "Each time this model ends a Normal move,\u00a0you can select one enemy unit (excluding Monster and\u00a0Vehicle units) that it moved over during that move, then roll six D6: for each 4+, that enemy unit suffers 1 mortal wound"
         }
       ],
       "keywords": [
@@ -4123,7 +4123,7 @@
         },
         {
           "id": "plasma-incinerator-standard-ranged",
-          "name": "➤ Plasma Incinerator - Standard",
+          "name": "\u27a4 Plasma Incinerator - Standard",
           "type": "ranged",
           "stats": {
             "range": 24,
@@ -4141,7 +4141,7 @@
         },
         {
           "id": "plasma-incinerator-supercharge-ranged",
-          "name": "➤ Plasma Incinerator - Supercharge",
+          "name": "\u27a4 Plasma Incinerator - Supercharge",
           "type": "ranged",
           "stats": {
             "range": 24,
@@ -4180,7 +4180,7 @@
         {
           "id": "for-the-chapter",
           "name": "For the Chapter!",
-          "description": "Each time a model in this unit is destroyed, roll one D6: on a 3+, do not remove it from play. The destroyed model can shoot after the attacking model’s unit has finished making its attacks, and is then removed from play. When resolving these attacks, any Hazardous tests taken for that attack are automatically passed."
+          "description": "Each time a model in this unit is destroyed, roll one D6: on a 3+, do not remove it from play. The destroyed model can shoot after the attacking model\u2019s unit has finished making its attacks, and is then removed from play. When resolving these attacks, any Hazardous tests taken for that attack are automatically passed."
         }
       ],
       "keywords": [
@@ -4388,7 +4388,7 @@
         {
           "id": "total-obliteration",
           "name": "Total Obliteration",
-          "description": "Each time a ranged attack made by a model in this unit targets a Monster or Vehicle model, you can re-roll the Hit roll, you can re-roll the Wound roll and you can re-roll the Damage roll."
+          "description": "Each time a ranged attack made by a\u00a0model in this unit targets a Monster or Vehicle model, you\u00a0can re-roll the Hit roll, you can re-roll the Wound roll and you can re-roll the Damage roll."
         }
       ],
       "keywords": [
@@ -4505,7 +4505,7 @@
         {
           "id": "signum",
           "name": "Signum",
-          "description": "Each time this unit Remains Stationary, until the start of your next Movement phase, ranged weapons equipped by models in this unit have the [IGNORES COVER] ability."
+          "description": "Each time this unit Remains Stationary, until the start\u00a0of your next Movement phase, ranged weapons equipped by\u00a0models in this unit have the [IGNORES COVER] ability."
         },
         {
           "id": "armorium-cherub",
@@ -4627,7 +4627,7 @@
         {
           "id": "targeter-optics",
           "name": "Targeter Optics",
-          "description": "Each time this unit Remains Stationary, until the start of your next Movement phase, ranged weapons equipped by models in this unit have the  [IGNORES COVER] ability."
+          "description": "Each time this unit Remains Stationary, until\u00a0the start of your next Movement phase, ranged weapons\u00a0equipped by models in this unit have the\u00a0 [IGNORES COVER] ability."
         }
       ],
       "keywords": [
@@ -4678,7 +4678,7 @@
         {
           "id": "tremor-shells",
           "name": "Tremor Shells",
-          "description": "In your Shooting phase, after this unit has shot, if an enemy Infantry unit was hit by one or more attacks made by this unit’s thunderfire cannon this  phase, until the end of your opponent’s next turn, that enemy unit is shaken. While a unit is shaken, subtract 2 from that unit’s Move characteristic, and subtract 2 from Advance and Charge rolls made for that unit."
+          "description": "In your Shooting phase, after this unit has shot, if an enemy Infantry unit was hit by one or more attacks made by this unit\u2019s thunderfire cannon this\u00a0 phase, until the end of your opponent\u2019s next turn, that enemy unit is shaken. While a unit is shaken, subtract 2 from that unit\u2019s Move characteristic, and subtract 2 from Advance and Charge rolls made for that unit."
         },
         {
           "id": "crewed-artillery",
@@ -4994,7 +4994,7 @@
         {
           "id": "annihilator",
           "name": "Annihilator",
-          "description": "Each time a ranged attack made by this model is allocated to a Monster or Vehicle model, you can re‑roll the Damage roll"
+          "description": "Each time a ranged attack made by this model is\u00a0allocated to a Monster or Vehicle model, you can re\u2011roll the Damage roll"
         }
       ],
       "keywords": [
@@ -5108,7 +5108,7 @@
         {
           "id": "rotating-death",
           "name": "Rotating Death",
-          "description": "This model’s twin heavy onslaught gatling cannon has the [SUSTAINED HITS 2] ability when targeting Infantry units."
+          "description": "This model\u2019s twin heavy onslaught gatling\u00a0cannon has the [SUSTAINED HITS 2] ability when targeting\u00a0Infantry units."
         }
       ],
       "keywords": [
@@ -5156,7 +5156,7 @@
         {
           "id": "ferocious-assault",
           "name": "Ferocious Assault",
-          "description": "Each time this model makes an attack with its twin las-talon that targets the closest eligible Monster or Vehicle unit, add 1 to the Hit roll"
+          "description": "Each time this model makes an attack with\u00a0its twin las-talon that targets the closest eligible Monster or Vehicle unit, add 1 to the Hit roll"
         }
       ],
       "keywords": [
@@ -5204,7 +5204,7 @@
         {
           "id": "siege-shield",
           "name": "Siege Shield",
-          "description": "When making ranged attacks with its demolisher cannon, this model can target enemy units within Engagement Range of it (provided no other friendly units are also within Engagement Range of that enemy unit). In addition, when making ranged attacks, this model does not suffer the penalty to its Hit rolls for being within Engagement Range of one or more enemy units."
+          "description": "When making ranged attacks with its\u00a0demolisher cannon, this model can target enemy units within\u00a0Engagement Range of it (provided no other friendly units\u00a0are also within Engagement Range of that enemy unit). In\u00a0addition, when making ranged attacks, this model does not\u00a0suffer the penalty to its Hit rolls for being within Engagement\u00a0Range of one or more enemy units."
         }
       ],
       "keywords": [
@@ -5250,12 +5250,12 @@
         {
           "id": "assault-ramp",
           "name": "Assault Ramp",
-          "description": "Each time a unit disembarks from this model after it has made a Normal move, that unit is still eligible to declare a charge this turn."
+          "description": "Each time a unit disembarks from this model\u00a0after it has made a Normal move, that unit is still eligible to\u00a0declare a charge this turn."
         },
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 12 Adeptus Astartes Infantry models. Each Jump Pack, Wulfen, Gravis or Terminator model takes up the space of 2 models and each Centurion model takes up the space of 3 models."
+          "description": "This model has a transport capacity of 12 Adeptus Astartes\u00a0Infantry models. Each Jump Pack, Wulfen, Gravis or\u00a0Terminator model takes up the space of 2 models and each\u00a0Centurion model takes up the space of 3 models."
         }
       ],
       "keywords": [
@@ -5286,12 +5286,12 @@
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 16 Adeptus Astartes Infantry models. Each Jump Pack, Wulfen, Gravis or Terminator model takes up the space of 2 models and each Centurion model takes up the space of 3 models."
+          "description": "This model has a transport capacity of 16 Adeptus Astartes\u00a0Infantry models. Each Jump Pack, Wulfen, Gravis or\u00a0Terminator model takes up the space of 2 models and each\u00a0Centurion model takes up the space of 3 models."
         },
         {
           "id": "assault-ramp",
           "name": "Assault Ramp",
-          "description": "Each time a unit disembarks from this model after it has made a Normal move, that unit is still eligible to declare a charge this turn."
+          "description": "Each time a unit disembarks from this model\u00a0after it has made a Normal move, that unit is still eligible to\u00a0declare a charge this turn."
         }
       ],
       "keywords": [
@@ -5343,12 +5343,12 @@
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 14 Adeptus Astartes Infantry models. Each Jump Pack, Wulfen, Gravis or Terminator model takes up the space of 2 models and each Centurion model takes up the space of 3 models."
+          "description": "This model has a transport capacity of 14 Adeptus Astartes\u00a0Infantry models. Each Jump Pack, Wulfen, Gravis or\u00a0Terminator model takes up the space of 2 models and each\u00a0Centurion model takes up the space of 3 models."
         },
         {
           "id": "assault-ramp",
           "name": "Assault Ramp",
-          "description": "Each time a unit disembarks from this model after it has made a Normal move, that unit is still eligible to declare a charge this turn."
+          "description": "Each time a unit disembarks from this model\u00a0after it has made a Normal move, that unit is still eligible to\u00a0declare a charge this turn."
         }
       ],
       "keywords": [
@@ -5381,12 +5381,12 @@
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 14 ADEPTUS ASTARTES INFANTRY models. Each JUMP PACK, WULFEN, GRAVIS or TERMINATOR model takes up the space of 2 models and each CENTURION model takes up the space of 3 models."
+          "description": "This model has a transport capacity of 14 ADEPTUS ASTARTES INFANTRY models. Each JUMP PACK, WULFEN, GRAVIS or\u00a0TERMINATOR model takes up the space of 2 models and each\u00a0CENTURION model takes up the space of 3 models."
         },
         {
           "id": "emergency-combat-embarkation",
           "name": "Emergency Combat Embarkation",
-          "description": "Once per turn, in your opponent’s Charge phase, after an enemy unit has selected targets for its charge but before it makes a Charge move, you can select one Adeptus Astartes unit from your army that was selected as a target of that charge. Provided that unit is not within Engagement Range of any enemy units and every model in that unit is within 3\" of this Transport, it can embark within this Transport. The charging unit can then select new targets for its charge."
+          "description": "Once per turn, in your\u00a0opponent\u2019s Charge phase, after an enemy unit has selected\u00a0targets for its charge but before it makes a Charge move, you\u00a0can select one Adeptus Astartes unit from your army that\u00a0was selected as a target of that charge. Provided that unit\u00a0is not within Engagement Range of any enemy units and\u00a0every model in that unit is within 3\" of this Transport, it can\u00a0embark within this Transport. The charging unit can then\u00a0select new targets for its charge."
         }
       ],
       "keywords": [
@@ -5450,12 +5450,12 @@
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 7 Adeptus Astartes Infantry models. Each Jump Pack, Wulfen, Gravis or Terminator model takes up the space of 2 models and each Centurion model takes up the space of 3 models."
+          "description": "This model has a transport capacity of 7 Adeptus Astartes\u00a0Infantry models. Each Jump Pack, Wulfen, Gravis or\u00a0Terminator model takes up the space of 2 models and each\u00a0Centurion model takes up the space of 3 models."
         },
         {
           "id": "executioner",
           "name": "Executioner",
-          "description": "Each time this model makes an attack that targets a unit that is Below Half-strength, add 1 to the Hit roll."
+          "description": "Each time this model makes an attack that\u00a0targets a unit that is Below Half-strength, add 1 to the Hit roll."
         }
       ],
       "keywords": [
@@ -5486,7 +5486,7 @@
         {
           "id": "self-repair",
           "name": "Self Repair",
-          "description": "At the end of your Command phase, this model regains 1 lost wound."
+          "description": "At the end of your Command phase, this model\u00a0regains 1 lost wound."
         },
         {
           "id": "transport",
@@ -5523,12 +5523,12 @@
         {
           "id": "fire-support",
           "name": "Fire Support",
-          "description": "In your Shooting phase, after this model has  shot, select one enemy unit it scored one or more hits against this phase. Until the end of the phase, each time a friendly model that disembarked from this Transport this turn makes an attack that targets that enemy unit, you can re-roll the Wound roll."
+          "description": "In your Shooting phase, after this model has\u00a0\u00a0shot, select one enemy unit it scored one or more hits against\u00a0this phase. Until the end of the phase, each time a friendly\u00a0model that disembarked from this Transport this turn makes\u00a0an attack that targets that enemy unit, you can re-roll the\u00a0Wound roll."
         },
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 6 Adeptus Astartes Infantry models.  It cannot transport JUMP PACK, WULFEN, PHOBOS, GRAVIS, CENTURION, TERMINATOR or TACTICUS models (excluding TACTICUS CHARACTER models that began the battle attached to a non-TACTICUS unit)"
+          "description": "This model has a transport capacity of 6 Adeptus\u00a0Astartes Infantry models.\u00a0 It cannot transport JUMP PACK, WULFEN, PHOBOS, GRAVIS, CENTURION, TERMINATOR or TACTICUS models (excluding TACTICUS CHARACTER models that began the battle attached to a non-TACTICUS unit)"
         }
       ],
       "keywords": [
@@ -5584,7 +5584,7 @@
         {
           "id": "assault-vehicle",
           "name": "Assault Vehicle",
-          "description": "Units can disembark from this Transport after it has Advanced. Units that do so count as having made a Normal move, and cannot declare a charge that turn."
+          "description": "Units can disembark from this Transport\u00a0after it has Advanced. Units that do so count as having made a\u00a0Normal move, and cannot declare a charge that turn."
         }
       ],
       "keywords": [
@@ -5615,12 +5615,12 @@
         {
           "id": "drop-pod-assault",
           "name": "Drop Pod Assault",
-          "description": "This model must start the battle in Reserves and can be set up in the Reinforcements step of your first, second or third Movement phase, regardless of any mission rules. Any units embarked within this model must immediately disembark after it has been set up on the battlefield, and they must be set up more than 9\" away from all enemy models."
+          "description": "This model must start the battle in\u00a0Reserves and can be set up in the Reinforcements step of your first, second\u00a0or third Movement phase, regardless of any mission rules.\u00a0Any units embarked within this model must immediately disembark after it has been set up on the battlefield, and they\u00a0must be set up more than 9\" away from all enemy models."
         },
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 12 Adeptus Astartes Infantry models. It cannot transport Jump Pack, Wulfen, Gravis, Centurion or Terminator models."
+          "description": "This model has a transport capacity of 12 Adeptus Astartes\u00a0Infantry models. It cannot transport Jump Pack, Wulfen,\u00a0Gravis, Centurion or Terminator models."
         },
         {
           "id": "combat-disembarkation",
@@ -5679,12 +5679,12 @@
         {
           "id": "storm-assault",
           "name": "Storm Assault",
-          "description": "Each time a unit disembarks from this model after it has made a Normal move, that unit is still eligible to declare a charge this turn."
+          "description": "Each time a unit disembarks from this model\u00a0after it has made a Normal move, that unit is still eligible to\u00a0declare a charge this turn."
         },
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 6 models. It can only transport Scout Squad, Scout Sniper Squad and Sergeant Telion models."
+          "description": "This model has a transport capacity of 6 models. It can only\u00a0transport Scout Squad, Scout Sniper Squad and Sergeant\u00a0Telion models."
         }
       ],
       "keywords": [
@@ -5734,7 +5734,7 @@
         {
           "id": "interceptor",
           "name": "Interceptor",
-          "description": "Each time this model makes a ranged attack that targets a unit that can Fly, add 1 to the Hit roll"
+          "description": "Each time this model makes a ranged attack that\u00a0targets a unit that can Fly, add 1 to the Hit roll"
         }
       ],
       "keywords": [
@@ -5785,7 +5785,7 @@
         {
           "id": "strafing-run",
           "name": "Strafing Run",
-          "description": "Each time this model makes a ranged attack that targets a unit that cannot Fly, add 1 to the Hit roll."
+          "description": "Each time this model makes a ranged attack\u00a0that targets a unit that cannot Fly, add 1 to the Hit roll."
         }
       ],
       "keywords": [
@@ -5829,7 +5829,7 @@
         },
         {
           "id": "twin-heavy-plasma-cannon-standard-ranged",
-          "name": "➤ Twin Heavy Plasma Cannon - Standard",
+          "name": "\u27a4 Twin Heavy Plasma Cannon - Standard",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -5847,7 +5847,7 @@
         },
         {
           "id": "twin-heavy-plasma-cannon-supercharge-ranged",
-          "name": "➤ Twin Heavy Plasma Cannon - Supercharge",
+          "name": "\u27a4 Twin Heavy Plasma Cannon - Supercharge",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -5869,12 +5869,12 @@
         {
           "id": "armoured-resilience",
           "name": "Armoured Resilience",
-          "description": "Each time an attack is allocated to this model, subtract 1 from the Damage characteristic of that attack."
+          "description": "Each time an attack is allocated to\u00a0this model, subtract 1 from the Damage characteristic of\u00a0that attack."
         },
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 12 Adeptus Astartes Infantry models and 1 Dreadnought model. Each Jump Pack, Wulfen, Gravis or Terminator model takes up the space of 2 models and each Centurion model takes up the space of 3 models."
+          "description": "This model has a transport capacity of 12 Adeptus Astartes Infantry models and 1 Dreadnought model. Each Jump\u00a0Pack, Wulfen, Gravis or Terminator model takes up the\u00a0space of 2 models and each Centurion model takes up the\u00a0space of 3 models."
         }
       ],
       "keywords": [
@@ -5943,7 +5943,7 @@
         },
         {
           "id": "hammerfall-missile-launcher-superfrag-ranged",
-          "name": "➤ Hammerfall Missile Launcher - Superfrag",
+          "name": "\u27a4 Hammerfall Missile Launcher - Superfrag",
           "type": "ranged",
           "stats": {
             "range": 48,
@@ -5959,7 +5959,7 @@
         },
         {
           "id": "hammerfall-missile-launcher-superkrak-ranged",
-          "name": "➤ Hammerfall Missile Launcher - Superkrak",
+          "name": "\u27a4 Hammerfall Missile Launcher - Superkrak",
           "type": "ranged",
           "stats": {
             "range": 48,
@@ -5976,12 +5976,12 @@
         {
           "id": "fortification",
           "name": "Fortification",
-          "description": "While an enemy unit is only within Engagement Range of one or more Fortifications from your army:\n■ That unit can still be selected as the target of ranged attacks, but each time such an attack is made, unless it is made with a Pistol, subtract 1 from the Hit roll.\n■ Models in that unit do not need to take Desperate Escape tests due to Falling Back while Battle-shocked, except for those that will move over enemy models when doing so."
+          "description": "While an enemy unit is only within Engagement\u00a0Range of one or more Fortifications from your army:\n\u25a0 That unit can still be selected as the target of ranged\u00a0attacks, but each time such an attack is made, unless it is\u00a0made with a Pistol, subtract 1 from the Hit roll.\n\u25a0 Models in that unit do not need to take Desperate Escape\u00a0tests due to Falling Back while Battle-shocked, except for\u00a0those that will move over enemy models when doing so."
         },
         {
           "id": "ceramite-cover",
           "name": "Ceramite Cover",
-          "description": "Each time a ranged attack is allocated to a model, if that model is not fully visible to every model in the attacking unit because of this Fortification, that model has the Benefit of Cover against that attack."
+          "description": "Each time a ranged attack is allocated to a\u00a0model, if that model is not fully visible to every model in the\u00a0attacking unit because of this Fortification, that model has\u00a0the Benefit of Cover against that attack."
         }
       ],
       "keywords": [
@@ -6010,12 +6010,12 @@
         {
           "id": "swift-assault",
           "name": "Swift Assault",
-          "description": "While this model is leading a unit, ranged weapons equipped by models in that unit have the [ASSAULT] ability."
+          "description": "While this model is leading a unit, ranged\u00a0weapons equipped by models in that unit have the\u00a0[ASSAULT] ability."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Bike Squad\n\u25a0 Outrider Squad",
           "eligibleUnits": [
             "bike-squad",
             "outrider-squad"
@@ -6050,7 +6050,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Company Heroes\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad\n\nYou can attach this model to a unit it can lead even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessor Squad\n\u25a0 Bladeguard Veteran Squad\n\u25a0 Company Heroes\n\u25a0 Hellblaster Squad\n\u25a0 Infernus Squad\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad\n\u25a0 Tactical Squad\n\nYou can attach this model to a unit it can lead even if\u00a0one Captain or Chapter Master model has already been\u00a0attached to it. If you do, and that Bodyguard unit is destroyed,\u00a0the Leader units attached to it become separate units, with\u00a0their original Starting Strengths.",
           "eligibleUnits": [
             "assault-intercessor-squad",
             "bladeguard-veteran-squad",
@@ -6127,12 +6127,12 @@
         {
           "id": "deadly-terror",
           "name": "Deadly Terror",
-          "description": "While this model is leading a unit, increase the range of that unit’s Terror Troops ability by 3\"."
+          "description": "While this model is leading a unit, increase the\u00a0range of that unit\u2019s Terror Troops ability by 3\"."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following unit:\n\n■ Reiver Squad\n\nYou can attach this model a unit it can lead even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
+          "description": "This model can be attached to the following unit:\n\n\u25a0 Reiver Squad\n\nYou can attach this model a unit it can lead even if one\u00a0Captain or Chapter Master model has already been\u00a0attached to it. If you do, and that Bodyguard unit is destroyed,\u00a0the Leader units attached to it become separate units, with\u00a0their original Starting Strengths.",
           "eligibleUnits": [
             "reiver-squad"
           ]
@@ -6201,12 +6201,12 @@
         {
           "id": "strategic-dispersal",
           "name": "Strategic Dispersal",
-          "description": "In your Shooting phase, after this model’s unit has shot, if it is not within Engagement Range of any enemy models, it can make a Normal move of up to  6\". If it does, until the end of the turn, that unit is not eligible to declare a charge.’"
+          "description": "In your Shooting phase, after this model\u2019s\u00a0unit has shot, if it is not within Engagement Range of any\u00a0enemy models, it can make a Normal move of up to\u00a0 6\". If it does, until\u00a0the end of the turn, that unit is not eligible to declare\u00a0a charge.\u2019"
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Incursor Squad\n■ Infiltrator Squad\n■ Reiver Squad\n\nYou can attach this model to a unit it can lead units even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Incursor Squad\n\u25a0 Infiltrator Squad\n\u25a0 Reiver Squad\n\nYou can attach this model to a unit it can lead units even if\u00a0one Captain or Chapter Master model has already been\u00a0attached to it. If you do, and that Bodyguard unit is destroyed,\u00a0the Leader units attached to it become separate units, with\u00a0their original Starting Strengths.",
           "eligibleUnits": [
             "incursor-squad",
             "infiltrator-squad",
@@ -6243,12 +6243,12 @@
         {
           "id": "mental-fortress-psychic",
           "name": "Mental Fortress [Psychic]",
-          "description": "While this model is leading a unit, models in that unit have a 4+ invulnerable save."
+          "description": "While this model is leading a unit,\u00a0models in that unit have a 4+ invulnerable save."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Desolation Squad\n■ Devastator Squad\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessor Squad\n\u25a0 Desolation Squad\n\u25a0 Devastator Squad\n\u25a0 Hellblaster Squad\n\u25a0 Infernus Squad\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad\n\u25a0 Tactical Squad",
           "eligibleUnits": [
             "assault-intercessor-squad",
             "desolation-squad",
@@ -6291,12 +6291,12 @@
         {
           "id": "shrouding-psychic",
           "name": "Shrouding [Psychic]",
-          "description": "While this model is leading a unit, models in that unit have the Stealth ability and that unit cannot be targeted by ranged attacks unless the attacking\nmodel is within 12\"."
+          "description": "While this model is leading a unit,\u00a0models in that unit have the Stealth ability and that unit\u00a0cannot be targeted by ranged attacks unless the attacking\nmodel is within 12\"."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Eliminator Squad\n■ Incursor Squad\n■ Infiltrator Squad\n■ Reiver Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Eliminator Squad\n\u25a0 Incursor Squad\n\u25a0 Infiltrator Squad\n\u25a0 Reiver Squad",
           "eligibleUnits": [
             "eliminator-squad",
             "incursor-squad",
@@ -6335,12 +6335,12 @@
         {
           "id": "veil-of-time-psychic",
           "name": "Veil of Time [Psychic]",
-          "description": "While this model is leading a unit, weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability."
+          "description": "While this model is leading a\u00a0unit, weapons equipped by models in that unit have the\u00a0[SUSTAINED HITS 1] ability."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Relic Terminator Squad\n■ Terminator Assault Squad\n■ Terminator Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Relic Terminator Squad\n\u25a0 Terminator Assault Squad\n\u25a0 Terminator Squad",
           "eligibleUnits": [
             "relic-terminator-squad",
             "terminator-assault-squad",
@@ -6377,12 +6377,12 @@
         {
           "id": "might-of-heroes-pyschic",
           "name": "Might of Heroes [Pyschic]",
-          "description": "While this model is leading a unit, improve the Strength and Armour Penetration characteristic of melee weapons equipped by models in that unit by 1."
+          "description": "While this model is leading a\u00a0unit, improve the Strength and Armour Penetration characteristic of melee\u00a0weapons equipped by models in that unit by 1."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Squad with Jump Packs\n■ Vanguard Veteran Squad with Jump Packs",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Squad with Jump Packs\n\u25a0 Vanguard Veteran Squad with Jump Packs",
           "eligibleUnits": [
             "assault-squad-with-jump-packs",
             "vanguard-veteran-squad-with-jump-packs"
@@ -6420,7 +6420,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessor Squad\n\u25a0 Bladeguard Veteran Squad\n\u25a0 Hellblaster Squad\n\u25a0 Infernus Squad\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad\n\u25a0 Tactical Squad",
           "eligibleUnits": [
             "assault-intercessor-squad",
             "bladeguard-veteran-squad",
@@ -6461,12 +6461,12 @@
         {
           "id": "recitation-of-faith",
           "name": "Recitation of Faith",
-          "description": "While this model is leading a unit, models in that unit have the Feel No Pain 4+ ability against mortal wounds."
+          "description": "While this model is leading a unit,\u00a0models in that unit have the Feel No Pain 4+ ability against\u00a0mortal wounds."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Terminator Assault Squad\n■ Terminator Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Terminator Assault Squad\n\u25a0 Terminator Squad",
           "eligibleUnits": [
             "terminator-assault-squad",
             "terminator-squad"
@@ -6501,12 +6501,12 @@
         {
           "id": "catechism-of-fire",
           "name": "Catechism of Fire",
-          "description": "Each time this model’s unit is selected to shoot, you can select one enemy unit within 12\" of and visible to this model. Until the end of the phase, ranged\nweapons equipped by models in this model’s unit have the [DEVASTATING WOUNDS] ability when targeting that enemy unit."
+          "description": "Each time this model\u2019s unit is selected\u00a0to shoot, you can select one enemy unit within 12\" of and\u00a0visible to this model. Until the end of the phase, ranged\nweapons equipped by models in this model\u2019s unit have\u00a0the [DEVASTATING WOUNDS] ability when targeting that\u00a0enemy unit."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Bike Squad\n\u25a0 Outrider Squad",
           "eligibleUnits": [
             "bike-squad",
             "outrider-squad"
@@ -6541,12 +6541,12 @@
         {
           "id": "exhortation-of-rage",
           "name": "Exhortation of Rage",
-          "description": "Each time this model’s unit is selected to fight, you can select one enemy unit within Engagement Range of this model’s unit and roll one D6: on a 4-5, that enemy unit suffers D3 mortal wounds; on a 6, that enemy unit suffers 3 mortal wounds."
+          "description": "Each time this model\u2019s unit is selected\u00a0to fight, you can select one enemy unit within Engagement\u00a0Range of this model\u2019s unit and roll one D6: on a 4-5, that\u00a0enemy unit suffers D3 mortal wounds; on a 6, that enemy unit\u00a0suffers 3 mortal wounds."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessors with Jump Packs\n■ Vanguard Veteran Squad with Jump Packs",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessors with Jump Packs\n\u25a0 Vanguard Veteran Squad with Jump Packs",
           "eligibleUnits": [
             "assault-intercessors-with-jump-packs",
             "vanguard-veteran-squad-with-jump-packs"
@@ -6598,22 +6598,22 @@
         {
           "id": "techmarine",
           "name": "Techmarine",
-          "description": "While this model is within 3\" of one or more friendly Adeptus Astartes Vehicle units, this model has the Lone Operative ability"
+          "description": "While this model is within 3\" of one or more\u00a0friendly Adeptus Astartes Vehicle units, this model has the\u00a0Lone Operative ability"
         },
         {
           "id": "blessing-of-the-omnissiah",
           "name": "Blessing of the Omnissiah",
-          "description": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until the start of your next Command phase, each time that Vehicle model makes an attack, add 1 to the Hit roll. Each model can only be selected for this ability once per turn."
+          "description": "In your Command phase, you can\u00a0select one friendly Adeptus Astartes Vehicle model within\u00a03\" of this model. That model regains up to D3 lost wounds and,\u00a0until the start of your next Command phase, each time that\u00a0Vehicle model makes an attack, add 1 to the Hit roll. Each\u00a0model can only be selected for this ability once per turn."
         },
         {
           "id": "vengeance-of-the-omnissiah",
           "name": "Vengeance of the Omnissiah",
-          "description": "If a friendly Adeptus Astartes Vehicle model is destroyed within 12\" of this model, until the end of the battle, this model’s Omnissian power axe has an\nAttacks characteristic of 7."
+          "description": "If a friendly Adeptus Astartes\u00a0Vehicle model is destroyed within 12\" of this model, until the\u00a0end of the battle, this model\u2019s Omnissian power axe has an\nAttacks characteristic of 7."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Desolation Squad\n■ Devastator Squad\n■ Intercessor Squad\n■ Tactical Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessor Squad\n\u25a0 Desolation Squad\n\u25a0 Devastator Squad\n\u25a0 Intercessor Squad\n\u25a0 Tactical Squad",
           "eligibleUnits": [
             "assault-intercessor-squad",
             "desolation-squad",
@@ -6681,7 +6681,7 @@
         {
           "id": "mindlock",
           "name": "Mindlock",
-          "description": "While a Techmarine model is leading this unit, improve the Ballistic Skill and Weapon Skill characteristics of ranged and melee weapons equipped by  Astartes Servitor models in this unit by 1."
+          "description": "While a Techmarine model is leading this unit,\u00a0improve the Ballistic Skill and Weapon Skill characteristics of\u00a0ranged and melee weapons equipped by\u00a0 Astartes Servitor\u00a0models in this unit by 1."
         },
         {
           "id": "invulnerable-save",
@@ -6691,7 +6691,7 @@
         {
           "id": "servitor-retinue",
           "name": "Servitor Retinue",
-          "description": "At the start of the Declare Battle Formations step, this unit can join one other unit from your army that is being led by a Techmarine. If it does, until the end of the battle, every model in this unit counts as being part of that Bodyguard unit, and that Bodyguard unit’s Starting Strength is increased accordingly."
+          "description": "At the start of the Declare Battle Formations step, this unit\u00a0can join one other unit from your army that is being led by\u00a0a Techmarine. If it does, until the end of the battle, every\u00a0model in this unit counts as being part of that Bodyguard\u00a0unit, and that Bodyguard unit\u2019s Starting Strength is\u00a0increased accordingly."
         }
       ],
       "keywords": [
@@ -6762,7 +6762,7 @@
         {
           "id": "evade-and-survive",
           "name": "Evade and Survive",
-          "description": "Once per turn, when an enemy unit ends a Normal, Advance or Fall Back move within 9\" of this unit, if this unit is not within Engagement Range of one or more enemy units, it can make a Normal move"
+          "description": "Once per turn, when an enemy unit ends\u00a0a Normal, Advance or Fall Back move within 9\" of this unit,\u00a0if this unit is not within Engagement Range of one or more\u00a0enemy units, it can make a Normal move"
         },
         {
           "id": "lone-survivor",
@@ -6817,17 +6817,17 @@
         {
           "id": "honour-or-death",
           "name": "Honour or Death",
-          "description": "While this model is leading a unit, add 1 to Advance and Charge rolls made for that unit and you can target that unit with the Heroic Intervention  stratagem for 0CP, even if you have already used that Stratagem on a different unit this phase."
+          "description": "While this model is leading a unit, add 1\u00a0to Advance and Charge rolls made for that unit and you can\u00a0target that unit with the Heroic Intervention\u00a0 stratagem for 0CP,\u00a0even if you have already used that Stratagem on a different\u00a0unit this phase."
         },
         {
           "id": "martial-superiority",
           "name": "Martial Superiority",
-          "description": "Each time this model makes a melee attack that targets a Character unit, you can re-roll the Hit roll and you can re-roll the Wound roll"
+          "description": "Each time this model makes a melee\u00a0attack that targets a Character unit, you can re-roll the Hit\u00a0roll and you can re-roll the Wound roll"
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessor Squad\n\u25a0 Bladeguard Veteran Squad\n\u25a0 Infernus Squad\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad",
           "eligibleUnits": [
             "assault-intercessor-squad",
             "bladeguard-veteran-squad",
@@ -6884,17 +6884,17 @@
         {
           "id": "narthecium",
           "name": "Narthecium",
-          "description": "While this model is leading a unit, in your Command phase, you can return 1 destroyed model (excluding Character models) to that unit."
+          "description": "While this model is leading a unit, in your\u00a0Command phase, you can return 1 destroyed model\u00a0(excluding Character models) to that unit."
         },
         {
           "id": "gene-seed-recovery",
           "name": "Gene Seed Recovery",
-          "description": "When this model’s Bodyguard unit is destroyed, roll one D6: on a 2+, you gain 1CP."
+          "description": "When this model\u2019s Bodyguard unit is\u00a0destroyed, roll one D6: on a 2+, you gain 1CP."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Desolation Squad\n■ Devastator Squad\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad\n\nYou can attach this model to one of the above units even if one Captain, Chapter Master or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessor Squad\n\u25a0 Desolation Squad\n\u25a0 Devastator Squad\n\u25a0 Hellblaster Squad\n\u25a0 Infernus Squad\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad\n\u25a0 Tactical Squad\n\nYou can attach this model to one of the above units even if\u00a0one Captain, Chapter Master or Lieutenant model has\u00a0already been attached to it. If you do, and that Bodyguard\u00a0unit is destroyed, the Leader units attached to it become\u00a0separate units, with their original Starting Strengths.",
           "eligibleUnits": [
             "assault-intercessor-squad",
             "desolation-squad",
@@ -6936,17 +6936,17 @@
         {
           "id": "surgical-precision",
           "name": "Surgical Precision",
-          "description": "While this model is leading a unit, weapons equipped by models in that unit have the [LETHAL HITS] ability."
+          "description": "While this model is leading a unit,\u00a0weapons equipped by models in that unit have the\u00a0[LETHAL HITS] ability."
         },
         {
           "id": "vivispectrum",
           "name": "Vivispectrum",
-          "description": "If this model’s unit destroys an enemy unit as the result of a melee attack, until the end of the battle, this model has an Objective Control characteristic of 9."
+          "description": "If this model\u2019s unit destroys an enemy unit as\u00a0the result of a melee attack, until the end of the battle, this\u00a0model has an Objective Control characteristic of 9."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Aggressor Squad\n■ Eradicator Squad\n■ Heavy Intercessor Squad\n\nYou can attach this model to one of the above units even if one Captain or Chapter Master model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Aggressor Squad\n\u25a0 Eradicator Squad\n\u25a0 Heavy Intercessor Squad\n\nYou can attach this model to one of the above units even if\u00a0one Captain or Chapter Master model has already been\u00a0attached to it. If you do, and that Bodyguard unit is destroyed,\u00a0the Leader units attached to it become separate units, with\u00a0their original Starting Strengths.",
           "eligibleUnits": [
             "aggressor-squad",
             "eradicator-squad",
@@ -6983,12 +6983,12 @@
         {
           "id": "unbreakable-duty",
           "name": "Unbreakable Duty",
-          "description": "While this model is within range of an objective marker and/or within 6\" of the centre of the battlefield, this model has the Feel No Pain 4+ ability."
+          "description": "While this model is within range of\u00a0an objective marker and/or within 6\" of the centre of the\u00a0battlefield, this model has the Feel No Pain 4+ ability."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Devastator Squad\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Desolation Squad\n■ Tactical Squad\n\nYou can attach this model to one of the above units even if one Captain, Chapter Master or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessor Squad\n\u25a0 Devastator Squad\n\u25a0 Hellblaster Squad\n\u25a0 Infernus Squad\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad\n\u25a0 Desolation Squad\n\u25a0 Tactical Squad\n\nYou can attach this model to one of the above units even if\u00a0one Captain, Chapter Master or Lieutenant model has\u00a0already been attached to it. If you do, and that Bodyguard\u00a0unit is destroyed, the Leader units attached to it become\u00a0separate units, with their original Starting Strengths.",
           "eligibleUnits": [
             "assault-intercessor-squad",
             "devastator-squad",
@@ -7030,12 +7030,12 @@
         {
           "id": "deeds-of-heroism",
           "name": "Deeds of Heroism",
-          "description": "Once per battle, when this model is selected to fight, it can use this ability. If it does, until the end of the phase, add 1 to the Attacks characteristic of melee weapons equipped by models in this model’s unit"
+          "description": "Once per battle, when this model is\u00a0selected to fight, it can use this ability. If it does, until the\u00a0end of the phase, add 1 to the Attacks characteristic of melee\u00a0weapons equipped by models in this model\u2019s unit"
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following unit:\n\n■ Bladeguard Veteran Squad\n\nYou can attach this model to the above unit even if one Captain, Chapter Master or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
+          "description": "This model can be attached to the following unit:\n\n\u25a0 Bladeguard Veteran Squad\n\nYou can attach this model to the above unit even if one\u00a0Captain, Chapter Master or Lieutenant model has already\u00a0been attached to it. If you do, and that Bodyguard unit is\u00a0destroyed, the Leader units attached to it become separate\u00a0units, with their original Starting Strengths.",
           "eligibleUnits": [
             "bladeguard-veteran-squad"
           ]
@@ -7071,12 +7071,12 @@
         {
           "id": "keep-the-banner-high",
           "name": "Keep the Banner High",
-          "description": "While this model is leading a unit, each time a model in that unit makes an attack, add 1 to the Hit roll if that unit is below its Starting Strength, and add 1 to the Wound roll as well if that unit is Below Half-strength"
+          "description": "While this model is leading a unit,\u00a0each time a model in that unit makes an attack, add 1 to the\u00a0Hit roll if that unit is below its Starting Strength, and add 1 to\u00a0the Wound roll as well if that unit is Below Half-strength"
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Terminator Squad\n■ Terminator Assault Squad\n\nYou can attach this model to one of the above units even if one Captain, Chapter Master or Lieutenant model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Terminator Squad\n\u25a0 Terminator Assault Squad\n\nYou can attach this model to one of the above units even if\u00a0one Captain, Chapter Master or Lieutenant model has\u00a0already been attached to it. If you do, and that Bodyguard\u00a0unit is destroyed, the Leader units attached to it become\u00a0separate units, with their original Starting Strengths.",
           "eligibleUnits": [
             "terminator-squad",
             "terminator-assault-squad"
@@ -7270,22 +7270,22 @@
         {
           "id": "tempormortis",
           "name": "Tempormortis",
-          "description": "While this model is leading a unit, that unit has the Fights First ability."
+          "description": "While this model is leading a unit, that unit has\u00a0the Fights First ability."
         },
         {
           "id": "silent-fury",
           "name": "Silent Fury",
-          "description": "Each time this model destroys an enemy Character model, until the end of the battle, add 1 to the Attacks characteristic of its executioner relic blade."
+          "description": "Each time this model destroys an enemy\u00a0Character model, until the end of the battle, add 1 to the\u00a0Attacks characteristic of its executioner relic blade."
         },
         {
           "id": "invulnerable-save",
           "name": "Invulnerable Save*",
-          "description": "4+\n* This model has a 4+ invulnerable save against melee attacks."
+          "description": "4+\n* This model has a 4+ invulnerable save against\u00a0melee attacks."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessor Squad\n\u25a0 Bladeguard Veteran Squad\n\u25a0 Infernus Squad\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad\n\u25a0 Tactical Squad",
           "eligibleUnits": [
             "assault-intercessor-squad",
             "bladeguard-veteran-squad",
@@ -7324,7 +7324,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad*\n■ Hellblaster Squad*\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Company Heroes\n■ Tactical Squad\n\n* This model cannot be attached to a Bladeguard Veteran Squad unless it is equipped with a relic shield, and cannot be attached to a Hellblaster Squad unless it is equipped with a plasma pistol.",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessor Squad\n\u25a0 Bladeguard Veteran Squad*\n\u25a0 Hellblaster Squad*\n\u25a0 Infernus Squad\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad\n\u25a0 Company Heroes\n\u25a0 Tactical Squad\n\n* This model cannot be attached to a Bladeguard Veteran Squad unless it is equipped with a relic shield, and cannot be attached to a Hellblaster Squad unless it is equipped with a plasma pistol.",
           "eligibleUnits": [
             "assault-intercessor-squad",
             "bladeguard-veteran-squad",
@@ -7510,12 +7510,12 @@
         {
           "id": "assault-ramp",
           "name": "Assault Ramp",
-          "description": "Each time a unit disembarks from this model after it has made a Normal move, that unit is still eligible to declare a charge this turn."
+          "description": "Each time a unit disembarks from this model\u00a0after it has made a Normal move, that unit is still eligible to\u00a0declare a charge this turn."
         },
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 12 Adeptus Astartes Infantry models. Each Jump Pack, Wulfen, Gravis or Terminator model takes up the space of 2 models and each Centurion model takes up the space of 3 models."
+          "description": "This model has a transport capacity of 12 Adeptus Astartes\u00a0Infantry models. Each Jump Pack, Wulfen, Gravis or\u00a0Terminator model takes up the space of 2 models and each\u00a0Centurion model takes up the space of 3 models."
         }
       ],
       "keywords": [
@@ -7561,7 +7561,7 @@
         {
           "id": "mortis-strike",
           "name": "Mortis Strike",
-          "description": "Each time this model makes a ranged attack that targets a unit that is not Below Half-strength, you can re-roll the Hit roll."
+          "description": "Each time this model makes a ranged attack\u00a0that targets a unit that is not Below Half-strength, you can\u00a0re-roll the Hit roll."
         }
       ],
       "keywords": [
@@ -7590,7 +7590,7 @@
       "weapons": [
         {
           "id": "plasma-destroyer-standard-ranged",
-          "name": "➤ Plasma Destroyer - Standard",
+          "name": "\u27a4 Plasma Destroyer - Standard",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -7607,7 +7607,7 @@
         },
         {
           "id": "plasma-destroyer-supercharge-ranged",
-          "name": "➤ Plasma Destroyer - Supercharge",
+          "name": "\u27a4 Plasma Destroyer - Supercharge",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -7681,7 +7681,7 @@
         {
           "id": "armoured-spearhead",
           "name": "Armoured Spearhead",
-          "description": "Each time this model makes an attack that targets an enemy unit, re-roll a Hit roll of 1 and, if that unit is within range of an objective marker you do not control, you can re-roll the Hit roll instead."
+          "description": "Each time this model makes an attack\u00a0that targets an enemy unit, re-roll a Hit roll of 1 and, if that unit\u00a0is within range of an objective marker you do not control, you\u00a0can re-roll the Hit roll instead."
         }
       ],
       "keywords": [
@@ -7773,7 +7773,7 @@
         },
         {
           "id": "tempest-salvo-launcher-frag-ranged",
-          "name": "➤ Tempest Salvo Launcher - Frag",
+          "name": "\u27a4 Tempest Salvo Launcher - Frag",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -7790,7 +7790,7 @@
         },
         {
           "id": "tempest-salvo-launcher-krak-ranged",
-          "name": "➤ Tempest Salvo Launcher - Krak",
+          "name": "\u27a4 Tempest Salvo Launcher - Krak",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -7808,7 +7808,7 @@
         {
           "id": "isolate-and-destroy",
           "name": "Isolate and Destroy",
-          "description": "Each time this model makes an attack that targets an enemy unit, if there are no other units from your opponent’s army within 6\" of that target, add 1 to the Wound roll."
+          "description": "Each time this model makes an attack\u00a0that targets an enemy unit, if there are no other units from\u00a0your opponent\u2019s army within 6\" of that target, add 1 to the\u00a0Wound roll."
         }
       ],
       "keywords": [
@@ -7857,7 +7857,7 @@
         {
           "id": "death-hold",
           "name": "Death-hold",
-          "description": "When making ranged attacks, this model does not suffer the penalty to its Hit rolls for being within Engagement Range of one or more enemy units."
+          "description": "When making ranged attacks, this model\u00a0does not suffer the penalty to its Hit rolls for being within\u00a0Engagement Range of one or more enemy units."
         }
       ],
       "keywords": [
@@ -7944,12 +7944,12 @@
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 12 Adeptus Astartes Infantry models. Each Jump Pack, Wulfen, Gravis or Terminator model takes up the space of 2 models and each Centurion model takes up the space of 3 models."
+          "description": "This model has a transport capacity of 12 Adeptus Astartes\u00a0Infantry models. Each Jump Pack, Wulfen, Gravis or\u00a0Terminator model takes up the space of 2 models and each\u00a0Centurion model takes up the space of 3 models."
         },
         {
           "id": "into-the-foe",
           "name": "Into the Foe",
-          "description": "If a unit disembarks from this Transport before it moves, until the end of the turn, that unit is eligible to charge in a turn in which it Advanced."
+          "description": "If a unit disembarks from this Transport before\u00a0it moves, until the end of the turn, that unit is eligible to\u00a0charge in a turn in which it Advanced."
         }
       ],
       "keywords": [
@@ -8000,12 +8000,12 @@
         {
           "id": "assault-ramp",
           "name": "Assault Ramp",
-          "description": "Each time a unit disembarks from this model after it has made a Normal move, that unit is still eligible to declare a charge this turn."
+          "description": "Each time a unit disembarks from this model\u00a0after it has made a Normal move, that unit is still eligible to\u00a0declare a charge this turn."
         },
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 12 Adeptus Astartes Infantry models. Each Jump Pack, Wulfen, Gravis or Terminator model takes up the space of 2 models and each Centurion model takes up the space of 3 models."
+          "description": "This model has a transport capacity of 12 Adeptus Astartes\u00a0Infantry models. Each Jump Pack, Wulfen, Gravis or\u00a0Terminator model takes up the space of 2 models and each\u00a0Centurion model takes up the space of 3 models."
         }
       ],
       "keywords": [
@@ -8081,7 +8081,7 @@
       "weapons": [
         {
           "id": "twin-plasma-gun-standard-ranged",
-          "name": "➤ Twin Plasma Gun - Standard",
+          "name": "\u27a4 Twin Plasma Gun - Standard",
           "type": "ranged",
           "stats": {
             "range": 24,
@@ -8099,7 +8099,7 @@
         },
         {
           "id": "twin-plasma-gun-overcharge-ranged",
-          "name": "➤ Twin Plasma Gun - Overcharge",
+          "name": "\u27a4 Twin Plasma Gun - Overcharge",
           "type": "ranged",
           "stats": {
             "range": 24,
@@ -8121,17 +8121,17 @@
         {
           "id": "self-repair",
           "name": "Self Repair",
-          "description": "At the end of your Command phase, this model regains 1 lost wound."
+          "description": "At the end of your Command phase, this model\u00a0regains 1 lost wound."
         },
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 6 Adeptus Astartes Infantry models. It cannot transport Jump Pack, Wulfen, Phobos, Gravis, Centurion, Terminator or Tacticus models (except for Tacticus Character models that begin the battle attached to a non-Tacticus unit)."
+          "description": "This model has a transport capacity of 6 Adeptus Astartes\u00a0Infantry models. It cannot transport Jump Pack, Wulfen,\u00a0Phobos, Gravis, Centurion, Terminator or Tacticus\u00a0models (except for Tacticus Character models that begin\u00a0the battle attached to a non-Tacticus unit)."
         },
         {
           "id": "orbital-comms-array-aura",
           "name": "Orbital Comms Array [Aura]",
-          "description": "While a friendly Adeptus Astartes unit is within 6\" of the bearer, each time you target that unit with a Stratagem, roll one D6: on a 5+, you gain 1CP"
+          "description": "While a friendly Adeptus\u00a0Astartes unit is within 6\" of the bearer, each time you target\u00a0that unit with a Stratagem, roll one D6: on a 5+, you gain 1CP"
         }
       ],
       "keywords": [
@@ -8180,12 +8180,12 @@
         {
           "id": "assault-ramp",
           "name": "Assault Ramp",
-          "description": "Each time a unit disembarks from this model after it has made a Normal move, that unit is still eligible to declare a charge this turn."
+          "description": "Each time a unit disembarks from this model\u00a0after it has made a Normal move, that unit is still eligible to\u00a0declare a charge this turn."
         },
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 12 Adeptus Astartes Infantry models. Each Jump Pack, Wulfen, Gravis or Terminator model takes up the space of 2 models and each Centurion model takes up the space of 3 models."
+          "description": "This model has a transport capacity of 12 Adeptus Astartes\u00a0Infantry models. Each Jump Pack, Wulfen, Gravis or\u00a0Terminator model takes up the space of 2 models and each\u00a0Centurion model takes up the space of 3 models."
         },
         {
           "id": "invulnerable-save",
@@ -8260,17 +8260,17 @@
         {
           "id": "swift-assault",
           "name": "Swift Assault",
-          "description": "While this model is leading a unit, ranged weapons equipped by models in that unit have the [ASSAULT] ability."
+          "description": "While this model is leading a unit, ranged\u00a0weapons equipped by models in that unit have the\u00a0[ASSAULT] ability."
         },
         {
           "id": "unbreakable-duty",
           "name": "Unbreakable Duty",
-          "description": "While this model is within range of an objective marker and/or within 6\" of the centre of the battlefield, this model has the Feel No Pain 4+ ability."
+          "description": "While this model is within range of\u00a0an objective marker and/or within 6\" of the centre of the\u00a0battlefield, this model has the Feel No Pain 4+ ability."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Squad\n■ Command Squad\n■ Tactical Squad\n■ Vanguard Veteran Squad\n■ Devastator Squad\n\nYou can attach this model to one of the above units even if one Character model has already been attached to it. If you do, and that Bodyguard unit is destroyed, the Leader units attached to it become separate units, with their original Starting Strengths.",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Squad\n\u25a0 Command Squad\n\u25a0 Tactical Squad\n\u25a0 Vanguard Veteran Squad\n\u25a0 Devastator Squad\n\nYou can attach this model to one of the above units even if\u00a0one Character model has already been attached to it. If\u00a0you do, and that Bodyguard unit is destroyed, the Leader\u00a0units attached to it become separate units, with their original\u00a0Starting Strengths.",
           "eligibleUnits": [
             "assault-squad",
             "command-squad",
@@ -8306,7 +8306,7 @@
       "weapons": [
         {
           "id": "terminus-lascannon-standard-ranged",
-          "name": "➤ Terminus Lascannon - Standard",
+          "name": "\u27a4 Terminus Lascannon - Standard",
           "type": "ranged",
           "stats": {
             "range": 48,
@@ -8323,7 +8323,7 @@
         },
         {
           "id": "terminus-lascannon-overload-ranged",
-          "name": "➤ Terminus Lascannon - Overload",
+          "name": "\u27a4 Terminus Lascannon - Overload",
           "type": "ranged",
           "stats": {
             "range": 48,
@@ -8344,7 +8344,7 @@
         {
           "id": "assault-ramp",
           "name": "Assault Ramp",
-          "description": "Each time a unit disembarks from this model after it has made a Normal move, that unit is still eligible to declare a charge this turn."
+          "description": "Each time a unit disembarks from this model\u00a0after it has made a Normal move, that unit is still eligible to\u00a0declare a charge this turn."
         }
       ],
       "keywords": [
@@ -8375,12 +8375,12 @@
         {
           "id": "fire-support",
           "name": "Fire Support",
-          "description": "In your Shooting phase, after this model has  shot, select one enemy unit it scored one or more hits against this phase. Until the end of the phase, each time a friendly model that disembarked from this Transport this turn makes an attack that targets that enemy unit, you can re-roll the Wound roll."
+          "description": "In your Shooting phase, after this model has\u00a0\u00a0shot, select one enemy unit it scored one or more hits against\u00a0this phase. Until the end of the phase, each time a friendly\u00a0model that disembarked from this Transport this turn makes\u00a0an attack that targets that enemy unit, you can re-roll the\u00a0Wound roll."
         },
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 6 Adeptus Astartes Infantry models. It cannot transport Jump Pack, Wulfen, Tacticus, Phobos, Gravis, Centurion or Terminator models."
+          "description": "This model has a transport capacity of 6 Adeptus\u00a0Astartes Infantry models. It cannot transport Jump\u00a0Pack, Wulfen, Tacticus, Phobos, Gravis, Centurion or\u00a0Terminator models."
         }
       ],
       "keywords": [
@@ -8431,7 +8431,7 @@
         {
           "id": "vanguard-assault",
           "name": "Vanguard Assault",
-          "description": "Each time this unit ends a Charge move, until the end of the turn, melee weapons equipped by models in this unit have the [LETHAL HITS] ability."
+          "description": "Each time this unit ends a Charge move,\u00a0until the end of the turn, melee weapons equipped by models\u00a0in this unit have the [LETHAL HITS] ability."
         }
       ],
       "keywords": [
@@ -8498,17 +8498,17 @@
         {
           "id": "martial-superiority",
           "name": "Martial Superiority",
-          "description": "Each time this model makes a melee attack that targets a Character unit, you can re-roll the Hit roll and you can re-roll the Wound roll"
+          "description": "Each time this model makes a melee\u00a0attack that targets a Character unit, you can re-roll the Hit\u00a0roll and you can re-roll the Wound roll"
         },
         {
           "id": "honour-or-death",
           "name": "Honour or Death",
-          "description": "While this model is leading a unit, add 1 to Advance and Charge rolls made for that unit and you can target that unit with the Heroic Intervention  stratagem for 0CP, even if you have already used that Stratagem on a different unit this phase."
+          "description": "While this model is leading a unit, add 1\u00a0to Advance and Charge rolls made for that unit and you can\u00a0target that unit with the Heroic Intervention\u00a0 stratagem for 0CP,\u00a0even if you have already used that Stratagem on a different\u00a0unit this phase."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Bike Squad\n\u25a0 Outrider Squad",
           "eligibleUnits": [
             "bike-squad",
             "outrider-squad"
@@ -8543,7 +8543,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Bike Squad\n\u25a0 Outrider Squad",
           "eligibleUnits": [
             "bike-squad",
             "outrider-squad"
@@ -8552,7 +8552,7 @@
         {
           "id": "unbreakable-duty",
           "name": "Unbreakable Duty",
-          "description": "While this model is within range of an objective marker and/or within 6\" of the centre of the battlefield, this model has the Feel No Pain 4+ ability."
+          "description": "While this model is within range of\u00a0an objective marker and/or within 6\" of the centre of the\u00a0battlefield, this model has the Feel No Pain 4+ ability."
         }
       ],
       "keywords": [
@@ -8583,7 +8583,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Bike Squad\n\u25a0 Outrider Squad",
           "eligibleUnits": [
             "bike-squad",
             "outrider-squad"
@@ -8592,12 +8592,12 @@
         {
           "id": "gene-seed-recovery",
           "name": "Gene Seed Recovery",
-          "description": "When this model’s Bodyguard unit is destroyed, roll one D6: on a 2+, you gain 1CP."
+          "description": "When this model\u2019s Bodyguard unit is\u00a0destroyed, roll one D6: on a 2+, you gain 1CP."
         },
         {
           "id": "narthecium",
           "name": "Narthecium",
-          "description": "While this model is leading a unit, in your Command phase, you can return 1 destroyed model (excluding Character models) to that unit."
+          "description": "While this model is leading a unit, in your\u00a0Command phase, you can return 1 destroyed model\u00a0(excluding Character models) to that unit."
         }
       ],
       "keywords": [
@@ -8680,12 +8680,12 @@
         {
           "id": "blessing-of-the-omnissiah",
           "name": "Blessing of the Omnissiah",
-          "description": "In your Command phase, you can select one friendly Adeptus Astartes Vehicle model within 3\" of this model. That model regains up to D3 lost wounds and, until the start of your next Command phase, each time that Vehicle model makes an attack, add 1 to the Hit roll. Each model can only be selected for this ability once per turn."
+          "description": "In your Command phase, you can\u00a0select one friendly Adeptus Astartes Vehicle model within\u00a03\" of this model. That model regains up to D3 lost wounds and,\u00a0until the start of your next Command phase, each time that\u00a0Vehicle model makes an attack, add 1 to the Hit roll. Each\u00a0model can only be selected for this ability once per turn."
         },
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Bike Squad\n\u25a0 Outrider Squad",
           "eligibleUnits": [
             "bike-squad",
             "outrider-squad"
@@ -8694,12 +8694,12 @@
         {
           "id": "techmarine",
           "name": "Techmarine",
-          "description": "While this model is within 3\" of one or more friendly Adeptus Astartes Vehicle units, this model has the Lone Operative ability"
+          "description": "While this model is within 3\" of one or more\u00a0friendly Adeptus Astartes Vehicle units, this model has the\u00a0Lone Operative ability"
         },
         {
           "id": "vengeance-of-the-omnissiah",
           "name": "Vengeance of the Omnissiah",
-          "description": "If a friendly Adeptus Astartes Vehicle model is destroyed within 12\" of this model, until the end of the battle, this model’s Omnissian power axe has an\nAttacks characteristic of 7."
+          "description": "If a friendly Adeptus Astartes\u00a0Vehicle model is destroyed within 12\" of this model, until the\u00a0end of the battle, this model\u2019s Omnissian power axe has an\nAttacks characteristic of 7."
         }
       ],
       "keywords": [
@@ -8730,7 +8730,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Bike Squad\n■ Outrider Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Bike Squad\n\u25a0 Outrider Squad",
           "eligibleUnits": [
             "bike-squad",
             "outrider-squad"
@@ -8739,7 +8739,7 @@
         {
           "id": "mental-fortress",
           "name": "Mental Fortress",
-          "description": "While this model is leading a unit, models in that unit have a 4+ invulnerable save."
+          "description": "While this model is leading a unit,\u00a0models in that unit have a 4+ invulnerable save."
         }
       ],
       "keywords": [
@@ -8808,12 +8808,12 @@
         {
           "id": "transport",
           "name": "Transport",
-          "description": "This model has a transport capacity of 15 Adeptus Astartes Infantry or Adeptus Astartes Mounted models. Each Jump Pack, Wulfen, Gravis or Terminator model takes up the space of 2 models. Each Centurion model takes up the space of 3 models. Each Mounted model takes up the space of 4 models. This model can also transport up to 2 Adeptus Astartes Vehicle models (excluding Aircraft and Titanic models). Models embarked within Transport Vehicles that are themselves being transported by this model do not count towards the transport capacity of this model."
+          "description": "This model has a transport capacity of 15 Adeptus Astartes\u00a0Infantry or Adeptus Astartes Mounted models. Each\u00a0Jump Pack, Wulfen, Gravis or Terminator model takes up\u00a0the space of 2 models. Each Centurion model takes up the\u00a0space of 3 models. Each Mounted model takes up the space\u00a0of 4 models. This model can also transport up to 2 Adeptus\u00a0Astartes Vehicle models (excluding Aircraft and Titanic\u00a0models). Models embarked within Transport Vehicles that\u00a0are themselves being transported by this model do not count\u00a0towards the transport capacity of this model."
         },
         {
           "id": "aerial-deployment",
           "name": "Aerial Deployment",
-          "description": "If this model starts the game in Hover mode and in Strategic Reserves, it can be set up in the Reinforcements step of your first, second or third Movement phase, regardless of any mission rules."
+          "description": "If this model starts the game in Hover\u00a0mode and in Strategic Reserves, it can be set up in the\u00a0Reinforcements step of your first, second or third Movement\u00a0phase, regardless of any mission rules."
         }
       ],
       "keywords": [
@@ -8879,7 +8879,7 @@
         {
           "id": "sentry-programming",
           "name": "Sentry Programming",
-          "description": "You can target this model with the Fire Overwatch Stratagem for 0CP, and can do so even if you have already targeted a different unit with that Stratagem this turn.  This model can only be targeted with that Stratagem once\nper turn."
+          "description": "You can target this model with the Fire\u00a0Overwatch Stratagem for 0CP, and can do so even if you have\u00a0already targeted a different unit with that Stratagem this turn.\u00a0\u00a0This model can only be targeted with that Stratagem once\nper turn."
         }
       ],
       "keywords": [
@@ -8938,7 +8938,7 @@
         },
         {
           "id": "plasma-pistol-supercharge-ranged",
-          "name": "➤ Plasma Pistol - Supercharge",
+          "name": "\u27a4 Plasma Pistol - Supercharge",
           "type": "ranged",
           "stats": {
             "range": 12,
@@ -8956,7 +8956,7 @@
         },
         {
           "id": "plasma-pistol-standard-ranged",
-          "name": "➤ Plasma Pistol - Standard",
+          "name": "\u27a4 Plasma Pistol - Standard",
           "type": "ranged",
           "stats": {
             "range": 12,
@@ -9277,7 +9277,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Bladeguard Veteran Squad\n■ Company Heroes\n■ Hellblaster Squad\n■ Infernus Squad\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessor Squad\n\u25a0 Bladeguard Veteran Squad\n\u25a0 Company Heroes\n\u25a0 Hellblaster Squad\n\u25a0 Infernus Squad\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad\n\u25a0 Tactical Squad",
           "eligibleUnits": [
             "assault-intercessor-squad",
             "bladeguard-veteran-squad",
@@ -9292,12 +9292,12 @@
         {
           "id": "master-of-rites",
           "name": "Master of Rites",
-          "description": "In your Command phase, select one of the following to apply to this model’s unit until the end of the turn: \n\n\n■ This model’s unit is eligible to shoot in a turn in which it Advanced.\n\n\n■ This model’s unit is eligible to declare a charge in a turn in it which it Advanced.\n\n\n■ This model’s unit is eligible to shoot and declare a charge in a turn in which it Fell Back."
+          "description": "In your Command phase, select one of the\u00a0following to apply to this model\u2019s unit until the end of the turn:\u00a0\n\n\n\u25a0 This model\u2019s unit is eligible to shoot in a turn in which\u00a0it Advanced.\n\n\n\u25a0 This model\u2019s unit is eligible to declare a charge in a turn in it\u00a0which it Advanced.\n\n\n\u25a0 This model\u2019s unit is eligible to shoot and declare a charge in\u00a0a turn in which it Fell Back."
         },
         {
           "id": "unrelenting-and-uncompromising",
           "name": "Unrelenting and Uncompromising",
-          "description": "While this model is leading a unit, each time a model in that unit makes an attack, you can ignore any or all modifiers to that attack’s Ballistic Skill or Weapon Skill characteristics and/or all modifiers to\nthe Hit roll."
+          "description": "While this model is\u00a0leading a unit, each time a model in that unit makes an attack,\u00a0you can ignore any or all modifiers to that attack\u2019s Ballistic\u00a0Skill or Weapon Skill characteristics and/or all modifiers to\nthe Hit roll."
         }
       ],
       "keywords": [
@@ -9420,7 +9420,7 @@
           "id": "fire-discipline",
           "name": "Fire Discipline",
           "points": 25,
-          "description": "While leading a unit, ranged weapons have [Sustained Hits 1].",
+          "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, ranged weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability. In addition, while the bearer's unit is under the effects of the Devastator Doctrine, you can re-roll Advance rolls made for that unit.",
           "modifiers": []
         }
       ]
@@ -9736,6 +9736,258 @@
             "Terminator"
           ],
           "modifiers": []
+        }
+      ]
+    },
+    "anvil_siege_force": {
+      "name": "Anvil Siege Force",
+      "rules": [
+        {
+          "id": "shield-of-the-imperium",
+          "name": "Shield of the Imperium",
+          "description": "Ranged weapons equipped by ADEPTUS ASTARTES models from your army have the [HEAVY] ability. If a weapon already has this ability, each time the bearer makes an attack with that weapon, if the bearer's unit Remained Stationary this turn, add 1 to the Wound roll.",
+          "type": "passive"
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "armour-of-contempt",
+          "name": "Armour of Contempt",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Use when an ADEPTUS ASTARTES unit from your army is selected as the target of an attack. Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
+        },
+        {
+          "id": "rigid-discipline",
+          "name": "Rigid Discipline",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Target one ADEPTUS ASTARTES unit in Engagement Range of enemies. That unit can make a Fall Back move of up to 6\", ending wholly within your deployment zone or within range of an objective marker."
+        },
+        {
+          "id": "not-one-backwards-step",
+          "name": "Not One Backwards Step",
+          "cost": 2,
+          "phase": "Command",
+          "description": "Target one ADEPTUS ASTARTES INFANTRY unit within range of an objective marker. Double the Objective Control characteristic of models in that unit, but that unit must Remain Stationary this turn."
+        },
+        {
+          "id": "no-threat-too-great",
+          "name": "No Threat Too Great",
+          "cost": 1,
+          "phase": "Shooting",
+          "description": "Target one ADEPTUS ASTARTES unit that has not yet been selected to shoot. Until the end of the phase, each time a model in your unit makes a ranged attack that targets a MONSTER or VEHICLE unit, you can re-roll the Wound roll."
+        },
+        {
+          "id": "battle-drill-recall",
+          "name": "Battle Drill Recall",
+          "cost": 2,
+          "phase": "Shooting",
+          "description": "Target one ADEPTUS ASTARTES unit that has not yet been selected to shoot. Until the end of the phase, ranged weapons equipped by models in your unit have the [SUSTAINED HITS 1] ability. If the unit Remained Stationary this turn, unmodified Hit rolls of 5+ score Critical Hits instead."
+        },
+        {
+          "id": "hail-of-vengeance",
+          "name": "Hail of Vengeance",
+          "cost": 1,
+          "phase": "Shooting",
+          "description": "Use after an enemy unit's attacks destroy one or more models in one of your ADEPTUS ASTARTES units. Your unit can shoot as if it were your Shooting phase, but can only target that enemy unit."
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "indomitable-fury",
+          "name": "Indomitable Fury",
+          "points": 20,
+          "description": "GRAVIS model only. The first time the bearer is destroyed, at the end of the phase, roll one D6: on a 2+, set the bearer back up on the battlefield with its full wounds remaining, not within Engagement Range of any enemy models.",
+          "eligibleKeywords": [
+            "Gravis"
+          ]
+        },
+        {
+          "id": "fleet-commander",
+          "name": "Fleet Commander",
+          "points": 15,
+          "description": "CAPTAIN model only. Once per battle, at the start of your Shooting phase, place a marker on the battlefield. At the start of your next Shooting phase, place a second marker within 12\" of the first. Draw a line between the two markers; each unit the line passes through must roll one D6: on a 3+, that unit suffers D3 mortal wounds."
+        },
+        {
+          "id": "stoic-defender",
+          "name": "Stoic Defender",
+          "points": 15,
+          "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit within range of an objective marker, models in that unit have the Feel No Pain 6+ ability. In addition, while the bearer's unit is Battle-shocked, halve the Objective Control characteristic of models in that unit instead of changing it to 0."
+        },
+        {
+          "id": "architect-of-war",
+          "name": "Architect of War",
+          "points": 25,
+          "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, ranged weapons equipped by models in that unit have the [IGNORES COVER] ability."
+        }
+      ]
+    },
+    "ironstorm_spearhead": {
+      "name": "Ironstorm Spearhead",
+      "rules": [
+        {
+          "id": "armoured-wrath",
+          "name": "Armoured Wrath",
+          "description": "Once per phase for each ADEPTUS ASTARTES unit in your army, you can re-roll one Hit roll, one Wound roll or one Damage roll made for a model in that unit.",
+          "type": "passive"
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "armour-of-contempt",
+          "name": "Armour of Contempt",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Use when an ADEPTUS ASTARTES unit from your army is selected as the target of an attack. Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
+        },
+        {
+          "id": "unbowed-conviction",
+          "name": "Unbowed Conviction",
+          "cost": 1,
+          "phase": "Command",
+          "description": "Target one ADEPTUS ASTARTES unit from your army that is below its Starting Strength. Until the end of the turn, that unit ignores any or all modifiers to its characteristics and to any roll or test made for it (excluding modifiers to saving throws)."
+        },
+        {
+          "id": "mercy-is-weakness",
+          "name": "Mercy is Weakness",
+          "cost": 2,
+          "phase": "Shooting",
+          "description": "Target one ADEPTUS ASTARTES unit that has not been selected to shoot or fight this phase. Until the end of the phase, each time a model in your unit makes an attack that targets a unit below its Starting Strength, that attack has the [SUSTAINED HITS 1] ability. When making such an attack, if the attacking model is a VEHICLE, a successful unmodified Hit roll of 5+ scores a Critical Hit."
+        },
+        {
+          "id": "vengeful-animus",
+          "name": "Vengeful Animus",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Use when an ADEPTUS ASTARTES VEHICLE model with the Deadly Demise ability is destroyed. Do not roll for that model's Deadly Demise ability; instead, the maximum amount of mortal wounds are inflicted."
+        },
+        {
+          "id": "ancient-fury",
+          "name": "Ancient Fury",
+          "cost": 1,
+          "phase": "Command",
+          "description": "Target one ADEPTUS ASTARTES WALKER model. Until the start of your next Command phase, improve the Move, Toughness, Leadership, and Objective Control characteristics of that model by 1, and add 1 to Hit rolls made for that model."
+        },
+        {
+          "id": "power-of-the-machine-spirit",
+          "name": "Power of the Machine Spirit",
+          "cost": 1,
+          "phase": "Shooting",
+          "description": "Use when an ADEPTUS ASTARTES VEHICLE unit from your army is reduced below half its Starting Strength by enemy attacks. That unit can shoot as if it were your Shooting phase, but can only target that enemy unit."
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "target-augury-web",
+          "name": "Target Augury Web",
+          "points": 30,
+          "description": "TECHMARINE model only. In your Command phase, select one ADEPTUS ASTARTES VEHICLE model within 6\" of the bearer. Until the start of your next Command phase, weapons equipped by that VEHICLE model have the [LETHAL HITS] ability."
+        },
+        {
+          "id": "the-flesh-is-weak",
+          "name": "The Flesh is Weak",
+          "points": 10,
+          "description": "ADEPTUS ASTARTES model only. The bearer has the Feel No Pain 4+ ability."
+        },
+        {
+          "id": "adept-of-the-omnissiah",
+          "name": "Adept of the Omnissiah",
+          "points": 35,
+          "description": "TECHMARINE model only. Once per battle round, when a saving throw is failed for a friendly ADEPTUS ASTARTES VEHICLE model within 6\" of the bearer, change the Damage characteristic of that attack to 0."
+        },
+        {
+          "id": "master-of-machine-war",
+          "name": "Master of Machine War",
+          "points": 20,
+          "description": "ADEPTUS ASTARTES model only. In your Command phase, select one ADEPTUS ASTARTES VEHICLE model within 6\" of the bearer. Until the start of your next Command phase, that VEHICLE is eligible to shoot even if it Fell Back or Advanced this turn."
+        }
+      ]
+    },
+    "stormlance_task_force": {
+      "name": "Stormlance Task Force",
+      "rules": [
+        {
+          "id": "lightning-assault",
+          "name": "Lightning Assault",
+          "description": "ADEPTUS ASTARTES units from your army are eligible to declare a charge in a turn in which they Advanced or Fell Back.",
+          "type": "passive"
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "armour-of-contempt",
+          "name": "Armour of Contempt",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Use when an ADEPTUS ASTARTES unit from your army is selected as the target of an attack. Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
+        },
+        {
+          "id": "blitzing-fusillade",
+          "name": "Blitzing Fusillade",
+          "cost": 1,
+          "phase": "Shooting",
+          "description": "Target one ADEPTUS ASTARTES unit that has not yet been selected to shoot. Until the end of the phase, ranged weapons equipped by models in your unit have the [ASSAULT] ability. If a weapon already has this ability, it has the [SUSTAINED HITS 1] ability as well."
+        },
+        {
+          "id": "full-throttle",
+          "name": "Full Throttle",
+          "cost": 2,
+          "phase": "Movement",
+          "description": "Target one ADEPTUS ASTARTES MOUNTED or VEHICLE unit (excluding WALKERS). If your unit Advances, do not make an Advance roll. Instead, add 6\" to the Move characteristic of models in your unit, or 9\" if your unit is MOUNTED."
+        },
+        {
+          "id": "shock-assault",
+          "name": "Shock Assault",
+          "cost": 1,
+          "phase": "Charge",
+          "description": "Target one ADEPTUS ASTARTES MOUNTED unit that has not yet declared a charge. Until the end of the turn, you can re-roll Charge rolls made for your unit and melee weapons equipped by models in that unit have the [LANCE] ability."
+        },
+        {
+          "id": "ride-hard-ride-fast",
+          "name": "Ride Hard, Ride Fast",
+          "cost": 1,
+          "phase": "Shooting",
+          "description": "Use when an ADEPTUS ASTARTES MOUNTED or FLY VEHICLE unit is selected as the target of an attack. Until the end of the phase, each time an attack targets your unit, subtract 1 from the Hit roll and subtract 1 from the Wound roll."
+        },
+        {
+          "id": "wind-swift-evasion",
+          "name": "Wind-swift Evasion",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Use after an enemy unit finishes a Normal, Advance, or Fall Back move within 9\" of one of your ADEPTUS ASTARTES INFANTRY or ADEPTUS ASTARTES MOUNTED units. Your unit can make a Normal move of up to 6\". Your unit cannot be within Engagement Range of any enemy units."
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "fury-of-the-storm",
+          "name": "Fury of the Storm",
+          "points": 25,
+          "description": "ADEPTUS ASTARTES MOUNTED model only. Improve the Strength and Armour Penetration characteristics of the bearer's melee weapons by 1. Each time the bearer ends a Charge move, until the end of the turn, improve the Strength and Armour Penetration characteristics of the bearer's melee weapons by 2 instead.",
+          "eligibleKeywords": [
+            "Mounted"
+          ]
+        },
+        {
+          "id": "portents-of-wisdom",
+          "name": "Portents of Wisdom",
+          "points": 15,
+          "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, you can re-roll Advance rolls made for that unit."
+        },
+        {
+          "id": "feinting-withdrawal",
+          "name": "Feinting Withdrawal",
+          "points": 10,
+          "description": "ADEPTUS ASTARTES model only. While the bearer is leading a unit, that unit is eligible to shoot in a turn in which it Fell Back."
+        },
+        {
+          "id": "hunters-instincts",
+          "name": "Hunter's Instincts",
+          "points": 25,
+          "description": "ADEPTUS ASTARTES MOUNTED model only. If the bearer's unit is in Strategic Reserves, for the purposes of setting up that unit on the battlefield, treat the current battle round number as being one higher than it actually is.",
+          "eligibleKeywords": [
+            "Mounted"
+          ]
         }
       ]
     }

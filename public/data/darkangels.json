@@ -6,7 +6,7 @@
   "armyRules": {
     "sons_of_the_lion": {
       "name": "Sons of the Lion",
-      "description": "Dark Angels units use the Oath of Moment army rule. In addition, certain units gain the DEATHWING or RAVENWING keyword:\n\n■ DEATHWING: Terminator, Bladeguard Veteran, Sternguard Veteran, Vanguard Veteran with Jump Pack, Bladeguard Ancient, Land Raider, Repulsor, and Dreadnought units gain the DEATHWING keyword.\n■ RAVENWING: Mounted and Vehicle units that have the FLY keyword gain the RAVENWING keyword."
+      "description": "Dark Angels units use the Oath of Moment army rule. In addition, certain units gain the DEATHWING or RAVENWING keyword:\n\n\u25a0 DEATHWING: Terminator, Bladeguard Veteran, Sternguard Veteran, Vanguard Veteran with Jump Pack, Bladeguard Ancient, Land Raider, Repulsor, and Dreadnought units gain the DEATHWING keyword.\n\u25a0 RAVENWING: Mounted and Vehicle units that have the FLY keyword gain the RAVENWING keyword."
     }
   },
   "units": [
@@ -38,11 +38,14 @@
             "ap": -2,
             "d": 2
           },
-          "abilities": ["Pistol", "Precision"]
+          "abilities": [
+            "Pistol",
+            "Precision"
+          ]
         },
         {
           "id": "emperor-s-shield-sweep-melee",
-          "name": "➤ Emperor's Shield - Sweep",
+          "name": "\u27a4 Emperor's Shield - Sweep",
           "type": "melee",
           "stats": {
             "a": 14,
@@ -55,7 +58,7 @@
         },
         {
           "id": "emperor-s-shield-strike-melee",
-          "name": "➤ Emperor's Shield - Strike",
+          "name": "\u27a4 Emperor's Shield - Strike",
           "type": "melee",
           "stats": {
             "a": 7,
@@ -64,7 +67,9 @@
             "ap": -3,
             "d": 3
           },
-          "abilities": ["Devastating Wounds"]
+          "abilities": [
+            "Devastating Wounds"
+          ]
         }
       ],
       "abilities": [
@@ -81,7 +86,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Deathwing Knights\n■ Deathwing Terminator Squad\n■ Inner Circle Companions",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Deathwing Knights\n\u25a0 Deathwing Terminator Squad\n\u25a0 Inner Circle Companions",
           "eligibleUnits": [
             "deathwing-knights",
             "deathwing-terminator-squad",
@@ -129,7 +134,9 @@
             "ap": -1,
             "d": 2
           },
-          "abilities": ["Rapid Fire 2"]
+          "abilities": [
+            "Rapid Fire 2"
+          ]
         },
         {
           "id": "the-sword-of-secrets-melee",
@@ -142,7 +149,9 @@
             "ap": -3,
             "d": 2
           },
-          "abilities": ["Precision"]
+          "abilities": [
+            "Precision"
+          ]
         }
       ],
       "abilities": [
@@ -159,7 +168,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Inner Circle Companions\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Inner Circle Companions\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad\n\u25a0 Tactical Squad",
           "eligibleUnits": [
             "inner-circle-companions",
             "intercessor-squad",
@@ -206,7 +215,9 @@
             "ap": 0,
             "d": 2
           },
-          "abilities": ["Rapid Fire 2"]
+          "abilities": [
+            "Rapid Fire 2"
+          ]
         },
         {
           "id": "the-sword-of-silence-melee",
@@ -219,7 +230,9 @@
             "ap": -2,
             "d": 2
           },
-          "abilities": ["Precision"]
+          "abilities": [
+            "Precision"
+          ]
         }
       ],
       "abilities": [
@@ -236,7 +249,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Deathwing Knights\n■ Deathwing Terminator Squad\n■ Relic Terminator Squad\n■ Terminator Assault Squad\n■ Terminator Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Deathwing Knights\n\u25a0 Deathwing Terminator Squad\n\u25a0 Relic Terminator Squad\n\u25a0 Terminator Assault Squad\n\u25a0 Terminator Squad",
           "eligibleUnits": [
             "deathwing-knights",
             "deathwing-terminator-squad",
@@ -286,7 +299,9 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Pistol"]
+          "abilities": [
+            "Pistol"
+          ]
         },
         {
           "id": "mind-wipe-ranged",
@@ -300,7 +315,10 @@
             "ap": -2,
             "d": "D3"
           },
-          "abilities": ["Psychic", "Precision"]
+          "abilities": [
+            "Psychic",
+            "Precision"
+          ]
         },
         {
           "id": "traitors-bane-melee",
@@ -313,7 +331,9 @@
             "ap": -1,
             "d": "D3"
           },
-          "abilities": ["Psychic"]
+          "abilities": [
+            "Psychic"
+          ]
         }
       ],
       "abilities": [
@@ -330,7 +350,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Inner Circle Companions\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Inner Circle Companions\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad\n\u25a0 Tactical Squad",
           "eligibleUnits": [
             "inner-circle-companions",
             "intercessor-squad",
@@ -378,7 +398,9 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Pistol"]
+          "abilities": [
+            "Pistol"
+          ]
         },
         {
           "id": "the-blades-of-reason-melee",
@@ -421,7 +443,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Inner Circle Companions\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessor Squad\n\u25a0 Inner Circle Companions\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad\n\u25a0 Tactical Squad",
           "eligibleUnits": [
             "assault-intercessor-squad",
             "inner-circle-companions",
@@ -470,7 +492,9 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Pistol"]
+          "abilities": [
+            "Pistol"
+          ]
         },
         {
           "id": "enmitys-edge-melee",
@@ -500,7 +524,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Assault Intercessor Squad\n■ Inner Circle Companions\n■ Intercessor Squad\n■ Sternguard Veteran Squad\n■ Tactical Squad",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Assault Intercessor Squad\n\u25a0 Inner Circle Companions\n\u25a0 Intercessor Squad\n\u25a0 Sternguard Veteran Squad\n\u25a0 Tactical Squad",
           "eligibleUnits": [
             "assault-intercessor-squad",
             "inner-circle-companions",
@@ -539,7 +563,7 @@
       "weapons": [
         {
           "id": "master-crafted-plasma-cannon-standard-ranged",
-          "name": "➤ Master-crafted Plasma Cannon - Standard",
+          "name": "\u27a4 Master-crafted Plasma Cannon - Standard",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -549,11 +573,13 @@
             "ap": -2,
             "d": 2
           },
-          "abilities": ["Blast"]
+          "abilities": [
+            "Blast"
+          ]
         },
         {
           "id": "master-crafted-plasma-cannon-supercharge-ranged",
-          "name": "➤ Master-crafted Plasma Cannon - Supercharge",
+          "name": "\u27a4 Master-crafted Plasma Cannon - Supercharge",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -563,7 +589,10 @@
             "ap": -3,
             "d": 3
           },
-          "abilities": ["Blast", "Hazardous"]
+          "abilities": [
+            "Blast",
+            "Hazardous"
+          ]
         },
         {
           "id": "twin-storm-bolter-ranged",
@@ -577,7 +606,10 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Rapid Fire 4", "Twin-linked"]
+          "abilities": [
+            "Rapid Fire 4",
+            "Twin-linked"
+          ]
         },
         {
           "id": "the-raven-sword-melee",
@@ -607,7 +639,7 @@
         {
           "id": "leader",
           "name": "Leader",
-          "description": "This model can be attached to the following units:\n\n■ Ravenwing Black Knights",
+          "description": "This model can be attached to the following units:\n\n\u25a0 Ravenwing Black Knights",
           "eligibleUnits": [
             "ravenwing-black-knights"
           ]
@@ -643,7 +675,7 @@
       "weapons": [
         {
           "id": "plasma-talon-standard-ranged",
-          "name": "➤ Plasma Talon - Standard",
+          "name": "\u27a4 Plasma Talon - Standard",
           "type": "ranged",
           "stats": {
             "range": 18,
@@ -653,11 +685,13 @@
             "ap": -2,
             "d": 1
           },
-          "abilities": ["Rapid Fire 1"]
+          "abilities": [
+            "Rapid Fire 1"
+          ]
         },
         {
           "id": "plasma-talon-supercharge-ranged",
-          "name": "➤ Plasma Talon - Supercharge",
+          "name": "\u27a4 Plasma Talon - Supercharge",
           "type": "ranged",
           "stats": {
             "range": 18,
@@ -667,7 +701,10 @@
             "ap": -3,
             "d": 2
           },
-          "abilities": ["Hazardous", "Rapid Fire 1"]
+          "abilities": [
+            "Hazardous",
+            "Rapid Fire 1"
+          ]
         },
         {
           "id": "corvus-hammer-melee",
@@ -680,7 +717,9 @@
             "ap": -1,
             "d": 1
           },
-          "abilities": ["Lance"]
+          "abilities": [
+            "Lance"
+          ]
         }
       ],
       "abilities": [
@@ -723,7 +762,7 @@
       "weapons": [
         {
           "id": "mace-of-absolution-strike-melee",
-          "name": "➤ Mace of Absolution - Strike",
+          "name": "\u27a4 Mace of Absolution - Strike",
           "type": "melee",
           "stats": {
             "a": 3,
@@ -736,7 +775,7 @@
         },
         {
           "id": "mace-of-absolution-sweep-melee",
-          "name": "➤ Mace of Absolution - Sweep",
+          "name": "\u27a4 Mace of Absolution - Sweep",
           "type": "melee",
           "stats": {
             "a": 5,
@@ -749,7 +788,7 @@
         },
         {
           "id": "great-weapon-of-the-unforgiven-strike-melee",
-          "name": "➤ Great Weapon of the Unforgiven - Strike",
+          "name": "\u27a4 Great Weapon of the Unforgiven - Strike",
           "type": "melee",
           "stats": {
             "a": 4,
@@ -758,11 +797,13 @@
             "ap": -3,
             "d": 3
           },
-          "abilities": ["Devastating Wounds"]
+          "abilities": [
+            "Devastating Wounds"
+          ]
         },
         {
           "id": "great-weapon-of-the-unforgiven-sweep-melee",
-          "name": "➤ Great Weapon of the Unforgiven - Sweep",
+          "name": "\u27a4 Great Weapon of the Unforgiven - Sweep",
           "type": "melee",
           "stats": {
             "a": 6,
@@ -771,7 +812,9 @@
             "ap": -2,
             "d": 1
           },
-          "abilities": ["Devastating Wounds"]
+          "abilities": [
+            "Devastating Wounds"
+          ]
         },
         {
           "id": "relic-weapon-melee",
@@ -843,7 +886,9 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Rapid Fire 2"]
+          "abilities": [
+            "Rapid Fire 2"
+          ]
         },
         {
           "id": "assault-cannon-ranged",
@@ -857,7 +902,9 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Devastating Wounds"]
+          "abilities": [
+            "Devastating Wounds"
+          ]
         },
         {
           "id": "heavy-flamer-ranged",
@@ -871,11 +918,14 @@
             "ap": -1,
             "d": 1
           },
-          "abilities": ["Ignores Cover", "Torrent"]
+          "abilities": [
+            "Ignores Cover",
+            "Torrent"
+          ]
         },
         {
           "id": "plasma-cannon-standard-ranged",
-          "name": "➤ Plasma Cannon - Standard",
+          "name": "\u27a4 Plasma Cannon - Standard",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -885,11 +935,13 @@
             "ap": -2,
             "d": 1
           },
-          "abilities": ["Blast"]
+          "abilities": [
+            "Blast"
+          ]
         },
         {
           "id": "plasma-cannon-supercharge-ranged",
-          "name": "➤ Plasma Cannon - Supercharge",
+          "name": "\u27a4 Plasma Cannon - Supercharge",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -899,11 +951,14 @@
             "ap": -3,
             "d": 2
           },
-          "abilities": ["Blast", "Hazardous"]
+          "abilities": [
+            "Blast",
+            "Hazardous"
+          ]
         },
         {
           "id": "cyclone-missile-launcher-frag-ranged",
-          "name": "➤ Cyclone Missile Launcher - Frag",
+          "name": "\u27a4 Cyclone Missile Launcher - Frag",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -913,11 +968,13 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Blast"]
+          "abilities": [
+            "Blast"
+          ]
         },
         {
           "id": "cyclone-missile-launcher-krak-ranged",
-          "name": "➤ Cyclone Missile Launcher - Krak",
+          "name": "\u27a4 Cyclone Missile Launcher - Krak",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -966,7 +1023,9 @@
             "ap": -2,
             "d": 2
           },
-          "abilities": ["Anti-Vehicle 4+"]
+          "abilities": [
+            "Anti-Vehicle 4+"
+          ]
         },
         {
           "id": "thunder-hammer-melee",
@@ -979,7 +1038,9 @@
             "ap": -2,
             "d": 2
           },
-          "abilities": ["Devastating Wounds"]
+          "abilities": [
+            "Devastating Wounds"
+          ]
         },
         {
           "id": "twin-lightning-claws-melee",
@@ -992,7 +1053,9 @@
             "ap": -2,
             "d": 1
           },
-          "abilities": ["Twin-linked"]
+          "abilities": [
+            "Twin-linked"
+          ]
         }
       ],
       "abilities": [
@@ -1041,7 +1104,7 @@
       "weapons": [
         {
           "id": "calibanite-greatsword-strike-melee",
-          "name": "➤ Calibanite Greatsword - Strike",
+          "name": "\u27a4 Calibanite Greatsword - Strike",
           "type": "melee",
           "stats": {
             "a": 3,
@@ -1054,7 +1117,7 @@
         },
         {
           "id": "calibanite-greatsword-sweep-melee",
-          "name": "➤ Calibanite Greatsword - Sweep",
+          "name": "\u27a4 Calibanite Greatsword - Sweep",
           "type": "melee",
           "stats": {
             "a": 4,
@@ -1105,7 +1168,7 @@
       "weapons": [
         {
           "id": "plasma-talon-standard-ranged",
-          "name": "➤ Plasma Talon - Standard",
+          "name": "\u27a4 Plasma Talon - Standard",
           "type": "ranged",
           "stats": {
             "range": 18,
@@ -1115,11 +1178,13 @@
             "ap": -2,
             "d": 1
           },
-          "abilities": ["Rapid Fire 1"]
+          "abilities": [
+            "Rapid Fire 1"
+          ]
         },
         {
           "id": "plasma-talon-supercharge-ranged",
-          "name": "➤ Plasma Talon - Supercharge",
+          "name": "\u27a4 Plasma Talon - Supercharge",
           "type": "ranged",
           "stats": {
             "range": 18,
@@ -1129,7 +1194,10 @@
             "ap": -3,
             "d": 2
           },
-          "abilities": ["Hazardous", "Rapid Fire 1"]
+          "abilities": [
+            "Hazardous",
+            "Rapid Fire 1"
+          ]
         },
         {
           "id": "corvus-hammer-melee",
@@ -1142,7 +1210,9 @@
             "ap": -1,
             "d": 1
           },
-          "abilities": ["Lance"]
+          "abilities": [
+            "Lance"
+          ]
         }
       ],
       "abilities": [
@@ -1195,7 +1265,9 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Rapid Fire 12"]
+          "abilities": [
+            "Rapid Fire 12"
+          ]
         },
         {
           "id": "rift-cannon-ranged",
@@ -1209,7 +1281,9 @@
             "ap": -3,
             "d": "D6"
           },
-          "abilities": ["Devastating Wounds"]
+          "abilities": [
+            "Devastating Wounds"
+          ]
         },
         {
           "id": "armoured-hull-melee",
@@ -1276,7 +1350,10 @@
             "ap": -1,
             "d": 2
           },
-          "abilities": ["Sustained Hits 1", "Twin-linked"]
+          "abilities": [
+            "Sustained Hits 1",
+            "Twin-linked"
+          ]
         },
         {
           "id": "avenger-mega-bolter-ranged",
@@ -1290,7 +1367,9 @@
             "ap": -1,
             "d": 2
           },
-          "abilities": ["Sustained Hits 1"]
+          "abilities": [
+            "Sustained Hits 1"
+          ]
         },
         {
           "id": "blacksword-missiles-ranged",
@@ -1304,7 +1383,9 @@
             "ap": -3,
             "d": "D6"
           },
-          "abilities": ["Anti-Fly 2+"]
+          "abilities": [
+            "Anti-Fly 2+"
+          ]
         },
         {
           "id": "armoured-hull-melee",
@@ -1371,7 +1452,9 @@
             "ap": -1,
             "d": 2
           },
-          "abilities": ["Sustained Hits 1"]
+          "abilities": [
+            "Sustained Hits 1"
+          ]
         },
         {
           "id": "assault-cannon-ranged",
@@ -1385,7 +1468,9 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Devastating Wounds"]
+          "abilities": [
+            "Devastating Wounds"
+          ]
         },
         {
           "id": "armoured-hull-melee",
@@ -1436,7 +1521,7 @@
       "weapons": [
         {
           "id": "plasma-storm-battery-standard-ranged",
-          "name": "➤ Plasma Storm Battery - Standard",
+          "name": "\u27a4 Plasma Storm Battery - Standard",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -1446,11 +1531,13 @@
             "ap": -2,
             "d": 2
           },
-          "abilities": ["Blast"]
+          "abilities": [
+            "Blast"
+          ]
         },
         {
           "id": "plasma-storm-battery-supercharge-ranged",
-          "name": "➤ Plasma Storm Battery - Supercharge",
+          "name": "\u27a4 Plasma Storm Battery - Supercharge",
           "type": "ranged",
           "stats": {
             "range": 36,
@@ -1460,7 +1547,10 @@
             "ap": -3,
             "d": 3
           },
-          "abilities": ["Blast", "Hazardous"]
+          "abilities": [
+            "Blast",
+            "Hazardous"
+          ]
         },
         {
           "id": "heavy-bolter-ranged",
@@ -1474,7 +1564,9 @@
             "ap": -1,
             "d": 2
           },
-          "abilities": ["Sustained Hits 1"]
+          "abilities": [
+            "Sustained Hits 1"
+          ]
         },
         {
           "id": "assault-cannon-ranged",
@@ -1488,7 +1580,9 @@
             "ap": 0,
             "d": 1
           },
-          "abilities": ["Devastating Wounds"]
+          "abilities": [
+            "Devastating Wounds"
+          ]
         },
         {
           "id": "armoured-hull-melee",
@@ -1529,7 +1623,7 @@
         {
           "id": "grim-resolve",
           "name": "Grim Resolve",
-          "description": "While an ADEPTUS ASTARTES unit from your army is Battle-shocked, change the Objective Control characteristic of models in that unit to 1, instead of 0.",
+          "description": "While an ADEPTUS ASTARTES unit from your army is Battle-shocked, change the Objective Control characteristic of models in that unit to 1, instead of 0.\n\nIn your Command phase, select one ADEPTUS ASTARTES unit from your army; until the start of your next Command phase, add 1 to the Objective Control characteristic of models in that unit.",
           "type": "passive"
         }
       ],
@@ -1610,7 +1704,7 @@
         {
           "id": "vowed-target",
           "name": "Vowed Target",
-          "description": "At the start of each battle round, select one objective marker on the battlefield to be your Vowed objective. Until the end of the battle round, each time an ADEPTUS ASTARTES model from your army makes an attack that targets a unit within range of that objective marker, add 1 to the Wound roll.",
+          "description": "At the start of your Movement phase, select one of the following:\n\n- Defensive Footing: Select one objective marker you control. Until your next Movement phase, that objective marker is your Vowed objective marker.\n- Aggressive Push: Select one or more objective markers you do not control. Until the start of your next Movement phase, each of those objective markers is one of your Vowed objective markers. If a rule refers to a unit or model being within range of your Vowed objective marker, that rule takes effect if that unit or model is within range of one or more of your Vowed objective markers.\n\nEach time a DEATHWING INFANTRY unit from your army makes an attack that targets a unit within range of one or more of your Vowed objective markers, add 1 to the Wound roll.",
           "type": "selection",
           "resetsEachRound": true
         }
@@ -1665,28 +1759,36 @@
           "name": "Champion of the Deathwing",
           "points": 15,
           "description": "DEATHWING model only. Add 2 to the Attacks characteristic and add 1 to the Strength characteristic of melee weapons equipped by the bearer.",
-          "eligibleKeywords": ["Deathwing"]
+          "eligibleKeywords": [
+            "Deathwing"
+          ]
         },
         {
           "id": "deathwing-assault-enhancement",
           "name": "Deathwing Assault",
           "points": 30,
           "description": "DEATHWING model with the Deep Strike ability only. The bearer's unit can be set up using the Deep Strike ability in the Reinforcements step of your first, second or third Movement phase, regardless of any mission rules.",
-          "eligibleKeywords": ["Deathwing"]
+          "eligibleKeywords": [
+            "Deathwing"
+          ]
         },
         {
           "id": "eye-of-the-unseen",
           "name": "Eye of the Unseen",
           "points": 10,
           "description": "DEATHWING model only. The bearer has the Fights First ability. In addition, each time the bearer makes a melee attack, on a Critical Hit, that attack has the [PRECISION] ability.",
-          "eligibleKeywords": ["Deathwing"]
+          "eligibleKeywords": [
+            "Deathwing"
+          ]
         },
         {
           "id": "singular-will",
           "name": "Singular Will",
           "points": 20,
           "description": "DEATHWING model only. While the bearer is within range of your Vowed objective, each time a model in the bearer's unit would lose a wound, roll one D6: on a 5+, that wound is not lost.",
-          "eligibleKeywords": ["Deathwing"]
+          "eligibleKeywords": [
+            "Deathwing"
+          ]
         }
       ]
     },
@@ -1696,7 +1798,7 @@
         {
           "id": "masters-of-manoeuvre",
           "name": "Masters of Manoeuvre",
-          "description": "ADEPTUS ASTARTES units from your army that have the RAVENWING keyword are eligible to shoot in a turn in which they Advanced or Fell Back. In addition, Outrider Squad units from your army have the Battleline keyword.",
+          "description": "ADEPTUS ASTARTES units from your army are eligible to shoot in a turn in which they Advanced or Fell Back. ADEPTUS ASTARTES MOUNTED units from your army are eligible to shoot and declare a charge in a turn in which they Advanced or Fell Back. In addition, Outrider Squad units from your army have the Battleline keyword.",
           "type": "passive"
         }
       ],
@@ -1750,28 +1852,36 @@
           "name": "Master of Manoeuvre",
           "points": 15,
           "description": "RAVENWING model only. The bearer's unit can make a Normal Move of up to 6\" after deployment, before the first turn begins.",
-          "eligibleKeywords": ["Ravenwing"]
+          "eligibleKeywords": [
+            "Ravenwing"
+          ]
         },
         {
           "id": "master-crafted-weapon",
           "name": "Master-crafted Weapon",
           "points": 10,
           "description": "RAVENWING model only. Add 2 to the Strength and 1 to the Damage characteristics of melee weapons equipped by the bearer.",
-          "eligibleKeywords": ["Ravenwing"]
+          "eligibleKeywords": [
+            "Ravenwing"
+          ]
         },
         {
           "id": "mounted-strategist",
           "name": "Mounted Strategist",
           "points": 30,
-          "description": "RAVENWING model only. Ranged weapons equipped by models in the bearer's unit have the [IGNORES COVER] ability.",
-          "eligibleKeywords": ["Ravenwing"]
+          "description": "RAVENWING model only. You can re-roll Advance and Charge rolls made for the bearer's unit.",
+          "eligibleKeywords": [
+            "Ravenwing"
+          ]
         },
         {
           "id": "recon-hunter",
           "name": "Recon Hunter",
           "points": 20,
           "description": "RAVENWING model only. Each time the bearer makes an attack, add 1 to the Hit roll and add 1 to the Wound roll.",
-          "eligibleKeywords": ["Ravenwing"]
+          "eligibleKeywords": [
+            "Ravenwing"
+          ]
         }
       ]
     },
@@ -1779,19 +1889,54 @@
       "name": "Lion's Blade Task Force",
       "rules": [
         {
-          "id": "lions-blade",
-          "name": "Lion's Blade",
-          "description": "Each time an ADEPTUS ASTARTES unit from your army is selected to fight, if that unit made a Charge move this turn, until the end of the phase, melee weapons equipped by models in that unit have the [SUSTAINED HITS 1] ability.",
+          "id": "in-the-lions-claws",
+          "name": "In The Lion's Claws",
+          "description": "Each time an enemy unit (excluding MONSTERS and VEHICLES) within Engagement Range of one or more RAVENWING units from your army Falls Back, all models in that enemy unit must take a Desperate Escape test. When doing so, if that enemy unit is Battle-shocked, subtract 1 from each of those tests.\n\nEach time a DEATHWING unit from your army declares a charge, if one or more targets of that charge are within Engagement Range of one or more RAVENWING units from your army, add 2 to the Charge roll.",
           "type": "passive"
         }
       ],
       "stratagems": [
         {
+          "id": "overpowering-exaction",
+          "name": "Overpowering Exaction",
+          "cost": 1,
+          "phase": "Command",
+          "description": "Select one enemy unit within Engagement Range of your ADEPTUS ASTARTES unit. That enemy unit must take a Battle-shock test. If your unit has the DEATHWING or RAVENWING keyword, subtract 1 from the result. You can only use this Stratagem once per battle round."
+        },
+        {
           "id": "armour-of-contempt",
           "name": "Armour of Contempt",
           "cost": 1,
           "phase": "Any",
-          "description": "Use when an ADEPTUS ASTARTES unit from your army is selected as the target of an attack. Until the end of the phase, each time an attack targets that unit, worsen the Armour Penetration characteristic of that attack by 1."
+          "description": "Use when an ADEPTUS ASTARTES unit from your army is selected as the target of an attack. Until the attacking unit has finished making its attacks, each time an attack targets your unit, worsen the Armour Penetration characteristic of that attack by 1."
+        },
+        {
+          "id": "strength-in-unity",
+          "name": "Strength in Unity",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Use when an ADEPTUS ASTARTES unit is targeted by attacks. If the enemy unit is within Engagement Range of one or more RAVENWING units, subtract 1 from hit rolls. If within Engagement Range of one or more DEATHWING units and the attack's Strength is greater than the target's Toughness, subtract 1 from the Wound roll. Cannot be used with Armour of Contempt in the same phase."
+        },
+        {
+          "id": "knights-of-iron",
+          "name": "Knights of Iron",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Target one RAVENWING unit. Until the end of the phase, each time a model in your unit makes a Normal, Advance or Charge move, it can move horizontally through terrain features."
+        },
+        {
+          "id": "illuminating-fire",
+          "name": "Illuminating Fire",
+          "cost": 2,
+          "phase": "Shooting",
+          "description": "After a RAVENWING unit shoots, select one enemy unit within 12\" that was targeted. Until the end of the phase, each time a friendly DEATHWING unit makes an attack that targets that enemy unit, add 1 to the Wound roll."
+        },
+        {
+          "id": "inescapable-wrath",
+          "name": "Inescapable Wrath",
+          "cost": 2,
+          "phase": "Charge",
+          "description": "Target one DEATHWING INFANTRY or DEATHWING WALKER unit within 6\" of one or more enemy units. Your unit declares a charge targeting one or more of those enemy units and you resolve that charge. Note that even if this charge is successful, your unit does not receive any Charge bonus this turn."
         }
       ],
       "enhancements": [
@@ -1799,25 +1944,31 @@
           "id": "calibanite-armaments",
           "name": "Calibanite Armaments",
           "points": 15,
-          "description": "ADEPTUS ASTARTES model only. Improve the Strength and Armour Penetration characteristics of melee weapons equipped by the bearer by 1."
-        },
-        {
-          "id": "fulgus-magna",
-          "name": "Fulgus Magna",
-          "points": 20,
-          "description": "ADEPTUS ASTARTES model only. The bearer has a 4+ invulnerable save."
+          "description": "ADEPTUS ASTARTES model only. Add 1 to the Damage characteristic of the bearer's melee weapons."
         },
         {
           "id": "lord-of-the-hunt",
           "name": "Lord of the Hunt",
           "points": 15,
-          "description": "ADEPTUS ASTARTES model only. You can re-roll Charge rolls made for the bearer's unit."
+          "description": "RAVENWING model only. The bearer's unit is eligible to shoot and declare a charge in a turn in which it Fell Back and you can re-roll Desperate Escape tests taken for models in the bearer's unit.",
+          "eligibleKeywords": [
+            "Ravenwing"
+          ]
         },
         {
           "id": "stalwart-champion",
           "name": "Stalwart Champion",
           "points": 25,
-          "description": "ADEPTUS ASTARTES model only. Each time an attack is allocated to the bearer, halve the Damage characteristic of that attack."
+          "description": "CAPTAIN, CHAPLAIN or LIEUTENANT model only. While the bearer's unit is not Battle-shocked, add 1 to the Objective Control characteristic of models in the bearer's unit."
+        },
+        {
+          "id": "fulgus-magna",
+          "name": "Fulgus Magna",
+          "points": 20,
+          "description": "DEATHWING model only. Once per battle, at the end of your opponent's turn, if the bearer's unit is not within Engagement Range of one or more enemy units, remove the bearer's unit from the battlefield and place it into Strategic Reserves.",
+          "eligibleKeywords": [
+            "Deathwing"
+          ]
         }
       ]
     },
@@ -1913,14 +2064,18 @@
           "name": "Deathwing Assault",
           "points": 15,
           "description": "Deathwing model with the Deep Strike ability only. The bearer's unit can be set up using the Deep Strike ability in the Reinforcements step of your first, second or third Movement phase, regardless of any mission rules.",
-          "eligibleKeywords": ["Deathwing"]
+          "eligibleKeywords": [
+            "Deathwing"
+          ]
         },
         {
           "id": "lord-of-the-ravenwing",
           "name": "Lord of the Ravenwing",
           "points": 10,
           "description": "Ravenwing model only. You can re-roll Advance and Charge rolls made for the bearer's unit.",
-          "eligibleKeywords": ["Ravenwing"]
+          "eligibleKeywords": [
+            "Ravenwing"
+          ]
         }
       ]
     }
