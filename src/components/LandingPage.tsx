@@ -51,6 +51,11 @@ const factionColors: Record<string, { bg: string; border: string; text: string }
     border: 'border-rose-600/30 hover:border-rose-500/60',
     text: 'text-rose-400',
   },
+  darkangels: {
+    bg: 'from-green-900/30 to-green-950/40',
+    border: 'border-green-600/30 hover:border-green-500/60',
+    text: 'text-green-400',
+  },
 };
 
 function FactionCard({ army, onClick }: { army: AvailableArmy; onClick: () => void }) {

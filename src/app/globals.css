@@ -173,6 +173,20 @@
   --accent-glow: rgba(20, 184, 166, 0.4);
 }
 
+[data-theme="darkangels"] {
+  --accent-50: #f0fdf4;
+  --accent-100: #dcfce7;
+  --accent-200: #bbf7d0;
+  --accent-300: #6ee7a0;
+  --accent-400: #2ea85a;
+  --accent-500: #1a7a3a;
+  --accent-600: #15622e;
+  --accent-700: #114d24;
+  --accent-800: #0d3b1c;
+  --accent-900: #0a2c15;
+  --accent-glow: rgba(26, 122, 58, 0.4);
+}
+
 /* ============================================
    BASE STYLES
    ============================================ */
