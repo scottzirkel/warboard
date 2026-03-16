@@ -888,7 +888,8 @@
           },
           "abilities": [
             "Rapid Fire 2"
-          ]
+          ],
+          "loadoutGroup": "storm-bolter-power-fist"
         },
         {
           "id": "assault-cannon-ranged",
@@ -904,7 +905,8 @@
           },
           "abilities": [
             "Devastating Wounds"
-          ]
+          ],
+          "loadoutGroup": "heavy-assault-cannon"
         },
         {
           "id": "heavy-flamer-ranged",
@@ -921,7 +923,8 @@
           "abilities": [
             "Ignores Cover",
             "Torrent"
-          ]
+          ],
+          "loadoutGroup": "heavy-flamer"
         },
         {
           "id": "plasma-cannon-standard-ranged",
@@ -937,7 +940,8 @@
           },
           "abilities": [
             "Blast"
-          ]
+          ],
+          "loadoutGroup": "heavy-plasma-cannon"
         },
         {
           "id": "plasma-cannon-supercharge-ranged",
@@ -954,7 +958,8 @@
           "abilities": [
             "Blast",
             "Hazardous"
-          ]
+          ],
+          "loadoutGroup": "heavy-plasma-cannon"
         },
         {
           "id": "cyclone-missile-launcher-frag-ranged",
@@ -970,7 +975,8 @@
           },
           "abilities": [
             "Blast"
-          ]
+          ],
+          "loadoutGroup": "heavy-cyclone"
         },
         {
           "id": "cyclone-missile-launcher-krak-ranged",
@@ -984,7 +990,8 @@
             "ap": -2,
             "d": "D6"
           },
-          "abilities": []
+          "abilities": [],
+          "loadoutGroup": "heavy-cyclone"
         },
         {
           "id": "power-fist-melee",
@@ -997,7 +1004,8 @@
             "ap": -2,
             "d": 2
           },
-          "abilities": []
+          "abilities": [],
+          "loadoutGroup": "storm-bolter-power-fist"
         },
         {
           "id": "power-weapon-melee",
@@ -1010,7 +1018,8 @@
             "ap": -2,
             "d": 1
           },
-          "abilities": []
+          "abilities": [],
+          "loadoutGroup": "sergeant"
         },
         {
           "id": "chainfist-melee",
@@ -1025,37 +1034,8 @@
           },
           "abilities": [
             "Anti-Vehicle 4+"
-          ]
-        },
-        {
-          "id": "thunder-hammer-melee",
-          "name": "Thunder Hammer",
-          "type": "melee",
-          "stats": {
-            "a": 3,
-            "ws": "4+",
-            "s": 8,
-            "ap": -2,
-            "d": 2
-          },
-          "abilities": [
-            "Devastating Wounds"
-          ]
-        },
-        {
-          "id": "twin-lightning-claws-melee",
-          "name": "Twin Lightning Claws",
-          "type": "melee",
-          "stats": {
-            "a": 5,
-            "ws": "3+",
-            "s": 5,
-            "ap": -2,
-            "d": 1
-          },
-          "abilities": [
-            "Twin-linked"
-          ]
+          ],
+          "loadoutGroup": "storm-bolter-chainfist"
         }
       ],
       "abilities": [
@@ -1083,6 +1063,58 @@
         "Dark Angels",
         "Deathwing",
         "Deathwing Terminator Squad"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "storm-bolter-power-fist",
+              "name": "Storm Bolter + Power Fist",
+              "default": true
+            },
+            {
+              "id": "storm-bolter-chainfist",
+              "name": "Storm Bolter + Chainfist"
+            }
+          ]
+        },
+        {
+          "id": "heavy-weapon",
+          "name": "Heavy Weapon",
+          "type": "optional",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "heavy-assault-cannon",
+              "name": "Assault Cannon",
+              "maxModels": 1
+            },
+            {
+              "id": "heavy-flamer",
+              "name": "Heavy Flamer",
+              "maxModels": 1
+            },
+            {
+              "id": "heavy-plasma-cannon",
+              "name": "Plasma Cannon",
+              "maxModels": 1
+            },
+            {
+              "id": "heavy-cyclone",
+              "name": "Cyclone Missile Launcher",
+              "maxModels": 1
+            }
+          ]
+        }
       ]
     },
     {
@@ -1107,7 +1139,7 @@
           "name": "\u27a4 Calibanite Greatsword - Strike",
           "type": "melee",
           "stats": {
-            "a": 3,
+            "a": 4,
             "ws": "3+",
             "s": 6,
             "ap": -2,
@@ -1120,10 +1152,10 @@
           "name": "\u27a4 Calibanite Greatsword - Sweep",
           "type": "melee",
           "stats": {
-            "a": 4,
+            "a": 5,
             "ws": "3+",
             "s": 6,
-            "ap": -1,
+            "ap": -2,
             "d": 1
           },
           "abilities": []
