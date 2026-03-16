@@ -721,12 +721,26 @@ export const useArmyStore = create<ArmyStore>()(
         [choiceId]: newCount,
       };
 
+      // For replacement patterns, auto-adjust the default choice to keep total = modelCount
+      if (delta !== 0 && unit.loadoutOptions) {
+        const containingOption = unit.loadoutOptions.find(o =>
+          o.choices.some(c => c.id === choiceId)
+        );
+        if (containingOption?.pattern === 'replacement') {
+          const defaultChoice = containingOption.choices.find(c => c.default);
+          if (defaultChoice && defaultChoice.id !== choiceId) {
+            const currentDefaultCount = newWeaponCounts[defaultChoice.id] || 0;
+            const adjustedDefaultCount = Math.max(0, currentDefaultCount - delta);
+            newWeaponCounts[defaultChoice.id] = adjustedDefaultCount;
+          }
+        }
+      }
+
       // If this choice excludes models from another option (e.g., Vexilla excludes from main-weapon),
       // automatically reduce the default choice in that option
       if (excludesFromOption && delta !== 0 && unit.loadoutOptions) {
         const targetOption = unit.loadoutOptions.find(o => o.id === excludesFromOption);
         if (targetOption) {
-          // Find the default choice or the one with the highest count
           const defaultChoice = targetOption.choices.find(c => c.default);
           if (defaultChoice) {
             const currentDefaultCount = newWeaponCounts[defaultChoice.id] || 0;

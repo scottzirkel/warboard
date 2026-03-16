@@ -247,7 +247,7 @@ export function ListUnitCard({
           {/* Weapon Loadout Options */}
           {unit.loadoutOptions && unit.loadoutOptions.length > 0 && (
             <div className="space-y-2 pt-1 border-t border-gray-700/50">
-              {unit.loadoutOptions.map((option) => (
+              {unit.loadoutOptions.map((option, optIdx) => (
                 <WeaponLoadoutSelector
                   key={option.id}
                   option={option}
@@ -256,6 +256,7 @@ export function ListUnitCard({
                   onCountChange={(choiceId, count) => {
                     onWeaponCountChange(choiceId, count);
                   }}
+                  showDivider={optIdx > 0}
                 />
               ))}
               {/* Weapon Count Validation Error */}

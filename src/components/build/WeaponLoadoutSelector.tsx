@@ -1,6 +1,6 @@
 'use client';
 
-import { Stepper } from '@/components/ui';
+import { Stepper, TooltipBadge } from '@/components/ui';
 import type { LoadoutOption, LoadoutChoice } from '@/types';
 
 interface WeaponLoadoutSelectorProps {
@@ -9,6 +9,7 @@ interface WeaponLoadoutSelectorProps {
   weaponCounts: Record<string, number>;
   onCountChange: (choiceId: string, count: number) => void;
   className?: string;
+  showDivider?: boolean;
 }
 
 interface ChoiceRowProps {
@@ -16,28 +17,21 @@ interface ChoiceRowProps {
   count: number;
   maxCount: number;
   onChange: (count: number) => void;
-  groupLimited?: boolean;
 }
 
-function ChoiceRow({ choice, count, maxCount, onChange, groupLimited }: ChoiceRowProps) {
+function ChoiceRow({ choice, count, maxCount, onChange }: ChoiceRowProps) {
   const effectiveMax = choice.maxModels !== undefined
     ? Math.min(choice.maxModels, maxCount)
     : maxCount;
 
-  const finalMax = groupLimited !== undefined ? Math.min(effectiveMax, maxCount) : effectiveMax;
   const hasMaxLimit = choice.maxModels !== undefined;
 
   return (
-    <div
-      className="flex items-center justify-between bg-black/20 rounded-lg px-3 py-2"
-    >
+    <div className="flex items-center justify-between bg-black/20 rounded-lg px-3 py-2">
       <div className="flex items-center gap-2 min-w-0">
         <span className="text-sm text-gray-300 truncate">{choice.name}</span>
         {hasMaxLimit && (
-          <span
-            className="text-white/40 text-xs"
-            title={`Max ${choice.maxModels} model(s) can take this option`}
-          >
+          <span className="text-white/40 text-xs">
             (max {choice.maxModels})
           </span>
         )}
@@ -45,7 +39,7 @@ function ChoiceRow({ choice, count, maxCount, onChange, groupLimited }: ChoiceRo
       <Stepper
         value={count}
         min={0}
-        max={finalMax}
+        max={effectiveMax}
         onChange={onChange}
         size="sm"
       />
@@ -59,6 +53,7 @@ export function WeaponLoadoutSelector({
   weaponCounts,
   onCountChange,
   className = '',
+  showDivider = false,
 }: WeaponLoadoutSelectorProps) {
   // Calculate group non-default constraint
   const groupConstraint = option.maxNonDefaultPerModels;
@@ -72,32 +67,52 @@ export function WeaponLoadoutSelector({
     : 0;
   const groupRemaining = groupMax !== undefined ? groupMax - totalNonDefault : undefined;
 
+  // For replacement patterns, calculate how many models are assigned to other choices
+  const isReplacement = option.pattern === 'replacement';
+  const totalAssigned = isReplacement
+    ? option.choices.reduce((sum, c) => sum + (weaponCounts[c.id] || 0), 0)
+    : 0;
+
   return (
-    <div className={`space-y-1 ${className}`}>
-      {groupMax !== undefined && (
-        <div className="flex items-center gap-2 px-1 pb-1">
-          <span className="text-xs text-white/50">
-            {totalNonDefault}/{groupMax} upgrade{groupMax !== 1 ? 's' : ''} used
-          </span>
-          <span
-            className="text-white/30 text-xs cursor-help"
-            title={`${groupConstraint!.max} per ${groupConstraint!.per} models — for ${modelCount} models, ${groupMax} total allowed`}
-          >
-            info
-          </span>
-        </div>
+    <div className={className}>
+      {showDivider && (
+        <div className="border-t border-gray-700/50 my-2" />
       )}
-      {/* Choices - filter out "none" as it's implied when no other choice is selected */}
+
+      {/* Section header */}
+      <div className="flex items-center justify-between px-1 pb-1">
+        <span className="text-xs font-medium text-white/60 uppercase tracking-wider">
+          {option.name}
+        </span>
+        {groupMax !== undefined && (
+          <TooltipBadge
+            tooltip={`${groupConstraint!.max} replacement${groupConstraint!.max > 1 ? 's' : ''} per ${groupConstraint!.per} models. With ${modelCount} models, ${groupMax} total allowed.`}
+          >
+            {totalNonDefault}/{groupMax} replaced
+          </TooltipBadge>
+        )}
+      </div>
+
+      {/* Choices */}
       <div className="space-y-1">
         {option.choices
           .filter((choice) => choice.id !== 'none')
           .map((choice) => {
             const isNonDefault = !choice.default;
             const currentCount = weaponCounts[choice.id] || 0;
-            // For non-default choices under a group constraint, limit the max
+
+            // Calculate effective max for this choice
             let choiceMax = modelCount;
+
+            // For replacement patterns: max = modelCount - other choices in this option
+            if (isReplacement) {
+              const othersTotal = totalAssigned - currentCount;
+              choiceMax = Math.max(0, modelCount - othersTotal);
+            }
+
+            // For non-default choices under a group constraint, further limit
             if (isNonDefault && groupRemaining !== undefined) {
-              choiceMax = Math.min(modelCount, currentCount + groupRemaining);
+              choiceMax = Math.min(choiceMax, currentCount + groupRemaining);
             }
 
             return (
@@ -107,7 +122,6 @@ export function WeaponLoadoutSelector({
                 count={currentCount}
                 maxCount={choiceMax}
                 onChange={(count) => onCountChange(choice.id, count)}
-                groupLimited={isNonDefault && groupMax !== undefined}
               />
             );
           })}
