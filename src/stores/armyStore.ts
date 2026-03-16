@@ -601,13 +601,23 @@ export const useArmyStore = create<ArmyStore>()(
     newCount = Math.max(0, newCount);
     newCount = Math.min(newCount, listUnit.modelCount);
 
-    // Check maxModels constraint
+    // Check maxModels constraint and group non-default constraint
     if (unit.loadoutOptions) {
       for (const option of unit.loadoutOptions) {
         const choice = option.choices.find(c => c.id === choiceId);
 
         if (choice?.maxModels !== undefined) {
           newCount = Math.min(newCount, choice.maxModels);
+        }
+
+        // Enforce group non-default max
+        if (choice && option.maxNonDefaultPerModels && !choice.default && choice.id !== 'none') {
+          const { max, per } = option.maxNonDefaultPerModels;
+          const groupMax = Math.floor(listUnit.modelCount / per) * max;
+          const otherNonDefault = option.choices
+            .filter(c => c.id !== choiceId && !c.default && c.id !== 'none')
+            .reduce((sum, c) => sum + (listUnit.weaponCounts?.[c.id] || 0), 0);
+          newCount = Math.min(newCount, Math.max(0, groupMax - otherNonDefault));
         }
       }
     }
@@ -678,6 +688,15 @@ export const useArmyStore = create<ArmyStore>()(
         if (choice) {
           if (choice.maxModels !== undefined) {
             newCount = Math.min(newCount, choice.maxModels);
+          }
+          // Enforce group non-default max
+          if (option.maxNonDefaultPerModels && !choice.default && choice.id !== 'none') {
+            const { max, per } = option.maxNonDefaultPerModels;
+            const groupMax = Math.floor(listUnit.modelCount / per) * max;
+            const otherNonDefault = option.choices
+              .filter(c => c.id !== choiceId && !c.default && c.id !== 'none')
+              .reduce((sum, c) => sum + (listUnit.weaponCounts?.[c.id] || 0), 0);
+            newCount = Math.min(newCount, Math.max(0, groupMax - otherNonDefault));
           }
           excludesFromOption = choice.excludesFromOption;
           break;

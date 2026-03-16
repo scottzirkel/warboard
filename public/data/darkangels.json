@@ -889,7 +889,7 @@
           "abilities": [
             "Rapid Fire 2"
           ],
-          "loadoutGroup": "storm-bolter-power-fist"
+          "loadoutGroup": "storm-bolter"
         },
         {
           "id": "assault-cannon-ranged",
@@ -906,7 +906,7 @@
           "abilities": [
             "Devastating Wounds"
           ],
-          "loadoutGroup": "heavy-assault-cannon"
+          "loadoutGroup": "assault-cannon"
         },
         {
           "id": "heavy-flamer-ranged",
@@ -941,7 +941,7 @@
           "abilities": [
             "Blast"
           ],
-          "loadoutGroup": "heavy-plasma-cannon"
+          "loadoutGroup": "plasma-cannon"
         },
         {
           "id": "plasma-cannon-supercharge-ranged",
@@ -959,7 +959,7 @@
             "Blast",
             "Hazardous"
           ],
-          "loadoutGroup": "heavy-plasma-cannon"
+          "loadoutGroup": "plasma-cannon"
         },
         {
           "id": "cyclone-missile-launcher-frag-ranged",
@@ -976,7 +976,7 @@
           "abilities": [
             "Blast"
           ],
-          "loadoutGroup": "heavy-cyclone"
+          "loadoutGroup": "cyclone-missile"
         },
         {
           "id": "cyclone-missile-launcher-krak-ranged",
@@ -991,7 +991,7 @@
             "d": "D6"
           },
           "abilities": [],
-          "loadoutGroup": "heavy-cyclone"
+          "loadoutGroup": "cyclone-missile"
         },
         {
           "id": "power-fist-melee",
@@ -1005,7 +1005,7 @@
             "d": 2
           },
           "abilities": [],
-          "loadoutGroup": "storm-bolter-power-fist"
+          "loadoutGroup": "power-fist"
         },
         {
           "id": "power-weapon-melee",
@@ -1035,10 +1035,16 @@
           "abilities": [
             "Anti-Vehicle 4+"
           ],
-          "loadoutGroup": "storm-bolter-chainfist"
+          "loadoutGroup": "chainfist"
         }
       ],
       "abilities": [
+        {
+          "id": "deep-strike",
+          "name": "Deep Strike",
+          "description": "During the Declare Battle Formations step, if every model in this unit has this ability, you can set this unit up in Reserves instead of on the battlefield. If you do, in the Reinforcements step of one of your Movement phases you can set up this unit anywhere on the battlefield that is more than 9\" horizontally away from all enemy models.",
+          "core": true
+        },
         {
           "id": "inner-circle",
           "name": "Inner Circle",
@@ -1066,52 +1072,49 @@
       ],
       "loadoutOptions": [
         {
-          "id": "main-weapon",
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "maxNonDefaultPerModels": { "max": 1, "per": 5 },
+          "choices": [
+            {
+              "id": "storm-bolter",
+              "name": "Storm Bolter",
+              "default": true
+            },
+            {
+              "id": "assault-cannon",
+              "name": "Assault Cannon"
+            },
+            {
+              "id": "heavy-flamer",
+              "name": "Heavy Flamer"
+            },
+            {
+              "id": "plasma-cannon",
+              "name": "Plasma Cannon"
+            },
+            {
+              "id": "cyclone-missile",
+              "name": "Cyclone Missile Launcher + Storm Bolter"
+            }
+          ]
+        },
+        {
+          "id": "melee-weapon",
           "name": "Melee Weapon",
           "type": "choice",
           "pattern": "replacement",
           "choices": [
             {
-              "id": "storm-bolter-power-fist",
-              "name": "Storm Bolter + Power Fist",
+              "id": "power-fist",
+              "name": "Power Fist",
               "default": true
             },
             {
-              "id": "storm-bolter-chainfist",
-              "name": "Storm Bolter + Chainfist"
-            }
-          ]
-        },
-        {
-          "id": "heavy-weapon",
-          "name": "Heavy Weapon",
-          "type": "optional",
-          "pattern": "replacement",
-          "choices": [
-            {
-              "id": "none",
-              "name": "None",
-              "default": true
-            },
-            {
-              "id": "heavy-assault-cannon",
-              "name": "Assault Cannon",
-              "maxModels": 1
-            },
-            {
-              "id": "heavy-flamer",
-              "name": "Heavy Flamer",
-              "maxModels": 1
-            },
-            {
-              "id": "heavy-plasma-cannon",
-              "name": "Plasma Cannon",
-              "maxModels": 1
-            },
-            {
-              "id": "heavy-cyclone",
-              "name": "Cyclone Missile Launcher",
-              "maxModels": 1
+              "id": "chainfist",
+              "name": "Chainfist"
             }
           ]
         }

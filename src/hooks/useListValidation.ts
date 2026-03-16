@@ -590,6 +590,22 @@ export function useListValidation(
             });
           }
         }
+
+        // Check group non-default constraint
+        if (option.maxNonDefaultPerModels) {
+          const { max, per } = option.maxNonDefaultPerModels;
+          const groupMax = Math.floor(listUnit.modelCount / per) * max;
+          const totalNonDefault = option.choices
+            .filter(c => !c.default && c.id !== 'none')
+            .reduce((sum, c) => sum + (weaponCounts[c.id] || 0), 0);
+          if (totalNonDefault > groupMax) {
+            errors.push({
+              type: 'loadout',
+              message: `${unit.name}: ${option.name} allows ${groupMax} upgrade(s) for ${listUnit.modelCount} models (${max} per ${per}), but ${totalNonDefault} selected`,
+              unitIndex: i,
+            });
+          }
+        }
       }
     }
 

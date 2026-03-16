@@ -20,6 +20,10 @@ export interface LoadoutOptionState {
   totalAssigned: number;
   isReplacement: boolean;
   isAddition: boolean;
+  /** Max total non-default choices allowed (from maxNonDefaultPerModels) */
+  groupNonDefaultMax?: number;
+  /** Current total non-default choices */
+  totalNonDefault: number;
 }
 
 export interface WeaponCountsResult {
@@ -97,6 +101,31 @@ function calculateEffectiveMax(
 }
 
 /**
+ * Calculate the group-level non-default maximum for an option.
+ * Returns undefined if no group constraint exists.
+ */
+function calculateGroupNonDefaultMax(
+  option: LoadoutOption,
+  modelCount: number
+): number | undefined {
+  if (!option.maxNonDefaultPerModels) return undefined;
+  const { max, per } = option.maxNonDefaultPerModels;
+  return Math.floor(modelCount / per) * max;
+}
+
+/**
+ * Calculate total non-default selections for an option.
+ */
+function totalNonDefaultForOption(
+  option: LoadoutOption,
+  weaponCounts: Record<string, number>
+): number {
+  return option.choices
+    .filter(c => !c.default && c.id !== 'none')
+    .reduce((sum, c) => sum + (weaponCounts[c.id] || 0), 0);
+}
+
+/**
  * Calculate default weapon counts for a unit
  */
 export function calculateDefaultWeaponCounts(
@@ -168,6 +197,20 @@ export function validateWeaponCounts(
       }
     }
 
+    // Check group non-default constraint
+    if (option.maxNonDefaultPerModels) {
+      const { max, per } = option.maxNonDefaultPerModels;
+      const groupMax = Math.floor(modelCount / per) * max;
+      const totalNonDefault = option.choices
+        .filter(c => !c.default && c.id !== 'none')
+        .reduce((sum, c) => sum + (weaponCounts[c.id] || 0), 0);
+      if (totalNonDefault > groupMax) {
+        errors.push(
+          `${unit.name}: ${option.name} allows ${groupMax} upgrade(s) for ${modelCount} models (${max} per ${per}), but ${totalNonDefault} selected`
+        );
+      }
+    }
+
     // For replacement patterns, total should equal modelCount minus excluded models
     if (option.pattern === 'replacement') {
       const totalAssigned = option.choices.reduce(
@@ -230,6 +273,8 @@ export function useWeaponCounts(
       });
 
       const totalAssigned = choices.reduce((sum, c) => sum + c.count, 0);
+      const groupNonDefaultMax = calculateGroupNonDefaultMax(option, modelCount);
+      const totalNonDefault = totalNonDefaultForOption(option, weaponCounts);
 
       return {
         option,
@@ -237,6 +282,8 @@ export function useWeaponCounts(
         totalAssigned,
         isReplacement: option.pattern === 'replacement',
         isAddition: option.pattern === 'addition',
+        groupNonDefaultMax,
+        totalNonDefault,
       };
     });
   }, [unit, weaponCounts, modelCount]);
@@ -270,6 +317,17 @@ export function useWeaponCounts(
         // Ensure we don't exceed total model count across all choices
         const maxAvailable = modelCount - otherChoicesTotal;
         clampedCount = Math.min(clampedCount, Math.max(0, maxAvailable));
+      }
+
+      // Enforce group non-default max
+      if (option.maxNonDefaultPerModels && !choice.default && choice.id !== 'none') {
+        const groupMax = calculateGroupNonDefaultMax(option, modelCount);
+        if (groupMax !== undefined) {
+          const otherNonDefault = option.choices
+            .filter(c => c.id !== choiceId && !c.default && c.id !== 'none')
+            .reduce((sum, c) => sum + (weaponCounts[c.id] || 0), 0);
+          clampedCount = Math.min(clampedCount, Math.max(0, groupMax - otherNonDefault));
+        }
       }
 
       onCountChange(choiceId, clampedCount);
@@ -312,7 +370,29 @@ export function useWeaponCounts(
 
         const maxAvailable = modelCount - otherChoicesTotal;
 
+        // Check group non-default limit
+        if (option?.maxNonDefaultPerModels && !choice.default && choice.id !== 'none') {
+          const groupMax = calculateGroupNonDefaultMax(option, modelCount);
+          if (groupMax !== undefined) {
+            const totalNonDefault = totalNonDefaultForOption(option, weaponCounts);
+            if (totalNonDefault >= groupMax && currentCount === 0) {
+              return true; // Group is full, can't add more non-default
+            }
+          }
+        }
+
         return currentCount >= Math.min(effectiveMax, maxAvailable);
+      }
+
+      // Check group non-default limit for non-replacement patterns
+      if (option?.maxNonDefaultPerModels && !choice.default && choice.id !== 'none') {
+        const groupMax = calculateGroupNonDefaultMax(option, modelCount);
+        if (groupMax !== undefined) {
+          const totalNonDefault = totalNonDefaultForOption(option, weaponCounts);
+          if (totalNonDefault >= groupMax && currentCount === 0) {
+            return true;
+          }
+        }
       }
 
       return currentCount >= effectiveMax;
@@ -343,7 +423,7 @@ export function useWeaponCounts(
         return 0;
       }
 
-      const effectiveMax = calculateEffectiveMax(choice, modelCount);
+      let result = calculateEffectiveMax(choice, modelCount);
 
       // Also consider mutual exclusivity for replacement patterns
       const option = findOptionForChoice(unit, choiceId);
@@ -355,10 +435,22 @@ export function useWeaponCounts(
 
         const maxAvailable = modelCount - otherChoicesTotal;
 
-        return Math.min(effectiveMax, Math.max(0, maxAvailable));
+        result = Math.min(result, Math.max(0, maxAvailable));
       }
 
-      return effectiveMax;
+      // Apply group non-default max constraint
+      if (option?.maxNonDefaultPerModels && !choice.default && choice.id !== 'none') {
+        const groupMax = calculateGroupNonDefaultMax(option, modelCount);
+        if (groupMax !== undefined) {
+          const otherNonDefault = option.choices
+            .filter(c => c.id !== choiceId && !c.default && c.id !== 'none')
+            .reduce((sum, c) => sum + (weaponCounts[c.id] || 0), 0);
+          const groupRemaining = Math.max(0, groupMax - otherNonDefault);
+          result = Math.min(result, groupRemaining);
+        }
+      }
+
+      return result;
     },
     [unit, weaponCounts, modelCount]
   );
