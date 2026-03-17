@@ -434,7 +434,7 @@ export default function Home() {
             const groupWeapons = selectedUnit.weapons.filter((w) => w.loadoutGroup === defaultChoice.id);
             groups.push({
               id: defaultChoice.id,
-              name: defaultChoice.name || defaultChoice.id,
+              name: defaultChoice.name || defaultChoice.id.replace(/-/g, ' ').replace(/\bsgt\b/g, 'Sergeant').replace(/\b\w/g, c => c.toUpperCase()),
               modelCount: selectedListUnit.modelCount,
               isPaired: defaultChoice.paired || false,
               weapons: groupWeapons,
@@ -461,7 +461,7 @@ export default function Home() {
 
         groups.push({
           id: groupId,
-          name: choice?.name || groupId,
+          name: choice?.name || groupId.replace(/-/g, ' ').replace(/\bsgt\b/g, 'Sergeant').replace(/\b\w/g, c => c.toUpperCase()),
           modelCount: effectiveCount,
           isPaired: choice?.paired || false,
           weapons: groupWeapons,

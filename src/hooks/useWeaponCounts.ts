@@ -211,8 +211,9 @@ export function validateWeaponCounts(
       }
     }
 
-    // For replacement patterns, total should equal modelCount minus excluded models
-    if (option.pattern === 'replacement') {
+    // For choice+replacement patterns, total should equal modelCount minus excluded models
+    // Skip optional replacements (e.g., sergeant weapon swaps) where "none" means keep default
+    if (option.type === 'choice' && option.pattern === 'replacement') {
       const totalAssigned = option.choices.reduce(
         (sum, choice) => sum + (weaponCounts[choice.id] || 0),
         0

@@ -229,7 +229,7 @@
       "name": "Intercessor Squad",
       "points": {
         "5": 80,
-        "6": 160
+        "10": 160
       },
       "stats": {
         "m": 6,
@@ -241,8 +241,40 @@
       },
       "weapons": [
         {
-          "id": "bolt-pistol-ranged",
-          "name": "Bolt pistol",
+          "id": "astartes-grenade-launcher-frag",
+          "name": "\u27a4 Astartes Grenade Launcher \u2013 Frag",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": "D3",
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Blast"
+          ],
+          "loadoutGroup": "grenade-launcher"
+        },
+        {
+          "id": "astartes-grenade-launcher-krak",
+          "name": "\u27a4 Astartes Grenade Launcher \u2013 Krak",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 1,
+            "bs": "3+",
+            "s": 9,
+            "ap": -2,
+            "d": "D3"
+          },
+          "abilities": [],
+          "loadoutGroup": "grenade-launcher"
+        },
+        {
+          "id": "bolt-pistol",
+          "name": "Bolt Pistol",
           "type": "ranged",
           "stats": {
             "range": 12,
@@ -254,25 +286,10 @@
           },
           "abilities": [
             "Pistol"
-          ],
-          "loadoutGroup": "intercessor-sergeant"
+          ]
         },
         {
-          "id": "close-combat-weapon-melee",
-          "name": "Close combat weapon",
-          "type": "melee",
-          "stats": {
-            "a": 3,
-            "ws": "3+",
-            "s": 4,
-            "ap": 0,
-            "d": 1
-          },
-          "abilities": [],
-          "loadoutGroup": "intercessor"
-        },
-        {
-          "id": "bolt-rifle-ranged",
+          "id": "bolt-rifle",
           "name": "Bolt Rifle",
           "type": "ranged",
           "stats": {
@@ -287,51 +304,140 @@
             "Assault",
             "Heavy"
           ],
-          "loadoutGroup": "intercessor"
+          "loadoutGroup": "sgt-ranged"
         },
         {
-          "id": "astartes-grenade-launcher-krak-ranged",
-          "name": "\u27a4 Astartes grenade launcher - krak",
+          "id": "hand-flamer",
+          "name": "Hand Flamer",
           "type": "ranged",
           "stats": {
-            "range": 24,
-            "a": 1,
-            "bs": "3+",
-            "s": 9,
-            "ap": -2,
-            "d": "D3"
-          },
-          "abilities": [],
-          "loadoutGroup": "intercessor-w-grenade-launcher"
-        },
-        {
-          "id": "astartes-grenade-launcher-frag-ranged",
-          "name": "\u27a4 Astartes grenade launcher - frag",
-          "type": "ranged",
-          "stats": {
-            "range": 24,
-            "a": "D3",
-            "bs": "3+",
-            "s": 4,
+            "range": 12,
+            "a": "D6",
+            "bs": "N/A",
+            "s": 3,
             "ap": 0,
             "d": 1
           },
           "abilities": [
-            "Blast"
+            "Ignores Cover",
+            "Pistol",
+            "Torrent"
           ],
-          "loadoutGroup": "intercessor-w-grenade-launcher"
+          "loadoutGroup": "sgt-ranged"
+        },
+        {
+          "id": "plasma-pistol-standard",
+          "name": "\u27a4 Plasma Pistol \u2013 Standard",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "3+",
+            "s": 7,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "sgt-ranged"
+        },
+        {
+          "id": "plasma-pistol-supercharge",
+          "name": "\u27a4 Plasma Pistol \u2013 Supercharge",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "3+",
+            "s": 8,
+            "ap": -3,
+            "d": 2
+          },
+          "abilities": [
+            "Hazardous",
+            "Pistol"
+          ],
+          "loadoutGroup": "sgt-ranged"
+        },
+        {
+          "id": "astartes-chainsword",
+          "name": "Astartes Chainsword",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "3+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "sgt-melee"
+        },
+        {
+          "id": "close-combat-weapon",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "sgt-melee"
+        },
+        {
+          "id": "power-fist",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "3+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "sgt-melee"
+        },
+        {
+          "id": "power-weapon",
+          "name": "Power Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "3+",
+            "s": 5,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "sgt-melee"
+        },
+        {
+          "id": "thunder-hammer",
+          "name": "Thunder Hammer",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "4+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Devastating Wounds"
+          ],
+          "loadoutGroup": "sgt-melee"
         }
       ],
       "abilities": [
         {
           "id": "objective-secured",
           "name": "Objective Secured",
-          "description": "If you control an objective marker at the end of your Command phase and this unit is within range of\u00a0that objective marker, that objective marker remains under your control, even if you have no models within range of it, until your opponent controls it at the start or end of any turn."
-        },
-        {
-          "id": "target-elimination",
-          "name": "Target Elimination",
-          "description": "Each time this unit is selected to\u00a0shoot, it can use this ability. If it does, until the end of\u00a0the phase, add 2 to the Attacks characteristic of bolt\u00a0rifles equipped by models in this unit and you can\u00a0only select one enemy unit as the target of all of this\u00a0unit's attacks"
+          "description": "If you control an objective marker at the end of your Command phase and this unit is within range of that objective marker, that objective marker remains under your control, even if you have no models within range of it, until your opponent controls it at the start or end of any turn."
         }
       ],
       "keywords": [
@@ -344,26 +450,80 @@
       ],
       "loadoutOptions": [
         {
-          "id": "main-weapon",
-          "name": "Weapon",
-          "type": "choice",
+          "id": "sgt-ranged",
+          "name": "Sergeant Ranged Weapon",
+          "type": "optional",
           "pattern": "replacement",
           "choices": [
             {
-              "id": "intercessor",
-              "name": "Close combat weapon + Bolt pistol + Bolt Rifle"
+              "id": "none",
+              "name": "Bolt Rifle (default)",
+              "default": true
             },
             {
-              "id": "intercessor-w-grenade-launcher",
-              "name": "Close combat weapon + Bolt pistol + Bolt Rifle + Astartes grenade launcher"
+              "id": "sgt-ranged-chainsword",
+              "name": "Astartes Chainsword",
+              "maxModels": 1
+            },
+            {
+              "id": "sgt-ranged-hand-flamer",
+              "name": "Hand Flamer",
+              "maxModels": 1
+            },
+            {
+              "id": "sgt-ranged-plasma-pistol",
+              "name": "Plasma Pistol",
+              "maxModels": 1
+            },
+            {
+              "id": "sgt-ranged-power-weapon",
+              "name": "Power Weapon",
+              "maxModels": 1
             }
           ]
         },
         {
-          "id": "intercessor-sergeant",
-          "name": "Bolt pistol",
+          "id": "sgt-melee",
+          "name": "Sergeant Melee Weapon",
+          "type": "optional",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "none",
+              "name": "Close Combat Weapon (default)",
+              "default": true
+            },
+            {
+              "id": "sgt-melee-chainsword",
+              "name": "Astartes Chainsword",
+              "maxModels": 1
+            },
+            {
+              "id": "sgt-melee-power-fist",
+              "name": "Power Fist",
+              "maxModels": 1
+            },
+            {
+              "id": "sgt-melee-power-weapon",
+              "name": "Power Weapon",
+              "maxModels": 1
+            },
+            {
+              "id": "sgt-melee-thunder-hammer",
+              "name": "Thunder Hammer",
+              "maxModels": 1
+            }
+          ]
+        },
+        {
+          "id": "grenade-launcher",
+          "name": "Grenade Launcher",
           "type": "optional",
           "pattern": "addition",
+          "maxNonDefaultPerModels": {
+            "max": 1,
+            "per": 5
+          },
           "choices": [
             {
               "id": "none",
@@ -371,9 +531,8 @@
               "default": true
             },
             {
-              "id": "intercessor-sergeant",
-              "name": "Bolt pistol + Terminator Honours upgrade",
-              "maxModels": 1
+              "id": "grenade-launcher",
+              "name": "Astartes Grenade Launcher"
             }
           ]
         }
@@ -2228,7 +2387,10 @@
           "name": "Ranged Weapon",
           "type": "choice",
           "pattern": "replacement",
-          "maxNonDefaultPerModels": { "max": 1, "per": 5 },
+          "maxNonDefaultPerModels": {
+            "max": 1,
+            "per": 5
+          },
           "choices": [
             {
               "id": "storm-bolter",

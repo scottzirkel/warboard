@@ -75,10 +75,10 @@ export function ListUnitCard({
 
     const weaponCounts = listUnit.weaponCounts || {};
 
-    // Only validate "replacement" type options (where total must equal modelCount)
-    // "addition" type options are optional and don't need to equal modelCount
+    // Only validate "choice + replacement" options (where total must equal modelCount)
+    // Skip "optional" replacements (e.g., sergeant swaps where "none" = keep default)
     for (const option of unit.loadoutOptions) {
-      if (option.pattern !== 'replacement') continue;
+      if (option.type !== 'choice' || option.pattern !== 'replacement') continue;
 
       // Sum counts for choices in this replacement option
       const optionTotal = option.choices

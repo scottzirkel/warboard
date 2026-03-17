@@ -67,12 +67,6 @@ export function WeaponLoadoutSelector({
     : 0;
   const groupRemaining = groupMax !== undefined ? groupMax - totalNonDefault : undefined;
 
-  // For replacement patterns, calculate how many models are assigned to other choices
-  const isReplacement = option.pattern === 'replacement';
-  const totalAssigned = isReplacement
-    ? option.choices.reduce((sum, c) => sum + (weaponCounts[c.id] || 0), 0)
-    : 0;
-
   return (
     <div className={className}>
       {showDivider && (
@@ -88,10 +82,27 @@ export function WeaponLoadoutSelector({
           <TooltipBadge
             tooltip={`${groupConstraint!.max} replacement${groupConstraint!.max > 1 ? 's' : ''} per ${groupConstraint!.per} models. With ${modelCount} models, ${groupMax} total allowed.`}
           >
-            {totalNonDefault}/{groupMax} replaced
+            {totalNonDefault}/{groupMax} {option.pattern === 'addition' ? 'equipped' : 'replaced'}
           </TooltipBadge>
         )}
       </div>
+
+      {/* Default label for optional options (e.g., "Bolt Rifle (default)") */}
+      {option.type === 'optional' && (() => {
+        const defaultChoice = option.choices.find(c => c.default && c.id === 'none');
+        const anyNonDefaultSelected = option.choices
+          .filter(c => c.id !== 'none')
+          .some(c => (weaponCounts[c.id] || 0) > 0);
+        if (defaultChoice && defaultChoice.name !== 'None') {
+          return (
+            <div className="text-sm text-white/40 px-3 py-1">
+              {anyNonDefaultSelected ? <s>{defaultChoice.name}</s> : defaultChoice.name}
+              {!anyNonDefaultSelected && <span className="text-white/25 ml-1">(default)</span>}
+            </div>
+          );
+        }
+        return null;
+      })()}
 
       {/* Choices */}
       <div className="space-y-1">
@@ -102,15 +113,11 @@ export function WeaponLoadoutSelector({
             const currentCount = weaponCounts[choice.id] || 0;
 
             // Calculate effective max for this choice
+            // Don't restrict based on replacement total — the store auto-adjusts
+            // the default choice when a non-default is changed
             let choiceMax = modelCount;
 
-            // For replacement patterns: max = modelCount - other choices in this option
-            if (isReplacement) {
-              const othersTotal = totalAssigned - currentCount;
-              choiceMax = Math.max(0, modelCount - othersTotal);
-            }
-
-            // For non-default choices under a group constraint, further limit
+            // For non-default choices under a group constraint, limit to group remaining
             if (isNonDefault && groupRemaining !== undefined) {
               choiceMax = Math.min(choiceMax, currentCount + groupRemaining);
             }

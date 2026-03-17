@@ -392,11 +392,9 @@ export const useArmyStore = create<ArmyStore>()(
         }
       }
 
-      // Then set default choice to full model count
-      const mainOption = unit.loadoutOptions.find(o => o.type === 'choice') || unit.loadoutOptions[0];
-
-      if (mainOption) {
-        const defaultChoice = mainOption.choices.find(c => c.default) || mainOption.choices[0];
+      // Set default choice to full model count for ALL options
+      for (const option of unit.loadoutOptions) {
+        const defaultChoice = option.choices.find(c => c.default) || option.choices[0];
 
         if (defaultChoice && defaultChoice.id !== 'none') {
           weaponCounts[defaultChoice.id] = modelCount;
@@ -636,6 +634,22 @@ export const useArmyStore = create<ArmyStore>()(
         [choiceId]: newCount,
       };
 
+      // For replacement patterns, force default = modelCount - sum(non-defaults)
+      if (unit.loadoutOptions) {
+        const containingOption = unit.loadoutOptions.find(o =>
+          o.choices.some(c => c.id === choiceId)
+        );
+        if (containingOption?.pattern === 'replacement') {
+          const defaultChoice = containingOption.choices.find(c => c.default);
+          if (defaultChoice) {
+            const nonDefaultTotal = containingOption.choices
+              .filter(c => !c.default && c.id !== 'none')
+              .reduce((sum, c) => sum + (newWeaponCounts[c.id] || 0), 0);
+            newWeaponCounts[defaultChoice.id] = Math.max(0, currentUnit.modelCount - nonDefaultTotal);
+          }
+        }
+      }
+
       // For single-model units, enforce mutual exclusivity
       // When selecting one weapon, zero out all others
       if (currentUnit.modelCount === 1 && newCount === 1) {
@@ -721,17 +735,19 @@ export const useArmyStore = create<ArmyStore>()(
         [choiceId]: newCount,
       };
 
-      // For replacement patterns, auto-adjust the default choice to keep total = modelCount
-      if (delta !== 0 && unit.loadoutOptions) {
+      // For replacement patterns, force default = modelCount - sum(non-defaults)
+      // This guarantees total always equals modelCount regardless of which choice changed
+      if (unit.loadoutOptions) {
         const containingOption = unit.loadoutOptions.find(o =>
           o.choices.some(c => c.id === choiceId)
         );
         if (containingOption?.pattern === 'replacement') {
           const defaultChoice = containingOption.choices.find(c => c.default);
-          if (defaultChoice && defaultChoice.id !== choiceId) {
-            const currentDefaultCount = newWeaponCounts[defaultChoice.id] || 0;
-            const adjustedDefaultCount = Math.max(0, currentDefaultCount - delta);
-            newWeaponCounts[defaultChoice.id] = adjustedDefaultCount;
+          if (defaultChoice) {
+            const nonDefaultTotal = containingOption.choices
+              .filter(c => !c.default && c.id !== 'none')
+              .reduce((sum, c) => sum + (newWeaponCounts[c.id] || 0), 0);
+            newWeaponCounts[defaultChoice.id] = Math.max(0, currentUnit.modelCount - nonDefaultTotal);
           }
         }
       }
