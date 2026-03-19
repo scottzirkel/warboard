@@ -79,6 +79,8 @@ const createMockGameState = (overrides: Partial<GameState> = {}): GameState => (
   battleRound: 1,
   currentPhase: 'command',
   playerTurn: 'player',
+  goingFirst: true,
+  isAttacker: true,
   commandPoints: 0,
   primaryVP: 0,
   secondaryVP: 0,
@@ -93,6 +95,10 @@ const createMockGameState = (overrides: Partial<GameState> = {}): GameState => (
   collapsedLeaders: {},
   activatedLeaders: {},
   loadoutCasualties: {},
+  selectedPrimaryMission: null,
+  selectedSecondaryMissions: [],
+  discardedSecondaryMissions: [],
+  scoredConditions: {},
   ...overrides,
 });
 

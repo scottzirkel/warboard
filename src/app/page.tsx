@@ -17,6 +17,8 @@ import { ArmyOverviewPanel } from '@/components/play/ArmyOverviewPanel';
 import { GameStatePanel } from '@/components/play/GameStatePanel';
 import { SelectedUnitDetailsPanel } from '@/components/play/SelectedUnitDetailsPanel';
 import { TwistSelectionModal } from '@/components/play/TwistSelectionModal';
+import { GameStartModal } from '@/components/play/GameStartModal';
+import { SecondaryMissionModal } from '@/components/play/SecondaryMissionModal';
 import { PhaseTransitionModal } from '@/components/play/PhaseTransitionModal';
 import { getPhaseReminders, type PhaseReminder } from '@/lib/phaseReminders';
 import {
@@ -36,7 +38,7 @@ import {
   useSavedLists,
   getLocalStorageLists,
 } from '@/hooks';
-import type { CurrentList, Unit, LoadoutGroup, Weapon, ModifierSource, ModifierOperation, MissionTwist } from '@/types';
+import type { CurrentList, Unit, LoadoutGroup, Weapon, ModifierSource, ModifierOperation, MissionTwist, PrimaryMission, SecondaryMission } from '@/types';
 import type { GameFormat } from '@/types';
 import { findUnitById } from '@/lib/armyDataUtils';
 
@@ -52,7 +54,11 @@ export default function Home() {
   const [detailModalUnit, setDetailModalUnit] = useState<Unit | null>(null);
   const [showSetupModal, setShowSetupModal] = useState(false);
   const [missionTwists, setMissionTwists] = useState<MissionTwist[]>([]);
+  const [primaryMissions, setPrimaryMissions] = useState<PrimaryMission[]>([]);
+  const [secondaryMissions, setSecondaryMissions] = useState<SecondaryMission[]>([]);
   const [showTwistModal, setShowTwistModal] = useState(false);
+  const [showGameStartModal, setShowGameStartModal] = useState(false);
+  const [showSecondaryMissionModal, setShowSecondaryMissionModal] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [exportCode, setExportCode] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
@@ -124,6 +130,13 @@ export default function Home() {
     isAbilityUsed,
     toggleAbilityUsed,
     resetGameState,
+    setGoingFirst,
+    setIsAttacker,
+    setSelectedPrimaryMission,
+    toggleSecondaryMission,
+    discardSecondaryMission,
+    scoreCondition,
+    unscoreCondition,
   } = useGameStore();
 
   const {
@@ -298,6 +311,8 @@ export default function Home() {
         const res = await fetch('/data/missions.json');
         const data = await res.json();
         setMissionTwists(data.twists || []);
+        setPrimaryMissions(data.primaryMissions || []);
+        setSecondaryMissions(data.secondaryMissions || []);
       } catch (err) {
         console.error('Failed to load mission data:', err);
       }
@@ -339,6 +354,9 @@ export default function Home() {
     if (!prev) return;
     if (prev.phase === current.phase && prev.round === current.round) return;
 
+    // Don't show phase reminders while game start modal is open
+    if (showGameStartModal) return;
+
     const reminders = getPhaseReminders(
       gameState.currentPhase,
       gameState.battleRound,
@@ -353,6 +371,18 @@ export default function Home() {
       setShowPhaseModal(true);
     }
   }, [mode, gameState.currentPhase, gameState.battleRound, armyData, currentList.units, currentList.detachment, gameState]);
+
+  // Auto-open secondary mission selection at player's command phase
+  useEffect(() => {
+    if (mode !== 'play') return;
+    if (showGameStartModal || showSecondaryMissionModal) return;
+    if (gameState.currentPhase !== 'command' || gameState.playerTurn !== 'player') return;
+    if ((gameState.selectedSecondaryMissions ?? []).length >= 2) return;
+    if (secondaryMissions.length === 0) return;
+
+    setShowSecondaryMissionModal(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, gameState.currentPhase, gameState.playerTurn, gameState.selectedSecondaryMissions?.length, secondaryMissions.length]);
 
   // -------------------------------------------------------------------------
   // Computed Values
@@ -580,11 +610,10 @@ export default function Home() {
     }
     selectUnit(null);
     setMode(newMode);
-    const hasTwistSelected = (gameState.activeTwists?.length ?? 0) > 0;
-    if (newMode === 'play' && missionTwists.length > 0 && !hasTwistSelected) {
-      setShowTwistModal(true);
+    if (newMode === 'play' && gameState.currentPhase === 'deployment') {
+      setShowGameStartModal(true);
     }
-  }, [canPlay, selectUnit, setMode, showError, missionTwists.length, gameState.activeTwists]);
+  }, [canPlay, selectUnit, setMode, showError, gameState.currentPhase]);
 
   const handleModeToggle = useCallback(() => {
     const newMode = mode === 'build' ? 'play' : 'build';
@@ -746,10 +775,13 @@ export default function Home() {
   const handleResetGame = useCallback(() => {
     resetGameState();
     resetAllWounds();
-    if (missionTwists.length > 0) {
-      setShowTwistModal(true);
-    }
-  }, [resetGameState, resetAllWounds, missionTwists.length]);
+    setShowGameStartModal(true);
+  }, [resetGameState, resetAllWounds]);
+
+  const handleDiscardSecondary = useCallback((id: string) => {
+    discardSecondaryMission(id);
+    setShowSecondaryMissionModal(true);
+  }, [discardSecondaryMission]);
 
   const handleTwistSelect = useCallback((twistId: string | null) => {
     if (twistId) {
@@ -991,6 +1023,14 @@ export default function Home() {
                 armyData={armyData}
                 detachmentId={currentList.detachment}
                 currentPhase={gameState.currentPhase}
+                selectedPrimaryMission={primaryMissions.find(m => m.id === gameState.selectedPrimaryMission) ?? null}
+                selectedSecondaryMissions={secondaryMissions.filter(m => (gameState.selectedSecondaryMissions ?? []).includes(m.id))}
+                scoredConditions={gameState.scoredConditions ?? {}}
+                currentRound={gameState.battleRound}
+                onScoreCondition={scoreCondition}
+                onUnscoreCondition={unscoreCondition}
+                onDiscardSecondary={handleDiscardSecondary}
+                onChangeSecondaries={() => setShowSecondaryMissionModal(true)}
               />
             }
             rightPanel={
@@ -1297,7 +1337,48 @@ export default function Home() {
         />
       )}
 
-      {/* Twist Selection Modal (Play Mode entry / Reset) */}
+      {/* Game Start Modal (Play Mode entry / Reset) */}
+      <GameStartModal
+        isOpen={showGameStartModal}
+        onClose={() => {
+          setShowGameStartModal(false);
+          // Show deployment phase reminders now that game setup is done
+          const reminders = getPhaseReminders(
+            gameState.currentPhase,
+            gameState.battleRound,
+            armyData,
+            currentList.units,
+            currentList.detachment,
+            gameState,
+          );
+          if (reminders.length > 0) {
+            setPhaseReminders(reminders);
+            setShowPhaseModal(true);
+          }
+        }}
+        goingFirst={gameState.goingFirst}
+        onGoingFirstChange={setGoingFirst}
+        isAttacker={gameState.isAttacker}
+        onIsAttackerChange={setIsAttacker}
+        twists={missionTwists}
+        activeTwistId={gameState.activeTwists?.[0] || null}
+        onTwistSelect={handleTwistSelect}
+        primaryMissions={primaryMissions}
+        selectedPrimaryMissionId={gameState.selectedPrimaryMission ?? null}
+        onPrimaryMissionSelect={setSelectedPrimaryMission}
+      />
+
+      {/* Secondary Mission Selection Modal (command phase) */}
+      <SecondaryMissionModal
+        isOpen={showSecondaryMissionModal}
+        onClose={() => setShowSecondaryMissionModal(false)}
+        secondaryMissions={secondaryMissions}
+        selectedSecondaryMissionIds={gameState.selectedSecondaryMissions ?? []}
+        discardedSecondaryMissionIds={gameState.discardedSecondaryMissions ?? []}
+        onSecondaryMissionToggle={toggleSecondaryMission}
+      />
+
+      {/* Twist Selection Modal (mid-game twist change) */}
       <TwistSelectionModal
         isOpen={showTwistModal}
         onClose={() => setShowTwistModal(false)}

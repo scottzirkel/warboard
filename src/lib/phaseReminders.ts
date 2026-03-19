@@ -11,6 +11,7 @@ export type PhaseReminder = {
 };
 
 const PHASE_PATTERNS: Record<GamePhase, RegExp> = {
+  deployment: /\bdeployment\b/i,
   command: /\bcommand phase\b/i,
   movement: /\bmovement phase\b/i,
   shooting: /\bshooting phase\b/i,
@@ -38,13 +39,15 @@ export function getPhaseReminders(
   if (phase === 'command') {
     const detachment = armyData.detachments[detachmentId];
 
-    if (detachment?.rules) {
+    if (detachment?.rules && gameState.playerTurn === 'player') {
       for (const rule of detachment.rules) {
         if (!rule.resetsEachRound || !rule.choices) continue;
 
         const isPending = gameState.pendingRoundConfirmations[rule.id] === true;
+        const hasChoice = !!gameState.activeRuleChoices[rule.id];
 
-        if (isPending) {
+        // Show reminder if pending confirmation OR no choice made yet
+        if (isPending || !hasChoice) {
           reminders.push({
             type: 'selection',
             source: 'detachment_rule',
@@ -56,7 +59,17 @@ export function getPhaseReminders(
     }
   }
 
-  // 2. Unit abilities that mention the incoming phase
+  // 2. Secondary mission reminder (player's command phase, only if none selected)
+  if (phase === 'command' && gameState.playerTurn === 'player' && (gameState.selectedSecondaryMissions ?? []).length === 0) {
+    reminders.push({
+      type: 'reminder',
+      source: 'army_rule',
+      title: 'Select Secondaries',
+      description: 'Choose your secondary missions for this battle round if you haven\'t already.',
+    });
+  }
+
+  // 3. Unit abilities that mention the incoming phase
   for (let i = 0; i < listUnits.length; i++) {
     const listUnit = listUnits[i];
     const unit = findUnitById(armyData, listUnit.unitId);
@@ -81,7 +94,8 @@ export function getPhaseReminders(
   }
 
   // 3. Army rules that mention the phase (excluding Ka'tah from modal — handled on datasheet)
-  if (armyData.armyRules) {
+  // Army rules that say "your Command phase" only show on player's turn
+  if (armyData.armyRules && (phase !== 'command' || gameState.playerTurn === 'player')) {
     for (const [key, rule] of Object.entries(armyData.armyRules)) {
       if (key === 'martial_katah') continue;
 

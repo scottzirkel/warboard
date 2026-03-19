@@ -98,7 +98,7 @@ export function PlayMode({
   commandPoints = 0,
   primaryVP = 0,
   secondaryVP = 0,
-  currentPhase = 'command',
+  currentPhase = 'deployment',
   playerTurn = 'player',
   onBattleRoundChange,
   onCommandPointsChange,

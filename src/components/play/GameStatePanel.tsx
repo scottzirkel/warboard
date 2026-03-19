@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { Modal, Badge, Button, Card, SegmentedControl } from '@/components/ui';
-import type { ArmyData, Detachment, Stratagem } from '@/types';
+import { MissionScoringPanel } from './MissionScoringPanel';
+import type { ArmyData, Detachment, Stratagem, PrimaryMission, SecondaryMission } from '@/types';
 
 // ============================================================================
 // Types
@@ -49,6 +50,16 @@ interface GameStatePanelProps {
 
   // Current game phase for highlighting relevant stratagems
   currentPhase?: string;
+
+  // Mission scoring
+  selectedPrimaryMission: PrimaryMission | null;
+  selectedSecondaryMissions: SecondaryMission[];
+  scoredConditions: Record<number, Record<string, number>>;
+  currentRound: number;
+  onScoreCondition: (missionId: string, blockIdx: number, condIdx: number, vp: number, type: 'primary' | 'secondary') => void;
+  onUnscoreCondition: (key: string, round: number, type: 'primary' | 'secondary') => void;
+  onDiscardSecondary: (id: string) => void;
+  onChangeSecondaries: () => void;
 
   className?: string;
 }
@@ -168,10 +179,29 @@ function getPhaseOrder(stratagem: Stratagem): number {
 }
 
 /**
- * Sort stratagems by phase order (game flow order).
+ * Sort stratagems: available for current phase first, then by phase order.
+ * Exhausted stratagems sort to the bottom within each group.
  */
-function sortStratagemsByPhase(stratagems: Stratagem[]): Stratagem[] {
-  return [...stratagems].sort((a, b) => getPhaseOrder(a) - getPhaseOrder(b));
+function sortStratagems(
+  stratagems: Stratagem[],
+  currentPhase: string | undefined,
+  stratagemUsage: Record<string, number>,
+): Stratagem[] {
+  return [...stratagems].sort((a, b) => {
+    const aMatches = stratagemMatchesPhase(a, currentPhase);
+    const bMatches = stratagemMatchesPhase(b, currentPhase);
+
+    // Phase-matching stratagems first
+    if (aMatches !== bMatches) return aMatches ? -1 : 1;
+
+    // Within each group, exhausted stratagems go last
+    const aExhausted = !canUseStratagem(a, stratagemUsage[a.id] || 0);
+    const bExhausted = !canUseStratagem(b, stratagemUsage[b.id] || 0);
+    if (aExhausted !== bExhausted) return aExhausted ? 1 : -1;
+
+    // Then by phase order
+    return getPhaseOrder(a) - getPhaseOrder(b);
+  });
 }
 
 // Styles for inset group items
@@ -208,14 +238,23 @@ export function GameStatePanel({
   armyData,
   detachmentId,
   currentPhase,
+  selectedPrimaryMission,
+  selectedSecondaryMissions,
+  scoredConditions,
+  currentRound,
+  onScoreCondition,
+  onUnscoreCondition,
+  onDiscardSecondary,
+  onChangeSecondaries,
   className = '',
 }: GameStatePanelProps) {
   const katahStances = getKatahStances(armyData);
   const detachment = getDetachment(armyData, detachmentId);
-  const allStratagems = sortStratagemsByPhase([
-    ...getCoreStratagems(armyData),
-    ...getDetachmentStratagems(detachment),
-  ]);
+  const allStratagems = sortStratagems(
+    [...getCoreStratagems(armyData), ...getDetachmentStratagems(detachment)],
+    currentPhase,
+    stratagemUsage ?? {},
+  );
 
   // Collapse state: Detachment Rules and Stratagems default expanded
   const [detachmentRulesOpen, setDetachmentRulesOpen] = useState(true);
@@ -269,6 +308,19 @@ export function GameStatePanel({
       </h2>
 
       <div className="space-y-3 flex-1 overflow-y-auto scroll-smooth">
+        {/* Mission Scoring */}
+        <MissionScoringPanel
+          primaryMission={selectedPrimaryMission}
+          secondaryMissions={selectedSecondaryMissions}
+          scoredConditions={scoredConditions}
+          currentRound={currentRound}
+          currentPhase={currentPhase ?? ''}
+          onScoreCondition={onScoreCondition}
+          onUnscoreCondition={onUnscoreCondition}
+          onDiscardSecondary={onDiscardSecondary}
+          onChangeSecondaries={onChangeSecondaries}
+        />
+
         {/* Martial Ka'tah (if stances available) */}
         {katahStances.length > 0 && (
           <Card className="overflow-hidden">

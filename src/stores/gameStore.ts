@@ -9,8 +9,10 @@ import { GAME_PHASES } from '@/types';
 
 const createDefaultGameState = (): GameState => ({
   battleRound: 1,
-  currentPhase: 'command',
+  currentPhase: 'deployment',
   playerTurn: 'player',
+  goingFirst: true,
+  isAttacker: true,
   commandPoints: 0,
   primaryVP: 0,
   secondaryVP: 0,
@@ -25,6 +27,10 @@ const createDefaultGameState = (): GameState => ({
   collapsedLeaders: {},
   activatedLeaders: {},
   loadoutCasualties: {},
+  selectedPrimaryMission: null,
+  selectedSecondaryMissions: [],
+  discardedSecondaryMissions: [],
+  scoredConditions: {},
 });
 
 // ============================================================================
@@ -49,6 +55,10 @@ interface GameStoreActions {
   // Player Turn
   setPlayerTurn: (turn: 'player' | 'opponent') => void;
   togglePlayerTurn: () => void;
+
+  // Game Setup
+  setGoingFirst: (goingFirst: boolean) => void;
+  setIsAttacker: (isAttacker: boolean) => void;
 
   // Advance Game State (moves through phases, turns, and rounds)
   advanceGameState: () => void;
@@ -125,6 +135,17 @@ interface GameStoreActions {
   isAbilityUsed: (unitIndex: number, abilityId: string) => boolean;
   toggleAbilityUsed: (unitIndex: number, abilityId: string) => void;
   setAbilityUsed: (unitIndex: number, abilityId: string, used: boolean) => void;
+
+  // Mission Selection
+  setSelectedPrimaryMission: (id: string | null) => void;
+  toggleSecondaryMission: (id: string) => void;
+
+  // Mission Selection
+  discardSecondaryMission: (id: string) => void;
+
+  // Mission Scoring
+  scoreCondition: (missionId: string, blockIdx: number, condIdx: number, vp: number, type: 'primary' | 'secondary') => void;
+  unscoreCondition: (key: string, round: number, type: 'primary' | 'secondary') => void;
 
   // Full Reset
   resetGameState: () => void;
@@ -210,16 +231,19 @@ export const useGameStore = create<GameStore>()(
   prevPhase: () => {
     const { setPhase, setBattleRound, gameState } = get();
     const currentIndex = GAME_PHASES.indexOf(gameState.currentPhase);
-    const prevIndex = currentIndex - 1;
 
-    if (prevIndex < 0) {
-      // Beginning of round - go to previous round's fight phase
+    // Deployment is only for the start of the game — skip it when going backwards
+    const commandIndex = GAME_PHASES.indexOf('command');
+    const floorIndex = gameState.battleRound === 1 ? 0 : commandIndex;
+
+    if (currentIndex <= floorIndex) {
+      // At the floor — go to previous round's fight phase
       if (gameState.battleRound > 1) {
         setBattleRound(gameState.battleRound - 1);
         setPhase('fight');
       }
     } else {
-      setPhase(GAME_PHASES[prevIndex]);
+      setPhase(GAME_PHASES[currentIndex - 1]);
     }
   },
 
@@ -242,6 +266,18 @@ export const useGameStore = create<GameStore>()(
         ...state.gameState,
         playerTurn: state.gameState.playerTurn === 'player' ? 'opponent' : 'player',
       },
+    }));
+  },
+
+  setGoingFirst: (goingFirst: boolean) => {
+    set(state => ({
+      gameState: { ...state.gameState, goingFirst },
+    }));
+  },
+
+  setIsAttacker: (isAttacker: boolean) => {
+    set(state => ({
+      gameState: { ...state.gameState, isAttacker },
     }));
   },
 
@@ -278,6 +314,7 @@ export const useGameStore = create<GameStore>()(
               playerTurn: 'player',
               commandPoints: state.gameState.commandPoints + 1, // Both players gain CP at start of Command
               activeStratagems: [], // Clear stratagems for new phase
+              selectedSecondaryMissions: [], // Fresh secondaries each round
             },
           }));
           resetActivationState();
@@ -287,10 +324,13 @@ export const useGameStore = create<GameStore>()(
     } else {
       // Move to next phase
       const nextPhase = GAME_PHASES[currentPhaseIndex + 1];
+      // Deployment → Command: grant initial CP
+      const enteringCommand = gameState.currentPhase === 'deployment' && nextPhase === 'command';
       set(state => ({
         gameState: {
           ...state.gameState,
           currentPhase: nextPhase,
+          ...(enteringCommand ? { commandPoints: state.gameState.commandPoints + 1 } : {}),
           activeStratagems: [], // Clear stratagems for new phase
         },
       }));
@@ -781,6 +821,102 @@ export const useGameStore = create<GameStore>()(
         },
       },
     }));
+  },
+
+  // -------------------------------------------------------------------------
+  // Mission Selection Actions
+  // -------------------------------------------------------------------------
+
+  setSelectedPrimaryMission: (id: string | null) => {
+    set(state => ({
+      gameState: { ...state.gameState, selectedPrimaryMission: id },
+    }));
+  },
+
+  toggleSecondaryMission: (id: string) => {
+    set(state => {
+      const current = state.gameState.selectedSecondaryMissions ?? [];
+      if (current.includes(id)) {
+        return {
+          gameState: {
+            ...state.gameState,
+            selectedSecondaryMissions: current.filter(s => s !== id),
+          },
+        };
+      }
+      if (current.length >= 2) return state; // cap at 2
+      return {
+        gameState: {
+          ...state.gameState,
+          selectedSecondaryMissions: [...current, id],
+        },
+      };
+    });
+  },
+
+  discardSecondaryMission: (id: string) => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        selectedSecondaryMissions: (state.gameState.selectedSecondaryMissions ?? []).filter(s => s !== id),
+        discardedSecondaryMissions: [...(state.gameState.discardedSecondaryMissions ?? []), id],
+        commandPoints: state.gameState.commandPoints + 1,
+      },
+    }));
+  },
+
+  // -------------------------------------------------------------------------
+  // Mission Scoring Actions
+  // -------------------------------------------------------------------------
+
+  scoreCondition: (missionId: string, blockIdx: number, condIdx: number, vp: number, type: 'primary' | 'secondary') => {
+    const round = get().gameState.battleRound;
+    const baseKey = `${missionId}:${blockIdx}:${condIdx}`;
+
+    set(state => {
+      const roundConds = (state.gameState.scoredConditions ?? {})[round] || {};
+      // Find next available key (for cumulative conditions that can be scored multiple times)
+      let key = baseKey;
+      if (roundConds[baseKey] !== undefined) {
+        let n = 1;
+        while (roundConds[`${baseKey}:${n}`] !== undefined) n++;
+        key = `${baseKey}:${n}`;
+      }
+
+      return {
+        gameState: {
+          ...state.gameState,
+          scoredConditions: {
+            ...(state.gameState.scoredConditions ?? {}),
+            [round]: { ...roundConds, [key]: vp },
+          },
+          ...(type === 'primary'
+            ? { primaryVP: state.gameState.primaryVP + vp }
+            : { secondaryVP: state.gameState.secondaryVP + vp }),
+        },
+      };
+    });
+  },
+
+  unscoreCondition: (key: string, round: number, type: 'primary' | 'secondary') => {
+    set(state => {
+      const roundConditions = { ...(state.gameState.scoredConditions ?? {})[round] };
+      const vp = roundConditions[key] || 0;
+      delete roundConditions[key];
+
+      return {
+        gameState: {
+          ...state.gameState,
+          scoredConditions: {
+            ...(state.gameState.scoredConditions ?? {}),
+            [round]: roundConditions,
+          },
+          ...(type === 'primary'
+            ? { primaryVP: Math.max(0, state.gameState.primaryVP - vp) }
+            : { secondaryVP: Math.max(0, state.gameState.secondaryVP - vp) }),
+        },
+      };
+    });
   },
 
   // -------------------------------------------------------------------------

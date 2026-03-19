@@ -892,7 +892,12 @@ export function SelectedUnitDetailsPanel({
                         className={`bg-black/20 rounded-lg p-2 transition-opacity ${isUsed ? 'opacity-40' : ''} ${isPhaseRelevant ? 'border-l-2 border-l-accent-400 bg-accent-500/5' : ''}`}
                       >
                         <div className="flex items-center justify-between gap-2">
-                          <div className="text-sm font-medium text-accent-300">{ability.name}</div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium text-accent-300">{ability.name}</span>
+                            {hasLeader && (
+                              <span className="text-[10px] text-accent-400/70">({unit.name})</span>
+                            )}
+                          </div>
                           {isOncePerBattle && onToggleAbilityUsed && (
                             <button
                               onClick={() => onToggleAbilityUsed(ability.id)}
@@ -957,18 +962,40 @@ export function SelectedUnitDetailsPanel({
           </div>
         )}
 
-        {/* Keywords - Simplified inline badges with tooltips for glossary terms */}
-        <div className="flex flex-wrap gap-1 px-1">
-          {unit.keywords.map((kw) => {
-            const description = getKeywordDescription(kw);
-            return description ? (
-              <TooltipBadge key={kw} tooltip={description} variant="default" className="text-[10px]">
-                {kw}
-              </TooltipBadge>
-            ) : (
-              <span key={kw} className="badge text-[10px]">{kw}</span>
-            );
-          })}
+        {/* Keywords - separated by unit and leader */}
+        <div className="space-y-1.5 px-1">
+          <div>
+            {hasLeader && <div className="text-[10px] text-white/40 mb-0.5">{unit.name}</div>}
+            <div className="flex flex-wrap gap-1">
+              {unit.keywords.map((kw) => {
+                const description = getKeywordDescription(kw);
+                return description ? (
+                  <TooltipBadge key={kw} tooltip={description} variant="default" className="text-[10px]">
+                    {kw}
+                  </TooltipBadge>
+                ) : (
+                  <span key={kw} className="badge text-[10px]">{kw}</span>
+                );
+              })}
+            </div>
+          </div>
+          {hasLeader && leaderUnit && (
+            <div>
+              <div className="text-[10px] text-purple-400/70 mb-0.5">{leaderUnit.name}</div>
+              <div className="flex flex-wrap gap-1">
+                {leaderUnit.keywords.map((kw) => {
+                  const description = getKeywordDescription(kw);
+                  return description ? (
+                    <TooltipBadge key={`leader-${kw}`} tooltip={description} variant="default" className="text-[10px]">
+                      {kw}
+                    </TooltipBadge>
+                  ) : (
+                    <span key={`leader-${kw}`} className="badge text-[10px]">{kw}</span>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

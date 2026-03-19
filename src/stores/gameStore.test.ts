@@ -69,8 +69,8 @@ describe('gameStore', () => {
   // ---------------------------------------------------------------------------
 
   describe('game phase', () => {
-    it('starts at command phase', () => {
-      expect(useGameStore.getState().gameState.currentPhase).toBe('command');
+    it('starts at deployment phase', () => {
+      expect(useGameStore.getState().gameState.currentPhase).toBe('deployment');
     });
 
     it('sets phase', () => {
@@ -87,6 +87,9 @@ describe('gameStore', () => {
     });
 
     it('advances through phases in order', () => {
+      useGameStore.getState().nextPhase(); // deployment -> command
+      expect(useGameStore.getState().gameState.currentPhase).toBe('command');
+
       useGameStore.getState().nextPhase(); // command -> movement
       expect(useGameStore.getState().gameState.currentPhase).toBe('movement');
 
@@ -124,11 +127,11 @@ describe('gameStore', () => {
       expect(useGameStore.getState().gameState.battleRound).toBe(1);
     });
 
-    it('does not go before round 1 command phase', () => {
+    it('does not go before round 1 deployment phase', () => {
       useGameStore.getState().prevPhase();
 
       expect(useGameStore.getState().gameState.battleRound).toBe(1);
-      expect(useGameStore.getState().gameState.currentPhase).toBe('command');
+      expect(useGameStore.getState().gameState.currentPhase).toBe('deployment');
     });
   });
 
@@ -162,6 +165,7 @@ describe('gameStore', () => {
 
   describe('advanceGameState', () => {
     it('advances through phases within a turn', () => {
+      useGameStore.getState().setPhase('command'); // skip deployment
       useGameStore.getState().advanceGameState(); // command -> movement
 
       expect(useGameStore.getState().gameState.currentPhase).toBe('movement');
@@ -608,11 +612,126 @@ describe('gameStore', () => {
       const { gameState } = useGameStore.getState();
 
       expect(gameState.battleRound).toBe(1);
-      expect(gameState.currentPhase).toBe('command');
+      expect(gameState.currentPhase).toBe('deployment');
       expect(gameState.commandPoints).toBe(0);
       expect(gameState.primaryVP).toBe(0);
       expect(gameState.activeStratagems).toHaveLength(0);
       expect(gameState.katah).toBeNull();
+      expect(gameState.selectedPrimaryMission).toBeNull();
+      expect(gameState.selectedSecondaryMissions).toHaveLength(0);
+      expect(gameState.scoredConditions).toEqual({});
+    });
+  });
+
+  // ---------------------------------------------------------------------------
+  // Mission Selection
+  // ---------------------------------------------------------------------------
+
+  describe('mission selection', () => {
+    it('sets primary mission', () => {
+      useGameStore.getState().setSelectedPrimaryMission('take-and-hold');
+      expect(useGameStore.getState().gameState.selectedPrimaryMission).toBe('take-and-hold');
+    });
+
+    it('clears primary mission', () => {
+      useGameStore.getState().setSelectedPrimaryMission('take-and-hold');
+      useGameStore.getState().setSelectedPrimaryMission(null);
+      expect(useGameStore.getState().gameState.selectedPrimaryMission).toBeNull();
+    });
+
+    it('toggles secondary mission on', () => {
+      useGameStore.getState().toggleSecondaryMission('behind-enemy-lines');
+      expect(useGameStore.getState().gameState.selectedSecondaryMissions).toContain('behind-enemy-lines');
+    });
+
+    it('toggles secondary mission off', () => {
+      useGameStore.getState().toggleSecondaryMission('behind-enemy-lines');
+      useGameStore.getState().toggleSecondaryMission('behind-enemy-lines');
+      expect(useGameStore.getState().gameState.selectedSecondaryMissions).toHaveLength(0);
+    });
+
+    it('caps at 2 secondary missions', () => {
+      useGameStore.getState().toggleSecondaryMission('a');
+      useGameStore.getState().toggleSecondaryMission('b');
+      useGameStore.getState().toggleSecondaryMission('c');
+      expect(useGameStore.getState().gameState.selectedSecondaryMissions).toEqual(['a', 'b']);
+    });
+
+    it('discards a secondary mission and gains 1 CP', () => {
+      useGameStore.getState().setCommandPoints(3);
+      useGameStore.getState().toggleSecondaryMission('a');
+      useGameStore.getState().toggleSecondaryMission('b');
+      useGameStore.getState().discardSecondaryMission('a');
+      expect(useGameStore.getState().gameState.selectedSecondaryMissions).toEqual(['b']);
+      expect(useGameStore.getState().gameState.discardedSecondaryMissions).toContain('a');
+      expect(useGameStore.getState().gameState.commandPoints).toBe(4);
+    });
+
+    it('clears secondaries when advancing to new round', () => {
+      // Start from command phase (skip deployment)
+      useGameStore.getState().setPhase('command');
+      useGameStore.getState().toggleSecondaryMission('a');
+      useGameStore.getState().toggleSecondaryMission('b');
+
+      // Advance through player turn: command→movement→shooting→charge→fight (4 advances)
+      // then fight→opponent command (1 advance) = 5 total
+      for (let i = 0; i < 5; i++) useGameStore.getState().advanceGameState();
+      expect(useGameStore.getState().gameState.playerTurn).toBe('opponent');
+
+      // Advance through opponent turn: command→movement→shooting→charge→fight (4 advances)
+      // then fight→round 2 player command (1 advance) = 5 total
+      for (let i = 0; i < 5; i++) useGameStore.getState().advanceGameState();
+
+      expect(useGameStore.getState().gameState.battleRound).toBe(2);
+      expect(useGameStore.getState().gameState.playerTurn).toBe('player');
+      expect(useGameStore.getState().gameState.selectedSecondaryMissions).toEqual([]);
+    });
+  });
+
+  // ---------------------------------------------------------------------------
+  // Mission Scoring
+  // ---------------------------------------------------------------------------
+
+  describe('mission scoring', () => {
+    it('scores a primary condition and increments primaryVP', () => {
+      useGameStore.getState().scoreCondition('take-and-hold', 0, 0, 5, 'primary');
+      const { gameState } = useGameStore.getState();
+      expect(gameState.primaryVP).toBe(5);
+      expect(gameState.scoredConditions[1]).toHaveProperty('take-and-hold:0:0');
+    });
+
+    it('scores a secondary condition and increments secondaryVP', () => {
+      useGameStore.getState().scoreCondition('behind-enemy-lines', 0, 0, 4, 'secondary');
+      expect(useGameStore.getState().gameState.secondaryVP).toBe(4);
+    });
+
+    it('unscores a condition and decrements VP', () => {
+      useGameStore.getState().scoreCondition('m1', 0, 0, 3, 'primary');
+      useGameStore.getState().unscoreCondition('m1:0:0', 1, 'primary');
+      expect(useGameStore.getState().gameState.primaryVP).toBe(0);
+      expect(useGameStore.getState().gameState.scoredConditions[1]?.['m1:0:0']).toBeUndefined();
+    });
+
+    it('auto-increments keys for cumulative scoring in same round', () => {
+      useGameStore.getState().scoreCondition('m1', 0, 0, 2, 'secondary');
+      useGameStore.getState().scoreCondition('m1', 0, 0, 2, 'secondary');
+      const roundConds = useGameStore.getState().gameState.scoredConditions[1];
+      expect(roundConds['m1:0:0']).toBe(2);
+      expect(roundConds['m1:0:0:1']).toBe(2);
+      expect(useGameStore.getState().gameState.secondaryVP).toBe(4);
+    });
+
+    it('resets mission state on game reset', () => {
+      useGameStore.getState().setSelectedPrimaryMission('take-and-hold');
+      useGameStore.getState().toggleSecondaryMission('a');
+      useGameStore.getState().discardSecondaryMission('a');
+      useGameStore.getState().scoreCondition('take-and-hold', 0, 0, 5, 'primary');
+      useGameStore.getState().resetGameState();
+      const { gameState } = useGameStore.getState();
+      expect(gameState.selectedPrimaryMission).toBeNull();
+      expect(gameState.selectedSecondaryMissions).toHaveLength(0);
+      expect(gameState.discardedSecondaryMissions).toHaveLength(0);
+      expect(gameState.scoredConditions).toEqual({});
     });
   });
 });

@@ -212,6 +212,16 @@ export const useArmyStore = create<ArmyStore>()(
 
             // Merge detachments — child detachments take precedence
             data.detachments = { ...parentData.detachments, ...data.detachments };
+
+            // Inherit core stratagems from parent if child doesn't have them
+            if (!data.coreStratagems && parentData.coreStratagems) {
+              data.coreStratagems = parentData.coreStratagems;
+            }
+
+            // Merge army rules — parent rules first, child overrides by key
+            if (parentData.armyRules) {
+              data.armyRules = { ...parentData.armyRules, ...data.armyRules };
+            }
           }
         }
       }

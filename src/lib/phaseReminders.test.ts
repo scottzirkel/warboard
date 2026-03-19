@@ -33,6 +33,8 @@ describe('getPhaseReminders', () => {
     battleRound: 1,
     currentPhase: 'command',
     playerTurn: 'player',
+    goingFirst: true,
+    isAttacker: true,
     commandPoints: 0,
     primaryVP: 0,
     secondaryVP: 0,
@@ -47,6 +49,10 @@ describe('getPhaseReminders', () => {
     collapsedLeaders: {},
     activatedLeaders: {},
     loadoutCasualties: {},
+    selectedPrimaryMission: 'test-primary',
+    selectedSecondaryMissions: ['test-sec-1', 'test-sec-2'],
+    discardedSecondaryMissions: [],
+    scoredConditions: {},
   };
 
   const makeUnit = (overrides: Partial<Unit> = {}): Unit => ({

@@ -102,15 +102,19 @@ export interface CurrentList {
 // Game State (Play Mode)
 // ============================================================================
 
-export type GamePhase = 'command' | 'movement' | 'shooting' | 'charge' | 'fight';
+export type GamePhase = 'deployment' | 'command' | 'movement' | 'shooting' | 'charge' | 'fight';
 export type PlayerTurn = 'player' | 'opponent';
 
-export const GAME_PHASES: GamePhase[] = ['command', 'movement', 'shooting', 'charge', 'fight'];
+export const GAME_PHASES: GamePhase[] = ['deployment', 'command', 'movement', 'shooting', 'charge', 'fight'];
 
 export interface GameState {
   battleRound: number;
   currentPhase: GamePhase;
   playerTurn: PlayerTurn;
+  /** Whether the player is going first this game */
+  goingFirst: boolean;
+  /** Whether the player is the attacker (vs defender) */
+  isAttacker: boolean;
   commandPoints: number;
   primaryVP: number;
   secondaryVP: number;
@@ -132,6 +136,14 @@ export interface GameState {
   loadoutCasualties: Record<number, Record<string, number>>;
   /** Tracks used once-per-battle abilities (unitIndex -> abilityId -> used) */
   usedAbilities?: Record<number, Record<string, boolean>>;
+  /** Selected primary mission ID */
+  selectedPrimaryMission: string | null;
+  /** Selected secondary mission IDs (exactly 2) */
+  selectedSecondaryMissions: string[];
+  /** Secondary mission IDs that have been discarded (can't be re-picked) */
+  discardedSecondaryMissions: string[];
+  /** Scored conditions: round -> conditionKey -> vpAwarded */
+  scoredConditions: Record<number, Record<string, number>>;
 }
 
 // ============================================================================

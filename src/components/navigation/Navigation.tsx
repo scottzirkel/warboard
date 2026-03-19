@@ -151,6 +151,7 @@ function CompactStepper({
 // ============================================================================
 
 const PHASE_LABELS: Record<GamePhase, string> = {
+  deployment: 'DEP',
   command: 'CMD',
   movement: 'MOV',
   shooting: 'SHT',

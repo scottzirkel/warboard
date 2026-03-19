@@ -12,6 +12,7 @@ interface PhaseTransitionModalProps {
 }
 
 const PHASE_LABELS: Record<GamePhase, string> = {
+  deployment: 'Deployment',
   command: 'Command Phase',
   movement: 'Movement Phase',
   shooting: 'Shooting Phase',
