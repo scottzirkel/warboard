@@ -47,6 +47,10 @@ public/sw.js.map
 public/swe-worker-*.js
 public/workbox-*.js
 
+# Playwright
+test-results/
+playwright-report/
+
 # Faction data (sourced from @scottzirkel/40k-data)
 public/data/custodes.json
 public/data/tyranids.json
