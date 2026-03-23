@@ -650,6 +650,23 @@ export const useArmyStore = create<ArmyStore>()(
           o.choices.some(c => c.id === choiceId)
         );
         if (containingOption?.pattern === 'replacement') {
+          // For optional replacement options where all non-default choices are
+          // maxModels:1 (e.g., sergeant weapon swaps), selecting one should
+          // zero out the others — only one model can take the swap.
+          if (containingOption.type === 'optional' && newCount > 0) {
+            const nonDefaultChoices = containingOption.choices.filter(
+              c => !c.default && c.id !== 'none'
+            );
+            const allMaxOne = nonDefaultChoices.every(c => c.maxModels === 1);
+            if (allMaxOne) {
+              for (const c of nonDefaultChoices) {
+                if (c.id !== choiceId) {
+                  newWeaponCounts[c.id] = 0;
+                }
+              }
+            }
+          }
+
           const defaultChoice = containingOption.choices.find(c => c.default);
           if (defaultChoice) {
             const nonDefaultTotal = containingOption.choices
@@ -752,6 +769,23 @@ export const useArmyStore = create<ArmyStore>()(
           o.choices.some(c => c.id === choiceId)
         );
         if (containingOption?.pattern === 'replacement') {
+          // For optional replacement options where all non-default choices are
+          // maxModels:1 (e.g., sergeant weapon swaps), selecting one should
+          // zero out the others — only one model can take the swap.
+          if (containingOption.type === 'optional' && newCount > 0) {
+            const nonDefaultChoices = containingOption.choices.filter(
+              c => !c.default && c.id !== 'none'
+            );
+            const allMaxOne = nonDefaultChoices.every(c => c.maxModels === 1);
+            if (allMaxOne) {
+              for (const c of nonDefaultChoices) {
+                if (c.id !== choiceId) {
+                  newWeaponCounts[c.id] = 0;
+                }
+              }
+            }
+          }
+
           const defaultChoice = containingOption.choices.find(c => c.default);
           if (defaultChoice) {
             const nonDefaultTotal = containingOption.choices

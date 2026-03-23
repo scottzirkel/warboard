@@ -231,7 +231,9 @@ export default function Home() {
       }
     }
 
-    return [...regularUnits, ...allyUnits];
+    return [...regularUnits, ...allyUnits].filter(
+      (u) => !u.name.includes('[Legends]')
+    );
   }, [armyData]);
 
   const findUnit = useCallback((unitId: string): Unit | undefined => {

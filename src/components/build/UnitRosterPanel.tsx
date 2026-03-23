@@ -162,6 +162,7 @@ export function UnitRosterPanel({
   className = '',
 }: UnitRosterPanelProps) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState<'name' | 'cost'>('name');
   // All groups open by default so cards are visible immediately
   const [openGroups, setOpenGroups] = useState<Set<string>>(new Set(groupPriority));
 
@@ -193,13 +194,21 @@ export function UnitRosterPanel({
       groups[group].push(unit);
     });
 
-    // Sort units within each group alphabetically
+    // Sort units within each group
     Object.values(groups).forEach((groupUnits) => {
-      groupUnits.sort((a, b) => a.name.localeCompare(b.name));
+      if (sortBy === 'cost') {
+        groupUnits.sort((a, b) => {
+          const aMin = Math.min(...Object.values(a.points));
+          const bMin = Math.min(...Object.values(b.points));
+          return aMin - bMin || a.name.localeCompare(b.name);
+        });
+      } else {
+        groupUnits.sort((a, b) => a.name.localeCompare(b.name));
+      }
     });
 
     return groups;
-  }, [filteredUnits]);
+  }, [filteredUnits, sortBy]);
 
   // Get sorted group names
   const sortedGroups = useMemo(() => {
@@ -234,7 +243,7 @@ export function UnitRosterPanel({
 
   return (
     <div className={`flex flex-col h-full ${className}`}>
-      {/* Search Input */}
+      {/* Search & Sort */}
       <div className="mb-3 shrink-0 flex items-center gap-2">
         <input
           type="text"
@@ -243,6 +252,14 @@ export function UnitRosterPanel({
           placeholder="Search units..."
           className="input-dark flex-1"
         />
+        <button
+          type="button"
+          onClick={() => setSortBy(sortBy === 'name' ? 'cost' : 'name')}
+          className="shrink-0 text-[11px] px-2 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-white/60 hover:text-white/80 transition-colors"
+          title={`Sort by ${sortBy === 'name' ? 'cost' : 'name'}`}
+        >
+          {sortBy === 'name' ? 'A-Z' : 'Pts'}
+        </button>
         <span className="text-xs text-white/40 shrink-0">{filteredUnits.length} units</span>
       </div>
 

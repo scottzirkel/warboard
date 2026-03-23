@@ -20,7 +20,71 @@
         "ld": "6+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "master-crafted-heavy-bolt-rifle-ranged",
+          "name": "Master-crafted Heavy Bolt Rifle",
+          "type": "ranged",
+          "stats": {
+            "range": 30,
+            "a": 2,
+            "bs": "2+",
+            "s": 5,
+            "ap": -1,
+            "d": 3
+          },
+          "abilities": [
+            "Assault",
+            "Heavy"
+          ],
+          "loadoutGroup": "ranged-default"
+        },
+        {
+          "id": "boltstorm-gauntlet-ranged",
+          "name": "Boltstorm Gauntlet",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 3,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "master-crafted-power-weapon-melee",
+          "name": "Master-crafted Power Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-default"
+        },
+        {
+          "id": "power-fist-melee",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-option"
+        }
+      ],
       "abilities": [
         {
           "id": "refuse-to-yield",
@@ -257,7 +321,137 @@
         "ld": "6+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "heavy-bolt-pistol-ranged",
+          "name": "Heavy Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 1,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-default"
+        },
+        {
+          "id": "plasma-pistol-standard-ranged",
+          "name": "➤ Plasma Pistol - standard",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "plasma-pistol-supercharge-ranged",
+          "name": "➤ Plasma Pistol - supercharge",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 8,
+            "ap": -3,
+            "d": 2
+          },
+          "abilities": [
+            "Hazardous",
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "hand-flamer-ranged",
+          "name": "Hand Flamer",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": "D6",
+            "bs": "N/A",
+            "s": 3,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Ignores Cover",
+            "Pistol",
+            "Torrent"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "astartes-chainsword-melee",
+          "name": "Astartes Chainsword",
+          "type": "melee",
+          "stats": {
+            "a": 7,
+            "ws": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-default"
+        },
+        {
+          "id": "relic-weapon-melee",
+          "name": "Relic Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-option"
+        },
+        {
+          "id": "power-fist-melee",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-option"
+        },
+        {
+          "id": "thunder-hammer-melee",
+          "name": "Thunder Hammer",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "3+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Devastating Wounds"
+          ],
+          "loadoutGroup": "melee-option"
+        }
+      ],
       "abilities": [
         {
           "id": "angel-s-wrath",
@@ -554,11 +748,6 @@
               "default": true
             },
             {
-              "id": "sgt-ranged-chainsword",
-              "name": "Astartes Chainsword",
-              "maxModels": 1
-            },
-            {
               "id": "sgt-ranged-hand-flamer",
               "name": "Hand Flamer",
               "maxModels": 1
@@ -566,11 +755,6 @@
             {
               "id": "sgt-ranged-plasma-pistol",
               "name": "Plasma Pistol",
-              "maxModels": 1
-            },
-            {
-              "id": "sgt-ranged-power-weapon",
-              "name": "Power Weapon",
               "maxModels": 1
             }
           ]
@@ -2982,7 +3166,189 @@
         "ld": "6+",
         "oc": 3
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "assault-cannon-ranged",
+          "name": "Assault Cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 6,
+            "bs": "3+",
+            "s": 6,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Devastating Wounds"
+          ],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "multi-melta-ranged",
+          "name": "Multi-melta",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 2,
+            "bs": "3+",
+            "s": 9,
+            "ap": -4,
+            "d": "D6"
+          },
+          "abilities": [
+            "Melta 2"
+          ],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "heavy-plasma-cannon-standard-ranged",
+          "name": "➤ Heavy Plasma Cannon - standard",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": "D3",
+            "bs": "3+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Blast"
+          ],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "heavy-plasma-cannon-supercharge-ranged",
+          "name": "➤ Heavy Plasma Cannon - supercharge",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": "D3",
+            "bs": "3+",
+            "s": 8,
+            "ap": -3,
+            "d": 3
+          },
+          "abilities": [
+            "Blast",
+            "Hazardous"
+          ],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "twin-lascannon-ranged",
+          "name": "Twin Lascannon",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 1,
+            "bs": "3+",
+            "s": 12,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "missile-launcher-frag-ranged",
+          "name": "➤ Missile Launcher - frag",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": "D6",
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Blast"
+          ],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "missile-launcher-krak-ranged",
+          "name": "➤ Missile Launcher - krak",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 1,
+            "bs": "3+",
+            "s": 9,
+            "ap": -2,
+            "d": "D6"
+          },
+          "abilities": [],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "storm-bolter-ranged",
+          "name": "Storm Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "arm-weapon"
+        },
+        {
+          "id": "heavy-flamer-ranged",
+          "name": "Heavy Flamer",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": "D6",
+            "bs": "N/A",
+            "s": 5,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Ignores Cover",
+            "Torrent"
+          ],
+          "loadoutGroup": "arm-weapon"
+        },
+        {
+          "id": "dreadnought-combat-weapon-melee",
+          "name": "Dreadnought Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "3+",
+            "s": 12,
+            "ap": -2,
+            "d": 3
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-default"
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "3+",
+            "s": 6,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-option"
+        }
+      ],
       "abilities": [
         {
           "id": "wisdom-of-the-ancients-aura",
@@ -3553,7 +3919,90 @@
         "ld": "6+",
         "oc": 2
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "bolt-pistol-ranged",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "twin-bolt-rifle-ranged",
+          "name": "Twin Bolt Rifle",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "onslaught-gatling-cannon-ranged",
+          "name": "Onslaught Gatling Cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 8,
+            "bs": "3+",
+            "s": 5,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Devastating Wounds"
+          ],
+          "loadoutGroup": "turret-weapon"
+        },
+        {
+          "id": "multi-melta-ranged",
+          "name": "Multi-melta",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 2,
+            "bs": "3+",
+            "s": 9,
+            "ap": -4,
+            "d": "D6"
+          },
+          "abilities": [
+            "Melta 2"
+          ],
+          "loadoutGroup": "turret-weapon"
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "outrider-escort",
@@ -4218,7 +4667,74 @@
         "ld": "6+",
         "oc": 3
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "twin-ironhail-heavy-stubber-ranged",
+          "name": "Twin Ironhail Heavy Stubber",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 3,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 3",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "fragstorm-grenade-launcher-ranged",
+          "name": "Fragstorm Grenade Launcher",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": "D6",
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Blast"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "onslaught-gatling-cannon-ranged",
+          "name": "Onslaught Gatling Cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 8,
+            "bs": "3+",
+            "s": 5,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Devastating Wounds"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "hailstrike",
@@ -5172,7 +5688,56 @@
         "ld": "6+",
         "oc": 2
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "twin-firestrike-las-talon-ranged",
+          "name": "Twin Firestrike Las-talon",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 2,
+            "bs": "2+",
+            "s": 10,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "twin-firestrike-autocannon-ranged",
+          "name": "Twin Firestrike Autocannon",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 3,
+            "bs": "2+",
+            "s": 9,
+            "ap": -1,
+            "d": 3
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "sentinel-protocols",
@@ -5707,7 +6272,109 @@
         "ld": "6+",
         "oc": 5
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "hurricane-bolter-ranged",
+          "name": "Hurricane Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 6,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 6",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "twin-assault-cannon-ranged",
+          "name": "Twin Assault Cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 6,
+            "bs": "3+",
+            "s": 6,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Devastating Wounds",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "hunter-killer-missile-ranged",
+          "name": "Hunter-killer Missile",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 1,
+            "bs": "2+",
+            "s": 14,
+            "ap": -3,
+            "d": "D6"
+          },
+          "abilities": [
+            "One Shot"
+          ],
+          "loadoutGroup": "option"
+        },
+        {
+          "id": "multi-melta-ranged",
+          "name": "Multi-melta",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 2,
+            "bs": "3+",
+            "s": 9,
+            "ap": -4,
+            "d": "D6"
+          },
+          "abilities": [
+            "Melta 2"
+          ],
+          "loadoutGroup": "option"
+        },
+        {
+          "id": "storm-bolter-ranged",
+          "name": "Storm Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "option"
+        },
+        {
+          "id": "armoured-tracks-melee",
+          "name": "Armoured Tracks",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "4+",
+            "s": 8,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "transport",
@@ -5802,7 +6469,122 @@
         "ld": "6+",
         "oc": 5
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "repulsor-defensive-array-ranged",
+          "name": "Repulsor Defensive Array",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 18,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "hunter-slayer-missile-ranged",
+          "name": "Hunter-slayer Missile",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 1,
+            "bs": "2+",
+            "s": 14,
+            "ap": -3,
+            "d": "D6"
+          },
+          "abilities": [
+            "Indirect Fire",
+            "One Shot"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "heavy-onslaught-gatling-cannon-ranged",
+          "name": "Heavy Onslaught Gatling Cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 12,
+            "bs": "3+",
+            "s": 6,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Devastating Wounds"
+          ],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "twin-heavy-bolter-ranged",
+          "name": "Twin Heavy Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 3,
+            "bs": "3+",
+            "s": 5,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Sustained Hits 1",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "las-talon-ranged",
+          "name": "Las-talon",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 2,
+            "bs": "3+",
+            "s": 10,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "twin-lascannon-ranged",
+          "name": "Twin Lascannon",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 1,
+            "bs": "3+",
+            "s": 12,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "armoured-hull-melee",
+          "name": "Armoured Hull",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "4+",
+            "s": 8,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "transport",
@@ -5907,7 +6689,56 @@
         "ld": "6+",
         "oc": 2
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "storm-bolter-ranged",
+          "name": "Storm Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "hunter-killer-missile-ranged",
+          "name": "Hunter-killer Missile",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 1,
+            "bs": "2+",
+            "s": 14,
+            "ap": -3,
+            "d": "D6"
+          },
+          "abilities": [
+            "One Shot"
+          ],
+          "loadoutGroup": "option"
+        },
+        {
+          "id": "armoured-tracks-melee",
+          "name": "Armoured Tracks",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "4+",
+            "s": 6,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "self-repair",
@@ -5944,7 +6775,91 @@
         "ld": "6+",
         "oc": 2
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "twin-heavy-bolter-ranged",
+          "name": "Twin Heavy Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 3,
+            "bs": "3+",
+            "s": 5,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Sustained Hits 1",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "twin-lascannon-ranged",
+          "name": "Twin Lascannon",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 1,
+            "bs": "3+",
+            "s": 12,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "main-weapon"
+        },
+        {
+          "id": "hunter-killer-missile-ranged",
+          "name": "Hunter-killer Missile",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 1,
+            "bs": "2+",
+            "s": 14,
+            "ap": -3,
+            "d": "D6"
+          },
+          "abilities": [
+            "One Shot"
+          ],
+          "loadoutGroup": "option"
+        },
+        {
+          "id": "storm-bolter-ranged",
+          "name": "Storm Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "option"
+        },
+        {
+          "id": "armoured-tracks-melee",
+          "name": "Armoured Tracks",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "4+",
+            "s": 6,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "fire-support",
@@ -6471,7 +7386,135 @@
         "ld": "6+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "bolt-pistol-ranged",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-default"
+        },
+        {
+          "id": "master-crafted-bolter-ranged",
+          "name": "Master-crafted Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "ranged-default"
+        },
+        {
+          "id": "neo-volkite-pistol-ranged",
+          "name": "Neo-volkite Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 5,
+            "ap": 0,
+            "d": 2
+          },
+          "abilities": [
+            "Devastating Wounds",
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "plasma-pistol-standard-ranged",
+          "name": "➤ Plasma Pistol - standard",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "plasma-pistol-supercharge-ranged",
+          "name": "➤ Plasma Pistol - supercharge",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 8,
+            "ap": -3,
+            "d": 2
+          },
+          "abilities": [
+            "Hazardous",
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-default"
+        },
+        {
+          "id": "master-crafted-power-weapon-melee",
+          "name": "Master-crafted Power Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-option"
+        },
+        {
+          "id": "power-fist-melee",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "2+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-option"
+        }
+      ],
       "abilities": [
         {
           "id": "leader",
@@ -6664,7 +7707,77 @@
         "ld": "6+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "bolt-pistol-ranged",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "smite-witchfire-ranged",
+          "name": "➤ Smite - witchfire",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": "D6",
+            "bs": "3+",
+            "s": 5,
+            "ap": -1,
+            "d": "D3"
+          },
+          "abilities": [
+            "Psychic"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "smite-focused-witchfire-ranged",
+          "name": "➤ Smite - focused witchfire",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": "D6",
+            "bs": "3+",
+            "s": 6,
+            "ap": -2,
+            "d": "D3"
+          },
+          "abilities": [
+            "Devastating Wounds",
+            "Hazardous",
+            "Psychic"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "force-weapon-melee",
+          "name": "Force Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "3+",
+            "s": 6,
+            "ap": -1,
+            "d": "D3"
+          },
+          "abilities": [
+            "Psychic"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "mental-fortress-psychic",
@@ -6712,7 +7825,77 @@
         "ld": "6+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "bolt-pistol-ranged",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "smite-witchfire-ranged",
+          "name": "➤ Smite - witchfire",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": "D6",
+            "bs": "3+",
+            "s": 5,
+            "ap": -1,
+            "d": "D3"
+          },
+          "abilities": [
+            "Psychic"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "smite-focused-witchfire-ranged",
+          "name": "➤ Smite - focused witchfire",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": "D6",
+            "bs": "3+",
+            "s": 6,
+            "ap": -2,
+            "d": "D3"
+          },
+          "abilities": [
+            "Devastating Wounds",
+            "Hazardous",
+            "Psychic"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "force-weapon-melee",
+          "name": "Force Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "3+",
+            "s": 6,
+            "ap": -1,
+            "d": "D3"
+          },
+          "abilities": [
+            "Psychic"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "shrouding-psychic",
@@ -6940,7 +8123,39 @@
         "ld": "5+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "absolvor-bolt-pistol-ranged",
+          "name": "Absolvor Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 1,
+            "bs": "3+",
+            "s": 5,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "crozius-arcanum-melee",
+          "name": "Crozius Arcanum",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 6,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "leader",
@@ -6981,7 +8196,39 @@
         "ld": "5+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "storm-bolter-ranged",
+          "name": "Storm Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "ranged-default"
+        },
+        {
+          "id": "crozius-arcanum-melee",
+          "name": "Crozius Arcanum",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 6,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "recitation-of-faith",
@@ -7022,7 +8269,56 @@
         "ld": "5+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "absolvor-bolt-pistol-ranged",
+          "name": "Absolvor Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 1,
+            "bs": "3+",
+            "s": 5,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "twin-bolt-rifle-ranged",
+          "name": "Twin Bolt Rifle",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "crozius-arcanum-melee",
+          "name": "Crozius Arcanum",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 6,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "catechism-of-fire",
@@ -7062,7 +8358,194 @@
         "ld": "5+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "bolt-pistol-ranged",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-default"
+        },
+        {
+          "id": "plasma-pistol-standard-ranged",
+          "name": "➤ Plasma Pistol - standard",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "3+",
+            "s": 7,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "plasma-pistol-supercharge-ranged",
+          "name": "➤ Plasma Pistol - supercharge",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "3+",
+            "s": 8,
+            "ap": -3,
+            "d": 2
+          },
+          "abilities": [
+            "Hazardous",
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "inferno-pistol-ranged",
+          "name": "Inferno Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 6,
+            "a": 1,
+            "bs": "3+",
+            "s": 8,
+            "ap": -4,
+            "d": "D3"
+          },
+          "abilities": [
+            "Melta 2",
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "boltgun-ranged",
+          "name": "Boltgun",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "combi-weapon-ranged",
+          "name": "Combi-weapon",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 1,
+            "bs": "4+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Anti-Infantry 4+",
+            "Devastating Wounds",
+            "Rapid Fire 1"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "grav-pistol-ranged",
+          "name": "Grav-pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "3+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Anti-Vehicle 2+",
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "hand-flamer-ranged",
+          "name": "Hand Flamer",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": "D6",
+            "bs": "N/A",
+            "s": 3,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Ignores Cover",
+            "Pistol",
+            "Torrent"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "storm-bolter-ranged",
+          "name": "Storm Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "crozius-arcanum-melee",
+          "name": "Crozius Arcanum",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 6,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-default"
+        },
+        {
+          "id": "power-fist-melee",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "2+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-option"
+        }
+      ],
       "abilities": [
         {
           "id": "exhortation-of-rage",
@@ -7457,7 +8940,39 @@
         "ld": "6+",
         "oc": 3
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "absolvor-bolt-pistol-ranged",
+          "name": "Absolvor Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 1,
+            "bs": "3+",
+            "s": 5,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "surgical-precision",
@@ -7504,7 +9019,71 @@
         "ld": "6+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "bolt-pistol-ranged",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "bolt-rifle-ranged",
+          "name": "Bolt Rifle",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Assault",
+            "Heavy"
+          ],
+          "loadoutGroup": "ranged-default"
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-default"
+        },
+        {
+          "id": "power-weapon-melee",
+          "name": "Power Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-option"
+        }
+      ],
       "abilities": [
         {
           "id": "unbreakable-duty",
@@ -7551,7 +9130,39 @@
         "ld": "6+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "heavy-bolt-pistol-ranged",
+          "name": "Heavy Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 1,
+            "bs": "3+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
       "abilities": [
         {
           "id": "deeds-of-heroism",
@@ -7592,7 +9203,101 @@
         "ld": "6+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "storm-bolter-ranged",
+          "name": "Storm Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "ranged-default"
+        },
+        {
+          "id": "power-fist-melee",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "2+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-default"
+        },
+        {
+          "id": "power-weapon-melee",
+          "name": "Power Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-option"
+        },
+        {
+          "id": "chainfist-melee",
+          "name": "Chainfist",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "3+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Anti-Vehicle 3+"
+          ],
+          "loadoutGroup": "melee-option"
+        },
+        {
+          "id": "thunder-hammer-melee",
+          "name": "Thunder Hammer",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "3+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Devastating Wounds"
+          ],
+          "loadoutGroup": "melee-option"
+        },
+        {
+          "id": "twin-lightning-claws-melee",
+          "name": "Twin Lightning Claws",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "melee-option"
+        }
+      ],
       "abilities": [
         {
           "id": "keep-the-banner-high",
@@ -7846,7 +9551,135 @@
         "ld": "6+",
         "oc": 1
       },
-      "weapons": [],
+      "weapons": [
+        {
+          "id": "bolt-pistol-ranged",
+          "name": "Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-default"
+        },
+        {
+          "id": "master-crafted-bolter-ranged",
+          "name": "Master-crafted Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "ranged-default"
+        },
+        {
+          "id": "neo-volkite-pistol-ranged",
+          "name": "Neo-volkite Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 5,
+            "ap": 0,
+            "d": 2
+          },
+          "abilities": [
+            "Devastating Wounds",
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "plasma-pistol-standard-ranged",
+          "name": "➤ Plasma Pistol - standard",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "plasma-pistol-supercharge-ranged",
+          "name": "➤ Plasma Pistol - supercharge",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 8,
+            "ap": -3,
+            "d": 2
+          },
+          "abilities": [
+            "Hazardous",
+            "Pistol"
+          ],
+          "loadoutGroup": "ranged-option"
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-default"
+        },
+        {
+          "id": "master-crafted-power-weapon-melee",
+          "name": "Master-crafted Power Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-option"
+        },
+        {
+          "id": "power-fist-melee",
+          "name": "Power Fist",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "melee-option"
+        }
+      ],
       "abilities": [
         {
           "id": "leader",

@@ -1,11 +1,18 @@
 #!/bin/bash
-# Copy faction JSON files from @scottzirkel/40k-data into public/data/
-# and validate critical data integrity after copy.
-SRC="node_modules/@scottzirkel/40k-data/data"
+# Copy faction JSON files into public/data/.
+# Prefers the local sibling data repo for dev; falls back to the npm package.
+LOCAL_SRC="../data/data"
+PKG_SRC="node_modules/@scottzirkel/40k-data/data"
 DEST="public/data"
 
-if [ ! -d "$SRC" ]; then
-  echo "40k-data package not found, skipping copy"
+if [ -d "$LOCAL_SRC" ]; then
+  SRC="$LOCAL_SRC"
+  echo "Using local data repo ($LOCAL_SRC)"
+elif [ -d "$PKG_SRC" ]; then
+  SRC="$PKG_SRC"
+  echo "Using npm package ($PKG_SRC)"
+else
+  echo "No faction data source found, skipping copy"
   exit 0
 fi
 
