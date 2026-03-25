@@ -430,20 +430,65 @@ export default function Home() {
 
     const groups: LoadoutGroup[] = [];
     const weaponCounts = selectedListUnit.weaponCounts || {};
+    const hasLoadoutOptions = (selectedUnit.loadoutOptions?.length ?? 0) > 0;
+
+    // Calculate how many models swapped away from each default weapon
+    // via optional replacement options (e.g., sergeant weapon swaps)
+    const defaultReplacements: Record<string, number> = {};
+    if (hasLoadoutOptions) {
+      for (const option of selectedUnit.loadoutOptions!) {
+        if (option.type === 'optional' && option.pattern === 'replacement') {
+          const defaultChoice = option.choices.find((c) => c.default);
+          if (defaultChoice?.name) {
+            const swappedCount = option.choices
+              .filter((c) => !c.default && c.id !== 'none')
+              .reduce((sum, c) => sum + (weaponCounts[c.id] || 0), 0);
+            if (swappedCount > 0) {
+              defaultReplacements[defaultChoice.name] =
+                (defaultReplacements[defaultChoice.name] || 0) + swappedCount;
+            }
+          }
+        }
+      }
+    }
 
     // Get weapons without loadoutGroup (always equipped)
     const alwaysEquipped = selectedUnit.weapons.filter((w) => !w.loadoutGroup);
 
+    // Build always-equipped groups, splitting by adjusted model count
     if (alwaysEquipped.length > 0) {
-      groups.push({
-        id: 'default',
-        name: 'Standard Equipment',
-        modelCount: selectedListUnit.modelCount,
-        isPaired: false,
-        weapons: alwaysEquipped,
-        rangedWeapons: alwaysEquipped.filter((w) => w.type === 'ranged'),
-        meleeWeapons: alwaysEquipped.filter((w) => w.type === 'melee'),
-      });
+      const fullCountWeapons = alwaysEquipped.filter((w) => !defaultReplacements[w.name]);
+      const reducedByCount = new Map<number, Weapon[]>();
+      for (const w of alwaysEquipped) {
+        if (defaultReplacements[w.name]) {
+          const adjusted = selectedListUnit.modelCount - defaultReplacements[w.name];
+          if (!reducedByCount.has(adjusted)) reducedByCount.set(adjusted, []);
+          reducedByCount.get(adjusted)!.push(w);
+        }
+      }
+
+      if (fullCountWeapons.length > 0) {
+        groups.push({
+          id: 'default',
+          name: 'Standard Equipment',
+          modelCount: selectedListUnit.modelCount,
+          isPaired: false,
+          weapons: fullCountWeapons,
+          rangedWeapons: fullCountWeapons.filter((w) => w.type === 'ranged'),
+          meleeWeapons: fullCountWeapons.filter((w) => w.type === 'melee'),
+        });
+      }
+      for (const [count, weapons] of reducedByCount) {
+        groups.push({
+          id: `default-${count}`,
+          name: 'Standard Equipment',
+          modelCount: count,
+          isPaired: false,
+          weapons,
+          rangedWeapons: weapons.filter((w) => w.type === 'ranged'),
+          meleeWeapons: weapons.filter((w) => w.type === 'melee'),
+        });
+      }
     }
 
     // Get weapons by loadout group
@@ -457,9 +502,9 @@ export default function Home() {
       ([key, count]) => count > 0 && allChoiceIds.has(key)
     );
 
-    if (!hasValidCounts && selectedUnit.loadoutOptions) {
+    if (!hasValidCounts && hasLoadoutOptions) {
       // No valid weapon selections — fall back to default choices
-      for (const option of selectedUnit.loadoutOptions) {
+      for (const option of selectedUnit.loadoutOptions!) {
         if (option.type === 'choice') {
           const defaultChoice = option.choices.find((c) => c.default) || option.choices[0];
           if (defaultChoice) {
@@ -504,7 +549,6 @@ export default function Home() {
     }
 
     // Sort groups: ranged weapons first, then melee-only
-    // Groups with ranged weapons come before groups with only melee
     groups.sort((a, b) => {
       const aHasRanged = a.rangedWeapons.length > 0;
       const bHasRanged = b.rangedWeapons.length > 0;
@@ -554,9 +598,11 @@ export default function Home() {
     const selectedWeapons: Weapon[] = [];
     const loadoutGroupIds = [...new Set(leaderUnit.weapons.filter((w) => w.loadoutGroup).map((w) => w.loadoutGroup!))];
 
-    if (!hasValidCounts && leaderUnit.loadoutOptions) {
+    const hasLeaderOptions = (leaderUnit.loadoutOptions?.length ?? 0) > 0;
+
+    if (!hasValidCounts && hasLeaderOptions) {
       // No valid weapon selections — fall back to default choices
-      for (const option of leaderUnit.loadoutOptions) {
+      for (const option of leaderUnit.loadoutOptions!) {
         if (option.type === 'choice') {
           const defaultChoice = option.choices.find((c) => c.default) || option.choices[0];
           if (defaultChoice) {

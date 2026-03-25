@@ -109,6 +109,42 @@
         "Grenades",
         "Imperium",
         "Gravis"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "ranged-default",
+              "name": "Master-crafted Heavy Bolt Rifle",
+              "default": true
+            },
+            {
+              "id": "ranged-option",
+              "name": "Boltstorm Gauntlet"
+            }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "melee-default",
+              "name": "Master-crafted Power Weapon",
+              "default": true
+            },
+            {
+              "id": "melee-fist",
+              "name": "Power Fist"
+            }
+          ]
+        }
       ]
     },
     {
@@ -304,7 +340,43 @@
         "Imperium",
         "Terminator"
       ],
-      "invuln": "4+"
+      "invuln": "4+",
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "ranged-default",
+              "name": "Storm Bolter",
+              "default": true
+            },
+            {
+              "id": "ranged-combi",
+              "name": "Combi-weapon"
+            }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "melee-default",
+              "name": "Relic Weapon",
+              "default": true
+            },
+            {
+              "id": "melee-fist",
+              "name": "Relic Fist"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "captain-with-jump-pack",
@@ -477,6 +549,43 @@
         "Fly",
         "Jump Pack",
         "Tacticus"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "optional",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "none",
+              "name": "Heavy Bolt Pistol",
+              "default": true
+            },
+            {
+              "id": "ranged-option",
+              "name": "Plasma Pistol / Hand Flamer",
+              "maxModels": 1
+            }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "melee-default",
+              "name": "Astartes Chainsword",
+              "default": true
+            },
+            {
+              "id": "melee-option",
+              "name": "Relic Weapon / Power Fist / Thunder Hammer"
+            }
+          ]
+        }
       ]
     },
     {
@@ -687,7 +796,7 @@
           "loadoutGroup": "sgt-melee-thunder-hammer"
         },
         {
-          "id": "astartes-chainsword-ranged-swap",
+          "id": "astartes-chainsword-sgt-ranged",
           "name": "Astartes Chainsword",
           "type": "melee",
           "stats": {
@@ -701,11 +810,11 @@
           "loadoutGroup": "sgt-ranged-chainsword"
         },
         {
-          "id": "power-weapon-ranged-swap",
+          "id": "power-weapon-sgt-ranged",
           "name": "Power Weapon",
           "type": "melee",
           "stats": {
-            "a": 4,
+            "a": 5,
             "ws": "3+",
             "s": 5,
             "ap": -2,
@@ -738,7 +847,7 @@
       "loadoutOptions": [
         {
           "id": "sgt-ranged",
-          "name": "Sergeant Ranged Weapon",
+          "name": "Sergeant Weapon 1",
           "type": "optional",
           "pattern": "replacement",
           "choices": [
@@ -756,12 +865,22 @@
               "id": "sgt-ranged-plasma-pistol",
               "name": "Plasma Pistol",
               "maxModels": 1
+            },
+            {
+              "id": "sgt-ranged-chainsword",
+              "name": "Astartes Chainsword",
+              "maxModels": 1
+            },
+            {
+              "id": "sgt-ranged-power-weapon",
+              "name": "Power Weapon",
+              "maxModels": 1
             }
           ]
         },
         {
           "id": "sgt-melee",
-          "name": "Sergeant Melee Weapon",
+          "name": "Sergeant Weapon 2",
           "type": "optional",
           "pattern": "replacement",
           "choices": [
@@ -3362,6 +3481,51 @@
         "Smoke",
         "Imperium",
         "Walker"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Main Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "main-weapon",
+              "name": "Assault Cannon / Multi-melta / etc.",
+              "default": true
+            }
+          ]
+        },
+        {
+          "id": "arm-weapon",
+          "name": "Arm Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "arm-weapon",
+              "name": "Storm Bolter / Heavy Flamer",
+              "default": true
+            }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "melee-default",
+              "name": "Dreadnought Combat Weapon",
+              "default": true
+            },
+            {
+              "id": "melee-option",
+              "name": "Close Combat Weapon"
+            }
+          ]
+        }
       ]
     },
     {
@@ -7539,6 +7703,44 @@
         "Imperium",
         "Tacticus",
         "Lieutenant"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "optional",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "none",
+              "name": "Bolt Pistol + Master-crafted Bolter",
+              "default": true
+            },
+            {
+              "id": "ranged-option",
+              "name": "Neo-volkite Pistol",
+              "maxModels": 1
+            }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "optional",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "none",
+              "name": "Close Combat Weapon",
+              "default": true
+            },
+            {
+              "id": "melee-option",
+              "name": "Master-crafted Power Weapon / Power Fist",
+              "maxModels": 1
+            }
+          ]
+        }
       ]
     },
     {
@@ -8063,7 +8265,26 @@
         "Terminator",
         "Librarian"
       ],
-      "invuln": "4+"
+      "invuln": "4+",
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "ranged-default",
+              "name": "Storm Bolter",
+              "default": true
+            },
+            {
+              "id": "ranged-combi",
+              "name": "Combi-weapon"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "librarian-with-jump-pack-legends",
@@ -8569,6 +8790,44 @@
         "Chaplain",
         "Fly",
         "Jump Pack"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "optional",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "none",
+              "name": "Bolt Pistol",
+              "default": true
+            },
+            {
+              "id": "ranged-option",
+              "name": "Pistol / Combi-weapon / Storm Bolter",
+              "maxModels": 1
+            }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "optional",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "none",
+              "name": "Crozius Arcanum",
+              "default": true
+            },
+            {
+              "id": "melee-option",
+              "name": "Power Fist",
+              "maxModels": 1
+            }
+          ]
+        }
       ]
     },
     {
@@ -8872,6 +9131,22 @@
       },
       "weapons": [
         {
+          "id": "absolvor-bolt-pistol-ranged",
+          "name": "Absolvor Bolt Pistol",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 1,
+            "bs": "3+",
+            "s": 5,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Pistol"
+          ]
+        },
+        {
           "id": "reductor-pistol-ranged",
           "name": "Reductor Pistol",
           "type": "ranged",
@@ -8885,8 +9160,20 @@
           },
           "abilities": [
             "Pistol"
-          ],
-          "loadoutGroup": "wargear"
+          ]
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close Combat Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": []
         }
       ],
       "abilities": [
@@ -9113,6 +9400,26 @@
         "Imperium",
         "Tacticus",
         "Ancient"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "optional",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "none",
+              "name": "Close Combat Weapon",
+              "default": true
+            },
+            {
+              "id": "melee-option",
+              "name": "Power Weapon",
+              "maxModels": 1
+            }
+          ]
+        }
       ]
     },
     {
@@ -9321,6 +9628,25 @@
         "Imperium",
         "Terminator",
         "Ancient"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "melee-default",
+              "name": "Power Fist",
+              "default": true
+            },
+            {
+              "id": "melee-option",
+              "name": "Power Weapon / Chainfist / Thunder Hammer / Twin Lightning Claws"
+            }
+          ]
+        }
       ]
     },
     {
@@ -9704,6 +10030,44 @@
         "Grenades",
         "Imperium",
         "Tacticus"
+      ],
+      "loadoutOptions": [
+        {
+          "id": "ranged-weapon",
+          "name": "Ranged Weapon",
+          "type": "optional",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "none",
+              "name": "Bolt Pistol + Master-crafted Bolter",
+              "default": true
+            },
+            {
+              "id": "ranged-option",
+              "name": "Neo-volkite Pistol",
+              "maxModels": 1
+            }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "optional",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "none",
+              "name": "Close Combat Weapon",
+              "default": true
+            },
+            {
+              "id": "melee-option",
+              "name": "Master-crafted Power Weapon / Power Fist",
+              "maxModels": 1
+            }
+          ]
+        }
       ]
     },
     {

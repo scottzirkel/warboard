@@ -76,6 +76,13 @@ export function getPhaseReminders(
 
     if (!unit) continue;
 
+    // Skip standalone leader if it's attached to another unit
+    // (its abilities will be collected via the bodyguard's attachedLeader path)
+    const isAttachedElsewhere = listUnits.some(
+      (other) => other.attachedLeader?.unitIndex === i
+    );
+    if (isAttachedElsewhere) continue;
+
     // Check unit abilities
     collectAbilityReminders(unit, i, phase, gameState, reminders);
 

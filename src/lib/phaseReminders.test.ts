@@ -220,6 +220,33 @@ describe('getPhaseReminders', () => {
     expect(result).toHaveLength(0);
   });
 
+  it('does not duplicate abilities when leader is attached to a bodyguard', () => {
+    const leader = makeUnit({
+      id: 'apothecary',
+      name: 'Apothecary',
+      abilities: [{
+        id: 'narthecium',
+        name: 'Narthecium',
+        description: 'While this model is leading a unit, in your Command phase, you can return 1 destroyed model.',
+      }],
+    });
+    const bodyguard = makeUnit({
+      id: 'intercessors',
+      name: 'Intercessor Squad',
+      abilities: [],
+    });
+    const armyData = makeArmyData({ units: [leader, bodyguard] });
+
+    const listUnits = [
+      makeListUnit({ unitId: 'apothecary', modelCount: 1 }),
+      makeListUnit({ unitId: 'intercessors', modelCount: 5, attachedLeader: { unitIndex: 0 } }),
+    ];
+
+    const result = getPhaseReminders('command', 1, armyData, listUnits, '', baseGameState);
+    const nartheciumReminders = result.filter(r => r.title === 'Narthecium');
+    expect(nartheciumReminders).toHaveLength(1);
+  });
+
   it('excludes leader abilities from reminders', () => {
     const armyData = makeArmyData({
       units: [makeUnit({
