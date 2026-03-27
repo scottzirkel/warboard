@@ -11,6 +11,7 @@ import type { Adapter } from 'next-auth/adapters';
  * The adapter stores users, accounts, and sessions in the database.
  */
 export const authOptions: NextAuthOptions = {
+  secret: process.env.AUTH_SECRET,
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     GoogleProvider({

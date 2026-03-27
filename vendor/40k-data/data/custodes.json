@@ -1,0 +1,4494 @@
+{
+  "faction": "Adeptus Custodes",
+  "lastUpdated": "2026-02",
+  "catalogueId": "1f19-6509-d906-ca10",
+  "catalogueRevision": "85",
+  "gameSystemId": "sys-352e-adc2-7639-d6a9",
+  "units": [
+    {
+      "id": "aleya",
+      "bsdataId": "9e42-7207-9c30-6122",
+      "name": "Aleya",
+      "points": {
+        "1": 65
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 32
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 6,
+        "t": 3,
+        "sv": "3+",
+        "w": 4,
+        "ld": "6+",
+        "oc": 1
+      },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "somnus-melee",
+          "name": "Somnus",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "2+",
+            "s": 6,
+            "ap": -3,
+            "d": 3
+          },
+          "abilities": [
+            "Anti-Psyker 5+",
+            "Devastating Wounds"
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "tactical-perception",
+          "name": "Tactical Perception",
+          "description": "While this model is leading a unit, models in that unit have the Fights First ability."
+        },
+        {
+          "id": "tenacious-spirit",
+          "name": "Tenacious Spirit",
+          "description": "While this model is leading a unit, each time a model in that unit makes an attack, add 1 to the Hit roll if that unit is below its Starting Strength, and add 1 to the Wound roll as well if that unit is Below Half-strength."
+        },
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n■ Prosecutors\n■ Vigilators\n■ Witchseekers",
+          "eligibleUnits": [
+            "prosecutors",
+            "vigilators",
+            "witchseekers"
+          ]
+        }
+      ],
+      "keywords": [
+        "Aleya",
+        "Epic Hero",
+        "Character",
+        "Infantry",
+        "Imperium",
+        "Anathema Psykana"
+      ]
+    },
+    {
+      "id": "allarus-custodians",
+      "bsdataId": "c8a6-a4c5-703e-b717",
+      "name": "Allarus Custodians",
+      "points": {
+        "2": 110,
+        "3": 165,
+        "5": 275,
+        "6": 330
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 40
+      },
+      "modelCountOptions": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "stats": {
+        "m": 5,
+        "t": 7,
+        "sv": "2+",
+        "w": 4,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "guardian-spear-melee",
+          "name": "Guardian Spear",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "guardian-spear"
+        },
+        {
+          "id": "guardian-spear-ranged",
+          "name": "Guardian Spear",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ],
+          "loadoutGroup": "guardian-spear"
+        },
+        {
+          "id": "balistus-grenade-launcher-ranged",
+          "name": "Balistus grenade launcher",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": "D6",
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Blast"
+          ],
+          "loadoutGroup": "guardian-spear"
+        },
+        {
+          "id": "castellan-axe-melee",
+          "name": "Castellan axe",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "2+",
+            "s": 9,
+            "ap": -1,
+            "d": 3
+          },
+          "abilities": [],
+          "loadoutGroup": "castellan-axe"
+        },
+        {
+          "id": "castellan-axe-ranged",
+          "name": "Castellan axe",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ],
+          "loadoutGroup": "castellan-axe"
+        },
+        {
+          "id": "misericordia-melee",
+          "name": "Misericordia",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "vexilla-misericordia"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "guardian-spear",
+              "name": "Guardian Spear + Balistus grenade launcher",
+              "default": true
+            },
+            {
+              "id": "castellan-axe",
+              "name": "Castellan Axe + Balistus grenade launcher"
+            }
+          ]
+        },
+        {
+          "id": "vexilla-misericordia",
+          "name": "Misericordia",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "vexilla-misericordia",
+              "name": "Misericordia + Balistus grenade launcher",
+              "maxModels": 1
+            }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "slayers-of-tyrants",
+          "name": "Slayers of Tyrants",
+          "description": "Each time a model in this unit makes an attack that targets a ^^Character, Monster^^ or ^^Vehicle^^ unit, you can re-roll the Wound roll."
+        },
+        {
+          "id": "from-golden-light",
+          "name": "From Golden Light",
+          "description": "Once per battle, at the end of your opponent's turn, if this unit is not within Engagement Range of one or more enemy units, you can remove it from the battlefield and place it into Strategic Reserves."
+        }
+      ],
+      "keywords": [
+        "Allarus Custodians",
+        "Imperium",
+        "Terminator",
+        "Infantry"
+      ]
+    },
+    {
+      "id": "anathema-psykana-rhino",
+      "bsdataId": "d7cb-7d30-715b-50d2",
+      "name": "Anathema Psykana Rhino",
+      "points": {
+        "1": 75
+      },
+      "baseSize": {
+        "shape": "oval",
+        "mm": 105,
+        "mmMinor": 70
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 12,
+        "t": 9,
+        "sv": "3+",
+        "w": 10,
+        "ld": "6+",
+        "oc": 2
+      },
+      "weapons": [
+        {
+          "id": "storm-bolter-ranged",
+          "name": "Storm Bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "armoured-tracks-melee",
+          "name": "Armoured tracks",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "4+",
+            "s": 6,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "self-repair",
+          "name": "Self Repair",
+          "description": "At the start of your Command phase, this model regains 1 lost wound."
+        }
+      ],
+      "keywords": [
+        "Rhino",
+        "Anathema Psykana",
+        "Vehicle",
+        "Dedicated Transport",
+        "Transport",
+        "Smoke",
+        "Imperium"
+      ]
+    },
+    {
+      "id": "blade-champion",
+      "bsdataId": "48b7-e713-d5b1-f11c",
+      "name": "Blade Champion",
+      "points": {
+        "1": 120
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 40
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 6,
+        "t": 6,
+        "sv": "2+",
+        "w": 6,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "vaultswords-behemor-melee",
+          "name": "➤ Vaultswords - Behemor",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Precision"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "vaultswords-hurricanis-melee",
+          "name": "➤ Vaultswords - Hurricanis",
+          "type": "melee",
+          "stats": {
+            "a": 9,
+            "ws": "2+",
+            "s": 5,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Sustained Hits 1"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "vaultswords-victus-melee",
+          "name": "➤ Vaultswords - Victus",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 6,
+            "ap": -3,
+            "d": 3
+          },
+          "abilities": [
+            "Devastating Wounds"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n■ Custodian Guard\n■ Custodian Wardens",
+          "eligibleUnits": [
+            "custodian-guard",
+            "custodian-wardens"
+          ]
+        },
+        {
+          "id": "martial-inspiration",
+          "name": "Martial Inspiration",
+          "description": "Once per battle, in your Charge phase, this model's unit is eligible to declare a charge in a turn in which it Advanced."
+        },
+        {
+          "id": "swift-onslaught",
+          "name": "Swift Onslaught",
+          "description": "While this model is leading a unit, you can re-roll Charge rolls made for that unit."
+        }
+      ],
+      "keywords": [
+        "Blade Champion",
+        "Infantry",
+        "Character",
+        "Imperium"
+      ]
+    },
+    {
+      "id": "custodian-guard",
+      "bsdataId": "91b3-2e1c-e642-d213",
+      "name": "Custodian Guard",
+      "points": {
+        "4": 160,
+        "5": 200
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 40
+      },
+      "modelCountOptions": [
+        4,
+        5
+      ],
+      "stats": {
+        "m": 6,
+        "t": 6,
+        "sv": "2+",
+        "w": 3,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "guardian-spear-melee",
+          "name": "Guardian Spear",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "guardian-spear"
+        },
+        {
+          "id": "guardian-spear-ranged",
+          "name": "Guardian Spear",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ],
+          "loadoutGroup": "guardian-spear"
+        },
+        {
+          "id": "sentinel-blade-melee",
+          "name": "Sentinel Blade",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 6,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "sentinel-blade-praesidium-shield",
+          "modifiers": [
+            {
+              "stat": "w",
+              "operation": "add",
+              "value": 1,
+              "scope": "model",
+              "source": "Praesidium Shield"
+            }
+          ]
+        },
+        {
+          "id": "sentinel-blade-ranged",
+          "name": "Sentinel Blade",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault",
+            "Pistol"
+          ],
+          "loadoutGroup": "sentinel-blade-praesidium-shield",
+          "modifiers": [
+            {
+              "stat": "w",
+              "operation": "add",
+              "value": 1,
+              "scope": "model",
+              "source": "Praesidium Shield"
+            }
+          ]
+        },
+        {
+          "id": "misericordia-melee",
+          "name": "Misericordia",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "vexilla-praesidium-shield-misericordia",
+          "modifiers": [
+            {
+              "stat": "w",
+              "operation": "add",
+              "value": 1,
+              "scope": "model",
+              "source": "Praesidium Shield"
+            }
+          ]
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "guardian-spear",
+              "name": "Guardian Spear",
+              "default": true
+            },
+            {
+              "id": "sentinel-blade-praesidium-shield",
+              "name": "Sentinel Blade & Praesidium Shield"
+            }
+          ]
+        },
+        {
+          "id": "vexilla-praesidium-shield-misericordia",
+          "name": "Vexilla",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "vexilla-praesidium-shield-misericordia",
+              "name": "Vexilla + Misericordia",
+              "maxModels": 1
+            }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "stand-vigil",
+          "name": "Stand Vigil",
+          "description": "Each time a model in this unit makes an attack, re-roll a Wound roll of 1. While this unit is within range of an objective marker you control, you can re-roll the Wound roll instead."
+        },
+        {
+          "id": "sentinel-storm",
+          "name": "Sentinel Storm",
+          "description": "Once per battle, in your Shooting phase, after the unit has shot, it can shoot again."
+        }
+      ],
+      "keywords": [
+        "Custodian Guard",
+        "Infantry",
+        "Battleline",
+        "Imperium"
+      ]
+    },
+    {
+      "id": "custodian-wardens",
+      "bsdataId": "9610-b148-8433-93b8",
+      "name": "Custodian Wardens",
+      "points": {
+        "4": 210,
+        "5": 260
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 40
+      },
+      "modelCountOptions": [
+        4,
+        5
+      ],
+      "stats": {
+        "m": 6,
+        "t": 6,
+        "sv": "2+",
+        "w": 3,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "guardian-spear-melee",
+          "name": "Guardian Spear",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "guardian-spear"
+        },
+        {
+          "id": "guardian-spear-ranged",
+          "name": "Guardian Spear",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ],
+          "loadoutGroup": "guardian-spear"
+        },
+        {
+          "id": "castellan-axe-melee",
+          "name": "Castellan axe",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "2+",
+            "s": 9,
+            "ap": -1,
+            "d": 3
+          },
+          "abilities": [],
+          "loadoutGroup": "castellan-axe"
+        },
+        {
+          "id": "castellan-axe-ranged",
+          "name": "Castellan axe",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ],
+          "loadoutGroup": "castellan-axe"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "guardian-spear",
+              "name": "Guardian Spear",
+              "default": true
+            },
+            {
+              "id": "castellan-axe",
+              "name": "Castellan Axe"
+            }
+          ]
+        },
+        {
+          "id": "custodian-warden-w-vexilla",
+          "name": "Vexilla",
+          "type": "optional",
+          "pattern": "addition",
+          "choices": [
+            {
+              "id": "none",
+              "name": "None",
+              "default": true
+            },
+            {
+              "id": "custodian-warden-w-vexilla",
+              "name": "Vexilla",
+              "maxModels": 1
+            }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "resolute-will",
+          "name": "Resolute Will",
+          "description": "While a CHARACTER is leading this unit, each time an attack targets this unit, if the Strength characteristic of that attack is greater than the Toughness characteristic of this unit, subtract 1 from the Wound roll."
+        },
+        {
+          "id": "living-fortress",
+          "name": "Living Fortress",
+          "description": "Once per battle, at the start of any phase, this unit can use this ability. If it does, until the end of the phase, models in this unit have the Feel No Pain 4+ ability."
+        }
+      ],
+      "keywords": [
+        "Custodian Wardens",
+        "Infantry",
+        "Imperium"
+      ]
+    },
+    {
+      "id": "knight-centura",
+      "bsdataId": "7099-71b-56e8-7191",
+      "name": "Knight-Centura",
+      "points": {
+        "1": 55
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 32
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 6,
+        "t": 3,
+        "sv": "3+",
+        "w": 4,
+        "ld": "6+",
+        "oc": 1
+      },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "executioner-greatblade-melee",
+          "name": "Executioner Greatblade",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Anti-Psyker 5+",
+            "Devastating Wounds"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n■ Prosecutors\n■ Vigilators\n■ Witchseekers",
+          "eligibleUnits": [
+            "prosecutors",
+            "vigilators",
+            "witchseekers"
+          ]
+        },
+        {
+          "id": "seeker-s-instincts",
+          "name": "Seeker's Instincts",
+          "description": "While this model is leading a unit, add 2\" to the Move characteristic of models in that unit and add 2 to Advance and Charge rolls made for that unit."
+        },
+        {
+          "id": "corner-the-quarry",
+          "name": "Corner the Quarry",
+          "description": "Each time an enemy unit (excluding MONSTERS and VEHICLES) that is within Engagement Range of this model’s unit Falls Back, all models in that enemy unit must take a Desperate Escape test. When doing so, if that enemy unit is Battle-shocked, subtract 1 from each of those tests."
+        }
+      ],
+      "keywords": [
+        "Knight-Centura",
+        "Infantry",
+        "Anathema Psykana",
+        "Imperium",
+        "Character"
+      ]
+    },
+    {
+      "id": "prosecutors",
+      "bsdataId": "3ec3-a4df-fdbf-5507",
+      "name": "Prosecutors",
+      "points": {
+        "4": 40,
+        "5": 50,
+        "9": 75,
+        "10": 85
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 32
+      },
+      "modelCountOptions": [
+        4,
+        5,
+        9,
+        10
+      ],
+      "stats": {
+        "m": 6,
+        "t": 3,
+        "sv": "3+",
+        "w": 1,
+        "ld": "6+",
+        "oc": 2
+      },
+      "weapons": [
+        {
+          "id": "boltgun-ranged",
+          "name": "Boltgun",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 1,
+            "bs": "3+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 1"
+          ]
+        },
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close combat weapon",
+          "type": "melee",
+          "stats": {
+            "a": 2,
+            "ws": "3+",
+            "s": 3,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": []
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "purity-of-execution",
+          "name": "Purity of Execution",
+          "description": "Each time a model in this unit makes a ranged attack that targets a Psyker unit, that attack has the [PRECISION] and [DEVASTATING WOUNDS] abilities."
+        }
+      ],
+      "keywords": [
+        "Prosecutors",
+        "Imperium",
+        "Infantry",
+        "Anathema Psykana"
+      ]
+    },
+    {
+      "id": "shield-captain",
+      "bsdataId": "b61c-b815-65c0-b1cc",
+      "name": "Shield-Captain",
+      "points": {
+        "1": 120
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 40
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 6,
+        "t": 6,
+        "sv": "2+",
+        "w": 6,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "guardian-spear-melee",
+          "name": "Guardian Spear",
+          "type": "melee",
+          "stats": {
+            "a": 7,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "guardian-spear"
+        },
+        {
+          "id": "guardian-spear-ranged",
+          "name": "Guardian Spear",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ],
+          "loadoutGroup": "guardian-spear"
+        },
+        {
+          "id": "castellan-axe-melee",
+          "name": "Castellan axe",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 9,
+            "ap": -1,
+            "d": 3
+          },
+          "abilities": [],
+          "loadoutGroup": "castellan-axe"
+        },
+        {
+          "id": "castellan-axe-ranged",
+          "name": "Castellan axe",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ],
+          "loadoutGroup": "castellan-axe"
+        },
+        {
+          "id": "sentinel-blade-melee",
+          "name": "Sentinel Blade",
+          "type": "melee",
+          "stats": {
+            "a": 7,
+            "ws": "2+",
+            "s": 6,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "sentinel-blade",
+          "modifiers": [
+            {
+              "stat": "w",
+              "operation": "add",
+              "value": 1,
+              "scope": "model",
+              "source": "Praesidium Shield"
+            }
+          ]
+        },
+        {
+          "id": "sentinel-blade-ranged",
+          "name": "Sentinel Blade",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault",
+            "Pistol"
+          ],
+          "loadoutGroup": "sentinel-blade",
+          "modifiers": [
+            {
+              "stat": "w",
+              "operation": "add",
+              "value": 1,
+              "scope": "model",
+              "source": "Praesidium Shield"
+            }
+          ]
+        },
+        {
+          "id": "pyrithite-spear-melee",
+          "name": "Pyrithite Spear",
+          "type": "melee",
+          "stats": {
+            "a": 7,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "pyrithite-spear",
+          "modifiers": [
+            {
+              "stat": "w",
+              "operation": "add",
+              "value": 1,
+              "scope": "model",
+              "source": "Praesidium Shield"
+            }
+          ]
+        },
+        {
+          "id": "pyrithite-spear-ranged",
+          "name": "Pyrithite Spear",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 9,
+            "ap": -4,
+            "d": "D6"
+          },
+          "abilities": [
+            "Melta 2"
+          ],
+          "loadoutGroup": "pyrithite-spear",
+          "modifiers": [
+            {
+              "stat": "w",
+              "operation": "add",
+              "value": 1,
+              "scope": "model",
+              "source": "Praesidium Shield"
+            }
+          ]
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "guardian-spear",
+              "name": "Guardian Spear",
+              "default": true
+            },
+            {
+              "id": "castellan-axe",
+              "name": "Castellan Axe"
+            },
+            {
+              "id": "sentinel-blade",
+              "name": "Sentinel Blade + Praesidium Shield",
+              "paired": true
+            },
+            {
+              "id": "pyrithite-spear",
+              "name": "Pyrithite Spear + Praesidium Shield",
+              "paired": true
+            }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "strategic-mastery",
+          "name": "Strategic Mastery",
+          "description": "Once per battle round, you can select one model from your army with this ability. That model's unit can be targeted with a Stratagem. If it does, reduce the CP cost of that use of that Stratagem by 1CP."
+        },
+        {
+          "id": "master-of-the-stances",
+          "name": "Master of the Stances",
+          "description": "Once per battle, when this model's unit is selected to fight, it can use this ability. If it does, until that fight is resolved, both Ka'tah Stances are active for that unit, instead of only one."
+        },
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n■ Custodian Guard\n■ Custodian Wardens",
+          "eligibleUnits": [
+            "custodian-guard",
+            "custodian-wardens"
+          ]
+        }
+      ],
+      "keywords": [
+        "Shield-Captain",
+        "Imperium",
+        "Character",
+        "Infantry"
+      ]
+    },
+    {
+      "id": "shield-captain-in-allarus-terminator-armour",
+      "bsdataId": "6319-eeba-b717-bd86",
+      "name": "Shield-Captain in Allarus Terminator Armour",
+      "points": {
+        "1": 130
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 40
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 5,
+        "t": 7,
+        "sv": "2+",
+        "w": 7,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "guardian-spear-melee",
+          "name": "Guardian Spear",
+          "type": "melee",
+          "stats": {
+            "a": 7,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "equipped-with"
+        },
+        {
+          "id": "guardian-spear-ranged",
+          "name": "Guardian Spear",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ],
+          "loadoutGroup": "equipped-with"
+        },
+        {
+          "id": "castellan-axe-melee",
+          "name": "Castellan axe",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 9,
+            "ap": -1,
+            "d": 3
+          },
+          "abilities": [],
+          "loadoutGroup": "equipped-with"
+        },
+        {
+          "id": "castellan-axe-ranged",
+          "name": "Castellan axe",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ],
+          "loadoutGroup": "equipped-with"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n■ Allarus Custodians",
+          "eligibleUnits": [
+            "allarus-custodians"
+          ]
+        },
+        {
+          "id": "auramite-and-adamantite",
+          "name": "Auramite and Adamantite",
+          "description": "Once per battle, at the start of any phase, this model can use this ability. If it does, until the end of the phase, each time an attack is allocated to this model, change the Damage characteristic of that attack to 1."
+        }
+      ],
+      "keywords": [
+        "Terminator",
+        "Shield-Captain",
+        "Infantry",
+        "Imperium",
+        "Character"
+      ]
+    },
+    {
+      "id": "shield-captain-on-dawneagle-jetbike",
+      "bsdataId": "58fa-4a25-a5af-1144",
+      "name": "Shield-Captain on Dawneagle Jetbike",
+      "points": {
+        "1": 150
+      },
+      "baseSize": {
+        "shape": "oval",
+        "mm": 75,
+        "mmMinor": 42
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 12,
+        "t": 7,
+        "sv": "2+",
+        "w": 8,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "interceptor-lance-melee",
+          "name": "Interceptor lance",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Lance"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "vertus-hurricane-bolter-ranged",
+          "name": "Vertus hurricane bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 3,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Rapid Fire 3",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "equipped-with"
+        },
+        {
+          "id": "salvo-launcher-ranged",
+          "name": "Salvo launcher",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 1,
+            "bs": "2+",
+            "s": 10,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "equipped-with"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n■ Vertus Praetors",
+          "eligibleUnits": [
+            "vertus-praetors"
+          ]
+        },
+        {
+          "id": "sweeping-advance",
+          "name": "Sweeping Advance",
+          "description": "Once per battle, at the end of the Fight phase, if this model's unit fought this phase, if it is within Engagement Range of one or more enemy units, it can make a Fall Back move or, if it is not within Engagement Range of one or more enemy units, it can make a Normal move."
+        }
+      ],
+      "keywords": [
+        "Dawneagle Jetbike",
+        "Imperium",
+        "Mounted",
+        "Character",
+        "Fly",
+        "Shield-Captain"
+      ]
+    },
+    {
+      "id": "trajann-valoris",
+      "bsdataId": "7d7c-c212-47a3-38e4",
+      "name": "Trajann Valoris",
+      "points": {
+        "1": 140
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 40
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 6,
+        "t": 6,
+        "sv": "2+",
+        "w": 7,
+        "ld": "5+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "watcher-s-axe-melee",
+          "name": "Watcher's Axe",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 10,
+            "ap": -2,
+            "d": 3
+          },
+          "abilities": []
+        },
+        {
+          "id": "eagle-s-scream-ranged",
+          "name": "Eagle's Scream",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 3
+          },
+          "abilities": [
+            "Assault"
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "feel-no-pain",
+          "name": "Feel No Pain",
+          "description": "5+"
+        },
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n■ Custodian Guard\n■ Custodian Wardens",
+          "eligibleUnits": [
+            "custodian-guard",
+            "custodian-wardens"
+          ]
+        },
+        {
+          "id": "supreme-commander",
+          "name": "Supreme Commander",
+          "description": "If this model is in your army, it must be your Warlord."
+        },
+        {
+          "id": "captain-general",
+          "name": "Captain-General",
+          "description": "While this model is leading a unit, each time a model in that unit makes an attack, you can ignore any or all modifiers to that attack's Ballistic Skill or Weapon Skill characteristics and/or all modifiers to the Hit roll."
+        },
+        {
+          "id": "moment-shackle",
+          "name": "Moment Shackle",
+          "description": "Once per battle, at the start of the Fight phase, you can select one of the following to take effect until the end of the phase:\n■ This model's Watcher's Axe melee weapon has an Attacks characteristic of 12.\n■ This model has a 2+ invulnerable save."
+        }
+      ],
+      "keywords": [
+        "Trajann Valoris",
+        "Epic Hero",
+        "Character",
+        "Infantry",
+        "Imperium"
+      ]
+    },
+    {
+      "id": "valerian",
+      "bsdataId": "8103-2e01-5d6a-b761",
+      "name": "Valerian",
+      "points": {
+        "1": 110
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 40
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 6,
+        "t": 6,
+        "sv": "2+",
+        "w": 6,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "gnosis-ranged",
+          "name": "Gnosis",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 3,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ]
+        },
+        {
+          "id": "gnosis-melee",
+          "name": "Gnosis",
+          "type": "melee",
+          "stats": {
+            "a": 7,
+            "ws": "2+",
+            "s": 8,
+            "ap": -3,
+            "d": 2
+          },
+          "abilities": []
+        }
+      ],
+      "abilities": [
+        {
+          "id": "leader",
+          "name": "Leader",
+          "description": "This model can be attached to the following units:\n■ Custodian Guard\n■ Custodian Wardens",
+          "eligibleUnits": [
+            "custodian-guard",
+            "custodian-wardens"
+          ]
+        },
+        {
+          "id": "golden-laurels",
+          "name": "Golden Laurels",
+          "description": "While this model is leading a unit, each time a melee attack targets that unit, worsen that Armour Penetration characteristic of that attack by 1."
+        },
+        {
+          "id": "hero-of-lion-s-gate",
+          "name": "Hero of Lion's Gate",
+          "description": "Once per battle, after making a Hit roll, Wound roll or saving throw for this model, you can change the result of that roll to an unmodified 6."
+        }
+      ],
+      "keywords": [
+        "Valerian",
+        "Infantry",
+        "Character",
+        "Imperium",
+        "Shield-Captain",
+        "Epic Hero"
+      ]
+    },
+    {
+      "id": "venerable-contemptor-dreadnought",
+      "bsdataId": "188b-e48b-29f-1456",
+      "name": "Venerable Contemptor Dreadnought",
+      "points": {
+        "1": 170
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 60
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 6,
+        "t": 9,
+        "sv": "2+",
+        "w": 10,
+        "ld": "6+",
+        "oc": 3
+      },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "combi-bolter-ranged",
+          "name": "Combi-bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "contemptor-combat-weapon-melee",
+          "name": "Contemptor combat weapon",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 12,
+            "ap": -2,
+            "d": 3
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "multi-melta-ranged",
+          "name": "Multi-melta",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 2,
+            "bs": "2+",
+            "s": 9,
+            "ap": -4,
+            "d": "D6"
+          },
+          "abilities": [
+            "Melta 2"
+          ],
+          "loadoutGroup": "equipped-with"
+        },
+        {
+          "id": "kheres-pattern-assault-cannon-ranged",
+          "name": "Kheres-pattern assault cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 6,
+            "bs": "2+",
+            "s": 7,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Devastating Wounds"
+          ],
+          "loadoutGroup": "equipped-with"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "unyielding-ancient",
+          "name": "Unyielding Ancient",
+          "description": "The first time this model is destroyed, remove it from play without resolving its Deadly Demise ability. Then, at the end of the phase, roll one D6: on a 2+, set this model back up on the battlefield as close as possible to where it was destroyed and not within Engagement Range of any enemy units, with D6 wounds remaining."
+        }
+      ],
+      "keywords": [
+        "Venerable Contemptor Dreadnought",
+        "Vehicle",
+        "Walker",
+        "Imperium",
+        "AC Walker"
+      ]
+    },
+    {
+      "id": "venerable-land-raider",
+      "bsdataId": "76be-3bcb-cf4-bcbd",
+      "name": "Venerable Land Raider",
+      "points": {
+        "1": 220
+      },
+      "baseSize": {
+        "shape": "oval",
+        "mm": 160,
+        "mmMinor": 105
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 10,
+        "t": 12,
+        "sv": "2+",
+        "w": 16,
+        "ld": "6+",
+        "oc": 5
+      },
+      "weapons": [
+        {
+          "id": "armoured-tracks-melee",
+          "name": "Armoured tracks",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "4+",
+            "s": 8,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "godhammer-lascannon-ranged",
+          "name": "Godhammer lascannon",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 2,
+            "bs": "2+",
+            "s": 12,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "storm-bolter-ranged",
+          "name": "Storm bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid fire 2"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "twin-heavy-bolter-ranged",
+          "name": "Twin heavy bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 3,
+            "bs": "2+",
+            "s": 5,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Sustained Hits 1",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "assault-ramp",
+          "name": "Assault Ramp",
+          "description": "Each time a unit disembarks from this model after it has made a Normal move, that unit is still eligible to declare a charge this turn."
+        },
+        {
+          "id": "damaged-1-5-wounds-remaining",
+          "name": "Damaged: 1-5 Wounds remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": [
+        "Venerable Land Raider",
+        "Transport",
+        "Vehicle",
+        "Imperium",
+        "Smoke"
+      ]
+    },
+    {
+      "id": "vertus-praetors",
+      "bsdataId": "918b-c9ed-7af7-74df",
+      "name": "Vertus Praetors",
+      "points": {
+        "2": 150,
+        "3": 225
+      },
+      "baseSize": {
+        "shape": "oval",
+        "mm": 75,
+        "mmMinor": 42
+      },
+      "modelCountOptions": [
+        2,
+        3
+      ],
+      "stats": {
+        "m": 12,
+        "t": 7,
+        "sv": "2+",
+        "w": 5,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "interceptor-lance-melee",
+          "name": "Interceptor lance",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Lance"
+          ],
+          "loadoutGroup": "salvo-launcher"
+        },
+        {
+          "id": "salvo-launcher-ranged",
+          "name": "Salvo launcher",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 1,
+            "bs": "2+",
+            "s": 10,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "salvo-launcher"
+        },
+        {
+          "id": "vertus-hurricane-bolter-ranged",
+          "name": "Vertus hurricane bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 3,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Rapid Fire 3",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "hurricane-bolter"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "salvo-launcher",
+              "name": "Interceptor lance + Salvo launcher",
+              "default": true
+            },
+            {
+              "id": "hurricane-bolter",
+              "name": "Interceptor lance + Vertus hurricane bolter"
+            }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "turbo-boost",
+          "name": "Turbo Boost",
+          "description": "Each time this unit Advances, do not make an Advance roll. Instead, until the end of the phase, add 6\" to the Move characteristic of models in this unit."
+        },
+        {
+          "id": "quicksilver-execution",
+          "name": "Quicksilver Execution",
+          "description": "Once per battle, after this unit ends a normal or Advance move, you can select one enemy unit (excluding MONSTER and VEHICLE units) that it moved over during that move, then roll one D6 for each model in this unit; for each 2+, that enemy unit suffers 2 mortal wounds."
+        }
+      ],
+      "keywords": [
+        "Fly",
+        "Mounted",
+        "Imperium",
+        "Vertus Praetors"
+      ]
+    },
+    {
+      "id": "vigilators",
+      "bsdataId": "dd2d-568a-9c56-1b6e",
+      "name": "Vigilators",
+      "points": {
+        "4": 45,
+        "5": 55,
+        "9": 90,
+        "10": 100
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 32
+      },
+      "modelCountOptions": [
+        4,
+        5,
+        9,
+        10
+      ],
+      "stats": {
+        "m": 6,
+        "t": 3,
+        "sv": "3+",
+        "w": 1,
+        "ld": "6+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "executioner-greatblade-melee",
+          "name": "Executioner greatblade",
+          "type": "melee",
+          "stats": {
+            "a": 2,
+            "ws": "3+",
+            "s": 5,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Anti-Psyker 5+",
+            "Devastating Wounds"
+          ]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "deft-parry",
+          "name": "Deft Parry",
+          "description": "Each time a melee attack targets this unit, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": [
+        "Vigilators",
+        "Anathema Psykana",
+        "Infantry",
+        "Imperium"
+      ]
+    },
+    {
+      "id": "witchseekers",
+      "bsdataId": "503b-f7be-eeeb-9e31",
+      "name": "Witchseekers",
+      "points": {
+        "4": 45,
+        "5": 55,
+        "9": 90,
+        "10": 100
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 32
+      },
+      "modelCountOptions": [
+        4,
+        5,
+        9,
+        10
+      ],
+      "stats": {
+        "m": 6,
+        "t": 3,
+        "sv": "3+",
+        "w": 1,
+        "ld": "6+",
+        "oc": 1
+      },
+      "weapons": [
+        {
+          "id": "close-combat-weapon-melee",
+          "name": "Close combat weapon",
+          "type": "melee",
+          "stats": {
+            "a": 2,
+            "ws": "3+",
+            "s": 3,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": []
+        },
+        {
+          "id": "witchseeker-flamer-ranged",
+          "name": "Witchseeker flamer",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": "D6",
+            "bs": "N/A",
+            "s": 4,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Ignores Cover",
+            "Torrent"
+          ]
+        }
+      ],
+      "loadoutOptions": [],
+      "abilities": [
+        {
+          "id": "sanctified-flames",
+          "name": "Sanctified Flames",
+          "description": "In your Shooting phase, after this unit has shot, select one enemy unit that was hit by one or more of those attacks. That unit must take a Battle-shock test."
+        }
+      ],
+      "keywords": [
+        "Witchseekers",
+        "Anathema Psykana",
+        "Infantry",
+        "Imperium"
+      ]
+    },
+    {
+      "id": "custodian-guard-with-adrasite-and-pyrithite-spears",
+      "bsdataId": "af0f-5212-907e-7125",
+      "name": "Custodian Guard with Adrasite and Pyrithite spears",
+      "points": {
+        "5": 250
+      },
+      "modelCountOptions": [
+        5
+      ],
+      "stats": {
+        "m": 6,
+        "t": 6,
+        "sv": "2+",
+        "w": 3,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "adrasite-spear-ranged",
+          "name": "Adrasite spear",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 1,
+            "bs": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 3
+          },
+          "abilities": [],
+          "loadoutGroup": "adrasite-spear"
+        },
+        {
+          "id": "adrasite-spear-melee",
+          "name": "Adrasite spear",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "adrasite-spear"
+        },
+        {
+          "id": "pyrithite-spear-melee",
+          "name": "Pyrithite spear",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "pyrithite-spear"
+        },
+        {
+          "id": "pyrithite-spear-ranged",
+          "name": "Pyrithite spear",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 9,
+            "ap": -4,
+            "d": "D6"
+          },
+          "abilities": [
+            "Melta 2"
+          ],
+          "loadoutGroup": "pyrithite-spear"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "adrasite-spear",
+              "name": "Adrasite spear",
+              "default": true
+            },
+            {
+              "id": "pyrithite-spear",
+              "name": "Pyrithite spear"
+            }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "stand-vigil",
+          "name": "Stand Vigil",
+          "description": "Each time a model in this unit makes an attack, re-roll a Wound roll of 1. While this unit is within range of an objective marker you control, you can re-roll the Wound roll instead."
+        },
+        {
+          "id": "no-foe-shall-stand",
+          "name": "No Foe Shall Stand",
+          "description": "Once per battle, at the start of your Shooting phase, this unit can use this ability. If it does, until the end of the phase, ranged weapons equipped by models in this unit have the [LETHAL HITS] and [IGNORES COVER abilities]."
+        }
+      ],
+      "keywords": [
+        "Custodian Guard",
+        "Infantry",
+        "Imperium"
+      ],
+      "baseSize": {
+        "shape": "round",
+        "mm": 40
+      }
+    },
+    {
+      "id": "sagittarum-custodians",
+      "bsdataId": "6f9f-e6aa-ba13-aab1",
+      "name": "Sagittarum Custodians",
+      "points": {
+        "5": 225
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 40
+      },
+      "modelCountOptions": [
+        5
+      ],
+      "stats": {
+        "m": 6,
+        "t": 6,
+        "sv": "2+",
+        "w": 3,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "adrastus-bolt-caliver-ranged",
+          "name": "Adrastus bolt caliver",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 3,
+            "bs": "2+",
+            "s": 5,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Sustained Hits 1"
+          ],
+          "loadoutGroup": "sagittarum-custodian"
+        },
+        {
+          "id": "misericordia-melee",
+          "name": "Misericordia",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "sagittarum-custodian"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "disintegration-beams",
+          "name": "Disintegration Beams",
+          "description": "Once per battle, at the start of your Shooting phase, this unit can use this ability. If it does, until the end of the phase, ranged weapons equipped by models in this unit have the Devastating Wounds ability."
+        },
+        {
+          "id": "saturation-volleys",
+          "name": "Saturation Volleys",
+          "description": "In your Shooting phase, after this unit has shot, select one enemy unit (excluding MONSTERS and VEHICLES) hit by one or more of those attacks. Until the start of your next turn, while this unit is on the battlefield. that enemy unit is suppressed. While a unit is suppressed, each time a model in that unit makes an attack, subtract 1 from the hit roll."
+        }
+      ],
+      "keywords": [
+        "Infantry",
+        "Imperium",
+        "Sagittarum Custodians"
+      ]
+    },
+    {
+      "id": "aquilon-custodians",
+      "bsdataId": "03bc-0141-b967-40e0",
+      "name": "Aquilon Custodians",
+      "points": {
+        "3": 195,
+        "6": 390
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 50
+      },
+      "modelCountOptions": [
+        3,
+        6
+      ],
+      "stats": {
+        "m": 5,
+        "t": 7,
+        "sv": "2+",
+        "w": 4,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "solerite-power-gauntlet-melee",
+          "name": "Solerite power gauntlet",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 8,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [],
+          "loadoutGroup": "gauntlet-lastrum-bolter"
+        },
+        {
+          "id": "lastrum-storm-bolter-ranged",
+          "name": "Lastrum storm bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 5,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "gauntlet-lastrum-bolter"
+        },
+        {
+          "id": "twin-adrathic-destructor-ranged",
+          "name": "Twin adrathic destructor",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 1,
+            "bs": "2+",
+            "s": 6,
+            "ap": -2,
+            "d": 3
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "gauntlet-twin-adrathic-destructor"
+        },
+        {
+          "id": "infernus-firepike-ranged",
+          "name": "Infernus firepike",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": "D6",
+            "bs": "N/A",
+            "s": 6,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Ignores Cover",
+            "Torrent"
+          ],
+          "loadoutGroup": "gauntlet-infernus-firepike"
+        },
+        {
+          "id": "solerite-power-talon-melee",
+          "name": "Solerite power talon",
+          "type": "melee",
+          "stats": {
+            "a": 7,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "talon-infernus-firepike"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "gauntlet-lastrum-bolter",
+              "name": "Solerite power gauntlet + Lastrum storm bolter",
+              "default": true
+            },
+            {
+              "id": "gauntlet-twin-adrathic-destructor",
+              "name": "Solerite power gauntlet + Twin adrathic destructor"
+            },
+            {
+              "id": "gauntlet-infernus-firepike",
+              "name": "Solerite power gauntlet + Infernus firepike"
+            },
+            {
+              "id": "talon-infernus-firepike",
+              "name": "Infernus firepike + Solerite power talon"
+            },
+            {
+              "id": "talon-lastrum-bolter",
+              "name": "Lastrum storm bolter + Solerite power talon"
+            },
+            {
+              "id": "talon-twin-adrathic-destructor",
+              "name": "Twin adrathic destructor + Solerite power talon"
+            }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "heavy-assault-infantry",
+          "name": "Heavy Assault Infantry",
+          "description": "Each time a model in this unit makes a ranged attack that targets the closest eligible target, re-roll a Wound roll of 1."
+        },
+        {
+          "id": "from-golden-light",
+          "name": "From Golden Light",
+          "description": "Once per battle, at the end of your opponent's turn, if this unit is not whithin Engagement Range of one or more enemy units, you can remove it from the battlefield. In the Reinforcements step of your next Movement phase, set it up anywhere on the battlefield that is more than 9\" horizontally away from all enemy models."
+        }
+      ],
+      "keywords": [
+        "Imperium",
+        "Terminator",
+        "Infantry",
+        "Aquilon Custodians"
+      ]
+    },
+    {
+      "id": "agamatus-custodians",
+      "bsdataId": "00ab-41c4-cf52-4ad2",
+      "name": "Agamatus Custodians",
+      "points": {
+        "3": 225,
+        "6": 450
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 60
+      },
+      "modelCountOptions": [
+        3,
+        6
+      ],
+      "stats": {
+        "m": 12,
+        "t": 6,
+        "sv": "2+",
+        "w": 4,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "lastrum-bolt-cannon-ranged",
+          "name": "Lastrum bolt cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 3,
+            "bs": "2+",
+            "s": 6,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Sustained Hits 1"
+          ],
+          "loadoutGroup": "lastrum-bolt-cannon"
+        },
+        {
+          "id": "interceptor-lance-melee",
+          "name": "Interceptor Lance",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Lance"
+          ],
+          "loadoutGroup": "lastrum-bolt-cannon"
+        },
+        {
+          "id": "adrathic-devastator-ranged",
+          "name": "Adrathic devastator",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 1,
+            "bs": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 3
+          },
+          "abilities": [],
+          "loadoutGroup": "adrathic-devastator"
+        },
+        {
+          "id": "twin-las-pulsar-ranged",
+          "name": "Twin las-pulsar",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 9,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "twin-las-pulsar"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "lastrum-bolt-cannon",
+              "name": "Lastrum bolt cannon + Interceptor Lance",
+              "default": true
+            },
+            {
+              "id": "adrathic-devastator",
+              "name": "Adrathic devastator + Interceptor Lance"
+            },
+            {
+              "id": "twin-las-pulsar",
+              "name": "Twin las-pulsar + Interceptor Lance"
+            }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "implacable-vanguard",
+          "name": "Implacable Vanguard",
+          "description": "Once per battle, in your Shooting phase, after this unit has shot, if it is not within Engagement Range of one or more enemy units, it can make a Normal move of up to 6\". If it does, until the end of the turn, this unit is not elgibile to declare a charge."
+        },
+        {
+          "id": "turbo-boost",
+          "name": "Turbo Boost",
+          "description": "Each time this unit Advances, do not make an Advance roll. Instead, until the end of the phase, add 6\" to the Move characteristic of models in this unit."
+        }
+      ],
+      "keywords": [
+        "Mounted",
+        "Fly",
+        "Imperium",
+        "Agamatus Custodians"
+      ]
+    },
+    {
+      "id": "venatari-custodians",
+      "bsdataId": "201e-e502-a8d1-3974",
+      "name": "Venatari Custodians",
+      "points": {
+        "3": 165,
+        "6": 330
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 40
+      },
+      "modelCountOptions": [
+        3,
+        6
+      ],
+      "stats": {
+        "m": 10,
+        "t": 6,
+        "sv": "2+",
+        "w": 3,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "venatari-lance-ranged",
+          "name": "Venatari lance",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 4,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Assault"
+          ],
+          "loadoutGroup": "venatari-lance"
+        },
+        {
+          "id": "venatari-lance-melee",
+          "name": "Venatari lance",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Lance"
+          ],
+          "loadoutGroup": "venatari-lance"
+        },
+        {
+          "id": "kinetic-destroyer-ranged",
+          "name": "Kinetic destroyer",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 2,
+            "bs": "2+",
+            "s": 6,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Pistol",
+            "Sustained Hits 1"
+          ],
+          "loadoutGroup": "kinetic-destroyer-tarsus-buckler"
+        },
+        {
+          "id": "tarsis-buckler-melee",
+          "name": "Tarsis buckler",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 5,
+            "ap": -2,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "kinetic-destroyer-tarsus-buckler"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "main-weapon",
+          "name": "Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "venatari-lance",
+              "name": "Venatari lance",
+              "default": true
+            },
+            {
+              "id": "kinetic-destroyer-tarsus-buckler",
+              "name": "Kinetic destroyer + Tarsis buckler"
+            }
+          ]
+        }
+      ],
+      "abilities": [
+        {
+          "id": "strike-from-the-skies",
+          "name": "Strike from the Skies",
+          "description": "This unit is eligible to shoot and declare a charge in a turn in which it Fell Back."
+        },
+        {
+          "id": "swooping-dive",
+          "name": "Swooping Dive",
+          "description": "Once per battle, you can target this unit with the Rapid Ingress Stratagem for 0 CP, and can do so even if you have already targeted a different unit with that Stratagem that phase."
+        }
+      ],
+      "keywords": [
+        "Imperium",
+        "Infantry",
+        "Fly",
+        "Jump Pack",
+        "Venatari Custodians"
+      ]
+    },
+    {
+      "id": "contemptor-galatus-dreadnought",
+      "bsdataId": "4988-d93e-5034-2b3c",
+      "name": "Contemptor-Galatus Dreadnought",
+      "points": {
+        "1": 165
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 60
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 6,
+        "t": 9,
+        "sv": "2+",
+        "w": 10,
+        "ld": "6+",
+        "oc": 3
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "galatus-warblade-ranged",
+          "name": "Galatus warblade",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": "D6",
+            "bs": "N/A",
+            "s": 6,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Ignores Cover",
+            "Torrent",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "galatus-warblade-melee",
+          "name": "Galatus warblade",
+          "type": "melee",
+          "stats": {
+            "a": 8,
+            "ws": "2+",
+            "s": 8,
+            "ap": -2,
+            "d": 3
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "galatus-shield",
+          "name": "Galatus Shield",
+          "description": "Each time a melee attack targets this model subtract 1 from the Wound roll."
+        }
+      ],
+      "keywords": [
+        "Contemptor-Galatus Dreadnought",
+        "Vehicle",
+        "Walker",
+        "Imperium",
+        "AC Walker"
+      ]
+    },
+    {
+      "id": "contemptor-achillus-dreadnought",
+      "bsdataId": "db3b-02cd-87a2-3b52",
+      "name": "Contemptor-Achillus Dreadnought",
+      "points": {
+        "1": 155
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 60
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 6,
+        "t": 9,
+        "sv": "2+",
+        "w": 10,
+        "ld": "6+",
+        "oc": 3
+      },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "achillus-dreadspear-ranged",
+          "name": "Achillus dreadspear",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": 1,
+            "bs": "2+",
+            "s": 9,
+            "ap": -2,
+            "d": 3
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "achillus-dreadspear-melee",
+          "name": "Achillus dreadspear",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 12,
+            "ap": -2,
+            "d": "D6+1"
+          },
+          "abilities": [
+            "Lance"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "infernus-incinerator-ranged",
+          "name": "Infernus incinerator",
+          "type": "ranged",
+          "stats": {
+            "range": 12,
+            "a": "D6",
+            "bs": "N/A",
+            "s": 6,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Ignores Cover",
+            "Torrent"
+          ],
+          "loadoutGroup": "equipped-with"
+        },
+        {
+          "id": "lastrum-storm-bolter-ranged",
+          "name": "Lastrum storm bolter",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 2,
+            "bs": "2+",
+            "s": 5,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Rapid Fire 2"
+          ],
+          "loadoutGroup": "equipped-with"
+        },
+        {
+          "id": "twin-adrathic-destructor-ranged",
+          "name": "Twin adrathic destructor",
+          "type": "ranged",
+          "stats": {
+            "range": 18,
+            "a": 1,
+            "bs": "2+",
+            "s": 6,
+            "ap": -2,
+            "d": 3
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "equipped-with"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "dread-foe",
+          "name": "Dread Foe",
+          "description": "Each time this model is selected to fight, you can select one enemy unit within Engagement Range of it and roll one D6, adding 2 to the result if this model made a Charge move this turn: on 4-5, that enemy unit suffers D3 mortal wounds; on a 6+, that enemy unit suffers 3 mortal wounds."
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Imperium",
+        "Walker",
+        "Contemptor-Achillus Dreadnought",
+        "AC Walker"
+      ]
+    },
+    {
+      "id": "pallas-grav-attack",
+      "bsdataId": "06df-2fb2-8dfa-2fce",
+      "name": "Pallas Grav-attack",
+      "points": {
+        "1": 105
+      },
+      "baseSize": {
+        "shape": "oval",
+        "mm": 90,
+        "mmMinor": 52
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 12,
+        "t": 8,
+        "sv": "2+",
+        "w": 9,
+        "ld": "6+",
+        "oc": 2
+      },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "armoured-hull-melee",
+          "name": "Armoured hull",
+          "type": "melee",
+          "stats": {
+            "a": 3,
+            "ws": "4+",
+            "s": 6,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "twin-arachnus-blaze-cannon-ranged",
+          "name": "Twin arachnus blaze cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 8,
+            "bs": "2+",
+            "s": 5,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Devastating Wounds",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "merciless-hunter",
+          "name": "Merciless Hunter",
+          "description": "In your Shooting phase, each time this model makes an attack that targets an enemy unit that is Below Half-strength, add 1 to the Wound roll."
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Fly",
+        "Pallas Grav-attack",
+        "Imperium"
+      ]
+    },
+    {
+      "id": "caladius-grav-tank",
+      "bsdataId": "3ee2-62a9-af84-1a90",
+      "name": "Caladius Grav-tank",
+      "points": {
+        "1": 215
+      },
+      "baseSize": {
+        "shape": "oval",
+        "mm": 170,
+        "mmMinor": 109
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 10,
+        "t": 11,
+        "sv": "2+",
+        "w": 14,
+        "ld": "6+",
+        "oc": 4
+      },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "armoured-hull-melee",
+          "name": "Armoured hull",
+          "type": "melee",
+          "stats": {
+            "a": 4,
+            "ws": "4+",
+            "s": 6,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "twin-lastrum-bolt-cannon-ranged",
+          "name": "Twin lastrum bolt cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 3,
+            "bs": "2+",
+            "s": 6,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Sustained Hits 1"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "twin-iliastus-accelerator-cannon-ranged",
+          "name": "Twin iliastus accelerator cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 4,
+            "bs": "2+",
+            "s": 10,
+            "ap": -1,
+            "d": 3
+          },
+          "abilities": [
+            "Rapid Fire 4",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "equipped-with"
+        },
+        {
+          "id": "twin-arachnus-heavy-blaze-cannon-ranged",
+          "name": "Twin arachnus heavy blaze cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 4,
+            "bs": "2+",
+            "s": 12,
+            "ap": -3,
+            "d": "D6+2"
+          },
+          "abilities": [
+            "Twin-linked"
+          ],
+          "loadoutGroup": "equipped-with"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "advanced-firepower",
+          "name": "Advanced Firepower",
+          "description": "Each time this model makes an attack with its Twin iliastus accelerator cannon that targets an enemy unit (excluding MONSTERS and VEHICLES), that attack has the [LETHAL HITS] ability. Each time this model makes an attack with its Twin arachnus heavy blaze cannon that targets an enemy MONSTER or VEHICLE unit, that attack has the [LETHAL HITS] ability."
+        },
+        {
+          "id": "damaged-1-5-wounds-remaining",
+          "name": "Damaged: 1-5 wounds remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Fly",
+        "Imperium",
+        "Caladius Grav-tank"
+      ]
+    },
+    {
+      "id": "telemon-heavy-dreadnought",
+      "bsdataId": "e7d8-1c73-7d03-8b62",
+      "name": "Telemon Heavy Dreadnought",
+      "points": {
+        "1": 225
+      },
+      "baseSize": {
+        "shape": "round",
+        "mm": 100
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 8,
+        "t": 10,
+        "sv": "2+",
+        "w": 12,
+        "ld": "6+",
+        "oc": 4
+      },
+      "invuln": "4+",
+      "weapons": [
+        {
+          "id": "armoured-feet-melee",
+          "name": "Armoured feet",
+          "type": "melee",
+          "stats": {
+            "a": 5,
+            "ws": "2+",
+            "s": 7,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "spiculus-bolt-launcher-ranged",
+          "name": "Spiculus bolt launcher",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": "D6+3",
+            "bs": "2+",
+            "s": 5,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [
+            "Blast"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "arachnus-storm-cannon-ranged",
+          "name": "Arachnus storm cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 12,
+            "bs": "2+",
+            "s": 6,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Devastating Wounds"
+          ],
+          "loadoutGroup": "equipped-with"
+        },
+        {
+          "id": "iliastus-accelerator-culverin-ranged",
+          "name": "Iliastus accelerator culverin",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 4,
+            "bs": "2+",
+            "s": 9,
+            "ap": -1,
+            "d": 3
+          },
+          "abilities": [],
+          "loadoutGroup": "equipped-with"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "guardian-eternal",
+          "name": "Guardian Eternal",
+          "description": "Each time an attack is allocated to this model, subtract 1 from the Damage characteristic of that attack."
+        },
+        {
+          "id": "damaged-1-4-wounds-remaining",
+          "name": "Damaged: 1-4 wounds remaining",
+          "description": "While this model has 1-4 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        },
+        {
+          "id": "devoted-to-destruction",
+          "name": "Devoted to Destruction",
+          "description": "If this model is equipped with 2 Telemon caestus weapons in addition to its armoured feet weapon, add 2 to the Attacks characteristic of those Telemon caestus weapons."
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Imperium",
+        "Telemon Heavy Dreadnought",
+        "Walker",
+        "AC Walker"
+      ]
+    },
+    {
+      "id": "coronus-grav-carrier",
+      "bsdataId": "f35e-ef9c-9ef4-77e1",
+      "name": "Coronus Grav-carrier",
+      "points": {
+        "1": 200
+      },
+      "baseSize": {
+        "shape": "oval",
+        "mm": 170,
+        "mmMinor": 109
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 12,
+        "t": 12,
+        "sv": "2+",
+        "w": 16,
+        "ld": "6+",
+        "oc": 5
+      },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "armoured-hull-melee",
+          "name": "Armoured hull",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "4+",
+            "s": 8,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "twin-arachnus-blaze-cannon-ranged",
+          "name": "Twin arachnus blaze cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 24,
+            "a": 8,
+            "bs": "2+",
+            "s": 5,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Devastating Wounds",
+            "Twin-linked"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "twin-lastrum-bolt-cannon-ranged",
+          "name": "Twin lastrum bolt cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 3,
+            "bs": "2+",
+            "s": 6,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Sustained Hits 1"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "fire-support",
+          "name": "Fire Support",
+          "description": "In your Shooting phase, after this model has shot, select one enemy unit hit by one or more of those attacks. Until the end of the phase, each time a friendly model that disembarked from this ^^Transport^^ this turn makes an attack that targets that enemy unit, you can re-roll the Wound roll."
+        },
+        {
+          "id": "damaged-1-5-wounds-remaining",
+          "name": "Damaged: 1-5 wounds remaining",
+          "description": "While this model has 1-5 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Transport",
+        "Fly",
+        "Imperium",
+        "Coronus Grav-carrier"
+      ]
+    },
+    {
+      "id": "orion-assault-dropship",
+      "bsdataId": "9c1a-7efd-ed36-440e",
+      "name": "Orion Assault Dropship",
+      "points": {
+        "1": 690
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 20,
+        "t": 12,
+        "sv": "2+",
+        "w": 22,
+        "ld": "6+",
+        "oc": 0
+      },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "arachnus-heavy-blaze-cannon-ranged",
+          "name": "Arachnus heavy blaze cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 4,
+            "bs": "2+",
+            "s": 12,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "armoured-hull-melee",
+          "name": "Armoured hull",
+          "type": "melee",
+          "stats": {
+            "a": 9,
+            "ws": "4+",
+            "s": 9,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "spiculus-heavy-bolt-launcher-ranged",
+          "name": "Spiculus heavy bolt launcher",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": "D6+6",
+            "bs": "2+",
+            "s": 7,
+            "ap": -1,
+            "d": 2
+          },
+          "abilities": [
+            "Blast"
+          ],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "twin-lastrum-bolt-cannon-ranged",
+          "name": "Twin lastrum bolt cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 3,
+            "bs": "2+",
+            "s": 6,
+            "ap": -1,
+            "d": 1
+          },
+          "abilities": [
+            "Sustained Hits 1"
+          ],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "damaged-1-7-wounds-remaining",
+          "name": "Damaged: 1-7 wounds remaining",
+          "description": "While this model has 1-7 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        },
+        {
+          "id": "assault-dropship",
+          "name": "Assault Dropship",
+          "description": "If a unit disembarks from this TRANSPORT before it moves, until the end of the turn, that unit is eligibile to charge in a turn in which it Advanced."
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Transport",
+        "Aircraft",
+        "Fly",
+        "Imperium",
+        "Orion Assault Dropship"
+      ],
+      "baseSize": {
+        "shape": "round",
+        "mm": 160
+      }
+    },
+    {
+      "id": "ares-gunship",
+      "bsdataId": "9335-74d9-ad68-3ff7",
+      "name": "Ares Gunship",
+      "points": {
+        "1": 580
+      },
+      "modelCountOptions": [
+        1
+      ],
+      "stats": {
+        "m": 20,
+        "t": 12,
+        "sv": "2+",
+        "w": 22,
+        "ld": "6",
+        "oc": 0
+      },
+      "invuln": "5+",
+      "weapons": [
+        {
+          "id": "arachnus-heavy-blaze-cannon-ranged",
+          "name": "Arachnus heavy blaze cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 36,
+            "a": 4,
+            "bs": "2+",
+            "s": 12,
+            "ap": -3,
+            "d": "D6+1"
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "arachnus-magna-blaze-cannon-ranged",
+          "name": "Arachnus magna-blaze cannon",
+          "type": "ranged",
+          "stats": {
+            "range": 48,
+            "a": 3,
+            "bs": "2+",
+            "s": 18,
+            "ap": -4,
+            "d": "D6+6"
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        },
+        {
+          "id": "armoured-hull-melee",
+          "name": "Armoured hull",
+          "type": "melee",
+          "stats": {
+            "a": 9,
+            "ws": "4+",
+            "s": 9,
+            "ap": 0,
+            "d": 1
+          },
+          "abilities": [],
+          "loadoutGroup": "wargear"
+        }
+      ],
+      "abilities": [
+        {
+          "id": "infernus-firebomb",
+          "name": "Infernus Firebomb",
+          "description": "Each time this model ends a Normal move, you can select one enemy unit it moved over during that move. Until the end of the turn, models in that unit cannot have the Benefit of Cover. In addition, roll one D6 for eah model in that unit: for each 6, that unit suffers 1 mortal wound."
+        },
+        {
+          "id": "damaged-1-7-wounds-remaining",
+          "name": "Damaged: 1-7 wounds remaining",
+          "description": "While this model has 1-7 wounds remaining, each time this model makes an attack, subtract 1 from the Hit roll."
+        }
+      ],
+      "keywords": [
+        "Vehicle",
+        "Aircraft",
+        "Fly",
+        "Imperium",
+        "Ares Gunship"
+      ],
+      "baseSize": {
+        "shape": "round",
+        "mm": 160
+      }
+    }
+  ],
+  "coreStratagems": [
+    {
+      "id": "command-re-roll",
+      "name": "Command Re-roll",
+      "cost": 1,
+      "phase": "Any",
+      "description": "WHEN: In any phase, just after you have made a Hit roll, a Wound roll, a Damage roll, a saving throw, an Advance roll, a Charge roll, a Desperate Escape test, a Hazardous test, or just after you have rolled the dice to determine the number of attacks made with a weapon. TARGET: An attack, model or unit from your army. EFFECT: You re-roll that roll, test or saving throw."
+    },
+    {
+      "id": "counter-offensive",
+      "name": "Counter-offensive",
+      "cost": 2,
+      "phase": "Fight",
+      "description": "WHEN: Fight phase, just after an enemy unit has fought. TARGET: One unit from your army that is within Engagement Range of one or more enemy units and that has not already been selected to fight this phase. EFFECT: Your unit fights next."
+    },
+    {
+      "id": "epic-challenge",
+      "name": "Epic Challenge",
+      "cost": 1,
+      "phase": "Fight",
+      "description": "WHEN: Fight phase, when a CHARACTER unit from your army that is within Engagement Range of one or more Attached units is selected to fight. TARGET: One CHARACTER model in your unit. EFFECT: Until the end of the phase, all melee attacks made by that model have the [PRECISION] ability."
+    },
+    {
+      "id": "fire-overwatch",
+      "name": "Fire Overwatch",
+      "cost": 1,
+      "phase": "Opponent's Turn",
+      "description": "WHEN: Your opponent's Movement or Charge phase, just after an enemy unit is set up or when an enemy unit starts or ends a Normal, Advance, Fall Back or Charge move. TARGET: One unit from your army that is within 24\" of that enemy unit and that would be eligible to shoot if it were your Shooting phase. EFFECT: Your unit can shoot that enemy unit as if it were your Shooting phase. RESTRICTIONS: An unmodified Hit roll of 6 is required to score a hit. You can only use this Stratagem once per turn."
+    },
+    {
+      "id": "go-to-ground",
+      "name": "Go to Ground",
+      "cost": 1,
+      "phase": "Opponent's Shooting",
+      "description": "WHEN: Your opponent's Shooting phase, just after an enemy unit has selected its targets. TARGET: One INFANTRY unit from your army that was selected as the target of one or more of the attacking unit's attacks. EFFECT: Until the end of the phase, all models in your unit have a 6+ invulnerable save and have the Benefit of Cover."
+    },
+    {
+      "id": "grenade",
+      "name": "Grenade",
+      "cost": 1,
+      "phase": "Shooting",
+      "description": "WHEN: Your Shooting phase. TARGET: One GRENADES unit from your army that is not within Engagement Range of any enemy units and has not been selected to shoot this phase. EFFECT: Select one enemy unit that is not within Engagement Range of any units from your army and is within 8\" of and visible to your GRENADES unit. Roll six D6: for each 4+, that enemy unit suffers 1 mortal wound."
+    },
+    {
+      "id": "heroic-intervention",
+      "name": "Heroic Intervention",
+      "cost": 2,
+      "phase": "Opponent's Charge",
+      "description": "WHEN: Your opponent's Charge phase, just after an enemy unit ends a Charge move. TARGET: One unit from your army that is within 6\" of that enemy unit and would be eligible to declare a charge against that enemy unit if it were your Charge phase. EFFECT: Your unit now declares a charge that targets only that enemy unit, and you resolve that charge as if it were your Charge phase. RESTRICTIONS: You can only select a VEHICLE unit if it is a WALKER. Your unit does not receive any Charge bonus this turn."
+    },
+    {
+      "id": "insane-bravery",
+      "name": "Insane Bravery",
+      "cost": 1,
+      "phase": "Command",
+      "description": "WHEN: Battle-shock step of your Command phase, just after you have failed a Battle-shock test taken for a unit from your army. TARGET: The unit from your army that Battle-shock test was just taken for (even though your Battle-shocked units cannot normally be affected by your Stratagems). EFFECT: Your unit is treated as having passed that test instead, and is not Battle-shocked as a result."
+    },
+    {
+      "id": "rapid-ingress",
+      "name": "Rapid Ingress",
+      "cost": 1,
+      "phase": "Opponent's Movement",
+      "description": "WHEN: End of your opponent's Movement phase. TARGET: One unit from your army that is in Reserves. EFFECT: Your unit can arrive on the battlefield as if it were the Reinforcements step of your Movement phase. RESTRICTIONS: You cannot use this Stratagem to enable a unit to arrive during a battle round it would not normally be able to do so in."
+    },
+    {
+      "id": "tank-shock",
+      "name": "Tank Shock",
+      "cost": 1,
+      "phase": "Charge",
+      "description": "WHEN: Your Charge phase. TARGET: One VEHICLE unit from your army. EFFECT: After your unit ends a Charge move, select one enemy unit within Engagement Range of it, then select one melee weapon your unit is equipped with. Roll a number of D6 equal to that weapon's Strength characteristic. If that Strength characteristic is greater than that enemy unit's Toughness characteristic, roll two additional D6. For each 5+, that enemy unit suffers 1 mortal wound (to a maximum of 6 mortal wounds)."
+    }
+  ],
+  "detachments": {
+    "shield_host": {
+      "name": "Shield Host",
+      "rules": [
+        {
+          "id": "martial-mastery",
+          "name": "Martial Mastery",
+          "description": "At the start of each battle round, select one option. Applies to units with Martial Ka'tah.",
+          "type": "selection",
+          "resetsEachRound": true,
+          "modifiers": [],
+          "choices": [
+            {
+              "id": "critical-hits",
+              "name": "Critical Hits 5+",
+              "effect": "Unmodified hit rolls of 5+ score critical hits in melee.",
+              "modifiers": []
+            },
+            {
+              "id": "improved-ap",
+              "name": "Improved AP",
+              "effect": "Improve AP of melee weapons by 1.",
+              "modifiers": [
+                {
+                  "stat": "ap",
+                  "operation": "subtract",
+                  "value": 1,
+                  "scope": "melee"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "arcane-genetic-alchemy",
+          "name": "Arcane Genetic Alchemy",
+          "cost": 1,
+          "phase": "Any",
+          "description": "After mortal wound allocation, unit gains Feel No Pain 4+ against mortal wounds until end of phase.",
+          "modifiers": []
+        },
+        {
+          "id": "avenge-the-fallen",
+          "name": "Avenge the Fallen",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Below Starting Strength: +1 Attack. Below Half-strength: +2 Attacks instead.",
+          "modifiers": [
+            {
+              "stat": "a",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee",
+              "condition": "below starting strength"
+            }
+          ]
+        },
+        {
+          "id": "unwavering-sentinels",
+          "name": "Unwavering Sentinels",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Infantry unit holding objective: attacks targeting it suffer -1 to Hit in melee.",
+          "modifiers": []
+        },
+        {
+          "id": "multipotentiality",
+          "name": "Multipotentiality",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Unit that fell back is eligible to shoot and charge this turn.",
+          "modifiers": []
+        },
+        {
+          "id": "vigilance-eternal",
+          "name": "Vigilance Eternal",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Battleline unit holds objective even if no models are within range of it.",
+          "modifiers": []
+        },
+        {
+          "id": "archeotech-munitions",
+          "name": "Archeotech Munitions",
+          "cost": 1,
+          "phase": "Shooting/Fight",
+          "description": "Unit gains Lethal Hits or Sustained Hits 1 until end of phase.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "auric-mantle",
+          "name": "Auric Mantle",
+          "points": 15,
+          "description": "Shield-Captain or Blade Champion only. Bearer gains +2 Wounds.",
+          "eligibleKeywords": [
+            "Shield-Captain",
+            "Blade Champion"
+          ],
+          "modifiers": [
+            {
+              "stat": "w",
+              "operation": "add",
+              "value": 2,
+              "scope": "model"
+            }
+          ]
+        },
+        {
+          "id": "castellans-mark",
+          "name": "Castellan's Mark",
+          "points": 20,
+          "description": "Shield-Captain only. After deployment, redeploy up to two Adeptus Custodes units. May place in Strategic Reserves.",
+          "eligibleKeywords": [
+            "Shield-Captain"
+          ],
+          "modifiers": []
+        },
+        {
+          "id": "from-the-hall-of-armouries",
+          "name": "From the Hall of Armouries",
+          "points": 25,
+          "description": "Shield-Captain only. Add +1 Strength and +1 Damage to melee weapons.",
+          "eligibleKeywords": [
+            "Shield-Captain"
+          ],
+          "modifiers": [
+            {
+              "stat": "s",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee"
+            },
+            {
+              "stat": "d",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee"
+            }
+          ]
+        },
+        {
+          "id": "panoptispex",
+          "name": "Panoptispex",
+          "points": 5,
+          "description": "Shield-Captain or Blade Champion only. Bearer's unit ignores cover with ranged weapons.",
+          "eligibleKeywords": [
+            "Shield-Captain",
+            "Blade Champion"
+          ],
+          "modifiers": []
+        }
+      ]
+    },
+    "talons_of_the_emperor": {
+      "name": "Talons of the Emperor",
+      "rules": [
+        {
+          "id": "revered-companions",
+          "name": "Revered Companions",
+          "description": "Anathema Psykana units have Null Aegis aura (6\"): nearby Custodes gain Feel No Pain 5+ against psychic attacks and mortal wounds. Other Custodes units have Deadly Unity aura (6\"): Anathema Psykana attacks gain +1 to Hit.",
+          "type": "aura",
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "hunt-as-one",
+          "name": "Hunt as One",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Two units eligible to shoot/charge after falling back; one must be Anathema Psykana within 6\".",
+          "modifiers": []
+        },
+        {
+          "id": "talons-interlocked",
+          "name": "Talons Interlocked",
+          "cost": 1,
+          "phase": "Shooting/Fight",
+          "description": "Two Infantry units focus fire on same target: gain +1 Strength and +1 AP.",
+          "modifiers": [
+            {
+              "stat": "s",
+              "operation": "add",
+              "value": 1,
+              "scope": "all"
+            },
+            {
+              "stat": "ap",
+              "operation": "add",
+              "value": 1,
+              "scope": "all"
+            }
+          ]
+        },
+        {
+          "id": "empyric-severance",
+          "name": "Empyric Severance",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Custodes unit gains Feel No Pain 4+ against psychic attacks if Anathema Psykana unit is nearby.",
+          "modifiers": []
+        },
+        {
+          "id": "emperors-executioners",
+          "name": "Emperor's Executioners",
+          "cost": 2,
+          "phase": "Shooting/Fight",
+          "description": "+1 to Wound rolls against enemies below Starting Strength.",
+          "modifiers": []
+        },
+        {
+          "id": "taloned-pincer",
+          "name": "Taloned Pincer",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "After enemy moves within 9\", move up to 6\".",
+          "modifiers": []
+        },
+        {
+          "id": "shield-of-honour",
+          "name": "Shield of Honour",
+          "cost": 1,
+          "phase": "Shooting/Fight",
+          "description": "Redirect attacks targeting Anathema Infantry to nearby Custodes Infantry.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "aegis-projector",
+          "name": "Aegis Projector",
+          "points": 20,
+          "description": "Once per turn, change first failed saving throw to 0 damage.",
+          "modifiers": []
+        },
+        {
+          "id": "champion-of-the-imperium",
+          "name": "Champion of the Imperium",
+          "points": 25,
+          "description": "Extends Null Aegis and Deadly Unity aura range to 9\".",
+          "modifiers": []
+        },
+        {
+          "id": "gift-of-terran-artifice",
+          "name": "Gift of Terran Artifice",
+          "points": 15,
+          "description": "+1 to Wound rolls in melee.",
+          "modifiers": []
+        },
+        {
+          "id": "radiant-mantle",
+          "name": "Radiant Mantle",
+          "points": 30,
+          "description": "Attacks targeting bearer from within 12\" suffer -1 to Hit.",
+          "modifiers": []
+        }
+      ]
+    },
+    "null_maiden_vigil": {
+      "name": "Null Maiden Vigil",
+      "rules": [
+        {
+          "id": "creeping-dread",
+          "name": "Creeping Dread",
+          "description": "Aura: Enemy Psyker and below-strength units within 12\" of Anathema Psykana must take Battle-shock tests in opponent's Command phase. Below half-strength units subtract 1 from the test.",
+          "type": "aura",
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "desperations-price",
+          "name": "Desperation's Price",
+          "cost": 1,
+          "phase": "Any",
+          "description": "After enemy Psyker uses ability: Leadership test - pass = Battle-shocked, fail = D3 mortal wounds and Battle-shocked.",
+          "modifiers": []
+        },
+        {
+          "id": "witch-hunters",
+          "name": "Witch Hunters",
+          "cost": 1,
+          "phase": "Shooting/Fight",
+          "description": "Anathema unit gains Lethal Hits or Sustained Hits 1 (targets Psykers only).",
+          "modifiers": []
+        },
+        {
+          "id": "anathema-blademastery",
+          "name": "Anathema Blademastery",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Vigilators re-roll Hit rolls; re-roll Wounds vs Battle-shocked or Psyker.",
+          "modifiers": []
+        },
+        {
+          "id": "psy-chaff-volley",
+          "name": "Psy-Chaff Volley",
+          "cost": 1,
+          "phase": "Shooting",
+          "description": "Prosecutors' targets become 'prosecuted': enemy Psyker/Battle-shocked subtract 1 to Hit; Anathema gain +1 AP vs them.",
+          "modifiers": []
+        },
+        {
+          "id": "purgation-sweep",
+          "name": "Purgation Sweep",
+          "cost": 1,
+          "phase": "Shooting",
+          "description": "Witchseekers gain +1 Attack with Torrent weapons; +2 vs Psyker/Battle-shocked.",
+          "modifiers": [
+            {
+              "stat": "a",
+              "operation": "add",
+              "value": 1,
+              "scope": "ranged",
+              "condition": "torrent weapons"
+            }
+          ]
+        },
+        {
+          "id": "psychic-abominations",
+          "name": "Psychic Abominations",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Anathema Infantry gains Stealth; Battle-shocked/Psykers can only target within 12\".",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "enhanced-voidsheen-cloak",
+          "name": "Enhanced Voidsheen Cloak",
+          "points": 10,
+          "description": "Anathema model only. Subtract 1 from Damage; reduce to 1 if from Psyker or Battle-shocked.",
+          "eligibleKeywords": [
+            "Anathema Psykana"
+          ],
+          "modifiers": []
+        },
+        {
+          "id": "huntress-eye",
+          "name": "Huntress' Eye",
+          "points": 15,
+          "description": "Anathema model only. In Command phase, select enemy within 12\" to take Battle-shock test.",
+          "eligibleKeywords": [
+            "Anathema Psykana"
+          ],
+          "modifiers": []
+        },
+        {
+          "id": "oblivion-knight",
+          "name": "Oblivion Knight",
+          "points": 25,
+          "description": "Anathema model only. Led unit gains +1 to Hit; +1 to Wound vs Psyker units.",
+          "eligibleKeywords": [
+            "Anathema Psykana"
+          ],
+          "modifiers": []
+        },
+        {
+          "id": "raptor-blade",
+          "name": "Raptor Blade",
+          "points": 5,
+          "description": "Anathema model only. +1 Attack, +1 Strength, +1 Damage; +2 each vs Battle-shocked Psykers.",
+          "eligibleKeywords": [
+            "Anathema Psykana"
+          ],
+          "modifiers": [
+            {
+              "stat": "a",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee"
+            },
+            {
+              "stat": "s",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee"
+            },
+            {
+              "stat": "d",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee"
+            }
+          ]
+        }
+      ]
+    },
+    "auric_champions": {
+      "name": "Auric Champions",
+      "rules": [
+        {
+          "id": "assemblage-of-might",
+          "name": "Assemblage of Might",
+          "description": "In your Command phase, select one enemy unit. Character units gain +1 to Wound rolls targeting it until your next Command phase.",
+          "type": "passive",
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "slayer-of-champions",
+          "name": "Slayer of Champions",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "When Character destroys Assemblage target: select new target gaining +1 to Wound; gain 1CP if target was Character.",
+          "modifiers": []
+        },
+        {
+          "id": "superhuman-reserves",
+          "name": "Superhuman Reserves",
+          "cost": 2,
+          "phase": "Any",
+          "description": "Warlord can use a 'once per battle' ability an additional time. Maximum once per battle.",
+          "modifiers": []
+        },
+        {
+          "id": "emperors-auspice",
+          "name": "Emperor's Auspice",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Character unit gains Feel No Pain 4+ until end of phase.",
+          "modifiers": []
+        },
+        {
+          "id": "earning-of-a-name",
+          "name": "Earning of a Name",
+          "cost": 1,
+          "phase": "Fight",
+          "description": "Two Character units re-roll Hits and Wounds vs Monsters/Vehicles.",
+          "modifiers": []
+        },
+        {
+          "id": "vigil-unending",
+          "name": "Vigil Unending",
+          "cost": 2,
+          "phase": "Fight",
+          "description": "Destroyed Character fights before removal from play.",
+          "modifiers": []
+        },
+        {
+          "id": "shoulder-the-mantle",
+          "name": "Shoulder the Mantle",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Character not leading a unit attaches to nearby eligible unit.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "blade-imperator",
+          "name": "Blade Imperator",
+          "points": 25,
+          "description": "On charge: D3 mortal wounds on 4+. Once per battle, nearby enemies take Battle-shock.",
+          "modifiers": []
+        },
+        {
+          "id": "inspirational-exemplar",
+          "name": "Inspirational Exemplar",
+          "points": 10,
+          "description": "Leadership 5+. Once per battle, remove Battle-shocked from friendly unit within 12\".",
+          "modifiers": []
+        },
+        {
+          "id": "martial-philosopher",
+          "name": "Martial Philosopher",
+          "points": 30,
+          "description": "Unit eligible to shoot/charge after falling back. Once per battle, 6\" move when enemy ends within 9\".",
+          "modifiers": []
+        },
+        {
+          "id": "veiled-blade",
+          "name": "Veiled Blade",
+          "points": 25,
+          "description": "+2 Attacks to melee weapons. Once per battle, triple Objective Control in Command phase.",
+          "modifiers": [
+            {
+              "stat": "a",
+              "operation": "add",
+              "value": 2,
+              "scope": "melee"
+            }
+          ]
+        }
+      ]
+    },
+    "solar_spearhead": {
+      "name": "Solar Spearhead",
+      "rules": [
+        {
+          "id": "auric-armour",
+          "name": "Auric Armour",
+          "description": "At Starting Strength: +2 OC (non-Aircraft, non-Battle-shocked). Below Starting Strength: re-roll Hit rolls of 1. Below Half-strength: re-roll Hit and Wound rolls of 1.",
+          "type": "passive",
+          "modifiers": []
+        },
+        {
+          "id": "moritoi-ancients",
+          "name": "Moritoi Ancients",
+          "description": "Walkers gain +2\" Move and +1 to Advance/Charge rolls. Up to 2 Walker models can gain Character keyword.",
+          "type": "passive",
+          "modifiers": [
+            {
+              "stat": "m",
+              "operation": "add",
+              "value": 2,
+              "scope": "walker"
+            }
+          ]
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "unstoppable-advance",
+          "name": "Unstoppable Advance",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Vehicle moves additional 6\" after moving.",
+          "modifiers": []
+        },
+        {
+          "id": "crushing-momentum",
+          "name": "Crushing Momentum",
+          "cost": 1,
+          "phase": "Charge",
+          "description": "Charging Vehicle re-rolls Charge roll and Hit rolls.",
+          "modifiers": []
+        },
+        {
+          "id": "machine-spirits-wrath",
+          "name": "Machine Spirit's Wrath",
+          "cost": 1,
+          "phase": "Shooting",
+          "description": "Vehicle not selected to shoot makes attacks with full Ballistic Skill.",
+          "modifiers": []
+        },
+        {
+          "id": "venerable-guardian",
+          "name": "Venerable Guardian",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Vehicle within range of objective gains +2 Toughness.",
+          "modifiers": [
+            {
+              "stat": "t",
+              "operation": "add",
+              "value": 2,
+              "scope": "vehicle"
+            }
+          ]
+        },
+        {
+          "id": "armored-breach",
+          "name": "Armored Breach",
+          "cost": 2,
+          "phase": "Charge",
+          "description": "Vehicle charges through terrain without penalty.",
+          "modifiers": []
+        },
+        {
+          "id": "relic-onslaught",
+          "name": "Relic Onslaught",
+          "cost": 1,
+          "phase": "Shooting/Fight",
+          "description": "Vehicle gains Lethal Hits or Sustained Hits 1.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "honoured-fallen-aura",
+          "name": "Honoured Fallen (Aura)",
+          "points": 15,
+          "description": "ADEPTUS CUSTODES VEHICLE model only. While a friendly ADEPTUS CUSTODES INFANTRY or ADEPTUS CUSTODES MOUNTED unit is within 6\" of the bearer, each time a model in that unit makes an attack, re-roll a Hit roll of 1.",
+          "eligibleKeywords": [
+            "Vehicle"
+          ],
+          "modifiers": []
+        },
+        {
+          "id": "augury-uplink",
+          "name": "Augury Uplink",
+          "points": 35,
+          "description": "ADEPTUS CUSTODES model only. The bearer has the Feel No Pain 5+ ability.",
+          "modifiers": []
+        },
+        {
+          "id": "adamantine-talisman",
+          "name": "Adamantine Talisman",
+          "points": 25,
+          "description": "Adeptus Custodes model only. Improve the Attacks, Strength and Damage characteristics of melee weapons equipped by the bearer by 1.",
+          "modifiers": [
+            {
+              "stat": "a",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee"
+            },
+            {
+              "stat": "s",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee"
+            },
+            {
+              "stat": "d",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee"
+            }
+          ]
+        },
+        {
+          "id": "veteran-of-the-kataphraktoi",
+          "name": "Veteran of the Kataphraktoi",
+          "points": 10,
+          "description": "ADEPTUS CUSTODES INFANTRY or ADEPTUS CUSTODES MOUNTED model only. In your Command phase, select one ADEPTUS CUSTODES VEHICLE or ADEPTUS CUSTODES MOUNTED unit within 6\" of the bearer. Until the start of your next Command phase, that unit is eligible to shoot in a turn in which it Fell Back.",
+          "eligibleKeywords": [
+            "Infantry",
+            "Mounted"
+          ],
+          "modifiers": []
+        }
+      ]
+    },
+    "lions_of_the_emperor": {
+      "name": "Lions of the Emperor",
+      "rules": [
+        {
+          "id": "against-all-odds",
+          "name": "Against All Odds",
+          "description": "Each time an ADEPTUS CUSTODES unit from your army (excluding Vehicles) makes an attack, if there are no other friendly units within 6\" of that unit, add 1 to the Hit roll and add 1 to the Wound roll.",
+          "type": "conditional",
+          "modifiers": []
+        }
+      ],
+      "stratagems": [
+        {
+          "id": "desperate-counter",
+          "name": "Desperate Counter",
+          "cost": 1,
+          "phase": "Movement",
+          "description": "Below half-strength unit eligible to fight after falling back.",
+          "modifiers": []
+        },
+        {
+          "id": "heroic-intervention",
+          "name": "Heroic Intervention",
+          "cost": 1,
+          "phase": "Charge",
+          "description": "Unit within 6\" of charged unit can fight immediately.",
+          "modifiers": []
+        },
+        {
+          "id": "refusal-to-yield",
+          "name": "Refusal to Yield",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Below half-strength unit gains Feel No Pain 5+.",
+          "modifiers": []
+        },
+        {
+          "id": "final-onslaught",
+          "name": "Final Onslaught",
+          "cost": 2,
+          "phase": "Fight",
+          "description": "Dying model can make attacks before removal from play.",
+          "modifiers": []
+        },
+        {
+          "id": "unyielding-stand",
+          "name": "Unyielding Stand",
+          "cost": 1,
+          "phase": "Any",
+          "description": "Unit on objective: -1 to Wound rolls against it.",
+          "modifiers": []
+        }
+      ],
+      "enhancements": [
+        {
+          "id": "superior-creation",
+          "name": "Superior Creation",
+          "points": 25,
+          "description": "Adeptus Custodes Infantry model only. The first time the bearer is destroyed, roll one D6 at the end of the phase. On a 2+, set the bearer back up on the battlefield, as close as possible to where it was destroyed and not within Engagement Range of one or more enemy units, with its full wounds remaining.",
+          "eligibleKeywords": [
+            "Infantry"
+          ],
+          "modifiers": []
+        },
+        {
+          "id": "praesidius",
+          "name": "Praesidius",
+          "points": 25,
+          "description": "The bearer has the Lone Operative and Stealth abilities.",
+          "modifiers": []
+        },
+        {
+          "id": "fierce-conqueror",
+          "name": "Fierce Conqueror",
+          "points": 15,
+          "description": "At the start of the Fight phase, until the end of the phase, add 2 to the Attacks characteristic of melee weapons equipped by the bearer for every 5 enemy models within 6\" of the bearer (rounding down).",
+          "modifiers": []
+        },
+        {
+          "id": "admonimortis",
+          "name": "Admonimortis",
+          "points": 10,
+          "description": "Shield-Captain model only. Improve the Strength characteristic of melee weapons equipped by the bearer by 3, and improve the Armour Penetration and Damage characteristics of those weapons by 1.",
+          "eligibleKeywords": [
+            "Shield-Captain"
+          ],
+          "modifiers": [
+            {
+              "stat": "s",
+              "operation": "add",
+              "value": 3,
+              "scope": "melee"
+            },
+            {
+              "stat": "ap",
+              "operation": "subtract",
+              "value": 1,
+              "scope": "melee"
+            },
+            {
+              "stat": "d",
+              "operation": "add",
+              "value": 1,
+              "scope": "melee"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "armyRules": {
+    "martial_katah": {
+      "name": "Martial Ka'tah",
+      "description": "At the start of the Fight phase, select a Ka'tah Stance to be active for your Custodes models.",
+      "stances": [
+        {
+          "id": "dacatarai",
+          "name": "Dacatarai Stance",
+          "description": "Melee weapons gain Sustained Hits 1.",
+          "modifiers": []
+        },
+        {
+          "id": "rendax",
+          "name": "Rendax Stance",
+          "description": "Melee weapons gain Lethal Hits.",
+          "modifiers": []
+        }
+      ]
+    }
+  },
+  "allies": {
+    "imperial_agents": {
+      "name": "Imperial Agents",
+      "description": "Agents of the Imperium can be included in any IMPERIUM army.",
+      "units": [
+        {
+          "id": "inquisitor-draxus",
+          "name": "Inquisitor Draxus",
+          "points": {
+            "1": 110
+          },
+          "stats": {
+            "m": 6,
+            "t": 3,
+            "sv": "3+",
+            "w": 4,
+            "ld": "6+",
+            "oc": 1
+          },
+          "invuln": "5+",
+          "weapons": [
+            {
+              "id": "dirgesinger-anti-infantry",
+              "name": "Dirgesinger",
+              "type": "ranged",
+              "stats": {
+                "range": 18,
+                "a": 4,
+                "bs": "3+",
+                "s": 4,
+                "ap": 0,
+                "d": 2
+              },
+              "abilities": [
+                "Anti-Infantry 4+",
+                "Assault",
+                "Devastating Wounds"
+              ]
+            },
+            {
+              "id": "psychic-tempest",
+              "name": "Psychic Tempest",
+              "type": "ranged",
+              "stats": {
+                "range": 18,
+                "a": 6,
+                "bs": "3+",
+                "s": 6,
+                "ap": 0,
+                "d": 2
+              },
+              "abilities": [
+                "Psychic",
+                "Sustained Hits 2"
+              ]
+            },
+            {
+              "id": "power-fist",
+              "name": "Power Fist",
+              "type": "melee",
+              "stats": {
+                "a": 3,
+                "ws": "3+",
+                "s": 6,
+                "ap": -2,
+                "d": 2
+              },
+              "abilities": []
+            }
+          ],
+          "abilities": [
+            {
+              "id": "leader",
+              "name": "Leader",
+              "description": "Can lead Inquisitorial Agents, Imperial Navy Breachers, Exaction Squad, Subductor Squad, Vigilant Squad, or any IMPERIUM BATTLELINE INFANTRY.",
+              "eligibleUnits": [
+                "custodian-guard",
+                "prosecutors"
+              ]
+            },
+            {
+              "id": "authority-of-the-inquisition",
+              "name": "Authority of the Inquisition",
+              "description": "While leading a unit, can embark in any TRANSPORT the Bodyguard unit can."
+            },
+            {
+              "id": "xenos-hunter",
+              "name": "Xenos Hunter",
+              "description": "While leading a unit, add +1 to Hit rolls against enemies without IMPERIUM or CHAOS keywords."
+            },
+            {
+              "id": "psychic-veil",
+              "name": "Psychic Veil",
+              "description": "Command phase: Roll D6. On 1, suffer D3 mortal wounds. On 2+, can only be targeted by ranged attacks within 18\" until next Command phase."
+            }
+          ],
+          "keywords": [
+            "Infantry",
+            "Character",
+            "Epic Hero",
+            "Psyker",
+            "Grenades",
+            "Imperium",
+            "Ordo Xenos",
+            "Inquisitor"
+          ]
+        }
+      ]
+    }
+  },
+  "keywordGlossary": {
+    "weapon": [
+      {
+        "name": "Anti-X #+",
+        "description": "Improve AP by 1 and wound on #+ against targets with keyword X."
+      },
+      {
+        "name": "Assault",
+        "description": "Can be shot after Advancing."
+      },
+      {
+        "name": "Blast",
+        "description": "+1 Attack per 5 models in target unit."
+      },
+      {
+        "name": "Devastating Wounds",
+        "description": "Critical wounds inflict mortal wounds equal to Damage, no saves allowed."
+      },
+      {
+        "name": "Extra Attacks",
+        "description": "Attacks with this weapon are made in addition to other weapons."
+      },
+      {
+        "name": "Hazardous",
+        "description": "After resolving attacks, roll D6. On 1, bearer suffers 3 mortal wounds (Characters) or is destroyed (other models)."
+      },
+      {
+        "name": "Heavy",
+        "description": "+1 to Hit if unit Remained Stationary."
+      },
+      {
+        "name": "Ignores Cover",
+        "description": "Target does not benefit from cover."
+      },
+      {
+        "name": "Indirect Fire",
+        "description": "Can target units not visible. -1 to Hit, +1 to target's Save if not visible."
+      },
+      {
+        "name": "Lance",
+        "description": "+1 to Wound if unit charged this turn."
+      },
+      {
+        "name": "Lethal Hits",
+        "description": "Critical hits automatically wound (no wound roll needed)."
+      },
+      {
+        "name": "Melta X",
+        "description": "+X Damage against targets within half range."
+      },
+      {
+        "name": "One Shot",
+        "description": "Can only be used once per battle."
+      },
+      {
+        "name": "Pistol",
+        "description": "Can be shot in Engagement Range, but only at units in Engagement Range."
+      },
+      {
+        "name": "Precision",
+        "description": "On critical wounds, attacker can allocate wound to a Character or Attached model."
+      },
+      {
+        "name": "Psychic",
+        "description": "Weapon has the Psychic keyword for ability interactions."
+      },
+      {
+        "name": "Rapid Fire X",
+        "description": "+X Attacks when targeting units within half range."
+      },
+      {
+        "name": "Sustained Hits X",
+        "description": "Critical hits score X additional hits."
+      },
+      {
+        "name": "Torrent",
+        "description": "Automatically hits (no hit roll needed)."
+      },
+      {
+        "name": "Twin-linked",
+        "description": "Re-roll wound rolls."
+      }
+    ],
+    "unit": [
+      {
+        "name": "Battleline",
+        "description": "Core troop units. May have special rules in certain detachments."
+      },
+      {
+        "name": "Character",
+        "description": "Can lead units, receive Enhancements, and is targeted by Precision."
+      },
+      {
+        "name": "Deep Strike",
+        "description": "Can be set up in Reserves and arrive 9\"+ from enemies in Reinforcements step."
+      },
+      {
+        "name": "Epic Hero",
+        "description": "Unique named character. Limited to 1 per army."
+      },
+      {
+        "name": "Feel No Pain X+",
+        "description": "Roll D6 when losing a wound. On X+, wound is ignored."
+      },
+      {
+        "name": "Fights First",
+        "description": "In Fight phase, fights before units without this ability."
+      },
+      {
+        "name": "Fly",
+        "description": "Can move over models/terrain. Can move within Engagement Range freely."
+      },
+      {
+        "name": "Infiltrators",
+        "description": "Can deploy anywhere 9\"+ from enemy deployment zone and enemies."
+      },
+      {
+        "name": "Leader",
+        "description": "Can be attached to Bodyguard units. Abilities affect the combined unit."
+      },
+      {
+        "name": "Lone Operative",
+        "description": "Cannot be targeted unless within 12\" of attacking model."
+      },
+      {
+        "name": "Scouts X\"",
+        "description": "Make a Normal move of up to X\" before first turn begins."
+      },
+      {
+        "name": "Stealth",
+        "description": "Ranged attacks targeting this unit suffer -1 to Hit."
+      }
+    ]
+  }
+}
