@@ -729,9 +729,6 @@ export const useArmyStore = create<ArmyStore>()(
         return state;
       }
 
-      const currentCount = currentUnit.weaponCounts?.[choiceId] || 0;
-      const delta = newCount - currentCount;
-
       // Build new weapon counts
       let newWeaponCounts = {
         ...currentUnit.weaponCounts,

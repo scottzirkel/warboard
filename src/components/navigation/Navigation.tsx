@@ -480,7 +480,7 @@ export function Navigation({
               canPlay={canPlay}
             />
             {onMobilePanelChange && (
-              <div className="flex md:hidden items-center bg-white/10 rounded-lg overflow-hidden">
+              <div className="flex lg:hidden items-center bg-white/10 rounded-lg overflow-hidden">
                 {mode === 'play' ? (
                   <>
                     <button
