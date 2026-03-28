@@ -630,7 +630,25 @@ export const useArmyStore = create<ArmyStore>()(
             const nonDefaultTotal = containingOption.choices
               .filter(c => !c.default && c.id !== 'none')
               .reduce((sum, c) => sum + (newWeaponCounts[c.id] || 0), 0);
-            newWeaponCounts[defaultChoice.id] = Math.max(0, currentUnit.modelCount - nonDefaultTotal);
+
+            // Use maxModels if all choices are capped (e.g., knight master = 1 model)
+            const allCapped = containingOption.choices.every(c => c.maxModels !== undefined);
+            let availableModels = allCapped
+              ? Math.max(...containingOption.choices.map(c => c.maxModels!))
+              : currentUnit.modelCount;
+
+            // Subtract models excluded by other options
+            if (unit.loadoutOptions) {
+              for (const otherOpt of unit.loadoutOptions) {
+                for (const otherChoice of otherOpt.choices) {
+                  if (otherChoice.excludesFromOption === containingOption.id) {
+                    availableModels -= newWeaponCounts[otherChoice.id] || 0;
+                  }
+                }
+              }
+            }
+
+            newWeaponCounts[defaultChoice.id] = Math.max(0, availableModels - nonDefaultTotal);
           }
         }
       }
@@ -749,21 +767,47 @@ export const useArmyStore = create<ArmyStore>()(
             const nonDefaultTotal = containingOption.choices
               .filter(c => !c.default && c.id !== 'none')
               .reduce((sum, c) => sum + (newWeaponCounts[c.id] || 0), 0);
-            newWeaponCounts[defaultChoice.id] = Math.max(0, currentUnit.modelCount - nonDefaultTotal);
+
+            const allCapped = containingOption.choices.every(c => c.maxModels !== undefined);
+            let availableModels = allCapped
+              ? Math.max(...containingOption.choices.map(c => c.maxModels!))
+              : currentUnit.modelCount;
+
+            if (unit.loadoutOptions) {
+              for (const otherOpt of unit.loadoutOptions) {
+                for (const otherChoice of otherOpt.choices) {
+                  if (otherChoice.excludesFromOption === containingOption.id) {
+                    availableModels -= newWeaponCounts[otherChoice.id] || 0;
+                  }
+                }
+              }
+            }
+
+            newWeaponCounts[defaultChoice.id] = Math.max(0, availableModels - nonDefaultTotal);
           }
         }
       }
 
-      // If this choice excludes models from another option (e.g., Vexilla excludes from main-weapon),
-      // automatically reduce the default choice in that option
-      if (excludesFromOption && delta !== 0 && unit.loadoutOptions) {
+      // If this choice excludes models from another option, recalculate that option's default
+      if (excludesFromOption && unit.loadoutOptions) {
         const targetOption = unit.loadoutOptions.find(o => o.id === excludesFromOption);
-        if (targetOption) {
-          const defaultChoice = targetOption.choices.find(c => c.default);
-          if (defaultChoice) {
-            const currentDefaultCount = newWeaponCounts[defaultChoice.id] || 0;
-            const adjustedDefaultCount = Math.max(0, currentDefaultCount - delta);
-            newWeaponCounts[defaultChoice.id] = adjustedDefaultCount;
+        if (targetOption?.pattern === 'replacement') {
+          const targetDefault = targetOption.choices.find(c => c.default);
+          if (targetDefault) {
+            const targetNonDefaultTotal = targetOption.choices
+              .filter(c => !c.default && c.id !== 'none')
+              .reduce((sum, c) => sum + (newWeaponCounts[c.id] || 0), 0);
+
+            let targetAvailable = currentUnit.modelCount;
+            for (const otherOpt of unit.loadoutOptions) {
+              for (const otherChoice of otherOpt.choices) {
+                if (otherChoice.excludesFromOption === targetOption.id) {
+                  targetAvailable -= newWeaponCounts[otherChoice.id] || 0;
+                }
+              }
+            }
+
+            newWeaponCounts[targetDefault.id] = Math.max(0, targetAvailable - targetNonDefaultTotal);
           }
         }
       }

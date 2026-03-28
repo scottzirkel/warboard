@@ -85,11 +85,28 @@ export function ListUnitCard({
         .filter(c => c.id !== 'none')
         .reduce((sum, choice) => sum + (weaponCounts[choice.id] || 0), 0);
 
-      if (optionTotal < listUnit.modelCount) {
-        return `${listUnit.modelCount - optionTotal} model(s) need weapons`;
+      // Use maxModels if all choices are capped (e.g., knight master = 1 model)
+      const allCapped = option.choices.every(c => c.maxModels !== undefined);
+      let expectedModels = allCapped
+        ? Math.max(...option.choices.map(c => c.maxModels!))
+        : listUnit.modelCount;
+
+      // Subtract models excluded by other options (e.g., master weapon excludes from melee)
+      if (unit.loadoutOptions) {
+        for (const otherOpt of unit.loadoutOptions) {
+          for (const otherChoice of otherOpt.choices) {
+            if (otherChoice.excludesFromOption === option.id) {
+              expectedModels -= weaponCounts[otherChoice.id] || 0;
+            }
+          }
+        }
       }
-      if (optionTotal > listUnit.modelCount) {
-        return `${optionTotal - listUnit.modelCount} too many weapons assigned`;
+
+      if (optionTotal < expectedModels) {
+        return `${expectedModels - optionTotal} model(s) need weapons`;
+      }
+      if (optionTotal > expectedModels) {
+        return `${optionTotal - expectedModels} too many weapons assigned`;
       }
     }
 
@@ -247,18 +264,31 @@ export function ListUnitCard({
           {/* Weapon Loadout Options */}
           {unit.loadoutOptions && unit.loadoutOptions.length > 0 && (
             <div className="space-y-2 pt-1 border-t border-gray-700/50">
-              {unit.loadoutOptions.map((option, optIdx) => (
+              {unit.loadoutOptions.map((option, optIdx) => {
+                // Count models excluded from this option by other options' choices
+                const wc = listUnit.weaponCounts || {};
+                let excluded = 0;
+                for (const otherOpt of unit.loadoutOptions!) {
+                  for (const otherChoice of otherOpt.choices) {
+                    if (otherChoice.excludesFromOption === option.id) {
+                      excluded += wc[otherChoice.id] || 0;
+                    }
+                  }
+                }
+                return (
                 <WeaponLoadoutSelector
                   key={option.id}
                   option={option}
                   modelCount={listUnit.modelCount}
-                  weaponCounts={listUnit.weaponCounts || {}}
+                  weaponCounts={wc}
+                  excludedModels={excluded}
                   onCountChange={(choiceId, count) => {
                     onWeaponCountChange(choiceId, count);
                   }}
                   showDivider={optIdx > 0}
                 />
-              ))}
+                );
+              })}
               {/* Weapon Count Validation Error */}
               {weaponCountError && (
                 <div className="text-xs text-red-400">{weaponCountError}</div>

@@ -233,9 +233,16 @@ export function validateWeaponCounts(
         0
       );
 
+      // If all choices have maxModels, this option covers a subset of models
+      // (e.g., Knight Master weapon: 1 model, not all 5)
+      const allChoicesHaveMax = option.choices.every(c => c.maxModels !== undefined);
+      const baseCount = allChoicesHaveMax
+        ? Math.max(...option.choices.map(c => c.maxModels!))
+        : modelCount;
+
       // Calculate how many models are excluded from this option (e.g., Vexilla bearers)
       const excludedModels = countExcludedModels(unit, option.id, weaponCounts);
-      const expectedModels = modelCount - excludedModels;
+      const expectedModels = baseCount - excludedModels;
 
       if (totalAssigned > 0 && totalAssigned !== expectedModels) {
         errors.push(
@@ -329,8 +336,9 @@ export function useWeaponCounts(
           .filter(c => c.id !== choiceId)
           .reduce((sum, c) => sum + (weaponCounts[c.id] || 0), 0);
 
-        // Ensure we don't exceed total model count across all choices
-        const maxAvailable = modelCount - otherChoicesTotal;
+        // Subtract models excluded by other options (e.g., master weapon excludes from melee)
+        const excludedModels = countExcludedModels(unit, option.id, weaponCounts);
+        const maxAvailable = modelCount - otherChoicesTotal - excludedModels;
         clampedCount = Math.min(clampedCount, Math.max(0, maxAvailable));
       }
 
@@ -383,7 +391,8 @@ export function useWeaponCounts(
           .filter(c => c.id !== choiceId)
           .reduce((sum, c) => sum + (weaponCounts[c.id] || 0), 0);
 
-        const maxAvailable = modelCount - otherChoicesTotal;
+        const excludedModels = countExcludedModels(unit, option.id, weaponCounts);
+        const maxAvailable = modelCount - otherChoicesTotal - excludedModels;
 
         // Check group non-default limit
         if (option?.maxNonDefaultPerModels && !choice.default && choice.id !== 'none') {
@@ -448,7 +457,8 @@ export function useWeaponCounts(
           .filter(c => c.id !== choiceId)
           .reduce((sum, c) => sum + (weaponCounts[c.id] || 0), 0);
 
-        const maxAvailable = modelCount - otherChoicesTotal;
+        const excludedModels = countExcludedModels(unit, option.id, weaponCounts);
+        const maxAvailable = modelCount - otherChoicesTotal - excludedModels;
 
         result = Math.min(result, Math.max(0, maxAvailable));
       }

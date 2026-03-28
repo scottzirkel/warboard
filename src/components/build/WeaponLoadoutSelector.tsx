@@ -8,6 +8,8 @@ interface WeaponLoadoutSelectorProps {
   modelCount: number;
   weaponCounts: Record<string, number>;
   onCountChange: (choiceId: string, count: number) => void;
+  /** Number of models excluded from this option by other options */
+  excludedModels?: number;
   className?: string;
   showDivider?: boolean;
 }
@@ -52,6 +54,7 @@ export function WeaponLoadoutSelector({
   modelCount,
   weaponCounts,
   onCountChange,
+  excludedModels = 0,
   className = '',
   showDivider = false,
 }: WeaponLoadoutSelectorProps) {
@@ -113,9 +116,11 @@ export function WeaponLoadoutSelector({
             const currentCount = weaponCounts[choice.id] || 0;
 
             // Calculate effective max for this choice
-            // Don't restrict based on replacement total — the store auto-adjusts
-            // the default choice when a non-default is changed
-            let choiceMax = modelCount;
+            // Use maxModels cap or modelCount minus excluded models
+            const allCapped = option.choices.every(c => c.maxModels !== undefined);
+            let choiceMax = allCapped
+              ? Math.max(...option.choices.map(c => c.maxModels!))
+              : modelCount - excludedModels;
 
             // For non-default choices under a group constraint, limit to group remaining
             if (isNonDefault && groupRemaining !== undefined) {
