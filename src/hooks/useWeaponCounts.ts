@@ -142,7 +142,7 @@ export function calculateDefaultWeaponCounts(
   for (const option of unit.loadoutOptions) {
     const defaultChoice = option.choices.find(c => c.default);
 
-    if (defaultChoice) {
+    if (defaultChoice && defaultChoice.id !== 'none') {
       const effectiveMax = calculateEffectiveMax(defaultChoice, modelCount);
       counts[defaultChoice.id] = effectiveMax;
     }

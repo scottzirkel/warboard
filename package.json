@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predev": "bash scripts/copy-faction-data.sh",
     "dev": "next dev",
-    "prebuild": "bash scripts/copy-faction-data.sh",
     "build": "next build --webpack",
     "postinstall": "prisma generate",
     "start": "next start",
@@ -25,7 +23,7 @@
     "bsdata:generate": "npx tsx scripts/bsdata/generate-faction.ts",
     "bsdata:sync": "npm run bsdata:parse -- --all && npm run bsdata:generate -- --all",
     "bsdata:sync:faction": "npm run bsdata:parse -- $1 && npm run bsdata:generate -- $1",
-    "data:publish": "npm run bsdata:generate -- --all --output ~/projects/40k/40k-data/data && cd ~/projects/40k/40k-data && npm run build && git add -A"
+    "data:publish": "npm run bsdata:generate -- --all --output ~/projects/40k/data/data && cd ~/projects/40k/data && npm run build && git add -A"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
@@ -33,7 +31,7 @@
     "@libsql/client": "^0.17.0",
     "@prisma/adapter-libsql": "7.3.0",
     "@prisma/client": "7.3.0",
-    "@scottzirkel/40k-data": "file:vendor/40k-data",
+    "@scottzirkel/40k-data": "github:scottzirkel/40k-data",
     "@serwist/next": "^9.5.3",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/archiver": "^7.0.0",

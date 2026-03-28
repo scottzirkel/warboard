@@ -46,7 +46,7 @@ The Next.js app should match the look, feel, and functionality of the original A
 - **Styling**: Tailwind CSS (inline utilities, not CSS classes)
 - **State**: Zustand for state management
 - **Testing**: Vitest + React Testing Library
-- **Data**: JSON files in `/public/data/`
+- **Data**: `@scottzirkel/40k-data` package (GitHub dependency), served via `/api/faction/[army]` route
 - **Storage**: File-based JSON in `/data/lists/` via Next.js API routes
 
 ## Styling Guidelines
@@ -117,8 +117,7 @@ army-tracker/
 │   ├── types/           # TypeScript type definitions
 │   └── test/            # Test setup and utilities
 ├── public/data/
-│   ├── custodes.json    # Unit data, detachments, enhancements, abilities
-│   └── tyranids.json    # Tyranids faction data
+│   └── missions.json    # Chapter Approved missions (warboard-specific)
 ├── data/lists/          # Saved army lists (JSON files)
 └── package.json
 ```
@@ -468,8 +467,9 @@ Theme colors are accessed via Tailwind utilities (see Styling Guidelines above):
 - Use `color-mix()` for tinted backgrounds: `bg-[color-mix(in_srgb,var(--accent-500)_18%,transparent)]`
 
 ### Data-Driven
-- Unit stats and rules come from JSON files in `/public/data/`
-- Add new armies by creating new JSON files
+- Unit stats and rules come from `@scottzirkel/40k-data` package (single source of truth)
+- Faction JSON is served via `/api/faction/[army]` route, loaded by `useFactionData` hook
+- For local dev with live data edits: `cd ~/projects/40k/data && npm link` then `cd ~/projects/40k/warboard && npm link @scottzirkel/40k-data`
 - Modifiers are declarative, not hard-coded
 
 ### State Management
@@ -512,11 +512,12 @@ npx tsx scripts/bsdata/validate-faction.ts custodes  # Single faction
 ```
 
 ### Adding Units
-Edit `public/data/custodes.json` (or the appropriate faction file):
+Edit the faction JSON in the `data` repo (`~/projects/40k/data/data/custodes.json` etc.):
 1. Add unit to `units` array
 2. Include all stats, weapons, abilities
 3. Add loadout options if unit has choices
 4. Ensure keywords are accurate for grouping
+5. Push to `data` repo, then `npm update @scottzirkel/40k-data` in warboard
 
 ### Wargear Options - IMPORTANT
 **Always check the actual datasheet wargear options text** before modeling weapon choices:
@@ -532,10 +533,11 @@ Example patterns:
 - **Paired**: "1 sentinel blade and 1 praesidium shield" → must take both together
 
 ### Adding Enhancements
-Edit the relevant detachment in `public/data/custodes.json`:
+Edit the relevant detachment in the `data` repo (`~/projects/40k/data/data/custodes.json`):
 1. Add to `detachments.[detachment].enhancements`
 2. Include modifiers array if it affects stats
 3. Points are required
+4. Push to `data` repo, then `npm update @scottzirkel/40k-data` in warboard
 
 ---
 

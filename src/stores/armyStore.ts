@@ -9,6 +9,7 @@ import type {
 } from '@/types';
 import { GAME_FORMATS } from '@/types';
 import { findUnitById } from '@/lib/armyDataUtils';
+import { calculateDefaultWeaponCounts } from '@/hooks/useWeaponCounts';
 
 // ============================================================================
 // Available Armies Configuration
@@ -189,7 +190,7 @@ export const useArmyStore = create<ArmyStore>()(
     set({ isLoading: true, error: null });
 
     try {
-      const response = await fetch(`/data/${army.file}`);
+      const response = await fetch(`/api/faction/${armyId}`);
 
       if (!response.ok) {
         throw new Error(`Failed to load army data: ${response.statusText}`);
@@ -201,7 +202,7 @@ export const useArmyStore = create<ArmyStore>()(
       if (data.parentFaction) {
         const parentArmy = availableArmies.find(a => a.id === data.parentFaction);
         if (parentArmy) {
-          const parentResponse = await fetch(`/data/${parentArmy.file}`);
+          const parentResponse = await fetch(`/api/faction/${data.parentFaction}`);
           if (parentResponse.ok) {
             const parentData: ArmyData = await parentResponse.json();
 
@@ -389,28 +390,7 @@ export const useArmyStore = create<ArmyStore>()(
       return;
     }
 
-    // Initialize weapon counts with all choices at 0, then set defaults
-    const weaponCounts: Record<string, number> = {};
-
-    if (unit.loadoutOptions && unit.loadoutOptions.length > 0) {
-      // First, initialize all choices to 0
-      for (const option of unit.loadoutOptions) {
-        for (const choice of option.choices) {
-          if (choice.id !== 'none') {
-            weaponCounts[choice.id] = 0;
-          }
-        }
-      }
-
-      // Set default choice to full model count for ALL options
-      for (const option of unit.loadoutOptions) {
-        const defaultChoice = option.choices.find(c => c.default) || option.choices[0];
-
-        if (defaultChoice && defaultChoice.id !== 'none') {
-          weaponCounts[defaultChoice.id] = modelCount;
-        }
-      }
-    }
+    const weaponCounts = calculateDefaultWeaponCounts(unit, modelCount);
 
     const newUnit: ListUnit = {
       ...createDefaultListUnit(unitId, modelCount),
@@ -493,27 +473,7 @@ export const useArmyStore = create<ArmyStore>()(
 
     // If no weapon counts yet, initialize them
     if (!listUnit.weaponCounts || Object.keys(listUnit.weaponCounts).length === 0) {
-      const weaponCounts: Record<string, number> = {};
-
-      if (unit.loadoutOptions && unit.loadoutOptions.length > 0) {
-        for (const option of unit.loadoutOptions) {
-          for (const choice of option.choices) {
-            if (choice.id !== 'none') {
-              weaponCounts[choice.id] = 0;
-            }
-          }
-        }
-
-        const mainOption = unit.loadoutOptions.find(o => o.type === 'choice') || unit.loadoutOptions[0];
-
-        if (mainOption) {
-          const defaultChoice = mainOption.choices.find(c => c.default) || mainOption.choices[0];
-
-          if (defaultChoice && defaultChoice.id !== 'none') {
-            weaponCounts[defaultChoice.id] = newCount;
-          }
-        }
-      }
+      const weaponCounts = calculateDefaultWeaponCounts(unit, newCount);
 
       set(state => {
         const units = [...state.currentList.units];
@@ -542,15 +502,13 @@ export const useArmyStore = create<ArmyStore>()(
         }
       }
     } else if (newCount > oldCount) {
-      // Adding models - add to the default weapon
-      const options = unit.loadoutOptions || [];
-      const mainOption = options.find(o => o.type === 'choice') || options[0];
-
-      if (mainOption) {
-        const defaultChoice = mainOption.choices.find(c => c.default) || mainOption.choices[0];
+      // Adding models - add to the default weapon for each replacement option
+      for (const option of unit.loadoutOptions || []) {
+        if (option.pattern !== 'replacement') continue;
+        const defaultChoice = option.choices.find(c => c.default);
 
         if (defaultChoice && defaultChoice.id !== 'none') {
-          const diff = newCount - total;
+          const diff = newCount - oldCount;
           newWeaponCounts[defaultChoice.id] = (newWeaponCounts[defaultChoice.id] || 0) + diff;
         }
       }

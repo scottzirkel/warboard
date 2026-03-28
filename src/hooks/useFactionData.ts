@@ -69,10 +69,7 @@ export function useFactionData(armyId: string | null): UseFactionDataReturn {
       return;
     }
 
-    // Find the army configuration
-    const army = availableArmies.find((a: AvailableArmy) => a.id === armyId);
-
-    if (!army) {
+    if (!availableArmies.some((a: AvailableArmy) => a.id === armyId)) {
       setError(`Unknown army: ${armyId}`);
       setData(null);
       return;
@@ -82,7 +79,7 @@ export function useFactionData(armyId: string | null): UseFactionDataReturn {
     setError(null);
 
     try {
-      const response = await fetch(`/data/${army.file}`);
+      const response = await fetch(`/api/faction/${armyId}`);
 
       if (!response.ok) {
         throw new Error(`Failed to load army data: ${response.statusText}`);
@@ -145,14 +142,12 @@ export async function prefetchFactionData(armyId: string): Promise<ArmyData | nu
     return factionCache.get(armyId) || null;
   }
 
-  const army = availableArmies.find((a: AvailableArmy) => a.id === armyId);
-
-  if (!army) {
+  if (!availableArmies.some((a: AvailableArmy) => a.id === armyId)) {
     return null;
   }
 
   try {
-    const response = await fetch(`/data/${army.file}`);
+    const response = await fetch(`/api/faction/${armyId}`);
 
     if (!response.ok) {
       return null;

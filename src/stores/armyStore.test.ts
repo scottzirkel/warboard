@@ -378,8 +378,9 @@ describe('armyStore', () => {
       const unit = useArmyStore.getState().currentList.units[0];
 
       expect(unit.weaponCounts!['spears']).toBe(4); // Default choice gets modelCount
-      expect(unit.weaponCounts!['blades']).toBe(0);
-      expect(unit.weaponCounts!['vexilla']).toBe(0);
+      expect(unit.weaponCounts!['blades']).toBeUndefined(); // Non-default not initialized
+      expect(unit.weaponCounts!['vexilla']).toBeUndefined(); // Addition option not initialized
+      expect(unit.weaponCounts!['none']).toBeUndefined(); // 'none' IDs never stored
     });
 
     it('does not add unit for unknown unitId', () => {
