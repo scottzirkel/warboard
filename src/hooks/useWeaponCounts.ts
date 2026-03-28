@@ -138,11 +138,25 @@ export function calculateDefaultWeaponCounts(
     return counts;
   }
 
+  // First pass: set defaults without exclusion awareness
   for (const option of unit.loadoutOptions) {
     const defaultChoice = option.choices.find(c => c.default);
 
     if (defaultChoice) {
-      counts[defaultChoice.id] = modelCount;
+      const effectiveMax = calculateEffectiveMax(defaultChoice, modelCount);
+      counts[defaultChoice.id] = effectiveMax;
+    }
+  }
+
+  // Second pass: adjust for exclusions from other options
+  for (const option of unit.loadoutOptions) {
+    const defaultChoice = option.choices.find(c => c.default);
+
+    if (defaultChoice) {
+      const excluded = countExcludedModels(unit, option.id, counts);
+      if (excluded > 0) {
+        counts[defaultChoice.id] = Math.max(0, modelCount - excluded);
+      }
     }
   }
 

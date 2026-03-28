@@ -1005,16 +1005,19 @@
           "name": "Knight Master Weapon",
           "type": "choice",
           "pattern": "replacement",
-          "maxModels": 1,
           "choices": [
             {
               "id": "great-weapon",
               "name": "Great Weapon of the Unforgiven",
-              "default": true
+              "default": true,
+              "maxModels": 1,
+              "excludesFromOption": "melee-weapon"
             },
             {
               "id": "relic-weapon",
-              "name": "Relic Weapon"
+              "name": "Relic Weapon",
+              "maxModels": 1,
+              "excludesFromOption": "melee-weapon"
             }
           ]
         },
