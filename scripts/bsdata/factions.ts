@@ -75,6 +75,13 @@ export const FACTIONS: FactionConfig[] = [
     outputFile: 'blacktemplars.json',
     theme: 'blacktemplars',
   },
+  {
+    id: 'darkangels',
+    name: 'Dark Angels',
+    catalogueFile: 'Imperium - Dark Angels.cat',
+    outputFile: 'darkangels.json',
+    theme: 'darkangels',
+  },
 ];
 
 export function getFaction(id: string): FactionConfig | undefined {

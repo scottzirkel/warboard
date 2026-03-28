@@ -14,7 +14,8 @@ import { FACTIONS, getFaction, getAllFactionIds } from './factions.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const PUBLIC_DATA_PATH = join(__dirname, '../../public/data');
+// Read from the data package (single source of truth)
+const DATA_PATH = join(__dirname, '../../node_modules/@scottzirkel/40k-data/data');
 
 interface ValidationError {
   unit?: string;
@@ -99,7 +100,7 @@ function validateFaction(factionId: string): ValidationResult | null {
     return null;
   }
 
-  const filePath = join(PUBLIC_DATA_PATH, faction.outputFile);
+  const filePath = join(DATA_PATH, faction.outputFile);
   if (!existsSync(filePath)) {
     console.error(`  Data file not found: ${filePath}`);
     return null;
