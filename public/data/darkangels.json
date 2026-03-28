@@ -948,22 +948,8 @@
           "abilities": [
             "Devastating Wounds",
             "Sustained Hits 1"
-          ]
-        },
-        {
-          "id": "relic-weapon-melee",
-          "name": "Relic Weapon",
-          "type": "melee",
-          "stats": {
-            "a": 6,
-            "ws": "2+",
-            "s": 7,
-            "ap": -2,
-            "d": 2
-          },
-          "abilities": [
-            "Lethal Hits"
-          ]
+          ],
+          "loadoutGroup": "great-weapon"
         },
         {
           "id": "mace-of-absolution-melee",
@@ -979,7 +965,24 @@
           "abilities": [
             "Anti-Monster 4+",
             "Anti-Vehicle 4+"
-          ]
+          ],
+          "loadoutGroup": "mace"
+        },
+        {
+          "id": "relic-weapon-melee",
+          "name": "Relic Weapon",
+          "type": "melee",
+          "stats": {
+            "a": 6,
+            "ws": "2+",
+            "s": 7,
+            "ap": -2,
+            "d": 2
+          },
+          "abilities": [
+            "Lethal Hits"
+          ],
+          "loadoutGroup": "relic-weapon"
         },
         {
           "id": "power-weapon-melee",
@@ -992,7 +995,45 @@
             "ap": -2,
             "d": 2
           },
-          "abilities": []
+          "abilities": [],
+          "loadoutGroup": "power-weapon"
+        }
+      ],
+      "loadoutOptions": [
+        {
+          "id": "knight-master-weapon",
+          "name": "Knight Master Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "maxModels": 1,
+          "choices": [
+            {
+              "id": "great-weapon",
+              "name": "Great Weapon of the Unforgiven",
+              "default": true
+            },
+            {
+              "id": "relic-weapon",
+              "name": "Relic Weapon"
+            }
+          ]
+        },
+        {
+          "id": "melee-weapon",
+          "name": "Melee Weapon",
+          "type": "choice",
+          "pattern": "replacement",
+          "choices": [
+            {
+              "id": "mace",
+              "name": "Mace of Absolution",
+              "default": true
+            },
+            {
+              "id": "power-weapon",
+              "name": "Power Weapon"
+            }
+          ]
         }
       ],
       "abilities": [
