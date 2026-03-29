@@ -572,12 +572,14 @@ export const useArmyStore = create<ArmyStore>()(
       for (const option of unit.loadoutOptions) {
         const choice = option.choices.find(c => c.id === choiceId);
 
-        if (choice?.maxModels !== undefined) {
+        if (!choice) continue;
+
+        if (choice.maxModels !== undefined) {
           newCount = Math.min(newCount, choice.maxModels);
         }
 
         // Enforce group non-default max
-        if (choice && option.maxNonDefaultPerModels && !choice.default && choice.id !== 'none') {
+        if (option.maxNonDefaultPerModels && !choice.default && choice.id !== 'none') {
           const { max, per } = option.maxNonDefaultPerModels;
           const groupMax = Math.floor(listUnit.modelCount / per) * max;
           const otherNonDefault = option.choices
@@ -585,6 +587,8 @@ export const useArmyStore = create<ArmyStore>()(
             .reduce((sum, c) => sum + (listUnit.weaponCounts?.[c.id] || 0), 0);
           newCount = Math.min(newCount, Math.max(0, groupMax - otherNonDefault));
         }
+
+        break;
       }
     }
 
@@ -653,13 +657,20 @@ export const useArmyStore = create<ArmyStore>()(
         }
       }
 
-      // For single-model units, enforce mutual exclusivity
-      // When selecting one weapon, zero out all others
-      if (currentUnit.modelCount === 1 && newCount === 1) {
-        newWeaponCounts = Object.keys(newWeaponCounts).reduce((acc, key) => {
-          acc[key] = key === choiceId ? newCount : 0;
-          return acc;
-        }, {} as Record<string, number>);
+      // For single-model units with replacement options, enforce mutual exclusivity
+      // within the same option only — don't zero out choices from other options
+      if (currentUnit.modelCount === 1 && newCount === 1 && unit.loadoutOptions) {
+        const sameOption = unit.loadoutOptions.find(o =>
+          o.choices.some(c => c.id === choiceId)
+        );
+        if (sameOption?.pattern === 'replacement') {
+          const siblingIds = new Set(sameOption.choices.map(c => c.id));
+          for (const key of Object.keys(newWeaponCounts)) {
+            if (siblingIds.has(key) && key !== choiceId) {
+              newWeaponCounts[key] = 0;
+            }
+          }
+        }
       }
 
       units[index] = {
@@ -809,13 +820,20 @@ export const useArmyStore = create<ArmyStore>()(
         }
       }
 
-      // For single-model units, enforce mutual exclusivity
-      // When selecting one weapon, zero out all others
-      if (currentUnit.modelCount === 1 && newCount === 1) {
-        newWeaponCounts = Object.keys(newWeaponCounts).reduce((acc, key) => {
-          acc[key] = key === choiceId ? newCount : 0;
-          return acc;
-        }, {} as Record<string, number>);
+      // For single-model units with replacement options, enforce mutual exclusivity
+      // within the same option only — don't zero out choices from other options
+      if (currentUnit.modelCount === 1 && newCount === 1 && unit.loadoutOptions) {
+        const sameOption = unit.loadoutOptions.find(o =>
+          o.choices.some(c => c.id === choiceId)
+        );
+        if (sameOption?.pattern === 'replacement') {
+          const siblingIds = new Set(sameOption.choices.map(c => c.id));
+          for (const key of Object.keys(newWeaponCounts)) {
+            if (siblingIds.has(key) && key !== choiceId) {
+              newWeaponCounts[key] = 0;
+            }
+          }
+        }
       }
 
       units[index] = {
