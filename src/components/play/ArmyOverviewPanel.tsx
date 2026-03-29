@@ -309,7 +309,9 @@ export function ArmyOverviewPanel({
     // Destroyed units go to the bottom
     if (destroyedA && !destroyedB) return 1;
     if (!destroyedA && destroyedB) return -1;
-    return 0;
+
+    // Alphabetical within each group
+    return unitA.name.localeCompare(unitB.name);
   });
 
   return (
