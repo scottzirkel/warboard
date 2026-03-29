@@ -39,7 +39,22 @@
    ============================================ */
 
 :root {
-  /* Default: Custodes Gold */
+  /* Neutral default - no faction selected */
+  --accent-50: #f8fafc;
+  --accent-100: #f1f5f9;
+  --accent-200: #e2e8f0;
+  --accent-300: #cbd5e1;
+  --accent-400: #94a3b8;
+  --accent-500: #64748b;
+  --accent-600: #475569;
+  --accent-700: #334155;
+  --accent-800: #1e293b;
+  --accent-900: #0f172a;
+  --accent-glow: rgba(100, 116, 139, 0.4);
+}
+
+/* Adeptus Custodes - Auramite Gold */
+[data-theme="custodes"] {
   --accent-50: #fdfcf7;
   --accent-100: #fbf7e8;
   --accent-200: #f5ebc6;
@@ -143,19 +158,19 @@
   --accent-glow: rgba(245, 158, 11, 0.4);
 }
 
-/* Black Templars - Templar Red/Black */
+/* Black Templars - Crusade Black/Silver */
 [data-theme="blacktemplars"] {
-  --accent-50: #fff1f2;
-  --accent-100: #ffe4e6;
-  --accent-200: #fecdd3;
-  --accent-300: #fda4af;
-  --accent-400: #fb7185;
-  --accent-500: #f43f5e;
-  --accent-600: #e11d48;
-  --accent-700: #be123c;
-  --accent-800: #9f1239;
-  --accent-900: #881337;
-  --accent-glow: rgba(244, 63, 94, 0.4);
+  --accent-50: #f8fafc;
+  --accent-100: #f1f5f9;
+  --accent-200: #e2e8f0;
+  --accent-300: #cbd5e1;
+  --accent-400: #94a3b8;
+  --accent-500: #64748b;
+  --accent-600: #475569;
+  --accent-700: #334155;
+  --accent-800: #1e293b;
+  --accent-900: #0f172a;
+  --accent-glow: rgba(100, 116, 139, 0.4);
 }
 
 /* Aeldari - Craftworld Teal */

@@ -47,9 +47,14 @@ const factionColors: Record<string, { bg: string; border: string; text: string }
     text: 'text-amber-400',
   },
   blacktemplars: {
-    bg: 'from-rose-900/30 to-rose-950/40',
-    border: 'border-rose-600/30 hover:border-rose-500/60',
-    text: 'text-rose-400',
+    bg: 'from-slate-800/30 to-slate-950/40',
+    border: 'border-slate-500/30 hover:border-slate-400/60',
+    text: 'text-slate-300',
+  },
+  aeldari: {
+    bg: 'from-teal-900/30 to-teal-950/40',
+    border: 'border-teal-600/30 hover:border-teal-500/60',
+    text: 'text-teal-400',
   },
   darkangels: {
     bg: 'from-green-900/30 to-green-950/40',

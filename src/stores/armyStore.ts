@@ -23,6 +23,7 @@ export interface AvailableArmy {
 }
 
 export const availableArmies: AvailableArmy[] = [
+  { id: 'aeldari', name: 'Aeldari', file: 'aeldari.json' },
   { id: 'blacktemplars', name: 'Black Templars', file: 'blacktemplars.json' },
   { id: 'custodes', name: 'Adeptus Custodes', file: 'custodes.json' },
   { id: 'chaosmarines', name: 'Chaos Space Marines', file: 'chaosmarines.json' },
@@ -601,7 +602,7 @@ export const useArmyStore = create<ArmyStore>()(
       }
 
       // Build new weapon counts
-      let newWeaponCounts = {
+      const newWeaponCounts = {
         ...currentUnit.weaponCounts,
         [choiceId]: newCount,
       };
@@ -741,7 +742,7 @@ export const useArmyStore = create<ArmyStore>()(
       }
 
       // Build new weapon counts
-      let newWeaponCounts = {
+      const newWeaponCounts = {
         ...currentUnit.weaponCounts,
         [choiceId]: newCount,
       };
