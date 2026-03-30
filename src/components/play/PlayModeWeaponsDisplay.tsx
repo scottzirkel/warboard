@@ -112,6 +112,8 @@ interface PlayModeWeaponsDisplayProps {
   activeStance?: ArmyRuleStance | null;
   activeRuleChoices?: ActiveRuleChoice[];
   leaderEnhancement?: Enhancement | null;
+  /** Whether the unit itself is the warlord */
+  isUnitWarlord?: boolean;
   /** Whether the attached leader is the warlord (for applying warlord-only twists) */
   isLeaderWarlord?: boolean;
   loadoutCasualties?: Record<string, number>;
@@ -143,6 +145,7 @@ export function PlayModeWeaponsDisplay({
   activeStance = null,
   activeRuleChoices = [],
   leaderEnhancement = null,
+  isUnitWarlord = false,
   isLeaderWarlord = false,
   className = '',
 }: PlayModeWeaponsDisplayProps) {
@@ -150,9 +153,10 @@ export function PlayModeWeaponsDisplay({
   const leaderRanged = leaderWeapons?.filter((w) => w.type === 'ranged') || [];
   const leaderMelee = leaderWeapons?.filter((w) => w.type === 'melee') || [];
 
-  // Filter out warlord-only twists for unit weapons (they only apply to the warlord model)
-  const unitTwists = activeTwists.filter(t => !t.appliesToWarlord);
-  // Leader gets all twists (including warlord-only if they are the warlord)
+  // Warlord-only twists apply to the warlord model's weapons
+  // If the unit is the warlord (Character without attached leader), it gets warlord twists
+  // If a leader is attached and is the warlord, only the leader gets warlord twists
+  const unitTwists = isUnitWarlord ? activeTwists : activeTwists.filter(t => !t.appliesToWarlord);
   const leaderTwists = isLeaderWarlord ? activeTwists : activeTwists.filter(t => !t.appliesToWarlord);
 
   return (

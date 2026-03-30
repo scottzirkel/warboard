@@ -21,9 +21,10 @@ model User {
   createdAt     DateTime  @default(now()) @map("created_at")
 
   // Relationships
-  accounts Account[]
-  sessions Session[]
-  lists    List[]
+  accounts    Account[]
+  sessions    Session[]
+  lists       List[]
+  gameResults GameResult[]
 
   @@map("users")
 }
@@ -90,4 +91,30 @@ model List {
   @@index([userId])
   @@index([armyId])
   @@map("lists")
+}
+
+// Game result model
+// Stores completed game results for history and stats
+model GameResult {
+  id              String   @id @default(cuid())
+  userId          String   @map("user_id")
+  date            String   // ISO date string
+  army            String
+  detachment      String
+  format          String
+  pointsLimit     Int      @map("points_limit")
+  opponentFaction String   @map("opponent_faction")
+  result          String   // 'win' | 'loss' | 'draw'
+  primaryVP       Int      @map("primary_vp")
+  secondaryVP     Int      @map("secondary_vp")
+  totalVP         Int      @map("total_vp")
+  primaryMission  String   @map("primary_mission")
+  listSnapshot    String   @map("list_snapshot") // JSON string of CurrentList
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  // Relationships
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("game_results")
 }

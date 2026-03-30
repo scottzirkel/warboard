@@ -27,6 +27,7 @@ const createDefaultGameState = (): GameState => ({
   collapsedLeaders: {},
   activatedLeaders: {},
   loadoutCasualties: {},
+  selectedDeployment: null,
   selectedPrimaryMission: null,
   selectedSecondaryMissions: [],
   discardedSecondaryMissions: [],
@@ -136,11 +137,15 @@ interface GameStoreActions {
   toggleAbilityUsed: (unitIndex: number, abilityId: string) => void;
   setAbilityUsed: (unitIndex: number, abilityId: string, used: boolean) => void;
 
+  // Deployment Selection
+  setSelectedDeployment: (id: string | null) => void;
+
   // Mission Selection
   setSelectedPrimaryMission: (id: string | null) => void;
   toggleSecondaryMission: (id: string) => void;
 
   // Mission Selection
+  setSecondaryMissions: (ids: string[]) => void;
   discardSecondaryMission: (id: string) => void;
 
   // Mission Scoring
@@ -824,6 +829,16 @@ export const useGameStore = create<GameStore>()(
   },
 
   // -------------------------------------------------------------------------
+  // Deployment Selection Actions
+  // -------------------------------------------------------------------------
+
+  setSelectedDeployment: (id: string | null) => {
+    set(state => ({
+      gameState: { ...state.gameState, selectedDeployment: id },
+    }));
+  },
+
+  // -------------------------------------------------------------------------
   // Mission Selection Actions
   // -------------------------------------------------------------------------
 
@@ -852,6 +867,15 @@ export const useGameStore = create<GameStore>()(
         },
       };
     });
+  },
+
+  setSecondaryMissions: (ids: string[]) => {
+    set(state => ({
+      gameState: {
+        ...state.gameState,
+        selectedSecondaryMissions: ids.slice(0, 2),
+      },
+    }));
   },
 
   discardSecondaryMission: (id: string) => {

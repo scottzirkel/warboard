@@ -49,6 +49,7 @@ describe('getPhaseReminders', () => {
     collapsedLeaders: {},
     activatedLeaders: {},
     loadoutCasualties: {},
+    selectedDeployment: null,
     selectedPrimaryMission: 'test-primary',
     selectedSecondaryMissions: ['test-sec-1', 'test-sec-2'],
     discardedSecondaryMissions: [],

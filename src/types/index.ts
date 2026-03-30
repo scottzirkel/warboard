@@ -136,6 +136,8 @@ export interface GameState {
   loadoutCasualties: Record<number, Record<string, number>>;
   /** Tracks used once-per-battle abilities (unitIndex -> abilityId -> used) */
   usedAbilities?: Record<number, Record<string, boolean>>;
+  /** Selected deployment type ID */
+  selectedDeployment: string | null;
   /** Selected primary mission ID */
   selectedPrimaryMission: string | null;
   /** Selected secondary mission IDs (exactly 2) */
@@ -144,6 +146,37 @@ export interface GameState {
   discardedSecondaryMissions: string[];
   /** Scored conditions: round -> conditionKey -> vpAwarded */
   scoredConditions: Record<number, Record<string, number>>;
+}
+
+// ============================================================================
+// Game History
+// ============================================================================
+
+export type GameResultOutcome = 'win' | 'loss' | 'draw';
+
+export interface GameResult {
+  id: string;
+  date: string; // ISO string
+  army: string;
+  detachment: string;
+  format: GameFormat;
+  pointsLimit: number;
+  opponentFaction: string;
+  result: GameResultOutcome;
+  primaryVP: number;
+  secondaryVP: number;
+  totalVP: number;
+  primaryMissionName: string;
+  listSnapshot: CurrentList;
+}
+
+export interface GameResultInfo {
+  id: string;
+  date: string;
+  army: string;
+  opponentFaction: string;
+  result: GameResultOutcome;
+  totalVP: number;
 }
 
 // ============================================================================

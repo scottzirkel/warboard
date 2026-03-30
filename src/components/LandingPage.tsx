@@ -1,8 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { availableArmies, type AvailableArmy } from '@/stores/armyStore';
 import { UserMenu } from '@/components/auth';
+import { Modal } from '@/components/ui';
+import { GameHistoryPanel } from './GameHistoryPanel';
 
 interface LandingPageProps {
   onSelectArmy: (armyId: string) => void;
@@ -88,6 +91,8 @@ function FactionCard({ army, onClick }: { army: AvailableArmy; onClick: () => vo
 }
 
 export function LandingPage({ onSelectArmy, isLoading = false }: LandingPageProps) {
+  const [showHistory, setShowHistory] = useState(false);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-900 to-black relative">
       {/* Sign in / user menu in top-right corner */}
@@ -129,6 +134,21 @@ export function LandingPage({ onSelectArmy, isLoading = false }: LandingPageProp
             ))}
           </div>
         </div>
+
+        {/* Game History */}
+        <button
+          onClick={() => setShowHistory(true)}
+          className="text-white/40 hover:text-white/70 text-sm transition-colors flex items-center gap-2 mx-auto"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Game History
+        </button>
+
+        <Modal isOpen={showHistory} onClose={() => setShowHistory(false)} title="Game History" size="md">
+          <GameHistoryPanel />
+        </Modal>
 
         {/* Loading indicator */}
         {isLoading && (

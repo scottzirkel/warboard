@@ -95,6 +95,7 @@ const createMockGameState = (overrides: Partial<GameState> = {}): GameState => (
   collapsedLeaders: {},
   activatedLeaders: {},
   loadoutCasualties: {},
+  selectedDeployment: null,
   selectedPrimaryMission: null,
   selectedSecondaryMissions: [],
   discardedSecondaryMissions: [],

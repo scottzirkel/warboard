@@ -12,6 +12,7 @@ import type {
   StatKey,
   ModifierSource,
   GameState,
+  MissionTwist,
 } from '@/types';
 import {
   evaluateCondition,
@@ -448,15 +449,29 @@ function collectKatahModifiers(
  * Collect modifiers from active mission twists.
  */
 function collectTwistModifiers(
-  _armyData: ArmyData,
-  _activeTwists: string[],
-  _unitCondition: UnitConditionState,
-  _isWarlord: boolean
+  activeTwists: MissionTwist[],
+  isWarlord: boolean
 ): CollectedModifier[] {
-  // Mission twists are stored in a separate data file, not in faction data
-  // For now, return empty - twists would need to be loaded separately
-  // This is a placeholder for future implementation
-  return [];
+  const modifiers: CollectedModifier[] = [];
+
+  for (const twist of activeTwists) {
+    // Skip warlord-only twists if unit is not a warlord
+    if (twist.appliesToWarlord && !isWarlord) continue;
+    if (!twist.modifiers) continue;
+
+    for (const mod of twist.modifiers as Modifier[]) {
+      modifiers.push({
+        stat: mod.stat as StatKey,
+        operation: mod.operation,
+        value: mod.value,
+        scope: mod.scope,
+        sourceName: twist.name,
+        sourceType: 'twist',
+      });
+    }
+  }
+
+  return modifiers;
 }
 
 // ============================================================================
@@ -511,7 +526,8 @@ export function useStatModifiers(
   unitIndex: number,
   units: ListUnit[],
   detachment: string,
-  gameState?: GameState | null
+  gameState?: GameState | null,
+  activeTwistData?: MissionTwist[]
 ): UseStatModifiersReturn {
   // Collect all modifiers
   const modifiers = useMemo((): CollectedModifier[] => {
@@ -579,16 +595,14 @@ export function useStatModifiers(
 
       // Twist modifiers
       const twistMods = collectTwistModifiers(
-        armyData,
-        gameState.activeTwists || [],
-        unitCondition,
+        activeTwistData || [],
         listUnit.isWarlord || false
       );
       allModifiers.push(...twistMods);
     }
 
     return allModifiers;
-  }, [armyData, unit, listUnit, unitIndex, units, detachment, gameState]);
+  }, [armyData, unit, listUnit, unitIndex, units, detachment, gameState, activeTwistData]);
 
   // Get modifiers for a specific stat
   const getModifiersForStat = useMemo(() => {

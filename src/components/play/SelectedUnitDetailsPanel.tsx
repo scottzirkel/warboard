@@ -823,6 +823,7 @@ export function SelectedUnitDetailsPanel({
             activeStance={katahStance}
             activeRuleChoices={activeRuleChoiceData}
             leaderEnhancement={leaderEnhancement}
+            isUnitWarlord={listUnit?.isWarlord === true}
             isLeaderWarlord={isLeaderWarlord}
             loadoutCasualties={loadoutCasualties}
             onIncrementCasualties={onIncrementCasualties}

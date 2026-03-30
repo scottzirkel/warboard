@@ -19,6 +19,7 @@ import { SelectedUnitDetailsPanel } from '@/components/play/SelectedUnitDetailsP
 import { TwistSelectionModal } from '@/components/play/TwistSelectionModal';
 import { GameStartModal } from '@/components/play/GameStartModal';
 import { SecondaryMissionModal } from '@/components/play/SecondaryMissionModal';
+import { EndGameModal } from '@/components/play/EndGameModal';
 import { PhaseTransitionModal } from '@/components/play/PhaseTransitionModal';
 import { getPhaseReminders, type PhaseReminder } from '@/lib/phaseReminders';
 import {
@@ -38,7 +39,8 @@ import {
   useSavedLists,
   getLocalStorageLists,
 } from '@/hooks';
-import type { CurrentList, Unit, LoadoutGroup, Weapon, ModifierSource, ModifierOperation, MissionTwist, PrimaryMission, SecondaryMission } from '@/types';
+import { useGameHistory } from '@/hooks/useGameHistory';
+import type { CurrentList, Unit, LoadoutGroup, Weapon, ModifierSource, ModifierOperation, MissionTwist, PrimaryMission, SecondaryMission, MissionDeployment, GameResultOutcome } from '@/types';
 import type { GameFormat } from '@/types';
 import { findUnitById } from '@/lib/armyDataUtils';
 
@@ -53,6 +55,7 @@ export default function Home() {
   const [showReferencePanel, setShowReferencePanel] = useState(false);
   const [detailModalUnit, setDetailModalUnit] = useState<Unit | null>(null);
   const [showSetupModal, setShowSetupModal] = useState(false);
+  const [deployments, setDeployments] = useState<MissionDeployment[]>([]);
   const [missionTwists, setMissionTwists] = useState<MissionTwist[]>([]);
   const [primaryMissions, setPrimaryMissions] = useState<PrimaryMission[]>([]);
   const [secondaryMissions, setSecondaryMissions] = useState<SecondaryMission[]>([]);
@@ -62,6 +65,7 @@ export default function Home() {
   const [isExporting, setIsExporting] = useState(false);
   const [exportCode, setExportCode] = useState<string | null>(null);
   const [exportError, setExportError] = useState<string | null>(null);
+  const [showEndGameModal, setShowEndGameModal] = useState(false);
   const [showPhaseModal, setShowPhaseModal] = useState(false);
   const [phaseReminders, setPhaseReminders] = useState<PhaseReminder[]>([]);
   const prevPhaseRef = useRef<{ phase: string; round: number } | null>(null);
@@ -132,8 +136,10 @@ export default function Home() {
     resetGameState,
     setGoingFirst,
     setIsAttacker,
+    setSelectedDeployment,
     setSelectedPrimaryMission,
     toggleSecondaryMission,
+    setSecondaryMissions: setGameSecondaryMissions,
     discardSecondaryMission,
     scoreCondition,
     unscoreCondition,
@@ -175,6 +181,11 @@ export default function Home() {
     saveList: saveSavedList,
     deleteList: deleteSavedList,
   } = useSavedLists();
+
+  // -------------------------------------------------------------------------
+  // Game History Hook
+  // -------------------------------------------------------------------------
+  const { saveGame } = useGameHistory();
 
   // -------------------------------------------------------------------------
   // Leader Attachment Hook
@@ -260,6 +271,25 @@ export default function Home() {
   // -------------------------------------------------------------------------
   // Stat Modifiers Hook (for selected unit)
   // -------------------------------------------------------------------------
+  // Compute active twist data for the selected unit
+  const selectedUnitActiveTwists = useMemo(() => {
+    if (mode !== 'play' || !selectedListUnit) return undefined;
+    const activeIds = gameState.activeTwists || [];
+    return missionTwists
+      .filter(t => activeIds.includes(t.id))
+      .filter(t => {
+        if (t.appliesToWarlord) {
+          const isUnitWarlord = selectedListUnit.isWarlord === true;
+          const attachedLeaderIndex = selectedListUnit.attachedLeader?.unitIndex;
+          const isAttachedLeaderWarlord = attachedLeaderIndex !== undefined
+            ? currentList.units[attachedLeaderIndex]?.isWarlord === true
+            : false;
+          return isUnitWarlord || isAttachedLeaderWarlord;
+        }
+        return true;
+      });
+  }, [mode, selectedListUnit, gameState.activeTwists, missionTwists, currentList.units]);
+
   const statModifiers = useStatModifiers(
     armyData,
     selectedUnit,
@@ -267,7 +297,8 @@ export default function Home() {
     selectedUnitIndex ?? -1,
     currentList.units,
     currentList.detachment,
-    mode === 'play' ? gameState : null
+    mode === 'play' ? gameState : null,
+    selectedUnitActiveTwists
   );
 
   // -------------------------------------------------------------------------
@@ -312,6 +343,7 @@ export default function Home() {
       try {
         const res = await fetch('/data/missions.json');
         const data = await res.json();
+        setDeployments(data.deployments || []);
         setMissionTwists(data.twists || []);
         setPrimaryMissions(data.primaryMissions || []);
         setSecondaryMissions(data.secondaryMissions || []);
@@ -831,6 +863,57 @@ export default function Home() {
     setShowSecondaryMissionModal(true);
   }, [discardSecondaryMission]);
 
+  const handleRandomizeSecondaries = useCallback(() => {
+    const discarded = gameState.discardedSecondaryMissions ?? [];
+    const available = secondaryMissions.filter(m => !discarded.includes(m.id));
+    if (available.length < 2) return;
+    // Fisher-Yates shuffle and pick 2
+    const shuffled = [...available];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    setGameSecondaryMissions(shuffled.slice(0, 2).map(m => m.id));
+  }, [gameState.discardedSecondaryMissions, secondaryMissions, setGameSecondaryMissions]);
+
+  const handleAdvanceGameState = useCallback(() => {
+    // Check if game is at the end (round 5, opponent fight phase)
+    const isLastPhase = gameState.currentPhase === 'fight';
+    const isOpponentTurn = gameState.playerTurn === 'opponent';
+    const isFinalRound = gameState.battleRound >= 5;
+
+    if (isLastPhase && isOpponentTurn && isFinalRound) {
+      setShowEndGameModal(true);
+      return;
+    }
+
+    advanceGameState();
+  }, [gameState.currentPhase, gameState.playerTurn, gameState.battleRound, advanceGameState]);
+
+  const handleEndGame = useCallback(async (opponentFaction: string, result: GameResultOutcome) => {
+    const primaryMission = primaryMissions.find(m => m.id === gameState.selectedPrimaryMission);
+
+    await saveGame({
+      date: new Date().toISOString(),
+      army: currentList.army,
+      detachment: currentList.detachment,
+      format: currentList.format,
+      pointsLimit: currentList.pointsLimit,
+      opponentFaction,
+      result,
+      primaryVP: gameState.primaryVP,
+      secondaryVP: gameState.secondaryVP,
+      totalVP: gameState.primaryVP + gameState.secondaryVP,
+      primaryMissionName: primaryMission?.name ?? '',
+      listSnapshot: currentList,
+    });
+
+    setShowEndGameModal(false);
+    showSuccess('Game result saved!');
+    resetGameState();
+    setMode('build');
+  }, [gameState, currentList, primaryMissions, saveGame, resetGameState, setMode, showSuccess]);
+
   const handleTwistSelect = useCallback((twistId: string | null) => {
     if (twistId) {
       // Ensure this twist is the active one (toggleTwist already handles single-twist logic)
@@ -933,7 +1016,7 @@ export default function Home() {
         currentPhase={gameState.currentPhase}
         playerTurn={gameState.playerTurn}
         onPhaseChange={setPhase}
-        onAdvance={advanceGameState}
+        onAdvance={handleAdvanceGameState}
         onToggleTurn={togglePlayerTurn}
         onReset={handleResetGame}
         showReferencePanel={showReferencePanel}
@@ -1025,8 +1108,9 @@ export default function Home() {
             onPrimaryVPChange={setPrimaryVP}
             onSecondaryVPChange={setSecondaryVP}
             onToggleTurn={togglePlayerTurn}
-            onAdvance={advanceGameState}
+            onAdvance={handleAdvanceGameState}
             onReset={handleResetGame}
+            onEndGame={() => setShowEndGameModal(true)}
             activeTwistName={missionTwists.find(t => t.id === gameState.activeTwists?.[0])?.name ?? null}
             onChangeTwist={() => setShowTwistModal(true)}
             selectedUnitName={selectedUnit ? (
@@ -1071,6 +1155,7 @@ export default function Home() {
                 armyData={armyData}
                 detachmentId={currentList.detachment}
                 currentPhase={gameState.currentPhase}
+                selectedDeployment={deployments.find(d => d.id === gameState.selectedDeployment) ?? null}
                 selectedPrimaryMission={primaryMissions.find(m => m.id === gameState.selectedPrimaryMission) ?? null}
                 selectedSecondaryMissions={secondaryMissions.filter(m => (gameState.selectedSecondaryMissions ?? []).includes(m.id))}
                 scoredConditions={gameState.scoredConditions ?? {}}
@@ -1385,6 +1470,16 @@ export default function Home() {
         />
       )}
 
+      {/* End Game Modal */}
+      <EndGameModal
+        isOpen={showEndGameModal}
+        onClose={() => setShowEndGameModal(false)}
+        primaryVP={gameState.primaryVP}
+        secondaryVP={gameState.secondaryVP}
+        primaryMissionName={primaryMissions.find(m => m.id === gameState.selectedPrimaryMission)?.name ?? ''}
+        onConfirm={handleEndGame}
+      />
+
       {/* Game Start Modal (Play Mode entry / Reset) */}
       <GameStartModal
         isOpen={showGameStartModal}
@@ -1408,12 +1503,31 @@ export default function Home() {
         onGoingFirstChange={setGoingFirst}
         isAttacker={gameState.isAttacker}
         onIsAttackerChange={setIsAttacker}
+        deployments={deployments}
+        selectedDeploymentId={gameState.selectedDeployment ?? null}
+        onDeploymentSelect={setSelectedDeployment}
         twists={missionTwists}
         activeTwistId={gameState.activeTwists?.[0] || null}
         onTwistSelect={handleTwistSelect}
         primaryMissions={primaryMissions}
         selectedPrimaryMissionId={gameState.selectedPrimaryMission ?? null}
         onPrimaryMissionSelect={setSelectedPrimaryMission}
+        detachmentSelected={!!currentList.detachment}
+        warlordDesignated={currentList.units.some(u => u.isWarlord)}
+        enhancementsAssigned={
+          !armyData || !currentList.detachment
+            ? true
+            : (() => {
+                const det = armyData.detachments[currentList.detachment];
+                if (!det?.enhancements?.length) return true;
+                const characters = currentList.units.filter(u => {
+                  const unit = armyData.units.find(d => d.id === u.unitId);
+                  return unit?.keywords?.includes('Character');
+                });
+                return characters.length === 0 || characters.some(u => !!u.enhancement);
+              })()
+        }
+        format={currentList.format}
       />
 
       {/* Secondary Mission Selection Modal (command phase) */}
@@ -1424,6 +1538,7 @@ export default function Home() {
         selectedSecondaryMissionIds={gameState.selectedSecondaryMissions ?? []}
         discardedSecondaryMissionIds={gameState.discardedSecondaryMissions ?? []}
         onSecondaryMissionToggle={toggleSecondaryMission}
+        onRandomize={handleRandomizeSecondaries}
       />
 
       {/* Twist Selection Modal (mid-game twist change) */}

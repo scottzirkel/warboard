@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { Modal, Badge, Button, Card, SegmentedControl } from '@/components/ui';
 import { MissionScoringPanel } from './MissionScoringPanel';
-import type { ArmyData, Detachment, Stratagem, PrimaryMission, SecondaryMission } from '@/types';
+import { DeploymentMapImage } from './DeploymentMapImage';
+import type { ArmyData, Detachment, Stratagem, PrimaryMission, SecondaryMission, MissionDeployment } from '@/types';
 
 // ============================================================================
 // Types
@@ -50,6 +51,9 @@ interface GameStatePanelProps {
 
   // Current game phase for highlighting relevant stratagems
   currentPhase?: string;
+
+  // Deployment map
+  selectedDeployment: MissionDeployment | null;
 
   // Mission scoring
   selectedPrimaryMission: PrimaryMission | null;
@@ -238,6 +242,7 @@ export function GameStatePanel({
   armyData,
   detachmentId,
   currentPhase,
+  selectedDeployment,
   selectedPrimaryMission,
   selectedSecondaryMissions,
   scoredConditions,
@@ -320,6 +325,17 @@ export function GameStatePanel({
           onDiscardSecondary={onDiscardSecondary}
           onChangeSecondaries={onChangeSecondaries}
         />
+
+        {/* Deployment Map */}
+        {selectedDeployment && (
+          <Card className="overflow-hidden p-3">
+            <div className="text-xs text-white/40 uppercase tracking-wide mb-2">Deployment</div>
+            <DeploymentMapImage
+              deploymentId={selectedDeployment.id}
+              deploymentName={selectedDeployment.name}
+            />
+          </Card>
+        )}
 
         {/* Martial Ka'tah (if stances available) */}
         {katahStances.length > 0 && (

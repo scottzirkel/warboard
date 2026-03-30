@@ -1,7 +1,8 @@
 'use client';
 
 import { Modal, SegmentedControl } from '@/components/ui';
-import type { MissionTwist, PrimaryMission } from '@/types';
+import { DeploymentMapImage } from './DeploymentMapImage';
+import type { MissionTwist, PrimaryMission, MissionDeployment, GameFormat } from '@/types';
 
 interface GameStartModalProps {
   isOpen: boolean;
@@ -11,6 +12,10 @@ interface GameStartModalProps {
   onGoingFirstChange: (goingFirst: boolean) => void;
   isAttacker: boolean;
   onIsAttackerChange: (isAttacker: boolean) => void;
+  // Deployment selection
+  deployments: MissionDeployment[];
+  selectedDeploymentId: string | null;
+  onDeploymentSelect: (id: string | null) => void;
   // Twist
   twists: MissionTwist[];
   activeTwistId: string | null;
@@ -19,6 +24,11 @@ interface GameStartModalProps {
   primaryMissions: PrimaryMission[];
   selectedPrimaryMissionId: string | null;
   onPrimaryMissionSelect: (id: string | null) => void;
+  // Pregame checklist
+  detachmentSelected: boolean;
+  warlordDesignated: boolean;
+  enhancementsAssigned: boolean;
+  format: GameFormat;
 }
 
 const itemStyles = `
@@ -33,6 +43,26 @@ const checkmark = (
   </svg>
 );
 
+function DiceButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={(e) => { e.stopPropagation(); onClick(); }}
+      className="p-1 rounded-md hover:bg-white/10 transition-colors"
+      title="Randomize"
+    >
+      <svg className="w-4 h-4 text-white/50 hover:text-white/80" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.5}>
+        <rect x="3" y="3" width="14" height="14" rx="2" />
+        <circle cx="7" cy="7" r="1" fill="currentColor" stroke="none" />
+        <circle cx="13" cy="7" r="1" fill="currentColor" stroke="none" />
+        <circle cx="7" cy="13" r="1" fill="currentColor" stroke="none" />
+        <circle cx="13" cy="13" r="1" fill="currentColor" stroke="none" />
+        <circle cx="10" cy="10" r="1" fill="currentColor" stroke="none" />
+      </svg>
+    </button>
+  );
+}
+
 export function GameStartModal({
   isOpen,
   onClose,
@@ -40,18 +70,56 @@ export function GameStartModal({
   onGoingFirstChange,
   isAttacker,
   onIsAttackerChange,
+  deployments,
+  selectedDeploymentId,
+  onDeploymentSelect,
   twists,
   activeTwistId,
   onTwistSelect,
   primaryMissions,
   selectedPrimaryMissionId,
   onPrimaryMissionSelect,
+  detachmentSelected,
+  warlordDesignated,
+  enhancementsAssigned,
+  format,
 }: GameStartModalProps) {
   const canStart = selectedPrimaryMissionId !== null;
+
+  const checklistItems = [
+    { label: 'Detachment', done: detachmentSelected },
+    { label: 'Warlord', done: warlordDesignated || format === 'colosseum', hint: format !== 'colosseum' ? '(required)' : undefined },
+    { label: 'Enhancements', done: enhancementsAssigned, hint: '(optional)' },
+    { label: 'Deployment', done: !!selectedDeploymentId, hint: '(optional)' },
+    { label: 'Primary Mission', done: !!selectedPrimaryMissionId },
+    { label: 'First Turn', done: true },
+    { label: 'Role', done: true },
+  ];
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Game Setup" size="md">
       <div className="space-y-5">
+        {/* Pregame Checklist */}
+        <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+          {checklistItems.map(({ label, done, hint }) => (
+            <div key={label} className="flex items-center gap-1.5 text-sm">
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${done ? 'bg-green-500' : 'bg-white/10'}`}>
+                {done && (
+                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+              </div>
+              <span className={done ? 'text-white/70' : 'text-white/40'}>
+                {label}
+              </span>
+              {hint && !done && (
+                <span className="text-[10px] text-white/30">{hint}</span>
+              )}
+            </div>
+          ))}
+        </div>
+
         {/* Going First */}
         <div>
           <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">
@@ -82,12 +150,58 @@ export function GameStartModal({
           />
         </div>
 
+        {/* Deployment */}
+        {deployments.length > 0 && (
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-xs text-white/50 uppercase tracking-wide">
+                Deployment
+              </label>
+              <DiceButton onClick={() => {
+                const idx = Math.floor(Math.random() * deployments.length);
+                onDeploymentSelect(deployments[idx].id);
+              }} />
+            </div>
+            <div className="rounded-xl overflow-hidden bg-white/[0.04] max-h-[30vh] overflow-y-auto">
+              {deployments.map((deployment) => {
+                const isSelected = selectedDeploymentId === deployment.id;
+                return (
+                  <div
+                    key={deployment.id}
+                    className={`${itemStyles} ${isSelected ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-white/5'}`}
+                    onClick={() => onDeploymentSelect(isSelected ? null : deployment.id)}
+                  >
+                    <div className="flex-1 min-w-0">
+                      <span className="font-medium text-sm">{deployment.name}</span>
+                    </div>
+                    {isSelected && checkmark}
+                  </div>
+                );
+              })}
+            </div>
+            {selectedDeploymentId && (
+              <div className="mt-3">
+                <DeploymentMapImage
+                  deploymentId={selectedDeploymentId}
+                  deploymentName={deployments.find(d => d.id === selectedDeploymentId)?.name ?? ''}
+                />
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Primary Mission */}
         {primaryMissions.length > 0 && (
           <div>
-            <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">
-              Primary Mission
-            </label>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-xs text-white/50 uppercase tracking-wide">
+                Primary Mission
+              </label>
+              <DiceButton onClick={() => {
+                const idx = Math.floor(Math.random() * primaryMissions.length);
+                onPrimaryMissionSelect(primaryMissions[idx].id);
+              }} />
+            </div>
             <div className="rounded-xl overflow-hidden bg-white/[0.04] max-h-[30vh] overflow-y-auto">
               {primaryMissions.map((mission) => {
                 const isSelected = selectedPrimaryMissionId === mission.id;
@@ -111,9 +225,15 @@ export function GameStartModal({
         {/* Mission Twist */}
         {twists.length > 0 && (
           <div>
-            <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">
-              Mission Twist
-            </label>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-xs text-white/50 uppercase tracking-wide">
+                Mission Twist
+              </label>
+              <DiceButton onClick={() => {
+                const idx = Math.floor(Math.random() * twists.length);
+                onTwistSelect(twists[idx].id);
+              }} />
+            </div>
             <div className="rounded-xl overflow-hidden bg-white/[0.04] max-h-[30vh] overflow-y-auto">
               {/* No Twist option */}
               <div

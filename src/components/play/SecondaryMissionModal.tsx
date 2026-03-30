@@ -10,6 +10,7 @@ interface SecondaryMissionModalProps {
   selectedSecondaryMissionIds: string[];
   discardedSecondaryMissionIds: string[];
   onSecondaryMissionToggle: (id: string) => void;
+  onRandomize: () => void;
 }
 
 const itemStyles = `
@@ -31,6 +32,7 @@ export function SecondaryMissionModal({
   selectedSecondaryMissionIds,
   discardedSecondaryMissionIds,
   onSecondaryMissionToggle,
+  onRandomize,
 }: SecondaryMissionModalProps) {
   const canConfirm = selectedSecondaryMissionIds.length === 2;
 
@@ -41,8 +43,25 @@ export function SecondaryMissionModal({
           Choose 2 secondary missions for this battle round. Discarded missions cannot be re-selected.
         </p>
 
-        <div className="text-xs text-white/50 uppercase tracking-wide">
-          Secondary Missions ({selectedSecondaryMissionIds.length}/2)
+        <div className="flex items-center justify-between">
+          <div className="text-xs text-white/50 uppercase tracking-wide">
+            Secondary Missions ({selectedSecondaryMissionIds.length}/2)
+          </div>
+          <button
+            type="button"
+            onClick={onRandomize}
+            className="text-xs text-accent-400 hover:text-accent-300 transition-colors flex items-center gap-1"
+          >
+            <svg className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.5}>
+              <rect x="3" y="3" width="14" height="14" rx="2" />
+              <circle cx="7" cy="7" r="1" fill="currentColor" stroke="none" />
+              <circle cx="13" cy="7" r="1" fill="currentColor" stroke="none" />
+              <circle cx="7" cy="13" r="1" fill="currentColor" stroke="none" />
+              <circle cx="13" cy="13" r="1" fill="currentColor" stroke="none" />
+              <circle cx="10" cy="10" r="1" fill="currentColor" stroke="none" />
+            </svg>
+            Randomize
+          </button>
         </div>
 
         <div className="rounded-xl overflow-hidden bg-white/[0.04] max-h-[50vh] overflow-y-auto">
