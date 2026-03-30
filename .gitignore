@@ -35,8 +35,8 @@ Thumbs.db
 *.tsbuildinfo
 
 # Prisma
-prisma/dev.db
-prisma/dev.db-journal
+*.db
+*.db-journal
 
 # BSData parsed intermediates (regenerate with npm run bsdata:parse)
 scripts/bsdata/*-parsed.json
