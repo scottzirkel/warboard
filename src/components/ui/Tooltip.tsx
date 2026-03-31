@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useState, useRef, useCallback } from 'react';
+import { ReactNode, useState, useRef, useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 interface TooltipProps {
@@ -24,7 +24,7 @@ export function Tooltip({
   const triggerRef = useRef<HTMLSpanElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseEnter = useCallback(() => {
+  const showTooltip = useCallback(() => {
     if (!triggerRef.current) return;
 
     // Set initial position estimate based on trigger
@@ -69,9 +69,23 @@ export function Tooltip({
     });
   }, [position]);
 
-  const handleMouseLeave = useCallback(() => {
+  const hideTooltip = useCallback(() => {
     setIsVisible(false);
   }, []);
+
+  // Dismiss tooltip when tapping outside on touch devices
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const handleTouchOutside = (e: TouchEvent) => {
+      if (triggerRef.current && !triggerRef.current.contains(e.target as Node)) {
+        setIsVisible(false);
+      }
+    };
+
+    document.addEventListener('touchstart', handleTouchOutside);
+    return () => document.removeEventListener('touchstart', handleTouchOutside);
+  }, [isVisible]);
 
   if (!content) {
     return <>{children}</>;
@@ -138,8 +152,8 @@ export function Tooltip({
     <span
       ref={triggerRef}
       className={`inline-flex cursor-help ${className}`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={showTooltip}
+      onMouseLeave={hideTooltip}
     >
       {children}
       {canRenderPortal && tooltipElement && createPortal(tooltipElement, document.body)}
@@ -149,12 +163,15 @@ export function Tooltip({
 
 /**
  * A badge with an integrated tooltip - for modifier badges, keywords, etc.
+ * On desktop: hover shows tooltip, click fires onClick.
+ * On mobile: tap fires onClick (tooltip not shown to avoid blocking interaction).
  */
 interface TooltipBadgeProps {
   children: ReactNode;
   tooltip: ReactNode;
   variant?: 'accent' | 'purple' | 'default';
   className?: string;
+  onClick?: () => void;
 }
 
 export function TooltipBadge({
@@ -162,6 +179,7 @@ export function TooltipBadge({
   tooltip,
   variant = 'accent',
   className = '',
+  onClick,
 }: TooltipBadgeProps) {
   const variantClass = {
     default: 'bg-white/10 text-white/60',
@@ -171,7 +189,13 @@ export function TooltipBadge({
 
   return (
     <Tooltip content={tooltip}>
-      <span className={`badge ${variantClass} ${className}`}>
+      <span
+        className={`badge ${variantClass} ${onClick ? 'cursor-pointer hover:brightness-125 active:scale-95 transition-all' : ''} ${className}`}
+        onClick={onClick}
+        role={onClick ? 'button' : undefined}
+        tabIndex={onClick ? 0 : undefined}
+        onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } } : undefined}
+      >
         {children}
       </span>
     </Tooltip>

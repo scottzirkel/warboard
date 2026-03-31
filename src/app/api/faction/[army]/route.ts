@@ -11,6 +11,11 @@ const DATA_DIR = join(
   'data'
 );
 
+// Core 10th edition keyword glossary — loaded once from shared data file
+const CORE_KEYWORD_GLOSSARY = JSON.parse(
+  readFileSync(join(DATA_DIR, 'core-glossary.json'), 'utf-8')
+);
+
 function loadDetachments(armyId: string): Record<string, unknown> | null {
   const detachmentsDir = join(DATA_DIR, 'detachments', armyId);
 
@@ -51,6 +56,11 @@ export async function GET(
       if (separateDetachments) {
         data.detachments = separateDetachments;
       }
+    }
+
+    // Ensure all factions have a keyword glossary (use core rules as fallback)
+    if (!data.keywordGlossary) {
+      data.keywordGlossary = CORE_KEYWORD_GLOSSARY;
     }
 
     return NextResponse.json(data);

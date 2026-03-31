@@ -704,6 +704,21 @@ export default function Home() {
     setShowReferencePanel(prev => !prev);
   }, []);
 
+  const handleKeywordClick = useCallback((keyword: string, type: 'unit' | 'weapon') => {
+    setShowReferencePanel(true);
+    // Scroll to the keyword entry after panel opens
+    requestAnimationFrame(() => {
+      const slug = `ref-${type}-${keyword.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+      const el = document.getElementById(slug);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Brief highlight effect
+        el.classList.add('ring-2', 'ring-accent-400');
+        setTimeout(() => el.classList.remove('ring-2', 'ring-accent-400'), 1500);
+      }
+    });
+  }, []);
+
   const handleAddUnit = useCallback((unit: Unit) => {
     const modelCounts = Object.keys(unit.points).map(Number);
     const defaultModelCount = modelCounts[0];
@@ -1253,6 +1268,7 @@ export default function Home() {
                   isAbilityUsed={(abilityId) => isAbilityUsed(selectedUnitIndex, abilityId)}
                   onToggleAbilityUsed={(abilityId) => toggleAbilityUsed(selectedUnitIndex, abilityId)}
                   currentPhase={gameState.currentPhase}
+                  onKeywordClick={handleKeywordClick}
                 />
               ) : undefined
             }
@@ -1363,7 +1379,7 @@ export default function Home() {
                 <h4 className="text-xs font-semibold text-blue-400 uppercase tracking-wide mb-3">Weapon Abilities</h4>
                 <div className="space-y-1.5">
                   {armyData.keywordGlossary.weapon.map((kw) => (
-                    <div key={kw.name} className="bg-black/20 rounded-lg p-3">
+                    <div key={kw.name} id={`ref-weapon-${kw.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="bg-black/20 rounded-lg p-3 transition-all duration-300">
                       <span className="font-medium text-sm text-blue-300">{kw.name}</span>
                       <div className="text-xs text-white/70 mt-0.5">{kw.description}</div>
                     </div>
@@ -1378,7 +1394,7 @@ export default function Home() {
                 <h4 className="text-xs font-semibold text-green-400 uppercase tracking-wide mb-3">Unit Abilities</h4>
                 <div className="space-y-1.5">
                   {armyData.keywordGlossary.unit.map((kw) => (
-                    <div key={kw.name} className="bg-black/20 rounded-lg p-3">
+                    <div key={kw.name} id={`ref-unit-${kw.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="bg-black/20 rounded-lg p-3 transition-all duration-300">
                       <span className="font-medium text-sm text-green-300">{kw.name}</span>
                       <div className="text-xs text-white/70 mt-0.5">{kw.description}</div>
                     </div>

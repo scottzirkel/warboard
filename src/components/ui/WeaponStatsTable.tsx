@@ -10,6 +10,7 @@ interface WeaponStatsTableProps {
   enhancement?: Enhancement | null;
   activeStance?: ArmyRuleStance | null;
   activeRuleChoices?: ActiveRuleChoice[];
+  onKeywordClick?: (keyword: string, type: 'unit' | 'weapon') => void;
   className?: string;
 }
 
@@ -84,10 +85,12 @@ function WeaponAbilities({
   abilities,
   glossary,
   stanceAbility = null,
+  onKeywordClick,
 }: {
   abilities: string[];
   glossary: KeywordDefinition[];
   stanceAbility?: string | null;
+  onKeywordClick?: (keyword: string, type: 'unit' | 'weapon') => void;
 }) {
   if (!abilities || abilities.length === 0) return null;
 
@@ -102,11 +105,12 @@ function WeaponAbilities({
             {description ? (
               <Tooltip content={description}>
                 <span
-                  className={`cursor-help border-b border-dotted ${
+                  className={`border-b border-dotted ${
                     isStanceAbility
                       ? 'text-green-400 border-green-400/50 font-medium'
                       : 'border-accent-400/50'
-                  }`}
+                  } ${onKeywordClick ? 'cursor-pointer hover:brightness-125' : 'cursor-help'}`}
+                  onClick={onKeywordClick ? () => onKeywordClick(ability, 'weapon') : undefined}
                 >
                   {ability}
                 </span>
@@ -142,6 +146,7 @@ function RangedWeaponDisplay({
   enhancement = null,
   activeStance = null,
   activeRuleChoices = [],
+  onKeywordClick,
 }: {
   weapon: Weapon & { stats: RangedWeaponStats };
   activeStratagems?: Stratagem[];
@@ -150,6 +155,7 @@ function RangedWeaponDisplay({
   enhancement?: Enhancement | null;
   activeStance?: ArmyRuleStance | null;
   activeRuleChoices?: ActiveRuleChoice[];
+  onKeywordClick?: (keyword: string, type: 'unit' | 'weapon') => void;
 }) {
   const range = getModifiedWeaponStat(weapon, 'range', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
   const a = getModifiedWeaponStat(weapon, 'a', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
@@ -183,7 +189,7 @@ function RangedWeaponDisplay({
           </tr>
         </tbody>
       </table>
-      <WeaponAbilities abilities={weapon.abilities || []} glossary={weaponKeywordGlossary} />
+      <WeaponAbilities abilities={weapon.abilities || []} glossary={weaponKeywordGlossary} onKeywordClick={onKeywordClick} />
     </div>
   );
 }
@@ -211,6 +217,7 @@ function MeleeWeaponDisplay({
   enhancement = null,
   activeStance = null,
   activeRuleChoices = [],
+  onKeywordClick,
 }: {
   weapon: Weapon & { stats: MeleeWeaponStats };
   activeStratagems?: Stratagem[];
@@ -219,6 +226,7 @@ function MeleeWeaponDisplay({
   enhancement?: Enhancement | null;
   activeStance?: ArmyRuleStance | null;
   activeRuleChoices?: ActiveRuleChoice[];
+  onKeywordClick?: (keyword: string, type: 'unit' | 'weapon') => void;
 }) {
   const a = getModifiedWeaponStat(weapon, 'a', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
   const ws = getModifiedWeaponStat(weapon, 'ws', activeStratagems, activeTwists, enhancement, activeStance, activeRuleChoices);
@@ -258,7 +266,7 @@ function MeleeWeaponDisplay({
           </tr>
         </tbody>
       </table>
-      <WeaponAbilities abilities={combinedAbilities} glossary={weaponKeywordGlossary} stanceAbility={stanceAbility} />
+      <WeaponAbilities abilities={combinedAbilities} glossary={weaponKeywordGlossary} stanceAbility={stanceAbility} onKeywordClick={onKeywordClick} />
     </div>
   );
 }
@@ -277,6 +285,7 @@ export function WeaponStatsTable({
   enhancement = null,
   activeStance = null,
   activeRuleChoices = [],
+  onKeywordClick,
   className = '',
 }: WeaponStatsTableProps) {
   return (
@@ -293,6 +302,7 @@ export function WeaponStatsTable({
               enhancement={enhancement}
               activeStance={activeStance}
               activeRuleChoices={activeRuleChoices}
+              onKeywordClick={onKeywordClick}
             />
           );
         }
@@ -307,6 +317,7 @@ export function WeaponStatsTable({
               enhancement={enhancement}
               activeStance={activeStance}
               activeRuleChoices={activeRuleChoices}
+              onKeywordClick={onKeywordClick}
             />
           );
         }

@@ -77,6 +77,9 @@ interface SelectedUnitDetailsPanelProps {
   // Current game phase for ability highlighting
   currentPhase?: GamePhase;
 
+  // Keyword click handler (opens reference panel)
+  onKeywordClick?: (keyword: string, type: 'unit' | 'weapon') => void;
+
   className?: string;
 }
 
@@ -354,6 +357,8 @@ export function SelectedUnitDetailsPanel({
   onToggleAbilityUsed,
 
   currentPhase,
+
+  onKeywordClick,
 
   className = '',
 }: SelectedUnitDetailsPanelProps) {
@@ -828,6 +833,7 @@ export function SelectedUnitDetailsPanel({
             loadoutCasualties={loadoutCasualties}
             onIncrementCasualties={onIncrementCasualties}
             onDecrementCasualties={onDecrementCasualties}
+            onKeywordClick={onKeywordClick}
           />
         </div>
 
@@ -971,7 +977,9 @@ export function SelectedUnitDetailsPanel({
               {unit.keywords.map((kw) => {
                 const description = getKeywordDescription(kw);
                 return description ? (
-                  <TooltipBadge key={kw} tooltip={description} variant="default" className="text-[10px]">
+                  <TooltipBadge key={kw} tooltip={description} variant="default" className="text-[10px]"
+                    onClick={onKeywordClick ? () => onKeywordClick(kw, 'unit') : undefined}
+                  >
                     {kw}
                   </TooltipBadge>
                 ) : (
@@ -987,7 +995,9 @@ export function SelectedUnitDetailsPanel({
                 {leaderUnit.keywords.map((kw) => {
                   const description = getKeywordDescription(kw);
                   return description ? (
-                    <TooltipBadge key={`leader-${kw}`} tooltip={description} variant="default" className="text-[10px]">
+                    <TooltipBadge key={`leader-${kw}`} tooltip={description} variant="default" className="text-[10px]"
+                      onClick={onKeywordClick ? () => onKeywordClick(kw, 'unit') : undefined}
+                    >
                       {kw}
                     </TooltipBadge>
                   ) : (

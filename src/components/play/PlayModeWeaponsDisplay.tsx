@@ -16,6 +16,7 @@ interface LoadoutGroupCardProps {
   enhancement?: Enhancement | null;
   activeStance?: ArmyRuleStance | null;
   activeRuleChoices?: ActiveRuleChoice[];
+  onKeywordClick?: (keyword: string, type: 'unit' | 'weapon') => void;
   casualties?: number;
   onIncrementCasualties?: () => void;
   onDecrementCasualties?: () => void;
@@ -33,6 +34,7 @@ export function LoadoutGroupCard({
   enhancement = null,
   activeStance = null,
   activeRuleChoices = [],
+  onKeywordClick,
   casualties = 0,
   onIncrementCasualties,
   onDecrementCasualties,
@@ -66,6 +68,7 @@ export function LoadoutGroupCard({
               enhancement={enhancement}
               activeStance={activeStance}
               activeRuleChoices={activeRuleChoices}
+              onKeywordClick={onKeywordClick}
             />
           </div>
         )}
@@ -84,6 +87,7 @@ export function LoadoutGroupCard({
               enhancement={enhancement}
               activeStance={activeStance}
               activeRuleChoices={activeRuleChoices}
+              onKeywordClick={onKeywordClick}
             />
           </div>
         )}
@@ -119,6 +123,7 @@ interface PlayModeWeaponsDisplayProps {
   loadoutCasualties?: Record<string, number>;
   onIncrementCasualties?: (groupId: string) => void;
   onDecrementCasualties?: (groupId: string) => void;
+  onKeywordClick?: (keyword: string, type: 'unit' | 'weapon') => void;
   className?: string;
 }
 
@@ -147,6 +152,7 @@ export function PlayModeWeaponsDisplay({
   leaderEnhancement = null,
   isUnitWarlord = false,
   isLeaderWarlord = false,
+  onKeywordClick,
   className = '',
 }: PlayModeWeaponsDisplayProps) {
   const hasLeaderWeapons = leaderWeapons && leaderWeapons.length > 0;
@@ -180,6 +186,7 @@ export function PlayModeWeaponsDisplay({
           enhancement={enhancement}
           activeStance={activeStance}
           activeRuleChoices={activeRuleChoices}
+          onKeywordClick={onKeywordClick}
           casualties={loadoutCasualties[group.id] || 0}
           onIncrementCasualties={
             onIncrementCasualties
@@ -262,6 +269,7 @@ export function PlayModeWeaponsDisplay({
                     enhancement={leaderEnhancement}
                     activeStance={activeStance}
                     activeRuleChoices={activeRuleChoices}
+                    onKeywordClick={onKeywordClick}
                   />
                 </div>
               )}
@@ -280,6 +288,7 @@ export function PlayModeWeaponsDisplay({
                     enhancement={leaderEnhancement}
                     activeStance={activeStance}
                     activeRuleChoices={activeRuleChoices}
+                    onKeywordClick={onKeywordClick}
                   />
                 </div>
               )}
