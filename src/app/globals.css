@@ -657,3 +657,187 @@ select {
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 }
+
+/* ============================================
+   LIGHT MODE - Utility Class Overrides
+   These override Tailwind utilities (which live
+   in @layer utilities) for light mode. Un-layered
+   CSS always beats layered CSS in specificity.
+   ============================================ */
+
+/* --- Text colors --- */
+[data-color-mode="light"] .text-white {
+  color: var(--cm-text);
+}
+[data-color-mode="light"] .text-white\/90 {
+  color: color-mix(in srgb, var(--cm-text) 90%, transparent);
+}
+[data-color-mode="light"] .text-white\/80 {
+  color: color-mix(in srgb, var(--cm-text) 80%, transparent);
+}
+[data-color-mode="light"] .text-white\/70 {
+  color: color-mix(in srgb, var(--cm-text) 70%, transparent);
+}
+[data-color-mode="light"] .text-white\/60 {
+  color: color-mix(in srgb, var(--cm-text) 60%, transparent);
+}
+[data-color-mode="light"] .text-white\/55 {
+  color: color-mix(in srgb, var(--cm-text) 55%, transparent);
+}
+[data-color-mode="light"] .text-white\/50 {
+  color: color-mix(in srgb, var(--cm-text) 50%, transparent);
+}
+[data-color-mode="light"] .text-white\/45 {
+  color: color-mix(in srgb, var(--cm-text) 45%, transparent);
+}
+[data-color-mode="light"] .text-white\/40 {
+  color: color-mix(in srgb, var(--cm-text) 40%, transparent);
+}
+[data-color-mode="light"] .text-white\/30 {
+  color: color-mix(in srgb, var(--cm-text) 30%, transparent);
+}
+[data-color-mode="light"] .text-white\/20 {
+  color: color-mix(in srgb, var(--cm-text) 20%, transparent);
+}
+
+/* Gray text → adapt to light mode */
+[data-color-mode="light"] .text-gray-200 {
+  color: #374151;
+}
+[data-color-mode="light"] .text-gray-300 {
+  color: #4b5563;
+}
+[data-color-mode="light"] .text-gray-400 {
+  color: #6b7280;
+}
+[data-color-mode="light"] .text-gray-500 {
+  color: #6b7280;
+}
+
+/* --- Background colors --- */
+[data-color-mode="light"] .bg-white\/3 {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+[data-color-mode="light"] .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+[data-color-mode="light"] .bg-white\/8 {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+[data-color-mode="light"] .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+[data-color-mode="light"] .bg-white\/15 {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+[data-color-mode="light"] .bg-white\/20 {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+[data-color-mode="light"] .bg-white\/30 {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Hover states */
+[data-color-mode="light"] .hover\:bg-white\/5:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+[data-color-mode="light"] .hover\:bg-white\/10:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+[data-color-mode="light"] .hover\:bg-white\/20:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+[data-color-mode="light"] .hover\:text-white:hover {
+  color: var(--cm-text);
+}
+[data-color-mode="light"] .hover\:text-white\/80:hover {
+  color: color-mix(in srgb, var(--cm-text) 80%, transparent);
+}
+
+/* --- Border colors --- */
+[data-color-mode="light"] .border-white\/5 {
+  border-color: rgba(0, 0, 0, 0.05);
+}
+[data-color-mode="light"] .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+[data-color-mode="light"] .border-white\/15 {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+[data-color-mode="light"] .border-white\/20 {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* --- Gray backgrounds → lighter in light mode --- */
+[data-color-mode="light"] .bg-gray-800\/30 {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+[data-color-mode="light"] .bg-gray-800\/50 {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+[data-color-mode="light"] .bg-gray-900 {
+  background-color: #f9fafb;
+}
+[data-color-mode="light"] .bg-gray-800 {
+  background-color: #f3f4f6;
+}
+
+/* Gray borders */
+[data-color-mode="light"] .border-gray-700\/30 {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+[data-color-mode="light"] .border-gray-700 {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+[data-color-mode="light"] .border-gray-600 {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* --- Black backgrounds (used in dark mode for depth) --- */
+[data-color-mode="light"] .bg-black\/20 {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+[data-color-mode="light"] .bg-black\/30 {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+[data-color-mode="light"] .bg-black\/40 {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+[data-color-mode="light"] .bg-black\/50 {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+[data-color-mode="light"] .bg-black\/80 {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* --- Zinc backgrounds (NavMenu, dropdowns) --- */
+[data-color-mode="light"] .bg-zinc-800\/95 {
+  background-color: rgba(255, 255, 255, 0.97);
+}
+[data-color-mode="light"] .bg-zinc-800 {
+  background-color: #f4f4f5;
+}
+[data-color-mode="light"] .bg-zinc-900 {
+  background-color: #fafafa;
+}
+
+/* --- Ring / shadow overrides --- */
+[data-color-mode="light"] .ring-white\/10 {
+  --tw-ring-color: rgba(0, 0, 0, 0.08);
+}
+
+/* --- Divide colors --- */
+[data-color-mode="light"] .divide-white\/5 > :not(:first-child) {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+[data-color-mode="light"] .divide-white\/10 > :not(:first-child) {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* --- Placeholder text --- */
+[data-color-mode="light"] .placeholder-white\/40::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+[data-color-mode="light"] .placeholder\:text-white\/40::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
