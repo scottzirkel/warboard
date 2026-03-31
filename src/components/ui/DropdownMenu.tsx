@@ -58,7 +58,7 @@ export function DropdownMenu({ trigger, items, align = 'right' }: DropdownMenuPr
         <div
           className={`
             absolute top-full mt-1 z-50 min-w-[140px]
-            bg-zinc-800/95 backdrop-blur-xl border border-white/10
+            bg-cm-menu-bg backdrop-blur-xl border border-cm-border-input
             rounded-lg shadow-xl overflow-hidden
             ${align === 'right' ? 'right-0' : 'left-0'}
           `}

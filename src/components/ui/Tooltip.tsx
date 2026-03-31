@@ -111,10 +111,10 @@ export function Tooltip({
           shadow-2xl
         "
         style={{
-          backgroundColor: '#2c2c2e',
+          backgroundColor: 'var(--cm-surface-elevated)',
         }}
       >
-        <div className="px-4 py-3 text-sm text-white leading-relaxed whitespace-pre-wrap">
+        <div className="px-4 py-3 text-sm text-cm-text leading-relaxed whitespace-pre-wrap">
           {content}
         </div>
       </div>
@@ -139,8 +139,8 @@ export function Tooltip({
             absolute left-1/2 -translate-x-1/2
             w-0 h-0 border-[8px] border-transparent
             ${actualPosition === 'top'
-              ? '-top-[12px] border-t-[#2c2c2e]'
-              : '-bottom-[12px] border-b-[#2c2c2e]'
+              ? '-top-[12px] border-t-[var(--cm-surface-elevated)]'
+              : '-bottom-[12px] border-b-[var(--cm-surface-elevated)]'
             }
           `}
         />
