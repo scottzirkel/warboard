@@ -32,6 +32,26 @@
   --color-custodes-black: #1a1a1a;
 
   --font-family-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  /* Color mode tokens mapped to Tailwind */
+  --color-cm-text: var(--cm-text);
+  --color-cm-text-secondary: var(--cm-text-secondary);
+  --color-cm-text-muted: var(--cm-text-muted);
+  --color-cm-text-faint: var(--cm-text-faint);
+  --color-cm-surface: var(--cm-surface);
+  --color-cm-surface-elevated: var(--cm-surface-elevated);
+  --color-cm-surface-card: var(--cm-surface-card);
+  --color-cm-surface-inset: var(--cm-surface-inset);
+  --color-cm-surface-input: var(--cm-surface-input);
+  --color-cm-surface-hover: var(--cm-surface-hover);
+  --color-cm-surface-hover-subtle: var(--cm-surface-hover-subtle);
+  --color-cm-stat-bg: var(--cm-stat-bg);
+  --color-cm-border: var(--cm-border);
+  --color-cm-border-subtle: var(--cm-border-subtle);
+  --color-cm-border-input: var(--cm-border-input);
+  --color-cm-overlay-btn: var(--cm-overlay-btn);
+  --color-cm-nav: var(--cm-nav);
+  --color-cm-menu-bg: var(--cm-menu-bg);
 }
 
 /* ============================================
@@ -51,6 +71,59 @@
   --accent-800: #1e293b;
   --accent-900: #0f172a;
   --accent-glow: rgba(100, 116, 139, 0.4);
+
+  /* Color mode tokens - dark by default */
+  --cm-bg: #000000;
+  --cm-bg-gradient: linear-gradient(180deg, #1c1c1e 0%, #000000 100%);
+  --cm-nav: #1c1c1e;
+  --cm-surface: rgba(28, 28, 30, 0.85);
+  --cm-surface-elevated: rgba(44, 44, 46, 0.95);
+  --cm-surface-card: rgba(44, 44, 46, 0.65);
+  --cm-surface-inset: rgba(44, 44, 46, 0.65);
+  --cm-surface-input: rgba(0, 0, 0, 0.3);
+  --cm-surface-hover: rgba(255, 255, 255, 0.1);
+  --cm-surface-hover-subtle: rgba(255, 255, 255, 0.05);
+  --cm-stat-bg: rgba(0, 0, 0, 0.2);
+  --cm-text: #ffffff;
+  --cm-text-secondary: rgba(255, 255, 255, 0.55);
+  --cm-text-muted: rgba(255, 255, 255, 0.4);
+  --cm-text-faint: rgba(255, 255, 255, 0.3);
+  --cm-border: rgba(84, 84, 88, 0.65);
+  --cm-border-subtle: rgba(255, 255, 255, 0.05);
+  --cm-border-input: rgba(255, 255, 255, 0.1);
+  --cm-scrollbar: rgba(255, 255, 255, 0.15);
+  --cm-scrollbar-hover: rgba(255, 255, 255, 0.25);
+  --cm-overlay-btn: rgba(118, 118, 128, 0.24);
+  --cm-shadow-ring: 0 0 0 0.5px rgba(255, 255, 255, 0.05);
+  --cm-shadow-card: 0 0 0 0.5px rgba(255, 255, 255, 0.05), 0 2px 8px rgba(0, 0, 0, 0.15), 0 8px 24px rgba(0, 0, 0, 0.1);
+  --cm-menu-bg: rgba(39, 39, 42, 0.95);
+}
+
+[data-color-mode="light"] {
+  --cm-bg: #f2f2f7;
+  --cm-bg-gradient: linear-gradient(180deg, #f2f2f7 0%, #e5e5ea 100%);
+  --cm-nav: rgba(242, 242, 247, 0.92);
+  --cm-surface: rgba(255, 255, 255, 0.85);
+  --cm-surface-elevated: rgba(255, 255, 255, 0.97);
+  --cm-surface-card: rgba(255, 255, 255, 0.8);
+  --cm-surface-inset: rgba(239, 239, 244, 0.8);
+  --cm-surface-input: rgba(0, 0, 0, 0.04);
+  --cm-surface-hover: rgba(0, 0, 0, 0.06);
+  --cm-surface-hover-subtle: rgba(0, 0, 0, 0.03);
+  --cm-stat-bg: rgba(0, 0, 0, 0.04);
+  --cm-text: #1c1c1e;
+  --cm-text-secondary: rgba(0, 0, 0, 0.55);
+  --cm-text-muted: rgba(0, 0, 0, 0.4);
+  --cm-text-faint: rgba(0, 0, 0, 0.25);
+  --cm-border: rgba(0, 0, 0, 0.12);
+  --cm-border-subtle: rgba(0, 0, 0, 0.06);
+  --cm-border-input: rgba(0, 0, 0, 0.15);
+  --cm-scrollbar: rgba(0, 0, 0, 0.15);
+  --cm-scrollbar-hover: rgba(0, 0, 0, 0.3);
+  --cm-overlay-btn: rgba(118, 118, 128, 0.12);
+  --cm-shadow-ring: 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+  --cm-shadow-card: 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
+  --cm-menu-bg: rgba(255, 255, 255, 0.97);
 }
 
 /* Adeptus Custodes - Auramite Gold */
@@ -207,12 +280,13 @@
    ============================================ */
 
 html {
-  background: #000000;
+  background: var(--cm-bg);
 }
 
 body {
   @apply antialiased;
-  background: linear-gradient(180deg, #1c1c1e 0%, #000000 100%);
+  background: var(--cm-bg-gradient);
+  color: var(--cm-text);
   min-height: 100vh;
 }
 
@@ -230,12 +304,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--cm-scrollbar);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--cm-scrollbar-hover);
 }
 
 /* ============================================
@@ -243,20 +317,20 @@ body {
    ============================================ */
 
 .material-dark {
-  background: rgba(28, 28, 30, 0.85);
+  background: var(--cm-surface);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
 
 .material-elevated {
-  background: rgba(44, 44, 46, 0.95);
+  background: var(--cm-surface-elevated);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
 
 /* Navigation bar blur */
 .nav-blur {
-  background: #1c1c1e;
+  background: var(--cm-nav);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
@@ -266,16 +340,13 @@ body {
    ============================================ */
 
 .card-depth {
-  background: rgba(44, 44, 46, 0.65);
+  background: var(--cm-surface-card);
   border-radius: 16px;
-  box-shadow:
-    0 0 0 0.5px rgba(255, 255, 255, 0.05),
-    0 2px 8px rgba(0, 0, 0, 0.15),
-    0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--cm-shadow-card);
 }
 
 .inset-group {
-  background: rgba(44, 44, 46, 0.65);
+  background: var(--cm-surface-inset);
   border-radius: 12px;
 }
 
@@ -287,7 +358,7 @@ body {
 }
 
 .inset-group-item:not(:last-child) {
-  border-bottom: 0.5px solid rgba(84, 84, 88, 0.65);
+  border-bottom: 0.5px solid var(--cm-border);
 }
 
 /* ============================================
@@ -318,8 +389,8 @@ body {
 }
 
 .btn-ios-secondary {
-  background: rgba(118, 118, 128, 0.24);
-  color: white;
+  background: var(--cm-overlay-btn);
+  color: var(--cm-text);
 }
 
 .btn-ios-tinted {
@@ -385,7 +456,7 @@ body {
 }
 
 .list-row:active {
-  background: rgba(118, 118, 128, 0.2);
+  background: var(--cm-surface-hover);
 }
 
 .list-row-compact {
@@ -403,13 +474,13 @@ body {
   align-items: center;
   padding: 8px;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--cm-stat-bg);
 }
 
 .stat-label {
   font-size: 10px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--cm-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -417,7 +488,7 @@ body {
 .stat-value {
   font-size: 18px;
   font-weight: 600;
-  color: white;
+  color: var(--cm-text);
   margin-top: 2px;
 }
 
@@ -437,7 +508,7 @@ body {
 .weapon-table th {
   font-size: 10px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--cm-text-muted);
   text-transform: uppercase;
   padding: 4px 6px;
 }
@@ -445,7 +516,7 @@ body {
 .weapon-table td {
   font-size: 14px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--cm-text);
   text-align: center;
   padding: 6px;
 }
@@ -462,7 +533,7 @@ body {
 .section-header {
   font-size: 13px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--cm-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   padding: 12px 16px 8px;
@@ -471,7 +542,7 @@ body {
 .section-header-inline {
   font-size: 13px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--cm-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -482,7 +553,7 @@ body {
 
 .divider {
   height: 0.5px;
-  background: rgba(84, 84, 88, 0.65);
+  background: var(--cm-border);
   margin: 0 16px;
 }
 
@@ -531,35 +602,35 @@ select {
 }
 
 .select-dark {
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--cm-surface-input);
+  border: 1px solid var(--cm-border-input);
   border-radius: 10px;
   padding: 10px 16px;
-  color: white;
+  color: var(--cm-text);
   font-size: 15px;
 }
 
 .select-dark:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: var(--cm-border);
 }
 
 .input-dark {
-  background-color: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--cm-surface-input);
+  border: 1px solid var(--cm-border-input);
   border-radius: 10px;
   padding: 10px 16px;
-  color: white;
+  color: var(--cm-text);
   font-size: 15px;
 }
 
 .input-dark:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: var(--cm-border);
 }
 
 .input-dark::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--cm-text-muted);
 }
 
 /* ============================================

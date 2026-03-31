@@ -122,22 +122,22 @@ function CompactStepper({
 }: CompactStepperProps) {
   return (
     <div className="flex items-center gap-1.5">
-      <span className="text-white/50 text-xs uppercase tracking-wide">{label}</span>
-      <div className="flex items-center bg-white/5 rounded-lg">
+      <span className="text-cm-text-secondary text-xs uppercase tracking-wide">{label}</span>
+      <div className="flex items-center bg-cm-surface-hover-subtle rounded-lg">
         <button
           onClick={onDecrement}
           disabled={value <= minValue}
-          className="w-6 h-6 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 rounded-l-lg disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="w-6 h-6 flex items-center justify-center text-cm-text-muted hover:text-cm-text hover:bg-cm-surface-hover rounded-l-lg disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <span className="text-sm font-medium">-</span>
         </button>
-        <span className={`w-6 text-center text-sm font-bold ${accentColor ? 'text-accent-400' : 'text-white'}`}>
+        <span className={`w-6 text-center text-sm font-bold ${accentColor ? 'text-accent-400' : 'text-cm-text'}`}>
           {value}
         </span>
         <button
           onClick={onIncrement}
           disabled={value >= maxValue}
-          className="w-6 h-6 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 rounded-r-lg disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="w-6 h-6 flex items-center justify-center text-cm-text-muted hover:text-cm-text hover:bg-cm-surface-hover rounded-r-lg disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <span className="text-sm font-medium">+</span>
         </button>
@@ -198,7 +198,7 @@ function PhaseTracker({ currentPhase, playerTurn, onPhaseChange, onAdvance, onTo
                   : 'bg-accent-500 text-white'
                 : isOpponentTurn
                   ? 'text-red-400/50 hover:text-red-400 hover:bg-red-500/20'
-                  : 'text-white/50 hover:text-white hover:bg-white/10'
+                  : 'text-cm-text-secondary hover:text-cm-text hover:bg-cm-surface-hover'
             }`}
             title={phase.charAt(0).toUpperCase() + phase.slice(1) + ' Phase'}
           >
@@ -210,7 +210,7 @@ function PhaseTracker({ currentPhase, playerTurn, onPhaseChange, onAdvance, onTo
       {/* Advance Button */}
       <button
         onClick={onAdvance}
-        className="flex items-center gap-1 px-2 py-1 text-xs font-medium rounded bg-white/10 hover:bg-white/20 text-white transition-colors"
+        className="flex items-center gap-1 px-2 py-1 text-xs font-medium rounded bg-cm-surface-hover hover:bg-cm-surface-hover text-cm-text transition-colors"
         title="Advance to next phase"
       >
         <svg
@@ -294,7 +294,7 @@ function GameStateBar({
           </button>
           <button
             onClick={handleCancelReset}
-            className="px-2 py-1 text-xs font-medium rounded bg-white/10 hover:bg-white/20 text-white transition-colors"
+            className="px-2 py-1 text-xs font-medium rounded bg-cm-surface-hover hover:bg-cm-surface-hover text-cm-text transition-colors"
             title="Cancel"
           >
             ✕
@@ -303,7 +303,7 @@ function GameStateBar({
       ) : (
         <button
           onClick={handleResetClick}
-          className="p-1.5 rounded bg-white/5 hover:bg-white/10 text-white/50 hover:text-white transition-colors"
+          className="p-1.5 rounded bg-cm-surface-hover-subtle hover:bg-cm-surface-hover text-cm-text-secondary hover:text-cm-text transition-colors"
           title="Reset game"
         >
           <svg
@@ -323,7 +323,7 @@ function GameStateBar({
         </button>
       )}
 
-      <div className="h-4 w-px bg-white/10" />
+      <div className="h-4 w-px bg-cm-border-input" />
 
       {/* Round */}
       <CompactStepper
@@ -335,7 +335,7 @@ function GameStateBar({
         maxValue={5}
       />
 
-      <div className="h-4 w-px bg-white/10" />
+      <div className="h-4 w-px bg-cm-border-input" />
 
       {/* Command Points */}
       <CompactStepper
@@ -346,7 +346,7 @@ function GameStateBar({
         accentColor
       />
 
-      <div className="h-4 w-px bg-white/10" />
+      <div className="h-4 w-px bg-cm-border-input" />
 
       {/* Primary VP */}
       <CompactStepper
@@ -364,7 +364,7 @@ function GameStateBar({
         onIncrement={() => onSecondaryVPChange(secondaryVP + 1)}
       />
 
-      <div className="h-4 w-px bg-white/10" />
+      <div className="h-4 w-px bg-cm-border-input" />
 
       {/* Phase Tracker */}
       <PhaseTracker
@@ -480,7 +480,7 @@ export function Navigation({
               canPlay={canPlay}
             />
             {onMobilePanelChange && (
-              <div className="flex lg:hidden items-center bg-white/10 rounded-lg overflow-hidden">
+              <div className="flex lg:hidden items-center bg-cm-surface-hover rounded-lg overflow-hidden">
                 {mode === 'play' ? (
                   <>
                     <button
@@ -488,7 +488,7 @@ export function Navigation({
                       className={`px-3 py-1.5 text-sm font-medium transition-colors ${
                         mobilePanel === 'roster'
                           ? 'bg-accent-500 text-white'
-                          : 'text-white/60'
+                          : 'text-cm-text-muted'
                       }`}
                     >
                       Game
@@ -498,7 +498,7 @@ export function Navigation({
                       className={`px-3 py-1.5 text-sm font-medium transition-colors ${
                         mobilePanel === 'list'
                           ? 'bg-accent-500 text-white'
-                          : 'text-white/60'
+                          : 'text-cm-text-muted'
                       }`}
                     >
                       Army
@@ -511,7 +511,7 @@ export function Navigation({
                       className={`px-3 py-1.5 text-sm font-medium transition-colors ${
                         mobilePanel === 'list'
                           ? 'bg-accent-500 text-white'
-                          : 'text-white/60'
+                          : 'text-cm-text-muted'
                       }`}
                     >
                       Roster
@@ -521,7 +521,7 @@ export function Navigation({
                       className={`px-3 py-1.5 text-sm font-medium transition-colors ${
                         mobilePanel === 'roster'
                           ? 'bg-accent-500 text-white'
-                          : 'text-white/60'
+                          : 'text-cm-text-muted'
                       }`}
                     >
                       Units
@@ -557,7 +557,7 @@ export function Navigation({
           {/* Right: Actions */}
           <div className="flex items-center gap-2 shrink-0">
             {isLoading && (
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2 text-cm-text-muted">
                 <svg
                   className="w-4 h-4 animate-spin"
                   fill="none"

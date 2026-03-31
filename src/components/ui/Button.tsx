@@ -30,9 +30,9 @@ export function Button({
 
   const variantStyles = {
     primary: 'bg-gradient-to-b from-accent-500 to-accent-600 text-gray-900',
-    secondary: 'bg-[rgba(118,118,128,0.24)] text-white',
+    secondary: 'bg-cm-overlay-btn text-cm-text',
     tinted: 'bg-[color-mix(in_srgb,var(--accent-500)_18%,transparent)] text-accent-400',
-    ghost: 'bg-transparent hover:bg-white/5 text-white/60 hover:text-white/80',
+    ghost: 'bg-transparent hover:bg-cm-surface-hover-subtle text-cm-text-secondary hover:text-cm-text',
     danger: 'bg-red-500/20 text-red-400 hover:bg-red-500/30',
   }[variant];
 

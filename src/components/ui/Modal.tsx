@@ -98,8 +98,8 @@ export function Modal({
         `}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
-          <h2 id="modal-title" className="text-lg font-semibold text-white">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-cm-border-input">
+          <h2 id="modal-title" className="text-lg font-semibold text-cm-text">
             {title}
           </h2>
           {showCloseButton && (
@@ -165,7 +165,7 @@ export function ConfirmModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm">
       <div className="space-y-4">
-        <p className="text-white/70">{message}</p>
+        <p className="text-cm-text-secondary">{message}</p>
 
         <div className="flex justify-end gap-3">
           <button

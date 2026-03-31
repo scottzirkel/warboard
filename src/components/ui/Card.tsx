@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 
 const cardDepthStyles = `
-  bg-[rgba(44,44,46,0.65)]
+  bg-cm-surface-card
   rounded-2xl
-  shadow-[0_0_0_0.5px_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.15),0_8px_24px_rgba(0,0,0,0.1)]
+  shadow-[var(--cm-shadow-card)]
 `;
 
 interface CardProps {
@@ -26,9 +26,9 @@ export function Card({
   return (
     <div
       className={`
-        ${depth ? cardDepthStyles : 'bg-white/5 rounded-xl'}
+        ${depth ? cardDepthStyles : 'bg-cm-surface-hover-subtle rounded-xl'}
         ${selected ? 'ring-2 ring-inset ring-accent-500' : ''}
-        ${hoverable ? 'hover:bg-white/10 cursor-pointer transition-colors' : ''}
+        ${hoverable ? 'hover:bg-cm-surface-hover cursor-pointer transition-colors' : ''}
         ${onClick ? 'cursor-pointer' : ''}
         ${className}
       `}
@@ -48,7 +48,7 @@ interface CardHeaderProps {
 
 export function CardHeader({ children, className = '' }: CardHeaderProps) {
   return (
-    <div className={`px-4 py-3 border-b border-white/5 ${className}`}>
+    <div className={`px-4 py-3 border-b border-cm-border-subtle ${className}`}>
       {children}
     </div>
   );
@@ -70,7 +70,7 @@ interface CardFooterProps {
 
 export function CardFooter({ children, className = '' }: CardFooterProps) {
   return (
-    <div className={`px-4 py-3 border-t border-white/5 ${className}`}>
+    <div className={`px-4 py-3 border-t border-cm-border-subtle ${className}`}>
       {children}
     </div>
   );

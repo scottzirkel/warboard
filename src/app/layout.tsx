@@ -37,7 +37,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} text-white min-h-screen`}>
+      <body className={`${inter.className} min-h-screen`}>
         <SessionProvider>
           <ThemeProvider>
             {children}

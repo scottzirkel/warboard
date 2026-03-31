@@ -16,14 +16,14 @@ export function Panel({
   return (
     <div
       className={`
-        bg-gray-800/30 border border-gray-700/30 rounded-lg
+        bg-cm-surface-card border border-cm-border-subtle rounded-lg
         flex flex-col h-full
         ${className}
       `}
     >
       {title && (
-        <div className="px-4 py-3 border-b border-gray-700/30 flex items-center justify-between shrink-0">
-          <h2 className="text-lg font-semibold text-gray-200">{title}</h2>
+        <div className="px-4 py-3 border-b border-cm-border-subtle flex items-center justify-between shrink-0">
+          <h2 className="text-lg font-semibold text-cm-text">{title}</h2>
           {headerRight && <div>{headerRight}</div>}
         </div>
       )}
@@ -48,7 +48,7 @@ export function PanelSection({
   return (
     <div className={`p-4 ${className}`}>
       {title && (
-        <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-3">
+        <h3 className="text-sm font-medium text-cm-text-muted uppercase tracking-wider mb-3">
           {title}
         </h3>
       )}

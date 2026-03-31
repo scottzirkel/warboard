@@ -39,8 +39,12 @@ export interface ConfirmModalConfig {
 // ============================================================================
 
 export type MobilePanel = 'list' | 'roster' | 'details';
+export type ColorMode = 'dark' | 'light';
 
 interface UIStoreState {
+  // Color Mode
+  colorMode: ColorMode;
+
   // Landing Page
   hasEnteredApp: boolean;
 
@@ -66,6 +70,10 @@ interface UIStoreState {
 }
 
 interface UIStoreActions {
+  // Color Mode
+  toggleColorMode: () => void;
+  setColorMode: (mode: ColorMode) => void;
+
   // Landing Page
   enterApp: () => void;
   exitApp: () => void;
@@ -119,6 +127,7 @@ const generateToastId = (): string => {
 // ============================================================================
 
 const createDefaultUIState = (): UIStoreState => ({
+  colorMode: 'dark',
   hasEnteredApp: false,
   mode: 'build',
   selectedUnitIndex: null,
@@ -139,6 +148,20 @@ export const useUIStore = create<UIStore>()(
     (set, get) => ({
   // Initial State
   ...createDefaultUIState(),
+
+  // -------------------------------------------------------------------------
+  // Color Mode Actions
+  // -------------------------------------------------------------------------
+
+  toggleColorMode: () => {
+    set(state => ({
+      colorMode: state.colorMode === 'dark' ? 'light' : 'dark',
+    }));
+  },
+
+  setColorMode: (colorMode: ColorMode) => {
+    set({ colorMode });
+  },
 
   // -------------------------------------------------------------------------
   // Landing Page Actions
@@ -284,6 +307,7 @@ export const useUIStore = create<UIStore>()(
     {
       name: 'army-tracker-ui',
       partialize: (state) => ({
+        colorMode: state.colorMode,
         hasEnteredApp: state.hasEnteredApp,
         mode: state.mode,
         selectedUnitIndex: state.selectedUnitIndex,
