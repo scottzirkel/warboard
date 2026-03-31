@@ -659,6 +659,42 @@ select {
 }
 
 /* ============================================
+   TOAST NOTIFICATIONS
+   ============================================ */
+
+.toast-success-bg { background-color: rgba(20, 83, 45, 0.8); }
+.toast-success-border { border-color: #15803d; }
+.toast-success-text { color: #dcfce7; }
+
+.toast-error-bg { background-color: rgba(127, 29, 29, 0.8); }
+.toast-error-border { border-color: #b91c1c; }
+.toast-error-text { color: #fee2e2; }
+
+.toast-warning-bg { background-color: rgba(113, 63, 18, 0.8); }
+.toast-warning-border { border-color: #a16207; }
+.toast-warning-text { color: #fef3c7; }
+
+.toast-info-bg { background-color: rgba(30, 58, 138, 0.8); }
+.toast-info-border { border-color: #1d4ed8; }
+.toast-info-text { color: #dbeafe; }
+
+[data-color-mode="light"] .toast-success-bg { background-color: rgba(220, 252, 231, 0.95); }
+[data-color-mode="light"] .toast-success-border { border-color: #86efac; }
+[data-color-mode="light"] .toast-success-text { color: #14532d; }
+
+[data-color-mode="light"] .toast-error-bg { background-color: rgba(254, 226, 226, 0.95); }
+[data-color-mode="light"] .toast-error-border { border-color: #fca5a5; }
+[data-color-mode="light"] .toast-error-text { color: #7f1d1d; }
+
+[data-color-mode="light"] .toast-warning-bg { background-color: rgba(254, 243, 199, 0.95); }
+[data-color-mode="light"] .toast-warning-border { border-color: #fcd34d; }
+[data-color-mode="light"] .toast-warning-text { color: #78350f; }
+
+[data-color-mode="light"] .toast-info-bg { background-color: rgba(219, 234, 254, 0.95); }
+[data-color-mode="light"] .toast-info-border { border-color: #93c5fd; }
+[data-color-mode="light"] .toast-info-text { color: #1e3a8a; }
+
+/* ============================================
    LIGHT MODE - Utility Class Overrides
    These override Tailwind utilities (which live
    in @layer utilities) for light mode. Un-layered
@@ -808,6 +844,9 @@ select {
 }
 [data-color-mode="light"] .bg-black\/80 {
   background-color: rgba(0, 0, 0, 0.4);
+}
+[data-color-mode="light"] .bg-black {
+  background-color: var(--cm-bg);
 }
 
 /* --- Zinc backgrounds (NavMenu, dropdowns) --- */
