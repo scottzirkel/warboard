@@ -86,7 +86,10 @@ export function Modal({
       aria-labelledby="modal-title"
     >
       {/* Backdrop - iOS-style blur */}
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
+      <div
+        className="absolute inset-0 backdrop-blur-md"
+        style={{ backgroundColor: 'var(--cm-overlay-backdrop)' }}
+      />
 
       {/* Modal Content - using material-elevated styling */}
       <div
@@ -178,7 +181,7 @@ export function ConfirmModal({
             onClick={handleConfirm}
             className={`btn-ios ${
               variant === 'danger'
-                ? 'bg-red-600 hover:bg-red-700 text-white'
+                ? 'bg-red-500/90 hover:bg-red-500 text-white'
                 : 'btn-ios-primary'
             }`}
           >

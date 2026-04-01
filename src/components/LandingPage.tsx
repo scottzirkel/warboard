@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { availableArmies, type AvailableArmy } from '@/stores/armyStore';
+import { useUIStore } from '@/stores/uiStore';
 import { UserMenu } from '@/components/auth';
 import { Modal } from '@/components/ui';
 import { GameHistoryPanel } from './GameHistoryPanel';
@@ -13,94 +14,135 @@ interface LandingPageProps {
 }
 
 // Faction theme colors for the cards
-const factionColors: Record<string, { bg: string; border: string; text: string }> = {
+const factionColors: Record<string, { darkBg: string; darkBorder: string; darkText: string; accent: string }> = {
   custodes: {
-    bg: 'from-yellow-900/30 to-yellow-950/40',
-    border: 'border-yellow-600/30 hover:border-yellow-500/60',
-    text: 'text-yellow-400',
+    darkBg: 'from-yellow-900/30 to-yellow-950/40',
+    darkBorder: 'border-yellow-600/30 hover:border-yellow-500/60',
+    darkText: 'text-yellow-400',
+    accent: '#d4a72c',
   },
   tyranids: {
-    bg: 'from-purple-900/30 to-purple-950/40',
-    border: 'border-purple-600/30 hover:border-purple-500/60',
-    text: 'text-purple-400',
+    darkBg: 'from-purple-900/30 to-purple-950/40',
+    darkBorder: 'border-purple-600/30 hover:border-purple-500/60',
+    darkText: 'text-purple-400',
+    accent: '#a855f7',
   },
   spacemarines: {
-    bg: 'from-blue-900/30 to-blue-950/40',
-    border: 'border-blue-600/30 hover:border-blue-500/60',
-    text: 'text-blue-400',
+    darkBg: 'from-blue-900/30 to-blue-950/40',
+    darkBorder: 'border-blue-600/30 hover:border-blue-500/60',
+    darkText: 'text-blue-400',
+    accent: '#3b82f6',
   },
   necrons: {
-    bg: 'from-emerald-900/30 to-emerald-950/40',
-    border: 'border-emerald-600/30 hover:border-emerald-500/60',
-    text: 'text-emerald-400',
+    darkBg: 'from-emerald-900/30 to-emerald-950/40',
+    darkBorder: 'border-emerald-600/30 hover:border-emerald-500/60',
+    darkText: 'text-emerald-400',
+    accent: '#10b981',
   },
   orks: {
-    bg: 'from-lime-900/30 to-lime-950/40',
-    border: 'border-lime-600/30 hover:border-lime-500/60',
-    text: 'text-lime-400',
+    darkBg: 'from-lime-900/30 to-lime-950/40',
+    darkBorder: 'border-lime-600/30 hover:border-lime-500/60',
+    darkText: 'text-lime-400',
+    accent: '#22c55e',
   },
   chaosmarines: {
-    bg: 'from-red-900/30 to-red-950/40',
-    border: 'border-red-600/30 hover:border-red-500/60',
-    text: 'text-red-400',
+    darkBg: 'from-red-900/30 to-red-950/40',
+    darkBorder: 'border-red-600/30 hover:border-red-500/60',
+    darkText: 'text-red-400',
+    accent: '#ef4444',
   },
   tau: {
-    bg: 'from-amber-900/30 to-amber-950/40',
-    border: 'border-amber-600/30 hover:border-amber-500/60',
-    text: 'text-amber-400',
+    darkBg: 'from-amber-900/30 to-amber-950/40',
+    darkBorder: 'border-amber-600/30 hover:border-amber-500/60',
+    darkText: 'text-amber-400',
+    accent: '#f59e0b',
   },
   blacktemplars: {
-    bg: 'from-slate-800/30 to-slate-950/40',
-    border: 'border-slate-500/30 hover:border-slate-400/60',
-    text: 'text-slate-300',
+    darkBg: 'from-slate-800/30 to-slate-950/40',
+    darkBorder: 'border-slate-500/30 hover:border-slate-400/60',
+    darkText: 'text-slate-300',
+    accent: '#64748b',
   },
   aeldari: {
-    bg: 'from-teal-900/30 to-teal-950/40',
-    border: 'border-teal-600/30 hover:border-teal-500/60',
-    text: 'text-teal-400',
+    darkBg: 'from-teal-900/30 to-teal-950/40',
+    darkBorder: 'border-teal-600/30 hover:border-teal-500/60',
+    darkText: 'text-teal-400',
+    accent: '#14b8a6',
   },
   darkangels: {
-    bg: 'from-green-900/30 to-green-950/40',
-    border: 'border-green-600/30 hover:border-green-500/60',
-    text: 'text-green-400',
+    darkBg: 'from-green-900/30 to-green-950/40',
+    darkBorder: 'border-green-600/30 hover:border-green-500/60',
+    darkText: 'text-green-400',
+    accent: '#1a7a3a',
   },
 };
 
-function FactionCard({ army, onClick }: { army: AvailableArmy; onClick: () => void }) {
+function FactionCard({ army, onClick, colorMode }: { army: AvailableArmy; onClick: () => void; colorMode: 'dark' | 'light' }) {
   const colors = factionColors[army.id] || {
-    bg: 'from-gray-800/30 to-gray-900/40',
-    border: 'border-cm-border-input hover:border-white/30',
-    text: 'text-cm-text',
+    darkBg: 'from-gray-800/30 to-gray-900/40',
+    darkBorder: 'border-cm-border-input hover:border-white/30',
+    darkText: 'text-cm-text',
+    accent: '#64748b',
   };
+  const isLight = colorMode === 'light';
+  const lightCardStyle = isLight ? {
+    background: `linear-gradient(135deg, color-mix(in srgb, ${colors.accent} 16%, rgba(255, 255, 255, 0.94)), color-mix(in srgb, ${colors.accent} 7%, rgba(246, 241, 232, 0.98)))`,
+    borderColor: `color-mix(in srgb, ${colors.accent} 24%, rgba(177, 156, 130, 0.75))`,
+    boxShadow: `0 1px 0 rgba(255,255,255,0.75) inset, 0 12px 24px color-mix(in srgb, ${colors.accent} 10%, transparent), 0 2px 8px rgba(73, 48, 22, 0.08)`,
+  } : undefined;
+  const lightHeadingStyle = isLight ? {
+    color: `color-mix(in srgb, ${colors.accent} 54%, #201911)`,
+  } : undefined;
 
   return (
     <button
       onClick={onClick}
+      style={lightCardStyle}
       className={`
         w-full p-4 rounded-xl
-        bg-gradient-to-br ${colors.bg}
-        border ${colors.border}
+        border
         transition-all duration-200
-        hover:scale-[1.02] active:scale-[0.98]
+        hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98]
         text-left
+        ${isLight ? 'bg-cm-surface-card hover:bg-cm-surface-elevated hover:border-cm-border' : `bg-gradient-to-br ${colors.darkBg} ${colors.darkBorder}`}
       `}
     >
-      <h3 className={`font-semibold ${colors.text}`}>{army.name}</h3>
+      <h3
+        style={lightHeadingStyle}
+        className={`font-semibold ${isLight ? 'text-cm-text' : colors.darkText}`}
+      >
+        {army.name}
+      </h3>
     </button>
   );
 }
 
 export function LandingPage({ onSelectArmy, isLoading = false }: LandingPageProps) {
   const [showHistory, setShowHistory] = useState(false);
+  const colorMode = useUIStore((state) => state.colorMode);
+  const isLight = colorMode === 'light';
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-900 to-black relative">
+    <div
+      className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden"
+      style={{ background: 'var(--cm-bg-gradient)' }}
+    >
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: isLight
+            ? 'radial-gradient(circle at top, rgba(212,167,44,0.14), transparent 34%), radial-gradient(circle at 18% 22%, rgba(59,130,246,0.1), transparent 28%), radial-gradient(circle at 82% 18%, rgba(168,85,247,0.08), transparent 26%)'
+            : 'radial-gradient(circle at top, rgba(212,167,44,0.08), transparent 32%), radial-gradient(circle at 18% 22%, rgba(59,130,246,0.06), transparent 28%)',
+        }}
+      />
+
       {/* Sign in / user menu in top-right corner */}
       <div className="absolute top-4 right-4">
         <UserMenu />
       </div>
 
-      <div className="max-w-md w-full space-y-8 text-center">
+      <div className="max-w-md w-full space-y-8 text-center relative z-10">
         {/* Logo */}
         <div className="flex justify-center">
           <Image
@@ -129,6 +171,7 @@ export function LandingPage({ onSelectArmy, isLoading = false }: LandingPageProp
               <FactionCard
                 key={army.id}
                 army={army}
+                colorMode={colorMode}
                 onClick={() => onSelectArmy(army.id)}
               />
             ))}

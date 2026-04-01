@@ -38,12 +38,17 @@ export function SegmentedControl<T extends string | null = string>({
             key={String(option.value)}
             onClick={() => !isDisabled && onChange(option.value)}
             title={option.title}
+            style={isActive ? {
+              backgroundColor: 'var(--cm-control-active, rgba(255,255,255,0.12))',
+              color: 'var(--cm-control-active-text, var(--cm-text))',
+              boxShadow: 'var(--cm-shadow-ring)',
+            } : undefined}
             className={`
               flex-1 flex flex-col items-center justify-center px-3 py-2
               rounded-md text-sm font-medium transition-all select-none text-center
               ${isActive
-                ? 'bg-gray-500/85 text-cm-text shadow-md'
-                : 'text-cm-text-secondary hover:text-cm-text cursor-pointer'
+                ? ''
+                : 'text-cm-text-secondary hover:text-cm-text hover:bg-cm-surface-hover-subtle cursor-pointer'
               }
               ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}
             `}

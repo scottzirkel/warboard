@@ -26,7 +26,7 @@ export function GameFormatSelector({
             flex-1 px-3 py-1.5 text-sm font-medium rounded transition-colors
             ${
               value === format.id
-                ? 'bg-accent-500 text-gray-900'
+                ? 'bg-accent-500 text-white'
                 : 'bg-cm-surface-hover text-cm-text-secondary hover:bg-cm-surface-inset'
             }
           `}

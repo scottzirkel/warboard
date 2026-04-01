@@ -45,7 +45,7 @@ function CollapsibleSection({
       header: 'bg-green-500/10',
       border: 'border-green-600/30',
       text: 'text-green-300',
-      count: 'bg-green-600/50 text-green-200',
+      count: 'bg-green-500/35 text-green-200',
     },
     orange: {
       header: 'bg-orange-900/30',

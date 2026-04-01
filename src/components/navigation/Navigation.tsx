@@ -123,11 +123,11 @@ function CompactStepper({
   return (
     <div className="flex items-center gap-1.5">
       <span className="text-cm-text-secondary text-xs uppercase tracking-wide">{label}</span>
-      <div className="flex items-center bg-cm-surface-hover-subtle rounded-lg">
+      <div className="flex items-center bg-cm-stat-bg rounded-lg shadow-[var(--cm-shadow-ring)]">
         <button
           onClick={onDecrement}
           disabled={value <= minValue}
-          className="w-6 h-6 flex items-center justify-center text-cm-text-muted hover:text-cm-text hover:bg-cm-surface-hover rounded-l-lg disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="w-6 h-6 flex items-center justify-center text-cm-text-secondary hover:text-cm-text hover:bg-cm-surface-hover rounded-l-lg disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <span className="text-sm font-medium">-</span>
         </button>
@@ -137,7 +137,7 @@ function CompactStepper({
         <button
           onClick={onIncrement}
           disabled={value >= maxValue}
-          className="w-6 h-6 flex items-center justify-center text-cm-text-muted hover:text-cm-text hover:bg-cm-surface-hover rounded-r-lg disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="w-6 h-6 flex items-center justify-center text-cm-text-secondary hover:text-cm-text hover:bg-cm-surface-hover rounded-r-lg disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <span className="text-sm font-medium">+</span>
         </button>
@@ -194,7 +194,7 @@ function PhaseTracker({ currentPhase, playerTurn, onPhaseChange, onAdvance, onTo
             className={`px-2 py-1 text-xs font-medium rounded transition-colors ${
               currentPhase === phase
                 ? isOpponentTurn
-                  ? 'bg-red-500 text-white'
+                  ? 'bg-red-500/85 text-white'
                   : 'bg-accent-500 text-white'
                 : isOpponentTurn
                   ? 'text-red-400/50 hover:text-red-400 hover:bg-red-500/20'
@@ -287,7 +287,7 @@ function GameStateBar({
         <div className="flex items-center gap-1">
           <button
             onClick={handleConfirmReset}
-            className="px-2 py-1 text-xs font-medium rounded bg-red-500 hover:bg-red-600 text-white transition-colors"
+            className="px-2 py-1 text-xs font-medium rounded bg-red-500/85 hover:bg-red-500 text-white transition-colors"
             title="Confirm reset"
           >
             Reset?

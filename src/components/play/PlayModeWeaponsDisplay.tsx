@@ -243,8 +243,8 @@ export function PlayModeWeaponsDisplay({
               }}
               className={`ml-auto px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
                 isLeaderActivated
-                  ? 'bg-green-600 text-white'
-                  : 'bg-purple-600 hover:bg-purple-500 text-cm-text'
+                  ? 'bg-green-500/85 text-white'
+                  : 'bg-purple-500/85 hover:bg-purple-500 text-white'
               }`}
               title={isLeaderActivated ? 'Mark as not activated' : 'Mark as activated'}
             >

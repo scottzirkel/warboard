@@ -197,10 +197,10 @@ export function PlayMode({
                 {/* Turn Toggle */}
                 <button
                   onClick={onToggleTurn}
-                  className={`px-4 py-2 rounded-lg text-base font-semibold transition-colors ${
+                    className={`px-4 py-2 rounded-lg text-base font-semibold transition-colors ${
                     playerTurn === 'player'
                       ? 'bg-accent-500 text-white'
-                      : 'bg-red-500 text-white'
+                      : 'bg-red-500/85 text-white'
                   }`}
                 >
                   {playerTurn === 'player' ? 'Your Turn' : 'Opponent'}
@@ -215,7 +215,7 @@ export function PlayMode({
                 </div>
                 <button
                   onClick={onAdvance}
-                  className="px-5 py-2.5 rounded-lg bg-accent-500 text-white font-semibold"
+                  className="px-5 py-2.5 rounded-lg bg-accent-500 text-white font-semibold shadow-[var(--cm-shadow-ring)]"
                 >
                   Next Phase
                 </button>
@@ -325,7 +325,7 @@ export function PlayMode({
                             onReset();
                             setShowResetConfirm(false);
                           }}
-                          className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold"
+                          className="px-4 py-2 rounded-lg bg-red-500/85 text-white font-semibold"
                         >
                           Yes
                         </button>

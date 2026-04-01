@@ -57,7 +57,7 @@ export function UserMenu({ className = '' }: UserMenuProps) {
             alt={session.user.name || 'User avatar'}
             width={28}
             height={28}
-            className="rounded-full bg-white border-2 border-white"
+            className="rounded-full bg-cm-surface-card border border-cm-border-subtle shadow-[var(--cm-shadow-ring)]"
           />
         ) : (
           <div className="h-7 w-7 rounded-full bg-cm-surface-hover flex items-center justify-center text-xs font-medium text-cm-text-secondary">

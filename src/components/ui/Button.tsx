@@ -22,6 +22,7 @@ export function Button({
   const isDisabled = disabled || isLoading;
 
   const base = `
+    btn-ios
     inline-flex items-center justify-center gap-1.5
     font-semibold transition-all
     active:scale-[0.97] active:opacity-80
@@ -29,9 +30,9 @@ export function Button({
   `;
 
   const variantStyles = {
-    primary: 'bg-gradient-to-b from-accent-500 to-accent-600 text-gray-900',
-    secondary: 'bg-cm-overlay-btn text-cm-text',
-    tinted: 'bg-[color-mix(in_srgb,var(--accent-500)_18%,transparent)] text-accent-400',
+    primary: 'btn-ios-primary',
+    secondary: 'btn-ios-secondary',
+    tinted: 'btn-ios-tinted',
     ghost: 'bg-transparent hover:bg-cm-surface-hover-subtle text-cm-text-secondary hover:text-cm-text',
     danger: 'bg-red-500/20 text-red-400 hover:bg-red-500/30',
   }[variant];

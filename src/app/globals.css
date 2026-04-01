@@ -94,6 +94,7 @@
   --cm-scrollbar: rgba(255, 255, 255, 0.15);
   --cm-scrollbar-hover: rgba(255, 255, 255, 0.25);
   --cm-overlay-btn: rgba(118, 118, 128, 0.24);
+  --cm-overlay-backdrop: rgba(0, 0, 0, 0.8);
   --cm-shadow-ring: 0 0 0 0.5px rgba(255, 255, 255, 0.05);
   --cm-shadow-card: 0 0 0 0.5px rgba(255, 255, 255, 0.05), 0 2px 8px rgba(0, 0, 0, 0.15), 0 8px 24px rgba(0, 0, 0, 0.1);
   --cm-menu-bg: rgba(39, 39, 42, 0.95);
@@ -101,52 +102,55 @@
 
 [data-color-mode="light"] {
   /* Base tokens (used by CSS utility classes like .card-depth, .nav-blur, etc.) */
-  --cm-bg: #F2F2F7;
-  --cm-bg-gradient: linear-gradient(180deg, #F2F2F7 0%, #E5E5EA 100%);
-  --cm-nav: rgba(242, 242, 247, 0.92);
-  --cm-surface: rgba(255, 255, 255, 0.92);
-  --cm-surface-elevated: #FFFFFF;
-  --cm-surface-card: #FFFFFF;
-  --cm-surface-inset: #F2F2F7;
-  --cm-surface-input: #F2F2F7;
-  --cm-surface-hover: rgba(0, 0, 0, 0.06);
-  --cm-surface-hover-subtle: rgba(0, 0, 0, 0.03);
-  --cm-stat-bg: #EBEBF0;
-  --cm-text: #1C1C1E;
-  --cm-text-secondary: #3C3C43;
-  --cm-text-muted: #555558;
-  --cm-text-faint: #6E6E73;
-  --cm-border: #C6C6C8;
-  --cm-border-subtle: #D1D1D6;
-  --cm-border-input: #AEAEB2;
-  --cm-scrollbar: rgba(0, 0, 0, 0.25);
-  --cm-scrollbar-hover: rgba(0, 0, 0, 0.4);
-  --cm-overlay-btn: rgba(120, 120, 128, 0.16);
-  --cm-shadow-ring: 0 0 0 0.5px rgba(0, 0, 0, 0.08);
-  --cm-shadow-card: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
-  --cm-menu-bg: rgba(255, 255, 255, 0.97);
+  --cm-bg: #f6f1e8;
+  --cm-bg-gradient: linear-gradient(180deg, #f8f4ed 0%, #efe7d9 52%, #e6dccb 100%);
+  --cm-nav: rgba(249, 244, 236, 0.82);
+  --cm-surface: rgba(255, 251, 246, 0.76);
+  --cm-surface-elevated: rgba(255, 252, 248, 0.94);
+  --cm-surface-card: rgba(255, 252, 248, 0.9);
+  --cm-surface-inset: rgba(234, 225, 210, 0.86);
+  --cm-surface-input: rgba(255, 252, 247, 0.96);
+  --cm-surface-hover: rgba(74, 56, 35, 0.1);
+  --cm-surface-hover-subtle: rgba(74, 56, 35, 0.06);
+  --cm-stat-bg: rgba(232, 221, 204, 0.92);
+  --cm-text: #201911;
+  --cm-text-secondary: #433427;
+  --cm-text-muted: #5a4735;
+  --cm-text-faint: #735d49;
+  --cm-border: rgba(191, 172, 147, 0.58);
+  --cm-border-subtle: rgba(221, 208, 190, 0.56);
+  --cm-border-input: rgba(188, 169, 144, 0.52);
+  --cm-scrollbar: rgba(72, 54, 33, 0.22);
+  --cm-scrollbar-hover: rgba(72, 54, 33, 0.38);
+  --cm-overlay-btn: rgba(91, 70, 45, 0.06);
+  --cm-overlay-backdrop: rgba(246, 239, 228, 0.76);
+  --cm-shadow-ring: 0 0 0 1px rgba(126, 95, 58, 0.06);
+  --cm-shadow-card: 0 1px 0 rgba(255, 255, 255, 0.75) inset, 0 1px 2px rgba(73, 48, 22, 0.05), 0 10px 30px rgba(73, 48, 22, 0.08);
+  --cm-menu-bg: rgba(255, 251, 246, 0.94);
+  --cm-control-active: rgba(168, 154, 132, 0.28);
+  --cm-control-active-text: #2e241a;
 
   /* Tailwind @theme overrides — directly override --color-cm-* so
      Tailwind utility classes (text-cm-text, bg-cm-surface-card, etc.)
      resolve correctly without depending on var() chain through :root */
-  --color-cm-text: #1C1C1E;
-  --color-cm-text-secondary: #3C3C43;
-  --color-cm-text-muted: #555558;
-  --color-cm-text-faint: #6E6E73;
-  --color-cm-surface: rgba(255, 255, 255, 0.92);
-  --color-cm-surface-elevated: #FFFFFF;
-  --color-cm-surface-card: #FFFFFF;
-  --color-cm-surface-inset: #F2F2F7;
-  --color-cm-surface-input: #F2F2F7;
-  --color-cm-surface-hover: rgba(0, 0, 0, 0.06);
-  --color-cm-surface-hover-subtle: rgba(0, 0, 0, 0.03);
-  --color-cm-stat-bg: #EBEBF0;
-  --color-cm-border: #C6C6C8;
-  --color-cm-border-subtle: #D1D1D6;
-  --color-cm-border-input: #AEAEB2;
-  --color-cm-overlay-btn: rgba(120, 120, 128, 0.16);
-  --color-cm-nav: rgba(242, 242, 247, 0.92);
-  --color-cm-menu-bg: rgba(255, 255, 255, 0.97);
+  --color-cm-text: #201911;
+  --color-cm-text-secondary: #433427;
+  --color-cm-text-muted: #5a4735;
+  --color-cm-text-faint: #735d49;
+  --color-cm-surface: rgba(255, 251, 246, 0.76);
+  --color-cm-surface-elevated: rgba(255, 252, 248, 0.94);
+  --color-cm-surface-card: rgba(255, 252, 248, 0.9);
+  --color-cm-surface-inset: rgba(234, 225, 210, 0.86);
+  --color-cm-surface-input: rgba(255, 252, 247, 0.96);
+  --color-cm-surface-hover: rgba(74, 56, 35, 0.1);
+  --color-cm-surface-hover-subtle: rgba(74, 56, 35, 0.06);
+  --color-cm-stat-bg: rgba(232, 221, 204, 0.92);
+  --color-cm-border: rgba(191, 172, 147, 0.58);
+  --color-cm-border-subtle: rgba(221, 208, 190, 0.56);
+  --color-cm-border-input: rgba(188, 169, 144, 0.52);
+  --color-cm-overlay-btn: rgba(91, 70, 45, 0.06);
+  --color-cm-nav: rgba(249, 244, 236, 0.82);
+  --color-cm-menu-bg: rgba(255, 251, 246, 0.94);
 }
 
 /* Adeptus Custodes - Auramite Gold */
@@ -414,6 +418,7 @@ body {
 .btn-ios-secondary {
   background: var(--cm-overlay-btn);
   color: var(--cm-text);
+  box-shadow: var(--cm-shadow-ring);
 }
 
 .btn-ios-tinted {
@@ -443,6 +448,51 @@ body {
 .badge-accent {
   background: color-mix(in srgb, var(--accent-500) 18%, transparent);
   color: var(--accent-400);
+}
+
+[data-color-mode="light"] .btn-ios-tinted {
+  background: rgba(255, 252, 247, 0.9);
+  color: var(--cm-text-secondary);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.82) inset, var(--cm-shadow-ring);
+}
+
+[data-color-mode="light"] .btn-ios-primary {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent-400) 82%, white) 0%,
+    color-mix(in srgb, var(--accent-500) 88%, white) 100%
+  );
+  color: white;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.28) inset, 0 8px 18px color-mix(in srgb, var(--accent-500) 22%, transparent);
+}
+
+[data-color-mode="light"] .btn-ios-secondary {
+  background: rgba(255, 252, 247, 0.84);
+  color: var(--cm-text);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.82) inset, var(--cm-shadow-ring);
+}
+
+[data-color-mode="light"] .badge-accent,
+[data-color-mode="light"] .stat-value.modified,
+[data-color-mode="light"] .weapon-table td.modified {
+  color: var(--accent-700);
+}
+
+[data-color-mode="light"] .badge-accent {
+  background: color-mix(in srgb, var(--accent-500) 22%, var(--cm-surface-card));
+  color: var(--accent-800);
+}
+
+[data-color-mode="light"] .text-accent-300 {
+  color: var(--accent-800);
+}
+
+[data-color-mode="light"] .text-accent-400 {
+  color: var(--accent-700);
+}
+
+[data-color-mode="light"] .text-accent-500 {
+  color: var(--accent-700);
 }
 
 .badge-red {
@@ -716,4 +766,3 @@ select {
 [data-color-mode="light"] .toast-info-bg { background-color: rgba(219, 234, 254, 0.95); }
 [data-color-mode="light"] .toast-info-border { border-color: #93c5fd; }
 [data-color-mode="light"] .toast-info-text { color: #1e3a8a; }
-

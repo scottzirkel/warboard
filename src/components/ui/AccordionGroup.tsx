@@ -224,7 +224,7 @@ export function LoadoutGroupAccordion({
                 onDecrementCasualties();
               }}
               disabled={casualties <= 0}
-              className="w-4 h-4 flex items-center justify-center rounded text-[10px] font-bold bg-green-600/80 hover:bg-green-500 disabled:opacity-30 disabled:cursor-not-allowed text-cm-text"
+              className="w-4 h-4 flex items-center justify-center rounded text-[10px] font-bold bg-green-500/80 hover:bg-green-500 disabled:opacity-30 disabled:cursor-not-allowed text-white"
               title="Restore model"
             >
               +
@@ -241,7 +241,7 @@ export function LoadoutGroupAccordion({
                 onIncrementCasualties();
               }}
               disabled={currentModels <= 0}
-              className="w-4 h-4 flex items-center justify-center rounded text-[10px] font-bold bg-red-600/80 hover:bg-red-500 disabled:opacity-30 disabled:cursor-not-allowed text-cm-text"
+              className="w-4 h-4 flex items-center justify-center rounded text-[10px] font-bold bg-red-500/80 hover:bg-red-500 disabled:opacity-30 disabled:cursor-not-allowed text-white"
               title="Remove model"
             >
               −
@@ -269,7 +269,7 @@ export function LoadoutGroupAccordion({
             }}
             className={`ml-auto px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
               isActivated
-                ? 'bg-green-600 text-white'
+                ? 'bg-green-500/85 text-white'
                 : 'bg-cm-surface-hover hover:bg-cm-surface-hover text-cm-text-secondary'
             }`}
             title={isActivated ? 'Mark as not activated' : 'Mark as activated'}

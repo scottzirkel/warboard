@@ -149,7 +149,7 @@ export function MigrateListsModal({
                 type="checkbox"
                 checked={selectedFilenames.has(list.filename)}
                 onChange={() => toggleSelection(list.filename)}
-                className="rounded border-white/30 bg-cm-surface-hover-subtle text-accent-500 focus:ring-accent-500"
+                className="rounded border-cm-border-input bg-cm-surface-input text-accent-500 focus:ring-accent-500"
                 disabled={isMigrating}
               />
               <span className="text-cm-text truncate">{list.name}</span>

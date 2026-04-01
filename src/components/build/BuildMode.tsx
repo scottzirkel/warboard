@@ -214,7 +214,7 @@ export function BuildMode({
                   className={`
                     w-full py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer
                     ${selectedDetachment === d.id
-                      ? 'bg-green-600/30 text-green-400'
+                      ? 'bg-green-500/18 text-green-600'
                       : 'bg-accent-500/20 text-accent-400 hover:bg-accent-500/30'}
                   `}
                 >

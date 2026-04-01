@@ -203,7 +203,7 @@ export function LoadModal({
                       <>
                         <button
                           onClick={() => handleDelete(list.filename)}
-                          className="btn-ios btn-ios-sm bg-red-600 text-white"
+                          className="btn-ios btn-ios-sm bg-red-500/90 text-white"
                           disabled={isProcessing}
                         >
                           Delete

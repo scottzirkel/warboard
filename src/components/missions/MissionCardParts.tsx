@@ -157,7 +157,7 @@ interface CardShellProps {
 
 export function CardShell({ children, className = '' }: CardShellProps) {
   return (
-    <div className={`overflow-hidden rounded-xl border border-cm-border-input bg-[#1a1a1e] ${className}`}>
+    <div className={`overflow-hidden rounded-xl border border-cm-border-input bg-cm-surface-card ${className}`}>
       {children}
     </div>
   );

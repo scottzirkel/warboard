@@ -59,8 +59,8 @@ function AdjustButton({ onClick, disabled = false, variant }: AdjustButtonProps)
         ${disabled
           ? 'bg-cm-surface-inset text-cm-text-muted cursor-not-allowed'
           : isIncrease
-            ? 'bg-green-600 hover:bg-green-500 text-white'
-            : 'bg-red-600 hover:bg-red-500 text-white'
+            ? 'bg-green-500/85 hover:bg-green-500 text-white'
+            : 'bg-red-500/85 hover:bg-red-500 text-white'
         }
       `}
     >

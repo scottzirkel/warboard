@@ -103,7 +103,7 @@ function UnitCard({ unit, pointsDisplay, onAdd, onOpenDetail }: UnitCardProps) {
   return (
     <div
       onClick={onOpenDetail}
-      className="bg-cm-surface-hover-subtle hover:bg-cm-surface-hover border border-cm-border-input rounded-xl p-3 cursor-pointer transition-colors relative group shadow-sm shadow-black/20"
+      className="bg-cm-surface-hover-subtle hover:bg-cm-surface-hover border border-cm-border-input rounded-xl p-3 cursor-pointer transition-colors relative group shadow-[var(--cm-shadow-ring)]"
     >
       {/* Quick Add Button */}
       <button
@@ -112,7 +112,7 @@ function UnitCard({ unit, pointsDisplay, onAdd, onOpenDetail }: UnitCardProps) {
           e.stopPropagation();
           onAdd();
         }}
-        className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-accent-500/80 hover:bg-accent-500 text-white text-sm font-bold transition-colors"
+        className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-accent-500/90 hover:bg-accent-500 text-white text-sm font-bold transition-colors"
         title={`Add ${unit.name}`}
       >
         +
@@ -139,12 +139,12 @@ function UnitCard({ unit, pointsDisplay, onAdd, onOpenDetail }: UnitCardProps) {
       {badges.length > 0 && (
         <div className="flex flex-wrap gap-1 mt-2">
           {badges.map((badge) => (
-            <span key={badge} className="text-[10px] px-1.5 py-0.5 rounded bg-cm-surface-hover text-cm-text-secondary">
+            <span key={badge} className="text-[10px] px-1.5 py-0.5 rounded bg-cm-stat-bg text-cm-text-secondary font-medium">
               {badge}
             </span>
           ))}
           {unit.isAlly && unit.allyFaction && (
-            <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300">
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/16 text-purple-700 font-medium">
               {unit.allyFaction}
             </span>
           )}

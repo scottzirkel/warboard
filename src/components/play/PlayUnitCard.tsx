@@ -100,7 +100,7 @@ export function PlayUnitCard({
     <div
       onClick={onSelect}
       className={`
-        bg-cm-surface-hover-subtle border rounded-xl overflow-hidden cursor-pointer shadow-sm shadow-black/20
+        bg-cm-surface-hover-subtle border rounded-xl overflow-hidden cursor-pointer shadow-[var(--cm-shadow-ring)]
         md:flex md:flex-col
         ${isSelected ? 'border-accent-500 ring-1 ring-accent-500' : 'border-cm-border-input'}
         ${isDestroyed ? 'opacity-40' : 'hover:bg-cm-surface-hover'}
@@ -143,7 +143,7 @@ export function PlayUnitCard({
             { label: 'OC', value: unit.stats.oc, modified: false },
           ] as const).map(({ label, value, modified }) => (
             <div key={label} className="flex flex-col items-center justify-center rounded-md bg-cm-stat-bg py-1.5">
-              <span className="text-[10px] font-medium text-cm-text-muted uppercase leading-none">{label}</span>
+              <span className="text-[10px] font-semibold text-cm-text-secondary uppercase leading-none">{label}</span>
               <span className={`text-base font-bold leading-tight ${modified ? 'text-accent-300' : 'text-cm-text'}`}>
                 {label === 'SV' && unit.invuln
                   ? <>{value}/<span className="inline-block translate-y-0.5 text-sm">{unit.invuln.replace('+', '⧺')}</span></>
@@ -158,7 +158,7 @@ export function PlayUnitCard({
           {isDestroyed ? (
             <span className="text-[11px] font-bold text-red-400 uppercase">Destroyed</span>
           ) : (
-            <span className={`text-[11px] ${isDamaged ? 'text-red-400' : 'text-cm-text-secondary'}`}>
+            <span className={`text-[11px] font-medium ${isDamaged ? 'text-red-500' : 'text-cm-text-secondary'}`}>
               {combinedModelsAlive}/{combinedTotalModels} models
             </span>
           )}

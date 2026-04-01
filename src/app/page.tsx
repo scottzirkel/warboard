@@ -1282,7 +1282,8 @@ export default function Home() {
           {/* Backdrop - click to close */}
           {showReferencePanel && (
             <div
-              className="fixed inset-0 bg-black/50 z-50"
+              className="fixed inset-0 z-50 backdrop-blur-sm"
+              style={{ backgroundColor: 'var(--cm-overlay-backdrop)' }}
               onClick={handleToggleReferencePanel}
             />
           )}
@@ -1325,7 +1326,7 @@ export default function Home() {
                     ...(armyData.detachments[currentList.detachment]?.stratagems || []),
                     ...(armyData.coreStratagems || []),
                   ].map((strat) => (
-                    <div key={strat.id} className="bg-black/20 rounded-lg p-3">
+                    <div key={strat.id} className="bg-cm-surface-hover-subtle border border-cm-border-subtle rounded-lg p-3">
                       <div className="flex justify-between items-start">
                         <span className="font-medium text-sm text-accent-300">{strat.name}</span>
                         <span className="badge badge-purple text-[10px] py-0">{strat.cost}CP</span>
@@ -1346,7 +1347,7 @@ export default function Home() {
                 </h4>
                 <div className="space-y-2">
                   {armyData.detachments[currentList.detachment]?.enhancements?.map((enh) => (
-                    <div key={enh.id} className="bg-black/20 rounded-lg p-3">
+                    <div key={enh.id} className="bg-cm-surface-hover-subtle border border-cm-border-subtle rounded-lg p-3">
                       <div className="flex justify-between items-start">
                         <span className="font-medium text-sm text-accent-300">{enh.name}</span>
                         <span className="badge badge-accent text-[10px] py-0">{enh.points} pts</span>
@@ -1364,7 +1365,7 @@ export default function Home() {
                 <h4 className="text-xs font-semibold text-orange-400 uppercase tracking-wide mb-3">Wargear Abilities</h4>
                 <div className="space-y-1.5">
                   {Object.entries(armyData.weaponKeywords).map(([key, kw]) => (
-                    <div key={key} className="bg-black/20 rounded-lg p-3">
+                    <div key={key} className="bg-cm-surface-hover-subtle border border-cm-border-subtle rounded-lg p-3">
                       <span className="font-medium text-sm text-orange-300">{kw.name}</span>
                       <div className="text-xs text-cm-text-secondary mt-0.5">{kw.description}</div>
                     </div>
@@ -1379,7 +1380,7 @@ export default function Home() {
                 <h4 className="text-xs font-semibold text-blue-400 uppercase tracking-wide mb-3">Weapon Abilities</h4>
                 <div className="space-y-1.5">
                   {armyData.keywordGlossary.weapon.map((kw) => (
-                    <div key={kw.name} id={`ref-weapon-${kw.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="bg-black/20 rounded-lg p-3 transition-all duration-300">
+                    <div key={kw.name} id={`ref-weapon-${kw.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="bg-cm-surface-hover-subtle border border-cm-border-subtle rounded-lg p-3 transition-all duration-300">
                       <span className="font-medium text-sm text-blue-300">{kw.name}</span>
                       <div className="text-xs text-cm-text-secondary mt-0.5">{kw.description}</div>
                     </div>
@@ -1394,7 +1395,7 @@ export default function Home() {
                 <h4 className="text-xs font-semibold text-green-400 uppercase tracking-wide mb-3">Unit Abilities</h4>
                 <div className="space-y-1.5">
                   {armyData.keywordGlossary.unit.map((kw) => (
-                    <div key={kw.name} id={`ref-unit-${kw.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="bg-black/20 rounded-lg p-3 transition-all duration-300">
+                    <div key={kw.name} id={`ref-unit-${kw.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="bg-cm-surface-hover-subtle border border-cm-border-subtle rounded-lg p-3 transition-all duration-300">
                       <span className="font-medium text-sm text-green-300">{kw.name}</span>
                       <div className="text-xs text-cm-text-secondary mt-0.5">{kw.description}</div>
                     </div>
