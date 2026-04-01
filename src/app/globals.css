@@ -109,42 +109,42 @@
   --cm-surface-card: #FFFFFF;
   --cm-surface-inset: #F2F2F7;
   --cm-surface-input: #F2F2F7;
-  --cm-surface-hover: rgba(0, 0, 0, 0.04);
-  --cm-surface-hover-subtle: rgba(0, 0, 0, 0.02);
-  --cm-stat-bg: #F2F2F7;
+  --cm-surface-hover: rgba(0, 0, 0, 0.06);
+  --cm-surface-hover-subtle: rgba(0, 0, 0, 0.03);
+  --cm-stat-bg: #EBEBF0;
   --cm-text: #1C1C1E;
-  --cm-text-secondary: #48484A;
-  --cm-text-muted: #636366;
-  --cm-text-faint: #8E8E93;
-  --cm-border: #D1D1D6;
-  --cm-border-subtle: #E5E5EA;
-  --cm-border-input: #C7C7CC;
-  --cm-scrollbar: rgba(0, 0, 0, 0.2);
-  --cm-scrollbar-hover: rgba(0, 0, 0, 0.35);
-  --cm-overlay-btn: rgba(120, 120, 128, 0.12);
-  --cm-shadow-ring: 0 0 0 0.5px rgba(0, 0, 0, 0.06);
-  --cm-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --cm-text-secondary: #3C3C43;
+  --cm-text-muted: #555558;
+  --cm-text-faint: #6E6E73;
+  --cm-border: #C6C6C8;
+  --cm-border-subtle: #D1D1D6;
+  --cm-border-input: #AEAEB2;
+  --cm-scrollbar: rgba(0, 0, 0, 0.25);
+  --cm-scrollbar-hover: rgba(0, 0, 0, 0.4);
+  --cm-overlay-btn: rgba(120, 120, 128, 0.16);
+  --cm-shadow-ring: 0 0 0 0.5px rgba(0, 0, 0, 0.08);
+  --cm-shadow-card: 0 1px 4px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
   --cm-menu-bg: rgba(255, 255, 255, 0.97);
 
   /* Tailwind @theme overrides — directly override --color-cm-* so
      Tailwind utility classes (text-cm-text, bg-cm-surface-card, etc.)
      resolve correctly without depending on var() chain through :root */
   --color-cm-text: #1C1C1E;
-  --color-cm-text-secondary: #48484A;
-  --color-cm-text-muted: #636366;
-  --color-cm-text-faint: #8E8E93;
+  --color-cm-text-secondary: #3C3C43;
+  --color-cm-text-muted: #555558;
+  --color-cm-text-faint: #6E6E73;
   --color-cm-surface: rgba(255, 255, 255, 0.92);
   --color-cm-surface-elevated: #FFFFFF;
   --color-cm-surface-card: #FFFFFF;
   --color-cm-surface-inset: #F2F2F7;
   --color-cm-surface-input: #F2F2F7;
-  --color-cm-surface-hover: rgba(0, 0, 0, 0.04);
-  --color-cm-surface-hover-subtle: rgba(0, 0, 0, 0.02);
-  --color-cm-stat-bg: #F2F2F7;
-  --color-cm-border: #D1D1D6;
-  --color-cm-border-subtle: #E5E5EA;
-  --color-cm-border-input: #C7C7CC;
-  --color-cm-overlay-btn: rgba(120, 120, 128, 0.12);
+  --color-cm-surface-hover: rgba(0, 0, 0, 0.06);
+  --color-cm-surface-hover-subtle: rgba(0, 0, 0, 0.03);
+  --color-cm-stat-bg: #EBEBF0;
+  --color-cm-border: #C6C6C8;
+  --color-cm-border-subtle: #D1D1D6;
+  --color-cm-border-input: #AEAEB2;
+  --color-cm-overlay-btn: rgba(120, 120, 128, 0.16);
   --color-cm-nav: rgba(242, 242, 247, 0.92);
   --color-cm-menu-bg: rgba(255, 255, 255, 0.97);
 }
