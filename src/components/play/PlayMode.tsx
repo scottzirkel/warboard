@@ -21,12 +21,12 @@ function ValidationGate({ errors, onReturnToBuild }: ValidationGateProps) {
       <Card className="p-8 max-w-lg w-full border border-red-500/30">
         <div className="flex items-center gap-3 mb-4">
           <div className="text-red-400 text-2xl">!</div>
-          <h2 className="text-xl font-bold text-gray-100">
+          <h2 className="text-xl font-bold text-cm-text">
             Cannot Enter Play Mode
           </h2>
         </div>
 
-        <p className="text-white/60 mb-4">
+        <p className="text-cm-text-secondary mb-4">
           Your army list has validation errors that must be fixed before starting a game:
         </p>
 
@@ -36,7 +36,7 @@ function ValidationGate({ errors, onReturnToBuild }: ValidationGateProps) {
               <Badge variant="error" size="sm">
                 {error.type}
               </Badge>
-              <span className="text-white/70 text-sm">{error.message}</span>
+              <span className="text-cm-text-secondary text-sm">{error.message}</span>
             </li>
           ))}
         </ul>
@@ -140,7 +140,7 @@ export function PlayMode({
         {/* Left Panel - Game State */}
         <div className="bg-cm-surface-card rounded-2xl shadow-[var(--cm-shadow-card)] p-4 flex flex-col min-h-0 overflow-y-auto scroll-smooth">
           {middlePanel || (
-            <div className="flex-1 flex items-center justify-center text-white/40">
+            <div className="flex-1 flex items-center justify-center text-cm-text-muted">
               <p>No game state available</p>
             </div>
           )}
@@ -149,7 +149,7 @@ export function PlayMode({
         {/* Right Panel - Army Overview */}
         <div className="bg-cm-surface-card rounded-2xl shadow-[var(--cm-shadow-card)] p-4 flex flex-col min-h-0 overflow-hidden">
           {leftPanel || (
-            <div className="flex-1 flex items-center justify-center text-white/40">
+            <div className="flex-1 flex items-center justify-center text-cm-text-muted">
               <p>No army overview available</p>
             </div>
           )}
@@ -178,17 +178,17 @@ export function PlayMode({
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => onBattleRoundChange?.(Math.max(1, battleRound - 1))}
-                    className="w-10 h-10 rounded-lg bg-white/10 text-white/60 hover:bg-white/20 flex items-center justify-center text-xl"
+                    className="w-10 h-10 rounded-lg bg-cm-surface-hover text-cm-text-secondary hover:bg-cm-surface-hover flex items-center justify-center text-xl"
                   >
                     −
                   </button>
                   <div className="w-16 text-center">
-                    <div className="text-xs text-white/50 uppercase">Round</div>
-                    <div className="text-2xl text-white font-bold">{battleRound}</div>
+                    <div className="text-xs text-cm-text-secondary uppercase">Round</div>
+                    <div className="text-2xl text-cm-text font-bold">{battleRound}</div>
                   </div>
                   <button
                     onClick={() => onBattleRoundChange?.(Math.min(5, battleRound + 1))}
-                    className="w-10 h-10 rounded-lg bg-white/10 text-white/60 hover:bg-white/20 flex items-center justify-center text-xl"
+                    className="w-10 h-10 rounded-lg bg-cm-surface-hover text-cm-text-secondary hover:bg-cm-surface-hover flex items-center justify-center text-xl"
                   >
                     +
                   </button>
@@ -208,10 +208,10 @@ export function PlayMode({
               </div>
 
               {/* Phase Row */}
-              <div className="flex items-center justify-between bg-white/5 rounded-lg p-3">
+              <div className="flex items-center justify-between bg-cm-surface-hover-subtle rounded-lg p-3">
                 <div>
-                  <div className="text-xs text-white/50 uppercase">Phase</div>
-                  <div className="text-lg text-white font-semibold">{phaseDisplay}</div>
+                  <div className="text-xs text-cm-text-secondary uppercase">Phase</div>
+                  <div className="text-lg text-cm-text font-semibold">{phaseDisplay}</div>
                 </div>
                 <button
                   onClick={onAdvance}
@@ -224,19 +224,19 @@ export function PlayMode({
               {/* CP & VP Row */}
               <div className="grid grid-cols-3 gap-3">
                 {/* CP */}
-                <div className="bg-white/5 rounded-lg p-3">
-                  <div className="text-xs text-white/50 uppercase text-center mb-2">CP</div>
+                <div className="bg-cm-surface-hover-subtle rounded-lg p-3">
+                  <div className="text-xs text-cm-text-secondary uppercase text-center mb-2">CP</div>
                   <div className="flex items-center justify-center gap-2">
                     <button
                       onClick={() => onCommandPointsChange?.(Math.max(0, commandPoints - 1))}
-                      className="w-9 h-9 rounded-lg bg-white/10 text-white/60 hover:bg-white/20 flex items-center justify-center text-lg"
+                      className="w-9 h-9 rounded-lg bg-cm-surface-hover text-cm-text-secondary hover:bg-cm-surface-hover flex items-center justify-center text-lg"
                     >
                       −
                     </button>
                     <span className="text-2xl font-bold text-accent-400 w-8 text-center">{commandPoints}</span>
                     <button
                       onClick={() => onCommandPointsChange?.(commandPoints + 1)}
-                      className="w-9 h-9 rounded-lg bg-white/10 text-white/60 hover:bg-white/20 flex items-center justify-center text-lg"
+                      className="w-9 h-9 rounded-lg bg-cm-surface-hover text-cm-text-secondary hover:bg-cm-surface-hover flex items-center justify-center text-lg"
                     >
                       +
                     </button>
@@ -244,19 +244,19 @@ export function PlayMode({
                 </div>
 
                 {/* Primary VP */}
-                <div className="bg-white/5 rounded-lg p-3">
-                  <div className="text-xs text-white/50 uppercase text-center mb-2">Primary</div>
+                <div className="bg-cm-surface-hover-subtle rounded-lg p-3">
+                  <div className="text-xs text-cm-text-secondary uppercase text-center mb-2">Primary</div>
                   <div className="flex items-center justify-center gap-2">
                     <button
                       onClick={() => onPrimaryVPChange?.(Math.max(0, primaryVP - 1))}
-                      className="w-9 h-9 rounded-lg bg-white/10 text-white/60 hover:bg-white/20 flex items-center justify-center text-lg"
+                      className="w-9 h-9 rounded-lg bg-cm-surface-hover text-cm-text-secondary hover:bg-cm-surface-hover flex items-center justify-center text-lg"
                     >
                       −
                     </button>
                     <span className="text-2xl font-bold text-green-400 w-8 text-center">{primaryVP}</span>
                     <button
                       onClick={() => onPrimaryVPChange?.(primaryVP + 1)}
-                      className="w-9 h-9 rounded-lg bg-white/10 text-white/60 hover:bg-white/20 flex items-center justify-center text-lg"
+                      className="w-9 h-9 rounded-lg bg-cm-surface-hover text-cm-text-secondary hover:bg-cm-surface-hover flex items-center justify-center text-lg"
                     >
                       +
                     </button>
@@ -264,19 +264,19 @@ export function PlayMode({
                 </div>
 
                 {/* Secondary VP */}
-                <div className="bg-white/5 rounded-lg p-3">
-                  <div className="text-xs text-white/50 uppercase text-center mb-2">Secondary</div>
+                <div className="bg-cm-surface-hover-subtle rounded-lg p-3">
+                  <div className="text-xs text-cm-text-secondary uppercase text-center mb-2">Secondary</div>
                   <div className="flex items-center justify-center gap-2">
                     <button
                       onClick={() => onSecondaryVPChange?.(Math.max(0, secondaryVP - 1))}
-                      className="w-9 h-9 rounded-lg bg-white/10 text-white/60 hover:bg-white/20 flex items-center justify-center text-lg"
+                      className="w-9 h-9 rounded-lg bg-cm-surface-hover text-cm-text-secondary hover:bg-cm-surface-hover flex items-center justify-center text-lg"
                     >
                       −
                     </button>
                     <span className="text-2xl font-bold text-blue-400 w-8 text-center">{secondaryVP}</span>
                     <button
                       onClick={() => onSecondaryVPChange?.(secondaryVP + 1)}
-                      className="w-9 h-9 rounded-lg bg-white/10 text-white/60 hover:bg-white/20 flex items-center justify-center text-lg"
+                      className="w-9 h-9 rounded-lg bg-cm-surface-hover text-cm-text-secondary hover:bg-cm-surface-hover flex items-center justify-center text-lg"
                     >
                       +
                     </button>
@@ -285,12 +285,12 @@ export function PlayMode({
               </div>
 
               {/* Twist & Reset Row */}
-              <div className="pt-2 border-t border-white/10 flex items-center gap-2">
+              <div className="pt-2 border-t border-cm-border-input flex items-center gap-2">
                 {/* Mission Twist Button */}
                 {onChangeTwist && (
                   <button
                     onClick={onChangeTwist}
-                    className="flex-1 py-2 rounded-lg bg-white/5 text-white/50 font-medium flex items-center justify-center gap-2"
+                    className="flex-1 py-2 rounded-lg bg-cm-surface-hover-subtle text-cm-text-secondary font-medium flex items-center justify-center gap-2"
                   >
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -319,7 +319,7 @@ export function PlayMode({
                   <>
                     {showResetConfirm ? (
                       <div className="flex-1 flex items-center justify-center gap-3">
-                        <span className="text-white/60 text-sm">Reset?</span>
+                        <span className="text-cm-text-secondary text-sm">Reset?</span>
                         <button
                           onClick={() => {
                             onReset();
@@ -331,7 +331,7 @@ export function PlayMode({
                         </button>
                         <button
                           onClick={() => setShowResetConfirm(false)}
-                          className="px-4 py-2 rounded-lg bg-white/10 text-white font-semibold"
+                          className="px-4 py-2 rounded-lg bg-cm-surface-hover text-cm-text font-semibold"
                         >
                           No
                         </button>
@@ -339,7 +339,7 @@ export function PlayMode({
                     ) : (
                       <button
                         onClick={() => setShowResetConfirm(true)}
-                        className={`${onChangeTwist ? '' : 'flex-1'} py-2 px-4 rounded-lg bg-white/5 text-white/50 font-medium flex items-center justify-center gap-2`}
+                        className={`${onChangeTwist ? '' : 'flex-1'} py-2 px-4 rounded-lg bg-cm-surface-hover-subtle text-cm-text-secondary font-medium flex items-center justify-center gap-2`}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -366,7 +366,7 @@ export function PlayMode({
             {/* Game Panel Content (stratagems, etc.) */}
             <div className="card-depth p-4">
               {middlePanel || (
-                <div className="flex items-center justify-center text-white/40 py-8">
+                <div className="flex items-center justify-center text-cm-text-muted py-8">
                   <p>No game state available</p>
                 </div>
               )}
@@ -374,7 +374,7 @@ export function PlayMode({
           </>
         ) : (
           leftPanel || (
-            <div className="flex items-center justify-center text-white/40 py-8">
+            <div className="flex items-center justify-center text-cm-text-muted py-8">
               <p>No army overview available</p>
             </div>
           )

@@ -322,7 +322,7 @@ export function ArmyOverviewPanel({
       {/* Army Units List */}
       <div className="space-y-3 md:space-y-0 md:grid md:grid-cols-2 md:gap-3 flex-1 overflow-y-auto scroll-smooth min-h-0 md:auto-rows-min">
         {sortedUnits.length === 0 ? (
-          <div className="text-center text-white/40 py-12">
+          <div className="text-center text-cm-text-muted py-12">
             <p className="text-lg mb-1">No units in your army</p>
             <p className="text-sm">Switch to Build Mode to add units</p>
           </div>

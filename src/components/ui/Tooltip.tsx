@@ -182,7 +182,7 @@ export function TooltipBadge({
   onClick,
 }: TooltipBadgeProps) {
   const variantClass = {
-    default: 'bg-white/10 text-white/60',
+    default: 'bg-cm-surface-hover text-cm-text-secondary',
     accent: 'badge-accent',
     purple: 'badge-purple',
   }[variant];

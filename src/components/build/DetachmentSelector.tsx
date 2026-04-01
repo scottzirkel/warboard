@@ -23,7 +23,7 @@ export function DetachmentSelector({
 
   if (options.length === 0) {
     return (
-      <div className={`text-sm text-gray-500 italic ${className}`}>
+      <div className={`text-sm text-cm-text-muted italic ${className}`}>
         No detachments available
       </div>
     );

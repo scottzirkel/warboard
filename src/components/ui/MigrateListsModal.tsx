@@ -120,20 +120,20 @@ export function MigrateListsModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Import Local Lists" size="md">
       <div className="space-y-4">
-        <p className="text-sm text-white/70">
+        <p className="text-sm text-cm-text-secondary">
           You have {localLists.length} list{localLists.length !== 1 ? 's' : ''} saved locally.
           Would you like to import them to your account?
         </p>
 
         {/* Select All */}
-        <div className="flex items-center gap-2 pb-2 border-b border-white/10">
+        <div className="flex items-center gap-2 pb-2 border-b border-cm-border-input">
           <button
             onClick={toggleAll}
             className="text-xs text-accent-400 hover:text-accent-300 transition-colors"
           >
             {selectedFilenames.size === localLists.length ? 'Deselect All' : 'Select All'}
           </button>
-          <span className="text-xs text-white/40">
+          <span className="text-xs text-cm-text-muted">
             {selectedFilenames.size} of {localLists.length} selected
           </span>
         </div>
@@ -143,23 +143,23 @@ export function MigrateListsModal({
           {localLists.map((list) => (
             <label
               key={list.filename}
-              className="list-row cursor-pointer hover:bg-white/5 flex items-center gap-3"
+              className="list-row cursor-pointer hover:bg-cm-surface-hover-subtle flex items-center gap-3"
             >
               <input
                 type="checkbox"
                 checked={selectedFilenames.has(list.filename)}
                 onChange={() => toggleSelection(list.filename)}
-                className="rounded border-white/30 bg-white/5 text-accent-500 focus:ring-accent-500"
+                className="rounded border-white/30 bg-cm-surface-hover-subtle text-accent-500 focus:ring-accent-500"
                 disabled={isMigrating}
               />
-              <span className="text-white/80 truncate">{list.name}</span>
+              <span className="text-cm-text truncate">{list.name}</span>
             </label>
           ))}
         </div>
 
         {/* Progress */}
         {isMigrating && (
-          <div className="flex items-center gap-2 text-sm text-white/60">
+          <div className="flex items-center gap-2 text-sm text-cm-text-secondary">
             <svg
               className="animate-spin h-4 w-4 text-accent-500"
               xmlns="http://www.w3.org/2000/svg"

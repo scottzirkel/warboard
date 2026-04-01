@@ -206,14 +206,14 @@ export function PlayModeWeaponsDisplay({
         <div
           className={`rounded overflow-hidden mt-3 transition-colors ${
             isLeaderActivated
-              ? 'bg-green-900/40 ring-1 ring-green-600/50'
-              : 'bg-purple-900/30 ring-1 ring-purple-600/50'
+              ? 'bg-green-500/12 ring-1 ring-green-600/50'
+              : 'bg-purple-500/10 ring-1 ring-purple-600/50'
           }`}
         >
           {/* Leader Header (Clickable) */}
           <div
             className={`flex items-center gap-2 px-2 py-1.5 cursor-pointer transition-colors ${
-              isLeaderActivated ? 'hover:bg-green-800/40' : 'hover:bg-purple-800/40'
+              isLeaderActivated ? 'hover:bg-green-500/15' : 'hover:bg-purple-500/12'
             }`}
             onClick={onToggleLeaderCollapse}
           >
@@ -244,7 +244,7 @@ export function PlayModeWeaponsDisplay({
               className={`ml-auto px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
                 isLeaderActivated
                   ? 'bg-green-600 text-white'
-                  : 'bg-purple-600 hover:bg-purple-500 text-white'
+                  : 'bg-purple-600 hover:bg-purple-500 text-cm-text'
               }`}
               title={isLeaderActivated ? 'Mark as not activated' : 'Mark as activated'}
             >
@@ -299,7 +299,7 @@ export function PlayModeWeaponsDisplay({
 
       {/* Empty State */}
       {loadoutGroups.length === 0 && !hasLeaderWeapons && (
-        <div className="text-center text-gray-500 py-4 text-sm">
+        <div className="text-center text-cm-text-muted py-4 text-sm">
           No weapons equipped
         </div>
       )}

@@ -166,10 +166,10 @@ function RangedWeaponDisplay({
 
   return (
     <div className="text-sm">
-      <div className="font-medium text-gray-300">{weapon.name}</div>
+      <div className="font-medium text-cm-text-secondary">{weapon.name}</div>
       <table className="w-full text-center text-xs mt-1 table-fixed">
         <thead>
-          <tr className="text-gray-500">
+          <tr className="text-cm-text-muted">
             <th className="font-normal w-[16.67%]">RNG</th>
             <th className="font-normal w-[16.67%]">A</th>
             <th className="font-normal w-[16.67%]">BS</th>
@@ -178,7 +178,7 @@ function RangedWeaponDisplay({
             <th className="font-normal w-[16.67%]">D</th>
           </tr>
         </thead>
-        <tbody className="text-gray-300">
+        <tbody className="text-cm-text-secondary">
           <tr>
             <StatCell value={range.value} modified={range.modified} sources={range.sources} suffix='"' />
             <StatCell value={a.value} modified={a.modified} sources={a.sources} />
@@ -243,10 +243,10 @@ function MeleeWeaponDisplay({
 
   return (
     <div className="text-sm">
-      <div className="font-medium text-gray-300">{weapon.name}</div>
+      <div className="font-medium text-cm-text-secondary">{weapon.name}</div>
       <table className="w-full text-center text-xs mt-1 table-fixed">
         <thead>
-          <tr className="text-gray-500">
+          <tr className="text-cm-text-muted">
             <th className="font-normal w-[16.67%]"></th>
             <th className="font-normal w-[16.67%]">A</th>
             <th className="font-normal w-[16.67%]">WS</th>
@@ -255,7 +255,7 @@ function MeleeWeaponDisplay({
             <th className="font-normal w-[16.67%]">D</th>
           </tr>
         </thead>
-        <tbody className="text-gray-300">
+        <tbody className="text-cm-text-secondary">
           <tr>
             <td></td>
             <StatCell value={a.value} modified={a.modified} sources={a.sources} />

@@ -419,7 +419,7 @@ export function ImportModal({
     <Modal isOpen={isOpen} onClose={handleClose} title="Import Army List" size="lg">
       <div className="space-y-4">
         {/* Instructions */}
-        <div className="text-sm text-white/60 space-y-1">
+        <div className="text-sm text-cm-text-secondary space-y-1">
           <p>
             <strong>Supported formats:</strong>
           </p>

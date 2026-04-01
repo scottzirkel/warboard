@@ -44,7 +44,7 @@ export function PhaseTransitionModal({
                 className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3"
               >
                 <div className="text-sm font-medium text-amber-300">{item.title}</div>
-                <div className="text-xs text-white/70 mt-1">{item.description}</div>
+                <div className="text-xs text-cm-text-secondary mt-1">{item.description}</div>
               </div>
             ))}
           </div>
@@ -53,18 +53,18 @@ export function PhaseTransitionModal({
         {/* Reminders */}
         {reminderItems.length > 0 && (
           <div className="space-y-2">
-            <div className="text-xs font-medium uppercase tracking-wider text-white/50">
+            <div className="text-xs font-medium uppercase tracking-wider text-cm-text-secondary">
               Reminders
             </div>
             {reminderItems.map((item, i) => (
-              <div key={`rem-${i}`} className="bg-black/20 rounded-lg p-3">
+              <div key={`rem-${i}`} className="bg-cm-stat-bg rounded-lg p-3">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium text-accent-300">{item.title}</span>
                   {item.unitName && (
-                    <span className="text-[10px] text-white/40">({item.unitName})</span>
+                    <span className="text-[10px] text-cm-text-muted">({item.unitName})</span>
                   )}
                 </div>
-                <div className="text-xs text-white/70 mt-1">{item.description}</div>
+                <div className="text-xs text-cm-text-secondary mt-1">{item.description}</div>
               </div>
             ))}
           </div>

@@ -53,7 +53,7 @@ export function SetupModal({
       <div className="space-y-5">
         {/* Format */}
         <div>
-          <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">Game Format</label>
+          <label className="text-xs text-cm-text-secondary uppercase tracking-wide block mb-2">Game Format</label>
           <div className="space-y-2">
             {GAME_FORMATS.map(f => (
               <button
@@ -62,12 +62,12 @@ export function SetupModal({
                 className={`w-full p-3 rounded-xl text-sm font-medium text-left transition-all flex justify-between items-center ${
                   format === f.id
                     ? 'bg-accent-500/20 text-accent-400 border border-accent-500/50'
-                    : 'bg-white/5 text-white/60 border border-white/10 hover:border-white/20'
+                    : 'bg-cm-surface-hover-subtle text-cm-text-secondary border border-cm-border-input hover:border-cm-border'
                 }`}
               >
                 <span>{f.name}</span>
                 {f.points !== null && (
-                  <span className="text-white/40 text-xs">{f.points} pts</span>
+                  <span className="text-cm-text-muted text-xs">{f.points} pts</span>
                 )}
               </button>
             ))}
@@ -76,13 +76,13 @@ export function SetupModal({
           {/* Custom points input */}
           {format === 'custom' && (
             <div className="mt-3">
-              <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">Points Limit</label>
+              <label className="text-xs text-cm-text-secondary uppercase tracking-wide block mb-2">Points Limit</label>
               <input
                 type="number"
                 min="1"
                 value={customPoints}
                 onChange={(e) => setCustomPoints(e.target.value)}
-                className="w-full p-3 rounded-xl text-sm font-medium bg-white/5 text-white border border-white/10 focus:border-accent-500/50 focus:outline-none"
+                className="w-full p-3 rounded-xl text-sm font-medium bg-cm-surface-hover-subtle text-cm-text border border-cm-border-input focus:border-accent-500/50 focus:outline-none"
                 placeholder="Enter points limit"
               />
             </div>
@@ -91,7 +91,7 @@ export function SetupModal({
 
         {/* Detachment */}
         <div>
-          <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">Detachment</label>
+          <label className="text-xs text-cm-text-secondary uppercase tracking-wide block mb-2">Detachment</label>
           <div className="space-y-2">
             {detachments.map(d => (
               <button
@@ -100,7 +100,7 @@ export function SetupModal({
                 className={`w-full p-3 rounded-xl text-sm font-medium text-left transition-all ${
                   effectiveDetachment === d.id
                     ? 'bg-accent-500/20 text-accent-400 border border-accent-500/50'
-                    : 'bg-white/5 text-white/60 border border-white/10 hover:border-white/20'
+                    : 'bg-cm-surface-hover-subtle text-cm-text-secondary border border-cm-border-input hover:border-cm-border'
                 }`}
               >
                 {d.name}

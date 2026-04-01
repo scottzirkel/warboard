@@ -31,7 +31,7 @@ export function UserMenu({ className = '' }: UserMenuProps) {
   if (status === 'loading') {
     return (
       <div className={`flex items-center ${className}`}>
-        <div className="h-7 w-7 rounded-full bg-white/10 animate-pulse" />
+        <div className="h-7 w-7 rounded-full bg-cm-surface-hover animate-pulse" />
       </div>
     );
   }
@@ -60,19 +60,19 @@ export function UserMenu({ className = '' }: UserMenuProps) {
             className="rounded-full bg-white border-2 border-white"
           />
         ) : (
-          <div className="h-7 w-7 rounded-full bg-white/10 flex items-center justify-center text-xs font-medium text-white/70">
+          <div className="h-7 w-7 rounded-full bg-cm-surface-hover flex items-center justify-center text-xs font-medium text-cm-text-secondary">
             {session.user?.name?.[0]?.toUpperCase() || '?'}
           </div>
         )}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-48 material-elevated rounded-xl shadow-xl border border-white/10 overflow-hidden z-50">
-          <div className="px-3 py-2.5 border-b border-white/10">
-            <p className="text-sm font-medium text-white truncate">
+        <div className="absolute right-0 top-full mt-2 w-48 material-elevated rounded-xl shadow-xl border border-cm-border-input overflow-hidden z-50">
+          <div className="px-3 py-2.5 border-b border-cm-border-input">
+            <p className="text-sm font-medium text-cm-text truncate">
               {session.user?.name}
             </p>
-            <p className="text-xs text-white/40 truncate">
+            <p className="text-xs text-cm-text-muted truncate">
               {session.user?.email}
             </p>
           </div>
@@ -81,7 +81,7 @@ export function UserMenu({ className = '' }: UserMenuProps) {
               setIsOpen(false);
               signOut({ callbackUrl: '/' });
             }}
-            className="w-full px-3 py-2.5 text-left text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+            className="w-full px-3 py-2.5 text-left text-sm text-cm-text-secondary hover:text-cm-text hover:bg-cm-surface-hover-subtle transition-colors"
           >
             Sign out
           </button>

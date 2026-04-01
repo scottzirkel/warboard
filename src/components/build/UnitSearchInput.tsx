@@ -43,7 +43,7 @@ export function UnitSearchInput({
         <button
           type="button"
           onClick={() => onChange('')}
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200 transition-colors"
+          className="absolute right-2 top-1/2 -translate-y-1/2 text-cm-text-muted hover:text-cm-text transition-colors"
           aria-label="Clear search"
         >
           <svg

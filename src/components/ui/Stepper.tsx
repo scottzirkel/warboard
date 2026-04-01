@@ -68,7 +68,7 @@ export function Stepper({
         </button>
       </div>
       {showValue && (
-        <span className="text-white font-semibold min-w-[24px] text-center">
+        <span className="text-cm-text font-semibold min-w-[24px] text-center">
           {value}
         </span>
       )}

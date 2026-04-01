@@ -26,14 +26,14 @@ export function PointsSummaryBar({
   return (
     <div
       className={`
-        bg-gray-800/50 border-b border-gray-700/50
+        bg-cm-surface-card border-b border-cm-border
         px-4 py-3
         ${className}
       `}
     >
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-3">
-          <h1 className="text-lg font-semibold text-gray-100">
+          <h1 className="text-lg font-semibold text-cm-text">
             {name || 'Untitled List'}
           </h1>
         </div>
@@ -46,8 +46,8 @@ export function PointsSummaryBar({
           >
             {currentPoints}
           </span>
-          <span className="text-gray-500">/</span>
-          <span className="text-gray-400 font-mono">{pointsLimit} pts</span>
+          <span className="text-cm-text-muted">/</span>
+          <span className="text-cm-text-muted font-mono">{pointsLimit} pts</span>
         </div>
       </div>
       <ProgressBar value={currentPoints} max={pointsLimit} variant={variant} size="sm" />

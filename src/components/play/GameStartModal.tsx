@@ -48,10 +48,10 @@ function DiceButton({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={(e) => { e.stopPropagation(); onClick(); }}
-      className="p-1 rounded-md hover:bg-white/10 transition-colors"
+      className="p-1 rounded-md hover:bg-cm-surface-hover transition-colors"
       title="Randomize"
     >
-      <svg className="w-4 h-4 text-white/50 hover:text-white/80" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.5}>
+      <svg className="w-4 h-4 text-cm-text-secondary hover:text-cm-text" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={1.5}>
         <rect x="3" y="3" width="14" height="14" rx="2" />
         <circle cx="7" cy="7" r="1" fill="currentColor" stroke="none" />
         <circle cx="13" cy="7" r="1" fill="currentColor" stroke="none" />
@@ -103,18 +103,18 @@ export function GameStartModal({
         <div className="flex flex-wrap gap-x-4 gap-y-1.5">
           {checklistItems.map(({ label, done, hint }) => (
             <div key={label} className="flex items-center gap-1.5 text-sm">
-              <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${done ? 'bg-green-500' : 'bg-white/10'}`}>
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${done ? 'bg-green-500' : 'bg-cm-surface-hover'}`}>
                 {done && (
-                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <svg className="w-3 h-3 text-cm-text" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 )}
               </div>
-              <span className={done ? 'text-white/70' : 'text-white/40'}>
+              <span className={done ? 'text-cm-text-secondary' : 'text-cm-text-muted'}>
                 {label}
               </span>
               {hint && !done && (
-                <span className="text-[10px] text-white/30">{hint}</span>
+                <span className="text-[10px] text-cm-text-faint">{hint}</span>
               )}
             </div>
           ))}
@@ -122,7 +122,7 @@ export function GameStartModal({
 
         {/* Going First */}
         <div>
-          <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">
+          <label className="text-xs text-cm-text-secondary uppercase tracking-wide block mb-2">
             Are you going first?
           </label>
           <SegmentedControl
@@ -137,7 +137,7 @@ export function GameStartModal({
 
         {/* Attacker / Defender */}
         <div>
-          <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">
+          <label className="text-xs text-cm-text-secondary uppercase tracking-wide block mb-2">
             Are you the attacker or defender?
           </label>
           <SegmentedControl
@@ -154,7 +154,7 @@ export function GameStartModal({
         {deployments.length > 0 && (
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs text-white/50 uppercase tracking-wide">
+              <label className="text-xs text-cm-text-secondary uppercase tracking-wide">
                 Deployment
               </label>
               <DiceButton onClick={() => {
@@ -162,13 +162,13 @@ export function GameStartModal({
                 onDeploymentSelect(deployments[idx].id);
               }} />
             </div>
-            <div className="rounded-xl overflow-hidden bg-white/[0.04] max-h-[30vh] overflow-y-auto">
+            <div className="rounded-xl overflow-hidden bg-cm-surface-hover-subtle max-h-[30vh] overflow-y-auto">
               {deployments.map((deployment) => {
                 const isSelected = selectedDeploymentId === deployment.id;
                 return (
                   <div
                     key={deployment.id}
-                    className={`${itemStyles} ${isSelected ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-white/5'}`}
+                    className={`${itemStyles} ${isSelected ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-cm-surface-hover-subtle'}`}
                     onClick={() => onDeploymentSelect(isSelected ? null : deployment.id)}
                   >
                     <div className="flex-1 min-w-0">
@@ -194,7 +194,7 @@ export function GameStartModal({
         {primaryMissions.length > 0 && (
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs text-white/50 uppercase tracking-wide">
+              <label className="text-xs text-cm-text-secondary uppercase tracking-wide">
                 Primary Mission
               </label>
               <DiceButton onClick={() => {
@@ -202,13 +202,13 @@ export function GameStartModal({
                 onPrimaryMissionSelect(primaryMissions[idx].id);
               }} />
             </div>
-            <div className="rounded-xl overflow-hidden bg-white/[0.04] max-h-[30vh] overflow-y-auto">
+            <div className="rounded-xl overflow-hidden bg-cm-surface-hover-subtle max-h-[30vh] overflow-y-auto">
               {primaryMissions.map((mission) => {
                 const isSelected = selectedPrimaryMissionId === mission.id;
                 return (
                   <div
                     key={mission.id}
-                    className={`${itemStyles} ${isSelected ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-white/5'}`}
+                    className={`${itemStyles} ${isSelected ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-cm-surface-hover-subtle'}`}
                     onClick={() => onPrimaryMissionSelect(isSelected ? null : mission.id)}
                   >
                     <div className="flex-1 min-w-0">
@@ -226,7 +226,7 @@ export function GameStartModal({
         {twists.length > 0 && (
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs text-white/50 uppercase tracking-wide">
+              <label className="text-xs text-cm-text-secondary uppercase tracking-wide">
                 Mission Twist
               </label>
               <DiceButton onClick={() => {
@@ -234,14 +234,14 @@ export function GameStartModal({
                 onTwistSelect(twists[idx].id);
               }} />
             </div>
-            <div className="rounded-xl overflow-hidden bg-white/[0.04] max-h-[30vh] overflow-y-auto">
+            <div className="rounded-xl overflow-hidden bg-cm-surface-hover-subtle max-h-[30vh] overflow-y-auto">
               {/* No Twist option */}
               <div
-                className={`${itemStyles} ${activeTwistId === null ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-white/5'}`}
+                className={`${itemStyles} ${activeTwistId === null ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-cm-surface-hover-subtle'}`}
                 onClick={() => onTwistSelect(null)}
               >
                 <div className="flex-1">
-                  <div className="font-medium text-sm text-white/70">No Twist</div>
+                  <div className="font-medium text-sm text-cm-text-secondary">No Twist</div>
                 </div>
                 {activeTwistId === null && checkmark}
               </div>
@@ -252,14 +252,14 @@ export function GameStartModal({
                 return (
                   <div
                     key={twist.id}
-                    className={`${itemStyles} ${isActive ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-white/5'}`}
+                    className={`${itemStyles} ${isActive ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-cm-surface-hover-subtle'}`}
                     onClick={() => onTwistSelect(twist.id)}
                   >
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <span className="font-medium text-sm">{twist.name}</span>
                       </div>
-                      <div className="text-xs text-white/50 mt-1 line-clamp-2">{twist.description}</div>
+                      <div className="text-xs text-cm-text-secondary mt-1 line-clamp-2">{twist.description}</div>
                     </div>
                     {isActive && checkmark}
                   </div>

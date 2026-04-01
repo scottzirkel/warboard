@@ -137,7 +137,7 @@ export function LoadModal({
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               />
             </svg>
-            <span className="ml-2 text-white/60">Loading saved lists...</span>
+            <span className="ml-2 text-cm-text-secondary">Loading saved lists...</span>
           </div>
         )}
 
@@ -145,7 +145,7 @@ export function LoadModal({
         {!isLoading && lists.length === 0 && (
           <div className="text-center py-8">
             <svg
-              className="w-12 h-12 mx-auto text-white/20 mb-3"
+              className="w-12 h-12 mx-auto text-cm-text-faint mb-3"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -157,8 +157,8 @@ export function LoadModal({
                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
-            <p className="text-white/60">No saved lists found</p>
-            <p className="text-sm text-white/40 mt-1">
+            <p className="text-cm-text-secondary">No saved lists found</p>
+            <p className="text-sm text-cm-text-muted mt-1">
               Save a list first to see it here
             </p>
           </div>
@@ -172,14 +172,14 @@ export function LoadModal({
                 key={list.filename}
                 className={`
                   list-row cursor-pointer touch-highlight
-                  ${selectedFilename === list.filename ? 'bg-accent-tint-strong' : 'hover:bg-white/5'}
+                  ${selectedFilename === list.filename ? 'bg-accent-tint-strong' : 'hover:bg-cm-surface-hover-subtle'}
                 `}
                 onClick={() => setSelectedFilename(list.filename)}
                 onDoubleClick={handleLoad}
               >
                 <div className="flex items-center gap-3 min-w-0 flex-1">
                   <svg
-                    className={`w-5 h-5 flex-shrink-0 ${selectedFilename === list.filename ? 'text-accent-400' : 'text-white/40'}`}
+                    className={`w-5 h-5 flex-shrink-0 ${selectedFilename === list.filename ? 'text-accent-400' : 'text-cm-text-muted'}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -191,7 +191,7 @@ export function LoadModal({
                       d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                     />
                   </svg>
-                  <span className={`truncate ${selectedFilename === list.filename ? 'text-white' : 'text-white/80'}`}>
+                  <span className={`truncate ${selectedFilename === list.filename ? 'text-cm-text' : 'text-cm-text'}`}>
                     {list.name}
                   </span>
                 </div>
@@ -219,7 +219,7 @@ export function LoadModal({
                     ) : (
                       <button
                         onClick={() => handleDelete(list.filename)}
-                        className="p-2 text-white/40 hover:text-red-400 rounded-lg hover:bg-white/5 transition-colors"
+                        className="p-2 text-cm-text-muted hover:text-red-400 rounded-lg hover:bg-cm-surface-hover-subtle transition-colors"
                         title="Delete list"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

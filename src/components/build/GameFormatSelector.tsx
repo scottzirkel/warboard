@@ -27,7 +27,7 @@ export function GameFormatSelector({
             ${
               value === format.id
                 ? 'bg-accent-500 text-gray-900'
-                : 'bg-gray-700/50 text-gray-300 hover:bg-gray-700'
+                : 'bg-cm-surface-hover text-cm-text-secondary hover:bg-cm-surface-inset'
             }
           `}
         >

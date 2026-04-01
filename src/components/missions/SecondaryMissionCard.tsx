@@ -20,8 +20,8 @@ export function SecondaryMissionCard({ mission, className = '' }: SecondaryMissi
     <CardShell className={className}>
       {/* Card title */}
       <div className="bg-[#3e0602] px-3 py-2">
-        <div className="text-[10px] uppercase tracking-wider text-white/60">Secondary Mission</div>
-        <div className="text-sm font-bold uppercase tracking-wide text-white">{mission.name}</div>
+        <div className="text-[10px] uppercase tracking-wider text-cm-text-secondary">Secondary Mission</div>
+        <div className="text-sm font-bold uppercase tracking-wide text-cm-text">{mission.name}</div>
       </div>
 
       {/* Restrictions badge */}
@@ -43,7 +43,7 @@ export function SecondaryMissionCard({ mission, className = '' }: SecondaryMissi
       {mission.flavor && (
         <button
           onClick={() => setShowFlavor(!showFlavor)}
-          className="w-full px-3 py-1 text-left text-[10px] text-white/30 hover:text-white/50 transition-colors"
+          className="w-full px-3 py-1 text-left text-[10px] text-cm-text-faint hover:text-cm-text-secondary transition-colors"
         >
           {showFlavor ? mission.flavor : '▸ Flavor text...'}
         </button>
@@ -51,8 +51,8 @@ export function SecondaryMissionCard({ mission, className = '' }: SecondaryMissi
 
       {/* When drawn note */}
       {mission.whenDrawn && (
-        <div className="mx-3 mb-1 rounded bg-white/5 px-2 py-1 text-[10px] text-white/50">
-          <span className="font-semibold text-white/60">When Drawn:</span> {mission.whenDrawn}
+        <div className="mx-3 mb-1 rounded bg-cm-surface-hover-subtle px-2 py-1 text-[10px] text-cm-text-secondary">
+          <span className="font-semibold text-cm-text-secondary">When Drawn:</span> {mission.whenDrawn}
         </div>
       )}
 
@@ -62,7 +62,7 @@ export function SecondaryMissionCard({ mission, className = '' }: SecondaryMissi
       {/* Scoring blocks */}
       {mission.scoringBlocks.map((block, i) => (
         <div key={i}>
-          {i > 0 && <div className="h-px bg-white/5" />}
+          {i > 0 && <div className="h-px bg-cm-surface-hover-subtle" />}
           <ScoringTable block={block} showSplitVp={hasSplitVp} />
         </div>
       ))}

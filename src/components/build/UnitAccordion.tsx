@@ -20,16 +20,16 @@ export function UnitAccordion({
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className={`border-b border-gray-700/30 last:border-b-0 ${className}`}>
+    <div className={`border-b border-cm-border-subtle last:border-b-0 ${className}`}>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-2 flex items-center justify-between hover:bg-gray-700/30 transition-colors"
+        className="w-full px-4 py-2 flex items-center justify-between hover:bg-cm-surface-hover-subtle transition-colors"
       >
         <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${
+            className={`h-4 w-4 text-cm-text-muted transition-transform duration-200 ${
               isOpen ? 'rotate-90' : ''
             }`}
             fill="none"
@@ -43,9 +43,9 @@ export function UnitAccordion({
               d="M9 5l7 7-7 7"
             />
           </svg>
-          <span className="text-sm font-medium text-gray-200">{title}</span>
+          <span className="text-sm font-medium text-cm-text">{title}</span>
         </div>
-        <span className="text-xs text-gray-500 bg-gray-700/50 px-2 py-0.5 rounded">
+        <span className="text-xs text-cm-text-muted bg-cm-surface-hover px-2 py-0.5 rounded">
           {count}
         </span>
       </button>

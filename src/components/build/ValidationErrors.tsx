@@ -39,7 +39,7 @@ export function ValidationErrors({ errors, className = '' }: ValidationErrorsPro
           `}
         >
           <span className="mr-2">{errorTypeIcons[error.type]}</span>
-          <span className="text-gray-200">{error.message}</span>
+          <span className="text-cm-text">{error.message}</span>
         </div>
       ))}
     </div>

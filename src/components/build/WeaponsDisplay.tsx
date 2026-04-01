@@ -11,7 +11,7 @@ interface WeaponsDisplayProps {
 export function WeaponsDisplay({ weapons, className = '' }: WeaponsDisplayProps) {
   if (weapons.length === 0) {
     return (
-      <div className={`text-center py-4 text-gray-500 text-sm ${className}`}>
+      <div className={`text-center py-4 text-cm-text-muted text-sm ${className}`}>
         No weapons available.
       </div>
     );

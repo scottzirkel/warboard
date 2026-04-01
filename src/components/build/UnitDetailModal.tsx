@@ -85,9 +85,9 @@ export function UnitDetailModal({ unit, isOpen, onClose, onAddUnit }: UnitDetail
           {/* Ranged Weapons */}
           {ranged.length > 0 && (
             <div className="mb-3">
-              <div className="text-xs text-white/50 uppercase tracking-wide mb-1">Ranged</div>
+              <div className="text-xs text-cm-text-secondary uppercase tracking-wide mb-1">Ranged</div>
               {ranged.filter(isRangedStats).map((weapon) => (
-                <div key={weapon.id} className="bg-black/20 rounded-lg p-3 mb-1">
+                <div key={weapon.id} className="bg-cm-stat-bg rounded-lg p-3 mb-1">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-sm">{weapon.name}</span>
                     <span className="badge badge-blue text-[10px] py-0">ranged</span>
@@ -125,9 +125,9 @@ export function UnitDetailModal({ unit, isOpen, onClose, onAddUnit }: UnitDetail
           {/* Melee Weapons */}
           {melee.length > 0 && (
             <div>
-              <div className="text-xs text-white/50 uppercase tracking-wide mb-1">Melee</div>
+              <div className="text-xs text-cm-text-secondary uppercase tracking-wide mb-1">Melee</div>
               {melee.filter(isMeleeStats).map((weapon) => (
-                <div key={weapon.id} className="bg-black/20 rounded-lg p-3 mb-1">
+                <div key={weapon.id} className="bg-cm-stat-bg rounded-lg p-3 mb-1">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-sm">{weapon.name}</span>
                     <span className="badge badge-red text-[10px] py-0">melee</span>
@@ -170,9 +170,9 @@ export function UnitDetailModal({ unit, isOpen, onClose, onAddUnit }: UnitDetail
             </div>
             <div className="space-y-2">
               {unit.abilities.map((ability) => (
-                <div key={ability.id} className="bg-black/20 rounded-lg p-2">
+                <div key={ability.id} className="bg-cm-stat-bg rounded-lg p-2">
                   <div className="text-sm font-medium text-accent-300">{ability.name}</div>
-                  <div className="text-xs text-white/70 mt-0.5">{ability.description}</div>
+                  <div className="text-xs text-cm-text-secondary mt-0.5">{ability.description}</div>
                 </div>
               ))}
             </div>
@@ -181,7 +181,7 @@ export function UnitDetailModal({ unit, isOpen, onClose, onAddUnit }: UnitDetail
       </div>
 
       {/* Add to Roster Button */}
-      <div className="mt-4 pt-4 border-t border-white/10">
+      <div className="mt-4 pt-4 border-t border-cm-border-input">
         <button
           type="button"
           onClick={() => {

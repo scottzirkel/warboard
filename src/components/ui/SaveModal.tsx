@@ -70,14 +70,14 @@ export function SaveModal({
       <div className="space-y-4">
         {/* Name Input */}
         <div>
-          <label className="text-sm text-white/60 block mb-2">List Name</label>
+          <label className="text-sm text-cm-text-secondary block mb-2">List Name</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Enter a name for your list"
-            className="w-full px-3 py-2 bg-black/30 border border-white/10 rounded-lg text-white placeholder:text-white/40 focus:outline-none focus:border-accent-500"
+            className="w-full px-3 py-2 bg-cm-stat-bg border border-cm-border-input rounded-lg text-cm-text placeholder:text-cm-text-muted focus:outline-none focus:border-accent-500"
             autoFocus
           />
           {isExistingName && (

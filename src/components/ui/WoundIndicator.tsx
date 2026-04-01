@@ -21,7 +21,7 @@ function WoundPips({
 }) {
   const pips = [];
   const colorFull = variant === 'leader' ? 'bg-purple-500' : 'bg-green-500';
-  const colorEmpty = 'bg-gray-600';
+  const colorEmpty = 'bg-cm-surface-inset';
 
   for (let i = 0; i < max; i++) {
     const isFilled = i < current;
@@ -57,7 +57,7 @@ function AdjustButton({ onClick, disabled = false, variant }: AdjustButtonProps)
         w-7 h-7 rounded flex items-center justify-center text-lg font-bold
         transition-colors
         ${disabled
-          ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+          ? 'bg-cm-surface-inset text-cm-text-muted cursor-not-allowed'
           : isIncrease
             ? 'bg-green-600 hover:bg-green-500 text-white'
             : 'bg-red-600 hover:bg-red-500 text-white'
@@ -87,9 +87,9 @@ export function WoundIndicator({
   const canDecrease = currentWounds > 0;
   const canIncrease = currentWounds < maxWounds;
 
-  const borderColor = variant === 'leader' ? 'border-purple-500/30' : 'border-gray-700/30';
-  const bgColor = variant === 'leader' ? 'bg-purple-900/20' : 'bg-gray-800/50';
-  const labelColor = variant === 'leader' ? 'text-purple-400' : 'text-gray-400';
+  const borderColor = variant === 'leader' ? 'border-purple-500/30' : 'border-cm-border-subtle';
+  const bgColor = variant === 'leader' ? 'bg-purple-500/8' : 'bg-cm-surface-card';
+  const labelColor = variant === 'leader' ? 'text-purple-400' : 'text-cm-text-muted';
 
   return (
     <div className={`rounded-lg border ${borderColor} ${bgColor} p-3 ${className}`}>
@@ -102,14 +102,14 @@ export function WoundIndicator({
       <div className="flex items-center justify-between gap-4">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <span className="text-gray-400 text-sm">Models:</span>
-            <span className="text-gray-200 font-medium">
+            <span className="text-cm-text-muted text-sm">Models:</span>
+            <span className="text-cm-text font-medium">
               {modelsAlive} / {totalModels}
             </span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-gray-400 text-sm">Current Model:</span>
+            <span className="text-cm-text-muted text-sm">Current Model:</span>
             <WoundPips
               current={currentModelWounds}
               max={woundsPerModel}
@@ -118,8 +118,8 @@ export function WoundIndicator({
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-gray-400 text-sm">Total:</span>
-            <span className="text-gray-200 font-medium">
+            <span className="text-cm-text-muted text-sm">Total:</span>
+            <span className="text-cm-text font-medium">
               {currentWounds} / {maxWounds}
             </span>
           </div>
@@ -160,7 +160,7 @@ export function SimpleWoundBar({ current, max, className = '' }: SimpleWoundBarP
         : 'bg-red-500';
 
   return (
-    <div className={`h-2 bg-gray-700 rounded overflow-hidden ${className}`}>
+    <div className={`h-2 bg-cm-surface-inset rounded overflow-hidden ${className}`}>
       <div
         className={`h-full transition-all ${colorClass}`}
         style={{ width: `${percentage}%` }}

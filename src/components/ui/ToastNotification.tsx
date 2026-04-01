@@ -103,7 +103,7 @@ function ToastItem({ toast, onDismiss }: ToastItemProps) {
       {/* Dismiss Button */}
       <button
         onClick={handleDismiss}
-        className={`flex-shrink-0 p-0.5 rounded hover:bg-white/10 transition-colors ${styles.icon}`}
+        className={`flex-shrink-0 p-0.5 rounded hover:bg-cm-surface-hover transition-colors ${styles.icon}`}
         aria-label="Dismiss notification"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -225,7 +225,7 @@ export function ToastNotification({
       {/* Dismiss Button */}
       <button
         onClick={handleDismiss}
-        className={`flex-shrink-0 p-0.5 rounded hover:bg-white/10 transition-colors ${styles.icon}`}
+        className={`flex-shrink-0 p-0.5 rounded hover:bg-cm-surface-hover transition-colors ${styles.icon}`}
         aria-label="Dismiss notification"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

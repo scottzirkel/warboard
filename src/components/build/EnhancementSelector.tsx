@@ -40,8 +40,8 @@ export function EnhancementSelector({
         onClick={() => setIsOpen(true)}
         className={`
           w-full text-left px-3 py-1.5 rounded-lg text-sm
-          bg-white/5 border border-white/10 text-gray-200
-          hover:bg-white/10 transition-colors cursor-pointer
+          bg-cm-surface-hover-subtle border border-cm-border-input text-cm-text
+          hover:bg-cm-surface-hover transition-colors cursor-pointer
           ${className}
         `}
       >
@@ -61,7 +61,7 @@ export function EnhancementSelector({
             className={`
               w-full text-left px-3 py-2 rounded-lg text-sm font-medium
               transition-colors cursor-pointer
-              ${value === '' ? 'bg-accent-500/20 text-accent-400' : 'bg-gray-700/50 text-gray-200 hover:bg-gray-600/50'}
+              ${value === '' ? 'bg-accent-500/20 text-accent-400' : 'bg-cm-surface-hover text-cm-text hover:bg-cm-surface-hover-subtle'}
             `}
           >
             None
@@ -79,7 +79,7 @@ export function EnhancementSelector({
                 <Badge variant="accent">+{enhancement.points}pts</Badge>
               }
             >
-              <p className="text-sm text-gray-300 mb-3">
+              <p className="text-sm text-cm-text-secondary mb-3">
                 {enhancement.description}
               </p>
               <button

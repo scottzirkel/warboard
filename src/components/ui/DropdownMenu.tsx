@@ -77,12 +77,12 @@ export function DropdownMenu({ trigger, items, align = 'right' }: DropdownMenuPr
                 w-full px-3 py-2 text-left text-sm flex items-center gap-2
                 transition-colors
                 ${item.disabled
-                  ? 'text-white/30 cursor-not-allowed'
+                  ? 'text-cm-text-faint cursor-not-allowed'
                   : item.variant === 'danger'
                     ? 'text-red-400 hover:bg-red-500/20'
-                    : 'text-white/90 hover:bg-white/10'
+                    : 'text-cm-text hover:bg-cm-surface-hover'
                 }
-                ${index > 0 ? 'border-t border-white/5' : ''}
+                ${index > 0 ? 'border-t border-cm-border-subtle' : ''}
               `}
             >
               {item.icon && <span className="w-4 h-4">{item.icon}</span>}

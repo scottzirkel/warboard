@@ -32,7 +32,7 @@ export function GameHistoryPanel() {
   };
 
   if (isLoading && games.length === 0) {
-    return <div className="text-center text-white/40 py-8">Loading...</div>;
+    return <div className="text-center text-cm-text-muted py-8">Loading...</div>;
   }
 
   return (
@@ -49,7 +49,7 @@ export function GameHistoryPanel() {
 
       {/* Game List */}
       {games.length === 0 ? (
-        <div className="text-center text-white/40 py-8 text-sm">
+        <div className="text-center text-cm-text-muted py-8 text-sm">
           No games recorded yet. Play a game and save the result to see it here.
         </div>
       ) : (
@@ -71,8 +71,8 @@ export function GameHistoryPanel() {
 
 function StatBox({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="bg-white/5 rounded-lg p-2">
-      <div className="text-[10px] text-white/40 uppercase tracking-wide">{label}</div>
+    <div className="bg-cm-surface-hover-subtle rounded-lg p-2">
+      <div className="text-[10px] text-cm-text-muted uppercase tracking-wide">{label}</div>
       <div className="text-lg font-bold mt-0.5">{value}</div>
     </div>
   );
@@ -105,9 +105,9 @@ function GameCard({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <span className="font-medium text-sm truncate">vs {game.opponentFaction}</span>
-            <span className="text-xs text-white/30">{dateStr}</span>
+            <span className="text-xs text-cm-text-faint">{dateStr}</span>
           </div>
-          <div className="text-xs text-white/40 mt-0.5">
+          <div className="text-xs text-cm-text-muted mt-0.5">
             {game.army} &middot; {game.totalVP} VP
           </div>
         </div>
@@ -120,7 +120,7 @@ function GameCard({
           ) : (
             <button
               onClick={onDelete}
-              className="p-2 text-white/30 hover:text-red-400 transition-colors"
+              className="p-2 text-cm-text-faint hover:text-red-400 transition-colors"
               title="Delete"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

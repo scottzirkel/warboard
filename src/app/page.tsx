@@ -1005,7 +1005,7 @@ export default function Home() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-500 mx-auto mb-4" />
-          <p className="text-gray-400">Loading army data...</p>
+          <p className="text-cm-text-muted">Loading army data...</p>
         </div>
       </div>
     );
@@ -1294,7 +1294,7 @@ export default function Home() {
             `}
           >
             {/* Panel Header */}
-            <div className="flex justify-between items-center p-4 border-b border-white/10 shrink-0">
+            <div className="flex justify-between items-center p-4 border-b border-cm-border-input shrink-0">
               <h3 className="text-lg font-semibold text-accent-300">Quick Reference</h3>
               <button
                 onClick={handleToggleReferencePanel}
@@ -1330,8 +1330,8 @@ export default function Home() {
                         <span className="font-medium text-sm text-accent-300">{strat.name}</span>
                         <span className="badge badge-purple text-[10px] py-0">{strat.cost}CP</span>
                       </div>
-                      <div className="text-xs text-white/40 mt-1">{strat.phase}</div>
-                      <div className="text-xs text-white/70 mt-1">{strat.description}</div>
+                      <div className="text-xs text-cm-text-muted mt-1">{strat.phase}</div>
+                      <div className="text-xs text-cm-text-secondary mt-1">{strat.description}</div>
                     </div>
                   ))}
                 </div>
@@ -1351,7 +1351,7 @@ export default function Home() {
                         <span className="font-medium text-sm text-accent-300">{enh.name}</span>
                         <span className="badge badge-accent text-[10px] py-0">{enh.points} pts</span>
                       </div>
-                      <div className="text-xs text-white/70 mt-1">{enh.description}</div>
+                      <div className="text-xs text-cm-text-secondary mt-1">{enh.description}</div>
                     </div>
                   ))}
                 </div>
@@ -1366,7 +1366,7 @@ export default function Home() {
                   {Object.entries(armyData.weaponKeywords).map(([key, kw]) => (
                     <div key={key} className="bg-black/20 rounded-lg p-3">
                       <span className="font-medium text-sm text-orange-300">{kw.name}</span>
-                      <div className="text-xs text-white/70 mt-0.5">{kw.description}</div>
+                      <div className="text-xs text-cm-text-secondary mt-0.5">{kw.description}</div>
                     </div>
                   ))}
                 </div>
@@ -1381,7 +1381,7 @@ export default function Home() {
                   {armyData.keywordGlossary.weapon.map((kw) => (
                     <div key={kw.name} id={`ref-weapon-${kw.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="bg-black/20 rounded-lg p-3 transition-all duration-300">
                       <span className="font-medium text-sm text-blue-300">{kw.name}</span>
-                      <div className="text-xs text-white/70 mt-0.5">{kw.description}</div>
+                      <div className="text-xs text-cm-text-secondary mt-0.5">{kw.description}</div>
                     </div>
                   ))}
                 </div>
@@ -1396,7 +1396,7 @@ export default function Home() {
                   {armyData.keywordGlossary.unit.map((kw) => (
                     <div key={kw.name} id={`ref-unit-${kw.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="bg-black/20 rounded-lg p-3 transition-all duration-300">
                       <span className="font-medium text-sm text-green-300">{kw.name}</span>
-                      <div className="text-xs text-white/70 mt-0.5">{kw.description}</div>
+                      <div className="text-xs text-cm-text-secondary mt-0.5">{kw.description}</div>
                     </div>
                   ))}
                 </div>

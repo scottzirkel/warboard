@@ -385,7 +385,7 @@ export function SelectedUnitDetailsPanel({
   if (!unit || !listUnit || unitIndex === null) {
     return (
       <div className={`flex flex-col h-full ${className}`}>
-        <div className="flex-1 flex items-center justify-center text-white/40">
+        <div className="flex-1 flex items-center justify-center text-cm-text-muted">
           <p>Select a unit from your army to view details</p>
         </div>
       </div>
@@ -572,13 +572,13 @@ export function SelectedUnitDetailsPanel({
         {/* Damage Tracker - Compact */}
         <div className="card-depth p-2 lg:p-3">
           {/* Unit Wounds Row */}
-          <div className="flex items-center justify-between gap-2 bg-black/20 rounded-lg px-3 py-2">
+          <div className="flex items-center justify-between gap-2 bg-cm-stat-bg rounded-lg px-3 py-2">
             <div className="flex flex-col gap-1.5 min-w-0">
               <button
                 onClick={() => hasLeader && setManualStatsView(manualStatsView === 'unit' ? null : 'unit')}
                 className={`text-xs truncate transition-colors text-left ${
                   hasLeader ? 'hover:text-accent-400 cursor-pointer' : 'cursor-default'
-                } ${manualStatsView === 'unit' ? 'text-accent-400 underline' : 'text-white/50'}`}
+                } ${manualStatsView === 'unit' ? 'text-accent-400 underline' : 'text-cm-text-secondary'}`}
                 title={hasLeader ? 'Click to show unit stats' : undefined}
               >
                 {unit.name}
@@ -600,7 +600,7 @@ export function SelectedUnitDetailsPanel({
                         {Array.from({ length: wpm }).map((_, dotIdx) => (
                           <div
                             key={dotIdx}
-                            className={`w-2 h-2 rounded-full ${dotIdx < filledWounds ? 'bg-accent-400' : 'bg-white/20'}`}
+                            className={`w-2 h-2 rounded-full ${dotIdx < filledWounds ? 'bg-accent-400' : 'bg-cm-surface-hover'}`}
                           />
                         ))}
                       </div>
@@ -612,18 +612,18 @@ export function SelectedUnitDetailsPanel({
             <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => onUnitWoundAdjust?.(-1)}
-                className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-30 flex items-center justify-center transition-colors"
+                className="w-7 h-7 rounded-lg bg-cm-surface-hover hover:bg-cm-surface-hover disabled:opacity-30 flex items-center justify-center transition-colors"
                 disabled={unitWoundInfo.currentWounds <= 0}
               >
                 <span className="text-red-400 font-bold text-sm">−</span>
               </button>
               <div className="text-center min-w-[50px]">
                 <span className="text-base font-bold">{unitWoundInfo.currentWounds}</span>
-                <span className="text-white/40 text-xs"> / {unitWoundInfo.currentMaxWounds}</span>
+                <span className="text-cm-text-muted text-xs"> / {unitWoundInfo.currentMaxWounds}</span>
               </div>
               <button
                 onClick={() => onUnitWoundAdjust?.(1)}
-                className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-30 flex items-center justify-center transition-colors"
+                className="w-7 h-7 rounded-lg bg-cm-surface-hover hover:bg-cm-surface-hover disabled:opacity-30 flex items-center justify-center transition-colors"
                 disabled={unitWoundInfo.currentWounds >= unitWoundInfo.maxWounds}
               >
                 <span className="text-green-400 font-bold text-sm">+</span>
@@ -661,7 +661,7 @@ export function SelectedUnitDetailsPanel({
                           {Array.from({ length: wpm }).map((_, dotIdx) => (
                             <div
                               key={dotIdx}
-                              className={`w-2 h-2 rounded-full ${dotIdx < filledWounds ? 'bg-purple-500' : 'bg-white/20'}`}
+                              className={`w-2 h-2 rounded-full ${dotIdx < filledWounds ? 'bg-purple-500' : 'bg-cm-surface-hover'}`}
                             />
                           ))}
                         </div>
@@ -673,18 +673,18 @@ export function SelectedUnitDetailsPanel({
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={() => onLeaderWoundAdjust?.(-1)}
-                  className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-30 flex items-center justify-center transition-colors"
+                  className="w-7 h-7 rounded-lg bg-cm-surface-hover hover:bg-cm-surface-hover disabled:opacity-30 flex items-center justify-center transition-colors"
                   disabled={(leaderWoundInfo?.currentWounds ?? 0) <= 0}
                 >
                   <span className="text-red-400 font-bold text-sm">−</span>
                 </button>
                 <div className="text-center min-w-[50px]">
                   <span className="text-base font-bold text-purple-300">{leaderWoundInfo.currentWounds}</span>
-                  <span className="text-white/40 text-xs"> / {leaderWoundInfo.maxWounds}</span>
+                  <span className="text-cm-text-muted text-xs"> / {leaderWoundInfo.maxWounds}</span>
                 </div>
                 <button
                   onClick={() => onLeaderWoundAdjust?.(1)}
-                  className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-30 flex items-center justify-center transition-colors"
+                  className="w-7 h-7 rounded-lg bg-cm-surface-hover hover:bg-cm-surface-hover disabled:opacity-30 flex items-center justify-center transition-colors"
                   disabled={(leaderWoundInfo?.currentWounds ?? 0) >= (leaderWoundInfo?.maxWounds ?? 0)}
                 >
                   <span className="text-green-400 font-bold text-sm">+</span>
@@ -696,7 +696,7 @@ export function SelectedUnitDetailsPanel({
           {/* Model Types Row - For units with multiple model types (e.g., Gretchin, Squighog Boyz) */}
           {unit.modelTypes && unit.modelTypes.length > 1 && (
             <div className="flex flex-wrap items-center gap-2 mt-2 px-1">
-              <span className="text-[10px] text-white/40 uppercase tracking-wider">Model Stats:</span>
+              <span className="text-[10px] text-cm-text-muted uppercase tracking-wider">Model Stats:</span>
               {unit.modelTypes.map((modelType) => (
                 <button
                   key={modelType.id}
@@ -706,13 +706,13 @@ export function SelectedUnitDetailsPanel({
                   className={`text-xs px-2 py-1 rounded-md transition-colors ${
                     selectedModelType === modelType.id
                       ? 'bg-amber-500/30 text-amber-300 border border-amber-500/50'
-                      : 'bg-white/10 text-white/60 hover:text-white/80 hover:bg-white/15'
+                      : 'bg-cm-surface-hover text-cm-text-secondary hover:text-cm-text hover:bg-cm-surface-hover'
                   } ${modelType.isLeader ? 'border-l-2 border-l-amber-500/50' : ''}`}
                   title={modelType.isLeader ? `${modelType.name} (Precision target)` : modelType.name}
                 >
                   {modelType.name}
                   {modelType.stats.w !== unit.stats.w && (
-                    <span className="ml-1 text-[10px] text-white/40">W{modelType.stats.w}</span>
+                    <span className="ml-1 text-[10px] text-cm-text-muted">W{modelType.stats.w}</span>
                   )}
                 </button>
               ))}
@@ -723,14 +723,14 @@ export function SelectedUnitDetailsPanel({
         {/* Active Modifiers Summary - Shows stat changes with full details on hover */}
         {activeModifierCount > 0 && (
           <div className="card-depth p-2 lg:p-3 space-y-2">
-            <div className="text-xs text-white/50 font-medium uppercase tracking-wider">Active Modifiers</div>
+            <div className="text-xs text-cm-text-secondary font-medium uppercase tracking-wider">Active Modifiers</div>
             <div className="space-y-1.5">
               {activeKatah && katahName && (
                 <TooltipBadge tooltip={katahDescription || katahName} className="w-full justify-start">
                   <div className="flex items-center justify-between w-full gap-2">
                     <span className="text-accent-300">{katahName.replace(' Stance', '')}</span>
                     {katahStance?.modifiers && katahStance.modifiers.length > 0 && (
-                      <span className="text-white/70 text-xs">{formatModifiersSummary(katahStance.modifiers)}</span>
+                      <span className="text-cm-text-secondary text-xs">{formatModifiersSummary(katahStance.modifiers)}</span>
                     )}
                   </div>
                 </TooltipBadge>
@@ -740,7 +740,7 @@ export function SelectedUnitDetailsPanel({
                   <div className="flex items-center justify-between w-full gap-2">
                     <span className="text-accent-300">{enhancement.name}</span>
                     {enhancement.modifiers && enhancement.modifiers.length > 0 && (
-                      <span className="text-white/70 text-xs">{formatModifiersSummary(enhancement.modifiers)}</span>
+                      <span className="text-cm-text-secondary text-xs">{formatModifiersSummary(enhancement.modifiers)}</span>
                     )}
                   </div>
                 </TooltipBadge>
@@ -754,7 +754,7 @@ export function SelectedUnitDetailsPanel({
                   <div className="flex items-center justify-between w-full gap-2">
                     <span className="text-blue-300">{choice.name}</span>
                     {choice.modifiers && choice.modifiers.length > 0 && (
-                      <span className="text-white/70 text-xs">{formatModifiersSummary(choice.modifiers)}</span>
+                      <span className="text-cm-text-secondary text-xs">{formatModifiersSummary(choice.modifiers)}</span>
                     )}
                   </div>
                 </TooltipBadge>
@@ -769,7 +769,7 @@ export function SelectedUnitDetailsPanel({
                     <span className="text-accent-300">{strat.name}</span>
                     <div className="flex items-center gap-2">
                       {strat.modifiers && strat.modifiers.length > 0 && (
-                        <span className="text-white/70 text-xs">{formatModifiersSummary(strat.modifiers)}</span>
+                        <span className="text-cm-text-secondary text-xs">{formatModifiersSummary(strat.modifiers)}</span>
                       )}
                       <span className="text-accent-400 text-xs">{strat.cost}CP</span>
                     </div>
@@ -785,7 +785,7 @@ export function SelectedUnitDetailsPanel({
                   <div className="flex items-center justify-between w-full gap-2">
                     <span className="text-purple-300">{twist.name}</span>
                     {twist.modifiers && twist.modifiers.length > 0 && (
-                      <span className="text-white/70 text-xs">{formatModifiersSummary(twist.modifiers)}</span>
+                      <span className="text-cm-text-secondary text-xs">{formatModifiersSummary(twist.modifiers)}</span>
                     )}
                   </div>
                 </TooltipBadge>
@@ -801,7 +801,7 @@ export function SelectedUnitDetailsPanel({
             {hasAnyActivations && onResetActivations && (
               <button
                 onClick={onResetActivations}
-                className="text-[10px] px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-white/70 transition-colors"
+                className="text-[10px] px-2 py-0.5 rounded bg-cm-surface-hover hover:bg-cm-surface-hover text-cm-text-secondary transition-colors"
                 title="Reset all activations for this unit"
               >
                 Reset
@@ -842,7 +842,7 @@ export function SelectedUnitDetailsPanel({
           <div className="card-depth overflow-hidden">
             <button
               onClick={() => setAbilitiesOpen(!abilitiesOpen)}
-              className="section-header w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors"
+              className="section-header w-full flex items-center justify-between cursor-pointer hover:bg-cm-surface-hover-subtle transition-colors"
             >
               <span>Abilities</span>
               <div className="flex items-center gap-2">
@@ -850,7 +850,7 @@ export function SelectedUnitDetailsPanel({
                   {(unit.abilities?.length || 0) + (hasLeader && leaderUnit?.abilities ? leaderUnit.abilities.length : 0)}
                 </span>
                 <svg
-                  className={`w-3 h-3 text-white/40 transition-transform duration-200 ${abilitiesOpen ? '' : '-rotate-90'}`}
+                  className={`w-3 h-3 text-cm-text-muted transition-transform duration-200 ${abilitiesOpen ? '' : '-rotate-90'}`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -873,7 +873,7 @@ export function SelectedUnitDetailsPanel({
                         {activeKatah ? katahName : 'No Ka\'tah stance selected'}
                       </div>
                       {katahDescription && (
-                        <div className="text-[10px] text-white/60 mt-0.5">{katahDescription}</div>
+                        <div className="text-[10px] text-cm-text-secondary mt-0.5">{katahDescription}</div>
                       )}
                     </div>
                   </div>
@@ -896,7 +896,7 @@ export function SelectedUnitDetailsPanel({
                     return (
                       <div
                         key={ability.id}
-                        className={`bg-black/20 rounded-lg p-2 transition-opacity ${isUsed ? 'opacity-40' : ''} ${isPhaseRelevant ? 'border-l-2 border-l-accent-400 bg-accent-500/5' : ''}`}
+                        className={`bg-cm-stat-bg rounded-lg p-2 transition-opacity ${isUsed ? 'opacity-40' : ''} ${isPhaseRelevant ? 'border-l-2 border-l-accent-400 bg-accent-500/5' : ''}`}
                       >
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex items-center gap-2">
@@ -910,7 +910,7 @@ export function SelectedUnitDetailsPanel({
                               onClick={() => onToggleAbilityUsed(ability.id)}
                               className={`text-[10px] px-2 py-0.5 rounded transition-colors ${
                                 isUsed
-                                  ? 'bg-white/10 text-white/50'
+                                  ? 'bg-cm-surface-hover text-cm-text-secondary'
                                   : 'bg-accent-500/30 text-accent-300 hover:bg-accent-500/50'
                               }`}
                             >
@@ -918,7 +918,7 @@ export function SelectedUnitDetailsPanel({
                             </button>
                           )}
                         </div>
-                        <div className="text-xs text-white/70 mt-0.5">{ability.description}</div>
+                        <div className="text-xs text-cm-text-secondary mt-0.5">{ability.description}</div>
                       </div>
                     );
                   })}
@@ -952,7 +952,7 @@ export function SelectedUnitDetailsPanel({
                               onClick={() => onToggleAbilityUsed(abilityKey)}
                               className={`text-[10px] px-2 py-0.5 rounded transition-colors ${
                                 isUsed
-                                  ? 'bg-white/10 text-white/50'
+                                  ? 'bg-cm-surface-hover text-cm-text-secondary'
                                   : 'bg-purple-500/30 text-purple-300 hover:bg-purple-500/50'
                               }`}
                             >
@@ -960,7 +960,7 @@ export function SelectedUnitDetailsPanel({
                             </button>
                           )}
                         </div>
-                        <div className="text-xs text-white/70 mt-0.5">{ability.description}</div>
+                        <div className="text-xs text-cm-text-secondary mt-0.5">{ability.description}</div>
                       </div>
                     );
                   })}
@@ -972,7 +972,7 @@ export function SelectedUnitDetailsPanel({
         {/* Keywords - separated by unit and leader */}
         <div className="space-y-1.5 px-1">
           <div>
-            {hasLeader && <div className="text-[10px] text-white/40 mb-0.5">{unit.name}</div>}
+            {hasLeader && <div className="text-[10px] text-cm-text-muted mb-0.5">{unit.name}</div>}
             <div className="flex flex-wrap gap-1">
               {unit.keywords.map((kw) => {
                 const description = getKeywordDescription(kw);

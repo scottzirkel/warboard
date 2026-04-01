@@ -49,13 +49,13 @@ function SimpleAccordion({ title, count, isOpen, onToggle, children }: SimpleAcc
       <button
         type="button"
         onClick={onToggle}
-        className="w-full flex justify-between items-center py-2 hover:bg-white/5 transition-colors text-left touch-highlight"
+        className="w-full flex justify-between items-center py-2 hover:bg-cm-surface-hover-subtle transition-colors text-left touch-highlight"
       >
         <span className="font-semibold text-accent-300">{title}</span>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-gray-400">{count}</span>
+          <span className="text-xs text-cm-text-muted">{count}</span>
           <svg
-            className={`w-4 h-4 transition-transform duration-200 text-gray-400 ${isOpen ? 'rotate-180' : ''}`}
+            className={`w-4 h-4 transition-transform duration-200 text-cm-text-muted ${isOpen ? 'rotate-180' : ''}`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -103,7 +103,7 @@ function UnitCard({ unit, pointsDisplay, onAdd, onOpenDetail }: UnitCardProps) {
   return (
     <div
       onClick={onOpenDetail}
-      className="bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-3 cursor-pointer transition-colors relative group shadow-sm shadow-black/20"
+      className="bg-cm-surface-hover-subtle hover:bg-cm-surface-hover border border-cm-border-input rounded-xl p-3 cursor-pointer transition-colors relative group shadow-sm shadow-black/20"
     >
       {/* Quick Add Button */}
       <button
@@ -119,13 +119,13 @@ function UnitCard({ unit, pointsDisplay, onAdd, onOpenDetail }: UnitCardProps) {
       </button>
 
       {/* Unit Name */}
-      <div className="font-medium text-sm text-white pr-8 leading-tight">{unit.name}</div>
+      <div className="font-medium text-sm text-cm-text pr-8 leading-tight">{unit.name}</div>
 
       {/* Points */}
       <div className="text-xs text-accent-400 mt-1">{pointsDisplay}</div>
 
       {/* Key Stats Row */}
-      <div className="flex items-center gap-2 mt-2 text-[11px] text-white/60">
+      <div className="flex items-center gap-2 mt-2 text-[11px] text-cm-text-secondary">
         <span>M{unit.stats.m}&quot;</span>
         <span>T{unit.stats.t}</span>
         <span>SV{unit.stats.sv}</span>
@@ -139,7 +139,7 @@ function UnitCard({ unit, pointsDisplay, onAdd, onOpenDetail }: UnitCardProps) {
       {badges.length > 0 && (
         <div className="flex flex-wrap gap-1 mt-2">
           {badges.map((badge) => (
-            <span key={badge} className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-white/50">
+            <span key={badge} className="text-[10px] px-1.5 py-0.5 rounded bg-cm-surface-hover text-cm-text-secondary">
               {badge}
             </span>
           ))}
@@ -255,18 +255,18 @@ export function UnitRosterPanel({
         <button
           type="button"
           onClick={() => setSortBy(sortBy === 'name' ? 'cost' : 'name')}
-          className="shrink-0 text-[11px] px-2 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-white/60 hover:text-white/80 transition-colors"
+          className="shrink-0 text-[11px] px-2 py-1.5 rounded-lg bg-cm-surface-hover hover:bg-cm-surface-hover text-cm-text-secondary hover:text-cm-text transition-colors"
           title={`Sort by ${sortBy === 'name' ? 'cost' : 'name'}`}
         >
           {sortBy === 'name' ? 'A-Z' : 'Pts'}
         </button>
-        <span className="text-xs text-white/40 shrink-0">{filteredUnits.length} units</span>
+        <span className="text-xs text-cm-text-muted shrink-0">{filteredUnits.length} units</span>
       </div>
 
       {/* Loading State */}
       {isLoading && (
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-center text-white/40">
+          <div className="text-center text-cm-text-muted">
             <div className="animate-spin w-6 h-6 border-2 border-accent-400 border-t-transparent rounded-full mx-auto mb-2" />
             <span className="text-sm">Loading units...</span>
           </div>
@@ -276,7 +276,7 @@ export function UnitRosterPanel({
       {/* Empty State */}
       {!isLoading && filteredUnits.length === 0 && (
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-center text-white/40">
+          <div className="text-center text-cm-text-muted">
             <p className="text-sm">
               {searchQuery ? 'No units match your search' : 'No units available'}
             </p>

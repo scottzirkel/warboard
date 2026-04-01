@@ -129,7 +129,7 @@ export function DeploymentMapImage({ deploymentId, deploymentName, className = '
         <text x="300" y="405" textAnchor="middle" fill="rgba(59,130,246,0.6)" fontSize="20" fontWeight="bold">You</text>
         <text x="300" y="45" textAnchor="middle" fill="rgba(239,68,68,0.5)" fontSize="20" fontWeight="bold">Opponent</text>
       </svg>
-      <p className="text-xs text-white/50 mt-1">{deploymentName}</p>
+      <p className="text-xs text-cm-text-secondary mt-1">{deploymentName}</p>
     </div>
   );
 }

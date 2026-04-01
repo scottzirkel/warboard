@@ -69,8 +69,8 @@ const factionColors: Record<string, { bg: string; border: string; text: string }
 function FactionCard({ army, onClick }: { army: AvailableArmy; onClick: () => void }) {
   const colors = factionColors[army.id] || {
     bg: 'from-gray-800/30 to-gray-900/40',
-    border: 'border-white/10 hover:border-white/30',
-    text: 'text-white',
+    border: 'border-cm-border-input hover:border-white/30',
+    text: 'text-cm-text',
   };
 
   return (
@@ -114,13 +114,13 @@ export function LandingPage({ onSelectArmy, isLoading = false }: LandingPageProp
         </div>
 
         {/* Tagline */}
-        <p className="text-white/60 text-sm -mt-4">
+        <p className="text-cm-text-secondary text-sm -mt-4">
           Build your army, track your battles.
         </p>
 
         {/* Faction Selection */}
         <div className="space-y-3">
-          <p className="text-white/40 text-xs uppercase tracking-wider font-medium">
+          <p className="text-cm-text-muted text-xs uppercase tracking-wider font-medium">
             Choose your faction
           </p>
 
@@ -138,7 +138,7 @@ export function LandingPage({ onSelectArmy, isLoading = false }: LandingPageProp
         {/* Game History */}
         <button
           onClick={() => setShowHistory(true)}
-          className="text-white/40 hover:text-white/70 text-sm transition-colors flex items-center gap-2 mx-auto"
+          className="text-cm-text-muted hover:text-cm-text-secondary text-sm transition-colors flex items-center gap-2 mx-auto"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -152,14 +152,14 @@ export function LandingPage({ onSelectArmy, isLoading = false }: LandingPageProp
 
         {/* Loading indicator */}
         {isLoading && (
-          <div className="flex items-center justify-center gap-2 text-white/40 text-sm">
+          <div className="flex items-center justify-center gap-2 text-cm-text-muted text-sm">
             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-accent-500" />
             <span>Loading...</span>
           </div>
         )}
 
         {/* Footer hint */}
-        <p className="text-white/30 text-xs pt-4">
+        <p className="text-cm-text-faint text-xs pt-4">
           You can change your faction anytime in Build mode.
         </p>
       </div>

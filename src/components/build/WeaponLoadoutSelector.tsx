@@ -29,11 +29,11 @@ function ChoiceRow({ choice, count, maxCount, onChange }: ChoiceRowProps) {
   const hasMaxLimit = choice.maxModels !== undefined;
 
   return (
-    <div className="flex items-center justify-between bg-black/20 rounded-lg px-3 py-2">
+    <div className="flex items-center justify-between bg-cm-stat-bg rounded-lg px-3 py-2">
       <div className="flex items-center gap-2 min-w-0">
-        <span className="text-sm text-gray-300 truncate">{choice.name}</span>
+        <span className="text-sm text-cm-text-secondary truncate">{choice.name}</span>
         {hasMaxLimit && (
-          <span className="text-white/40 text-xs">
+          <span className="text-cm-text-muted text-xs">
             (max {choice.maxModels})
           </span>
         )}
@@ -73,12 +73,12 @@ export function WeaponLoadoutSelector({
   return (
     <div className={className}>
       {showDivider && (
-        <div className="border-t border-gray-700/50 my-2" />
+        <div className="border-t border-cm-border my-2" />
       )}
 
       {/* Section header */}
       <div className="flex items-center justify-between px-1 pb-1">
-        <span className="text-xs font-medium text-white/60 uppercase tracking-wider">
+        <span className="text-xs font-medium text-cm-text-secondary uppercase tracking-wider">
           {option.name}
         </span>
         {groupMax !== undefined && (
@@ -98,9 +98,9 @@ export function WeaponLoadoutSelector({
           .some(c => (weaponCounts[c.id] || 0) > 0);
         if (defaultChoice && defaultChoice.name !== 'None') {
           return (
-            <div className="text-sm text-white/40 px-3 py-1">
+            <div className="text-sm text-cm-text-muted px-3 py-1">
               {anyNonDefaultSelected ? <s>{defaultChoice.name}</s> : defaultChoice.name}
-              {!anyNonDefaultSelected && <span className="text-white/25 ml-1">(default)</span>}
+              {!anyNonDefaultSelected && <span className="text-cm-text/25 ml-1">(default)</span>}
             </div>
           );
         }

@@ -99,7 +99,7 @@ export function BuildMode({
               value={listName}
               onChange={(e) => onNameChange?.(e.target.value)}
               placeholder="List Name"
-              className="flex-1 min-w-0 bg-transparent border-none text-white font-medium text-lg focus:outline-none placeholder:text-white/40"
+              className="flex-1 min-w-0 bg-transparent border-none text-cm-text font-medium text-lg focus:outline-none placeholder:text-cm-text-muted"
             />
             <div className="text-right shrink-0">
               <div
@@ -134,7 +134,7 @@ export function BuildMode({
           </div>
 
           {/* Progress bar */}
-          <div className="mt-2 h-2 bg-black/30 rounded-full overflow-hidden">
+          <div className="mt-2 h-2 bg-cm-stat-bg rounded-full overflow-hidden">
             <div
               className={`h-full rounded-full transition-all ${
                 pointsStatus === 'error' ? 'bg-red-500' :
@@ -156,7 +156,7 @@ export function BuildMode({
               <div className="text-sm font-medium text-red-400 mb-1">List Requirements</div>
               <ul className="space-y-1">
                 {validationErrors.map((error, idx) => (
-                  <li key={idx} className="text-xs text-white/70">{error.message}</li>
+                  <li key={idx} className="text-xs text-cm-text-secondary">{error.message}</li>
                 ))}
               </ul>
             </div>
@@ -203,7 +203,7 @@ export function BuildMode({
                 {d.ruleDescription && (
                   <div className="mb-3">
                     <span className="text-xs font-medium text-accent-400 uppercase tracking-wide">Army Rule</span>
-                    <p className="text-sm text-gray-300 mt-1 whitespace-pre-line">
+                    <p className="text-sm text-cm-text-secondary mt-1 whitespace-pre-line">
                       {d.ruleDescription}
                     </p>
                   </div>
@@ -234,12 +234,12 @@ export function BuildMode({
                 className={`w-full p-3 rounded-xl text-sm font-medium text-left transition-all flex justify-between items-center ${
                   selectedFormat === f.id
                     ? 'bg-accent-500/20 text-accent-400 border border-accent-500/50'
-                    : 'bg-white/5 text-white/60 border border-white/10 hover:border-white/20'
+                    : 'bg-cm-surface-hover-subtle text-cm-text-secondary border border-cm-border-input hover:border-cm-border'
                 }`}
               >
                 <span>{f.name}</span>
                 {f.points !== null && (
-                  <span className="text-white/40 text-xs">{f.points} pts</span>
+                  <span className="text-cm-text-muted text-xs">{f.points} pts</span>
                 )}
               </button>
             ))}
@@ -247,13 +247,13 @@ export function BuildMode({
             {/* Custom points input */}
             {selectedFormat === 'custom' && (
               <div className="mt-3">
-                <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">Points Limit</label>
+                <label className="text-xs text-cm-text-secondary uppercase tracking-wide block mb-2">Points Limit</label>
                 <input
                   type="number"
                   min="1"
                   value={customPointsInput}
                   onChange={(e) => handleCustomPointsChange(e.target.value)}
-                  className="w-full p-3 rounded-xl text-sm font-medium bg-white/5 text-white border border-white/10 focus:border-accent-500/50 focus:outline-none"
+                  className="w-full p-3 rounded-xl text-sm font-medium bg-cm-surface-hover-subtle text-cm-text border border-cm-border-input focus:border-accent-500/50 focus:outline-none"
                   placeholder="Enter points limit"
                 />
               </div>

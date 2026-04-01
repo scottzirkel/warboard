@@ -39,12 +39,12 @@ export function SecondaryMissionModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Select Secondary Missions" size="md">
       <div className="space-y-4">
-        <p className="text-xs text-white/50">
+        <p className="text-xs text-cm-text-secondary">
           Choose 2 secondary missions for this battle round. Discarded missions cannot be re-selected.
         </p>
 
         <div className="flex items-center justify-between">
-          <div className="text-xs text-white/50 uppercase tracking-wide">
+          <div className="text-xs text-cm-text-secondary uppercase tracking-wide">
             Secondary Missions ({selectedSecondaryMissionIds.length}/2)
           </div>
           <button
@@ -64,7 +64,7 @@ export function SecondaryMissionModal({
           </button>
         </div>
 
-        <div className="rounded-xl overflow-hidden bg-white/[0.04] max-h-[50vh] overflow-y-auto">
+        <div className="rounded-xl overflow-hidden bg-cm-surface-hover-subtle max-h-[50vh] overflow-y-auto">
           {secondaryMissions.map((mission) => {
             const isSelected = selectedSecondaryMissionIds.includes(mission.id);
             const isDiscarded = discardedSecondaryMissionIds.includes(mission.id);
@@ -79,7 +79,7 @@ export function SecondaryMissionModal({
                     ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]'
                     : disabled
                       ? 'opacity-30 cursor-not-allowed'
-                      : 'hover:bg-white/5'
+                      : 'hover:bg-cm-surface-hover-subtle'
                 }`}
                 onClick={() => !disabled && onSecondaryMissionToggle(mission.id)}
               >
@@ -90,7 +90,7 @@ export function SecondaryMissionModal({
                       <span className="text-[10px] text-red-400/70 uppercase tracking-wide">Discarded</span>
                     )}
                   </div>
-                  <div className="text-xs text-white/50 mt-0.5 line-clamp-1">{mission.flavor}</div>
+                  <div className="text-xs text-cm-text-secondary mt-0.5 line-clamp-1">{mission.flavor}</div>
                 </div>
                 {isSelected && checkmark}
               </div>

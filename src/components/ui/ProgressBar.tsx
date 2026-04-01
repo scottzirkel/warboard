@@ -10,19 +10,19 @@ interface ProgressBarProps {
 const variantColors = {
   default: {
     bg: 'bg-accent-500',
-    track: 'bg-gray-700',
+    track: 'bg-cm-surface-inset',
   },
   success: {
     bg: 'bg-green-500',
-    track: 'bg-gray-700',
+    track: 'bg-cm-surface-inset',
   },
   warning: {
     bg: 'bg-yellow-500',
-    track: 'bg-gray-700',
+    track: 'bg-cm-surface-inset',
   },
   danger: {
     bg: 'bg-red-500',
-    track: 'bg-gray-700',
+    track: 'bg-cm-surface-inset',
   },
 };
 
@@ -46,7 +46,7 @@ export function ProgressBar({
   return (
     <div className={className}>
       {showLabel && (
-        <div className="flex justify-between text-sm text-gray-400 mb-1">
+        <div className="flex justify-between text-sm text-cm-text-muted mb-1">
           <span>{value}</span>
           <span>{max}</span>
         </div>
@@ -91,10 +91,10 @@ export function PointsProgress({
   return (
     <div className={className}>
       <div className="flex justify-between text-sm mb-1">
-        <span className={isOver ? 'text-red-400' : 'text-gray-300'}>
+        <span className={isOver ? 'text-red-400' : 'text-cm-text-secondary'}>
           {current} pts
         </span>
-        <span className="text-gray-500">{limit} pts</span>
+        <span className="text-cm-text-muted">{limit} pts</span>
       </div>
       <ProgressBar value={current} max={limit} variant={variant} size="sm" />
     </div>

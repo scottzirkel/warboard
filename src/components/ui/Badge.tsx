@@ -18,7 +18,7 @@ export function Badge({
   const base = 'inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold';
 
   const variantStyles = {
-    default: 'bg-white/10 text-white/60',
+    default: 'bg-cm-surface-hover text-cm-text-secondary',
     accent: 'bg-[color-mix(in_srgb,var(--accent-500)_18%,transparent)] text-accent-400',
     success: 'bg-green-500/18 text-green-400',
     warning: 'bg-yellow-500/18 text-yellow-400',

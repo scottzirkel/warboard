@@ -78,7 +78,7 @@ export function PlayUnitCard({
 
   // Health bar color: green=100%, yellow=50-99%, red=<50%
   const getHealthBarColor = () => {
-    if (isDestroyed) return 'bg-gray-600';
+    if (isDestroyed) return 'bg-cm-surface-inset';
     if (healthPercent >= 100) return 'bg-green-500';
     if (healthPercent >= 50) return 'bg-yellow-500';
     return 'bg-red-500';
@@ -100,10 +100,10 @@ export function PlayUnitCard({
     <div
       onClick={onSelect}
       className={`
-        bg-white/5 border rounded-xl overflow-hidden cursor-pointer shadow-sm shadow-black/20
+        bg-cm-surface-hover-subtle border rounded-xl overflow-hidden cursor-pointer shadow-sm shadow-black/20
         md:flex md:flex-col
-        ${isSelected ? 'border-accent-500 ring-1 ring-accent-500' : 'border-white/10'}
-        ${isDestroyed ? 'opacity-40' : 'hover:bg-white/10'}
+        ${isSelected ? 'border-accent-500 ring-1 ring-accent-500' : 'border-cm-border-input'}
+        ${isDestroyed ? 'opacity-40' : 'hover:bg-cm-surface-hover'}
         transition-colors
         ${className}
       `}
@@ -111,7 +111,7 @@ export function PlayUnitCard({
       <div className="px-3 pt-2 pb-1.5 md:flex-1">
         {/* Unit Name Row */}
         <div className="flex items-center gap-2 mb-1.5">
-          <span className={`text-sm font-semibold truncate flex-1 ${isDestroyed ? 'line-through text-white/50' : ''}`}>
+          <span className={`text-sm font-semibold truncate flex-1 ${isDestroyed ? 'line-through text-cm-text-secondary' : ''}`}>
             {displayName}
           </span>
           {(isWarlord || isLeaderWarlord) && (
@@ -123,7 +123,7 @@ export function PlayUnitCard({
           )}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-white/30 shrink-0"
+            className="h-5 w-5 text-cm-text-faint shrink-0"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -142,9 +142,9 @@ export function PlayUnitCard({
             { label: 'LD', value: unit.stats.ld, modified: false },
             { label: 'OC', value: unit.stats.oc, modified: false },
           ] as const).map(({ label, value, modified }) => (
-            <div key={label} className="flex flex-col items-center justify-center rounded-md bg-black/20 py-1.5">
-              <span className="text-[10px] font-medium text-white/40 uppercase leading-none">{label}</span>
-              <span className={`text-base font-bold leading-tight ${modified ? 'text-accent-300' : 'text-white'}`}>
+            <div key={label} className="flex flex-col items-center justify-center rounded-md bg-cm-stat-bg py-1.5">
+              <span className="text-[10px] font-medium text-cm-text-muted uppercase leading-none">{label}</span>
+              <span className={`text-base font-bold leading-tight ${modified ? 'text-accent-300' : 'text-cm-text'}`}>
                 {label === 'SV' && unit.invuln
                   ? <>{value}/<span className="inline-block translate-y-0.5 text-sm">{unit.invuln.replace('+', '⧺')}</span></>
                   : value}
@@ -158,7 +158,7 @@ export function PlayUnitCard({
           {isDestroyed ? (
             <span className="text-[11px] font-bold text-red-400 uppercase">Destroyed</span>
           ) : (
-            <span className={`text-[11px] ${isDamaged ? 'text-red-400' : 'text-white/50'}`}>
+            <span className={`text-[11px] ${isDamaged ? 'text-red-400' : 'text-cm-text-secondary'}`}>
               {combinedModelsAlive}/{combinedTotalModels} models
             </span>
           )}
@@ -173,7 +173,7 @@ export function PlayUnitCard({
         {/* Inline wound controls */}
         {(onUnitWoundChange || onLeaderWoundChange) && !isDestroyed && (
           <div
-            className="flex items-center justify-between px-1.5 bg-black/30 touch-manipulation"
+            className="flex items-center justify-between px-1.5 bg-cm-stat-bg touch-manipulation"
             onClick={(e) => e.stopPropagation()}
             onTouchEnd={(e) => e.stopPropagation()}
           >
@@ -195,7 +195,7 @@ export function PlayUnitCard({
               </span>
             </button>
 
-            <span className="text-[11px] text-white/60 font-medium tabular-nums select-none">
+            <span className="text-[11px] text-cm-text-secondary font-medium tabular-nums select-none">
               {combinedCurrentWounds}/{combinedMaxWounds} W
             </span>
 
@@ -222,7 +222,7 @@ export function PlayUnitCard({
         )}
 
         {/* Health bar at the very bottom */}
-        <div className="h-1 bg-gray-700/50">
+        <div className="h-1 bg-cm-surface-hover">
           <div
             className={`h-full transition-all duration-300 ${getHealthBarColor()}`}
             style={{ width: `${healthPercent}%` }}

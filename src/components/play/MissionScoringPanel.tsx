@@ -161,7 +161,7 @@ function MissionSection({
       <div className="flex items-center">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex-1 flex items-center justify-between py-2 px-3 text-sm font-semibold text-white/80 hover:bg-white/5 transition-colors cursor-pointer [-webkit-tap-highlight-color:transparent]"
+          className="flex-1 flex items-center justify-between py-2 px-3 text-sm font-semibold text-cm-text hover:bg-cm-surface-hover-subtle transition-colors cursor-pointer [-webkit-tap-highlight-color:transparent]"
         >
           <div className="flex items-center gap-2">
             <span>{mission.name}</span>
@@ -170,7 +170,7 @@ function MissionSection({
             </Badge>
           </div>
           <svg
-            className={`w-3 h-3 text-white/40 transition-transform duration-200 ${isOpen ? '' : '-rotate-90'}`}
+            className={`w-3 h-3 text-cm-text-muted transition-transform duration-200 ${isOpen ? '' : '-rotate-90'}`}
             fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -193,10 +193,10 @@ function MissionSection({
           return (
             <div key={blockIdx} className={`px-3 pb-2 ${!eligible ? 'opacity-40' : ''}`}>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-medium text-white/40 uppercase tracking-wide">
+                <span className="text-[10px] font-medium text-cm-text-muted uppercase tracking-wide">
                   {getRoundLabel(block.round)}
                 </span>
-                <span className="text-[10px] text-white/30">{block.when}</span>
+                <span className="text-[10px] text-cm-text-faint">{block.when}</span>
               </div>
               {block.conditions.map((cond, condIdx) => {
                 const vp = parseVP(cond.vp);
@@ -215,14 +215,14 @@ function MissionSection({
                     className={`
                       w-full text-left py-2 px-3 rounded-lg mb-1 min-h-[44px] flex items-center gap-2
                       transition-colors [-webkit-tap-highlight-color:transparent] cursor-pointer
-                      ${scored ? 'bg-[color-mix(in_srgb,var(--accent-500)_15%,transparent)]' : 'hover:bg-white/5'}
+                      ${scored ? 'bg-[color-mix(in_srgb,var(--accent-500)_15%,transparent)]' : 'hover:bg-cm-surface-hover-subtle'}
                       ${!eligible || (isCumulative && atMax) ? 'cursor-not-allowed' : ''}
                     `}
                   >
                     <div className="flex-1 min-w-0">
-                      <div className="text-xs text-white/70 leading-relaxed">{cond.condition}</div>
+                      <div className="text-xs text-cm-text-secondary leading-relaxed">{cond.condition}</div>
                       {isCumulative && (
-                        <div className="text-[10px] text-white/40 mt-0.5">
+                        <div className="text-[10px] text-cm-text-muted mt-0.5">
                           {cumulativeTotal}{maxVp !== null ? `/${maxVp}` : ''} VP scored
                           {cumulativeThisRound > 0 && ` (${cumulativeThisRound} this round)`}
                         </div>
@@ -230,7 +230,7 @@ function MissionSection({
                     </div>
                     <div className="flex items-center gap-1.5 shrink-0">
                       {(scored || (isCumulative && cumulativeThisRound > 0)) && checkmarkIcon}
-                      <span className={`text-xs font-medium ${scored || (isCumulative && cumulativeThisRound > 0) ? 'text-accent-400' : 'text-white/40'}`}>
+                      <span className={`text-xs font-medium ${scored || (isCumulative && cumulativeThisRound > 0) ? 'text-accent-400' : 'text-cm-text-muted'}`}>
                         {vp}VP
                       </span>
                     </div>
@@ -266,13 +266,13 @@ export function MissionScoringPanel({
     <Card className="overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="text-[13px] font-semibold text-white/55 uppercase tracking-[0.5px] py-3 px-4 pt-3 pb-2 w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors"
+        className="text-[13px] font-semibold text-cm-text-secondary uppercase tracking-[0.5px] py-3 px-4 pt-3 pb-2 w-full flex items-center justify-between cursor-pointer hover:bg-cm-surface-hover-subtle transition-colors"
       >
         <span>Missions</span>
         <div className="flex items-center gap-2">
           <Badge>{(primaryMission ? 1 : 0) + secondaryMissions.length}</Badge>
           <svg
-            className={`w-3 h-3 text-white/40 transition-transform duration-200 ${isOpen ? '' : '-rotate-90'}`}
+            className={`w-3 h-3 text-cm-text-muted transition-transform duration-200 ${isOpen ? '' : '-rotate-90'}`}
             fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -305,7 +305,7 @@ export function MissionScoringPanel({
         {secondaryMissions.length < 2 && (
           <button
             onClick={onChangeSecondaries}
-            className="w-full py-2.5 px-3 text-xs font-medium text-accent-400 hover:bg-white/5 transition-colors [-webkit-tap-highlight-color:transparent]"
+            className="w-full py-2.5 px-3 text-xs font-medium text-accent-400 hover:bg-cm-surface-hover-subtle transition-colors [-webkit-tap-highlight-color:transparent]"
           >
             Select Secondary Missions
           </button>

@@ -29,29 +29,29 @@ export function RosterUnitRow({
     <div
       className={`
         px-4 py-2 flex items-center justify-between gap-2
-        hover:bg-gray-700/30 transition-colors
+        hover:bg-cm-surface-hover-subtle transition-colors
         ${isSelected ? 'bg-accent-500/10 border-l-2 border-accent-500' : ''}
         ${className}
       `}
     >
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-200 truncate">{unit.name}</span>
+          <span className="text-sm text-cm-text truncate">{unit.name}</span>
           {isCharacter && (
             <Badge variant="purple" size="sm">
               Character
             </Badge>
           )}
         </div>
-        <div className="flex items-center gap-2 text-xs text-gray-500">
+        <div className="flex items-center gap-2 text-xs text-cm-text-muted">
           <span>{minPoints} pts</span>
           {minCount !== maxCount && (
-            <span className="text-gray-600">
+            <span className="text-cm-text-secondary">
               ({minCount}-{maxCount} models)
             </span>
           )}
           {minCount === maxCount && (
-            <span className="text-gray-600">
+            <span className="text-cm-text-secondary">
               ({minCount} {minCount === 1 ? 'model' : 'models'})
             </span>
           )}

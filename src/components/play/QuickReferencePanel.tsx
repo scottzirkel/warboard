@@ -30,10 +30,10 @@ function CollapsibleSection({
 }: CollapsibleSectionProps) {
   const variantStyles = {
     default: {
-      header: 'bg-gray-700/50',
-      border: 'border-gray-600/30',
-      text: 'text-gray-200',
-      count: 'bg-gray-600 text-gray-300',
+      header: 'bg-cm-surface-hover',
+      border: 'border-cm-border-subtle',
+      text: 'text-cm-text',
+      count: 'bg-cm-surface-inset text-cm-text-secondary',
     },
     blue: {
       header: 'bg-blue-900/30',
@@ -42,7 +42,7 @@ function CollapsibleSection({
       count: 'bg-blue-600/50 text-blue-200',
     },
     green: {
-      header: 'bg-green-900/30',
+      header: 'bg-green-500/10',
       border: 'border-green-600/30',
       text: 'text-green-300',
       count: 'bg-green-600/50 text-green-200',
@@ -54,7 +54,7 @@ function CollapsibleSection({
       count: 'bg-orange-600/50 text-orange-200',
     },
     purple: {
-      header: 'bg-purple-900/30',
+      header: 'bg-purple-500/10',
       border: 'border-purple-600/30',
       text: 'text-purple-300',
       count: 'bg-purple-600/50 text-purple-200',
@@ -108,7 +108,7 @@ function CollapsibleSection({
           ${isOpen ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}
         `}
       >
-        <div className="p-3 bg-gray-800/30">
+        <div className="p-3 bg-cm-surface-card">
           {children}
         </div>
       </div>
@@ -126,15 +126,15 @@ interface StratagemCardProps {
 
 function StratagemCard({ stratagem }: StratagemCardProps) {
   return (
-    <div className="bg-gray-700/30 rounded-lg p-3 border border-gray-600/30">
+    <div className="bg-cm-surface-hover-subtle rounded-lg p-3 border border-cm-border-subtle">
       <div className="flex items-center justify-between mb-2">
-        <h4 className="font-medium text-gray-200">{stratagem.name}</h4>
+        <h4 className="font-medium text-cm-text">{stratagem.name}</h4>
         <div className="flex items-center gap-2">
           <Badge variant="info" size="sm">{stratagem.phase}</Badge>
           <Badge variant="accent" size="sm">{stratagem.cost}CP</Badge>
         </div>
       </div>
-      <p className="text-sm text-gray-400">{stratagem.description}</p>
+      <p className="text-sm text-cm-text-muted">{stratagem.description}</p>
     </div>
   );
 }
@@ -150,9 +150,9 @@ interface KeywordCardProps {
 
 function KeywordCard({ name, description }: KeywordCardProps) {
   return (
-    <div className="bg-gray-700/30 rounded-lg p-3 border border-gray-600/30">
-      <h4 className="font-medium text-gray-200 mb-1">{name}</h4>
-      <p className="text-sm text-gray-400">{description}</p>
+    <div className="bg-cm-surface-hover-subtle rounded-lg p-3 border border-cm-border-subtle">
+      <h4 className="font-medium text-cm-text mb-1">{name}</h4>
+      <p className="text-sm text-cm-text-muted">{description}</p>
     </div>
   );
 }
@@ -172,9 +172,9 @@ interface WargearAbilityCardProps {
 
 function WargearAbilityCard({ ability }: WargearAbilityCardProps) {
   return (
-    <div className="bg-gray-700/30 rounded-lg p-3 border border-orange-600/20">
+    <div className="bg-cm-surface-hover-subtle rounded-lg p-3 border border-orange-600/20">
       <h4 className="font-medium text-orange-300 mb-1">{ability.name}</h4>
-      <p className="text-sm text-gray-400">{ability.description}</p>
+      <p className="text-sm text-cm-text-muted">{ability.description}</p>
     </div>
   );
 }
@@ -301,7 +301,7 @@ export function QuickReferencePanel({
               {detachment.rules.map((rule) => (
                 <div key={rule.id}>
                   <h4 className="font-medium text-purple-300 mb-1">{rule.name}</h4>
-                  <p className="text-sm text-gray-400">{rule.description}</p>
+                  <p className="text-sm text-cm-text-muted">{rule.description}</p>
                 </div>
               ))}
             </div>
@@ -338,12 +338,12 @@ export function QuickReferencePanel({
           >
             <div className="space-y-2">
               {enhancements.map((enhancement) => (
-                <div key={enhancement.id} className="bg-gray-700/30 rounded-lg p-3 border border-gray-600/30">
+                <div key={enhancement.id} className="bg-cm-surface-hover-subtle rounded-lg p-3 border border-cm-border-subtle">
                   <div className="flex items-center justify-between mb-1">
-                    <h4 className="font-medium text-gray-200">{enhancement.name}</h4>
+                    <h4 className="font-medium text-cm-text">{enhancement.name}</h4>
                     <Badge variant="accent" size="sm">{enhancement.points}pts</Badge>
                   </div>
-                  <p className="text-sm text-gray-400">{enhancement.description}</p>
+                  <p className="text-sm text-cm-text-muted">{enhancement.description}</p>
                 </div>
               ))}
             </div>
@@ -425,7 +425,7 @@ export function QuickReferencePanel({
 
         {/* Empty State */}
         {!detachment && (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-cm-text-muted">
             <p>Select a detachment to view reference information</p>
           </div>
         )}

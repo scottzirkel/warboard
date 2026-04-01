@@ -217,14 +217,14 @@ export function ExportModal({
               <button
                 key={format.id}
                 onClick={() => handleSelectFormat(format.id)}
-                className="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-accent-400/50 transition-colors text-left"
+                className="flex items-center gap-4 p-4 rounded-xl bg-cm-surface-hover-subtle hover:bg-cm-surface-hover border border-cm-border-input hover:border-accent-400/50 transition-colors text-left"
               >
                 <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-accent-500/20 flex items-center justify-center text-accent-400">
                   {format.icon}
                 </div>
                 <div>
-                  <div className="font-medium text-white">{format.name}</div>
-                  <div className="text-sm text-white/50">{format.description}</div>
+                  <div className="font-medium text-cm-text">{format.name}</div>
+                  <div className="text-sm text-cm-text-secondary">{format.description}</div>
                 </div>
               </button>
             ))}
@@ -235,12 +235,12 @@ export function ExportModal({
         {selectedFormat && selectedFormat !== 'yellowscribe' && exportContent && (
           <>
             <div className="relative">
-              <pre className="bg-black/40 border border-white/10 rounded-lg p-4 text-sm text-white/80 overflow-auto max-h-80 font-mono whitespace-pre-wrap">
+              <pre className="bg-cm-stat-bg border border-cm-border-input rounded-lg p-4 text-sm text-cm-text overflow-auto max-h-80 font-mono whitespace-pre-wrap">
                 {exportContent}
               </pre>
               <button
                 onClick={() => handleCopy(exportContent)}
-                className="absolute top-2 right-2 p-2 rounded-md bg-white/10 hover:bg-white/20 transition-colors"
+                className="absolute top-2 right-2 p-2 rounded-md bg-cm-surface-hover hover:bg-cm-surface-hover transition-colors"
                 title="Copy to clipboard"
               >
                 {copied ? (
@@ -248,7 +248,7 @@ export function ExportModal({
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 ) : (
-                  <svg className="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-cm-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -313,17 +313,17 @@ export function ExportModal({
             {/* Success State */}
             {yellowscribeCode && !yellowscribeLoading && !yellowscribeError && (
               <>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-cm-text-secondary">
                   Your Yellowscribe code is ready. Use this code in Tabletop Simulator to spawn your army.
                 </p>
 
                 <div className="relative">
-                  <div className="bg-black/40 border border-white/10 rounded-lg p-4 font-mono text-2xl text-center text-accent-400 tracking-widest">
+                  <div className="bg-cm-stat-bg border border-cm-border-input rounded-lg p-4 font-mono text-2xl text-center text-accent-400 tracking-widest">
                     {yellowscribeCode}
                   </div>
                   <button
                     onClick={() => handleCopy(yellowscribeCode)}
-                    className="absolute top-2 right-2 p-2 rounded-md bg-white/5 hover:bg-white/10 transition-colors"
+                    className="absolute top-2 right-2 p-2 rounded-md bg-cm-surface-hover-subtle hover:bg-cm-surface-hover transition-colors"
                     title="Copy to clipboard"
                   >
                     {copied ? (
@@ -331,7 +331,7 @@ export function ExportModal({
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     ) : (
-                      <svg className="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-cm-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -347,7 +347,7 @@ export function ExportModal({
                   <p className="text-sm text-green-400 text-center">Copied to clipboard!</p>
                 )}
 
-                <div className="text-xs text-white/40 space-y-1">
+                <div className="text-xs text-cm-text-muted space-y-1">
                   <p><strong>Note:</strong> Codes expire after 10 minutes.</p>
                   <p>In TTS, use the Yellowscribe mod and paste this code to spawn your army.</p>
                 </div>
@@ -368,7 +368,7 @@ export function ExportModal({
         {/* BattleScribe Export */}
         {selectedFormat === 'battlescribe' && (
           <>
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-cm-text-secondary">
               Export your army list as a BattleScribe roster file (.rosz). This file can be imported
               into BattleScribe, New Recruit, or other compatible tools.
             </p>
@@ -378,7 +378,7 @@ export function ExportModal({
               <button
                 onClick={handleBattlescribeExport}
                 disabled={battlescribeExporting}
-                className="w-full py-3 px-4 rounded-xl bg-accent-500 hover:bg-accent-400 disabled:bg-accent-500/50 text-white font-medium transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3 px-4 rounded-xl bg-accent-500 hover:bg-accent-400 disabled:bg-accent-500/50 text-cm-text font-medium transition-colors flex items-center justify-center gap-2"
               >
                 {battlescribeExporting ? (
                   <>
@@ -441,7 +441,7 @@ export function ExportModal({
               </div>
             )}
 
-            <div className="text-xs text-white/40 space-y-1">
+            <div className="text-xs text-cm-text-muted space-y-1">
               <p><strong>Note:</strong> Uses BSData catalogue IDs for maximum compatibility.</p>
               <p>Import the .rosz file in BattleScribe using File → Import Roster.</p>
             </div>

@@ -25,7 +25,7 @@ export function SegmentedControl<T extends string | null = string>({
   return (
     <div
       className={`
-        flex items-stretch bg-white/10 rounded-lg p-0.5
+        flex items-stretch bg-cm-surface-hover rounded-lg p-0.5
         ${className}
       `}
     >
@@ -42,8 +42,8 @@ export function SegmentedControl<T extends string | null = string>({
               flex-1 flex flex-col items-center justify-center px-3 py-2
               rounded-md text-sm font-medium transition-all select-none text-center
               ${isActive
-                ? 'bg-gray-500/85 text-white shadow-md'
-                : 'text-white/60 hover:text-white/80 cursor-pointer'
+                ? 'bg-gray-500/85 text-cm-text shadow-md'
+                : 'text-cm-text-secondary hover:text-cm-text cursor-pointer'
               }
               ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}
             `}

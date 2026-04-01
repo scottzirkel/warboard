@@ -13,22 +13,22 @@ export function ChallengerCard({ card, className = '' }: ChallengerCardProps) {
     <CardShell className={className}>
       {/* Card title */}
       <div className="bg-[#0a506f] px-3 py-2">
-        <div className="text-[10px] uppercase tracking-wider text-white/60">Challenger Card</div>
-        <div className="text-sm font-bold uppercase tracking-wide text-white">{card.name}</div>
+        <div className="text-[10px] uppercase tracking-wider text-cm-text-secondary">Challenger Card</div>
+        <div className="text-sm font-bold uppercase tracking-wide text-cm-text">{card.name}</div>
       </div>
 
       {/* Stratagem section */}
-      <div className="border-b border-white/10">
+      <div className="border-b border-cm-border-input">
         <MissionHeader left="Challenger Stratagem" variant="blue" />
         <div className="flex items-start gap-3 px-3 py-2">
           <CpDiamond cost={card.stratagem.cost} />
           <div className="flex-1">
-            <div className="mb-1 text-xs font-bold text-white">{card.stratagem.name}</div>
-            <div className="mb-1 text-[10px] uppercase tracking-wide text-white/40">{card.stratagem.phase}</div>
-            <div className="text-[11px] text-white/60">
-              <span className="font-semibold text-white/50">When:</span> {card.stratagem.when}
+            <div className="mb-1 text-xs font-bold text-cm-text">{card.stratagem.name}</div>
+            <div className="mb-1 text-[10px] uppercase tracking-wide text-cm-text-muted">{card.stratagem.phase}</div>
+            <div className="text-[11px] text-cm-text-secondary">
+              <span className="font-semibold text-cm-text-secondary">When:</span> {card.stratagem.when}
             </div>
-            <div className="mt-1 text-[11px] text-white/70">{card.stratagem.effect}</div>
+            <div className="mt-1 text-[11px] text-cm-text-secondary">{card.stratagem.effect}</div>
           </div>
         </div>
       </div>

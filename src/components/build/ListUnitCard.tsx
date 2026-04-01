@@ -126,7 +126,7 @@ export function ListUnitCard({
         {/* Header Row: Name + Warlord Toggle + Remove Button */}
         <div className="flex items-start justify-between gap-2 px-3 pt-3">
           <div className="min-w-0 flex-1">
-            <h4 className="text-sm font-medium text-gray-200 truncate">
+            <h4 className="text-sm font-medium text-cm-text truncate">
               {unit.name}
             </h4>
           </div>
@@ -142,7 +142,7 @@ export function ListUnitCard({
                 className={`w-6 h-6 flex items-center justify-center rounded transition-colors ${
                   listUnit.isWarlord
                     ? 'text-accent-400 bg-accent-500/20'
-                    : 'text-gray-500 hover:text-accent-400 hover:bg-accent-500/10'
+                    : 'text-cm-text-muted hover:text-accent-400 hover:bg-accent-500/10'
                 }`}
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -156,7 +156,7 @@ export function ListUnitCard({
                 onRemove();
               }}
               title="Remove unit"
-              className="w-6 h-6 flex items-center justify-center rounded text-gray-400 hover:text-red-400 hover:bg-red-500/20 transition-colors"
+              className="w-6 h-6 flex items-center justify-center rounded text-cm-text-muted hover:text-red-400 hover:bg-red-500/20 transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -190,7 +190,7 @@ export function ListUnitCard({
           {/* Model Count Selector (dropdown matching Alpine.js) */}
           {modelCounts.length > 1 && (
             <div className="flex items-center justify-between">
-              <span className="text-xs text-gray-400">Models</span>
+              <span className="text-xs text-cm-text-muted">Models</span>
               <select
                 value={listUnit.modelCount}
                 onChange={(e) => {
@@ -212,7 +212,7 @@ export function ListUnitCard({
           {/* Enhancement Selector (Characters only) */}
           {isCharacter && enhancements.length > 0 && (
             <div className="space-y-1">
-              <span className="text-xs text-gray-400">Enhancement</span>
+              <span className="text-xs text-cm-text-muted">Enhancement</span>
               <EnhancementSelector
                 value={listUnit.enhancement}
                 onChange={onEnhancementChange}
@@ -224,7 +224,7 @@ export function ListUnitCard({
           {/* Leader Attachment (non-Characters that can have leaders) */}
           {canHaveLeaderAttached && (
             <div className="space-y-1">
-              <span className="text-xs text-gray-400">Attached Leader</span>
+              <span className="text-xs text-cm-text-muted">Attached Leader</span>
               <select
                 value={listUnit.attachedLeader?.unitIndex.toString() ?? ''}
                 onChange={(e) => {
@@ -263,7 +263,7 @@ export function ListUnitCard({
 
           {/* Weapon Loadout Options */}
           {unit.loadoutOptions && unit.loadoutOptions.length > 0 && (
-            <div className="space-y-2 pt-1 border-t border-gray-700/50">
+            <div className="space-y-2 pt-1 border-t border-cm-border">
               {unit.loadoutOptions.map((option, optIdx) => {
                 // Count models excluded from this option by other options' choices
                 const wc = listUnit.weaponCounts || {};

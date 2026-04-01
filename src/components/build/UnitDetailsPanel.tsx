@@ -45,7 +45,7 @@ export function UnitDetailsPanel({
   // No unit selected state (matching Alpine.js)
   if (!unit || unitIndex === null) {
     return (
-      <div className={`text-center py-8 text-white/40 text-sm ${className}`}>
+      <div className={`text-center py-8 text-cm-text-muted text-sm ${className}`}>
         <p className="text-lg mb-1">Select a unit</p>
         <p className="text-sm">Click on a unit in your army list or roster to view details</p>
       </div>
@@ -68,9 +68,9 @@ export function UnitDetailsPanel({
       {/* Header */}
       <div className="flex items-start justify-between gap-3 mb-3 shrink-0">
         <div className="flex-1 min-w-0">
-          <h3 className="text-sm font-semibold text-white/90 uppercase tracking-wide leading-tight">{unit.name}</h3>
+          <h3 className="text-sm font-semibold text-cm-text uppercase tracking-wide leading-tight">{unit.name}</h3>
           {listUnit && (
-            <span className="text-xs text-white/50">
+            <span className="text-xs text-cm-text-secondary">
               {listUnit.modelCount} model{listUnit.modelCount !== 1 ? 's' : ''}
             </span>
           )}
@@ -134,9 +134,9 @@ export function UnitDetailsPanel({
         {/* Ranged Weapons */}
         {ranged.length > 0 && (
           <div className="mb-3">
-            <div className="text-xs text-white/50 uppercase tracking-wide mb-1">Ranged</div>
+            <div className="text-xs text-cm-text-secondary uppercase tracking-wide mb-1">Ranged</div>
             {ranged.filter(isRangedStats).map((weapon) => (
-              <div key={weapon.id} className="bg-black/20 rounded-lg p-3 mb-1">
+              <div key={weapon.id} className="bg-cm-stat-bg rounded-lg p-3 mb-1">
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-medium text-sm">{weapon.name}</span>
                   <span className="badge badge-blue text-[10px] py-0">ranged</span>
@@ -174,9 +174,9 @@ export function UnitDetailsPanel({
         {/* Melee Weapons */}
         {melee.length > 0 && (
           <div>
-            <div className="text-xs text-white/50 uppercase tracking-wide mb-1">Melee</div>
+            <div className="text-xs text-cm-text-secondary uppercase tracking-wide mb-1">Melee</div>
             {melee.filter(isMeleeStats).map((weapon) => (
-              <div key={weapon.id} className="bg-black/20 rounded-lg p-3 mb-1">
+              <div key={weapon.id} className="bg-cm-stat-bg rounded-lg p-3 mb-1">
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-medium text-sm">{weapon.name}</span>
                   <span className="badge badge-red text-[10px] py-0">melee</span>
@@ -219,9 +219,9 @@ export function UnitDetailsPanel({
           </div>
           <div className="space-y-2">
             {unit.abilities.map((ability) => (
-              <div key={ability.id} className="bg-black/20 rounded-lg p-2">
+              <div key={ability.id} className="bg-cm-stat-bg rounded-lg p-2">
                 <div className="text-sm font-medium text-accent-300">{ability.name}</div>
-                <div className="text-xs text-white/70 mt-0.5">{ability.description}</div>
+                <div className="text-xs text-cm-text-secondary mt-0.5">{ability.description}</div>
               </div>
             ))}
           </div>

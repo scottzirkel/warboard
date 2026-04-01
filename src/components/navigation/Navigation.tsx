@@ -186,7 +186,7 @@ function PhaseTracker({ currentPhase, playerTurn, onPhaseChange, onAdvance, onTo
       </button>
 
       {/* Phase Pills */}
-      <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isOpponentTurn ? 'bg-red-500/10' : 'bg-white/5'}`}>
+      <div className={`flex items-center gap-0.5 rounded-lg p-0.5 ${isOpponentTurn ? 'bg-red-500/10' : 'bg-cm-surface-hover-subtle'}`}>
         {GAME_PHASES.map((phase) => (
           <button
             key={phase}

@@ -30,17 +30,17 @@ export function TwistSelectionModal({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Mission Twist" size="md">
-      <div className="text-xs text-white/50 mb-3">
+      <div className="text-xs text-cm-text-secondary mb-3">
         Optional twist from Chapter Approved. Select one or skip.
       </div>
-      <div className="rounded-xl overflow-hidden bg-white/[0.04] max-h-[60vh] overflow-y-auto">
+      <div className="rounded-xl overflow-hidden bg-cm-surface-hover-subtle max-h-[60vh] overflow-y-auto">
         {/* No Twist option */}
         <div
-          className={`${itemStyles} ${activeTwistId === null ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-white/5'}`}
+          className={`${itemStyles} ${activeTwistId === null ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-cm-surface-hover-subtle'}`}
           onClick={() => handleSelect(null)}
         >
           <div className="flex-1">
-            <div className="font-medium text-sm text-white/70">No Twist</div>
+            <div className="font-medium text-sm text-cm-text-secondary">No Twist</div>
           </div>
           {activeTwistId === null && (
             <svg className="w-5 h-5 text-accent-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -56,7 +56,7 @@ export function TwistSelectionModal({
           return (
             <div
               key={twist.id}
-              className={`${itemStyles} ${isActive ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-white/5'}`}
+              className={`${itemStyles} ${isActive ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-cm-surface-hover-subtle'}`}
               onClick={() => handleSelect(twist.id)}
             >
               <div className="flex-1 min-w-0">
@@ -67,7 +67,7 @@ export function TwistSelectionModal({
                     <Badge variant="accent">Modifier</Badge>
                   )}
                 </div>
-                <div className="text-xs text-white/50 mt-1 line-clamp-2">{twist.description}</div>
+                <div className="text-xs text-cm-text-secondary mt-1 line-clamp-2">{twist.description}</div>
               </div>
               {isActive && (
                 <svg className="w-5 h-5 text-accent-400 shrink-0 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

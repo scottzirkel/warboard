@@ -30,12 +30,12 @@ function EndGameModalContent({
     <div className="space-y-4">
       {/* VP Summary */}
       <div className="grid grid-cols-3 gap-3 text-center">
-        <div className="bg-white/5 rounded-lg p-3">
-          <div className="text-xs text-white/40 uppercase">Primary</div>
+        <div className="bg-cm-surface-hover-subtle rounded-lg p-3">
+          <div className="text-xs text-cm-text-muted uppercase">Primary</div>
           <div className="text-xl font-bold mt-1">{primaryVP}</div>
         </div>
-        <div className="bg-white/5 rounded-lg p-3">
-          <div className="text-xs text-white/40 uppercase">Secondary</div>
+        <div className="bg-cm-surface-hover-subtle rounded-lg p-3">
+          <div className="text-xs text-cm-text-muted uppercase">Secondary</div>
           <div className="text-xl font-bold mt-1">{secondaryVP}</div>
         </div>
         <div className="bg-accent-500/20 rounded-lg p-3">
@@ -45,7 +45,7 @@ function EndGameModalContent({
       </div>
 
       {primaryMissionName && (
-        <div className="text-xs text-white/40 text-center">
+        <div className="text-xs text-cm-text-muted text-center">
           Mission: {primaryMissionName}
         </div>
       )}
@@ -61,7 +61,7 @@ function EndGameModalContent({
 
       {/* Result */}
       <div>
-        <label className="text-xs text-white/50 uppercase tracking-wide block mb-2">
+        <label className="text-xs text-cm-text-secondary uppercase tracking-wide block mb-2">
           Result
         </label>
         <SegmentedControl

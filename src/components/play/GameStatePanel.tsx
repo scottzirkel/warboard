@@ -216,7 +216,7 @@ const insetGroupItemStyles = `
 
 // Styles for section headers
 const sectionHeaderStyles = `
-  text-[13px] font-semibold text-white/55 uppercase tracking-[0.5px]
+  text-[13px] font-semibold text-cm-text-secondary uppercase tracking-[0.5px]
   py-3 px-4 pt-3 pb-2
 `;
 
@@ -308,7 +308,7 @@ export function GameStatePanel({
 
   return (
     <div className={`flex flex-col h-full ${className}`}>
-      <h2 className="text-[13px] font-semibold text-white/55 uppercase tracking-[0.5px] mb-4 shrink-0">
+      <h2 className="text-[13px] font-semibold text-cm-text-secondary uppercase tracking-[0.5px] mb-4 shrink-0">
         Army Rules
       </h2>
 
@@ -329,7 +329,7 @@ export function GameStatePanel({
         {/* Deployment Map */}
         {selectedDeployment && (
           <Card className="overflow-hidden p-3">
-            <div className="text-xs text-white/40 uppercase tracking-wide mb-2">Deployment</div>
+            <div className="text-xs text-cm-text-muted uppercase tracking-wide mb-2">Deployment</div>
             <DeploymentMapImage
               deploymentId={selectedDeployment.id}
               deploymentName={selectedDeployment.name}
@@ -341,7 +341,7 @@ export function GameStatePanel({
         {katahStances.length > 0 && (
           <Card className="overflow-hidden">
             <div className="p-3 pb-2">
-              <div className="text-white/60 font-medium mb-2">Martial Ka&apos;tah</div>
+              <div className="text-cm-text-secondary font-medium mb-2">Martial Ka&apos;tah</div>
               <SegmentedControl
                 options={katahOptions}
                 value={selectedKatah}
@@ -356,13 +356,13 @@ export function GameStatePanel({
           <Card className="overflow-hidden">
             <button
               onClick={() => setDetachmentRulesOpen(!detachmentRulesOpen)}
-              className={`${sectionHeaderStyles} w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors`}
+              className={`${sectionHeaderStyles} w-full flex items-center justify-between cursor-pointer hover:bg-cm-surface-hover-subtle transition-colors`}
             >
               <span>Detachment Rules</span>
               <div className="flex items-center gap-2">
                 <Badge>{detachment.rules.length}</Badge>
                 <svg
-                  className={`w-3 h-3 text-white/40 transition-transform duration-200 ${detachmentRulesOpen ? '' : '-rotate-90'}`}
+                  className={`w-3 h-3 text-cm-text-muted transition-transform duration-200 ${detachmentRulesOpen ? '' : '-rotate-90'}`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -402,7 +402,7 @@ export function GameStatePanel({
                           </span>
                         )}
                       </div>
-                      <div className="text-white/70 text-xs mb-2">{rule.description}</div>
+                      <div className="text-cm-text-secondary text-xs mb-2">{rule.description}</div>
                       {/* Show choices for selection-type rules */}
                       {rule.type === 'selection' && rule.choices && rule.choices.length > 0 && (
                         <>
@@ -433,13 +433,13 @@ export function GameStatePanel({
         <Card className="overflow-hidden">
           <button
             onClick={() => setStratagemsSectionOpen(!stratagemsSectionOpen)}
-            className={`${sectionHeaderStyles} w-full flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors`}
+            className={`${sectionHeaderStyles} w-full flex items-center justify-between cursor-pointer hover:bg-cm-surface-hover-subtle transition-colors`}
           >
             <span>Stratagems</span>
             <div className="flex items-center gap-2">
               <Badge>{allStratagems.length}</Badge>
               <svg
-                className={`w-3 h-3 text-white/40 transition-transform duration-200 ${stratagemsSectionOpen ? '' : '-rotate-90'}`}
+                className={`w-3 h-3 text-cm-text-muted transition-transform duration-200 ${stratagemsSectionOpen ? '' : '-rotate-90'}`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -452,7 +452,7 @@ export function GameStatePanel({
           <div className={`overflow-hidden transition-all duration-200 ${stratagemsSectionOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
             <div className="space-y-0">
               {allStratagems.length === 0 ? (
-                <div className="px-4 py-8 text-center text-white/40 text-sm">
+                <div className="px-4 py-8 text-center text-cm-text-muted text-sm">
                   No stratagems available
                 </div>
               ) : (
@@ -471,14 +471,14 @@ export function GameStatePanel({
                       className={`
                         ${insetGroupItemStyles}
                         cursor-pointer transition-colors [-webkit-tap-highlight-color:transparent]
-                        ${activeStratagems.includes(strat.id) ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-white/5'}
+                        ${activeStratagems.includes(strat.id) ? 'bg-[color-mix(in_srgb,var(--accent-500)_20%,transparent)]' : 'hover:bg-cm-surface-hover-subtle'}
                         ${usageOpacityClass || phaseOpacityClass}
                       `}
                       onClick={() => setSelectedStratagem(strat)}
                     >
                       <div className="flex-1">
                         <div className="font-medium text-sm">{strat.name}</div>
-                        <div className="text-xs text-white/40 mt-0.5">
+                        <div className="text-xs text-cm-text-muted mt-0.5">
                           {strat.phase}
                           {maxUses !== Infinity && (
                             <span className="ml-2">
@@ -508,15 +508,15 @@ export function GameStatePanel({
         <Card className="overflow-hidden">
           <button
             onClick={onChangeTwist}
-            className={`${insetGroupItemStyles} w-full cursor-pointer hover:bg-white/5 transition-colors [-webkit-tap-highlight-color:transparent]`}
+            className={`${insetGroupItemStyles} w-full cursor-pointer hover:bg-cm-surface-hover-subtle transition-colors [-webkit-tap-highlight-color:transparent]`}
           >
             <div className="flex-1">
-              <div className="text-xs text-white/40 uppercase tracking-wide">Mission Twist</div>
+              <div className="text-xs text-cm-text-muted uppercase tracking-wide">Mission Twist</div>
               <div className="font-medium text-sm mt-0.5">
                 {activeTwistName ?? 'None'}
               </div>
             </div>
-            <svg className="w-4 h-4 text-white/30 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="w-4 h-4 text-cm-text-faint shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>
@@ -554,7 +554,7 @@ export function GameStatePanel({
               </div>
 
               {/* Description */}
-              <p className="text-sm text-white/70 leading-relaxed">
+              <p className="text-sm text-cm-text-secondary leading-relaxed">
                 {selectedStratagem.description}
               </p>
 

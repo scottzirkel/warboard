@@ -16,18 +16,18 @@ export function StatCell({
   return (
     <div
       className={`
-        flex flex-col items-center p-2 rounded-lg bg-black/20
+        flex flex-col items-center p-2 rounded-lg bg-cm-stat-bg
         ${className}
       `}
       title={tooltip}
     >
-      <div className="text-[10px] font-medium text-white/45 uppercase tracking-[0.5px]">
+      <div className="text-[10px] font-medium text-cm-text-muted uppercase tracking-[0.5px]">
         {label}
       </div>
       <div
         className={`
           text-lg font-semibold mt-0.5
-          ${modified ? 'text-accent-400' : 'text-white'}
+          ${modified ? 'text-accent-400' : 'text-cm-text'}
         `}
       >
         {value}

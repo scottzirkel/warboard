@@ -30,9 +30,9 @@ export function AccordionItem({
   };
 
   const isActivated = variant === 'activated';
-  const headerBg = isActivated ? 'bg-green-900/40' : 'bg-gray-700/50';
+  const headerBg = isActivated ? 'bg-green-500/12' : 'bg-cm-surface-hover';
   const headerRing = isActivated ? 'ring-1 ring-green-500/30' : '';
-  const textColor = isActivated ? 'text-green-300' : 'text-gray-200';
+  const textColor = isActivated ? 'text-green-300' : 'text-cm-text';
 
   return (
     <div className={`rounded-lg overflow-hidden ${className}`}>
@@ -42,7 +42,7 @@ export function AccordionItem({
         className={`
           w-full flex items-center justify-between px-3 py-2
           ${headerBg} ${headerRing}
-          hover:bg-gray-600/50 transition-colors
+          hover:bg-cm-surface-hover-subtle transition-colors
           cursor-pointer
         `}
       >
@@ -76,7 +76,7 @@ export function AccordionItem({
           ${isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}
         `}
       >
-        <div className="p-3 bg-gray-800/30 border-t border-gray-700/30">
+        <div className="p-3 bg-cm-surface-card border-t border-cm-border-subtle">
           {children}
         </div>
       </div>
@@ -146,7 +146,7 @@ interface LoadoutGroupAccordionProps {
 /**
  * Loadout group accordion matching Alpine.js styling:
  * - Chevron is downward arrow, rotates -90deg when collapsed
- * - Act button uses bg-white/20 when not activated
+ * - Act button uses bg-cm-surface-hover when not activated
  * - No border on container, no background on content
  */
 export function LoadoutGroupAccordion({
@@ -169,10 +169,10 @@ export function LoadoutGroupAccordion({
   const isDestroyed = currentModels <= 0;
 
   const headerBg = isDestroyed
-    ? 'bg-red-900/30'
+    ? 'bg-red-500/10'
     : isActivated
-      ? 'bg-green-900/40'
-      : 'bg-black/20';
+      ? 'bg-green-500/12'
+      : 'bg-cm-stat-bg';
   const headerRing = isDestroyed
     ? 'ring-1 ring-red-600/30'
     : isActivated
@@ -182,7 +182,7 @@ export function LoadoutGroupAccordion({
     ? 'text-red-400'
     : isActivated
       ? 'text-green-400'
-      : 'text-gray-400';
+      : 'text-cm-text-muted';
   const countColor = isDestroyed
     ? 'text-red-400'
     : hasCasualties
@@ -194,8 +194,8 @@ export function LoadoutGroupAccordion({
     ? 'text-red-300 line-through'
     : isActivated
       ? 'text-green-300'
-      : 'text-gray-200';
-  const hoverBg = isActivated ? 'hover:bg-green-800/40' : 'hover:bg-white/5';
+      : 'text-cm-text';
+  const hoverBg = isActivated ? 'hover:bg-green-500/15' : 'hover:bg-cm-surface-hover-subtle';
 
   return (
     <div className={`rounded overflow-hidden transition-colors ${headerBg} ${headerRing} ${className}`}>
@@ -224,7 +224,7 @@ export function LoadoutGroupAccordion({
                 onDecrementCasualties();
               }}
               disabled={casualties <= 0}
-              className="w-4 h-4 flex items-center justify-center rounded text-[10px] font-bold bg-green-600/80 hover:bg-green-500 disabled:opacity-30 disabled:cursor-not-allowed text-white"
+              className="w-4 h-4 flex items-center justify-center rounded text-[10px] font-bold bg-green-600/80 hover:bg-green-500 disabled:opacity-30 disabled:cursor-not-allowed text-cm-text"
               title="Restore model"
             >
               +
@@ -241,7 +241,7 @@ export function LoadoutGroupAccordion({
                 onIncrementCasualties();
               }}
               disabled={currentModels <= 0}
-              className="w-4 h-4 flex items-center justify-center rounded text-[10px] font-bold bg-red-600/80 hover:bg-red-500 disabled:opacity-30 disabled:cursor-not-allowed text-white"
+              className="w-4 h-4 flex items-center justify-center rounded text-[10px] font-bold bg-red-600/80 hover:bg-red-500 disabled:opacity-30 disabled:cursor-not-allowed text-cm-text"
               title="Remove model"
             >
               −
@@ -270,7 +270,7 @@ export function LoadoutGroupAccordion({
             className={`ml-auto px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
               isActivated
                 ? 'bg-green-600 text-white'
-                : 'bg-white/20 hover:bg-white/30 text-white/70'
+                : 'bg-cm-surface-hover hover:bg-cm-surface-hover text-cm-text-secondary'
             }`}
             title={isActivated ? 'Mark as not activated' : 'Mark as activated'}
           >
