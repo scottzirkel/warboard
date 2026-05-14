@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+vendor/
 
 # Next.js
 .next/
@@ -16,6 +17,9 @@ dist/
 
 # OpenNext
 .open-next
+
+# Cloudflare local state
+.wrangler/
 
 # Debug
 npm-debug.log*
