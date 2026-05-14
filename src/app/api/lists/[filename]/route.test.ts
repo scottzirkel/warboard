@@ -2,15 +2,11 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { NextRequest } from 'next/server';
 import type { CurrentList } from '@/types';
 
-// Mock next-auth
-const mockGetServerSession = vi.fn();
-
-vi.mock('next-auth', () => ({
-  getServerSession: () => mockGetServerSession(),
-}));
+// Mock auth
+const mockAuth = vi.fn();
 
 vi.mock('@/lib/auth', () => ({
-  authOptions: {},
+  auth: () => mockAuth(),
 }));
 
 // Mock listService
@@ -40,7 +36,7 @@ describe('API /api/lists/[filename]', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     // Default to authenticated session
-    mockGetServerSession.mockResolvedValue({
+    mockAuth.mockResolvedValue({
       user: { id: mockUserId, name: 'Test User', email: 'test@example.com' },
     });
   });
@@ -60,13 +56,13 @@ describe('API /api/lists/[filename]', () => {
     };
 
     it('returns 401 when not authenticated', async () => {
-      mockGetServerSession.mockResolvedValue(null);
+      mockAuth.mockResolvedValue(null);
 
       const request = new NextRequest('http://localhost/api/lists/My_List.json');
       const context = createMockContext('My_List.json');
 
       const response = await GET(request, context);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(401);
       expect(data.error).toBe('Authentication required');
@@ -85,7 +81,7 @@ describe('API /api/lists/[filename]', () => {
       const context = createMockContext('My_List.json');
 
       const response = await GET(request, context);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(mockGetListByName).toHaveBeenCalledWith('My List', mockUserId);
       expect(data.name).toBe('My List');
@@ -106,7 +102,7 @@ describe('API /api/lists/[filename]', () => {
       const context = createMockContext('clxyz123456789012345678');
 
       const response = await GET(request, context);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(mockGetListById).toHaveBeenCalledWith('clxyz123456789012345678', mockUserId);
       expect(data.name).toBe('My List');
@@ -120,7 +116,7 @@ describe('API /api/lists/[filename]', () => {
       const context = createMockContext('Nonexistent.json');
 
       const response = await GET(request, context);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(404);
       expect(data.error).toBe('List not found');
@@ -133,7 +129,7 @@ describe('API /api/lists/[filename]', () => {
       const context = createMockContext('clxyz123456789012345678');
 
       const response = await GET(request, context);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(404);
       expect(data.error).toBe('List not found');
@@ -144,7 +140,7 @@ describe('API /api/lists/[filename]', () => {
       const context = createMockContext('');
 
       const response = await GET(request, context);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(400);
       expect(data.error).toBe('List identifier is required');
@@ -153,7 +149,7 @@ describe('API /api/lists/[filename]', () => {
 
   describe('DELETE /api/lists/[filename]', () => {
     it('returns 401 when not authenticated', async () => {
-      mockGetServerSession.mockResolvedValue(null);
+      mockAuth.mockResolvedValue(null);
 
       const request = new NextRequest('http://localhost/api/lists/My_List.json', {
         method: 'DELETE',
@@ -161,7 +157,7 @@ describe('API /api/lists/[filename]', () => {
       const context = createMockContext('My_List.json');
 
       const response = await DELETE(request, context);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(401);
       expect(data.error).toBe('Authentication required');
@@ -176,7 +172,7 @@ describe('API /api/lists/[filename]', () => {
       const context = createMockContext('My_List.json');
 
       const response = await DELETE(request, context);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(mockDeleteListByName).toHaveBeenCalledWith('My List', mockUserId);
       expect(data.success).toBe(true);
@@ -191,7 +187,7 @@ describe('API /api/lists/[filename]', () => {
       const context = createMockContext('clxyz123456789012345678');
 
       const response = await DELETE(request, context);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(mockDeleteListById).toHaveBeenCalledWith('clxyz123456789012345678', mockUserId);
       expect(data.success).toBe(true);
@@ -206,7 +202,7 @@ describe('API /api/lists/[filename]', () => {
       const context = createMockContext('Nonexistent.json');
 
       const response = await DELETE(request, context);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(404);
       expect(data.error).toBe('List not found');
@@ -221,7 +217,7 @@ describe('API /api/lists/[filename]', () => {
       const context = createMockContext('clxyz123456789012345678');
 
       const response = await DELETE(request, context);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(404);
       expect(data.error).toBe('List not found');
@@ -234,7 +230,7 @@ describe('API /api/lists/[filename]', () => {
       const context = createMockContext('');
 
       const response = await DELETE(request, context);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(400);
       expect(data.error).toBe('List identifier is required');

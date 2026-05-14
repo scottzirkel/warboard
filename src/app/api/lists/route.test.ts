@@ -1,15 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { NextRequest } from 'next/server';
 
-// Mock next-auth
-const mockGetServerSession = vi.fn();
-
-vi.mock('next-auth', () => ({
-  getServerSession: () => mockGetServerSession(),
-}));
+// Mock auth
+const mockAuth = vi.fn();
 
 vi.mock('@/lib/auth', () => ({
-  authOptions: {},
+  auth: () => mockAuth(),
 }));
 
 // Mock listService
@@ -29,7 +25,7 @@ describe('API /api/lists', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     // Default to authenticated session
-    mockGetServerSession.mockResolvedValue({
+    mockAuth.mockResolvedValue({
       user: { id: mockUserId, name: 'Test User', email: 'test@example.com' },
     });
   });
@@ -40,10 +36,10 @@ describe('API /api/lists', () => {
 
   describe('GET /api/lists', () => {
     it('returns 401 when not authenticated', async () => {
-      mockGetServerSession.mockResolvedValue(null);
+      mockAuth.mockResolvedValue(null);
 
       const response = await GET();
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(401);
       expect(data.error).toBe('Authentication required');
@@ -53,7 +49,7 @@ describe('API /api/lists', () => {
       mockGetAllLists.mockResolvedValue([]);
 
       const response = await GET();
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(mockGetAllLists).toHaveBeenCalledWith(mockUserId);
       expect(data).toEqual([]);
@@ -66,7 +62,7 @@ describe('API /api/lists', () => {
       ]);
 
       const response = await GET();
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(mockGetAllLists).toHaveBeenCalledWith(mockUserId);
       expect(data).toEqual([
@@ -79,7 +75,7 @@ describe('API /api/lists', () => {
       mockGetAllLists.mockRejectedValue(new Error('Database error'));
 
       const response = await GET();
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(500);
       expect(data.error).toBe('Failed to read lists');
@@ -88,7 +84,7 @@ describe('API /api/lists', () => {
 
   describe('POST /api/lists', () => {
     it('returns 401 when not authenticated', async () => {
-      mockGetServerSession.mockResolvedValue(null);
+      mockAuth.mockResolvedValue(null);
 
       const request = new NextRequest('http://localhost/api/lists', {
         method: 'POST',
@@ -96,7 +92,7 @@ describe('API /api/lists', () => {
       });
 
       const response = await POST(request);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(401);
       expect(data.error).toBe('Authentication required');
@@ -123,7 +119,7 @@ describe('API /api/lists', () => {
       });
 
       const response = await POST(request);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(mockSaveList).toHaveBeenCalledWith(
         expect.objectContaining({ name: 'My Test List' }),
@@ -146,7 +142,7 @@ describe('API /api/lists', () => {
       });
 
       const response = await POST(request);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(400);
       expect(data.error).toBe('List name is required');
@@ -173,7 +169,7 @@ describe('API /api/lists', () => {
       });
 
       const response = await POST(request);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(data.success).toBe(true);
       // Verify saveList was called with normalized format and userId
@@ -201,7 +197,7 @@ describe('API /api/lists', () => {
       });
 
       const response = await POST(request);
-      const data = await response.json();
+      const data: Record<string, unknown> = await response.json();
 
       expect(response.status).toBe(500);
       expect(data.error).toBe('Failed to save list');

@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateRosterXml } from '@/lib/roszExport';
 import type { CurrentList, ArmyData } from '@/types';
-import archiver from 'archiver';
-import { PassThrough } from 'stream';
+import { zipSync, strToU8 } from 'fflate';
 
 // ============================================================================
 // Configuration
@@ -42,25 +41,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const rosFilename = listName + '.ros';
 
     // Create .rosz file (ZIP archive containing .ros XML file)
-    const roszBuffer = await new Promise<Buffer>((resolve, reject) => {
-      const chunks: Buffer[] = [];
-      const passthrough = new PassThrough();
-
-      passthrough.on('data', (chunk: Buffer) => chunks.push(chunk));
-      passthrough.on('end', () => resolve(Buffer.concat(chunks)));
-      passthrough.on('error', reject);
-
-      const archive = archiver('zip', { zlib: { level: 9 } });
-      archive.on('error', reject);
-      archive.pipe(passthrough);
-
-      // Add the .ros XML file to the ZIP archive
-      archive.append(rosterXml, { name: rosFilename });
-      archive.finalize();
-    });
+    const roszBytes = zipSync(
+      { [rosFilename]: strToU8(rosterXml) },
+      { level: 9 }
+    );
 
     // POST to Yellowscribe API with .rosz file
-    // Using /makeArmyAndReturnCode which accepts binary .rosz data
     const queryParams = new URLSearchParams({
       filename,
       uiHeight: '700',
@@ -76,7 +62,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         headers: {
           'Content-Type': 'application/octet-stream',
         },
-        body: new Uint8Array(roszBuffer),
+        body: roszBytes.buffer as ArrayBuffer,
       }
     );
 

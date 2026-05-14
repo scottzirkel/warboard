@@ -3,7 +3,7 @@
 // This service handles all list CRUD operations using Prisma.
 // All operations are scoped to the authenticated user.
 
-import { prisma } from '@/lib/db';
+import { getPrisma } from '@/lib/db';
 import type { CurrentList, DbList, GameFormat } from '@/types';
 
 /** Map old 'standard' format to 'strike-force' for backwards compatibility. */
@@ -39,7 +39,7 @@ export interface ListWithData extends ListInfo {
  * Returns list metadata without the full data payload.
  */
 export async function getAllLists(userId: string): Promise<ListInfo[]> {
-  const lists = await prisma.list.findMany({
+  const lists = await getPrisma().list.findMany({
     where: { userId },
     select: {
       id: true,
@@ -58,7 +58,7 @@ export async function getAllLists(userId: string): Promise<ListInfo[]> {
  * Returns the full list data, or null if not found or not owned by user.
  */
 export async function getListById(id: string, userId: string): Promise<ListWithData | null> {
-  const list = await prisma.list.findFirst({
+  const list = await getPrisma().list.findFirst({
     where: { id, userId },
   });
 
@@ -80,7 +80,7 @@ export async function getListById(id: string, userId: string): Promise<ListWithD
  * Used for backward compatibility with filename-based lookup.
  */
 export async function getListByName(name: string, userId: string): Promise<ListWithData | null> {
-  const list = await prisma.list.findFirst({
+  const list = await getPrisma().list.findFirst({
     where: {
       userId,
       name,
@@ -105,7 +105,7 @@ export async function getListByName(name: string, userId: string): Promise<ListW
  * If a list with the same name exists for that user, it will be updated.
  */
 export async function saveList(listData: CurrentList, userId: string): Promise<DbList> {
-  const existingList = await prisma.list.findFirst({
+  const existingList = await getPrisma().list.findFirst({
     where: {
       userId,
       name: listData.name,
@@ -114,7 +114,7 @@ export async function saveList(listData: CurrentList, userId: string): Promise<D
 
   if (existingList) {
     // Update existing list
-    return prisma.list.update({
+    return getPrisma().list.update({
       where: { id: existingList.id },
       data: {
         armyId: listData.army,
@@ -124,7 +124,7 @@ export async function saveList(listData: CurrentList, userId: string): Promise<D
   }
 
   // Create new list
-  return prisma.list.create({
+  return getPrisma().list.create({
     data: {
       userId,
       name: listData.name,
@@ -141,7 +141,7 @@ export async function saveList(listData: CurrentList, userId: string): Promise<D
 export async function deleteListById(id: string, userId: string): Promise<boolean> {
   try {
     // First verify the list belongs to this user
-    const list = await prisma.list.findFirst({
+    const list = await getPrisma().list.findFirst({
       where: { id, userId },
     });
 
@@ -149,7 +149,7 @@ export async function deleteListById(id: string, userId: string): Promise<boolea
       return false;
     }
 
-    await prisma.list.delete({
+    await getPrisma().list.delete({
       where: { id },
     });
 
@@ -165,7 +165,7 @@ export async function deleteListById(id: string, userId: string): Promise<boolea
  */
 export async function deleteListByName(name: string, userId: string): Promise<boolean> {
   try {
-    const list = await prisma.list.findFirst({
+    const list = await getPrisma().list.findFirst({
       where: {
         userId,
         name,
@@ -176,7 +176,7 @@ export async function deleteListByName(name: string, userId: string): Promise<bo
       return false;
     }
 
-    await prisma.list.delete({
+    await getPrisma().list.delete({
       where: { id: list.id },
     });
 

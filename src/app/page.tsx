@@ -342,7 +342,7 @@ export default function Home() {
     const loadMissionData = async () => {
       try {
         const res = await fetch('/data/missions.json');
-        const data = await res.json();
+        const data = await res.json() as { deployments?: typeof deployments; twists?: typeof missionTwists; primaryMissions?: typeof primaryMissions; secondaryMissions?: typeof secondaryMissions };
         setDeployments(data.deployments || []);
         setMissionTwists(data.twists || []);
         setPrimaryMissions(data.primaryMissions || []);
@@ -829,7 +829,7 @@ export default function Home() {
         }),
       });
 
-      const result = await response.json();
+      const result = await response.json() as { success?: boolean; code?: string; error?: string };
 
       if (result.success && result.code) {
         setExportCode(result.code);

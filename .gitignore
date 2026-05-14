@@ -12,6 +12,10 @@ dist/
 # Environment files
 .env*.local
 .env
+.dev.vars
+
+# OpenNext
+.open-next
 
 # Debug
 npm-debug.log*
@@ -37,6 +41,7 @@ Thumbs.db
 # Prisma
 *.db
 *.db-journal
+src/generated/
 
 # BSData parsed intermediates (regenerate with npm run bsdata:parse)
 scripts/bsdata/*-parsed.json

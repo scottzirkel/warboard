@@ -1,0 +1,33 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"main": ".open-next/worker.js",
+	"name": "warboard",
+	"compatibility_date": "2026-04-03",
+	"compatibility_flags": ["nodejs_compat"],
+	"workers_dev": true,
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"services": [
+		{
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "warboard"
+		}
+	],
+	"routes": [
+		{ "pattern": "warboard.dicenotmice.com", "custom_domain": true }
+	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "warboard-db",
+			"database_id": "a25efb32-b8b2-4525-8b44-bb2157f2ab09"
+		},
+		{
+			"binding": "NEXT_TAG_CACHE_D1",
+			"database_name": "warboard-db",
+			"database_id": "a25efb32-b8b2-4525-8b44-bb2157f2ab09"
+		}
+	]
+}

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { getAllGameResults, saveGameResult } from '@/lib/gameResultService';
+import type { GameResult } from '@/types';
 
 // ============================================================================
 // GET /api/games - Returns game result metadata for authenticated user
@@ -9,7 +9,7 @@ import { getAllGameResults, saveGameResult } from '@/lib/gameResultService';
 
 export async function GET(): Promise<NextResponse> {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session?.user?.id) {
       return NextResponse.json(
@@ -35,7 +35,7 @@ export async function GET(): Promise<NextResponse> {
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session?.user?.id) {
       return NextResponse.json(
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const body = await request.json();
+    const body = await request.json() as Omit<GameResult, 'id'>;
 
     if (!body.result || !body.army) {
       return NextResponse.json(

@@ -16,18 +16,19 @@ const nextConfig = {
       },
     ],
   },
-  serverExternalPackages: [
-    '@libsql/client',
-    '@prisma/adapter-libsql',
-    'libsql',
-  ],
-  // Include 40k-data JSON files in Vercel function bundles
-  // (readFileSync with dynamic paths isn't traced by the bundler)
-  outputFileTracingIncludes: {
-    '/api/faction/\\[army\\]': ['./node_modules/@scottzirkel/40k-data/data/**'],
+  // Enable WebAssembly for Prisma Cloudflare runtime client
+  webpack: (config) => {
+    config.experiments = {
+      ...config.experiments,
+      asyncWebAssembly: true,
+    };
+    return config;
   },
   // Allow dev to use Turbopack while build uses webpack (for Serwist PWA)
   turbopack: {},
 }
 
 module.exports = withSerwist(nextConfig)
+
+// Initialize Cloudflare bindings for next dev (D1, etc.)
+import('@opennextjs/cloudflare').then(m => m.initOpenNextCloudflareForDev());

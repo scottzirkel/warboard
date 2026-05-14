@@ -2,31 +2,22 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import type { CurrentList } from '@/types';
 
 // Mock Prisma client - must be defined inline in vi.mock factory
+const mockList = {
+  findMany: vi.fn(),
+  findUnique: vi.fn(),
+  findFirst: vi.fn(),
+  create: vi.fn(),
+  update: vi.fn(),
+  delete: vi.fn(),
+};
+
 vi.mock('@/lib/db', () => ({
-  prisma: {
-    list: {
-      findMany: vi.fn(),
-      findUnique: vi.fn(),
-      findFirst: vi.fn(),
-      create: vi.fn(),
-      update: vi.fn(),
-      delete: vi.fn(),
-    },
-  },
+  getPrisma: () => ({
+    list: mockList,
+  }),
 }));
 
-// Import the mocked prisma to access mock functions
-import { prisma } from '@/lib/db';
-const mockPrisma = prisma as unknown as {
-  list: {
-    findMany: ReturnType<typeof vi.fn>;
-    findUnique: ReturnType<typeof vi.fn>;
-    findFirst: ReturnType<typeof vi.fn>;
-    create: ReturnType<typeof vi.fn>;
-    update: ReturnType<typeof vi.fn>;
-    delete: ReturnType<typeof vi.fn>;
-  };
-};
+const mockPrisma = { list: mockList };
 
 import {
   getAllLists,

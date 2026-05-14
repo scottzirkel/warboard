@@ -113,7 +113,7 @@ export function useGameHistory(): UseGameHistoryReturn {
         });
 
         if (!res.ok) {
-          const errData = await res.json();
+          const errData: { error?: string } = await res.json();
           throw new Error(errData.error || 'Failed to save game result');
         }
 

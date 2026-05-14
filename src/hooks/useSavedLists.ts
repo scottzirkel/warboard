@@ -117,8 +117,8 @@ export function useSavedLists(): UseSavedListsReturn {
           throw new Error('Failed to fetch lists from server');
         }
 
-        const data = await res.json();
-        const listInfos: SavedListInfo[] = data.map((item: { id: string; filename: string; name: string }) => ({
+        const data: Array<{ id: string; filename: string; name: string }> = await res.json();
+        const listInfos: SavedListInfo[] = data.map((item) => ({
           id: item.id,
           filename: item.id, // Use ID as filename for LoadModal compatibility
           name: item.name,
@@ -168,7 +168,7 @@ export function useSavedLists(): UseSavedListsReturn {
           return null;
         }
 
-        const data = await res.json();
+        const data: CurrentList = await res.json();
 
         // The API returns the full list data with extra fields
         const list: CurrentList = {
@@ -225,7 +225,7 @@ export function useSavedLists(): UseSavedListsReturn {
         });
 
         if (!res.ok) {
-          const data = await res.json();
+          const data: { error?: string } = await res.json();
           throw new Error(data.error || 'Failed to save list');
         }
 

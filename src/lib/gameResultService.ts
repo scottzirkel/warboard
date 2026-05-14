@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/db';
+import { getPrisma } from '@/lib/db';
 import type { GameResultInfo, GameResult, CurrentList, GameResultOutcome, GameFormat } from '@/types';
 
 // ============================================================================
@@ -10,7 +10,7 @@ import type { GameResultInfo, GameResult, CurrentList, GameResultOutcome, GameFo
  * Returns metadata only, ordered by date descending.
  */
 export async function getAllGameResults(userId: string): Promise<GameResultInfo[]> {
-  const results = await prisma.gameResult.findMany({
+  const results = await getPrisma().gameResult.findMany({
     where: { userId },
     select: {
       id: true,
@@ -30,7 +30,7 @@ export async function getAllGameResults(userId: string): Promise<GameResultInfo[
  * Get a single game result by ID for a specific user.
  */
 export async function getGameResultById(id: string, userId: string): Promise<GameResult | null> {
-  const result = await prisma.gameResult.findFirst({
+  const result = await getPrisma().gameResult.findFirst({
     where: { id, userId },
   });
 
@@ -60,7 +60,7 @@ export async function saveGameResult(
   data: Omit<GameResult, 'id'>,
   userId: string,
 ): Promise<{ id: string }> {
-  const result = await prisma.gameResult.create({
+  const result = await getPrisma().gameResult.create({
     data: {
       userId,
       date: data.date,
@@ -87,13 +87,13 @@ export async function saveGameResult(
  */
 export async function deleteGameResult(id: string, userId: string): Promise<boolean> {
   try {
-    const result = await prisma.gameResult.findFirst({
+    const result = await getPrisma().gameResult.findFirst({
       where: { id, userId },
     });
 
     if (!result) return false;
 
-    await prisma.gameResult.delete({ where: { id } });
+    await getPrisma().gameResult.delete({ where: { id } });
     return true;
   } catch {
     return false;

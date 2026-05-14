@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { getGameResultById, deleteGameResult } from '@/lib/gameResultService';
 
 interface RouteParams {
@@ -13,7 +12,7 @@ interface RouteParams {
 
 export async function GET(_request: NextRequest, context: RouteParams): Promise<NextResponse> {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session?.user?.id) {
       return NextResponse.json(
@@ -48,7 +47,7 @@ export async function GET(_request: NextRequest, context: RouteParams): Promise<
 
 export async function DELETE(_request: NextRequest, context: RouteParams): Promise<NextResponse> {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session?.user?.id) {
       return NextResponse.json(

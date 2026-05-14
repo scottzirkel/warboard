@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { getAllLists, saveList } from '@/lib/listService';
-import type { CurrentList } from '@/types';
+import type { CurrentList, GameFormat } from '@/types';
 
 // ============================================================================
 // GET /api/lists - Returns saved list metadata for authenticated user
@@ -10,7 +9,7 @@ import type { CurrentList } from '@/types';
 
 export async function GET(): Promise<NextResponse> {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session?.user?.id) {
       return NextResponse.json(
@@ -47,7 +46,7 @@ export async function GET(): Promise<NextResponse> {
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session?.user?.id) {
       return NextResponse.json(
@@ -56,7 +55,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const body = await request.json();
+    const body = await request.json() as Record<string, unknown>;
 
     if (!body.name) {
       return NextResponse.json(
@@ -66,13 +65,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // Normalize incoming data to CurrentList format
+    const rawFormat = String(body.format || body.gameFormat || 'strike-force');
     const listData: CurrentList = {
-      name: body.name,
-      army: body.army || 'custodes',
-      pointsLimit: body.pointsLimit || 2000,
-      format: (body.format === 'standard' ? 'strike-force' : body.format) || body.gameFormat || 'strike-force',
-      detachment: body.detachment || '',
-      units: body.units || [],
+      name: String(body.name),
+      army: String(body.army || 'custodes'),
+      pointsLimit: Number(body.pointsLimit) || 2000,
+      format: (rawFormat === 'standard' ? 'strike-force' : rawFormat) as GameFormat,
+      detachment: String(body.detachment || ''),
+      units: (body.units || []) as CurrentList['units'],
     };
 
     const savedList = await saveList(listData, session.user.id);
