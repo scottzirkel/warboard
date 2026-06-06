@@ -90,7 +90,7 @@ export function BuildMode({
       <div className="h-[130px] lg:hidden shrink-0" />
 
       {/* Points Summary Bar - fixed on mobile, static on desktop */}
-      <div className="fixed lg:static top-14 left-0 right-0 z-40 px-2 lg:px-0 pb-2 lg:pb-0 bg-cm-nav lg:bg-transparent lg:shrink-0">
+      <div className="fixed lg:static top-[var(--app-nav-height)] left-0 right-0 z-40 px-2 lg:px-0 pb-2 lg:pb-0 bg-cm-nav lg:bg-transparent lg:shrink-0">
         <div className="card-depth p-4 bg-cm-surface-elevated">
           {/* Row 1: List name + points */}
           <div className="flex items-start justify-between gap-4">

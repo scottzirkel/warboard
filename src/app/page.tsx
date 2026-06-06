@@ -1047,7 +1047,7 @@ export default function Home() {
       />
 
       {/* Spacer for fixed nav on mobile */}
-      <div className="h-14 md:hidden shrink-0" />
+      <div className="h-[var(--app-nav-height)] md:hidden shrink-0" />
 
       {/* Main Content */}
       <main className="flex-1 md:overflow-hidden">

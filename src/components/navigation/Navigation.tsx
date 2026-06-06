@@ -469,7 +469,7 @@ export function Navigation({
     onReset;
 
   return (
-    <nav className="nav-blur fixed lg:sticky top-0 left-0 right-0 z-50 shrink-0 overflow-x-clip overflow-y-visible">
+    <nav className="app-nav nav-blur fixed lg:sticky top-0 left-0 right-0 z-50 shrink-0 overflow-x-clip overflow-y-visible">
       <div className="px-2 lg:px-4">
         <div className="h-14 flex items-center justify-between gap-2 lg:gap-4">
           {/* Left: Mode Toggle + Mobile Panel Switcher */}
