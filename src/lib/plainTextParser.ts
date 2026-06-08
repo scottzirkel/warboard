@@ -33,6 +33,42 @@ export interface TextConversionResult {
 // Line Parsing Patterns
 // ============================================================================
 
+const SECTION_HEADER_PATTERN = /^(?:characters?|battleline|other\s*datasheets?|hq|troops?|elites?|fast\s*attack|heavy\s*support|dedicated\s*transport|flyers?|fortifications?|lords?\s*of\s*war)$/i;
+
+function isSectionHeader(line: string): boolean {
+  return SECTION_HEADER_PATTERN.test(line.trim());
+}
+
+function getFirstSectionHeaderIndex(lines: string[]): number {
+  return lines.findIndex(isSectionHeader);
+}
+
+function getOfficialExportPreamble(lines: string[]): string[] {
+  const firstSectionIndex = getFirstSectionHeaderIndex(lines);
+
+  if (firstSectionIndex === -1) {
+    return [];
+  }
+
+  return lines.slice(0, firstSectionIndex);
+}
+
+function isGameFormatHeader(line: string): boolean {
+  const cleaned = line.replace(/,/g, '').trim();
+
+  return /^(?:combat\s*patrol|incursion|strike\s*force|onslaught)\s*\(\s*\d+\s*points?\s*\)$/i.test(cleaned);
+}
+
+function stripOfficialExportPreamble(lines: string[]): string[] {
+  const firstSectionIndex = getFirstSectionHeaderIndex(lines);
+
+  if (firstSectionIndex === -1) {
+    return lines;
+  }
+
+  return lines.slice(firstSectionIndex);
+}
+
 /**
  * Extract model count from text like "x20", "20x", "× 10", or just "10".
  * Returns 1 if no count found (single model units).
@@ -65,17 +101,18 @@ function extractModelCount(text: string): { count: number; remaining: string } {
  * Extract points from text like "90pts", "90 pts", "(90)", "90 points".
  */
 function extractPoints(text: string): { points: number | undefined; remaining: string } {
+  const pointValue = String.raw`\d[\d,]*`;
   const patterns = [
-    /\((\d+)\s*(?:pts?|points?)?\)/i,     // (90), (90pts), (90 points)
-    /(\d+)\s*(?:pts|points)\b/i,          // 90pts, 90 pts, 90 points
-    /\b(\d+)\s*(?:pts?|points?)\b/i,      // 90pts anywhere
+    new RegExp(String.raw`\((${pointValue})\s*(?:pts?|points?)?\)`, 'i'), // (90), (2,000 points)
+    new RegExp(String.raw`(${pointValue})\s*(?:pts|points)\b`, 'i'),      // 90pts, 90 pts, 2,000 points
+    new RegExp(String.raw`\b(${pointValue})\s*(?:pts?|points?)\b`, 'i'),  // 90pts anywhere
   ];
 
   for (const pattern of patterns) {
     const match = text.match(pattern);
 
     if (match) {
-      const points = parseInt(match[1], 10);
+      const points = parseInt(match[1].replace(/,/g, ''), 10);
       const remaining = text.replace(match[0], '').trim();
 
       return { points, remaining };
@@ -105,17 +142,18 @@ function parseLine(line: string): ParsedTextUnit | null {
   if (/^#{1,3}\s/.test(trimmed)) return null; // Markdown headers (# Title, ## Section, ### Subsection)
   if (/^\*?\*?(?:detachment|points|name|list|army|faction)\*?\*?:/i.test(trimmed)) return null; // Metadata lines
   if (/^\*?\*?total\*?\*?:?\s*\d*/i.test(trimmed)) return null; // Total lines
+  if (/^exported\s+with\s+app\s+version\b/i.test(trimmed)) return null; // App export footer
   if (/^---+$/.test(trimmed)) return null; // Horizontal rules
 
   // Skip section headers (CHARACTERS, BATTLELINE, HQ, etc.)
-  if (/^(?:characters?|battleline|other\s*datasheets?|hq|troops?|elites?|fast\s*attack|heavy\s*support|dedicated\s*transport|flyers?|fortifications?|lords?\s*of\s*war)$/i.test(trimmed)) return null;
+  if (isSectionHeader(trimmed)) return null;
 
   // Skip army header lines like "Adeptus Custodes — 500 Points"
   // These use em-dash (—) or en-dash (–) and typically end with capital "Points"
   if (/^[a-z\s]+[—–]+\s*\d+\s*Points$/i.test(trimmed)) return null;
 
-  // Remove list markers (1., -, *, •)
-  let text = trimmed.replace(/^[\d]+[.)]\s*/, '').replace(/^[-*•]\s*/, '');
+  // Remove list markers (1., -, *, •, ◦)
+  let text = trimmed.replace(/^[\d]+[.)]\s*/, '').replace(/^[-*•◦]\s*/, '');
 
   // Remove table pipe characters and clean up
   text = text.replace(/^\||\|$/g, '').trim();
@@ -270,7 +308,7 @@ function parseTableFormat(lines: string[]): ParsedTextUnit[] {
  */
 function isIndentedSubItem(line: string): boolean {
   // Indented lines start with spaces/tabs followed by a list marker
-  return /^[\s]{2,}[-*•]/.test(line) || /^[\t]+[-*•]/.test(line);
+  return /^[\s]{2,}[-*•◦]/.test(line) || /^[\t]+[-*•◦]/.test(line);
 }
 
 /**
@@ -323,11 +361,15 @@ function isModelCompositionLine(line: string, previousUnitName: string | null, p
 /**
  * Parse an indented sub-item line for enhancement or weapon info.
  */
-function parseSubItem(line: string): { enhancement?: string; weapon?: string } {
-  const trimmed = line.trim().replace(/^[-*•]\s*/, '');
+function parseSubItem(line: string): { enhancement?: string; weapon?: string; warlord?: boolean } {
+  const trimmed = line.trim().replace(/^[-*•◦]\s*/, '');
+
+  if (/^warlord$/i.test(trimmed)) {
+    return { warlord: true };
+  }
 
   // Check for enhancement pattern: "Enhancement: Name (points)"
-  const enhancementMatch = trimmed.match(/^Enhancement:\s*(.+?)(?:\s*\(\d+\s*(?:pts?)?\))?$/i);
+  const enhancementMatch = trimmed.match(/^Enhancements?:\s*(.+?)(?:\s*\(\d+\s*(?:pts?)?\))?$/i);
 
   if (enhancementMatch) {
     return { enhancement: enhancementMatch[1].trim() };
@@ -340,6 +382,43 @@ function parseSubItem(line: string): { enhancement?: string; weapon?: string } {
   }
 
   return { weapon: trimmed };
+}
+
+function getIndentSize(line: string): number {
+  const match = line.match(/^\s*/);
+
+  return match?.[0].length ?? 0;
+}
+
+function hasNestedSubItems(lines: string[], currentIndex: number): boolean {
+  const currentIndent = getIndentSize(lines[currentIndex]);
+
+  for (let i = currentIndex + 1; i < lines.length; i++) {
+    const line = lines[i];
+
+    if (!line.trim()) continue;
+
+    const indent = getIndentSize(line);
+
+    if (indent <= currentIndent) {
+      return false;
+    }
+
+    if (isIndentedSubItem(line)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function isIndentedModelCompositionLine(lines: string[], currentIndex: number): boolean {
+  const line = lines[currentIndex].trim().replace(/^[-*•◦]\s*/, '');
+
+  if (!/\b\d+\s*x\b|\bx\s*\d+\b/i.test(line)) return false;
+  if (/\d+\s*(?:pts?|points?)/i.test(line)) return false;
+
+  return hasNestedSubItems(lines, currentIndex);
 }
 
 /**
@@ -380,14 +459,28 @@ function parseListFormat(lines: string[]): ParsedTextUnit[] {
   const units: ParsedTextUnit[] = [];
   let currentUnit: ParsedTextUnit | null = null;
   let currentUnitHadPoints = false;
+  let currentUnitCompositionCount = 0;
 
-  for (const line of lines) {
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+    const line = lines[lineIndex];
+
     // Check if this is an indented sub-item belonging to the current unit
     if (isIndentedSubItem(line) && currentUnit) {
+      if (isIndentedModelCompositionLine(lines, lineIndex)) {
+        const { count } = extractModelCount(line.trim());
+        currentUnitCompositionCount += count;
+        currentUnit.modelCount = Math.max(currentUnit.modelCount, currentUnitCompositionCount);
+        continue;
+      }
+
       const subItem = parseSubItem(line);
 
       if (subItem.enhancement) {
         currentUnit.enhancement = subItem.enhancement;
+      }
+
+      if (subItem.warlord) {
+        currentUnit.isWarlord = true;
       }
 
       if (subItem.weapon) {
@@ -408,7 +501,7 @@ function parseListFormat(lines: string[]): ParsedTextUnit[] {
     }
 
     // Check for standalone "Enhancement: Name" line
-    const enhancementLineMatch = line.trim().match(/^Enhancement:\s*(.+)$/i);
+    const enhancementLineMatch = line.trim().match(/^Enhancements?:\s*(.+)$/i);
 
     if (currentUnit && currentUnitHadPoints && enhancementLineMatch) {
       currentUnit.enhancement = enhancementLineMatch[1].replace(/\s*\(\d+\s*(?:pts?)?\)$/, '').trim();
@@ -442,7 +535,7 @@ function parseListFormat(lines: string[]): ParsedTextUnit[] {
         }
 
         // Check for "Enhancement: Name" line
-        const enhancementMatch = parsed.name.match(/^Enhancement:\s*(.+)$/i);
+        const enhancementMatch = parsed.name.match(/^Enhancements?:\s*(.+)$/i);
 
         if (enhancementMatch) {
           currentUnit.enhancement = enhancementMatch[1].replace(/\s*\(\d+\s*(?:pts?)?\)$/, '').trim();
@@ -467,6 +560,7 @@ function parseListFormat(lines: string[]): ParsedTextUnit[] {
 
       currentUnit = parsed;
       currentUnitHadPoints = parsed.points !== undefined;
+      currentUnitCompositionCount = 0;
     }
   }
 
@@ -506,6 +600,16 @@ function extractDetachment(lines: string[]): string | undefined {
     }
   }
 
+  const preamble = getOfficialExportPreamble(lines)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  for (let i = 1; i < preamble.length; i++) {
+    if (isGameFormatHeader(preamble[i])) {
+      return preamble[i - 1];
+    }
+  }
+
   return undefined;
 }
 
@@ -516,11 +620,20 @@ function extractDetachment(lines: string[]): string | undefined {
 function extractPointsLimit(lines: string[]): number | undefined {
   for (const line of lines) {
     // Remove markdown formatting first, then match
-    const cleaned = line.replace(/\*+/g, '');
+    const cleaned = line.replace(/\*+/g, '').replace(/,/g, '');
     const match = cleaned.match(/Points:\s*(\d+)\s*\/\s*(\d+)/i);
 
     if (match) {
       return parseInt(match[2], 10); // Return the limit (second number)
+    }
+  }
+
+  for (const line of getOfficialExportPreamble(lines)) {
+    const cleaned = line.replace(/\*+/g, '').replace(/,/g, '');
+    const match = cleaned.match(/\((\d+)\s*Points?\)/i);
+
+    if (match) {
+      return parseInt(match[1], 10);
     }
   }
 
@@ -569,7 +682,7 @@ export function parsePlainText(text: string): ParsedTextList {
   // Detect format and parse accordingly
   const units = isTableFormat(text)
     ? parseTableFormat(lines)
-    : parseListFormat(lines);
+    : parseListFormat(stripOfficialExportPreamble(lines));
 
   // Calculate total points from units if available
   const calculatedTotal = units.reduce((sum, u) => sum + (u.points || 0), 0);
@@ -700,6 +813,37 @@ function findDetachment(
   return Object.keys(armyData.detachments)[0];
 }
 
+function getEnhancementPoints(
+  armyData: ArmyData,
+  detachmentId: string,
+  enhancementId: string
+): number {
+  if (!enhancementId) return 0;
+
+  const detachment = armyData.detachments[detachmentId];
+  const enhancement = detachment?.enhancements.find((e) => e.id === enhancementId);
+
+  return enhancement?.points ?? 0;
+}
+
+function inferModelCountFromPoints(
+  unitPoints: Record<string, number>,
+  parsedPoints: number | undefined,
+  enhancementPoints: number
+): number | undefined {
+  if (parsedPoints === undefined) return undefined;
+
+  const matches = Object.entries(unitPoints)
+    .filter(([, points]) => points === parsedPoints || points + enhancementPoints === parsedPoints)
+    .map(([count]) => Number(count));
+
+  if (matches.length !== 1) {
+    return undefined;
+  }
+
+  return matches[0];
+}
+
 /**
  * Map loadout names to weapon counts.
  * Always initializes all choices to 0, then sets defaults or matched loadouts.
@@ -819,10 +963,29 @@ export function convertTextToCurrentList(
     const unitDef = findUnitById(armyData, unitId);
     let modelCount = parsedUnit.modelCount;
 
+    const enhancement = findEnhancement(
+      armyData,
+      detachmentId,
+      parsedUnit.enhancement
+    );
+
+    if (parsedUnit.enhancement && !enhancement) {
+      warnings.push(
+        `Could not find enhancement: ${parsedUnit.enhancement} for ${parsedUnit.name}`
+      );
+    }
+
     if (unitDef) {
       const validCounts = Object.keys(unitDef.points).map(Number);
+      const inferredModelCount = inferModelCountFromPoints(
+        unitDef.points,
+        parsedUnit.points,
+        getEnhancementPoints(armyData, detachmentId, enhancement)
+      );
 
-      if (!validCounts.includes(modelCount)) {
+      if (modelCount === 1 && inferredModelCount !== undefined) {
+        modelCount = inferredModelCount;
+      } else if (!validCounts.includes(modelCount)) {
         // Find closest valid count
         const closest = validCounts.reduce((prev, curr) =>
           Math.abs(curr - modelCount) < Math.abs(prev - modelCount)
@@ -835,18 +998,6 @@ export function convertTextToCurrentList(
         );
         modelCount = closest;
       }
-    }
-
-    const enhancement = findEnhancement(
-      armyData,
-      detachmentId,
-      parsedUnit.enhancement
-    );
-
-    if (parsedUnit.enhancement && !enhancement) {
-      warnings.push(
-        `Could not find enhancement: ${parsedUnit.enhancement} for ${parsedUnit.name}`
-      );
     }
 
     const weaponCounts = mapLoadout(
@@ -864,12 +1015,13 @@ export function convertTextToCurrentList(
       currentWounds: null,
       leaderCurrentWounds: null,
       attachedLeader: null,
+      isWarlord: parsedUnit.isWarlord || undefined,
     });
   }
 
   // Calculate points limit (round up to nearest 500)
   const totalPoints = parsed.totalPoints || 500;
-  const pointsLimit = Math.ceil(totalPoints / 500) * 500;
+  const pointsLimit = parsed.pointsLimit || Math.ceil(totalPoints / 500) * 500;
 
   return {
     list: {

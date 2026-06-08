@@ -4,7 +4,10 @@ import {
   convertTextToCurrentList,
   importPlainText,
 } from './plainTextParser';
-import type { ArmyData } from '@/types';
+import { findUnitById } from '@/lib/armyDataUtils';
+import darkAngelsData from '@scottzirkel/40k-data/data/darkangels.json';
+import spaceMarinesData from '@scottzirkel/40k-data/data/spacemarines.json';
+import type { ArmyData, CurrentList } from '@/types';
 
 // ============================================================================
 // Test Data
@@ -71,6 +74,36 @@ const mockArmyData: ArmyData = {
     },
   },
 };
+
+const actualDarkAngelsData = (() => {
+  const darkAngels = structuredClone(darkAngelsData) as unknown as ArmyData;
+  const spaceMarines = spaceMarinesData as unknown as ArmyData;
+  const darkAngelUnitIds = new Set(darkAngels.units.map((unit) => unit.id));
+
+  return {
+    ...darkAngels,
+    units: [
+      ...darkAngels.units,
+      ...spaceMarines.units.filter((unit) => !darkAngelUnitIds.has(unit.id)),
+    ],
+    detachments: {
+      ...spaceMarines.detachments,
+      ...darkAngels.detachments,
+    },
+  };
+})();
+
+function calculateListPoints(list: CurrentList, armyData: ArmyData): number {
+  const detachment = armyData.detachments[list.detachment];
+
+  return list.units.reduce((sum, listUnit) => {
+    const unit = findUnitById(armyData, listUnit.unitId);
+    const unitPoints = unit?.points[String(listUnit.modelCount)] ?? 0;
+    const enhancementPoints = detachment?.enhancements.find((e) => e.id === listUnit.enhancement)?.points ?? 0;
+
+    return sum + unitPoints + enhancementPoints;
+  }, 0);
+}
 
 // ============================================================================
 // parsePlainText Tests
@@ -439,6 +472,157 @@ Total: 500 pts
       expect(result.units[2].modelCount).toBe(4);
       expect(result.units[3].name).toBe('Witchseekers');
       expect(result.units[3].points).toBe(65);
+    });
+
+    it('imports Warhammer app exports without treating preamble or footer as units', () => {
+      const text = `2k (2000 Points)
+
+Space Marines
+Dark Angels
+Wrath of the Rock
+Strike Force (2,000 Points)
+
+CHARACTERS
+
+Apothecary (60 Points)
+  • 1x Absolvor bolt pistol
+  • 1x Close combat weapon
+  • 1x Reductor pistol
+  • Enhancements: Tempered in Battle (Aura)
+
+Azrael (125 Points)
+  • Warlord
+  • 1x Lion’s Wrath
+  • 1x The Lion Helm
+  • 1x The Sword of Secrets
+
+Belial (85 Points)
+  • 1x Master-crafted storm bolter
+  • 1x The Sword of Silence
+
+Chaplain in Terminator Armour (90 Points)
+  • 1x Crozius arcanum
+  • 1x Storm bolter
+  • Enhancements: Deathwing Assault
+
+Judiciar (95 Points)
+  • 1x Absolvor bolt pistol
+  • 1x Executioner relic blade
+  • Enhancements: Ancient Weapons
+
+BATTLELINE
+
+Intercessor Squad (160 Points)
+  • 1x Intercessor Sergeant
+     ◦ 1x Bolt pistol
+     ◦ 1x Close combat weapon
+     ◦ 1x Hand flamer
+  • 9x Intercessor
+     ◦ 1x Astartes grenade launcher
+     ◦ 9x Bolt pistol
+     ◦ 9x Bolt rifle
+     ◦ 9x Close combat weapon
+
+OTHER DATASHEETS
+
+Bladeguard Veteran Squad (170 Points)
+  • 1x Bladeguard Veteran Sergeant
+     ◦ 1x Heavy bolt pistol
+     ◦ 1x Master-crafted power weapon
+  • 5x Bladeguard Veteran
+     ◦ 5x Heavy bolt pistol
+     ◦ 5x Master-crafted power weapon
+
+Deathwing Knights (250 Points)
+  • 1x Knight Master
+     ◦ 1x Great weapon of the Unforgiven
+  • 4x Deathwing Knight
+     ◦ 4x Mace of absolution
+
+Deathwing Terminator Squad (180 Points)
+  • 1x Deathwing Sergeant
+     ◦ 1x Power weapon
+     ◦ 1x Storm bolter
+  • 4x Deathwing Terminator
+     ◦ 4x Power fist
+     ◦ 4x Storm bolter
+
+Hellblaster Squad (110 Points)
+  • 1x Hellblaster Sergeant
+     ◦ 1x Bolt pistol
+     ◦ 1x Close combat weapon
+     ◦ 1x Plasma incinerator
+  • 4x Hellblaster
+     ◦ 4x Bolt pistol
+     ◦ 4x Close combat weapon
+     ◦ 4x Plasma incinerator
+
+Infernus Squad (90 Points)
+  • 1x Infernus Sergeant
+     ◦ 1x Bolt pistol
+     ◦ 1x Close combat weapon
+     ◦ 1x Pyreblaster
+  • 4x Infernus Marine
+     ◦ 4x Bolt pistol
+     ◦ 4x Close combat weapon
+     ◦ 4x Pyreblaster
+
+Infiltrator Squad (200 Points)
+  • 1x Infiltrator Sergeant
+     ◦ 1x Bolt pistol
+     ◦ 1x Close combat weapon
+     ◦ 1x Marksman bolt carbine
+  • 9x Infiltrator
+     ◦ 9x Bolt pistol
+     ◦ 9x Close combat weapon
+     ◦ 1x Helix Gauntlet
+     ◦ 1x Infiltrator Comms Array
+     ◦ 9x Marksman bolt carbine
+
+Inner Circle Companions (90 Points)
+  • 3x Inner Circle Companion
+     ◦ 3x Calibanite greatsword
+     ◦ 3x Heavy bolt pistol
+
+Inner Circle Companions (90 Points)
+  • 3x Inner Circle Companion
+     ◦ 3x Calibanite greatsword
+     ◦ 3x Heavy bolt pistol
+
+Redemptor Dreadnought (205 Points)
+  • 1x Heavy flamer
+  • 1x Heavy onslaught gatling cannon
+  • 1x Redemptor fist
+  • 1x Twin fragstorm grenade launcher
+
+Exported with App Version: v1.53.0 (1), Data Version: v780`;
+
+      const parsed = parsePlainText(text);
+      const result = importPlainText(text, actualDarkAngelsData, 'darkangels');
+
+      expect(parsed.totalPoints).toBe(2000);
+      expect(parsed.units).toHaveLength(15);
+      expect(parsed.units.find((unit) => unit.name === 'Infiltrator Squad')?.modelCount).toBe(10);
+      expect(result.unmatchedUnits).toEqual([]);
+      expect(result.list.units).toHaveLength(15);
+      expect(result.list.detachment).toBe('wrath_of_the_rock');
+      expect(result.list.pointsLimit).toBe(2000);
+      expect(calculateListPoints(result.list, actualDarkAngelsData)).toBeLessThan(2500);
+
+      const intercessors = result.list.units.find((unit) => unit.unitId === 'intercessor-squad');
+      expect(intercessors?.modelCount).toBe(10);
+
+      const infiltrators = result.list.units.find((unit) => unit.unitId === 'infiltrator-squad');
+      expect(infiltrators?.modelCount).toBe(10);
+
+      const azrael = result.list.units.find((unit) => unit.unitId === 'azrael');
+      expect(azrael?.isWarlord).toBe(true);
+
+      const apothecary = result.list.units.find((unit) => unit.unitId === 'apothecary');
+      expect(apothecary?.enhancement).toBe('tempered-in-battle');
+
+      const chaplain = result.list.units.find((unit) => unit.unitId === 'chaplain-in-terminator-armour');
+      expect(chaplain?.enhancement).toBe('deathwing-assault-wrath');
     });
   });
 
